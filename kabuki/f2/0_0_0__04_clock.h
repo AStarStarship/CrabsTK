@@ -1,5 +1,5 @@
 /* Kabuki Toolkit @version 0.x
-@file    /kabuki/f2/03/test_ascii_clock.h
+@file    /kabuki/f2/0_0_0__04_clock.h
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -13,6 +13,8 @@ specific language governing permissions and limitations under the License. */
 #pragma once
 #include <pch.h>
 
+#include <cclock.h>
+
 #if SEAM == _0_0_0__04
 #include "test_debug.inl"
 #else
@@ -21,12 +23,12 @@ specific language governing permissions and limitations under the License. */
 
 namespace _ {
 
-static const char* _0_0_0__04_ASCII_Clock(char* seam_log, char* seam_end,
-                                          const char* args) {
+static const char* _0_0_0__04_Clock(char* seam_log, char* seam_end,
+                                    const char* args) {
 #if SEAM == _0_0_0__04
   TEST_BEGIN;
 
-  PRINT_HEADING("\n\n    Testing TextScanTime...");
+  PRINT_HEADING("\n\n    Testing StringScanTime...");
 
   Tms t, t_found;
   const char* result;
@@ -58,36 +60,39 @@ static const char* _0_0_0__04_ASCII_Clock(char* seam_log, char* seam_end,
     PRINT_LINE('-');
     PRINTF("\n    %i", i);
     Tms t = 0;
-    result = TextScanTime(strings[i], t);
+    result = StringScanTime(strings[i], t);
     // Assert (!ClockCompare (t, 2018, 8, 9, 0, 0, 0))
   }
 
   PRINTF("\n\n    Testing more valid input...\n");
 
+  enum { kSize = 128 };
+  char buffer[kSize];
+
   t = ClockTimeTMS(8, 9, 17, 4, 20);
   Print(buffer, buffer + kSize, t);
-  result = TextScanTime(buffer, t_found);
-  Assert(ClockCompare(t_found, t));
+  result = StringScanTime(buffer, t_found);
+  ASSERT(ClockCompare(t_found, t));
 
   t = ClockTimeTMS(2020, 4, 20, 4, 20);
   Print(buffer, buffer + kSize, t);
-  result = TextScanTime(buffer, t_found);
-  Assert(ClockCompare(t, t_found));
+  result = StringScanTime(buffer, t_found);
+  ASSERT(ClockCompare(t, t_found));
 
   t = ClockTimeTMS(1947, 12, 7, 23, 5, 7);
   Print(buffer, buffer + kSize, t);
-  result = TextScanTime(buffer, t_found);
-  Assert(ClockCompare(t, t_found));
+  result = StringScanTime(buffer, t_found);
+  ASSERT(ClockCompare(t, t_found));
 
   PRINT_HEADING("\nTesting invalid input...\n");
-  TextScanTime("cat", t);
+  StringScanTime("cat", t);
 
-  TextScanTime("2017-30-40", t);
+  StringScanTime("2017-30-40", t);
 
   PRINTF("\nDone testing date parsing utils! :-)\n");
 #endif
   return nullptr;
 }
-}  //< namespace _
+}  // namespace _
 
-#include "seam_footer.inl"
+#include "test_footer.inl"

@@ -28,15 +28,14 @@ specific language governing permissions and limitations under the License. */
 #endif
 namespace _ {
 
-#if F2_TEXT
+#if USING_F2_UTF
 
 template <typename Char = char>
-Char* Print(Char* cursor, Char* end, Clock& clock) {
+Char* Print(Char* cursor, Char* end, const Clock& clock) {
   // The way the print functions are setup, we return a nil-term char so we
   // don't have to check to write a single char in this
   ASSERT(cursor);
   ASSERT(cursor < end);
-  ASSERT(clock);
 
   cursor = Print<Char>(cursor, end, clock.year + ClockEpoch());
   if (!cursor) return nullptr;
@@ -74,8 +73,8 @@ Char* Print(Char* cursor, Char* end, Tss& t) {
 }
 
 template <typename Char = char>
-const Char* TextScanTime(const Char* string, int& hour, int& minute,
-                         int& second) {
+const Char* StringScanTime(const Char* string, int& hour, int& minute,
+                           int& second) {
   if (string == nullptr) return nullptr;
 
   PRINTF("\n\n    Scanning time:%s", string);
@@ -83,7 +82,7 @@ const Char* TextScanTime(const Char* string, int& hour, int& minute,
   int h,   //< Hour.
       m,   //< Minute.
       s;   //< Second.
-  if (!ScanSigned<Char>(++string, h)) {
+  if (!ScanSigned<int, Char>(++string, h)) {
     PRINTF("\nInvalid hour:%i", h);
     return nullptr;
   }
@@ -139,7 +138,7 @@ const Char* TextScanTime(const Char* string, int& hour, int& minute,
       "\nCases HH:MM, HH::MMam, HH::MMpm, HH:MM:SS, HH:MM:SSam, and "
       "HH:MM:SSpm");
 
-  if (!ScanSigned<Char>(string, m)) return nullptr;
+  if (!ScanSigned<int, Char>(string, m)) return nullptr;
   string = TextSkipNumbers<Char>(string);
   if (m < 0) {
     PRINTF("\nMinutes:%i can't be negative!", m);
@@ -192,7 +191,7 @@ const Char* TextScanTime(const Char* string, int& hour, int& minute,
 
   PRINT("\n    Cases HH:MM:SS, HH:MM:SSam, and HH:MM:SSpm");
 
-  if (!ScanSigned<Char>(string, s)) return nullptr;
+  if (!ScanSigned<int, Char>(string, s)) return nullptr;
   if (s < 0) {
     PRINTF("\nSeconds:%i can't be negative!", s);
     return nullptr;
@@ -258,7 +257,7 @@ const Char* Scan(const Char* cursor, Clock& clock) {
   int hour = 0, minute = 0, second = 0;
 
   if (c == '@') {
-    if (!(cursor = TextScanTime<Char>(cursor, hour, minute, second))) {
+    if (!(cursor = StringScanTime<Char>(cursor, hour, minute, second))) {
       PRINT("\nCase @ invalid time");
       return nullptr;
     }
@@ -269,7 +268,7 @@ const Char* Scan(const Char* cursor, Clock& clock) {
     return cursor + 1;
   }
   if (c == '#') {
-    if (!(cursor = TextScanTime<Char>(cursor, hour, minute, second))) {
+    if (!(cursor = StringScanTime<Char>(cursor, hour, minute, second))) {
       PRINT("\nCase @ invalid time");
     }
     clock.hour += hour;
@@ -285,7 +284,7 @@ const Char* Scan(const Char* cursor, Clock& clock) {
       is_last_year = 0;  //< Flag for if the date was last year or not.
 
   // Scan value1
-  if (!ScanSigned<Char>(cursor, value1)) {
+  if (!ScanSigned<int, Char>(cursor, value1)) {
     PRINT("Scan error at value1");
     return nullptr;
   }
@@ -293,14 +292,14 @@ const Char* Scan(const Char* cursor, Clock& clock) {
     PRINT("Dates can't be negative.");
     return nullptr;
   }
-  cursor = TextNumberStop<Char>(cursor);
+  cursor = StringDecimalStop<Char>(cursor);
   if (!cursor) return nullptr;
   delimiter = *cursor++;
   PRINTF("%i%c", value1);
   if (delimiter == '@') {
     PRINT(" HH@ ");
 
-    if (!(cursor = TextScanTime<Char>(cursor, hour, minute, second))) {
+    if (!(cursor = StringScanTime<Char>(cursor, hour, minute, second))) {
       PRINT("Invalid time DD@");
       return nullptr;
     }
@@ -310,7 +309,7 @@ const Char* Scan(const Char* cursor, Clock& clock) {
   }
   // Scan value2.
   cursor = TextSkipChar<Char>(cursor, '0');
-  if (!ScanSigned<Char>(cursor, value2)) {
+  if (!ScanSigned<int, Char>(cursor, value2)) {
     PRINT("Failed scanning value2 of date.");
     return nullptr;
   }
@@ -319,12 +318,12 @@ const Char* Scan(const Char* cursor, Clock& clock) {
     return nullptr;  //< Invalid month and day.
   }
   PRINTF("%i", value2);
-  cursor = TextNumberStop<Char>(cursor);
+  cursor = StringDecimalStop<Char>(cursor);
   c = *cursor;
   if (c != delimiter) {
     PRINT("\n    Cases MM/DD and MM/YYyy");
     if (c == '@') {
-      if (!(cursor = TextScanTime<Char>(cursor, hour, minute, second))) {
+      if (!(cursor = StringScanTime<Char>(cursor, hour, minute, second))) {
         PRINT(" invalid time ");
         return nullptr;
       }
@@ -364,7 +363,7 @@ const Char* Scan(const Char* cursor, Clock& clock) {
       clock.hour = hour;
       clock.minute = minute;
       clock.second = second;
-      if (!(cursor = TextScanTime(cursor, hour, minute, second))) {
+      if (!(cursor = StringScanTime(cursor, hour, minute, second))) {
         PRINT("\nInvalid MM/DD@");
         return nullptr;
       }
@@ -375,7 +374,7 @@ const Char* Scan(const Char* cursor, Clock& clock) {
       PRINT(" MM/YYyy");
       clock.month = value1 - 1;
       clock.year = value2;
-      if (!(cursor = TextScanTime<Char>(cursor, hour, minute, second))) {
+      if (!(cursor = StringScanTime<Char>(cursor, hour, minute, second))) {
         PRINT("\nInvalid MM / YYYY@ time");
         return nullptr;
       }
@@ -391,17 +390,17 @@ const Char* Scan(const Char* cursor, Clock& clock) {
   cursor = TextSkipChar<Char>(++cursor, '0');
   c = *cursor;
   // Then there are 3 values and 2 delimiters.
-  if (!IsDigit<Char>(c) || !ScanSigned<Char>(cursor, value3)) {
+  if (!IsDigit<Char>(c) || !ScanSigned<int, Char>(cursor, value3)) {
     PRINTF("\n    SlotRead error reading value3 of date. %c: ", c);
     return nullptr;  //< Invalid format!
   }
-  cursor = TextNumberStop<Char>(cursor);
+  cursor = StringDecimalStop<Char>(cursor);
   PRINTF("%c%i", c, value3);
   // Now we need to check what format it is in.
 
   c = *cursor;
   if (c == '@') {
-    if (!(end = TextScanTime<Char>(cursor, hour, minute, second))) {
+    if (!(end = StringScanTime<Char>(cursor, hour, minute, second))) {
       PRINT("Invalid YYyy/MM/DD@ time.");
       return nullptr;
     }
@@ -461,8 +460,16 @@ const Char* Scan(const Char* cursor, Clock& clock) {
   return cursor + 1;
 }
 
+template <typename SI = Tms>
+SI StampTime(Clock& clock) {
+  SI t = (clock.year - kClockEpochInit) * kSecondsPerYear +
+         (clock.day - 1) * kSecondsPerDay + clock.hour * kSecondsPerHour +
+         clock.minute * kSecondsPerMinute + clock.second;
+  return t;
+}
+
 template <typename Char, typename SI>
-const Char* TextScanTime(const Char* begin, SI& result) {
+const Char* StringScanTime(const Char* begin, SI& result) {
   Clock clock;
   const Char* end = Scan<Char>(begin, clock);
   result = StampTime<SI>(clock);
@@ -470,20 +477,19 @@ const Char* TextScanTime(const Char* begin, SI& result) {
 }
 
 template <typename Char>
-const Char* TextScanTime(const Char* begin, Tss& result) {
-  begin = TextScanTime<Char, Tms>(begin, result.seconds);
+const Char* StringScanTime(const Char* begin, Tss& result) {
+  begin = StringScanTime<Char, Tms>(begin, result.seconds);
   if (!begin) return nullptr;
   if (*begin++ != ':') {
     result.ticks = 0;
     return begin - 1;
   }
-  return Scan<Char>(begin, result.ticks);
+  return ScanUnsigned<uint32_t, Char>(begin, result.ticks);
 }
-#endif  // #if F2_TEXT
+#endif  // #if USING_F2_UTF
 
-}  //< namespace _
+}  // namespace _
 
-#undef PRINT
-#undef PRINTF
+#include "test_footer.inl"
 #endif  //< #ifndef INCLUDED_KABUKI_F2_TCLOCK
-#endif  //< #if SEAM >= _0_0_0__06
+#endif  //< #if SEAM >= _0_0_0__04

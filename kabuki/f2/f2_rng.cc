@@ -19,6 +19,8 @@ specific language governing permissions and limitations under the License. */
 
 namespace _ {
 
+// static std::random_device rd;
+// static std::default_random_engine rng(rd);
 static std::default_random_engine rng;
 
 uint32_t RandomUI4() { return rng(); }
@@ -26,6 +28,8 @@ uint32_t RandomUI4() { return rng(); }
 uint RandomSeed() { return std::random_device()(); }
 
 void RandomizeSeed() { return rng.seed(RandomSeed()); }
+
+bool RandomBOL() { return (bool)RandomUI4(); }
 
 uint8_t RandomUI1() { return (uint8_t)RandomUI4(); }
 
@@ -43,6 +47,8 @@ uint64_t RandomUI8() {
 }
 
 int64_t RandomSI8() { return (int64_t)RandomUI8(); }
+
+void RandomNumber(bool& result) { result = (bool)RandomUI4() & 1; }
 
 void RandomNumber(uint8_t& result) { result = RandomUI1(); }
 

@@ -23,30 +23,35 @@ specific language governing permissions and limitations under the License. */
 #include "tbinary.h"
 #include "ttest.h"
 
-namespace _ {
-
 #if SEAM == _0_0_0__00
 #include "test_debug.inl"
-#define PRINT_ARGS                                     \
-  Printf("\nargs_count:%i args:%p", args_count, args); \
-  for (int i = 0; i < args_count; ++i)                 \
-  Printf("\n%i:\"%s\"", i, args[args_count])
+#define PRINT_ARGS                                    \
+  Printf("\nargs_count:%i args:%p", arg_count, args); \
+  for (int i = 0; i < arg_count; ++i) Printf("\n%i:\"%s", i, args[i])
 #else
 #include "test_release.inl"
 #define PRINT_ARGS
 #endif
 
-const char* ArgsToString(int args_count, char** args) {
-  if (args_count <= 1) return nullptr;
-  if (args_count == 2) return args[1];
-  PRINT_ARGS;
-  for (int i = 1; i < args_count; ++i) {
-    char* cursor = args[i];
-    while (*cursor) cursor--;
-    *cursor-- = ' ';
-    while (!*cursor) *cursor-- = ' ';
+namespace _ {
+
+const char* ArgsToString(int arg_count, char** args) {
+  if (!args || arg_count <= 1) {
+    PRINT("\n!args || arg_count <= 1");
+    return "";
   }
-  return args[1];
+  if (arg_count == 2) {
+    PRINT("\narg_count == 2");
+    return args[1];
+  }
+  PRINT_ARGS;
+  char *begin = args[1], *end = args[arg_count - 1] - 1;
+  while (end != begin) {
+    char c = *end;
+    if (!c) c = ' ';
+    --end;
+  }
+  return begin;
 }
 #undef PRINT_ARGS
 #include "test_footer.inl"
@@ -152,7 +157,7 @@ void Print(int32_t value) {
 }
 
 void Print(float value) {
-#if SEAM <= _0_0_0__03
+#if SEAM <= _0_0_0__12
   return Printf("%f", value);
 #else
   enum { kSize = 16 };
@@ -163,7 +168,7 @@ void Print(float value) {
 }
 
 void Print(double value) {
-#if SEAM <= _0_0_0__03
+#if SEAM <= _0_0_0__12
   return Printf("%f", value);
 #else
   enum { kSize = 24 };
@@ -197,7 +202,6 @@ void PrintHeading(const char* heading_a, const char* heading_b, int line_count,
   Print("\n| ");
   Print(heading_a);
   Print(heading_b);
-  Print('\n');
   PrintLine(width, token, '+');
   Print('\n');
 }
@@ -348,7 +352,6 @@ void Pausef(const char* format, ...) {
 }  // namespace _
 
 #if SEAM >= _0_0_0__02
-
 namespace _ {
 
 void PrintSocket(const char* begin, const char* end) {

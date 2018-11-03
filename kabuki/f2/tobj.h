@@ -22,7 +22,11 @@ specific language governing permissions and limitations under the License. */
 
 #include "tsocket.h"
 
+#if SEAM == _0_0_0__02
+#include "test_debug.inl"
+#else
 #include "test_release.inl"
+#endif
 
 namespace _ {
 
@@ -177,7 +181,7 @@ class TObj {
   CObj obj_;  //< ASCII OBJ harness.
 };
 
-}  //< namespace _
+}  // namespace _
 
 #include "test_footer.inl"
 #endif  //< INCLUDED_KABUKI_F2_TOBJ

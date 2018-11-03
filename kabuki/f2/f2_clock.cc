@@ -14,28 +14,19 @@ specific language governing permissions and limitations under the License. */
 #include <pch.h>
 
 #if SEAM >= _0_0_0__04
+
+#include <ctime>
+
+#include "tbinary.h"
+#include "tclock.h"
+
 #if SEAM == _0_0_0__04
 #include "test_debug.inl"
 #else
 #include "test_release.inl"
 #endif
 
-#include <ctime>
-
-#include "clock.h"
-#include "lock.h"
-#include "tbinary.h"
-#include "tclock.h"
-
 namespace _ {
-
-template <typename SI = Tms>
-SI StampTime(Clock& clock) {
-  SI t = (clock.year - kClockEpochInit) * kSecondsPerYear +
-         (clock.day - 1) * kSecondsPerDay + clock.hour * kSecondsPerHour +
-         clock.minute * kSecondsPerMinute + clock.second;
-  return t;
-}
 
 template <typename SI>
 void ClockSet(Clock* clock, SI t) {
@@ -135,7 +126,6 @@ Tss& StopwatchInit(Tss& tss, Tms t, uint32_t ticks) {
 }
 
 Clock* ClockInit(Clock& clock) {
-  ASSERT(clock);
   time_t t;
   time(&t);
   return ClockInit<time_t>(clock, t);
@@ -193,17 +183,17 @@ const char* ClockWeekDay(int day_number) {
 }
 
 char ClockDayOfWeekInitial(int day_number) {
-  static const char days[] = {"SMTWRFSU"};
+  static const char days[] = "SMTWRFSU";
   if (day_number < 0) return 'I';
   if (day_number >= 7) return 'I';
   return days[day_number];
 }
 
-int ClockCompare(Clock& date_a, Clock& date_b) {
+int ClockCompare(const Clock& date_a, const Clock& date_b) {
   PRINT("\n    Expecting Date:");
-  PRINT_DATE(date_a);
+  PRINT_TIME(date_a);
   PRINT(" and found:");
-  PRINT_DATE(date_b);
+  PRINT_TIME(date_b);
 
   if (date_a.year != date_b.year) {
     PRINTF("\n    year.a:%i != year.b:%i ", date_a.year + ClockEpoch(),
@@ -238,11 +228,11 @@ int ClockCompare(Tms time_a, Tms time_b) {
   return ClockCompare(a, b);
 }
 
-int ClockCompare(Clock& clock, int year, int month, int day, int hour = 0,
+int ClockCompare(const Clock& clock, int year, int month, int day, int hour = 0,
                  int minute = 0, int second = 0) {
   PRINTF("\n    Expecting %i/%i/%i@%i:%i:%i and found ", year, month, day, hour,
          minute, second);
-  PRINT_DATE(clock);
+  PRINT_TIME(clock);
 
   if (year - ClockEpoch() != clock.year) {
     PRINTF("\n    Expecting year:%i but found:%i.", year,
@@ -335,14 +325,14 @@ Tme ClockTimeTME(int year, int month, int day, int hour, int minute,
 /*
 template <typename Char = char>
 Char* Print(Char* cursor, Char* end, Tss& t) {
-  Clock clock(t.seconds);
-  cursor = Print<Char>(cursor, end, clock);
+  Clock c (t.seconds);
+  cursor = Print<Char>(cursor, end, c);
   cursor = Print<Char>(cursor, end, ':');
   return Print<Char>(cursor, end, t.ticks);
 }*/
 
 #if USING_UTF8
-char* Print(char* begin, char* end, Clock& clock) {
+char* Print(char* begin, char* end, const Clock& clock) {
   return Print<char>(begin, end, clock);
 }
 
@@ -360,9 +350,33 @@ char* PrintTime(char* begin, char* end, Tme t) {
   return Print<char>(begin, end, clock);
 }
 
-const char* TextScanTime(const char* string, int& hour, int& minute,
-                         int& second) {
-  return TextScanTime<char>(string, hour, minute, second);
+void PrintTime(const Clock& clock) {
+  enum { kSize = 64 };
+  char buffer[kSize];
+  Print(buffer, buffer + kSize - 1, clock);
+}
+
+void PrintTime(Tss t) {
+  enum { kSize = 64 };
+  char buffer[kSize];
+  Print(buffer, buffer + kSize - 1, t);
+}
+
+void PrintTime(Tms t) {
+  enum { kSize = 64 };
+  char buffer[kSize];
+  Print(buffer, buffer + kSize - 1, t);
+}
+
+void PrintTime(Tme t) {
+  enum { kSize = 64 };
+  char buffer[kSize];
+  Print(buffer, buffer + kSize - 1, t);
+}
+
+const char* StringScanTime(const char* string, int& hour, int& minute,
+                           int& second) {
+  return StringScanTime<char>(string, hour, minute, second);
 }
 
 const char* Scan(const char* string, Clock& clock) {
@@ -370,15 +384,15 @@ const char* Scan(const char* string, Clock& clock) {
 }
 
 const char* Scan(const char* string, Tss& t) {
-  return TextScanTime<char>(string, t);
+  return StringScanTime<char>(string, t);
 }
 
-const char* TextScanTime(const char* string, Tms& t) {
-  return TextScanTime<char, Tms>(string, t);
+const char* StringScanTime(const char* string, Tms& t) {
+  return StringScanTime<char, Tms>(string, t);
 }
 
-const char* TextScanTime(const char* string, Tme& t) {
-  return TextScanTime<char, Tme>(string, t);
+const char* StringScanTime(const char* string, Tme& t) {
+  return StringScanTime<char, Tme>(string, t);
 }
 
 #endif
@@ -404,25 +418,25 @@ char16_t* PrintTime(char16_t* begin, char16_t* end, Tme t) {
 char16_t* Print(char16_t* begin, char16_t* end, Clock& t) {
   return Print<char16_t>(begin, end, t);
 }
-const char16_t* TextScanTime(const char16_t* string, Clock& clock) {
-  return TextScanTime<char16_t>(string, clock);
+const char16_t* StringScanTime(const char16_t* string, Clock& clock) {
+  return StringScanTime<char16_t>(string, clock);
 }
 
-const char16_t* TextScanTime(const char16_t* string, int& hour, int& minute,
-                             int& second) {
-  return TextScanTime<char16_t>(string, hour, minute, second);
+const char16_t* StringScanTime(const char16_t* string, int& hour, int& minute,
+                               int& second) {
+  return StringScanTime<char16_t>(string, hour, minute, second);
 }
 
 const char16_t* TextScanMicroseconds(const char16_t* string, Tss& result) {
-  return TextScanTime<char16_t, Tss>(string, result);
+  return StringScanTime<char16_t, Tss>(string, result);
 }
 
-const char16_t* TextScanTime(const char16_t* string, Tms& result) {
-  return TextScanTime<char16_t, Tms>(string, result);
+const char16_t* StringScanTime(const char16_t* string, Tms& result) {
+  return StringScanTime<char16_t, Tms>(string, result);
 }
 
-const char16_t* TextScanTime(const char16_t* string, Tme& result) {
-  return TextScanTime<char16_t, Tme>(string, result);
+const char16_t* StringScanTime(const char16_t* string, Tme& result) {
+  return StringScanTime<char16_t, Tme>(string, result);
 }
 #endif
 #if USING_UTF32
@@ -448,30 +462,30 @@ char32_t* Print(char32_t* begin, char32_t* end, Clock& clock) {
   return Print<char32_t>(begin, end, clock);
 }
 
-const char32_t* TextScanTime(const char32_t* string, int& hour, int& minute,
-                             int& second) {
-  return TextScanTime<char32_t>(string, hour, minute, second);
+const char32_t* StringScanTime(const char32_t* string, int& hour, int& minute,
+                               int& second) {
+  return StringScanTime<char32_t>(string, hour, minute, second);
 }
 
 const char32_t* Scan(const char32_t* string, Clock& time) {
-  return TextScanTime<char32_t>(string, time);
+  return StringScanTime<char32_t>(string, time);
 }
 
 const char32_t* Scan(const char32_t* string, Tss& result) {
-  return TextScanTime<char32_t, Tss>(string, result);
+  return StringScanTime<char32_t, Tss>(string, result);
 }
 
-const char32_t* TextScanTime(const char32_t* string, Tms& result) {
-  return TextScanTime<char32_t, Tms>(string, result);
+const char32_t* StringScanTime(const char32_t* string, Tms& result) {
+  return StringScanTime<char32_t, Tms>(string, result);
 }
 
-const char32_t* TextScanTime(const char32_t* string, Tme& result) {
-  return TextScanTime<char32_t, Tme>(string, result);
+const char32_t* StringScanTime(const char32_t* string, Tme& result) {
+  return StringScanTime<char32_t, Tme>(string, result);
 }
 
 #endif
 
-}  //< namespace _
+}  // namespace _
 
 #include "test_footer.inl"
 #endif  //< #if SEAM >= _0_0_0__04

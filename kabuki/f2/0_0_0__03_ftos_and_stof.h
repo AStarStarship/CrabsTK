@@ -1,6 +1,6 @@
 /* Kabuki Toolkit @version 0.x
 @link    https://github.com/kabuki-starship/kabuki-toolkit.git
-@file    \kabuki\f2\02\ftos_and_stof.h
+@file    \kabuki\f2\0_0_0__03_ftos_and_stof.h
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -13,6 +13,12 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <pch.h>
+
+#include <cmath>
+#include <cstdio>
+
+#include "cbinary.h"
+#include "crng.h"
 
 using namespace std;
 
@@ -29,7 +35,13 @@ const char* _0_0_0__03_FtoS_and_StoF(char* seam_log, char* seam_end,
 #if SEAM >= _0_0_0__03
   TEST_BEGIN;
 
-  enum { kSize = 24 };
+#if SEAM == _0_0_0__03
+  enum { kTestCount = 1 << 15 };
+#else
+  enum { kTestCount = 1 << 20 };
+#endif
+
+  enum { kSize = 31 };
   char buffer[kSize + 1];
 
   uint64_t value;
@@ -37,25 +49,13 @@ const char* _0_0_0__03_FtoS_and_StoF(char* seam_log, char* seam_end,
 
   PRINTF("\n\nTesting Float Ceiling<Float, UI> (Float)...\n");
 
-  for (int i = 0; i < 1 << 20; ++i) {
+  for (int i = 0; i < kTestCount; ++i) {
     do {
       value = RandomUI8();
       dbl_expected = static_cast<double>(value);
     } while (!IsFinite(dbl_expected));
-    dbl_found = Ceiling(dbl_expected);
+    dbl_found = ceil(dbl_expected);
     dbl_expected = Ceiling(dbl_expected);
-    Test(dbl_expected, dbl_found);
-  }
-
-  PRINTF("\n\nTesting float Char* Print<Char> (Char*, Char*, float&)...\n");
-
-  for (int i = 0; i < 1 << 20; ++i) {
-    do {
-      value = RandomUI8();
-      dbl_expected = static_cast<double>(value);
-    } while (!IsFinite(dbl_expected));
-    PrintFloat<>(buffer, buffer + kSize, dbl_expected);
-    Test(scanf_s("%lf", &dbl_found));
     Test(dbl_expected, dbl_found);
   }
 
@@ -63,15 +63,27 @@ const char* _0_0_0__03_FtoS_and_StoF(char* seam_log, char* seam_end,
       "\n\nTesting const Char* Scan<Char> (const Char*, const Char*, float&) "
       "functions...\n");
 
-  for (int i = 0; i < 1 << 20; ++i) {
+  for (int i = 0; i < kTestCount; ++i) {
     do {
       value = RandomUI8();
       dbl_expected = static_cast<double>(value);
     } while (!IsFinite(dbl_expected));
-    char buffer[24];
-    sprintf_s(buffer, kSize, "%f", dbl_expected);
-    Test(ScanFloat<double, uint64_t, char>(buffer, dbl_expected));
-    Test(dbl_expected, dbl_found);
+    sprintf_s(buffer, kSize, "%lf", dbl_expected);
+    ASSERT(Scan(buffer, dbl_found));
+    AVOW(dbl_expected, dbl_found);
+  }
+
+  PRINTF("\n\nTesting Char* Print<Char> (Char*, Char*, Float)...\n");
+
+  for (int i = 0; i < kTestCount; ++i) {
+    do {
+      value = RandomUI8();
+      dbl_expected = static_cast<double>(value);
+    } while (!IsFinite(dbl_expected));
+    Print(buffer, buffer + kSize, dbl_expected);
+    int r = sscanf_s(buffer, "%lf", &dbl_found);
+    ASSERT(r);
+    AVOW(dbl_expected, dbl_found);
   }
 
   TEST_END;

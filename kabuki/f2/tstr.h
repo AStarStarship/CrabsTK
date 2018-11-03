@@ -1,5 +1,5 @@
-/* Kabuki Toolkit
-@version 0.x
+/* Kabuki Toolkit @version 0.x
+@link    https://github.com/kabuki-starship/kabuki-toolkit.git
 @file    /kabuki/f2/tstr.h
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
@@ -127,7 +127,7 @@ const Char* TextLineEnd(const Char* cursor, const Char* end, int column_count) {
 }
 
 template <typename Char = char>
-const Char* TextNumberStop(const Char* cursor, const Char* end) {
+const Char* StringDecimalStop(const Char* cursor, const Char* end) {
   ASSERT(cursor);
   ASSERT(cursor <= end);
   Char c = *cursor++;
@@ -143,23 +143,6 @@ const Char* TextNumberStop(const Char* cursor, const Char* end) {
     c = *cursor++;
   }
   return cursor - 1;
-}
-
-template <typename Char = char>
-const Char* TextNumberStop(const Char* cursor) {
-  ASSERT(cursor);
-  Char c = *cursor;
-  if (c < '0' || c > '9') return nullptr;
-  if (c == '-') {  // It might be negative.
-    c = *(++cursor);
-    if (!IsDigit<Char>(c)) return cursor - 1;  //< it's not negative.
-    c = *(++cursor);
-  }
-  while (IsDigit<Char>(c)) {
-    if (c <= 0) return cursor;
-    c = *(++cursor);
-  }
-  return cursor;
 }
 
 template <typename Char = char>

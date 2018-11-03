@@ -20,10 +20,16 @@ specific language governing permissions and limitations under the License. */
 #include "csocket.h"
 #include "tstr.h"
 
+#if SEAM == _0_0_0__12
+#include "test_debug.inl"
+#else
+#include "test_release.inl"
+#endif
+
 /* @tag Comment may be wrapped around
 like this.
-  @tag Or comment may be
-       wrapped around like this.
+@tag Or comment may be
+      wrapped around like this.
 */
 
 namespace _ {

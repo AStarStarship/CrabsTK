@@ -543,7 +543,7 @@ API byte TableFind(const Table<UI, SI>* table, const char* key) {
   return kInvalidIndex;
 }
 
-#if F2_TEXT
+#if USING_F2_UTF
 /* Prints this object out to the console. */
 template <typename UI, typename SI>
 Utf8& TablePrint(Utf8& print, Table<UI, SI>* table) {

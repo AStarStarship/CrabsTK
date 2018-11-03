@@ -55,7 +55,7 @@ API const char32_t* TextLineEnd(const char32_t* begin, int column_count);
 /* Returns the pointer to the next char32_t in the char32_t that is not an ASCII
 number.
 @return A pointer to the next non-number in the text char32_t. */
-API const char32_t* TextNumberStop(const char32_t* begin);
+API const char32_t* StringDecimalStop(const char32_t* begin);
 
 /* Skips the leading zeros of a number if there are any. */
 API const char32_t* TextSkipChar(const char32_t* begin, char32_t skip_char);

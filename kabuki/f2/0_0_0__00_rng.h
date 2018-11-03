@@ -1,6 +1,6 @@
 /* Kabuki Toolkit @version 0.x
 @link    https://github.com/kabuki-starship/kabuki-toolkit.git
-@file    /kabuki/f2/00/itos_and_stoi.h
+@file    /kabuki/f2/0_0_0__00_rng.h
 @author  Cale McCollough <calemccollough.github.io>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -24,10 +24,12 @@ specific language governing permissions and limitations under the License. */
 #endif
 
 namespace _ {
+
 inline const char* _0_0_0__00_RNG(char* seam_log, char* seam_end,
                                   const char* args) {
 #if SEAM >= _0_0_0__00
   TEST_BEGIN;
+
   PRINT_HEADING("Testing ArgsToString");
 
   char arg_string[] = "C:\\Windows\0Foo\0\0Bar    \0\0\0   420    \0";
@@ -44,33 +46,20 @@ inline const char* _0_0_0__00_RNG(char* seam_log, char* seam_end,
       PRINT("\nNil arg.");
     }
   }
-  PRINT("\n\nContiguous Args:\n");
-  char* end = test_args[kArgCount - 2];
-  while (*end) ++end;
+  PRINT("\n\nRunning ArgsToString...\n");
+  ASSERT(ArgsToString(kArgCount, test_args));
 
-  PRINT("\n\nContiguous Args:\n");
-  char* cursor = test_args[0];
-  while (cursor != end) {
-    char c = *cursor++;
-    if (c == 0)
-      PRINT('`');
-    else if (c < ' ')
-      PRINT('~');
-    else
-      PRINT(c);
-  }
   PRINT("\n\nPrinting argument string...\n");
-  ArgsToString(kArgCount, test_args);
-  PRINT('\n');
   PRINT(test_args[1]);
 
-  PRINT("\n\nDone testing const char* ArgsToString(int, char**)\n\n");
+  PRINT("\n\nDone testing const char* ArgsToString(int, char**);");
+
   PRINT_HEADING("Testing RNG");
 
   for (int i = 0; i < 10000; ++i) {
-    PRINT("\n");
     RandomizeSeed();
     auto value = RandomUI2();
+    PRINT('\n');
     PRINT(value);
   }
 

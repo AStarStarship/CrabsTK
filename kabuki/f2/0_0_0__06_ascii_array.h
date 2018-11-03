@@ -1,5 +1,5 @@
 /* Kabuki Toolkit @version 0.x
-@file    /kabuki/f2/05/test_ascii_array.h
+@file    /kabuki/f2/0_0_0__06_test_ascii_array.h
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -41,6 +41,6 @@ static const char* _0_0_0__06_ASCII_Array(char* seam_log, char* seam_end,
 #endif
   return nullptr;
 }
-}  //< namespace _
+}  // namespace _
 
 #include "seam_footer.inl"

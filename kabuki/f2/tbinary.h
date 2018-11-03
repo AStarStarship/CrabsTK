@@ -17,8 +17,13 @@ specific language governing permissions and limitations under the License. */
 #ifndef INCLUDED_KABUKI_F2_TBINARY
 #define INCLUDED_KABUKI_F2_TBINARY 1
 
+#if defined(_MSC_VER) && defined(_M_AMD64)
+#include <intrin.h>
+#endif
+
 #include "cbinary.h"
 #include "cconsole.h"
+#include "csocket.h"
 
 #if SEAM >= _0_0_0__00
 #if SEAM == _0_0_0__00
@@ -471,7 +476,7 @@ Char* PrintUnsigned(Char* cursor, Char* end, UI value) {
   Char* nil_ptr;
   uint16_t pow_10_ui2, delta = 0;
   uint32_t pow_10_ui4;
-  const uint16_t* lut = BinaryDecimalsLUT();
+  const uint16_t* lut = BinaryLUTDecimals();
 
   // The best way to understand how the numbers are getting converted is that
   // numbers get broken up into up to 8 pairs of 100, in each pair of 10000
@@ -789,6 +794,26 @@ const Char* ScanSigned(const Char* buffer, SI& result) {
 #endif
 namespace _ {
 
+template <typename Char = const char>
+const Char* StringDecimalStop(const Char* cursor) {
+  if (!cursor) return cursor;
+  Char c = *cursor++;
+  if (c == '-') c = *cursor++;
+  if (c < '0' || c > '9') return nullptr;
+  c = *cursor++;
+  while (IsDigit<Char>(c)) {
+    c = *cursor++;
+    if (c <= 0) return cursor - 1;
+  }
+  return cursor - 1;
+}
+
+template <typename Char = const char>
+Char* StringDecimalStop(Char* cursor) {
+  return const_cast<Char*>(
+      StringDecimalStop<Char>(reinterpret_cast<const Char*>(cursor)));
+}
+
 /* Searches for the highest MSb asserted.
 @return -1 */
 template <typename UI>
@@ -797,15 +822,25 @@ int MSbAssertedReverse(UI value) {
     if ((value >> i) != 0) return i;
   return -1;
 }
-}  // namespace _
 
-/* A decimal number in floating-point format. */
-template <typename Float, typename UI>
-class Binary {
+template <typename Char>
+Char* Print3(Char* buffer, Char* end, Char a, Char b, Char c) {
+  if (!buffer || buffer + 3 >= end) return nullptr;
+  *buffer++ = a;
+  *buffer++ = b;
+  *buffer++ = c;
+}
+
+/* A decimal number in floating-point format.
+template <typename Float = double, typename UI = uint64_t>
+class TBinary {
  public:
+  static int Foo() { return 1; }
+
   enum {
     kSize = sizeof(Float),
     kSizeBits = kSize * 8,
+    kMSbIndex = kSizeBits - 1,
     kStringLengthMax = 24,
     kExponentSizeBits =
         (sizeof(Float) == 2)
@@ -813,31 +848,26 @@ class Binary {
             : (sizeof(Float) == 4) ? 8 : (sizeof(Float) == 8) ? 11 : 15,
     kCoefficientSize = kSizeBits - kExponentSizeBits - 1,
     kMantissaSize = kSizeBits - kExponentSizeBits - 2,
-    kExponentMaskUnshifted =
-        (~((uint32_t)0)) >> (kSizeBits - kExponentSizeBits),
+    kExponentMaskUnshifted = (~((UI)0)) >> (kSizeBits - kExponentSizeBits),
     kExponentBias = kExponentMaskUnshifted + kCoefficientSize,
     kExponentMin = -kExponentBias,
   };
+
+  // Constructs an uninitialized floating-point number.
+  TBinary() {}
 
   inline static UI Coefficient(UI decimal) {
     return (decimal << (kExponentSizeBits + 1)) >> (kExponentSizeBits + 1);
   }
 
-  inline static UI Exponent(UI decimal) {
-    return (decimal << (kExponentSizeBits + 1)) >> (kExponentSizeBits + 1);
-  }
-
-  // Constructs an uninitialized floating-point number.
-  Binary() {}
-
-  // Converts a Float to a Binary
-  Binary(Float binary) {
+  // Converts a Float to a TBinary
+  TBinary(Float binary) {
     UI ui = *reinterpret_cast<UI*>(&binary);
-    uint32_t biased_e = ui << 1;  //< Get rid of sign bit.
+    uint32_t biased_e = (uint32_t)(ui << 1);  //< Get rid of sign bit.
     // Get rid of the integral portion.
     biased_e = biased_e >> (kSizeBits - kExponentSizeBits);
     // Get rid of the sign and exponent.
-    uint64_t coefficient = Coefficient<UI>(binary);
+-    uint64_t coefficient = Coefficient(binary);
     if (biased_e != 0) {
       f = coefficient + (((UI)1) << kExponentSizeBits);
       e = biased_e - kExponentBias;
@@ -847,7 +877,13 @@ class Binary {
     }
   }
 
-  Binary(UI f, int32_t e) : f(f), e(e) {}
+  TBinary(UI f, int32_t e) : f(f), e(e) {}
+
+  TBinary(const TBinary a, const TBinary b) {}
+
+  inline static UI Exponent(UI decimal) {
+    return (decimal << (kExponentSizeBits + 1)) >> (kExponentSizeBits + 1);
+  }
 
   template <typename Char = char>
   static Char* Print(Char* buffer, Char* end, Float value) {
@@ -862,7 +898,8 @@ class Binary {
     }
     if (IsInfinite(value)) {
       if (end - buffer < 4) return nullptr;
-      buffer[0] = (f >> (sizeof(UI) *8 - 1))) ? '-' : '+';
+      UI f = *reinterpret_cast<UI*>(&value);
+      buffer[0] = (f >> (sizeof(UI) * 8 - 1)) ? '-' : '+';
       buffer[1] = 'i';
       buffer[2] = 'n';
       buffer[3] = 'f';
@@ -871,29 +908,289 @@ class Binary {
     }
 
     if (value == 0) {
-      return Print<Char>(buffer, end, '0', '.', '0');
+      return Print3<Char>(buffer, end, (Char)'0', (Char)'.', (Char)'0');
     }
     if (value < 0) {
       *buffer++ = '-';
       value = -value;
     }
-    int32_t length, k;
-    char* cursor = Print<Char>(buffer, end, value, &length, k);
-    return Standardize(buffer, length, k);
+    int32_t k;
+    Char* cursor = Print<Char>(buffer, end, value, k);
+    if (!cursor) return cursor;
+    return Standardize<Char>(buffer, end, cursor - buffer, k);
   }
 
   template <typename UI = uintptr_t>
-  inline UI NaNUnsigned() {
+  static inline UI NaNUnsigned() {
     UI nan = 0;
     return ~nan;
   }
 
   template <typename SI, typename UI>
-  inline SI NaNSigned() {
+  static inline SI NaNSigned() {
     UI nan = 1;
     return (SI)(nan << (sizeof(UI) * 8 - 1));
   }
 
+  static TBinary IEEE754Pow10(int32_t e, int32_t& k) {
+    // int32_t k = static_cast<int32_t>(ceil((-61 - e) *
+    // 0.30102999566398114))
+
+    // + 374; dk must be positive to perform ceiling function on positive
+    // values.
+    Float dk = (-61 - e) * 0.30102999566398114 + 347;
+    k = static_cast<int32_t>(dk);
+    if (k != dk) ++k;
+
+    uint32_t index = static_cast<uint32_t>((k >> 3) + 1);
+
+    k = -(-348 + static_cast<int32_t>(index << 3));
+    // decimal exponent no need lookup table.
+
+    ASSERT(index < 87);
+
+    // Save exponents pointer and offset to avoid creating base pointer again.
+    return TBinary(BinaryLUTF()[index], BinaryLUTE()[index]);
+  }
+
+ private:
+  UI f;
+  int32_t e;
+
+  static inline void Multiply(TBinary& result, TBinary& a, TBinary& b) {}
+
+  template <typename Char>
+  static Char* Print(Char* buffer, Char* end, Float value, int32_t& k) {
+    TBinary v(value);
+    TBinary lower_estimate, upper_estimate;
+    v.NormalizedBoundaries(lower_estimate, upper_estimate);
+
+    TBinary c_mk = IEEE754Pow10(upper_estimate.e, k);
+
+    TBinary W(v.NormalizeBoundary(), c_mk);
+    TBinary w_plus(upper_estimate, c_mk), w_minus(lower_estimate, c_mk);
+    w_minus.f++;
+    w_plus.f--;
+    return DigitGen<Char>(buffer, end, W, w_plus, w_plus.f - w_minus.f, k);
+  }
+
+  TBinary NormalizeBoundary() const {
+    // int msba = MSbAsserted(0);
+#if defined(_MSC_VER) && defined(_M_AMD64)
+    unsigned long index;  //< This is Microsoft's fault.
+    _BitScanReverse64(&index, f);
+    return TBinary(f << (kMSbIndex - index), e - (kMSbIndex - index));
+#else
+    TBinary res = *this;
+    UI kDpHiddenBit = ((UI)1) << kMantissaSize;  // 0x0010000000000000;
+    while (!(res.f & (kDpHiddenBit << 1))) {
+      res.f <<= 1;
+      --res.e;
+    }
+    res.f <<= (kDiySignificandSize - kCoefficientSize - 2);
+    res.e = res.e - (kDiySignificandSize - kCoefficientSize - 2);
+    return res;
+#endif
+  }
+
+  // static const uint64_t  kDpExponentMask = 0x7FF0000000000000,
+  //   kDpSignificandMask = 0x000FFFFFFFFFFFFF,
+
+  // Normalizes the boundaries.
+  void NormalizedBoundaries(TBinary& m_minus, TBinary& m_plus) const {
+    UI l_f,   //< Local copy of f.
+        l_e;  //< Local copy of e.
+    TBinary pl =
+        TBinary((l_f << 1) + 1, ((int32_t)l_e) - 1).NormalizeBoundary();
+    const uint64_t kHiddenBit = ((uint64_t)1)
+                                << kMantissaSize;  //< 0x0010000000000000
+    TBinary mi = (f == kHiddenBit) ? TBinary((l_f << 2) - 1, e - 2)
+                                   : TBinary((l_f << 1) - 1, e - 1);
+    mi.f <<= mi.e - pl.e;
+    mi.e = pl.e;
+    m_plus = pl;
+    m_minus = mi;
+  }
+
+  // Rounds the Grisu estimation closer to the inside of the squeeze.
+  template <typename Char>
+  static void Round(Char& lsd, UI delta, UI rest, UI ten_kappa, UI wp_w) {
+    while (rest < wp_w && (delta - rest) >= ten_kappa &&
+           (rest + ten_kappa < wp_w ||  /// closer
+            (wp_w - rest) > (rest + ten_kappa - wp_w))) {
+      --lsd;
+      rest += ten_kappa;
+    }
+  }
+
+  // Prints the integer portion of the floating-point number.
+  //@return Nil upon failure or a pointer to the nil-term Char upon success.
+  template <typename Char>
+  static Char* DigitGen(Char* cursor, Char* end, const TBinary& w,
+                        const TBinary& m_plus, uint64_t delta, int32_t& k) {
+    TBinary one(((uint64_t)1) << -m_plus.e, m_plus.e), wp_w = m_plus - w;
+    uint32_t d, pow_10, p_1 = static_cast<uint32_t>(m_plus.f >> -one.e);
+    uint64_t p_2 = m_plus.f & (one.f - 1);
+    int kappa;
+    if (p_1 < (pow_10 = 10)) {
+      kappa = 1;
+    } else if (p_1 < (pow_10 = 100)) {
+      kappa = 2;
+    } else {
+      if ((p_1 >> 10) == 0) {
+        kappa = 3;
+        pow_10 = 1000;
+      } else if (!(p_1 >> 13)) {
+        kappa = 4;
+        pow_10 = 10000;
+      } else if (!(p_1 >> 17)) {
+        kappa = 5;
+        pow_10 = 100000;
+      } else if (!(p_1 >> 20)) {
+        kappa = 6;
+        pow_10 = 1000000;
+      } else if (!(p_1 >> 24)) {
+        kappa = 7;
+        pow_10 = 10000000;
+      } else if (!(p_1 >> 27)) {
+        kappa = 8;
+        pow_10 = 100000000;
+      } else if (!(p_1 >> 30)) {
+        kappa = 9;
+        pow_10 = 1000000000;
+      } else {
+        kappa = 10;
+        pow_10 = 10000000000;
+      }
+      if (p_1 >= pow_10) {
+        ++kappa;
+        pow_10 *= 10;
+      }
+    }
+    while (kappa > 0) {
+      uint32_t d;
+      d = p_1 / pow_10;
+      p_1 -= d * pow_10;
+
+      if (cursor >= end) return nullptr;
+
+      if (d) cursor = PrintDecimal<Char>(cursor, d);
+
+      --kappa;
+      UI tmp = (static_cast<uint64_t>(p_1) << -one.e) + p_2;
+
+      if (tmp <= delta) {
+        k += kappa;
+        Round(delta, tmp, IEEE754Pow10(kappa) << -one.e, wp_w.f);
+        return;
+      }
+    }
+
+    for (;;) {  // kappa = 0
+      p_2 *= 10;
+      delta *= 10;
+      char d = static_cast<char>(p_2 >> -one.e);
+      if (cursor >= end) return nullptr;
+      if (d) *cursor++ = '0' + d;
+      p_2 &= one.f - 1;
+      --kappa;
+      if (p_2 < delta) {
+        k += kappa;
+        Round(delta, p_2, one.f, wp_w.f * IEEE754Pow10(-kappa));
+        return;
+      }
+    }
+
+    // Load integer pow_10 from the i-cache.
+    switch (kappa) {
+      case 1:
+        d = p_1;
+        p_1 = 0;
+        break;
+      case 2:
+        pow_10 = 10;
+        break;
+      case 3:
+        pow_10 = 100;
+        break;
+      case 4:
+        pow_10 = 1000;
+        break;
+      case 5:
+        pow_10 = 10000;
+        break;
+      case 6:
+        pow_10 = 100000;
+        break;
+      case 7:
+        pow_10 = 1000000;
+        break;
+      case 8:
+        pow_10 = 10000000;
+        break;
+      case 9:
+        pow_10 = 100000000;
+        break;
+      case 10:
+        pow_10 = 1000000000;
+        break;
+    }
+  }
+
+  template <typename Char = char>
+  static Char* Standardize(Char* buffer, Char* end, intptr_t length,
+                           int32_t k) {
+    const intptr_t kk = length + k;  // 10^(kk-1) <= v < 10^kk
+    Char* nil_term_char;
+    if (length <= kk && kk <= 21) {  // 1234e7 -> 12340000000
+      for (intptr_t i = length; i < kk; i++) buffer[i] = '0';
+      buffer[kk] = '.';
+      buffer[kk + 1] = '0';
+      nil_term_char = &buffer[kk + 2];
+      *nil_term_char = '\0';
+      return nil_term_char;
+    } else if (0 < kk && kk <= 21) {  // 1234e-2 -> 12.34
+      SocketShiftUp(&buffer[kk + 1], LastByte(&buffer[kk]), length - kk);
+      buffer[kk] = '.';
+      nil_term_char = &buffer[length + 1];
+      *nil_term_char = '\0';
+      return nil_term_char;
+    } else if (-6 < kk && kk <= 0) {  // 1234e-6 -> 0.001234
+      const intptr_t offset = 2 - kk;
+      SocketShiftUp(&buffer[offset], LastByte(&buffer[0]), length);
+      buffer[0] = '0';
+      buffer[1] = '.';
+      for (intptr_t i = 2; i < offset; i++) buffer[i] = '0';
+      nil_term_char = &buffer[length + offset];
+      *nil_term_char = 0;
+      return nil_term_char;
+    } else if (length == 1) {
+      // 1e30
+      buffer[1] = 'e';
+      return PrintSigned<intptr_t, Char>(buffer + 2, end, kk - 1);
+    }
+    // else 1234e30 -> 1.234e33
+    SocketShiftUp(&buffer[2], LastByte(&buffer[1]), length - 1);
+
+    *(++buffer)++ = '.';
+    *buffer++ = 'e';
+    return PrintSigned<intptr_t, Char>(buffer + length + 2, end, kk - 1);
+  }
+};
+
+using Binary32 = TBinary<float, uint32_t>;
+using Binary64 = TBinary<double, uint64_t>;
+// using Binary16 = TBinary<half, uint32_t>;
+// using Binary128 = TBinary<quad, uint128_t>; */
+
+}  // namespace _
+#undef PRINT_FLOAT_BINARY
+#include "test_footer.inl"
+#endif  //< #if SEAM >= _0_0_0__03
+
+#endif  //< #if INCLUDED_KABUKI_F2_TBINARY
+
+/*
   // Non-working algorithm DOES NOT converts a string-to-float.
   //@return nil if there is no number to scan or pointer to the next char after
   // the end of the scanned number upon success.
@@ -909,7 +1206,7 @@ class Binary {
       kCharCountMax = 9,  // < (1 + [p*log_10(2)], where p = 32
     };
 
-    uint32_t integer,  //< Integer portion in Binary.
+    uint32_t integer,  //< Integer portion in TBinary.
         sign,          //< Sign in Binary32 format.
         ui_value,      //< Unsigned value.
         pow_10_ui2;    //< Power of 10 for converting integers.
@@ -1063,276 +1360,4 @@ class Binary {
     // result = result_flt;
 
     return end;
-  }
-
- private:
-  UI f;
-  int32_t e;
-
-  Binary NormalizeBoundary() const {
-    int = MSbAsserted(0);
-#if defined(_MSC_VER) && defined(_M_AMD64)
-    unsigned long index;  //< This is Microsoft's fault.
-    _BitScanReverse64(&index, f);
-    return Binary(f << (63 - index), e - (63 - index));
-#else
-    Binary res = *this;
-    while (!(res.f & (kDpHiddenBit << 1))) {
-      res.f <<= 1;
-      --res.e;
-    }
-    res.f <<= (kDiySignificandSize - kCoefficientSize - 2);
-    res.e = res.e - (kDiySignificandSize - kCoefficientSize - 2);
-    return res;
-#endif
-  }
-
-  static const uint64_t  // kDpExponentMask = 0x7FF0000000000000,
-      kDpSignificandMask = 0x000FFFFFFFFFFFFF,
-      kDpHiddenBit = 0x0010000000000000;
-
-  // Normalizes the boundaries.
-  inline void NormalizedBoundaries(Binary& m_minus, Binary& m_plus) const {
-    UI l_f,   //< Local copy of f.
-        l_e;  //< Local copy of e.
-    Binary pl = Binary((l_f << 1) + 1, l_e - 1).NormalizeBoundary();
-    const uint64_t kHiddenBit = ((uint64_t)1)
-                                << kMantissaSize;  //< 0x0010000000000000
-    Binary mi = (f == kHiddenBit) ? Binary((l_f << 2) - 1, e - 2)
-                                  : Binary((l_f << 1) - 1, e - 1);
-    mi.f <<= mi.e - pl.e;
-    mi.e = pl.e;
-    *m_plus = pl;
-    *m_minus = mi;
-  }
-
-  // Rounds the Grisu estimation closer to the inside of the squeeze.
-  template <typename Char>
-  inline void Round(Char& lsd, UI delta, UI rest, UI ten_kappa, UI wp_w) {
-    while (rest < wp_w && (delta - rest) >= ten_kappa &&
-           (rest + ten_kappa < wp_w ||  /// closer
-            (wp_w - rest) > (rest + ten_kappa - wp_w))) {
-      --lsd;
-      rest += ten_kappa;
-    }
-  }
-
-  // Prints the integer portion of the floating-point number.
-  //@return Nil upon failure or a pointer to the nil-term Char upon success.
-  template <typename Char>
-  inline Char* PrintCharPair(Char* cursor, Char* end, const Binary& w,
-                             const Binary& m_plus, uint64_t delta, int32_t& k) {
-    Binary one(((uint64_t)1) << -m_plus.e, m_plus.e), wp_w = m_plus - w;
-    uint32_t d, pow_10, p_1 = static_cast<uint32_t>(m_plus.f >> -one.e);
-    uint64_t p_2 = m_plus.f & (one.f - 1);
-    int kappa;
-    if (p_1 < (pow_10 = 10)) {
-      kappa = 1;
-    } else if (p_1 < (pow_10 = 100)) {
-      kappa = 2;
-    } else {
-      if ((p_1 >> 10) == 0) {
-        kappa = 3;
-        pow_10 = 1000;
-      } else if (!(p_1 >> 13)) {
-        kappa = 4;
-        pow_10 = 10000;
-      } else if (!(p_1 >> 17)) {
-        kappa = 5;
-        pow_10 = 100000;
-      } else if (!(p_1 >> 20)) {
-        kappa = 6;
-        pow_10 = 1000000;
-      } else if (!(p_1 >> 24)) {
-        kappa = 7;
-        pow_10 = 10000000;
-      } else if (!(p_1 >> 27)) {
-        kappa = 8;
-        pow_10 = 100000000;
-      } else if (!(p_1 >> 30)) {
-        kappa = 9;
-        pow_10 = 1000000000;
-      } else {
-        kappa = 10;
-        pow_10 = 10000000000;
-      }
-      if (p_1 >= pow_10) {
-        ++kappa;
-        pow_10 *= 10;
-      }
-    }
-    while (kappa > 0) {
-      uint32_t d;
-      d = p_1 / pow_10;
-      p_1 -= d * pow_10;
-
-      if (cursor >= end) return nullptr;
-
-      if (d) cursor = PrintDecimal<Char>(cursor, d);
-
-      --kappa;
-      UI tmp = (static_cast<uint64_t>(p_1) << -one.e) + p_2;
-
-      if (tmp <= delta) {
-        *k += kappa;
-        Round(delta, tmp, IEEE754Pow10(kappa) << -one.e, wp_w.f);
-        return;
-      }
-    }
-
-    for (;;) {  // kappa = 0
-      p_2 *= 10;
-      delta *= 10;
-      char d = static_cast<char>(p_2 >> -one.e);
-      if (cursor >= end) return nullptr;
-      if (d) *cursor++ = '0' + d;
-      p_2 &= one.f - 1;
-      --kappa;
-      if (p_2 < delta) {
-        *k += kappa;
-        Round(delta, p_2, one.f, wp_w.f * IEEE754Pow10(-kappa));
-        return;
-      }
-    }
-
-    // Load integer pow_10 from the i-cache.
-    switch (kappa) {
-      case 1:
-        d = p_1;
-        p_1 = 0;
-        break;
-      case 2:
-        pow_10 = 10;
-        break;
-      case 3:
-        pow_10 = 100;
-        break;
-      case 4:
-        pow_10 = 1000;
-        break;
-      case 5:
-        pow_10 = 10000;
-        break;
-      case 6:
-        pow_10 = 100000;
-        break;
-      case 7:
-        pow_10 = 1000000;
-        break;
-      case 8:
-        pow_10 = 10000000;
-        break;
-      case 9:
-        pow_10 = 100000000;
-        break;
-      case 10:
-        pow_10 = 1000000000;
-        break;
-    }
-  }
-
-  inline Binary IEEE754Pow10(int32_t e, int32_t& k) {
-    // int32_t k = static_cast<int32_t>(ceil((-61 - e) *
-    // 0.30102999566398114))
-
-    // + 374; dk must be positive to perform ceiling function on positive
-    // values.
-    Float dk = (-61 - e) * 0.30102999566398114 + 347;
-    int32_t k = static_cast<int32_t>(dk);
-    if (k != dk) ++k;
-
-    uint32_t index = static_cast<uint32_t>((k >> 3) + 1);
-
-    k = -(-348 + static_cast<int32_t>(index << 3));
-    // decimal exponent no need lookup table.
-
-    ASSERT(index < 87);
-
-    // Save exponents pointer and offset to avoid creating base pointer again.
-    const int16_t* exponents = &IEEE754Pow10E()[index];
-    return Binary(IEEE754Pow10(exponents), *exponents);
-  }
-
-  template <typename Char>
-  inline Char* Print(Char* buffer, Char* end, Float value, int32_t& k) {
-    const Binary v(value);
-    Binary minus, plus;
-    v.NormalizedBoundaries(&minus, &plus);
-
-    const Binary c_mk = IEEE754Pow10(plus.e, k);
-
-    const Binary W = v.Normalize() * c_mk;
-    Binary w_plus = plus * c_mk, w_minus = minus * c_mk;
-    w_minus.f++;
-    w_plus.f--;
-    return PrintCharPair<Char>(buffer, end, W, w_plus, w_plus.f - w_minus.f, k);
-  }
-
-  template <typename Char = char>
-  inline Char* Standardize(Char* buffer, Char* end, int32_t length, int32_t k) {
-    const int32_t kk = length + k;  // 10^(kk-1) <= v < 10^kk
-    Char* nil_term_char;
-    if (length <= kk && kk <= 21) {  // 1234e7 -> 12340000000
-      for (int32_t i = length; i < kk; i++) buffer[i] = '0';
-      buffer[kk] = '.';
-      buffer[kk + 1] = '0';
-      nil_term_char = &buffer[kk + 2];
-      *nil_term_char = '\0';
-      return nil_term_char;
-    } else if (0 < kk && kk <= 21) {  // 1234e-2 -> 12.34
-      SocketMove(&buffer[kk + 1], &buffer[kk], length - kk);
-      buffer[kk] = '.';
-      nil_term_char = &buffer[length + 1];
-      *nil_term_char = '\0';
-      return nil_term_char;
-    } else if (-6 < kk && kk <= 0) {  // 1234e-6 -> 0.001234
-      const int32_t offset = 2 - kk;
-      SocketMove(&buffer[offset], &buffer[0], length);
-      buffer[0] = '0';
-      buffer[1] = '.';
-      for (int32_t i = 2; i < offset; i++) buffer[i] = '0';
-      nil_term_char = &buffer[length + offset];
-      *nil_term_char = 0;
-      return nil_term_char;
-    } else if (length == 1) {
-      // 1e30
-      buffer[1] = 'e';
-      return Print<Char>(buffer + 2, end, kk - 1);
-    }
-    // else 1234e30 -> 1.234e33
-    SocketMove(&buffer[2], &buffer[1], length - 1);
-    buffer[1] = '.';
-    buffer[length + 1] = 'e';
-    return Print<Char>(length + 2, end, kk - 1);
-  }
-};
-
-template <typename Float = double, typename UI = uint64_t, typename Char = char>
-Char* PrintFloat(Char* cursor, Char* end, Float value) {
-  // return Binary<Float, UI>.Print<Char>(cursor, end, value);
-  return nullptr;
-}
-
-template <typename Float = float, typename UI = uint32_t, typename Char = char>
-Char* PrintFloat(Char* cursor, intptr_t size, Float value) {
-  // return Binary<Float, UI>.Print<Char>(cursor, cursor + size - 1, value);
-  return nullptr;
-}
-
-template <typename Float = double, typename UI = uint64_t, typename Char = char>
-Char* ScanFloat(Char* cursor, Float value) {
-  // return Binary<Float, UI>.Scan<Char>(cursor, value);
-  return nullptr;
-}
-
-using Binary32 = Binary<float, uint32_t>;
-using Binary64 = Binary<double, uint64_t>;
-// using Binary16 = Binary<half, uint32_t>;
-// using Binary128 = Binary<quad, uint128_t>;
-
-}  // namespace _
-#undef PRINT_FLOAT_BINARY
-#include "test_footer.inl"
-#endif  //< #if SEAM >= _0_0_0__03
-
-#endif  //< #if INCLUDED_KABUKI_F2_TBINARY
+  }*/

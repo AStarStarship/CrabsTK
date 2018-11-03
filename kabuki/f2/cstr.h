@@ -33,19 +33,19 @@ specific language governing permissions and limitations under the License. */
 #endif
 
 namespace _ {
-#if F2_TEXT == UTF8
+#if USING_F2_UTF == UTF8
 using Utf = Utf8;
 using Center = Utf8Center;
 using Right = Utf8Right;
 using Line = Utf8Line;
 using LineString = Utf8LineString;
-#elif F2_TEXT == UTF16
+#elif USING_F2_UTF == UTF16
 using Utf = Utf16;
 using Center = Utf16Center;
 using Right = Utf16Right;
 using Line = Utf16Line;
 using LineString = Utf16LineString;
-#elif F2_TEXT == UTF32
+#elif USING_F2_UTF == UTF32
 using Utf = Utf32;
 using Center = Utf32Center;
 using Right = Utf32Right;

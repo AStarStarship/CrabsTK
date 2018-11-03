@@ -25,11 +25,15 @@ string.
 @param args     Command line argument string. */
 typedef const char* (*TestCase)(char* seam_log, char* seam_end,
                                 const char* args);
-
 namespace _ {
 
 /* Tests an array of TestCase(s).
 @return 0 upon success or an app exit code upon failure. */
+int SeamTreeTest(int arg_count, char** args, char* seam_log, int seam_log_size,
+                 TestCase* tests, int test_count);
+
+/* Tests an array of TestCase(s).
+@return Nil upon success or an error string upon failure. */
 const char* TestTree(char* seam_log, char* seam_end, const char* args,
                      TestCase* seams, int node_count);
 

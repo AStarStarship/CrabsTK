@@ -13,13 +13,17 @@ specific language governing permissions and limitations under the License. */
 
 #include <pch.h>
 #if SEAM >= _0_0_0__02
+#include <cstdio>
 #include "cascii.h"
 #include "csocket.h"
 #include "tbinary.h"
 #include "tstr.h"
-
+#if SEAM == _0_0_0__02
 #include "test_release.inl"
-#if F2_TEXT
+#else
+#include "test_release.inl"
+#endif
+#if USING_F2_UTF
 
 namespace _ {
 
@@ -27,9 +31,9 @@ void Console(uintptr_t* buffer) { Console<char>(buffer); }
 
 void COutAuto(uintptr_t* buffer) { COutAuto<char>(buffer); }
 
-}  //< namespace _
+}  // namespace _
 
-#endif  // #if F2_TEXT
+#endif  // #if USING_F2_UTF
 
 #if USING_UTF8
 #include "cstr1.h"
@@ -58,12 +62,12 @@ const char* TextLineEnd(const char* text, const char* text_end,
   return TextLineEnd<char>(text, text_end, column_count);
 }
 
-const char* TextNumberStop(const char* text, const char* text_end) {
-  return TextNumberStop<char>(text, text_end);
+const char* StringDecimalStop(const char* text, const char* text_end) {
+  return StringDecimalStop<char>(text);
 }
 
-const char* TextNumberStop(const char* text) {
-  return TextNumberStop<char>(text);
+const char* StringDecimalStop(const char* text) {
+  return StringDecimalStop<char>(text);
 }
 
 const char* TextSkipChar(const char* text, char skip_char) {
@@ -158,15 +162,6 @@ char* PrintRight(char* begin, char* end, double value, int column_count) {
   return PrintRight<char>(begin, end, Utf8Text(value).String(), column_count);
 }
 
-const char* Scan(const char* string, float& result) {
-  // return ScanFloat<char>(string, result);
-  return nullptr;
-}
-
-const char* Scan(const char* string, double& result) {
-  // return Scan<char>(string, result);
-  return nullptr;
-}
 #endif  //< #if SEAM >= _0_0_0__03
 
 char* PrintCenter(char* begin, char* end, const char* string,
@@ -500,14 +495,11 @@ Utf8Text::Utf8Text(uint64_t value) {
   PrintUnsigned<uint64_t, char>(string, string + kSize - 1, value);
 }
 
-#if SEAM == _0_0_0__03
-Utf8Text::Utf8Text(float value) {
-  PrintFloat<float, uint32_t, char>(string, string + kSize - 1, value);
-}
+#if SEAM >= _0_0_0__03
+Utf8Text::Utf8Text(float value) { Print(string, string + kSize - 1, value); }
 
-Utf8Text::Utf8Text(double value) {
-  PrintFloat<double, uint64_t, char>(string, string + kSize - 1, value);
-}
+Utf8Text::Utf8Text(double value) { Print(string, string + kSize - 1, value); }
+
 #endif  //< #if SEAM == _0_0_0__03
 
 const char* Utf8Text::String() { return string; }
@@ -584,7 +576,7 @@ void COutUtf8(uintptr_t* buffer) { return Console<char>(buffer); }
 
 void COutAutoUtf8(uintptr_t* buffer) { return COutAuto<char>(buffer); }
 
-}  //< namespace _
+}  // namespace _
 
 _::Utf8& operator<<(_::Utf8& utf, const char* string) {
   return utf.Set(_::Print(utf.begin, utf.end, string));
@@ -693,12 +685,13 @@ const char16_t* TextLineEnd(const char16_t* text, const char16_t* text_end,
   return TextLineEnd<char16_t>(text, text_end, column_count);
 }
 
-const char16_t* TextNumberStop(const char16_t* text, const char16_t* text_end) {
-  return TextNumberStop<char16_t>(text, text_end);
+const char16_t* StringDecimalStop(const char16_t* text,
+                                  const char16_t* text_end) {
+  return StringDecimalStop<const char16_t>(text, text_end);
 }
 
-const char16_t* TextNumberStop(const char16_t* text) {
-  return TextNumberStop<char16_t>(text);
+const char16_t* StringDecimalStop(const char16_t* text) {
+  return StringDecimalStop<const char16_t>(text);
 }
 
 const char16_t* TextSkipChar(const char16_t* text, char16_t skip_char) {
@@ -956,12 +949,12 @@ char16_t* PrintBinary(char16_t* begin, char16_t* end, int64_t value) {
 
 char16_t* PrintBinary(char16_t* begin, char16_t* end, float value) {
   uint32_t ui = *reinterpret_cast<uint32_t*>(&value);
-  return PrintBinary<char16_t>(begin, end, ui);
+  return Print(begin, end, ui);
 }
 
 char16_t* PrintBinary(char16_t* begin, char16_t* end, double value) {
   uint64_t ui = *reinterpret_cast<uint64_t*>(&value);
-  return PrintBinary<char16_t>(begin, end, ui);
+  return Print(begin, end, ui);
 }
 
 char16_t* PrintSocket(char16_t* begin, char16_t* end, const void* start,
@@ -974,7 +967,7 @@ char16_t* PrintSocket(char16_t* begin, char16_t* end, const void* start,
                       const void* stop) {
   return PrintSocket<char16_t>(begin, end, start, stop);
 }
-}  //< namespace _
+}  // namespace _
 }  //< namespace _
 
 const char16_t* Scan(const char16_t* string, int8_t& result) {
@@ -1320,12 +1313,13 @@ const char32_t* TextLineEnd(const char32_t* text, const char32_t* text_end,
   return TextLineEnd<char32_t>(text, text_end, column_count);
 }
 
-const char32_t* TextNumberStop(const char32_t* text, const char32_t* text_end) {
-  return TextNumberStop<char32_t>(text, text_end);
+const char32_t* StringDecimalStop(const char32_t* text,
+                                  const char32_t* text_end) {
+  return StringDecimalStop<const char32_t>(text, text_end);
 }
 
-const char32_t* TextNumberStop(const char32_t* text) {
-  return TextNumberStop<char32_t>(text);
+const char32_t* StringDecimalStop(const char32_t* text) {
+  return StringDecimalStop<const char32_t>(text);
 }
 
 const char32_t* TextSkipChar(const char32_t* text, char32_t skip_char) {
@@ -1848,7 +1842,7 @@ const char32_t* Utf32Right::GetString() {
 
 int Utf32Right::GetColumnCount() { return column_count; }
 
-}  //< namespace _
+}  // namespace _
 
 _::Utf32& operator<<(_::Utf32& utf, const char32_t* string) {
   return utf.Set(_::Print(utf.begin, utf.end, string));

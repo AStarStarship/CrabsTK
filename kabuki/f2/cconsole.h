@@ -49,9 +49,6 @@ API void Print(const char* string, char delimiter);
 /* Prints two strings. */
 API void Print(const char* a, const char* b);
 
-/* Prints three strings. */
-API void Print(const char* a, const char* b, const char* c);
-
 /* Writes the give char to the given buffer.
 @return Returns nil upon buffer overflow and a pointer to the nil-term char
 upon success.

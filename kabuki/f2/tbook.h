@@ -20,80 +20,73 @@ specific language governing permissions and limitations under the License. */
 #include "casciidata.h"
 #include "csocket.h"
 
-#if SEAM == _0_0_0__13
-#ifndef PRINTF
-#define PRINTF(format, ...) Printf(format, __VA_ARGS__)
-#define PRINT(c) Print(c)
-#define PRINT_HEADING \
-  Print('\n');        \
-  for (int i = 80; i > 0; --i) std::cout << '-'
+#if SEAM == _0_0_0__12
+#include "test_debug.inl"
 #endif
 #else
-#define PRINTF(x, ...)
-#define PRINT(c)
-#define PRINT_HEADING
+#include "test_release.inl"
 #endif
 
 namespace _ {
 
 /* A multimap created from contiguous memory.
-    @ingroup Book
-    A multimap is like a Python dictionary or C++ map, the difference being a
-   TMultimap can contain nested TMultimap (string). The key design difference
-   between both Python dictionaries and C++ maps are Sets do not contains
-   points, and instead works using offsets.
+@ingroup Book
+A multimap is like a Python dictionary or C++ map, the difference being a
+TMultimap can contain nested TMultimap (string). The key design difference
+between both Python dictionaries and C++ maps are Sets do not contains
+points, and instead works using offsets.
 
-    A multimap may or may not have a hash table. In order to turn on the hash
-   table, simply set the collissionsSize to non-zero in the TMultimap header.
+A multimap may or may not have a hash table. In order to turn on the hash
+table, simply set the collissionsSize to non-zero in the TMultimap header.
 
-    The memory layout is the same for all of the TMultimap types as depicted
-   below:
+The memory layout is the same for all of the TMultimap types as depicted
+below:
 
-    @code
-    +==========================+ -----------
-    |_______ Buffer            |   ^     ^
-    |_______ ...               |   |     |
-    |_______ Data N            |  Data   |
-    |_______ ...               |   |     |
-    |_______ Data 0            |   v     |
-    |==========================| -----   |
-    |        Key 1             |   ^     |
-    |        ...               |   |     |
-    |        Key N             |   |     |
-    |vvvvvvvvvvvvvvvvvvvvvvvvvv|   |     |
-    |        buffer            |   |     |
-    |==========================|   |     |
-    |_______ count_max         |   |     |
-    |_______ ...               |   |    Size
-    |_______ Key Offset N      |   |     |
-    |_______ ...               |   |     |
-    |        Key Offset 1      |   |     |
-    |==========================| Header  |
-    |_______ count_max         |   |     |
-    |_______ ...               |   |     |
-    |_______ Data Offset N     |   |     |
-    |_______ ...               |   |     |
-    |        Data Offset 1     |   |     |
-    |==========================|   |     |
-    |_______ count_max         |   |     |
-    |_______ ...               |   |     |
-    |_______ Type uint8_t N       |   |     |
-    |_______ ...               |   |     |
-    |        Type uint8_t 1       |   |     |   ^ Up in addresses
-    |==========================|   |     |   |
-    |  TMapKey<UI, SI> Struct  |   v     v   ^
-    +==========================+ ----------- ^ 0xN
-    @endcode
+@code
++==========================+ -----------
+|_______ Buffer            |   ^     ^
+|_______ ...               |   |     |
+|_______ Data N            |  Data   |
+|_______ ...               |   |     |
+|_______ Data 0            |   v     |
+|==========================| -----   |
+|        Key 1             |   ^     |
+|        ...               |   |     |
+|        Key N             |   |     |
+|vvvvvvvvvvvvvvvvvvvvvvvvvv|   |     |
+|        buffer            |   |     |
+|==========================|   |     |
+|_______ count_max         |   |     |
+|_______ ...               |   |    Size
+|_______ Key Offset N      |   |     |
+|_______ ...               |   |     |
+|        Key Offset 1      |   |     |
+|==========================| Header  |
+|_______ count_max         |   |     |
+|_______ ...               |   |     |
+|_______ Data Offset N     |   |     |
+|_______ ...               |   |     |
+|        Data Offset 1     |   |     |
+|==========================|   |     |
+|_______ count_max         |   |     |
+|_______ ...               |   |     |
+|_______ Type uint8_t N       |   |     |
+|_______ ...               |   |     |
+|        Type uint8_t 1       |   |     |   ^ Up in addresses
+|==========================|   |     |   |
+|  TMapKey<UI, SI> Struct  |   v     v   ^
++==========================+ ----------- ^ 0xN
+@endcode
 
-    # Memory Overhead
+# Memory Overhead
 
-    | #Bytes | I | SI | UI | Total | Overhead Per index |
-    |:------:|:-:|:--:|:--:|:-----:|:-------------------|
-    |    2   | 1 |  2 |  2 |   8   |  8 + 3 per index + buffer.|
-    |    4   | 2 |  4 |  4 |   16  | 16 + 5 per index + buffer.|
-    |    8   | 4 |  8 |  8 |   32  | 24 + 9 per index + buffer.|
+| #Bytes | I | SI | UI | Total | Overhead Per index |
+|:------:|:-:|:--:|:--:|:-----:|:-------------------|
+|    2   | 1 |  2 |  2 |   8   |  8 + 3 per index + buffer.|
+|    4   | 2 |  4 |  4 |   16  | 16 + 5 per index + buffer.|
+|    8   | 4 |  8 |  8 |   32  | 24 + 9 per index + buffer.|
 
-    * Sizes shown in bytes.
+* Sizes shown in bytes.
 */
 
 using TMultimap2 = TMap<uint16_t, int16_t, uint8_t>;
@@ -807,10 +800,8 @@ using Multimap2 = TMap<uint8_t, uint16_t, uint16_t>;
 using Multimap4 = TMap<uint16_t, uint16_t, uint32_t>;
 using Multimap8 = TMap<uint32_t, uint32_t, uint64_t>;
 
-}  //< namespace _
+}  // namespace _
 
-#undef PRINTF
-#undef PRINT
-#undef PRINT_HEADING
+#include "test_footer.inl"
 #endif  //< INCLUDED_KABUKI_F2_TBOOK
 #endif  //< #if SEAM >= _0_0_0__12

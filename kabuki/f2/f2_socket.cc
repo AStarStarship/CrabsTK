@@ -14,6 +14,7 @@ specific language governing permissions and limitations under the License. */
 #include <pch.h>
 #if SEAM >= _0_0_0__02
 
+#include "tbinary.h"
 #include "tsocket.h"
 
 #if SEAM == _0_0_0__02
@@ -23,6 +24,22 @@ specific language governing permissions and limitations under the License. */
 #endif
 
 namespace _ {
+
+char* AlignDown(char* pointer, uintptr_t mask) {
+  return AlignDown<char*>(pointer);
+}
+
+const char* AlignDown(const char* pointer, uintptr_t mask) {
+  return AlignDown<const char*>(pointer);
+}
+
+const uintptr_t* AlignDown(const uintptr_t* pointer, uintptr_t mask) {
+  return AlignDown<const uintptr_t*>(pointer);
+}
+
+uintptr_t* AlignDown(uintptr_t* pointer, uintptr_t mask) {
+  return AlignDown<uintptr_t*>(pointer);
+}
 
 uintptr_t* AlignUp(uintptr_t* buffer, uintptr_t mask) {
   return AlignUp<uintptr_t>(buffer, mask);
@@ -279,6 +296,25 @@ void DestructorNoOp(uintptr_t* buffer) {
 void DestructorDeleteBuffer(uintptr_t* buffer) {
   ASSERT(buffer);
   delete buffer;
+}
+
+intptr_t SocketShiftUp(void* begin, void* end, intptr_t count) {
+  if (!begin || begin <= end || count <= 0) return 0;
+  char *start = reinterpret_cast<char*>(begin),
+       *stop = reinterpret_cast<char*>(end);
+  if (count < 3 * sizeof(void*)) {
+    for (int i = 0; i < count; ++i) *(stop + count) = *stop;
+    return 0;
+  }
+  char* pivot = AlignDown(stop);
+  for (int i = 0; i < count; ++i) *(stop + count) = *stop--;
+  uintptr_t *stop_word = reinterpret_cast<uintptr_t*>(stop),
+            *start_word =
+                reinterpret_cast<uintptr_t*>(AlignUp<uintptr_t*>(begin));
+  while (stop_word >= start_word) *(stop_word + count) = *stop_word--;
+  pivot = reinterpret_cast<char*>(stop_word + 1);
+  while (pivot >= start) *(pivot + count) = *pivot--;
+  return count;
 }
 
 }  // namespace _

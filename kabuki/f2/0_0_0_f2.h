@@ -25,7 +25,7 @@ specific language governing permissions and limitations under the License. */
 #include "0_0_0__03_ftos_and_stof.h"
 #endif
 #if SEAM >= _0_0_0__04
-#include "0_0_0__04_ascii_clock.h"
+#include "0_0_0__04_clock.h"
 #endif
 #if SEAM >= _0_0_0__05
 #include "0_0_0__05_ascii_stack.h"
@@ -70,7 +70,7 @@ static const char* _0_0_0_F2(char* seam_log, char* seam_end, const char* args) {
 #endif
 #if SEAM >= _0_0_0__04
                   ,
-                  _0_0_0__04_ASCII_Clock
+                  _0_0_0__04_Clock
 #endif
 #if SEAM >= _0_0_0__05
                   ,

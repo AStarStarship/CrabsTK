@@ -653,12 +653,6 @@ class Map {
     return reinterpret_cast<TMap<UI, SI, I>*>(buffer);
   }
 };  //< class Map
-}  //< namespace _
+}  // namespace _
 #endif  //< INCLUDED_CRAPS_MAP
-#undef PRINTF
-#undef PRINT
-#undef PRINT_HEADING
-#undef PRINT_TYPE
-#undef WIPE
-#undef PRINT_LINE
 #endif  //< #if SEAM >= _0_0_0__10

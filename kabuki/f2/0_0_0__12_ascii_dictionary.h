@@ -1,5 +1,5 @@
 /* Kabuki Toolkit @version 0.x
-@file    /kabuki/0/01_test_f2/00/00/seam.htest_ascii_dictionary.h
+@file    /kabuki/f2/0_0_0__12_ascii_dictionary.h
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -159,6 +159,6 @@ static const char* _0_0_0__12_ASCII_Dictionary(char* seam_log, char* seam_end,
 #endif
   return nullptr;
 }
-}  //< namespace _
+}  // namespace _
 
 #include "test_footer.inl"

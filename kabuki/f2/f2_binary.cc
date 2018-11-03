@@ -15,8 +15,6 @@ specific language governing permissions and limitations under the License. */
 
 #include "tbinary.h"
 
-#include "ttest.h"
-
 #include <cmath>
 
 namespace _ {
@@ -182,7 +180,7 @@ static const uint32_t kIEEE754Pow10[] = {
 
 #endif  //<  #if SEAM >= _0_0_0__03
 
-const uint16_t* BinaryDecimalsLUT() { return kDigits00To99; }
+const uint16_t* BinaryLUTDecimals() { return kDigits00To99; }
 
 uint8_t Unsigned(int8_t value) { return (uint8_t)(value); }
 
@@ -287,7 +285,78 @@ int HexToByte(uint16_t h) {
 #include "test_release.inl"
 #endif
 
+#include <cstdio>
+
 namespace _ {
+const int16_t* BinaryLUTE() { return kCachedPowersE; }
+
+const uint64_t* BinaryLUTF() { return kCachedPowersF; }
+
+char* Print(char* cursor, char* end, float value) {
+  if (!cursor || cursor >= end) return nullptr;
+  intptr_t size = end - cursor;
+  PRINTF("\ncursor:%p end:%p size:%i\nExpecting:%f", cursor, end, (int)size,
+         value);
+  int count = sprintf_s(cursor, end - cursor, "%f", value);
+  if (count <= 0) return nullptr;
+  return cursor + count;
+  // return TBinary<float, uint32_t>::Print<char>(cursor, end, value);
+}
+
+char* Print(char* cursor, char* end, double value) {
+  if (!cursor || cursor >= end) return nullptr;
+  intptr_t size = end - cursor;
+  int count = sprintf_s(cursor, size, "%lf", value);
+  if (count <= 0) return nullptr;
+  return cursor + count;
+  // return TBinary<double, uint64_t>::Print<char>(cursor, end, value);
+}
+
+template <typename Char>
+const Char* StringFloatStop(const Char* cursor) {
+  const char* stop = StringDecimalStop<char>(cursor);
+  if (!stop) return stop;
+  char c = *stop++;
+  if (c == '.') {
+    stop = StringDecimalStop<char>(cursor);
+    c = *stop++;
+  }
+  if (c == 'e' || c != 'E') {
+    if (c == '-') c = *stop++;
+    return StringDecimalStop<char>(cursor);
+  }
+  return stop;
+}
+
+const char* Scan(const char* cursor, float& value) {
+  int count = sscanf_s(cursor, "%f", &value);
+  return StringFloatStop<char>(cursor);
+}
+
+const char* Scan(const char* cursor, double& value) {
+  int count = sscanf_s(cursor, "%lf", &value);
+  return StringFloatStop<char>(cursor);
+}
+
+#if USING_UTF16
+char16_t* Print(char16_t* cursor, char16_t* end, float value) {
+  return TBinary<float, uint32_t>.Print<char16_t>(cursor, end, value);
+}
+
+char16_t* Print(char16_t* cursor, char16_t* end, double value) {
+  return TBinary<double, uint64_t>.Print<char16_t>(cursor, end, value);
+}
+#endif
+
+#if USING_UTF32
+char32_t* Print(char32_t* cursor, char32_t* end, float value) {
+  return TBinary<float, uint32_t>.Print<char32_t>(cursor, end, value);
+}
+
+char32_t* Print(char32_t* cursor, char32_t* end, double value) {
+  return TBinary<double, uint64_t>.Print<char32_t>(cursor, end, value);
+}
+#endif
 
 int FloatDigitsMax() { return 15; }
 
@@ -403,7 +472,7 @@ const int16_t* IEEE754Pow10E() {
 
 const uint64_t* IEEE754Pow10F() { return kCachedPowersF; }
 
-void NumberRealLutGenerate(char* lut, size_t size) {
+void BinaryLUTAlignedGenerate(char* lut, size_t size) {
   ASSERT(size);
   intptr_t iee754_pow_10_count = IEEE754LutElementCount();
   if (size != ((100 + iee754_pow_10_count) * 2 + iee754_pow_10_count * 8))
@@ -501,24 +570,36 @@ uint64_t ComputePow10(int e, int alpha, int gamma) {
   return *reinterpret_cast<uint64_t*>(&pow_10);
 }
 
-template <typename Float, typename UI>
-Float TCeiling(Float f) {
-  UI f_floor = static_cast<UI>(f);
-  if (f - static_cast<Float>(f_floor) == 0) return f;
-  return static_cast<Float>(f_floor + 1);
+double Ceiling(double value) { return ceil(value); }
+
+float Ceiling(float value) { return ceil(value); }
+
+char* LastByte(char* c) { return c; }
+
+#if USING_UTF16
+char* LastByte(char16_t* c) { return reinterpret_cast<char*> + 1; }
+
+char16_t* Print(char16_t* cursor, char16_t* end, float value) {
+  return nullptr;
 }
 
-double Ceiling(double value) { return TCeiling<double, uint64_t>(value); }
+char16_t* Print(char16_t* cursor, char16_t* end, double value) {
+  return nullptr;
+}
+#endif
 
-float Ceiling(float value) { return TCeiling<float, uint32_t>(value); }
+#if USING_UTF32
+char* LastByte(char32_t* c) { return reinterpret_cast<char*> + 3; }
 
-char* Print(char* cursor, char* end, float value) {
-  return PrintFloat<float, uint32_t, char>(cursor, end, value);
+char32_t* Print(char32_t* cursor, char32_t* end, float value) {
+  return nullptr;
 }
 
-char* Print(char* cursor, char* end, double value) {
-  return PrintFloat<double, uint64_t, char>(cursor, end, value);
+char32_t* Print(char32_t* cursor, char32_t* end, double value) {
+  return nullptr;
 }
+#endif
+
 }  // namespace _
 #include "test_footer.inl"
 #endif  //< #if SEAM >= _0_0_0__03

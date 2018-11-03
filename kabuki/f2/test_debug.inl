@@ -3,7 +3,7 @@
   if (!_::TestBegin(seam_log, seam_end, args)) return __FUNCTION__
 #define TEST_END Print("\n\nDone testing ", __FUNCTION__)
 #define PRINT(item) _::Print(item)
-#define PRINT_DATE(date) _::PrintDate()
+#define PRINT_TIME(t) _::PrintTime(t)
 #define PRINTF(format, ...) _::Printf(format, __VA_ARGS__)
 #define PAUSE(message) _::Pause(message)
 #define PAUSEF(format, ...) _::Pausef(format, __VA_ARGS__)

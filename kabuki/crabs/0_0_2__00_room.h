@@ -20,11 +20,11 @@ specific language governing permissions and limitations under the License. */
 namespace _ {
 
 static const char* Seam_0_0_4_0__00(char* seam_log, char* seam_end,
-                                     const char* args) {
+                                    const char* args) {
 #if SEAM == _0_0_4_0__00
 #endif
   return nullptr;
 }
-}  //< namespace _
+}  // namespace _
 
-#include "footer.h"
+#include "test_footer.h"

@@ -26,15 +26,28 @@ enum {
   kWordBitCount = sizeof(void*) == 8 ? 3 : sizeof(void*) == 4 ? 2 : 0
 };
 
+/* Aligns the given pointer down to a word boundary. */
+API char* AlignDown(char* pointer, uintptr_t mask = sizeof(void*));
+
+/* Aligns the given pointer down to a word boundary. */
+API const char* AlignDown(const char* pointer, uintptr_t mask = sizeof(void*));
+
+/* Aligns the given pointer down to a word boundary. */
+API uintptr_t* AlignDown(uintptr_t* pointer, uintptr_t mask = sizeof(void*));
+
+/* Aligns the given pointer down to a word boundary. */
+API const uintptr_t* AlignDown(const uintptr_t* pointer,
+                               uintptr_t mask = sizeof(void*));
+
+/* Aligns the given pointer up to a word boundary. */
+API const char* AlignUp(const char* pointer, uintptr_t mask = sizeof(void*));
+
 /* Aligns the given buffer pointer up to a cache line boundary (64 bytes). */
 API inline uintptr_t* AlignUp(uintptr_t* buffer,
                               uintptr_t mask = kWordBitsMask);
 
 /* Aligns the given pointer up to a word boundary. */
 API char* AlignUp(char* pointer, uintptr_t mask = sizeof(void*));
-
-/* Aligns the given pointer up to a word boundary. */
-API const char* AlignUp(const char* pointer, uintptr_t mask = sizeof(void*));
 
 /* Aligns the given value up to an 8-byte boundary. */
 API inline uint8_t AlignUp(uint8_t value, uint8_t mask = kWordBitsMask);
@@ -165,7 +178,14 @@ API inline bool SocketCompare(const void* begin_a, void* end_a,
 API inline bool SocketCompare(const void* begin_a, intptr_t size_a,
                               const void* begin_b, intptr_t size_b);
 
-}  //< namespace _
+/* Shifts the memory up by the given count in bytes.
+@return 0 upon failure and count upon success.
+@param  begin The start byte.
+@param  end   The end byte.
+@param  count The byte count to shift up. */
+intptr_t SocketShiftUp(void* begin, void* end, intptr_t count);
+
+}  // namespace _
 
 #endif  //< INCLUDED_KABUKI_F2_KABUKI_SOCKET
 #endif  //< #if SEAM >= _0_0_0__02

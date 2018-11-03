@@ -33,16 +33,9 @@ const char* TestTree(char* seam_log, char* seam_end, const char* args) {
 template <TestCase... N>
 int SeamTreeTest(int arg_count, char** args, char* seam_log,
                  int seam_log_size) {
-  if (seam_log_size < 0) return APP_EXIT_FAILURE;
-  static TestCase nodes[sizeof...(N)] = {N...};
-  const char* result =
-      TestTree(seam_log, seam_log + seam_log_size - 1,
-               ArgsToString(arg_count, args), nodes, sizeof...(N));
-  if (result) {
-    Print("\nERROR: ", result);
-    return APP_EXIT_FAILURE;
-  }
-  return APP_EXIT_SUCCESS;
+  static TestCase tests[sizeof...(N)] = {N...};
+  return SeamTreeTest(arg_count, args, seam_log, seam_log_size, tests,
+                      sizeof...(N));
 }
 
 }  // namespace _

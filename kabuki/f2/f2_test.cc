@@ -17,29 +17,53 @@ specific language governing permissions and limitations under the License. */
 
 #include "cconsole.h"
 
+#include "test_debug.inl"
+
 namespace _ {
+
+int SeamTreeTest(int arg_count, char** args, char* seam_log, int seam_log_size,
+                 TestCase* tests, int test_count) {
+  if (seam_log_size < 0) return APP_EXIT_FAILURE;
+  const char* result =
+      TestTree(seam_log, seam_log + seam_log_size - 1,
+               ArgsToString(arg_count, args), tests, test_count);
+  if (result) {
+    Print("\nERROR: ", result);
+    return APP_EXIT_FAILURE;
+  }
+  return APP_EXIT_SUCCESS;
+}
 
 const char* TestTree(char* seam_log, char* seam_end, const char* args,
                      TestCase* tests, int count) {
+  ASSERT(seam_log || seam_end || args || tests);
   for (int i = 0; i < count; ++i) {
     TestCase test = tests[i];
-    if (test) {
-      const char* seam = test(seam_log, seam_end, nullptr);
-      if (seam) PrintHeading("Testing ", seam);
-      const char* error = test(seam_log, seam_end, args);
-      if (error) return error;
-      Print("\n\nDone testing ", seam);
-    } else {
-      Print("\n Test ");
+    if (!test) {
+      Print("\nERROR: Test ");
       Print(i);
       Print(" missing!");
+      return "";
     }
+    const char* seam = test(nullptr, nullptr, nullptr);
+    if (!seam) {
+      Print("\nERROR: SEAM ");
+      Print(i + 1);
+      Print(" missing!");
+      return "";
+    }
+    PrintHeading("Testing ", seam);
+    Printf("\n%p %p %p", seam_log, seam_end, args);
+    const char* error = test(seam_log, seam_end, args);
+    if (error) return error;
+    Print("\n\nDone testing ", seam);
   }
+  Print("\n\nUnit test finished successfully!");
   return nullptr;
 }
 
 bool TestBegin(char* seam_log, char* seam_end, const char* args) {
-  return ((intptr_t)seam_log) || ((intptr_t)seam_log) || ((intptr_t)seam_log);
+  return !(!seam_log || !seam_end || !args);
 }
 
 void TestEnd(const char* function_name) {
@@ -262,3 +286,5 @@ bool ErrorFreeze(const char* function, const char* file, int line) {
 }
 
 }  // namespace _
+
+#include "test_release.inl"

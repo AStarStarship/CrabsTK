@@ -64,12 +64,12 @@ API const char* TextLineEnd(const char* text, const char* text_end,
 /* Returns the pointer to the next char in the char that is not an ASCII
 number.
 @return A pointer to the next non-number in the text char. */
-API const char* TextNumberStop(const char* text, const char* text_end);
+API const char* StringDecimalStop(const char* text, const char* text_end);
 
 /* Returns the pointer to the next char in the char that is not an ASCII
 number.
 @return A pointer to the next non-number in the text char. */
-API const char* TextNumberStop(const char* text);
+API const char* StringDecimalStop(const char* text);
 
 /* Skips the leading zeros of a number if there are any. */
 API const char* TextSkipChar(const char* text, char skip_char);
@@ -146,20 +146,6 @@ upon success.
 API char* Print(char* begin, char* end, int64_t value);
 
 #if SEAM >= _0_0_0__03
-
-/* Converts the given string to a 32-bit floating-point number.
-@param  text  A nil-terminated string in ROM.
-@param  result The result of the conversion.
-@return Returns a pointer to the next char after the end
-of the read number or nil upon failure. */
-API const char* Scan(const char* text, float& result);
-
-/* Converts the given string to a 64-bit floating-point number.
-@param  text  A nil-terminated string in ROM.
-@param  result The result of the conversion.
-@return Returns a pointer to the next char after the end
-of the read number or nil upon failure. */
-API const char* Scan(const char* text, double& result);
 
 /* Writes the give char to the given buffer center.
 @return Returns nil upon buffer overflow and a pointer to the nil-term char
@@ -556,6 +542,20 @@ API const char* Scan(const char* text, int64_t& result);
 of the read number or nil upon failure. */
 API const char* Scan(const char* text, uint64_t& result);
 
+/* Converts the given string to a 32-bit floating-point number.
+@param  text  A nil-terminated string in ROM.
+@param  result The result of the conversion.
+@return Returns a pointer to the next char after the end
+of the read number or nil upon failure. */
+API const char* Scan(const char* text, float& result);
+
+/* Converts the given string to a 64-bit floating-point number.
+@param  text  A nil-terminated string in ROM.
+@param  result The result of the conversion.
+@return Returns a pointer to the next char after the end
+of the read number or nil upon failure. */
+API const char* Scan(const char* text, double& result);
+
 /* Prints the buffer to the console as a UTF-8 string. */
 void COutUtf8(uintptr_t* buffer);
 
@@ -797,7 +797,7 @@ struct API Utf8LineString {
 // private:
 //};
 
-}  //< namespace _
+}  // namespace _
 
 /* Writes a nil-terminated UTF-8 or ASCII string to the print.
 @param  utf The utf.

@@ -36,6 +36,9 @@ specific language governing permissions and limitations under the License. */
 #include "tbinary.h"
 #endif
 #if SEAM == _0_0_0__04
+#include "cconsole.h"
+#include "crng.h"
+#include "tclock.h"
 #endif
 #if SEAM == _0_0_0__05
 #endif

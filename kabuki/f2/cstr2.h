@@ -55,12 +55,12 @@ API const char16_t* TextLineEnd(const char16_t* text, int column_count);
 /* Returns the pointer to the next char16_t in the char16_t that is not an ASCII
 number.
 @return A pointer to the next non-number in the text char16_t. */
-API const char16_t* TextNumberStop(const char16_t* begin);
+API const char16_t* StringDecimalStop(const char16_t* begin);
 
 /* Returns the pointer to the next char16_t in the char16_t that is not an ASCII
 number.
 @return A pointer to the next non-number in the text char16_t. */
-API const char16_t* TextNumberStop(const char16_t* begin);
+API const char16_t* StringDecimalStop(const char16_t* begin);
 
 /* Skips the leading zeros of a number if there are any. */
 API const char16_t* TextSkipChar(const char16_t* text, char16_t skip_char);

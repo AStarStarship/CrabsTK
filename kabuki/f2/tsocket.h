@@ -24,7 +24,7 @@ specific language governing permissions and limitations under the License. */
 
 namespace _ {
 
-/* Aligns the given pointer up to a sizeof (T) byte boundary.
+/* Aligns the given pointer up to a sizeof (T) boundary.
 @return The aligned value.
 @param  ptr The address to align.
 @desc Algorithm works by inverting the bits, mask of the LSbs and adding 1.
@@ -113,18 +113,18 @@ inline I AlignDownOffset(I value, I mask = kWordBitsMask) {
 @param  value The value to align.
 @return The aligned value. */
 template <typename T = uintptr_t>
-inline T AlignDown(void* value, uintptr_t mask = kWordBitsMask) {
-  uintptr_t ptr = reinterpret_cast<uintptr_t>(value);
-  return reinterpret_cast<T>(ptr - AlignDownOffset<>(ptr, mask));
+inline T AlignDown(void* ptr, uintptr_t mask = kWordBitsMask) {
+  uintptr_t value = reinterpret_cast<uintptr_t>(ptr);
+  return reinterpret_cast<T>(value - AlignDownOffset<>(value, mask));
 }
 
 /* Aligns the given pointer to the sizeof (WordBoundary) down..
 @param  value The value to align.
 @return The aligned value. */
 template <typename T = uintptr_t>
-inline T AlignDown(const void* value, uintptr_t mask = kWordBitsMask) {
-  uintptr_t ptr = reinterpret_cast<uintptr_t>(value);
-  return reinterpret_cast<const T>(ptr - AlignDownOffset<T>(value, mask));
+inline T AlignDown(const void* ptr, uintptr_t mask = kWordBitsMask) {
+  uintptr_t value = reinterpret_cast<uintptr_t>(ptr);
+  return reinterpret_cast<const T>(value - AlignDownOffset<>(value, mask));
 }
 
 /* Aligns the given pointer to the sizeof (WordBoundary) down..
@@ -222,7 +222,7 @@ uintptr_t* New(uintptr_t* buffer, intptr_t size) {
   return new uintptr_t[size >> kWordBitCount];
 }
 
-}  //< namespace _
+}  // namespace _
 
 #endif  //< INCLUDED_KABUKI_F2_KABUKI_TSOCKET
 #endif  //< #if SEAM >= _0_0_0__02

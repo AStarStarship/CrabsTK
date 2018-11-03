@@ -18,8 +18,6 @@ specific language governing permissions and limitations under the License. */
 #ifndef INCLUDED_KABUKI_F2_CLOCK
 #define INCLUDED_KABUKI_F2_CLOCK
 
-#include "config.h"
-
 namespace _ {
 
 /* A time in seconds and optional microseconds format that is compatible with
@@ -148,10 +146,10 @@ API int ClockCompare(Tms a, Tms b);
 API int ClockCompare(Tms a, Tms b);
 
 /* Compares the two the time and prints the results. */
-API int ClockCompare(Clock& clock, Clock& other);
+API int ClockCompare(const Clock& clock, const Clock& other);
 
 /* Compares the given Tms to the time and prints the results. */
-API int ClockCompare(Clock& clock, int year, int month, int day, int hour,
+API int ClockCompare(const Clock& clock, int year, int month, int day, int hour,
                      int minute, int second);
 
 /* Zeros out the struct values.
@@ -173,7 +171,7 @@ byte written.
 @param begin The beginning of the write buffer.
 @param time  The time to print.
 @param end   The end of the write buffer. */
-API char* Print(char* begin, char* end, Clock& clock);
+API char* Print(char* begin, char* end, const Clock& clock);
 
 /* Writes the given time to the text buffer.
 @return Null upon failure or a pointer to the byte after the last
@@ -199,6 +197,18 @@ byte written.
 @param end   The end of the write buffer. */
 API char* PrintTime(char* begin, char* end, Tme time);
 
+/* Prints the given timestamp to the stdout. */
+API void PrintTime(const Clock& clock);
+
+/* Prints the given timestamp to the stdout. */
+API void PrintTime(Tss t);
+
+/* Prints the given timestamp to the stdout. */
+API void PrintTime(Tms t);
+
+/* Prints the given timestamp to the stdout. */
+API void PrintTime(Tme t);
+
 /* Reads a time or time delta from a a char starting with an '@' sign.
 @brief
 @code
@@ -218,8 +228,8 @@ API char* PrintTime(char* begin, char* end, Tme time);
 @param hour   The location to write the number of hours to.
 @param minute The location to write the number of minutes to.
 @param Second The location to write the number of seconds to. */
-API const char* TextScanTime(const char* string, int& hour, int& minute,
-                             int& second);
+API const char* StringScanTime(const char* string, int& hour, int& minute,
+                               int& second);
 
 /* Converts a keyboard input to char and deletes the char.
 @return Nil upon buffer failure or char directly after the end of the
@@ -231,10 +241,10 @@ API const char* Scan(const char* string, Clock& clock);
 API const char* Scan(const char* string, Tss& result);
 
 /* Converts a keyboard input to a Tms. */
-API const char* TextScanTime(const char* string, Tms& result);
+API const char* StringScanTime(const char* string, Tms& result);
 
 /* Converts a keyboard input to a Tme. */
-API const char* TextScanTime(const char* string, Tme& result);
+API const char* StringScanTime(const char* string, Tme& result);
 
 #endif  //< #if USING_UTF8
 
@@ -291,23 +301,23 @@ API char16_t* Print(char16_t* begin, char16_t* end, Tme time);
 @param hour   The location to write the number of hours to.
 @param minute The location to write the number of minutes to.
 @param Second The location to write the number of seconds to. */
-API const char16_t* TextScanTime(const char16_t* string, int& hour, int& minute,
-                                 int& second);
+API const char16_t* StringScanTime(const char16_t* string, int& hour,
+                                   int& minute, int& second);
 
 /* Converts a keyboard input to char16_t and deletes the char16_t.
 @return Nil upon buffer failure or char16_t directly after the end of the
 timestamp upon success.
 */
-API const char16_t* Scan(const char16_t* string, Clock& time);
+API const char16_t* Scan(const char16_t* string, Clock& result);
 
 /* Converts a keyboard input to a Tss. */
 API const char16_t* Scan(const char16_t* string, Tss& result);
 
 /* Converts a keyboard input to a Tms. */
-API const char16_t* TextScanTime(const char16_t* string, Tms& result);
+API const char16_t* StringScanTime(const char16_t* string, Tms& result);
 
 /* Converts a keyboard input to a Tme. */
-API const char16_t* TextScanTime(const char16_t* string, Tme& result);
+API const char16_t* StringScanTime(const char16_t* string, Tme& result);
 
 #endif  //< #if USING_UTF16
 #if USING_UTF32
@@ -363,8 +373,8 @@ API char32_t* PrintTime(char32_t* begin, char32_t* end, Tme time);
 @16:20:00
 @endcode
 */
-API const char32_t* TextScanTime(const char32_t* input, int& hour, int& minute,
-                                 int& second);
+API const char32_t* StringScanTime(const char32_t* input, int& hour,
+                                   int& minute, int& second);
 
 /* Converts a keyboard input to char and deletes the char.
  */
@@ -374,13 +384,13 @@ API const char32_t* Scan(const char32_t* input, Clock& time);
 API const char32_t* Scan(const char32_t* input, Tss& result);
 
 /* Converts a keyboard input to a Tms. */
-API const char32_t* TextScanTime(const char32_t* input, Tms& result);
+API const char32_t* StringScanTime(const char32_t* input, Tms& result);
 
 /* Converts a keyboard input to a Tms. */
-API const char32_t* TextScanTime(const char32_t* input, Tme& result);
+API const char32_t* StringScanTime(const char32_t* input, Tme& result);
 
 #endif  //< #if USING_UTF32
-}  //< namespace _
+}  // namespace _
 
 #undef PRINT
 #undef PRINTF

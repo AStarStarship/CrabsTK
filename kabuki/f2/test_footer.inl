@@ -6,7 +6,7 @@
 #undef PAUSEF
 #undef PRINT_HEADING
 #undef PRINT_LINE
-#undef PRINT_DATE
+#undef PRINT_TIME
 #undef PRINT_TYPE
 #undef PRINT_SOCKET
 #undef SOCKET_SAVE

@@ -1,5 +1,5 @@
 /* Kabuki Toolkit @version 0.x
-@file    /kabuki/0/01_test_f2/10/seam_ascii_list.h
+@file    /kabuki/f2/0_0_0__09_ascii_list.h
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -70,6 +70,6 @@ static const char* _0_0_0__09_ASCII_List(char* seam_log, char* seam_end,
 #endif
   return nullptr;
 }
-}  //< namespace _
+}  // namespace _
 
 #include "test_footer.inl"

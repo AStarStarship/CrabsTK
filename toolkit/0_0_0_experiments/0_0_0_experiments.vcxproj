@@ -19,12 +19,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="f2_rng.cc" />
     <ClCompile Include="main.cc" />
     <ClCompile Include="pch.cc" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="crng.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
