@@ -18,7 +18,7 @@ specific language governing permissions and limitations under the License. */
 #ifndef INCLUDED_KABUKI_F2_TOBJ
 #define INCLUDED_KABUKI_F2_TOBJ
 
-#include "cobj.h"
+#include "cobject.h"
 
 #include "tsocket.h"
 

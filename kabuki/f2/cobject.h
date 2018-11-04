@@ -16,8 +16,8 @@ specific language governing permissions and limitations under the License. */
 
 #if SEAM >= _0_0_0__02
 
-#ifndef INCLUDED_KABUKI_F2_OBJ
-#define INCLUDED_KABUKI_F2_OBJ
+#ifndef INCLUDED_KABUKI_F2_COBJ
+#define INCLUDED_KABUKI_F2_COBJ
 
 #include "csocket.h"
 #include "ctest.h"
@@ -28,7 +28,7 @@ namespace _ {
 
 /* C header for an ASCII OBJ with programmable destructor. */
 struct CObj {
-  uintptr_t* begin;       //< Pointer to the contiguous ASCII OBJ.
+  uintptr_t* begin;        //< Pointer to the contiguous ASCII OBJ.
   HeapManager destructor;  //< Pointer to the destructor.
 };
 
@@ -75,6 +75,6 @@ API uintptr_t* ObjClone(uintptr_t* ascii_object, int32_t size);
 /* Clones the given ASCII OBJ. */
 API uintptr_t* ObjClone(uintptr_t* ascii_object, int64_t size);
 
-}  //< namespace _
+}  // namespace _
 #endif  //< #if SEAM >= _0_0_0__08
-#endif  //< INCLUDED_KABUKI_F2_OBJ
+#endif  //< INCLUDED_KABUKI_F2_COBJ

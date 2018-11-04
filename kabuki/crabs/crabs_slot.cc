@@ -16,7 +16,7 @@ specific language governing permissions and limitations under the License. */
 #include <kabuki/f2/csocket.h>
 #include <kabuki/f2/casciidata.h>
 #include <kabuki/f2/hex.h>
-#include <kabuki/f2/tstr.h>
+#include <kabuki/f2/tstring.h>
 
 #include "slot.h"
 // End dependencies.

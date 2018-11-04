@@ -16,7 +16,7 @@ specific language governing permissions and limitations under the License. */
 
 #include "crng.h"
 #include "tsocket.h"
-#include "tstr.h"
+#include "tstring.h"
 #include "ttest.h"
 
 #include "cconsole.h"

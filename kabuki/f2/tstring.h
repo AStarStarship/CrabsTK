@@ -1,6 +1,6 @@
 /* Kabuki Toolkit @version 0.x
 @link    https://github.com/kabuki-starship/kabuki-toolkit.git
-@file    /kabuki/f2/tstr.h
+@file    /kabuki/f2/tstring.h
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -17,12 +17,12 @@ specific language governing permissions and limitations under the License. */
 #ifndef INCLUDED_KABUKI_F2_UTFN
 #define INCLUDED_KABUKI_F2_UTFN
 
-#include "cstr.h"
+#include "cutf.h"
 
 #include "cascii.h"
 #include "ctest.h"
 #include "tbinary.h"
-#include "tobj.h"
+#include "tobject.h"
 #include "tsocket.h"
 
 #if SEAM == _0_0_0__02

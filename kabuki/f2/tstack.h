@@ -14,14 +14,12 @@ specific language governing permissions and limitations under the License. */
 #pragma once
 #include <pch.h>
 #if SEAM >= _0_0_0__05
-#ifndef INCLUDED_KABUKI_F2_STK
-#define INCLUDED_KABUKI_F2_STK
+#ifndef INCLUDED_KABUKI_F2_TSTK
+#define INCLUDED_KABUKI_F2_TSTK 1
 
-#include "config.h"
-
-#include "cobj.h"
+#include "cobject.h"
 #include "csocket.h"
-#include "cstr1.h"
+#include "cutf8.h"
 
 namespace _ {
 
@@ -64,70 +62,38 @@ constexpr UI UnsignedMax() {
 
 /* An array of 8, 16, 32, or 64 bit plain-old-data (POD) types.
 
-    An array may use two different memory layouts, one for a 1-d stack of a
-    given types, and another for a multi-dimensional array that uses the 1-d
-    array in order to store the dimensions. The only different between them is
-    that the size_array variable gets set to 0.
-    
+An array may use two different memory layouts, one for a 1-d stack of a
+given types, and another for a multi-dimensional array that uses the 1-d
+array in order to store the dimensions. The only different between them is
+that the size_array variable gets set to 0.
 
+Stack Memory Layout
 
+# Stack Memory Layout
 
+@code
+    +----------------+
+    |  Packed Stack  |  <-- Only if header_size = 0
+    |----------------|
+    |     Buffer     |
+    |----------------|
+    | Stack Elements |
+ ^  |----------------|
+ |  |  CArray struct |
+0xN +----------------+
+@endcode
 
+# Multi-dimensional Array Memory Layout
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    Stack Memory Layout
-
-    # Stack Memory Layout
-
-    @code
-        +----------------+
-        |  Packed Stack  |  <-- Only if header_size = 0
-        |----------------|
-        |     Buffer     |
-        |----------------|
-        | Stack Elements |
-     ^  |----------------|
-     |  |  CArray struct |
-    0xN +----------------+
-    @endcode
-
-    # Multi-dimensional Array Memory Layout
-
-    @code
-        +-----------------+
-        |  C-Style Array  |  <-- Only if header_size > 0
-        |-----------------|
-        | Dimension Stack |
-     ^  |-----------------|
-     |  |  CArray struct  |
-    0xN +-----------------+
-    @endcode
+@code
+    +-----------------+
+    |  C-Style Array  |  <-- Only if header_size > 0
+    |-----------------|
+    | Dimension Stack |
+ ^  |-----------------|
+ |  |  CArray struct  |
+0xN +-----------------+
+@endcode
 */
 template <typename T = intptr_t, typename UI = uint, typename SI = int>
 struct CArray {
@@ -196,9 +162,9 @@ inline UI StackCountMax(SI count_max) {
 }
 
 /* Initializes an stack from a preallocated buffer who's size is a multiple of
-    8 bytes.
-    @param buffer An stack of bytes large enough to fit the stack.
-    @return A dynamically allocated buffer. */
+8 bytes.
+@param buffer An stack of bytes large enough to fit the stack.
+@return A dynamically allocated buffer. */
 template <typename T = intptr_t, typename UI = uint, typename SI = int>
 uintptr_t* StackInit(uintptr_t* buffer, UI size) {
   ASSERT(buffer);
@@ -213,9 +179,9 @@ uintptr_t* StackInit(uintptr_t* buffer, UI size) {
 }
 
 /* Initializes an stack from a preallocated buffer who's size is a multiple of
-    8 bytes.
-    @param buffer An stack of bytes large enough to fit the stack.
-    @return A dynamically allocated buffer. */
+8 bytes.
+@param buffer An stack of bytes large enough to fit the stack.
+@return A dynamically allocated buffer. */
 template <typename T = intptr_t, typename UI = uint, typename SI = int>
 uintptr_t* StackInit(uintptr_t* buffer, UI size, SI count_max) {
   ASSERT(buffer);
@@ -233,7 +199,7 @@ uintptr_t* StackClone(CArray<T, UI, SI>* stack) {
   ASSERT(stack);
   UI size = stack->size_stack >> kWordBitCount;
   uintptr_t other_buffer = new uintptr_t[size];
-  uintptr* source = reinterpret_cast<uintptr_t*>(stack)* destination =
+  uintptr_t* source = reinterpret_cast<uintptr_t*>(stack)* destination =
       other_buffer;
   UI data_amount =
       (stack->count * sizeof(T) + sizeof(CArray<T, UI, SI>)) >> kWordBitCount;
@@ -279,12 +245,12 @@ T* StackElementsEnd(CArray<T, UI, SI>* stack) {
 }
 
 /* Inserts the item into the stack at the given index.
-    @warning Function does not check for bounds and pushing to the top
-             if the Stack (@see SI StackInsert<UI, SI> (T*, SI, T, SI)).
-    @param items Pointer to element 0 of the array.
-    @param item  The item to insert.
-    @param index The index to insert at.
-    @return -1 if a is nil and -2 if the stack is full. */
+@warning Function does not check for bounds and pushing to the top
+          if the Stack (@see SI StackInsert<UI, SI> (T*, SI, T, SI)).
+@param items Pointer to element 0 of the array.
+@param item  The item to insert.
+@param index The index to insert at.
+@return -1 if a is nil and -2 if the stack is full. */
 template <typename T = intptr_t, typename SI = int>
 inline SI ArrayInsert(T* items, SI count, T item, SI index) {
   T *target = items + index, *end = items + count;
@@ -295,10 +261,10 @@ inline SI ArrayInsert(T* items, SI count, T item, SI index) {
 }
 
 /* Inserts the item into the stack at the given index.
-    @param items Pointer to element 0 of the array.
-    @param item  The item to insert.
-    @param index The index to insert at.
-    @return -1 if a is nil and -2 if the stack is full. */
+@param items Pointer to element 0 of the array.
+@param item  The item to insert.
+@param index The index to insert at.
+@return -1 if a is nil and -2 if the stack is full. */
 template <typename T = intptr_t, typename SI = int>
 inline SI ArrayAdd(T* items, SI count, T item, SI index) {
   ASSERT(items);
@@ -316,10 +282,10 @@ inline SI ArrayAdd(T* items, SI count, T item, SI index) {
 }
 
 /* Inserts the item into the stack at the given index.
-    @param a    			 The stack.
-    @param item  The item to insert.
-    @param index The index to insert at.
-    @return -1 if a is nil and -2 if the stack is full.
+@param a    			 The stack.
+@param item  The item to insert.
+@param index The index to insert at.
+@return -1 if a is nil and -2 if the stack is full.
 template<typename T = intptr_t, typename UI = uint, typename SI = int>
 T ArrayAdd (CArray<T, UI, SI>* stack, T item, T index) {
     ASSERT (stack);
@@ -346,9 +312,9 @@ inline SI ArrayRemove(T* elements, SI size, SI index) {
 }
 
 /* Removes the given index from the stack.
-    @param  a     The stack.
-    @param  index The index the item to remove.
-    @return True if the index is out of bounds. */
+@param  a     The stack.
+@param  index The index the item to remove.
+@return True if the index is out of bounds. */
 template <typename T = intptr_t, typename UI = uint, typename SI = int>
 SI StackRemove(CArray<T, UI, SI>* stack, SI index) {
   ASSERT(stack);
@@ -360,9 +326,9 @@ SI StackRemove(CArray<T, UI, SI>* stack, SI index) {
 }
 
 /* Adds the given item to the end of the stack.
-    @param  a    The stack.
-    @param  item The item to push onto the stack.
-    @return The index of the newly stacked item. */
+@param  a    The stack.
+@param  item The item to push onto the stack.
+@return The index of the newly stacked item. */
 template <typename T = intptr_t, typename UI = uint, typename SI = int>
 SI StackPush(CArray<T, UI, SI>* stack, T item) {
   ASSERT(stack);
@@ -375,9 +341,9 @@ SI StackPush(CArray<T, UI, SI>* stack, T item) {
 }
 
 /* Pops the top item off of the stack.
-    @note We do not delete the item at the
-    @param  a The stack.
-    @return The item popped off the stack. */
+@note We do not delete the item at the
+@param  a The stack.
+@return The item popped off the stack. */
 template <typename T = intptr_t, typename UI = uint, typename SI = int>
 T StackPop(CArray<T, UI, SI>* stack) {
   ASSERT(stack);
@@ -390,9 +356,9 @@ T StackPop(CArray<T, UI, SI>* stack) {
 }
 
 /* Pops the top item off of the stack.
-    @note We do not delete the item at the
-    @param  a The stack.
-    @return The item popped off the stack. */
+@note We do not delete the item at the
+@param  a The stack.
+@return The item popped off the stack. */
 template <typename T = intptr_t, typename UI = uint, typename SI = int>
 T StackPeek(CArray<T, UI, SI>* stack) {
   ASSERT(stack);
@@ -404,9 +370,9 @@ T StackPeek(CArray<T, UI, SI>* stack) {
 }
 
 /* Gets the element at the given index.
-    @param  stack    The stack.
-    @param  index The index of the element to get.
-    @return -1 if a is nil and -2 if the index is out of bounds. */
+@param  stack    The stack.
+@param  index The index of the element to get.
+@return -1 if a is nil and -2 if the index is out of bounds. */
 template <typename T = intptr_t, typename UI = uint, typename SI = int>
 T StackGet(CArray<T, UI, SI>* stack, SI index) {
   ASSERT(stack);
@@ -416,7 +382,7 @@ T StackGet(CArray<T, UI, SI>* stack, SI index) {
 }
 
 /* Returns true if the given stack contains the given address.
-    @return false upon failure. */
+@return false upon failure. */
 template <typename T = intptr_t, typename UI = uint, typename SI = int>
 bool StackContains(CArray<T, UI, SI>* stack, void* address) {
   ASSERT(stack);
@@ -433,9 +399,9 @@ inline UI StackSizeWords(SI count) {
 }
 
 /* The upper bounds defines exactly how many elements can fit into a space
-    in memory.
-    @warning Anything above this threshold may cause a critical error; AND
-             sizeof (T) must be 1, 2, 4, or 8.
+in memory.
+@warning Anything above this threshold may cause a critical error; AND
+sizeof (T) must be 1, 2, 4, or 8.
 */
 template <typename T = intptr_t, typename UI = uint, typename SI = int>
 inline SI StackCountUpperBounds() {
@@ -448,10 +414,9 @@ inline SI StackCountUpperBounds() {
 }
 
 /* Doubles the size of the array until the max count is reached.
-    @return Returns null if the count_max is greater than the amount of memory
-            that can fit in type UI, the unaltered buffer pointer if the Stack
-            has grown to the count_max upper bounds, or a new dynamically
-            allocated buffer upon failure.. */
+@return Returns null if the count_max is greater than the amount of memory that
+can fit in type UI, the unaltered buffer pointer if the Stack has grown to the
+count_max upper bounds, or a new dynamically allocated buffer upon failure. */
 template <typename T = intptr_t, typename UI = uint, typename SI = int>
 uintptr_t* StackGrow(uintptr_t* buffer) {
   ASSERT(buffer);
@@ -503,29 +468,29 @@ Utf8& PrintStack(Utf8& print, CArray<T, UI, SI>* tarray) {
 
 /* A stack of data.
 
-    This is a wrapper class for the
+This is a wrapper class for the
 
-    Stack Memory Layout
+Stack Memory Layout
 
-    @code
-    +----------------+
-    |  Packed Stack  |  <-- Only if header_size = 0
-    |----------------|
-    | 64-bit Aligned |
-    |     Buffer     |
-    |----------------|
-    | Stack Elements |
-    |----------------|  +
-    |  Stack struct  |  |
-    +----------------+ 0x0
-    @endcode
+@code
++----------------+
+|  Packed Stack  |  <-- Only if header_size = 0
+|----------------|
+| 64-bit Aligned |
+|     Buffer     |
+|----------------|
+| Stack Elements |
+|----------------|  +
+|  Stack struct  |  |
++----------------+ 0x0
+@endcode
 */
 template <typename T = intptr_t, typename UI = uint, typename SI = int>
 class Stack {
  public:
   /* Initializes an stack of n elements of the given type.
-      @param count_max The max number of elements that can fit in memory in
-                       this Stack.
+  @param count_max The max number of elements that can fit in memory in
+  this Stack.
   */
   Stack(SI count_max = 0) {
     // Align the count_max to a 64-bit word boundary
@@ -538,6 +503,7 @@ class Stack {
     StackInit(buffer, size, count_max);
   }
 
+  /* Copy constructor. */
   Stack(const Stack& other)
       : size_array(0),
         size_stack(other.size_stack),
@@ -554,7 +520,7 @@ class Stack {
   }
 
   /* Gets the max number of elements in an stack with the specific index
-      width. */
+  width. */
   inline SI GetElementsMax() { return StackCountMax<T, UI, SI>(); }
 
   /* Gets the size of the entire Stack, including header, in bytes. */
@@ -567,19 +533,19 @@ class Stack {
   inline T* Elements() { return StackBegin<T, UI, SI>(Obj()); }
 
   /* Inserts the item into the stack at the given index.
-      @param item  The item to insert.
-      @param index The index to insert at.
-      @return -1 if a is nil and -2 if the stack is full. */
+  @param item  The item to insert.
+  @param index The index to insert at.
+  @return -1 if a is nil and -2 if the stack is full. */
   T Insert(T item, T index) { return Array<T, UI, SI>(Obj(), item, index); }
 
   /* Removes the given index from the stack.
-      @param  index The index the item to remove.
-      @return True if the index is out of bounds. */
+  @param  index The index the item to remove.
+  @return True if the index is out of bounds. */
   bool Remove(SI index) { return StackRemove<T, UI, SI>(Obj(), index); }
 
   /* Adds the given item to the end of the stack.
-      @param  item The item to push onto the stack.
-      @return The index of the newly stacked item. */
+  @param  item The item to push onto the stack.
+  @return The index of the newly stacked item. */
   SI Push(T item) {
     SI result = StackPush<T, UI, SI>(Obj(), item);
     // std::count << "\n  Pushing " << item;
@@ -595,9 +561,9 @@ class Stack {
   }
 
   /* Pops the top item off of the stack.
-      @note We do not delete the item at the
-      @param  a The stack.
-      @return The item popped off the stack. */
+  @note We do not delete the item at the
+  @param  a The stack.
+  @return The item popped off the stack. */
   inline T Pop() {
     T value = StackPop<T, UI, SI>(Obj());
     // print << "\n  Popping " << value;
@@ -605,18 +571,18 @@ class Stack {
   }
 
   /* Pops the top item off of the stack.
-      @note We do not delete the item at the
-      @param  a The stack.
-      @return The item popped off the stack. */
+  @note We do not delete the item at the
+  @param  a The stack.
+  @return The item popped off the stack. */
   inline T Peek() { return StackPeek<T, UI, SI>(Obj()); }
 
   /* Gets the element at the given index.
-      @param  index The index of the element to get.
-      @return -1 if a is nil and -2 if the index is out of bounds. */
+  @param  index The index of the element to get.
+  @return -1 if a is nil and -2 if the index is out of bounds. */
   inline T Element(SI index) { return StackGet<T, UI, SI>(Obj(), index); }
 
   /* Returns true if the given stack contains the given address.
-      @return false upon failure. */
+  @return false upon failure. */
   inline bool Contains(void* address) {
     return StackContains<T, UI, SI>(Obj(), address);
   }
@@ -658,7 +624,7 @@ class Stack {
   }
 };
 
-}  //< namespace _
+}  // namespace _
 
-#endif  //< INCLUDED_KABUKI_F2_STK
+#endif  //< INCLUDED_KABUKI_F2_TSTK
 #endif  //< #if SEAM >= _0_0_0__05

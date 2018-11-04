@@ -23,13 +23,13 @@ specific language governing permissions and limitations under the License. */
 #endif
 
 #if USING_UTF8
-#include "cstr1.h"
+#include "cutf8.h"
 #endif
 #if USING_UTF16
-#include "cstr2.h"
+#include "cutf16.h"
 #endif
 #if USING_UTF32
-#include "cstr4.h"
+#include "cutf32.h"
 #endif
 
 namespace _ {
@@ -52,7 +52,7 @@ using Right = Utf32Right;
 using Line = Utf32Line;
 using LineString = Utf32LineString;
 #endif
-}  //< namespace _
+}  // namespace _
 
 #endif  //< #if INCLUDED_KABUKI_F2_UTF
 #endif  //< #if SEAM >= _0_0_0__02

@@ -19,6 +19,8 @@ specific language governing permissions and limitations under the License. */
 #include "test_release.inl"
 #endif
 
+#include "tstack.h"
+
 namespace _ {
 
 static const char* _0_0_0__05_ASCII_Stack(char* seam_log, char* seam_end,
@@ -30,13 +32,13 @@ static const char* _0_0_0__05_ASCII_Stack(char* seam_log, char* seam_end,
 
   Stack<> stack(8);
 
-  for (i = 0; i <= 10; ++i) stack.Push(i);
+  for (int i = 0; i <= 10; ++i) stack.Push(i);
 
   PRINT(stack);
 
   PRINTF("\nPopping items off the Stack...\n");
 
-  for (i = 10; i > 0; i--) Compare(i, stack.Pop());
+  for (int i = 10; i > 0; i--) AVOW(i, stack.Pop());
 
   PRINT(stack);
 
@@ -46,4 +48,4 @@ static const char* _0_0_0__05_ASCII_Stack(char* seam_log, char* seam_end,
 }
 }  // namespace _
 
-#include "seam_footer.inl"
+#include "test_footer.inl"

@@ -20,7 +20,7 @@ specific language governing permissions and limitations under the License. */
 
 #include "tset.h"
 #include "tsocket.h"
-#include "tstk.h"
+#include "tstack.h"
 
 #if SEAM == _0_0_0__09
 #include "test_debug.inl"
@@ -477,7 +477,7 @@ class List {
   uintptr_t* begin;  //< Dynamically allocated word-aligned buffer.
 };
 
-}  //< namespace _
+}  // namespace _
 
 /* Overloaded operator<< prints the list. */
 template <typename UI = uint32_t, typename SI = int16_t>

@@ -15,9 +15,9 @@ specific language governing permissions and limitations under the License. */
 
 #if SEAM >= _0_0_0__03
 
-#include "cobj.h"
+#include "cobject.h"
 #include "csocket.h"
-#include "tobj.h"
+#include "tobject.h"
 
 #if SEAM == _0_0_0__03
 #include "test_debug.inl"
@@ -86,6 +86,6 @@ uintptr_t* ObjNew(int16_t size, size_t header_size) {
   return buffer;
 }
 
-}  //< namespace _
+}  // namespace _
 #include "test_footer.inl"
 #endif  //< #if SEAM >= _0_0_0__05

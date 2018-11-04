@@ -18,8 +18,8 @@ specific language governing permissions and limitations under the License. */
 #define INCLUDED_CRABS_DOOR
 #include "expr.h"
 #include "slot.h"
-#include "tstk.h"
-#include "tstr.h"
+#include "tstack.h"
+#include "tstring.h"
 
 namespace _ {
 

@@ -20,7 +20,7 @@ specific language governing permissions and limitations under the License. */
 #define INCLUDED_KABUKI_F2_ASCIIDATA
 
 #include "csocket.h"
-#include "tstr.h"
+#include "tstring.h"
 
 namespace _ {
 /* A type-value tuple. */

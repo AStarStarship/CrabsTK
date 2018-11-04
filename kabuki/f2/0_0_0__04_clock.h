@@ -25,7 +25,7 @@ namespace _ {
 
 static const char* _0_0_0__04_Clock(char* seam_log, char* seam_end,
                                     const char* args) {
-#if SEAM == _0_0_0__04
+#if SEAM >= _0_0_0__04
   TEST_BEGIN;
 
   PRINT_HEADING("\n\n    Testing StringScanTime...");

@@ -14,22 +14,10 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="tobj.h">
-      <Filter>kabuki\f2</Filter>
-    </ClInclude>
     <ClInclude Include="tset.h">
       <Filter>kabuki\f2</Filter>
     </ClInclude>
     <ClInclude Include="tsocket.h">
-      <Filter>kabuki\f2</Filter>
-    </ClInclude>
-    <ClInclude Include="tstk.h">
-      <Filter>kabuki\f2</Filter>
-    </ClInclude>
-    <ClInclude Include="tstr.h">
-      <Filter>kabuki\f2</Filter>
-    </ClInclude>
-    <ClInclude Include="ttbl.h">
       <Filter>kabuki\f2</Filter>
     </ClInclude>
     <ClInclude Include="ttest.h">
@@ -56,16 +44,7 @@
     <ClInclude Include="tclock.h">
       <Filter>kabuki\f2</Filter>
     </ClInclude>
-    <ClInclude Include="tdic.h">
-      <Filter>kabuki\f2</Filter>
-    </ClInclude>
     <ClInclude Include="thash.h">
-      <Filter>kabuki\f2</Filter>
-    </ClInclude>
-    <ClInclude Include="tlom.h">
-      <Filter>kabuki\f2</Filter>
-    </ClInclude>
-    <ClInclude Include="tlst.h">
       <Filter>kabuki\f2</Filter>
     </ClInclude>
     <ClInclude Include="tmap.h">
@@ -92,25 +71,10 @@
     <ClInclude Include="chash.h">
       <Filter>kabuki\f2</Filter>
     </ClInclude>
-    <ClInclude Include="cobj.h">
-      <Filter>kabuki\f2</Filter>
-    </ClInclude>
     <ClInclude Include="crng.h">
       <Filter>kabuki\f2</Filter>
     </ClInclude>
     <ClInclude Include="csocket.h">
-      <Filter>kabuki\f2</Filter>
-    </ClInclude>
-    <ClInclude Include="cstr.h">
-      <Filter>kabuki\f2</Filter>
-    </ClInclude>
-    <ClInclude Include="cstr1.h">
-      <Filter>kabuki\f2</Filter>
-    </ClInclude>
-    <ClInclude Include="cstr2.h">
-      <Filter>kabuki\f2</Filter>
-    </ClInclude>
-    <ClInclude Include="cstr4.h">
       <Filter>kabuki\f2</Filter>
     </ClInclude>
     <ClInclude Include="tarray.h">
@@ -168,6 +132,42 @@
       <Filter>kabuki\f2</Filter>
     </ClInclude>
     <ClInclude Include="tasciidata.h">
+      <Filter>kabuki\f2</Filter>
+    </ClInclude>
+    <ClInclude Include="tlist.h">
+      <Filter>kabuki\f2</Filter>
+    </ClInclude>
+    <ClInclude Include="tobject.h">
+      <Filter>kabuki\f2</Filter>
+    </ClInclude>
+    <ClInclude Include="tstack.h">
+      <Filter>kabuki\f2</Filter>
+    </ClInclude>
+    <ClInclude Include="tstring.h">
+      <Filter>kabuki\f2</Filter>
+    </ClInclude>
+    <ClInclude Include="ttable.h">
+      <Filter>kabuki\f2</Filter>
+    </ClInclude>
+    <ClInclude Include="cobject.h">
+      <Filter>kabuki\f2</Filter>
+    </ClInclude>
+    <ClInclude Include="cutf.h">
+      <Filter>kabuki\f2</Filter>
+    </ClInclude>
+    <ClInclude Include="cutf8.h">
+      <Filter>kabuki\f2</Filter>
+    </ClInclude>
+    <ClInclude Include="cutf16.h">
+      <Filter>kabuki\f2</Filter>
+    </ClInclude>
+    <ClInclude Include="cutf32.h">
+      <Filter>kabuki\f2</Filter>
+    </ClInclude>
+    <ClInclude Include="tloom.h">
+      <Filter>kabuki\f2</Filter>
+    </ClInclude>
+    <ClInclude Include="tdictionary.h">
       <Filter>kabuki\f2</Filter>
     </ClInclude>
   </ItemGroup>

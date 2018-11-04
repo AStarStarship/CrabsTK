@@ -18,7 +18,7 @@ specific language governing permissions and limitations under the License. */
 #ifndef INCLUDED_KABUKI_F2_ARRAY
 #define INCLUDED_KABUKI_F2_ARRAY
 
-#include "tstk.h"
+#include "tstack.h"
 
 namespace _ {
 

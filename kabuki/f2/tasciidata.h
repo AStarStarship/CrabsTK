@@ -18,7 +18,7 @@ specific language governing permissions and limitations under the License. */
 #define INCLUDED_KABUKI_F2_TYPES
 
 #include "csocket.h"
-#include "tstr.h"
+#include "tstring.h"
 
 #if SEAM == _0_0_0__12
 #include "test_debug.inl"

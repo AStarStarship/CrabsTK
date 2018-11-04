@@ -18,8 +18,10 @@ specific language governing permissions and limitations under the License. */
 #ifndef INCLUDED_KABUKI_F2_TCLOCK
 #define INCLUDED_KABUKI_F2_TCLOCK
 
+#include "cclock.h"
+
 #include "ctest.h"
-#include "tstr.h"
+#include "tstring.h"
 
 #if SEAM == _0_0_0__04
 #include "test_debug.inl"

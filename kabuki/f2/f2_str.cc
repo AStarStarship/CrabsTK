@@ -17,7 +17,7 @@ specific language governing permissions and limitations under the License. */
 #include "cascii.h"
 #include "csocket.h"
 #include "tbinary.h"
-#include "tstr.h"
+#include "tstring.h"
 #if SEAM == _0_0_0__02
 #include "test_release.inl"
 #else
@@ -36,7 +36,7 @@ void COutAuto(uintptr_t* buffer) { COutAuto<char>(buffer); }
 #endif  // #if USING_F2_UTF
 
 #if USING_UTF8
-#include "cstr1.h"
+#include "cutf8.h"
 namespace _ {
 
 const char* StringEmpty() { return StringEmpty<char>(); }
