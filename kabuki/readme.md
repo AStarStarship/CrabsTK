@@ -1,11 +1,11 @@
 # SEAM_00 - SDK Layer
 
 ## Child Seams
-* 00_00 - Terminal Layer
-* 00_01 - Web Layer
-* 00_02 - Audio Layer
-* 00_03 - Graphical Layer
-* 00_04 - Multimedia Layer
+* 0_0 - Terminal Layer
+* 0_1 - Web Layer
+* 0_2 - Audio Layer
+* 0_3 - Graphical Layer
+* 0_4 - Multimedia Layer
 
 ## Author
 
