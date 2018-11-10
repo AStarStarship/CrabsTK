@@ -50,7 +50,7 @@ ASCII Data Types provide a suitable replacement for the C++ std library suitable
   - *Frequently asked questions.*
 * [Quickstart Guide](https://github.com/kabuki-starship/kabuki-toolkit.git/blob/master/docs/quickstart-guide.md)
   - *Check here for the Kabuki Toolkit Wiki and GitHub repository!*
-* [Script Specification RFC](https://github.com/kabuki-starship/script/wiki/SCRIPT-Specification-RFC)
+* [Script Specification RFC](https://github.com/kabuki-starship/script2/blob/master/docs/script_specification_rfc.md)
   - *Release for Comment for Serial Chinese Room, Interprocess, and Telemetry (SCRIPT) Specification.*
 * [Kabuki Starship Website](https://kabuki-starship.github.io/)
   - *We are currently in need of some help fixing the CSS on the website. It only works right at < 1024 pixel width so the problem is in the @media section. Please make pull request to issue #1 in [https://github.com/kabuki-starship/kabuki-starship.github.io/issues](https://github.com/kabuki-starship/kabuki-starship.github.io/issues).*
