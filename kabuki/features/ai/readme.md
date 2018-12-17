@@ -2,26 +2,27 @@
 
 Module contains Artificial Intelligence and Machine Learning building blocks.
 
-## Development
+## OSI Model of Machine Learning
 
-### Locality of Polymorphism
+Below is the standard OSI Model of Machine Learning borrowed from the internet.
 
-Polymorphism entails adding (almost always) a 32-bit vtable pointer, which can 
-either be problematic or something you may have in there without polymorphism. 
-These vtable pointers may interfere with Locality of Reference, thus I have 
-named it Locality of Polymorphism, or they may increase locality of reference 
-by tightly packing up all of your function pointers into ROM for you.
-
-#### Banned Uses
-
-* Tasks like calculating vectorized data such as summing perception inputs.
-* When polymorphic overhead occupies more than about 1% of RAM or ROM and 
-  other methods are available.
-
-#### Welcomed Uses
-
-* Embedded Systems.
-* When vtable overhead is negligible.
+```C++
++----------+
+|   Task   |
++----------+
+|  Model   |
++----------+
+|  Layer   |
++----------+
+|  Graph   |
++----------+
+|    Op    |
++----------+
+|  Kernel  |
++----------+
+| Hardware |
++----------+
+```
 
 ## Author
 

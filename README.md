@@ -20,7 +20,7 @@ Kabuki Toolkit (KT) is a cross-platform Firmware-to-Software Development Kit (F2
 * Rapid compile time using C Application Binary Interface (ABI) with separated C++ templates for cross-language bindings.
 * Code automatically formatted to Google C++ Style Guide upon save and formatted to not fight clang-format.
 * Deep Internet-of-Things integration using the SCRIPT Software Defined Networking Protocol.
-* Modeled after AI philosophy and ASCII mimicry of the Chinese Room Thought Experiment and C0 Control Codes.
+* Modeled after AI philosophy  ASCII mimicry of the Chinese Room Thought Experiment, Kabuki Theater Theory of Consciousness, and C0 Control Codes.
 
 ## ASCII Data Types
 
@@ -40,7 +40,7 @@ ASCII Data Types provide a suitable replacement for the C++ std library suitable
   * Book - A multidictionary (i.e. unordered map) without hash table.
   * Dictionary - A dictionary of ASCII Data Types with hash table.
   * B-Sequence - Describes the order and maximum sizes of a Byte-Sequence of ASCII Data Types.
-  * Expression - Asynchronous Chinese Room Script Expressions capable of concurrently executing scripts in multiple language in real-time.
+  * Expression - Script2 Expressions capable of concurrently executing scripts in multiple language in real-time.
 
 [![GitHub version](https://badge.fury.io/gh/kabuki-starship%2Fkabuki-toolkit.svg)](https://badge.fury.io/gh/kabuki-starship%2Fkabuki-toolkit)
 
