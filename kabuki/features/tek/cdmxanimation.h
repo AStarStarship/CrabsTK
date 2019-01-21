@@ -1,35 +1,32 @@
-/** kabuki::tek
-    @file    ~/source/kabuki/tek/include/dmx_animation.h
-    @author  Cale McCollough <calemccollough.github.io>
-    @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
-             All right reserved (R). Licensed under the Apache License, Version 
-             2.0 (the "License"); you may not use this file except in 
-             compliance with the License. You may obtain a copy of the License 
-             [here](http://www.apache.org/licenses/LICENSE-2.0). Unless 
-             required by applicable law or agreed to in writing, software
-             distributed under the License is distributed on an "AS IS" BASIS,
-             WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or 
-             implied. See the License for the specific language governing 
-             permissions and limitations under the License.
-*/
+/* Kabuki Toolkit @version 0.x
+@link    https://github.com/kabuki-starship/kabuki-toolkit.git
+@file    /kabuki/features/tek/cdmxanimation.h
+@author  Cale McCollough <cale.mccollough@gmail.com>
+@license Copyright (C) 2014-2019 Cale McCollough <calemccollough.github.io>;
+All right reserved (R). Licensed under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance with the License.
+You may obtain a copy of the License at www.apache.org/licenses/LICENSE-2.0.
+Unless required by applicable law or agreed to in writing, software distributed
+under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
+CONDITIONS OF ANY KIND, either express or implied. See the License for the
+specific language governing permissions and limitations under the License. */
 
-#ifndef KABUKI_TEK_DMX_ANIMATION_H
-#define KABUKI_TEK_DMX_ANIMATION_H
+#include <pch.h>
+#ifndef INCLUDED_KABUKI_FEATURE_TEK_DMX_ANIMATION
+#define INCLUDED_KABUKI_FEATURE_TEK_DMX_ANIMATION 1
 
-#include "config.h"
+namespace _ {
 
-namespace kabuki { namespace tek {
+/*< @fn    UpdateHandler  (UI4, UI4, UI1);
+@brief C function Update handler for DMXAnimation.
+@code
+UI4 ExampleAnimation1  (num_channels, num_chases, num_variants);
+@endcode */
+typedef void (*UpdateHandler)  (UI4 Chase, UI4 Frame, UI1 Scene);
 
-/*< @fn    UpdateHandler  (uint, uint, byte);
-    @brief C function Update handler for DMXAnimation.
-    @code
-    uint ExampleAnimation1  (num_channels, num_chases, num_variants);
-    @endcode */
-typedef void (*UpdateHandler)  (uint Chase, uint Frame, byte Scene);
+//inline BOL IsInvalidFrame  (UI4 Index);
 
-//inline bool IsInvalidFrame  (uint Index);
-
-/** A simple DMX animation with variant.
+/* A simple DMX animation with variant.
 
 */
 class DmxAnimation {
@@ -39,47 +36,46 @@ class DmxAnimation {
         FPS         = 30    //< The target frames per second.
     };
     
-    /** Simple default constructor. */
-    DmxAnimation  (uint num_channels, uint num_chases, uint num_variants);
+    /* Simple default constructor. */
+    DmxAnimation  (UI4 num_channels, UI4 num_chases, UI4 num_variants);
 
-    /** Resets the animation to the first frame */
+    /* Resets the animation to the first frame */
     void ResetAnimation ();
     
-    /** Sets the currentChase to the given Index. */
-    void SetChaseNumber  (uint Index);
+    /* Sets the currentChase to the given Index. */
+    void SetChaseNumber  (UI4 Index);
     
-    /** Function sends out DMX data for the given channel. */
-    void SetChannelData  (uint16_t Channel, byte value);
+    /* Function sends out DMX data for the given channel. */
+    void SetChannelData  (UI2 Channel, UI1 value);
     
-    /** Function sets an RGB color starting at the given channel. */
-    void SetRGBColor  (uint16_t Channel, color_t value);
+    /* Function sets an RGB color starting at the given channel. */
+    void SetRGBColor  (UI2 Channel, color_t value);
     
-    /** Randomizes the currentVariant */
+    /* Randomizes the currentVariant */
     void RandomizeVariant ();
 
     void SendScene ();
-    void SetChase  (byte chaseNumber);
+    void SetChase  (UI1 chaseNumber);
     void RandomizeSceneVariant ();
-    void SetColor  (uint16_t channel, byte red, byte green, byte blue);
-    void SetColor  (uint16_t channel, color_t color);
+    void SetColor  (UI2 channel, UI1 red, UI1 green, UI1 blue);
+    void SetColor  (UI2 channel, color_t color);
     void SetAllColors  (color_t color);
-    color_t IncreaseBrightness  (color_t color, byte brightness_change);
-    color_t DecreaseBrightness  (color_t color, byte brightness_change);
+    color_t IncreaseBrightness  (color_t color, UI1 brightness_change);
+    color_t DecreaseBrightness  (color_t color, UI1 brightness_change);
     
     protected:
 
-    byte  param1_,              //< Animation parameter 1/Red.
+    UI1  param1_,              //< Animation parameter 1/Red.
           param2_,              //< Animation parameter 2/Green.
           param3_,              //< Animation parameter 3/Blue.
           param4_;              //< Animation parameter 4/White.
-    uint  current_chase_,       //< Current chase number.
+    UI4  current_chase_,       //< Current chase number.
           current_chase_length_,//< Length of the current chase.
           current_variant_,     //< Current variant.
           num_channels_,        //< The number of DMX channels.
           num_chases_,          //< The number of DMX chases.
           num_variants_;        //< The number of variations of the animation.
-    byte* data_;                //< Pointer to the DMX data for the current scene.
+    UI1* data_;                //< Pointer to the DMX data for the current scene.
 };
-}       //< namespace tek
-}       //< namespace kabuki
-#endif  //< KABUKI_TEK_DMX_ANIMATION_H
+}       //< namespace _
+#endif  //< INCLUDED_KABUKI_FEATURE_TEK_DMX_ANIMATION

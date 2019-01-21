@@ -1,66 +1,57 @@
-/** kabuki::tek
-    @file    ~/source/kabuki/tek/include/pot.h
-    @author  Cale McCollough <calemccollough.github.io>
-    @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
-             All right reserved (R). Licensed under the Apache License, Version 
-             2.0 (the "License"); you may not use this file except in 
-             compliance with the License. You may obtain a copy of the License 
-             [here](http://www.apache.org/licenses/LICENSE-2.0). Unless 
-             required by applicable law or agreed to in writing, software
-             distributed under the License is distributed on an "AS IS" BASIS,
-             WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or 
-             implied. See the License for the specific language governing 
-             permissions and limitations under the License.
-*/
- 
-#ifndef KABUKI_TEK_POT_H
-#define KABUKI_TEK_POT_H
+/* Kabuki Toolkit @version 0.x
+@link    https://github.com/kabuki-starship/kabuki-toolkit.git
+@file    /kabuki/features/tek/cpot.h
+@author  Cale McCollough <cale.mccollough@gmail.com>
+@license Copyright (C) 2014-2019 Cale McCollough <calemccollough.github.io>;
+All right reserved (R). Licensed under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance with the License.
+You may obtain a copy of the License at www.apache.org/licenses/LICENSE-2.0.
+Unless required by applicable law or agreed to in writing, software distributed
+under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
+CONDITIONS OF ANY KIND, either express or implied. See the License for the
+specific language governing permissions and limitations under the License. */
 
-#include "config.h"
+#ifndef INCLUDED_KABUKI_FEATURE_TEK_POT
+#define INCLUDED_KABUKI_FEATURE_TEK_POT 1
 
-namespace kabuki { namespace tek {
+namespace _ {
 
-/** A potentiometer.
-    
-    @code
-    Pot<int16_t> pot
-    @endcode
+/* A potentiometer.
+  
+@code
+Pot<SI2> pot
+@endcode
 */
 class KABUKI Pot {
-    public:
+ public:
+  /* Constructs a pot from the given ADC pin and assigned channel number. */
+  Pot(ch_t channel, PinName adc_pin);
 
-	/** Constructs a pot from the given ADC pin and assigned channel number. */
-    Pot (ch_t channel, PinName adc_pin);
+  /* Polls the pot. */
+  inline void Poll(UI2 new_value, _::Expr* expr, UI2 value, UI2 min_value,
+                   UI2 max_channel);
 
-    /** Polls the pot. */
-    inline void Poll (uint16_t new_value, _::Expr* expr, uint16_t value,
-    		          uint16_t min_value, uint16_t max_channel);
+  /* Script operations. */
+  const _::Operation* Star(char_t index, _::Expr* expr);
 
-    /** Script operations. */
-    const _::Operation* Star (char_t index, _::Expr* expr);
+  /* Prints this object to a terminal. */
+  void Print(_::Log& log);
 
-    /** Prints this object to a terminal. */
-    void Print (_::Log& log);
-
-    private:
-
-    ch_t     channel_; //< Mixer channel number.
-    AnalogIn ain_;     //< Pot ADC input.
-};       //< class Pot
+ private:
+  ch_t channel_;  //< Mixer channel number.
+  AnalogIn ain_;  //< Pot ADC input.
+};                //< class Pot
 
 class PotOp : public _::Operand {
-    public:
+ public:
+  /* Constructs a Pot Operation. */
+  PotOp(Pot* object);
 
-    /** Constructs a Pot Operation. */
-	PotOp (Pot* object);
+  /* Script operations. */
+  virtual const _::Operation* Star(char_t index, _::Expr* expr);
 
-    /** Script operations. */
-    virtual const _::Operation* Star (char_t index, _::Expr* expr);
-
-    private:
-
-    Pot* object_;  //< The Pot.
-};      //< class PotOp
-}       //< namespace tek
-}       //< namespace kabuki
-#endif  //< KABUKI_TEK_POT_H
+ private:
+  Pot* object_;  //< The Pot.
+};               //< class PotOp
+}  // namespace _
+#endif  //< INCLUDED_KABUKI_FEATURE_TEK_POT

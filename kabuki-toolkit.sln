@@ -17,6 +17,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "0_0_1_hal_drivers_platform"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "0_0_2_hello_machina_spectulatrix", "toolkit\0_0_2_hello_machina_spectulatrix\0_0_2_hello_machina_spectulatrix.vcxproj", "{6DC2D062-DC62-42EF-A35B-24B40E536D2E}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "features", "features", "{D5C3CA12-10C1-46F6-820E-E12AFB2F28DF}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "kabuki.features.tek", "kabuki\features\tek\kabuki.features.tek.vcxproj", "{0BA23287-DEDE-440F-9E93-416EA825C4C3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -53,6 +57,14 @@ Global
 		{6DC2D062-DC62-42EF-A35B-24B40E536D2E}.Release|x64.Build.0 = Release|x64
 		{6DC2D062-DC62-42EF-A35B-24B40E536D2E}.Release|x86.ActiveCfg = Release|Win32
 		{6DC2D062-DC62-42EF-A35B-24B40E536D2E}.Release|x86.Build.0 = Release|Win32
+		{0BA23287-DEDE-440F-9E93-416EA825C4C3}.Debug|x64.ActiveCfg = Debug|x64
+		{0BA23287-DEDE-440F-9E93-416EA825C4C3}.Debug|x64.Build.0 = Debug|x64
+		{0BA23287-DEDE-440F-9E93-416EA825C4C3}.Debug|x86.ActiveCfg = Debug|Win32
+		{0BA23287-DEDE-440F-9E93-416EA825C4C3}.Debug|x86.Build.0 = Debug|Win32
+		{0BA23287-DEDE-440F-9E93-416EA825C4C3}.Release|x64.ActiveCfg = Release|x64
+		{0BA23287-DEDE-440F-9E93-416EA825C4C3}.Release|x64.Build.0 = Release|x64
+		{0BA23287-DEDE-440F-9E93-416EA825C4C3}.Release|x86.ActiveCfg = Release|Win32
+		{0BA23287-DEDE-440F-9E93-416EA825C4C3}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -62,6 +74,7 @@ Global
 		{706DA7C9-FEAD-4885-8351-3471961BFEBC} = {81D8102E-FE86-4792-96C0-F2526481D750}
 		{39F6896A-2D79-4999-82CB-FF150A5E3A43} = {40FAFD18-BEA0-4021-A24F-63AE69789B14}
 		{6DC2D062-DC62-42EF-A35B-24B40E536D2E} = {81D8102E-FE86-4792-96C0-F2526481D750}
+		{D5C3CA12-10C1-46F6-820E-E12AFB2F28DF} = {40FAFD18-BEA0-4021-A24F-63AE69789B14}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5BAE086E-1F80-43C0-8709-6E87D4D05BC0}
