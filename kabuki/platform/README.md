@@ -7,7 +7,7 @@ U|  _"\ u  |"|    U  /"\  u  |_ " _|  |" ___|   \/"_ \/U |  _"\ uU|' \/ '|u
  ||>>_     //  \\  \\    >>  _// \\_  )(\\,-      \\     //   \\_<<,-,,-.   
 (__)__)   (_")("_)(__)  (__)(__) (__)(__)(_/     (__)   (__)  (__)(./  \.)  
 ```
-# Kabuki VM Platform
+# kabuki.platform
 
 The Kabuki VM Platform is based on mbed, an IoT platform similar to Arduino for ARM, adapted to work on x64 processors. Starting from the lowest going to highest levels the major components are:
 

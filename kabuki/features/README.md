@@ -7,27 +7,12 @@ U| |_  u |  _|"   \/ _ \/     | |   \| |\| | \| |_) |/  |  _|" <\___ \/
  )(\\,-  <<   >>  \\    >>  _// \\_(__) )(    //   \\_  <<   >>  )(  (__)
 (__)(_/ (__) (__)(__)  (__)(__) (__)   (__)  (__)  (__)(__) (__)(__)      
 ```
-# Kabuki VM Platform
+# kabuki.platform
 
-The Kabuki VM Features are based on mbed, an IoT platform similar to Arduino but for ARM, adapted to work on x64 processors. Starting from the lowest going to highest levels the major components are:
+The Kabuki VM Features are based on mbed, an IoT platform similar to Arduino but for ARM, adapted to work on x64 processors. The definition of a kabuki.Feature is that it may have some hardware support, such as math and audio DSP. It is the OSAL that then abstracts the hardware away for the kabuki.toolkit.
 
-1. **Hardware Abstraction Layer (HAL)** - Abstracts away the hardware to create a low-level virtual machine.
-   1. Abstract hardware model for common processor peripherals.
-   2. Hardware agnostic code shared between targets processors.
-   3. Target implementations for various processors.
-2. **Platform** - Platform such as an operating system or bare-metal firmware that creates a high-level VM from the low-level VM.
-   1. Platform abstraction layer for common platform features.
-   2. Platform agnostic code shared between platforms.
-   3. Platform implementation.
-3. **Features** - Cross-platform features.
-   1. Feature model with common interface for features.
-   2. Feature framework shares cross-platform code between features.
-   3. Feature implementation.
-4. **Chinese Room Abstract Stack Machine (Crabs)**
-  1. Stack Machine built on the HAL, Platform, and Features.
-5. **Tek**
-  1. Technology built with Crabs.
-6. **Toolkit Modules** - Cross-platform toolkit built on top of the features.
-   1. Module model.
-   3. Crabs layer.
-   3. Module implementation.
+# The License
+
+Copyright 2014-19 (C) Cale Jamison McCollough <<cale@astartup.net>>. All rights reserved (R).
+
+Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License [http://www.apache.org/licenses/LICENSE-2.0](http://www.apache.org/licenses/LICENSE-2.0). Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
