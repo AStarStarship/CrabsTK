@@ -12,7 +12,7 @@
 
 ![Under Construction Image](https://github.com/kabuki-starship/kabuki-toolkit/wiki/under_construction.png)
 
-Kabuki Toolkit (KT) is a modern embedded-C++ toolkit for making intelligent connected technologies, apps, plugins, games, servers, firmware, and art with Script2. KT consists of the SCRIPT Protocol, Firmware-to-Software Development Kit (F2SDK) and Virtual Machine for 32-bit and 64-bit processors based on the Script^2 IoT and Seam Tree Test nanoframework
+Kabuki Toolkit (KT) is a modern embedded-C++ toolkit for making intelligent connected technologies, apps, plugins, games, servers, firmware, and art with Script2.
 
 [![GitHub version](https://badge.fury.io/gh/kabuki-starship%2Fkabuki-toolkit.svg)](https://badge.fury.io/gh/kabuki-starship%2Fkabuki-toolkit)
 
@@ -25,61 +25,59 @@ Kabuki Toolkit (KT) is a modern embedded-C++ toolkit for making intelligent conn
 * [Script2](https://github.com/kabuki-starship/script2.md)
   - *Serial Chinese Room, Interprocess, and Telemetry (SCRIPT) Script (Script2).*
 * [Kabuki Starship Website](https://kabuki-starship.github.io/)
-  - *We are currently in need of some help fixing the CSS on the website. It only works right at < 1024 pixel width so the problem is in the @media section. Please make pull request to issue #1 in [https://github.com/kabuki-starship/kabuki-starship.github.io/issues](https://github.com/kabuki-starship/kabuki-starship.github.io/issues).*
 
 ## kabuki Modules
 
+All currently broken. Sorry. Please contribute as a developer. Thanks.
+
 | Module    | Description |
 |:---------:|:------------|
-| F2SDK     | Firmware-to-Software Development SDK. |
-| Features  | System features. |
-| HAL       | Hardware Abstraction Layer. |
-| OSAL      | Operating System Abstraction Layer. |
-| Platform  | Hardware platform. |
-| Tek       | Kabuki tek firmware. |
+| toolkit   | Firmware-to-Software Development toolkit. |
+| features  | System features. |
+| hal       | Hardware Abstraction Layer. |
+| osal      | Operating System Abstraction Layer. |
+| platform  | Hardware platform. |
+| tek       | Kabuki tek firmware. |
 
 ## kabuki.drivers
 | Module     | Description |
 |:----------:|:------------|
-| Ethernet   | Basic TCP support. |
-| Serial     | UART/Serial driver. |
+| ethernet   | Basic TCP support. |
+| serial     | UART/Serial driver. |
 | ...        | Many more drivers coming soon. |
 
 ## kabuki.features
 
-| Module     | Description |
-|:----------:|:------------|
-| Audio      | Audio library. |
-| AI         | Artificial Intelligence library. |
-| LTM        | Long-term memory and filesystem library. |
-| Math       | (Coming soon) Math library. |
-| Graphics   | Graphics library. |
-| MIDI       | Musical instrument digital interface. |
-| Touch      | Human-Machine interface. |
+| Module      | Description |
+|:-----------:|:------------|
+| ai          | Artificial Intelligence library. |
+| filecabinet | Long-term memory and filesystem library. |
+| math        | (Coming soon) Math library. |
+| graphics    | Graphics library. |
+| midi        | Musical instrument digital interface. |
+| sound       | Sound library. |
+| touch       | Human-Machine interface. |
 
-## kabuki.f2sdk Modules
+## kabuki.toolkit Modules
 
 | Module   | Description |
 |:--------:|:------------|
-| ADSP     | Audio Digital Signal Processing library. |
-| App      | Application framework. |
-| STM      | Short-term memory data structures library. |
-| Drawing  | Vector drawing library. |
-| GUI      | Graphical user interface. |
-| Plotting | Plotting library. |
-| Pro      | Project library. |
-| uWeb     | HTTP server and web microframework. |
-| Who      | Identification and authorization library. |
+| adsp     | Audio Digital Signal Processing library. |
+| data     | Database library. |
+| drawing  | Vector drawing library. |
+| gui      | Graphical user interface. |
+| plotting | Plotting library. |
+| pro      | Project library. |
+| uweb     | HTTP server and web microframework. |
+| who      | Identification and authorization library. |
 
 ## kabuki.tek Firmware
 
-All currently broken. Sorry. Please contribute as a developer. Thanks.
-
 | Module        | Description |
 |:-------------:|:------------|
-| AnyLED        | Firmware to control PWM and addressable LEDs. |
-| Unicontroller | A universal controller firmware for MIDI, DMX, SCRIPT SDNP, and OSC. |
-| OregonCooler  | Automatic watering system for plants and smart-home cooling system (coming soon). |
+| anyled        | Firmware to control PWM and addressable LEDs. |
+| unicontroller | A universal controller firmware for MIDI, Script2, DMX, and OSC. |
+| oregon_cooler | Automatic watering system for plants and smart-home cooling system (coming soon). |
 
 ### 3rd Party APIs
 
@@ -138,7 +136,7 @@ All currently broken. Sorry. Please contribute as a developer. Thanks.
 
 The Vision of KT is to provide a bloat-free DLL-friendly Embedded-C++11 Virtual Machine, Firmware-to-Software Development Kit, dynamic functional programming language, Jupyter Notebooks, and a real-time smartphone operating system that is the quality of Google Fuchsia, JUCE, Java, and Julia but with a commercially-permissive license.
 
-The Mission is to target GCC 4.7, the minimum C++ version required to compile boost, to allow for maximized firmware and web server distribution, and to provide at least one demo application in each language that we bind too to assist in making cross-language bindings feel as native as possible.
+The Mission is to target the minimum C++ version required to compile the third-party dependencies, convert as much to Script2 as possible and mash it up with mbed for x86_64 and RISC-V to allow for maximized firmware and web server distribution, and to provide at least one demo application in each language that we bind too to assist in making cross-language bindings feel as native as possible.
 
 ## Development Strategy
 
@@ -160,19 +158,19 @@ Get IMGUI working with ANGLE.
 
 **@dependency** Task
 
-Rename NanoGUI to Kabuki.SDK.GUI.Retained and convert to Script2 C++ API.
+Rename NanoGUI to kabuki.toolkit.gui.retained and convert to Script2 C++ API.
 
 ### Task 5
 
-Rename IMGUI to Kabuki.SDK.GUI.Intermediate and convert to Script2 C++ API.
+Rename IMGUI to kabuki.toolkit.gui.intermediate and convert to Script2 C++ API.
 
 ### Task 6
 
-Rename PLPlot to Kabuki.SDK.Plotting and convert to Script2 C++ API.
+Rename PLPlot to kabuki.toolkit.plotting and convert to Script2 C++ API.
 
 ### Task 7
 
-Combine common Kabuki.SDK.GUI.Retained and Kabuki.SDK.GUI.Intermediate code into Kabuki.Feature.Touch and abstract away rendering engine to use Cairo or NanoVG.
+Combine common kabuki.toolkit.gui.retained and kabuki.toolkit.gui.intermediate code into kabuki.Features.Touch and abstract away rendering engine to use Cairo or NanoVG.
 
 ### Task 8
 
@@ -180,7 +178,7 @@ Get Maximillian working with PortAudio.
 
 ### Task 9
 
-Rename PortAudio to Kabuki.Feature.Audio and convert to Script2 C++ API.
+Rename PortAudio to kabuki.features.audio and convert to Script2 C++ API.
 
 ### Task 10
 
@@ -196,11 +194,11 @@ Develop Kabuki Cards and a good Xamarin app with server with my **SUPER** basic 
 
 ### Task 12
 
-Rename Maximillian to Kabuki.Feature.ADSP and convert to Script2 C++ API.
+Rename Maximillian to kabuki.Features.ADSP and convert to Script2 C++ API.
 
 ### Task 13
 
-Split boost.asio into to HAL and Drivers and convert to Script2 C++ API and rename boost.beast to Kabuki.SDK.uWeb.
+Split boost.asio into to hal and Drivers and convert to Script2 C++ API and rename boost.beast to kabuki.toolkit.uweb.
 
 # The License
 

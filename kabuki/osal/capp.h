@@ -61,7 +61,7 @@ struct App {
     /**  */
     virtual int Close () = 0;
 
-    /** Returns a link to this application's drawing context. */
+    /** Returns a link to this application's osal context. */
     virtual _g::Cell& GetDrawCell () = 0;
         
     /**  */

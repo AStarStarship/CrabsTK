@@ -1,19 +1,8 @@
-# kabuki.toolkit.drawing
+# kabuki.osal
 
-There some code in here at one point but the requirements for the gl is very strictly regulated to Cairo and ANGLE now. The future GUI toolkit will be mapping the kabuki.features.hmi (Human-machine Interface) library which is good for easy mapping of controls over a serial line or the IoT. It provides the ability to multiplex pages of controls on buttons that use touchscreen widgets on PC or mobile device.
+There some code in here at one point but the requirements for the gl is very strictly The Operating System abstraction layer has access to all of the kabuki.features, and provides the glue for the features to work on an operating system. This is a pre-Script2 module with little to no work on done on it.
 
-# Development
-
-The process is:
-
-* Use most popular cairo GUI toolkit, strip it's internals out, and map them to the kabuki.features.hmi library.
-
-The work to be done is:
-
-* Get Cairo working with SDL2 in a DLL with ANGLE.
-* I made a primitive wire frame 3D model viewer demo a long time ago that is good for testing the gl.
-* The math library is coupled to the gl, pl (Plotting Library) and the AI libraries on this seam.
-* 
+The best example for the osal is the operation of the MIDI ports on Windows, OSX, Android, and iOS. In each system it's just a serial port, but the way they are named is slightly different. Each OS may support different features. The job of the osal is to glue the cross-platform code to the OS and hardware platform target.
 
 # The License
 
