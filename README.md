@@ -12,7 +12,7 @@
 
 ![Under Construction Image](https://github.com/kabuki-starship/kabuki-toolkit/wiki/under_construction.png)
 
-Kabuki Toolkit (KT) is a modern embedded-C++ toolkit for making intelligent connected technologies, apps, plugins, games, servers, firmware, and art with Script2. KT consists of the SCRIPT Protocol, Firmware-to-Software Development Kit (F2SDK) and Virtual Machine for 32-bit and 64-bit processors based on the Script^2 IoT and Seam Tree Test nanoframework
+Kabuki Toolkit (KT) is a modern embedded-C++ toolkit for making intelligent connected technologies, apps, plugins, games, servers, firmware, and art with Script2.
 
 [![GitHub version](https://badge.fury.io/gh/kabuki-starship%2Fkabuki-toolkit.svg)](https://badge.fury.io/gh/kabuki-starship%2Fkabuki-toolkit)
 
