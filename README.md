@@ -58,7 +58,7 @@ All currently broken. Sorry. Please contribute as a developer. Thanks.
 | sound       | Sound library. |
 | touch       | Human-Machine interface. |
 
-## kabuki.f2sdk Modules
+## kabuki.toolkit Modules
 
 | Module   | Description |
 |:--------:|:------------|
