@@ -1,13 +1,6 @@
-# seams
+# projects
 
-This folder contains the kabuki.Toolkit. Each Layer {Milli, Micro, Nano, Pico, Femto } Seam has it's own project here in the toolkit. The way to read the seam indexes is that Layer 0 is always the SDK. Kabuki Toolkit has the Milli Layers:
-
-| Layer |     Name      | Description |
-|:-----:|:-------------:|:------------|
-|  0_0  | Frontal Lobe  | The core handles memory, attention, perception, cognition, awareness, thought, language, and consciousness. |
-|  0_1  | Somatosensory | All things of or relating to touch and Human-Machine Interface. |
-|  0_2  |    Auditory   | Music, audio, and sound. |
-|  0_3  |    Visual     | All things visible to or by the computer. |
+This folder contains the list of projects that are a part of building, testing, and promoting Kabuki toolkit. If any project interests you, please feel free to take it over. I'm hoping to begin mapping NanoGUI to NanoVG, Cairo, PLPlot, and Skia so we can we independent of the the rendering engine.
 
 ## The License
 

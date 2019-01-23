@@ -12,11 +12,7 @@
 
 ![Under Construction Image](https://github.com/kabuki-starship/kabuki-toolkit/wiki/under_construction.png)
 
-Kabuki Toolkit (KT) is a cross-platform Embedded-C++11 Firmware-to-Software Development Kit (F2SDK), Virtual Machine for 32-bit and 64-bit processors, and software toolkit featuring:
-
-* Script^2 IoT and Seam Tree Test nanoframework that provides custom debug code for each branch and leaf.
-* VM based on mbed with modular features.
-*
+Kabuki Toolkit (KT) is a modern embedded-C++ toolkit for making intelligent connected technologies, apps, plugins, games, servers, firmware, and art with Script2. KT consists of the SCRIPT Protocol, Firmware-to-Software Development Kit (F2SDK) and Virtual Machine for 32-bit and 64-bit processors based on the Script^2 IoT and Seam Tree Test nanoframework
 
 [![GitHub version](https://badge.fury.io/gh/kabuki-starship%2Fkabuki-toolkit.svg)](https://badge.fury.io/gh/kabuki-starship%2Fkabuki-toolkit)
 
@@ -26,8 +22,8 @@ Kabuki Toolkit (KT) is a cross-platform Embedded-C++11 Firmware-to-Software Deve
   - *Frequently asked questions.*
 * [Quickstart Guide](https://github.com/kabuki-starship/kabuki-toolkit.git/blob/master/docs/quickstart-guide.md)
   - *Check here for the Kabuki Toolkit Wiki and GitHub repository!*
-* [Script Specification RFC](https://github.com/kabuki-starship/script2/blob/master/docs/script_specification_rfc.md)
-  - *Release for Comment for Serial Chinese Room, Interprocess, and Telemetry (SCRIPT) Specification.*
+* [Script2](https://github.com/kabuki-starship/script2.md)
+  - *Serial Chinese Room, Interprocess, and Telemetry (SCRIPT) Script (Script2).*
 * [Kabuki Starship Website](https://kabuki-starship.github.io/)
   - *We are currently in need of some help fixing the CSS on the website. It only works right at < 1024 pixel width so the problem is in the @media section. Please make pull request to issue #1 in [https://github.com/kabuki-starship/kabuki-starship.github.io/issues](https://github.com/kabuki-starship/kabuki-starship.github.io/issues).*
 
