@@ -128,7 +128,7 @@ public:
     int trig;
 	double line(int numberofsegments,double segments[100]);
     double ramp(double startVal=0, double endVal=1, double duration=1);
-    double ramps(std::vector<double> rampsArray);
+    double ramps(TArray<double> rampsArray);
     double ar(double attack=0.1, double release=0.1);
     double adsr(double attack=0.1, double decay=0.1, double sustain=0.1, double release=0.1);
 	void trigger(int index,double amp);
@@ -840,7 +840,7 @@ private:
     template <typename T>
     void                write(std::ofstream& _stream, const T& _t);
     void*               update(void* _context);
-    std::vector<double> getProcessedData();
+    TArray<double> getProcessedData();
     void                enqueueBuffer();
     void                freeResources();
     bool                threadRunning;

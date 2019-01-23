@@ -2,7 +2,7 @@
     @version 0.x
     @file    ~/library/kabuki/toolkit/ai/perceptron.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2014-2017-2018 Cale McCollough <calemccollough@gmail.com>;
+    @license Copyright (C) 2014-19-2018 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
              2.0 (the "License"); you may not use this file except in 
              compliance with the License. You may obtain a copy of the License 
@@ -39,20 +39,20 @@ class PerceptronGraph {
                       size_t output_cout, float_t output_bias);
 
     /** Gets the output node. */
-    std::vector<float_t>& GetX ();
+    TArray<float_t>& GetX ();
 
     /** Gets the output node. */
     float_t* GetX (size_t index);
 
     /** Gets the output node. */
-    std::vector<float_t>& GetY ();
+    TArray<float_t>& GetY ();
 
     /** Updates this network. */
     void Update ();
 
     private:
-    std::vector<float_t>  x_;
-    std::vector<float_t>& y_;       //< Output layer
+    TArray<float_t>  x_;
+    TArray<float_t>& y_;       //< Output layer
     PerceptronLayer       layer_1_; //< Output perceptron layer.
 };
 

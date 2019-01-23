@@ -1,7 +1,7 @@
 /* Kabuki Toolkit
     @file    /library/kt/id/user_hist.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
+    @license Copyright (C) 2014-19 Cale McCollough <calemccollough.github.io>;
              All right reserved (R). Licensed under the Apache License, Version
              2.0 (the "License"); you may not use this file except in
              compliance with the License. You may obtain a copy of the License
@@ -140,7 +140,7 @@ class API UserList : public Operand {
   int num_users_;                 //< Number of users logged in.
   double value_cost_;             //< Cost per point.
   Authenticator* authenticator_;  //< Handle, & Password Authenticator.
-  std::vector<User*> users_;      //< User list.
+  TArray<User*> users_;      //< User list.
   UidServer<> uids_;              //< Unique Session Key server
 };
 

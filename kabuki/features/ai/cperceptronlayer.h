@@ -2,7 +2,7 @@
     @version 0.x
     @file    ~/library/kabuki/toolkit/ai/perceptron_layer.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2014-2017-2018 Cale McCollough <calemccollough@gmail.com>;
+    @license Copyright (C) 2014-19-2018 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
              2.0 (the "License"); you may not use this file except in 
              compliance with the License. You may obtain a copy of the License 
@@ -77,9 +77,9 @@ class PerceptronLayer {
     private:
 
     float_t                     bias_;        //< Layer bias value.
-    std::vector<float_t>        x_;           //< Input x vector.
-    std::vector<Perceptron>     perceptrons_; //< Layer perceptrons.
-    std::vector<PerceptronLayer> nodes_;      //< Vector of next layers in the list.
+    TArray<float_t>        x_;           //< Input x vector.
+    TArray<Perceptron>     perceptrons_; //< Layer perceptrons.
+    TArray<PerceptronLayer> nodes_;      //< Vector of next layers in the list.
 };
 
 }       //< namespace _

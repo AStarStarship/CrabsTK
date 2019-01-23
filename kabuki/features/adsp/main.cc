@@ -4,7 +4,7 @@
 //maxiEnvelope myEnv;
 //int counter;
 //double vals[12]={1,0.1,0.5,0.0,1.5,0.0,0.1,1,1.0,0.15,1.0,0.1};
-//std::vector<double> rampsA(vals, vals+12);
+//TArray<double> rampsA(vals, vals+12);
 //
 //
 //void setup() {//some inits

@@ -132,11 +132,11 @@ class RtMidi
 
   //! A static function to determine the available compiled MIDI APIs.
   /*!
-    The values returned in the std::vector can be compared against
+    The values returned in the TArray can be compared against
     the enumerated list values.  Note that there can be more than one
     API compiled for certain operating systems.
   */
-  static void getCompiledApi( std::vector<RtMidi::Api> &apis ) throw();
+  static void getCompiledApi( TArray<RtMidi::Api> &apis ) throw();
 
   //! Pure virtual openPort() function.
   virtual void openPort( unsigned int portNumber = 0, const std::string portName = std::string( "RtMidi" ) ) = 0;
@@ -208,7 +208,7 @@ class RtMidiIn : public RtMidi
  public:
 
   //! User callback function type definition.
-  typedef void (*RtMidiCallback)( double timeStamp, std::vector<unsigned char> *message, void *userData);
+  typedef void (*RtMidiCallback)( double timeStamp, TArray<unsigned char> *message, void *userData);
 
   //! Default constructor that allows an optional api, client name and queue size.
   /*!
@@ -315,7 +315,7 @@ class RtMidiIn : public RtMidi
     message retrieval or an input connection was not previously
     established.
   */
-  double getMessage( std::vector<unsigned char> *message );
+  double getMessage( TArray<unsigned char> *message );
 
   //! Set an error callback function to be invoked when an error has occured.
   /*!
@@ -406,7 +406,7 @@ class RtMidiOut : public RtMidi
       An exception is thrown if an error occurs during output or an
       output connection was not previously established.
   */
-  void sendMessage( std::vector<unsigned char> *message );
+  void sendMessage( TArray<unsigned char> *message );
 
   //! Set an error callback function to be invoked when an error has occured.
   /*!
@@ -473,12 +473,12 @@ class MidiInApi : public MidiApi
   void setCallback( RtMidiIn::RtMidiCallback callback, void *userData );
   void cancelCallback( void );
   virtual void ignoreTypes( bool midiSysex, bool midiTime, bool midiSense );
-  double getMessage( std::vector<unsigned char> *message );
+  double getMessage( TArray<unsigned char> *message );
 
   // A MIDI structure used internally by the class to store incoming
   // messages.  Each message represents one and only one MIDI message.
   struct MidiMessage { 
-    std::vector<unsigned char> bytes; 
+    TArray<unsigned char> bytes; 
     double timeStamp;
 
     // Default constructor.
@@ -529,7 +529,7 @@ class MidiOutApi : public MidiApi
 
   MidiOutApi( void );
   virtual ~MidiOutApi( void );
-  virtual void sendMessage( std::vector<unsigned char> *message ) = 0;
+  virtual void sendMessage( TArray<unsigned char> *message ) = 0;
 };
 
 // **************************************************************** //
@@ -548,7 +548,7 @@ inline void RtMidiIn :: cancelCallback( void ) { ((MidiInApi *)rtapi_)->cancelCa
 inline unsigned int RtMidiIn :: getPortCount( void ) { return rtapi_->getPortCount(); }
 inline std::string RtMidiIn :: getPortName( unsigned int portNumber ) { return rtapi_->getPortName( portNumber ); }
 inline void RtMidiIn :: ignoreTypes( bool midiSysex, bool midiTime, bool midiSense ) { ((MidiInApi *)rtapi_)->ignoreTypes( midiSysex, midiTime, midiSense ); }
-inline double RtMidiIn :: getMessage( std::vector<unsigned char> *message ) { return ((MidiInApi *)rtapi_)->getMessage( message ); }
+inline double RtMidiIn :: getMessage( TArray<unsigned char> *message ) { return ((MidiInApi *)rtapi_)->getMessage( message ); }
 inline void RtMidiIn :: setErrorCallback( RtMidiErrorCallback errorCallback, void *userData ) { rtapi_->setErrorCallback(errorCallback, userData); }
 
 inline RtMidi::Api RtMidiOut :: getCurrentApi( void ) throw() { return rtapi_->getCurrentApi(); }
@@ -558,7 +558,7 @@ inline void RtMidiOut :: closePort( void ) { rtapi_->closePort(); }
 inline bool RtMidiOut :: isPortOpen() const { return rtapi_->isPortOpen(); }
 inline unsigned int RtMidiOut :: getPortCount( void ) { return rtapi_->getPortCount(); }
 inline std::string RtMidiOut :: getPortName( unsigned int portNumber ) { return rtapi_->getPortName( portNumber ); }
-inline void RtMidiOut :: sendMessage( std::vector<unsigned char> *message ) { ((MidiOutApi *)rtapi_)->sendMessage( message ); }
+inline void RtMidiOut :: sendMessage( TArray<unsigned char> *message ) { ((MidiOutApi *)rtapi_)->sendMessage( message ); }
 inline void RtMidiOut :: setErrorCallback( RtMidiErrorCallback errorCallback, void *userData ) { rtapi_->setErrorCallback(errorCallback, userData); }
 
 // **************************************************************** //
@@ -600,7 +600,7 @@ class MidiOutCore: public MidiOutApi
   void closePort( void );
   unsigned int getPortCount( void );
   std::string getPortName( unsigned int portNumber );
-  void sendMessage( std::vector<unsigned char> *message );
+  void sendMessage( TArray<unsigned char> *message );
 
  protected:
   void initialize( const std::string& clientName );
@@ -640,7 +640,7 @@ class MidiOutJack: public MidiOutApi
   void closePort( void );
   unsigned int getPortCount( void );
   std::string getPortName( unsigned int portNumber );
-  void sendMessage( std::vector<unsigned char> *message );
+  void sendMessage( TArray<unsigned char> *message );
 
  protected:
   std::string clientName;
@@ -680,7 +680,7 @@ class MidiOutAlsa: public MidiOutApi
   void closePort( void );
   unsigned int getPortCount( void );
   std::string getPortName( unsigned int portNumber );
-  void sendMessage( std::vector<unsigned char> *message );
+  void sendMessage( TArray<unsigned char> *message );
 
  protected:
   void initialize( const std::string& clientName );
@@ -717,7 +717,7 @@ class MidiOutWinMM: public MidiOutApi
   void closePort( void );
   unsigned int getPortCount( void );
   std::string getPortName( unsigned int portNumber );
-  void sendMessage( std::vector<unsigned char> *message );
+  void sendMessage( TArray<unsigned char> *message );
 
  protected:
   void initialize( const std::string& clientName );
@@ -752,7 +752,7 @@ class MidiOutDummy: public MidiOutApi
   void closePort( void ) {}
   unsigned int getPortCount( void ) { return 0; }
   std::string getPortName( unsigned int /*portNumber*/ ) { return ""; }
-  void sendMessage( std::vector<unsigned char> * /*message*/ ) {}
+  void sendMessage( TArray<unsigned char> * /*message*/ ) {}
 
  protected:
   void initialize( const std::string& /*clientName*/ ) {}

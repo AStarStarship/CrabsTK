@@ -438,7 +438,7 @@ double maxiEnvelope::ramp(double startVal, double endVal, double duration){
 }
 
 
-double maxiEnvelope::ramps(std::vector<double> rampsArray){
+double maxiEnvelope::ramps(TArray<double> rampsArray){
     
     if (trig!=0) {
         valindex=0;
@@ -2384,8 +2384,8 @@ void maxiRecorder::saveToWav()
 #endif
         threadRunning = false;
     }
-    std::vector<double> pcmData = getProcessedData();
-    std::vector<short> pcmDataInt;
+    TArray<double> pcmData = getProcessedData();
+    TArray<short> pcmDataInt;
 
     pcmDataInt.resize(pcmData.size());
 
@@ -2439,9 +2439,9 @@ void maxiRecorder::saveToWav()
 /// and work with.
 ///
 ///*************************************************************
-std::vector<double> maxiRecorder::getProcessedData()
+TArray<double> maxiRecorder::getProcessedData()
 {
-    std::vector<double> userData;
+    TArray<double> userData;
     int dataSize = int(savedBuffers.size()) * bufferSize;
     userData.resize(dataSize);
 

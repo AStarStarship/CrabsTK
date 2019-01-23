@@ -83,7 +83,7 @@ All currently broken. Sorry. Please contribute as a developer. Thanks.
 |:-------------:|:------------|
 | AnyLED        | Firmware to control PWM and addressable LEDs. |
 | Unicontroller | A universal controller firmware for MIDI, DMX, SCRIPT SDNP, and OSC. |
-| Flowerbed     | Automatic watering system for plants. |
+| OregonCooler  | Automatic watering system for plants and smart-home cooling system (coming soon). |
 
 ### 3rd Party APIs
 
@@ -103,6 +103,40 @@ All currently broken. Sorry. Please contribute as a developer. Thanks.
 ![Kabuki VM Package Diagram](https://raw.githubusercontent.com/kabuki-starship/kabuki-toolkit/master/docs/kabuki_package_diagram.jpg)
 
 **@note** *Package Diagram uses `C++` dependency inclusion, meaning that when a module/namespace is included all of the module's/namespace's dependencies are also included.*
+
+#### Kabuki VM Seams
+
+*     0_0 Frontal Cortex
+	* 0_0_00 script2
+	* 0_0_01 kabuki.hal
+	* 0_0_02 kabuki.drivers
+	* 0_0_03 kabuki.features.filecabinet
+	* 0_0_04 kabuki.toolkit.data
+	* 0_0_05 kabuki.toolkit.who
+	* 0_0_06 kabuki.toolkit.pro
+	* 0_0_07 kabuki.features.tls
+	* 0_0_08 kabuki.toolkit.uweb
+	* 0_0_09 kabuki.toolkit.orm
+	* 0_2_10 kabuki.features.midi
+	* 0_0_11 kabuki.features.math
+	* 0_0_12 kabuki.features.ai
+*     0_1    Somatosensory Cortex
+	* 0_1_00 kabuki.features.touch
+	* 0_1_01 kabuki.tek
+*     0_2    Auditory Cortex
+	* 0_2_01 kabuki.features.sound
+	* 0_2_02 kabuki.features.adsp
+	* 0_2_03 kabuki.toolkit.music
+*     0_3    Visual Cortex
+	* 0_3_00 kabuki.features.lights
+	* 0_3_01 kabuki.features.graphics
+	* 0_3_02 kabuki.features.camera
+	* 0_3_03 kabuki.features.webcam
+	* 0_3_04 kabuki.features.drawing
+	* 0_3_05 kabuki.toolkit.plotting
+	* 0_3_06 kabuki.toolkit.gui
+	* 0_3_07 kabuki.toolkit.video
+	* 0_3_08 kabuki.features.ai
 
 ## Vision and Mission Statement
 

@@ -1,0 +1,97 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="resources">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="project">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="project\script2_benchmark">
+      <UniqueIdentifier>{514fea74-b6e8-428d-8c26-be27ee77de19}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="project\script2_benchmark\align">
+      <UniqueIdentifier>{94ed3986-09d4-4ddb-99fa-a568f9eecbf8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="project\script2_benchmark\ftos">
+      <UniqueIdentifier>{80b17e38-1291-4e1e-9884-18fcd534533a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="project\script2_benchmark\itos">
+      <UniqueIdentifier>{00278812-3d5c-43ec-9914-1e9d3ccd302c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="project\script2_benchmark\msbasserted">
+      <UniqueIdentifier>{4d23364c-f471-420c-8ee0-ffdf53bb3b35}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="00_foo.h">
+      <Filter>project\script2_benchmark</Filter>
+    </ClInclude>
+    <ClInclude Include="01_bar.h">
+      <Filter>project\script2_benchmark</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.h">
+      <Filter>project\script2_benchmark</Filter>
+    </ClInclude>
+    <ClInclude Include="test_tree.h">
+      <Filter>project\script2_benchmark</Filter>
+    </ClInclude>
+    <ClInclude Include="itos\itos_algorithms.h">
+      <Filter>project\script2_benchmark\itos</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="global_config.inl">
+      <Filter>project\script2_benchmark</Filter>
+    </None>
+    <None Include="readme.md">
+      <Filter>project\script2_benchmark</Filter>
+    </None>
+    <None Include="seam_footer.inl">
+      <Filter>project\script2_benchmark</Filter>
+    </None>
+    <None Include="test_debug.inl">
+      <Filter>project\script2_benchmark</Filter>
+    </None>
+    <None Include="test_footer.inl">
+      <Filter>project\script2_benchmark</Filter>
+    </None>
+    <None Include="test_release.inl">
+      <Filter>project\script2_benchmark</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="pch.cc">
+      <Filter>project\script2_benchmark</Filter>
+    </ClCompile>
+    <ClCompile Include="align\benchmark_align.cc">
+      <Filter>project\script2_benchmark\align</Filter>
+    </ClCompile>
+    <ClCompile Include="ftos\benchmark_ftos.cc">
+      <Filter>project\script2_benchmark\ftos</Filter>
+    </ClCompile>
+    <ClCompile Include="itos\itos_algorithms.cc">
+      <Filter>project\script2_benchmark\itos</Filter>
+    </ClCompile>
+    <ClCompile Include="itos\print_mlsd.cc">
+      <Filter>project\script2_benchmark\itos</Filter>
+    </ClCompile>
+    <ClCompile Include="itos\print_mlsd2.cc">
+      <Filter>project\script2_benchmark\itos</Filter>
+    </ClCompile>
+    <ClCompile Include="itos\print_mod100sc.cc">
+      <Filter>project\script2_benchmark\itos</Filter>
+    </ClCompile>
+    <ClCompile Include="itos\print_script_itos.cc">
+      <Filter>project\script2_benchmark\itos</Filter>
+    </ClCompile>
+    <ClCompile Include="itos\benchmark_itos.cc">
+      <Filter>project\script2_benchmark\itos</Filter>
+    </ClCompile>
+    <ClCompile Include="msbasserted\benchmark_msbasserted.cc">
+      <Filter>project\script2_benchmark\msbasserted</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

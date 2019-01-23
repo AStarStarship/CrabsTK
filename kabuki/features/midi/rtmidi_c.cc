@@ -13,7 +13,7 @@ int rtmidi_sizeof_rtmidi_api ()
 int rtmidi_get_compiled_api (enum RtMidiApi **apis) // return length for NULL argument.
 {
 	if (!apis || !(*apis)) {
-		std::vector<RtMidi::Api> *v = new std::vector<RtMidi::Api> ();
+		TArray<RtMidi::Api> *v = new TArray<RtMidi::Api> ();
 		try {
 			RtMidi::getCompiledApi (*v);
 			int size = v->size ();
@@ -24,7 +24,7 @@ int rtmidi_get_compiled_api (enum RtMidiApi **apis) // return length for NULL ar
 		}
 	} else {
 		try {
-			std::vector<RtMidi::Api> *v = new std::vector<RtMidi::Api> ();
+			TArray<RtMidi::Api> *v = new TArray<RtMidi::Api> ();
 			RtMidi::getCompiledApi (*v);
 			for (unsigned int i = 0; i < v->size (); i++)
 				(*apis) [i] = (RtMidiApi) v->at (i);
@@ -103,7 +103,7 @@ class CallbackProxyUserData
 	void *user_data;
 };
 
-void callback_proxy (double timeStamp, std::vector<unsigned char> *message, void *userData)
+void callback_proxy (double timeStamp, TArray<unsigned char> *message, void *userData)
 {
 	CallbackProxyUserData* data = reinterpret_cast<CallbackProxyUserData*> (userData);
 	data->c_callback (timeStamp, message->data (), data->user_data);
@@ -129,7 +129,7 @@ double rtmidi_in_get_message (RtMidiInPtr device, unsigned char **message)
 {
 	try {
 		// FIXME: use allocator to achieve efficient buffering
-		std::vector<unsigned char> *v = new std::vector<unsigned char> ();
+		TArray<unsigned char> *v = new TArray<unsigned char> ();
 		double ret = ((RtMidiIn*) device)->getMessage (v);
 		*message = (unsigned char *) malloc ((int) ret);
 		memcpy (*message, v->data (), (int) ret);
@@ -166,7 +166,7 @@ int rtmidi_out_send_message (RtMidiOutPtr device, const unsigned char *message, 
 {
 	try {
 		// FIXME: use allocator to achieve efficient buffering
-		std::vector<unsigned char> *v = new std::vector<unsigned char> (length);
+		TArray<unsigned char> *v = new TArray<unsigned char> (length);
 		memcpy (v->data (), message, length);
 		((RtMidiOut*) device)->sendMessage (v);
 		delete v;

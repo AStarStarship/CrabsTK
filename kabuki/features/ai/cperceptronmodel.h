@@ -2,7 +2,7 @@
     @version 0.x
     @file    ~/library/kabuki/toolkit/ai/perceptron_model.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2014-2017-2018 Cale McCollough <calemccollough@gmail.com>;
+    @license Copyright (C) 2014-19-2018 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
              2.0 (the "License"); you may not use this file except in 
              compliance with the License. You may obtain a copy of the License 
@@ -31,7 +31,7 @@ class PerceptronModel : public PerceptronGraph {
 
     private:
 
-    std::vector<float_t> y_;
+    TArray<float_t> y_;
 };
 
 }       //< namespace _

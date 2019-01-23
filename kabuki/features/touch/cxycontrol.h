@@ -2,7 +2,7 @@
 @link    https://github.com/kabuki-starship/kabuki-toolkit.git
 @file    /kabuki/features/hmi/hmi_xycontrol.h
 @author  Cale McCollough <https://calemccollough.github.io>
-@license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
+@license Copyright (C) 2014-19 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
 "License"); you may not use this file except in compliance with the License.
 You may obtain a copy of the License at www.apache.org/licenses/LICENSE-2.0.

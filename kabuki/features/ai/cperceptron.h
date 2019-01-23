@@ -2,7 +2,7 @@ w/** Kabuki Toolkit
     @version 0.x
     @file    ~/library/kabuki/toolkit/ai/perceptron.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2014-2017-2018 Cale McCollough <calemccollough@gmail.com>;
+    @license Copyright (C) 2014-19-2018 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
              2.0 (the "License"); you may not use this file except in 
              compliance with the License. You may obtain a copy of the License 
@@ -69,7 +69,7 @@ class Perceptron {
 
     float_t            & y_; //< Y output address vector.
     float_t            * x_; //< X input values vector.
-    std::vector<float_t> w_; //< Weight input values vector.
+    TArray<float_t> w_; //< Weight input values vector.
 };
 
 }       //< namespace _

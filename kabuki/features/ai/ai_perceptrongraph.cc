@@ -1,7 +1,7 @@
 /** Kabuki Toolkit@version 0.x
 @file    /kabuki/f2sdk/ai/aiml_perceptron_layer.cc
 @author  Cale McCollough <cale.mccollough@gmail.com>
-@license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
+@license Copyright (C) 2014-19 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
 "License"); you may not use this file except in compliance with the License.
 You may obtain a copy of the License at www.apache.org/licenses/LICENSE-2.0.
@@ -28,7 +28,7 @@ PerceptronGraph::PerceptronGraph (size_t  output_count,
     x_.reserve (input_count);
 }
 
-std::vector<float_t>& PerceptronGraph::GetX () {
+TArray<float_t>& PerceptronGraph::GetX () {
     return x_;
 }
 
@@ -38,7 +38,7 @@ float_t* PerceptronGraph::GetX (size_t index) {
     return x_[index];
 }
 
-std::vector<float_t>& PerceptronGraph::GetY () {
+TArray<float_t>& PerceptronGraph::GetY () {
     return y_;
 }
 
