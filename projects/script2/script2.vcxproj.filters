@@ -1,0 +1,378 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="resources">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="project">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="project\script2">
+      <UniqueIdentifier>{514fea74-b6e8-428d-8c26-be27ee77de19}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\script2\global_config.inl">
+      <Filter>project\script2</Filter>
+    </None>
+    <None Include="..\..\script2\global_debug.inl">
+      <Filter>project\script2</Filter>
+    </None>
+    <None Include="..\..\script2\global_footer.inl">
+      <Filter>project\script2</Filter>
+    </None>
+    <None Include="..\..\script2\global_release.inl">
+      <Filter>project\script2</Filter>
+    </None>
+    <None Include="..\..\script2\README.md">
+      <Filter>project\script2</Filter>
+    </None>
+    <None Include="..\..\script2\test_debug.inl">
+      <Filter>project\script2</Filter>
+    </None>
+    <None Include="..\..\script2\test_footer.inl">
+      <Filter>project\script2</Filter>
+    </None>
+    <None Include="..\..\script2\test_release.inl">
+      <Filter>project\script2</Filter>
+    </None>
+    <None Include="..\..\script2\16_seam.s2">
+      <Filter>project\script2</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\script2\pch.cc">
+      <Filter>project\script2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\script2\script2_asciidata.cc">
+      <Filter>project\script2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\script2\script2_benchmark.cc">
+      <Filter>project\script2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\script2\script2_bin.cc">
+      <Filter>project\script2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\script2\script2_binary.cc">
+      <Filter>project\script2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\script2\script2_bout.cc">
+      <Filter>project\script2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\script2\script2_bsq.cc">
+      <Filter>project\script2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\script2\script2_clock.cc">
+      <Filter>project\script2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\script2\script2_console.cc">
+      <Filter>project\script2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\script2\script2_error.cc">
+      <Filter>project\script2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\script2\script2_expr.cc">
+      <Filter>project\script2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\script2\script2_floor.cc">
+      <Filter>project\script2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\script2\script2_hash.cc">
+      <Filter>project\script2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\script2\script2_interrupts.cc">
+      <Filter>project\script2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\script2\script2_lock.cc">
+      <Filter>project\script2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\script2\script2_morsecode.cc">
+      <Filter>project\script2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\script2\script2_object.cc">
+      <Filter>project\script2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\script2\script2_op.cc">
+      <Filter>project\script2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\script2\script2_operand.cc">
+      <Filter>project\script2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\script2\script2_rng.cc">
+      <Filter>project\script2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\script2\script2_room.cc">
+      <Filter>project\script2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\script2\script2_slot.cc">
+      <Filter>project\script2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\script2\script2_socket.cc">
+      <Filter>project\script2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\script2\script2_strand.cc">
+      <Filter>project\script2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\script2\script2_test.cc">
+      <Filter>project\script2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\script2\script2_vk.cc">
+      <Filter>project\script2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\script2\script2_wall.cc">
+      <Filter>project\script2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\script2\seam_tree.cc">
+      <Filter>project\script2</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\script2\pch.h">
+      <Filter>project\script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\script2\public.h">
+      <Filter>project\script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\script2\tarray.h">
+      <Filter>project\script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\script2\tasciidata.h">
+      <Filter>project\script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\script2\tbenchmark.h">
+      <Filter>project\script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\script2\tbinary.h">
+      <Filter>project\script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\script2\tbook.h">
+      <Filter>project\script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\script2\tclock.h">
+      <Filter>project\script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\script2\tdic.h">
+      <Filter>project\script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\script2\tdoor.h">
+      <Filter>project\script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\script2\test_tree.h">
+      <Filter>project\script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\script2\thash.h">
+      <Filter>project\script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\script2\tlibrary.h">
+      <Filter>project\script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\script2\tlist.h">
+      <Filter>project\script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\script2\tloom.h">
+      <Filter>project\script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\script2\tmap.h">
+      <Filter>project\script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\script2\tobject.h">
+      <Filter>project\script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\script2\tset.h">
+      <Filter>project\script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\script2\tsocket.h">
+      <Filter>project\script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\script2\tstack.h">
+      <Filter>project\script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\script2\tstrand.h">
+      <Filter>project\script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\script2\ttable.h">
+      <Filter>project\script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\script2\ttest.h">
+      <Filter>project\script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\script2\00_rng.h">
+      <Filter>project\script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\script2\01_itos_and_stoi.h">
+      <Filter>project\script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\script2\02_socket.h">
+      <Filter>project\script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\script2\03_utf_and_strand.h">
+      <Filter>project\script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\script2\04_ftos_and_stof.h">
+      <Filter>project\script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\script2\05_clock.h">
+      <Filter>project\script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\script2\06_stack.h">
+      <Filter>project\script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\script2\07_array.h">
+      <Filter>project\script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\script2\08_loom.h">
+      <Filter>project\script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\script2\09_table.h">
+      <Filter>project\script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\script2\10_list.h">
+      <Filter>project\script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\script2\11_map.h">
+      <Filter>project\script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\script2\12_book.h">
+      <Filter>project\script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\script2\13_dictionary.h">
+      <Filter>project\script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\script2\14_expr.h">
+      <Filter>project\script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\script2\15_door.h">
+      <Filter>project\script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\script2\16_room_and_wall.h">
+      <Filter>project\script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\script2\caddress.h">
+      <Filter>project\script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\script2\cargs.h">
+      <Filter>project\script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\script2\cascii.h">
+      <Filter>project\script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\script2\casciidata.h">
+      <Filter>project\script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\script2\cbenchmark.h">
+      <Filter>project\script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\script2\cbin.h">
+      <Filter>project\script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\script2\cbinary.h">
+      <Filter>project\script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\script2\cbout.h">
+      <Filter>project\script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\script2\cbsq.h">
+      <Filter>project\script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\script2\cbuffer.h">
+      <Filter>project\script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\script2\cclock.h">
+      <Filter>project\script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\script2\cconsole.h">
+      <Filter>project\script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\script2\ccrabs.h">
+      <Filter>project\script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\script2\cerror.h">
+      <Filter>project\script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\script2\cevent.h">
+      <Filter>project\script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\script2\cfloor.h">
+      <Filter>project\script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\script2\chash.h">
+      <Filter>project\script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\script2\cinterrupts.h">
+      <Filter>project\script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\script2\citerator.h">
+      <Filter>project\script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\script2\clanguage.h">
+      <Filter>project\script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\script2\clock.h">
+      <Filter>project\script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\script2\cmirror.h">
+      <Filter>project\script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\script2\cobject.h">
+      <Filter>project\script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\script2\cop.h">
+      <Filter>project\script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\script2\coperand.h">
+      <Filter>project\script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\script2\crng.h">
+      <Filter>project\script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\script2\croom.h">
+      <Filter>project\script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\script2\cslot.h">
+      <Filter>project\script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\script2\csocket.h">
+      <Filter>project\script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\script2\cstack.h">
+      <Filter>project\script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\script2\cstr1.h">
+      <Filter>project\script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\script2\cstr2.h">
+      <Filter>project\script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\script2\cstr4.h">
+      <Filter>project\script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\script2\cstrand.h">
+      <Filter>project\script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\script2\ctest.h">
+      <Filter>project\script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\script2\cvarint.h">
+      <Filter>project\script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\script2\cvk.h">
+      <Filter>project\script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\script2\cwall.h">
+      <Filter>project\script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\script2\global.h">
+      <Filter>project\script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\script2\global_config.h">
+      <Filter>project\script2</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\..\script2\CMakeLists.txt">
+      <Filter>project\script2</Filter>
+    </Text>
+  </ItemGroup>
+</Project>

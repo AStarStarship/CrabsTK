@@ -1,44 +1,9 @@
-# kabuki::ai
+# kabuki.features.ai
 
-Module contains Artificial Intelligence and Machine Learning building blocks.
+This module will contain code for interacting with ais.
 
-## OSI Model of Machine Learning
+# The License
 
-Below is the standard OSI Model of Machine Learning borrowed from the internet.
+Copyright 2014-19 (C) Cale Jamison McCollough <<cale@astartup.net>>. All rights reserved (R).
 
-```C++
-+----------+
-|   Task   |
-+----------+
-|  Model   |
-+----------+
-|  Layer   |
-+----------+
-|  Graph   |
-+----------+
-|    Op    |
-+----------+
-|  Kernel  |
-+----------+
-| Hardware |
-+----------+
-```
-
-## Author
-
-* [Cale McCollough](https://calemccollough.github.io)
-
-## License
-Copyright 2017-8 (C) [Cale McCollough](mailto:calemccollough@gmail.com)
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
+Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License [http://www.apache.org/licenses/LICENSE-2.0](http://www.apache.org/licenses/LICENSE-2.0). Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.

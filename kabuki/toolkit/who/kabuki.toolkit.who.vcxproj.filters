@@ -1,0 +1,235 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="resources">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="kabuki">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="kabuki\toolkit">
+      <UniqueIdentifier>{514fea74-b6e8-428d-8c26-be27ee77de19}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kabuki\toolkit\who">
+      <UniqueIdentifier>{9f9ccb68-10fe-4794-959e-2db2532c86a6}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="address.h">
+      <Filter>kabuki\toolkit\who</Filter>
+    </ClInclude>
+    <ClInclude Include="authenticator.h">
+      <Filter>kabuki\toolkit\who</Filter>
+    </ClInclude>
+    <ClInclude Include="authenticator_default.h">
+      <Filter>kabuki\toolkit\who</Filter>
+    </ClInclude>
+    <ClInclude Include="config.h">
+      <Filter>kabuki\toolkit\who</Filter>
+    </ClInclude>
+    <ClInclude Include="date.h">
+      <Filter>kabuki\toolkit\who</Filter>
+    </ClInclude>
+    <ClInclude Include="email_address.h">
+      <Filter>kabuki\toolkit\who</Filter>
+    </ClInclude>
+    <ClInclude Include="entity.h">
+      <Filter>kabuki\toolkit\who</Filter>
+    </ClInclude>
+    <ClInclude Include="entity_group.h">
+      <Filter>kabuki\toolkit\who</Filter>
+    </ClInclude>
+    <ClInclude Include="entity_list.h">
+      <Filter>kabuki\toolkit\who</Filter>
+    </ClInclude>
+    <ClInclude Include="footer.h">
+      <Filter>kabuki\toolkit\who</Filter>
+    </ClInclude>
+    <ClInclude Include="global.h">
+      <Filter>kabuki\toolkit\who</Filter>
+    </ClInclude>
+    <ClInclude Include="handle.h">
+      <Filter>kabuki\toolkit\who</Filter>
+    </ClInclude>
+    <ClInclude Include="header.h">
+      <Filter>kabuki\toolkit\who</Filter>
+    </ClInclude>
+    <ClInclude Include="hit.h">
+      <Filter>kabuki\toolkit\who</Filter>
+    </ClInclude>
+    <ClInclude Include="hit_list.h">
+      <Filter>kabuki\toolkit\who</Filter>
+    </ClInclude>
+    <ClInclude Include="library.h">
+      <Filter>kabuki\toolkit\who</Filter>
+    </ClInclude>
+    <ClInclude Include="name.h">
+      <Filter>kabuki\toolkit\who</Filter>
+    </ClInclude>
+    <ClInclude Include="oauth_account.h">
+      <Filter>kabuki\toolkit\who</Filter>
+    </ClInclude>
+    <ClInclude Include="organization.h">
+      <Filter>kabuki\toolkit\who</Filter>
+    </ClInclude>
+    <ClInclude Include="password.h">
+      <Filter>kabuki\toolkit\who</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.h">
+      <Filter>kabuki\toolkit\who</Filter>
+    </ClInclude>
+    <ClInclude Include="person.h">
+      <Filter>kabuki\toolkit\who</Filter>
+    </ClInclude>
+    <ClInclude Include="privilege.h">
+      <Filter>kabuki\toolkit\who</Filter>
+    </ClInclude>
+    <ClInclude Include="profile.h">
+      <Filter>kabuki\toolkit\who</Filter>
+    </ClInclude>
+    <ClInclude Include="relationship.h">
+      <Filter>kabuki\toolkit\who</Filter>
+    </ClInclude>
+    <ClInclude Include="role.h">
+      <Filter>kabuki\toolkit\who</Filter>
+    </ClInclude>
+    <ClInclude Include="roster.h">
+      <Filter>kabuki\toolkit\who</Filter>
+    </ClInclude>
+    <ClInclude Include="symbol.h">
+      <Filter>kabuki\toolkit\who</Filter>
+    </ClInclude>
+    <ClInclude Include="tag.h">
+      <Filter>kabuki\toolkit\who</Filter>
+    </ClInclude>
+    <ClInclude Include="tag_tibrary.h">
+      <Filter>kabuki\toolkit\who</Filter>
+    </ClInclude>
+    <ClInclude Include="test_tree.h">
+      <Filter>kabuki\toolkit\who</Filter>
+    </ClInclude>
+    <ClInclude Include="user.h">
+      <Filter>kabuki\toolkit\who</Filter>
+    </ClInclude>
+    <ClInclude Include="user_list.h">
+      <Filter>kabuki\toolkit\who</Filter>
+    </ClInclude>
+    <ClInclude Include="uwho_server.h">
+      <Filter>kabuki\toolkit\who</Filter>
+    </ClInclude>
+    <ClInclude Include="who_server.h">
+      <Filter>kabuki\toolkit\who</Filter>
+    </ClInclude>
+    <ClInclude Include="account.h">
+      <Filter>kabuki\toolkit\who</Filter>
+    </ClInclude>
+    <ClInclude Include="00_foo.h">
+      <Filter>kabuki\toolkit\who</Filter>
+    </ClInclude>
+    <ClInclude Include="01_bar.h">
+      <Filter>kabuki\toolkit\who</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="pch.cc">
+      <Filter>kabuki\toolkit\who</Filter>
+    </ClCompile>
+    <ClCompile Include="who_account.cc">
+      <Filter>kabuki\toolkit\who</Filter>
+    </ClCompile>
+    <ClCompile Include="who_address.cc">
+      <Filter>kabuki\toolkit\who</Filter>
+    </ClCompile>
+    <ClCompile Include="who_authenticatordefault.cc">
+      <Filter>kabuki\toolkit\who</Filter>
+    </ClCompile>
+    <ClCompile Include="who_date.cc">
+      <Filter>kabuki\toolkit\who</Filter>
+    </ClCompile>
+    <ClCompile Include="who_email_address.cc">
+      <Filter>kabuki\toolkit\who</Filter>
+    </ClCompile>
+    <ClCompile Include="who_entity.cc">
+      <Filter>kabuki\toolkit\who</Filter>
+    </ClCompile>
+    <ClCompile Include="who_entity_group.cc">
+      <Filter>kabuki\toolkit\who</Filter>
+    </ClCompile>
+    <ClCompile Include="who_entity_list.cc">
+      <Filter>kabuki\toolkit\who</Filter>
+    </ClCompile>
+    <ClCompile Include="who_handle.cc">
+      <Filter>kabuki\toolkit\who</Filter>
+    </ClCompile>
+    <ClCompile Include="who_hit.cc">
+      <Filter>kabuki\toolkit\who</Filter>
+    </ClCompile>
+    <ClCompile Include="who_hit_list.cc">
+      <Filter>kabuki\toolkit\who</Filter>
+    </ClCompile>
+    <ClCompile Include="who_library.cc">
+      <Filter>kabuki\toolkit\who</Filter>
+    </ClCompile>
+    <ClCompile Include="who_name.cc">
+      <Filter>kabuki\toolkit\who</Filter>
+    </ClCompile>
+    <ClCompile Include="who_oauth_account.cc">
+      <Filter>kabuki\toolkit\who</Filter>
+    </ClCompile>
+    <ClCompile Include="who_organization.cc">
+      <Filter>kabuki\toolkit\who</Filter>
+    </ClCompile>
+    <ClCompile Include="who_password.cc">
+      <Filter>kabuki\toolkit\who</Filter>
+    </ClCompile>
+    <ClCompile Include="who_person.cc">
+      <Filter>kabuki\toolkit\who</Filter>
+    </ClCompile>
+    <ClCompile Include="who_privilege.cc">
+      <Filter>kabuki\toolkit\who</Filter>
+    </ClCompile>
+    <ClCompile Include="who_profile.cc">
+      <Filter>kabuki\toolkit\who</Filter>
+    </ClCompile>
+    <ClCompile Include="who_relationship.cc">
+      <Filter>kabuki\toolkit\who</Filter>
+    </ClCompile>
+    <ClCompile Include="who_roster.cc">
+      <Filter>kabuki\toolkit\who</Filter>
+    </ClCompile>
+    <ClCompile Include="who_server.cc">
+      <Filter>kabuki\toolkit\who</Filter>
+    </ClCompile>
+    <ClCompile Include="who_symbol.cc">
+      <Filter>kabuki\toolkit\who</Filter>
+    </ClCompile>
+    <ClCompile Include="who_tag_library.cc">
+      <Filter>kabuki\toolkit\who</Filter>
+    </ClCompile>
+    <ClCompile Include="who_user.cc">
+      <Filter>kabuki\toolkit\who</Filter>
+    </ClCompile>
+    <ClCompile Include="who_user_list.cc">
+      <Filter>kabuki\toolkit\who</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="readme.md">
+      <Filter>kabuki\toolkit\who</Filter>
+    </None>
+    <None Include="test_debug.inl">
+      <Filter>kabuki\toolkit\who</Filter>
+    </None>
+    <None Include="test_footer.inl">
+      <Filter>kabuki\toolkit\who</Filter>
+    </None>
+    <None Include="test_release.inl">
+      <Filter>kabuki\toolkit\who</Filter>
+    </None>
+    <None Include="global_config.inl">
+      <Filter>kabuki\toolkit\who</Filter>
+    </None>
+  </ItemGroup>
+</Project>

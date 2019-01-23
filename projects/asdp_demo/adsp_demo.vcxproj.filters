@@ -1,0 +1,121 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="resources">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="project">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="project\adsp_demo">
+      <UniqueIdentifier>{514fea74-b6e8-428d-8c26-be27ee77de19}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="01_bar.h">
+      <Filter>project\adsp_demo</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.h">
+      <Filter>project\adsp_demo</Filter>
+    </ClInclude>
+    <ClInclude Include="test_tree.h">
+      <Filter>project\adsp_demo</Filter>
+    </ClInclude>
+    <ClInclude Include="00_foo.h">
+      <Filter>project\adsp_demo</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="global_config.inl">
+      <Filter>project\adsp_demo</Filter>
+    </None>
+    <None Include="readme.md">
+      <Filter>project\adsp_demo</Filter>
+    </None>
+    <None Include="test_debug.inl">
+      <Filter>project\adsp_demo</Filter>
+    </None>
+    <None Include="test_footer.inl">
+      <Filter>project\adsp_demo</Filter>
+    </None>
+    <None Include="test_release.inl">
+      <Filter>project\adsp_demo</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="pch.cc">
+      <Filter>project\adsp_demo</Filter>
+    </ClCompile>
+    <ClCompile Include="12.SamplePlayer.cc">
+      <Filter>project\adsp_demo</Filter>
+    </ClCompile>
+    <ClCompile Include="13.Advanced-Filters.cc">
+      <Filter>project\adsp_demo</Filter>
+    </ClCompile>
+    <ClCompile Include="14.monosynth.cc">
+      <Filter>project\adsp_demo</Filter>
+    </ClCompile>
+    <ClCompile Include="15.polysynth.cc">
+      <Filter>project\adsp_demo</Filter>
+    </ClCompile>
+    <ClCompile Include="16.Replicant.cc">
+      <Filter>project\adsp_demo</Filter>
+    </ClCompile>
+    <ClCompile Include="17.Compressor.cc">
+      <Filter>project\adsp_demo</Filter>
+    </ClCompile>
+    <ClCompile Include="18.DrumMachine.cc">
+      <Filter>project\adsp_demo</Filter>
+    </ClCompile>
+    <ClCompile Include="19.Enveloping2.cc">
+      <Filter>project\adsp_demo</Filter>
+    </ClCompile>
+    <ClCompile Include="20.FFT_example.cc">
+      <Filter>project\adsp_demo</Filter>
+    </ClCompile>
+    <ClCompile Include="21.Recording.cc">
+      <Filter>project\adsp_demo</Filter>
+    </ClCompile>
+    <ClCompile Include="1.TestTone.cc">
+      <Filter>project\adsp_demo</Filter>
+    </ClCompile>
+    <ClCompile Include="2.TwoTones.cc">
+      <Filter>project\adsp_demo</Filter>
+    </ClCompile>
+    <ClCompile Include="3.AM1.cc">
+      <Filter>project\adsp_demo</Filter>
+    </ClCompile>
+    <ClCompile Include="4.AM2.cc">
+      <Filter>project\adsp_demo</Filter>
+    </ClCompile>
+    <ClCompile Include="5.FM1.cc">
+      <Filter>project\adsp_demo</Filter>
+    </ClCompile>
+    <ClCompile Include="6.FM2.cc">
+      <Filter>project\adsp_demo</Filter>
+    </ClCompile>
+    <ClCompile Include="7.Counting1.cc">
+      <Filter>project\adsp_demo</Filter>
+    </ClCompile>
+    <ClCompile Include="8.Counting2.cc">
+      <Filter>project\adsp_demo</Filter>
+    </ClCompile>
+    <ClCompile Include="8.Counting3.cc">
+      <Filter>project\adsp_demo</Filter>
+    </ClCompile>
+    <ClCompile Include="8.Counting4.cc">
+      <Filter>project\adsp_demo</Filter>
+    </ClCompile>
+    <ClCompile Include="9.Envelopes.cc">
+      <Filter>project\adsp_demo</Filter>
+    </ClCompile>
+    <ClCompile Include="10.Filters.cc">
+      <Filter>project\adsp_demo</Filter>
+    </ClCompile>
+    <ClCompile Include="11.Mixing.cc">
+      <Filter>project\adsp_demo</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

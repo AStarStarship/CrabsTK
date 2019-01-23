@@ -67,7 +67,7 @@ std::string RtMidi :: getVersion( void ) throw()
   return std::string( RTMIDI_VERSION );
 }
 
-void RtMidi :: getCompiledApi( std::vector<RtMidi::Api> &apis ) throw()
+void RtMidi :: getCompiledApi( TArray<RtMidi::Api> &apis ) throw()
 {
   apis.clear();
 
@@ -137,7 +137,7 @@ RtMidiIn :: RtMidiIn( RtMidi::Api api, const std::string clientName, unsigned in
 
   // Iterate through the compiled APIs and return as soon as we find
   // one with at least one port or we reach the end of the list.
-  std::vector< RtMidi::Api > apis;
+  TArray< RtMidi::Api > apis;
   getCompiledApi( apis );
   for ( unsigned int i=0; i<apis.size(); i++ ) {
     openMidiApi( apis[i], clientName, queueSizeLimit );
@@ -205,7 +205,7 @@ RtMidiOut :: RtMidiOut( RtMidi::Api api, const std::string clientName )
 
   // Iterate through the compiled APIs and return as soon as we find
   // one with at least one port or we reach the end of the list.
-  std::vector< RtMidi::Api > apis;
+  TArray< RtMidi::Api > apis;
   getCompiledApi( apis );
   for ( unsigned int i=0; i<apis.size(); i++ ) {
     openMidiApi( apis[i], clientName );
@@ -333,7 +333,7 @@ void MidiInApi :: ignoreTypes( bool midiSysex, bool midiTime, bool midiSense )
   if ( midiSense ) inputData_.ignoreFlags |= 0x04;
 }
 
-double MidiInApi :: getMessage( std::vector<unsigned char> *message )
+double MidiInApi :: getMessage( TArray<unsigned char> *message )
 {
   message->clear();
 
@@ -346,7 +346,7 @@ double MidiInApi :: getMessage( std::vector<unsigned char> *message )
   if ( inputData_.queue.size == 0 ) return 0.0;
 
   // Copy queued message to the vector pointer argument and then "pop" it.
-  std::vector<unsigned char> *bytes = &(inputData_.queue.ring[inputData_.queue.front].bytes);
+  TArray<unsigned char> *bytes = &(inputData_.queue.ring[inputData_.queue.front].bytes);
   message->assign( bytes->begin(), bytes->end() );
   double deltaTime = inputData_.queue.ring[inputData_.queue.front].timeStamp;
   inputData_.queue.size--;
@@ -1007,7 +1007,7 @@ void MidiOutCore :: openVirtualPort( std::string portName )
   data->endpoint = endpoint;
 }
 
-void MidiOutCore :: sendMessage( std::vector<unsigned char> *message )
+void MidiOutCore :: sendMessage( TArray<unsigned char> *message )
 {
   // We use the MIDISendSysex() function to asynchronously send sysex
   // messages.  Otherwise, we use a single CoreMidi MIDIPacket.
@@ -1844,7 +1844,7 @@ void MidiOutAlsa :: openVirtualPort( std::string portName )
   }
 }
 
-void MidiOutAlsa :: sendMessage( std::vector<unsigned char> *message )
+void MidiOutAlsa :: sendMessage( TArray<unsigned char> *message )
 {
   int result;
   AlsaMidiData *data = static_cast<AlsaMidiData *> (apiData_);
@@ -2341,7 +2341,7 @@ void MidiOutWinMM :: openVirtualPort( std::string /*portName*/ )
   error( RtMidiError::WARNING, errorString_ );
 }
 
-void MidiOutWinMM :: sendMessage( std::vector<unsigned char> *message )
+void MidiOutWinMM :: sendMessage( TArray<unsigned char> *message )
 {
   if ( !connected_ ) return;
 
@@ -2825,7 +2825,7 @@ void MidiOutJack :: closePort()
   data->port = NULL;
 }
 
-void MidiOutJack :: sendMessage( std::vector<unsigned char> *message )
+void MidiOutJack :: sendMessage( TArray<unsigned char> *message )
 {
   int nBytes = message->size();
   JackMidiData *data = static_cast<JackMidiData *> (apiData_);

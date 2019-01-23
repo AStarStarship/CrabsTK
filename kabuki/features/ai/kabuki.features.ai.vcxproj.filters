@@ -1,0 +1,121 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="resources">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="kabuki">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="kabuki\features">
+      <UniqueIdentifier>{514fea74-b6e8-428d-8c26-be27ee77de19}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kabuki\features\ai">
+      <UniqueIdentifier>{9f9ccb68-10fe-4794-959e-2db2532c86a6}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="ai_perceptron.cc">
+      <Filter>kabuki\features\ai</Filter>
+    </ClCompile>
+    <ClCompile Include="ai_perceptrongraph.cc">
+      <Filter>kabuki\features\ai</Filter>
+    </ClCompile>
+    <ClCompile Include="ai_perceptrongraph2d.cc">
+      <Filter>kabuki\features\ai</Filter>
+    </ClCompile>
+    <ClCompile Include="ai_perceptronlayer.cc">
+      <Filter>kabuki\features\ai</Filter>
+    </ClCompile>
+    <ClCompile Include="ai_synapse.cc">
+      <Filter>kabuki\features\ai</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cc">
+      <Filter>kabuki\features\ai</Filter>
+    </ClCompile>
+    <ClCompile Include="pch.cc">
+      <Filter>kabuki\features\ai</Filter>
+    </ClCompile>
+    <ClCompile Include="ai_dataset.cc">
+      <Filter>kabuki\features\ai</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="assembly.h">
+      <Filter>kabuki\features\ai</Filter>
+    </ClInclude>
+    <ClInclude Include="cagent.h">
+      <Filter>kabuki\features\ai</Filter>
+    </ClInclude>
+    <ClInclude Include="casyncronous.h">
+      <Filter>kabuki\features\ai</Filter>
+    </ClInclude>
+    <ClInclude Include="cdatasetimporter.h">
+      <Filter>kabuki\features\ai</Filter>
+    </ClInclude>
+    <ClInclude Include="cgan.h">
+      <Filter>kabuki\features\ai</Filter>
+    </ClInclude>
+    <ClInclude Include="ckernel.h">
+      <Filter>kabuki\features\ai</Filter>
+    </ClInclude>
+    <ClInclude Include="cperceptron.h">
+      <Filter>kabuki\features\ai</Filter>
+    </ClInclude>
+    <ClInclude Include="cperceptrongraph.h">
+      <Filter>kabuki\features\ai</Filter>
+    </ClInclude>
+    <ClInclude Include="cperceptrongraph2d.h">
+      <Filter>kabuki\features\ai</Filter>
+    </ClInclude>
+    <ClInclude Include="cperceptronlayer.h">
+      <Filter>kabuki\features\ai</Filter>
+    </ClInclude>
+    <ClInclude Include="cperceptronmodel.h">
+      <Filter>kabuki\features\ai</Filter>
+    </ClInclude>
+    <ClInclude Include="cpersenseron.h">
+      <Filter>kabuki\features\ai</Filter>
+    </ClInclude>
+    <ClInclude Include="crdnn.h">
+      <Filter>kabuki\features\ai</Filter>
+    </ClInclude>
+    <ClInclude Include="csynapse.h">
+      <Filter>kabuki\features\ai</Filter>
+    </ClInclude>
+    <ClInclude Include="ctask.h">
+      <Filter>kabuki\features\ai</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.h">
+      <Filter>kabuki\features\ai</Filter>
+    </ClInclude>
+    <ClInclude Include="test_tree.h">
+      <Filter>kabuki\features\ai</Filter>
+    </ClInclude>
+    <ClInclude Include="00_foo.h">
+      <Filter>kabuki\features\ai</Filter>
+    </ClInclude>
+    <ClInclude Include="01_bar.h">
+      <Filter>kabuki\features\ai</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="global_config.inl">
+      <Filter>kabuki\features\ai</Filter>
+    </None>
+    <None Include="readme.md">
+      <Filter>kabuki\features\ai</Filter>
+    </None>
+    <None Include="test_debug.inl">
+      <Filter>kabuki\features\ai</Filter>
+    </None>
+    <None Include="test_footer.inl">
+      <Filter>kabuki\features\ai</Filter>
+    </None>
+    <None Include="test_release.inl">
+      <Filter>kabuki\features\ai</Filter>
+    </None>
+  </ItemGroup>
+</Project>

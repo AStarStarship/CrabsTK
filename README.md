@@ -12,35 +12,11 @@
 
 ![Under Construction Image](https://github.com/kabuki-starship/kabuki-toolkit/wiki/under_construction.png)
 
-Kabuki Toolkit (KT) is a cross-platform Firmware-to-Software Development Kit (F2SDK) and Virtual Machine for 32-bit and 64-bit processors featuring the Script^2 IoT and Seam Tree Test Nanoframework:
+Kabuki Toolkit (KT) is a cross-platform Embedded-C++11 Firmware-to-Software Development Kit (F2SDK), Virtual Machine for 32-bit and 64-bit processors, and software toolkit featuring:
 
-* Seam Trees provide low-cost in-order unit tests for Agile and Issue Driven Development with debug information customized for each tree node.
-* Modern Embedded-C++11/Visual-C++/GCC 4.7 core with Doxygen API docs without depreciated libraries.
-* ASCII Data Types and the ASCII Factory operate seamlessly across assembly boundary with optimal RAM usage and CPU cache performance from ROM-able ASCII Contiguous Objects.
-* Rapid compile time using C Application Binary Interface (ABI) with separated C++ templates for cross-language bindings.
-* Code automatically formatted to Google C++ Style Guide upon save and formatted to not fight clang-format.
-* Deep Internet-of-Things integration using the SCRIPT Software Defined Networking Protocol.
-* Modeled after AI philosophy  ASCII mimicry of the Chinese Room Thought Experiment, Kabuki Theater Theory of Consciousness, and C0 Control Codes.
-
-## ASCII Data Types
-
-ASCII Data Types provide a suitable replacement for the C++ std library suitable for embedded systems and AI that facilitates:
-
-* All of the C++ POD types.
-* Year 2038-safe 32-bit, 64- bit and dual-32-bit with 16-year epoch and sub-second tick timestamps.
-* All data types are 64-bit aligned so they may be rapidly copied from one system to another on homo-endian system.
-* Optional MSB variant encoding provides fast data compression similar to UTF-8.
-* Contiguous Objects
-  * UTF-8, UTF-16, and UTF-32 strings.
-  * Stack - A stack of POD types in the form of a bounded-sized array.
-  * Array - A multidimensional array with Stack of dimensions.
-  * Loom - A homogeneous array of UTF-8, UTF-16, or UTF-32 strings.
-  * Table - A hash table of contiguous mappings.
-  * Map - A sparse map of unsigned integers to ASCII Data Types.
-  * Book - A multidictionary (i.e. unordered map) without hash table.
-  * Dictionary - A dictionary of ASCII Data Types with hash table.
-  * B-Sequence - Describes the order and maximum sizes of a Byte-Sequence of ASCII Data Types.
-  * Expression - Script2 Expressions capable of concurrently executing scripts in multiple language in real-time.
+* Script^2 IoT and Seam Tree Test nanoframework that provides custom debug code for each branch and leaf.
+* VM based on mbed with modular features.
+*
 
 [![GitHub version](https://badge.fury.io/gh/kabuki-starship%2Fkabuki-toolkit.svg)](https://badge.fury.io/gh/kabuki-starship%2Fkabuki-toolkit)
 
@@ -59,13 +35,12 @@ ASCII Data Types provide a suitable replacement for the C++ std library suitable
 
 | Module    | Description |
 |:---------:|:------------|
-| f2        | F2 Foundational Framework. |
-| f2sdk     | Firmware-to-Software Development SDK. |
-| features  | System features. |
-| hal       | Hardware Abstraction Layer. |
-| osal      | Operating System Abstraction Layer. |
-| platform  | Hardware platform. |
-| tek       | Kabuki tek firmware. |
+| F2SDK     | Firmware-to-Software Development SDK. |
+| Features  | System features. |
+| HAL       | Hardware Abstraction Layer. |
+| OSAL      | Operating System Abstraction Layer. |
+| Platform  | Hardware platform. |
+| Tek       | Kabuki tek firmware. |
 
 ## kabuki.drivers
 | Module     | Description |
@@ -78,28 +53,27 @@ ASCII Data Types provide a suitable replacement for the C++ std library suitable
 
 | Module     | Description |
 |:----------:|:------------|
-| audio      | Audio library. |
-| crabs      | Chinese Room Abstract Stack Machine. |
-| filesystem | Filesystem. |
-| graphics   | Graphics library. |
-| midi       | Musical instrument digital interface. |
+| Audio      | Audio library. |
+| AI         | Artificial Intelligence library. |
+| LTM        | Long-term memory and filesystem library. |
+| Math       | (Coming soon) Math library. |
+| Graphics   | Graphics library. |
+| MIDI       | Musical instrument digital interface. |
+| Touch      | Human-Machine interface. |
 
 ## kabuki.f2sdk Modules
 
 | Module   | Description |
 |:--------:|:------------|
-| ai       | Artificial Intelligence library. |
-| adsp     | Audio Digital Signal Processing library. |
-| app      | Application framework. |
-| data     | Data and logging library. |
-| drawing  | Vector drawing library. |
-| hmi      | Human-Machine interface. |
-| gui      | Graphical user interface. |
-| math     | (Coming soon) Math library. |
-| plotting | Plotting library. |
-| pro      | IDD and misc project and scheduling library. |
-| web      | HTTP server and web microframework. |
-| who      | Identification and authorization library. |
+| ADSP     | Audio Digital Signal Processing library. |
+| App      | Application framework. |
+| STM      | Short-term memory data structures library. |
+| Drawing  | Vector drawing library. |
+| GUI      | Graphical user interface. |
+| Plotting | Plotting library. |
+| Pro      | Project library. |
+| uWeb     | HTTP server and web microframework. |
+| Who      | Identification and authorization library. |
 
 ## kabuki.tek Firmware
 
@@ -109,13 +83,13 @@ All currently broken. Sorry. Please contribute as a developer. Thanks.
 |:-------------:|:------------|
 | AnyLED        | Firmware to control PWM and addressable LEDs. |
 | Unicontroller | A universal controller firmware for MIDI, DMX, SCRIPT SDNP, and OSC. |
-| Flowerbed     | Automatic watering system for plants. |
+| OregonCooler  | Automatic watering system for plants and smart-home cooling system (coming soon). |
 
 ### 3rd Party APIs
 
 * [ANGLE](https://github.com/google/angle) - Graphics and Windowing System.
-* [boost asio](https://www.boost.org/doc/libs/1_68_0/doc/html/boost_asio.html)
-* [Crow](https://github.com/ipkn/crow) - GCC 4.7/C++11 web microframework.
+* [boost asio](https://www.boost.org/doc/libs/1_68_0/doc/html/boost_asio.html) - Asynchronous IO.
+* [boost beast](https://www.boost.org/doc/libs/1_69_0/libs/beast/doc/html/index.html) - C++11 web microframework.
 * [boost filesystem](https://www.boost.org/doc/libs/1_68_0/doc/html/boost_filesystem.html) - Cross-platform filesystem.
 * [Cairo](https://www.cairographics.org/) - 2D graphics library.
 * [PLplot](https://github.com/PLplot/PLplot) - Math plotting library.
@@ -126,21 +100,114 @@ All currently broken. Sorry. Please contribute as a developer. Thanks.
 
 ### Kabuki VM Seam Package Diagram
 
-![Kabuki VM Package Diagram](https://raw.githubusercontent.com/kabuki-starship/kabuki-toolkit/master/docs/kabuki_vm_package_diagram.jpg)
+![Kabuki VM Package Diagram](https://raw.githubusercontent.com/kabuki-starship/kabuki-toolkit/master/docs/kabuki_package_diagram.jpg)
 
 **@note** *Package Diagram uses `C++` dependency inclusion, meaning that when a module/namespace is included all of the module's/namespace's dependencies are also included.*
 
+#### Kabuki VM Seams
+
+*     0_0 Frontal Cortex
+	* 0_0_00 script2
+	* 0_0_01 kabuki.hal
+	* 0_0_02 kabuki.drivers
+	* 0_0_03 kabuki.features.filecabinet
+	* 0_0_04 kabuki.toolkit.data
+	* 0_0_05 kabuki.toolkit.who
+	* 0_0_06 kabuki.toolkit.pro
+	* 0_0_07 kabuki.features.tls
+	* 0_0_08 kabuki.toolkit.uweb
+	* 0_0_09 kabuki.toolkit.orm
+	* 0_2_10 kabuki.features.midi
+	* 0_0_11 kabuki.features.math
+	* 0_0_12 kabuki.features.ai
+*     0_1    Somatosensory Cortex
+	* 0_1_00 kabuki.features.touch
+	* 0_1_01 kabuki.tek
+*     0_2    Auditory Cortex
+	* 0_2_01 kabuki.features.sound
+	* 0_2_02 kabuki.features.adsp
+	* 0_2_03 kabuki.toolkit.music
+*     0_3    Visual Cortex
+	* 0_3_00 kabuki.features.lights
+	* 0_3_01 kabuki.features.graphics
+	* 0_3_02 kabuki.features.camera
+	* 0_3_03 kabuki.features.webcam
+	* 0_3_04 kabuki.features.drawing
+	* 0_3_05 kabuki.toolkit.plotting
+	* 0_3_06 kabuki.toolkit.gui
+	* 0_3_07 kabuki.toolkit.video
+	* 0_3_08 kabuki.features.ai
+
 ## Vision and Mission Statement
 
-The Vision of KT is to provide a F2SDK the quality of JUCE with an Apache 2.0 license and without any code made redundant by C++11. The Mission is to target GCC 4.7 to allow for maximized web server distribution with a Modern Embedded-C++11 implementation of the SCRIPT Specification that can peal back the seam layers like an onion and provide custom debug information for each seam that works on embedded devices; then to gather some of the best Apache 2.0-compatible licensed C++ but preferably C APIs and layer them onto the SCRIPT Engine to create a functional programming language that binds well to other languages using a CABI.
+The Vision of KT is to provide a bloat-free DLL-friendly Embedded-C++11 Virtual Machine, Firmware-to-Software Development Kit, dynamic functional programming language, Jupyter Notebooks, and a real-time smartphone operating system that is the quality of Google Fuchsia, JUCE, Java, and Julia but with a commercially-permissive license.
 
-## Author
+The Mission is to target GCC 4.7, the minimum C++ version required to compile boost, to allow for maximized firmware and web server distribution, and to provide at least one demo application in each language that we bind too to assist in making cross-language bindings feel as native as possible.
 
-* [Cale McCollough](https://calemccollough.github.io) <[cale.mccollough@gmail.com](mailto:cale.mccollough@gmail.com)>
-* Authors of third-party APIs attributed in source headers.
+## Development Strategy
 
-## License
+It's pretty easy to get lost in KT. The trick is to put blinders on and only work on one thing at a time. This makes having a single repo over multiple repos a good thing right now still because it forces you to only work on one features at a time in an agile fashion using the night-and-day principle.
 
-Copyright 2014-18 (C) [Cale McCollough](mailto:calemccollough@gmail.com). All rights reserved (R).
+### Task 1
+
+Get NanoGUI and NavoVG working with ANGLE.
+
+### Task 2
+
+Get PLPlot with a Cairo backend working with ANGLE.
+
+### Task 3
+
+Get IMGUI working with ANGLE.
+
+### Task 4
+
+**@dependency** Task
+
+Rename NanoGUI to Kabuki.SDK.GUI.Retained and convert to Script2 C++ API.
+
+### Task 5
+
+Rename IMGUI to Kabuki.SDK.GUI.Intermediate and convert to Script2 C++ API.
+
+### Task 6
+
+Rename PLPlot to Kabuki.SDK.Plotting and convert to Script2 C++ API.
+
+### Task 7
+
+Combine common Kabuki.SDK.GUI.Retained and Kabuki.SDK.GUI.Intermediate code into Kabuki.Feature.Touch and abstract away rendering engine to use Cairo or NanoVG.
+
+### Task 8
+
+Get Maximillian working with PortAudio.
+
+### Task 9
+
+Rename PortAudio to Kabuki.Feature.Audio and convert to Script2 C++ API.
+
+### Task 10
+
+*Under Development:* **Kabuki Contacts**
+
+Develop Kabuki Contacts by binding NanoGUI to NanoVG **and** PLPlot with a Cairo back-end running on ANGLE and replace all of the C++ std lib code with Script2 C++ API. NanoVG is pretty small so this process **HOPEFULLY** shouldn't take very long. The end-goal is to ASCII C++ Style Guide compliance refactoring with the #Sloth and to not be reliant on a slow rendering engine. We will have to use a dedicated rendering engine for DLL plugins that don't require the highest frame-rates and to work with Skia when high frame-rates are needed and to be able to switch from Retained to Intermediate Mode GUI.
+
+### Task 11
+
+*Under Development:* **Kabuki Cards**
+
+Develop Kabuki Cards and a good Xamarin app with server with my **SUPER** basic 3D engine and interface with the A-Startup store so we can sell products.
+
+### Task 12
+
+Rename Maximillian to Kabuki.Feature.ADSP and convert to Script2 C++ API.
+
+### Task 13
+
+Split boost.asio into to HAL and Drivers and convert to Script2 C++ API and rename boost.beast to Kabuki.SDK.uWeb.
+
+# The License
+
+Copyright 2014-19 (C) Cale Jamison McCollough <<cale@astartup.net>>. All rights reserved (R).
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License [http://www.apache.org/licenses/LICENSE-2.0](http://www.apache.org/licenses/LICENSE-2.0). Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.

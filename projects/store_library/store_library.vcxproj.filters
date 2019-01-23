@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="resources">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="project">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="project\store_library">
+      <UniqueIdentifier>{514fea74-b6e8-428d-8c26-be27ee77de19}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="config.h">
+      <Filter>project\store_library</Filter>
+    </ClInclude>
+    <ClInclude Include="global.h">
+      <Filter>project\store_library</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.h">
+      <Filter>project\store_library</Filter>
+    </ClInclude>
+    <ClInclude Include="test_tree.h">
+      <Filter>project\store_library</Filter>
+    </ClInclude>
+    <ClInclude Include="00_foo.h">
+      <Filter>project\store_library</Filter>
+    </ClInclude>
+    <ClInclude Include="01_bar.h">
+      <Filter>project\store_library</Filter>
+    </ClInclude>
+    <ClInclude Include="ccart.h">
+      <Filter>project\store_library</Filter>
+    </ClInclude>
+    <ClInclude Include="cclient.h">
+      <Filter>project\store_library</Filter>
+    </ClInclude>
+    <ClInclude Include="citem.h">
+      <Filter>project\store_library</Filter>
+    </ClInclude>
+    <ClInclude Include="cserver.h">
+      <Filter>project\store_library</Filter>
+    </ClInclude>
+    <ClInclude Include="cinventory.h">
+      <Filter>project\store_library</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="global_config.inl">
+      <Filter>project\store_library</Filter>
+    </None>
+    <None Include="readme.md">
+      <Filter>project\store_library</Filter>
+    </None>
+    <None Include="test_debug.inl">
+      <Filter>project\store_library</Filter>
+    </None>
+    <None Include="test_footer.inl">
+      <Filter>project\store_library</Filter>
+    </None>
+    <None Include="test_release.inl">
+      <Filter>project\store_library</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="pch.cc">
+      <Filter>project\store_library</Filter>
+    </ClCompile>
+    <ClCompile Include="store_cart.cc">
+      <Filter>project\store_library</Filter>
+    </ClCompile>
+    <ClCompile Include="store_client.cc">
+      <Filter>project\store_library</Filter>
+    </ClCompile>
+    <ClCompile Include="store_inventory.cc">
+      <Filter>project\store_library</Filter>
+    </ClCompile>
+    <ClCompile Include="store_item.cc">
+      <Filter>project\store_library</Filter>
+    </ClCompile>
+    <ClCompile Include="store_server.cc">
+      <Filter>project\store_library</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
