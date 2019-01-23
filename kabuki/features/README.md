@@ -9,7 +9,7 @@ U| |_  u |  _|"   \/ _ \/     | |   \| |\| | \| |_) |/  |  _|" <\___ \/
 ```
 # kabuki.platform
 
-The Kabuki VM Features are based on mbed, an IoT platform similar to Arduino but for ARM, adapted to work on x64 processors. The definition of a kabuki.Feature is that it may have some hardware support, such as math and audio DSP. It is the OSAL that then abstracts the hardware away for the kabuki.toolkit.
+The Kabuki VM Features are based on mbed, an IoT platform similar to Arduino but for ARM, adapted to work on x64 processors. The definition of a kabuki.feature is that it may have some hardware support, such as math and audio DSP. It is the OSAL that then abstracts the hardware away for the kabuki.toolkit.
 
 # The License
 
