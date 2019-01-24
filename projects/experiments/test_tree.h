@@ -20,7 +20,7 @@ specific language governing permissions and limitations under the License. */
 #include "01_bar.h"
 #endif
 
-namespace project { namespace experiments { 
+namespace kabuki { namespace experiments { 
 
 static const CH1* Test(CH1* seam_log, CH1* seam_end,
                         const CH1* args) {
@@ -31,4 +31,4 @@ static const CH1* Test(CH1* seam_log, CH1* seam_end,
   >(seam_log, seam_end, args);
 }
 }  //< namespace experiments
-}  //< namespace project
+}  //< namespace kabuki

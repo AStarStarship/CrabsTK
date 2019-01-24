@@ -22,7 +22,7 @@ specific language governing permissions and limitations under the License. */
 
 using namespace _;
 
-namespace project { namespace experiments { 
+namespace kabuki { namespace experiments { 
 inline const CH1* _0_Foo (CH1* seam_log, CH1* seam_end, const CH1* args) {
 #if SEAM >= PROJECT_EXPERIMENTS_0
   TEST_BEGIN;
@@ -33,4 +33,4 @@ inline const CH1* _0_Foo (CH1* seam_log, CH1* seam_end, const CH1* args) {
   return 0;
 }
 }  //< namespace experiments
-}  //< namespace project
+}  //< namespace kabuki

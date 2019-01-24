@@ -1,6 +1,6 @@
 # projects
 
-This folder contains the list of projects that are a part of building, testing, and promoting Kabuki toolkit. If any project interests you, please feel free to take it over. I'm hoping to begin mapping NanoGUI to NanoVG, Cairo, PLPlot, and Skia so we can we independent of the the rendering engine.
+Projects in KT are organized with all of the library objects in a single namespace, the `::_::` namespace and projects in the `kabuki::project` namespace.
 
 ## The License
 
