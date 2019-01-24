@@ -69,7 +69,7 @@ All currently broken. Sorry. Please contribute as a developer. Thanks.
 | uweb     | HTTP server and web microframework. |
 | who      | Identification and authorization library. |
 
-## kabuki.tek Firmware
+## projects.kabuki
 
 | Module        | Description |
 |:-------------:|:------------|
