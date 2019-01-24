@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="resources">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="root">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="00_foo.h">
+      <Filter>root</Filter>
+    </ClInclude>
+    <ClInclude Include="01_bar.h">
+      <Filter>root</Filter>
+    </ClInclude>
+    <ClInclude Include="assembly.h">
+      <Filter>root</Filter>
+    </ClInclude>
+    <ClInclude Include="config.h">
+      <Filter>root</Filter>
+    </ClInclude>
+    <ClInclude Include="global.h">
+      <Filter>root</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.h">
+      <Filter>root</Filter>
+    </ClInclude>
+    <ClInclude Include="refresh.h">
+      <Filter>root</Filter>
+    </ClInclude>
+    <ClInclude Include="sloth.h">
+      <Filter>root</Filter>
+    </ClInclude>
+    <ClInclude Include="test_tree.h">
+      <Filter>root</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="global_config.inl">
+      <Filter>root</Filter>
+    </None>
+    <None Include="readme.md">
+      <Filter>root</Filter>
+    </None>
+    <None Include="sloth.s2">
+      <Filter>root</Filter>
+    </None>
+    <None Include="sloth_kabuki_toolkit.s2">
+      <Filter>root</Filter>
+    </None>
+    <None Include="test_debug.inl">
+      <Filter>root</Filter>
+    </None>
+    <None Include="test_footer.inl">
+      <Filter>root</Filter>
+    </None>
+    <None Include="test_release.inl">
+      <Filter>root</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="kakbuki_toolkit_updater.cc">
+      <Filter>root</Filter>
+    </ClCompile>
+    <ClCompile Include="pch.cc">
+      <Filter>root</Filter>
+    </ClCompile>
+    <ClCompile Include="sloth_refresh.cc">
+      <Filter>root</Filter>
+    </ClCompile>
+    <ClCompile Include="sloth_sloth.cc">
+      <Filter>root</Filter>
+    </ClCompile>
+    <ClCompile Include="tests_main.cc">
+      <Filter>root</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

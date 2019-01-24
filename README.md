@@ -18,13 +18,11 @@ Kabuki Toolkit (KT) is a modern embedded-C++ toolkit for making intelligent conn
 
 ## Quick Links
 
-* [FAQ](https://github.com/kabuki-starship/kabuki-toolkit.git/blob/master/docs/faq.md)
-  - *Frequently asked questions.*
-* [Quickstart Guide](https://github.com/kabuki-starship/kabuki-toolkit.git/blob/master/docs/quickstart-guide.md)
-  - *Check here for the Kabuki Toolkit Wiki and GitHub repository!*
 * [Script2](https://github.com/kabuki-starship/script2.md)
-  - *Serial Chinese Room, Interprocess, and Telemetry (SCRIPT) Script (Script2).*
+  - *Serial Chinese Room, Interprocess, and Telemetry (SCRIPT) Script (Script2) is the foundation of KT so it's the best place to start learning.*
 * [Kabuki Starship Website](https://kabuki-starship.github.io/)
+* [Documents & FAQ](https://github.com/kabuki-starship/kabuki-toolkit.git/blob/master/docs/faq.md)
+  - *Check out the `/docs/readme.md` for answers to Frequently asked questions and .*
 
 ## kabuki Modules
 
@@ -75,9 +73,19 @@ All currently broken. Sorry. Please contribute as a developer. Thanks.
 
 | Module        | Description |
 |:-------------:|:------------|
-| anyled        | Firmware to control PWM and addressable LEDs. |
-| unicontroller | A universal controller firmware for MIDI, Script2, DMX, and OSC. |
-| oregon_cooler | Automatic watering system for plants and smart-home cooling system (coming soon). |
+| anyled        | Early-stage universal PWM and addressable LED controller. |
+| autopilot     | Early-stage drone autopilot. |
+| av_studio     | Early-stage Audio-visual Studio app. |
+| cards         | Early-stage playing card game app. |
+| connections   | Early-stage Contact list, trading, and chat app. |
+| igeek         | Early-stage Interactive Genetic Evolutionary Environment for KabukiNet. |
+| kabuki_vm     | Early-stage Kabuki Virtual Machine (VM). |
+| kabukinet     | Early-stage KabukiNet Partial and Ordinary Differential Equation neural net (PODEN2) architecture. |
+| oregon_cooler | Early-state smart-home cooling system and automatic watering system. |
+| script2       | Oversight project for Script2. |
+| sloth         | Early-stage SDK automation utility for integrating and refactoring third-party libraries. |
+| typecraft     | Early-stage typing tutor based on the Minecraft world. |
+| unicontroller | Early-stage universal Script2, MIDI, DMX, and OSC controller. |
 
 ### 3rd Party APIs
 
@@ -100,7 +108,7 @@ All currently broken. Sorry. Please contribute as a developer. Thanks.
 
 #### Kabuki VM Seams
 
-*     0_0 Frontal Cortex
+*     0_0    Frontal Cortex
 	* 0_0_00 script2
 	* 0_0_01 kabuki.hal
 	* 0_0_02 kabuki.drivers
@@ -137,68 +145,6 @@ All currently broken. Sorry. Please contribute as a developer. Thanks.
 The Vision of KT is to provide a bloat-free DLL-friendly Embedded-C++11 Virtual Machine, Firmware-to-Software Development Kit, dynamic functional programming language, Jupyter Notebooks, and a real-time smartphone operating system that is the quality of Google Fuchsia, JUCE, Java, and Julia but with a commercially-permissive license.
 
 The Mission is to target the minimum C++ version required to compile the third-party dependencies, convert as much to Script2 as possible and mash it up with mbed for x86_64 and RISC-V to allow for maximized firmware and web server distribution, and to provide at least one demo application in each language that we bind too to assist in making cross-language bindings feel as native as possible.
-
-## Development Strategy
-
-It's pretty easy to get lost in KT. The trick is to put blinders on and only work on one thing at a time. This makes having a single repo over multiple repos a good thing right now still because it forces you to only work on one features at a time in an agile fashion using the night-and-day principle.
-
-### Task 1
-
-Get NanoGUI and NavoVG working with ANGLE.
-
-### Task 2
-
-Get PLPlot with a Cairo backend working with ANGLE.
-
-### Task 3
-
-Get IMGUI working with ANGLE.
-
-### Task 4
-
-**@dependency** Task
-
-Rename NanoGUI to kabuki.toolkit.gui.retained and convert to Script2 C++ API.
-
-### Task 5
-
-Rename IMGUI to kabuki.toolkit.gui.intermediate and convert to Script2 C++ API.
-
-### Task 6
-
-Rename PLPlot to kabuki.toolkit.plotting and convert to Script2 C++ API.
-
-### Task 7
-
-Combine common kabuki.toolkit.gui.retained and kabuki.toolkit.gui.intermediate code into kabuki.Features.Touch and abstract away rendering engine to use Cairo or NanoVG.
-
-### Task 8
-
-Get Maximillian working with PortAudio.
-
-### Task 9
-
-Rename PortAudio to kabuki.features.audio and convert to Script2 C++ API.
-
-### Task 10
-
-*Under Development:* **Kabuki Contacts**
-
-Develop Kabuki Contacts by binding NanoGUI to NanoVG **and** PLPlot with a Cairo back-end running on ANGLE and replace all of the C++ std lib code with Script2 C++ API. NanoVG is pretty small so this process **HOPEFULLY** shouldn't take very long. The end-goal is to ASCII C++ Style Guide compliance refactoring with the #Sloth and to not be reliant on a slow rendering engine. We will have to use a dedicated rendering engine for DLL plugins that don't require the highest frame-rates and to work with Skia when high frame-rates are needed and to be able to switch from Retained to Intermediate Mode GUI.
-
-### Task 11
-
-*Under Development:* **Kabuki Cards**
-
-Develop Kabuki Cards and a good Xamarin app with server with my **SUPER** basic 3D engine and interface with the A-Startup store so we can sell products.
-
-### Task 12
-
-Rename Maximillian to kabuki.Features.ADSP and convert to Script2 C++ API.
-
-### Task 13
-
-Split boost.asio into to hal and Drivers and convert to Script2 C++ API and rename boost.beast to kabuki.toolkit.uweb.
 
 # The License
 
