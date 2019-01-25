@@ -1,6 +1,6 @@
-# seams.0_0_10.kabuki_chat_console
+# project.kabuki.connect.app
 
-This is a project for quickly testing random bits of code.
+An early-stage chat, email, and trading app.
 
 # The License
 
