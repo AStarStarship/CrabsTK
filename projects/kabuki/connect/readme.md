@@ -1,6 +1,6 @@
-# project.kabuki.cards
+# project.kabuki.connect
 
-A card game designed to teach students how to program using playing cards.
+An early-stage chat, email, and trading app.
 
 # The License
 

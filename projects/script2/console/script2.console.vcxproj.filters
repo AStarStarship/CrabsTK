@@ -14,9 +14,6 @@
     <ClCompile Include="..\..\..\script2\script2_wall.cc">
       <Filter>script2</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\script2\seam_tree.cc">
-      <Filter>script2</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\script2\pch.cc">
       <Filter>script2</Filter>
     </ClCompile>
@@ -93,6 +90,9 @@
       <Filter>script2</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\script2\script2_vk.cc">
+      <Filter>script2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\script2\test_runner.cc">
       <Filter>script2</Filter>
     </ClCompile>
   </ItemGroup>
