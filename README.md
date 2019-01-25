@@ -74,17 +74,23 @@ All currently broken. Sorry. Please contribute as a developer. Thanks.
 | Module        | Description |
 |:-------------:|:------------|
 | anyled        | Early-stage universal PWM and addressable LED controller. |
-| autopilot     | Early-stage drone autopilot. |
 | av_studio     | Early-stage Audio-visual Studio app. |
 | cards         | Early-stage playing card game app. |
 | connections   | Early-stage Contact list, trading, and chat app. |
 | igeek         | Early-stage Interactive Genetic Evolutionary Environment for KabukiNet. |
 | kabuki_vm     | Early-stage Kabuki Virtual Machine (VM). |
 | kabukinet     | Early-stage KabukiNet Partial and Ordinary Differential Equation neural net (PODEN2) architecture. |
-| oregon_cooler | Early-state smart-home cooling system and automatic watering system. |
 | script2       | Oversight project for Script2. |
 | sloth         | Early-stage SDK automation utility for integrating and refactoring third-party libraries. |
 | typecraft     | Early-stage typing tutor based on the Minecraft world. |
+
+## projects.kabuki.tek
+
+| Module        | Description |
+|:-------------:|:------------|
+| anyled        | Early-stage universal PWM and addressable LED controller. |
+| autopilot     | Early-stage drone autopilot. |
+| oregon_cooler | Early-state smart-home cooling system and automatic watering system. |
 | unicontroller | Early-stage universal Script2, MIDI, DMX, and OSC controller. |
 
 ### 3rd Party APIs
