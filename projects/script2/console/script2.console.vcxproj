@@ -50,12 +50,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\script2\00_rng.h" />
-    <ClInclude Include="..\..\..\script2\01_itos_and_stoi.h" />
+    <ClInclude Include="..\..\..\script2\01_itos_stoi.h" />
     <ClInclude Include="..\..\..\script2\02_socket.h" />
-    <ClInclude Include="..\..\..\script2\03_utf_and_strand.h" />
-    <ClInclude Include="..\..\..\script2\04_ftos_and_stof.h" />
+    <ClInclude Include="..\..\..\script2\03_utf.h" />
+    <ClInclude Include="..\..\..\script2\04_ftos_stof.h" />
     <ClInclude Include="..\..\..\script2\05_clock.h" />
-    <ClInclude Include="..\..\..\script2\06_stack.h" />
     <ClInclude Include="..\..\..\script2\07_array.h" />
     <ClInclude Include="..\..\..\script2\08_loom.h" />
     <ClInclude Include="..\..\..\script2\09_table.h" />

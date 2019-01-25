@@ -163,22 +163,7 @@
     <ClInclude Include="..\..\..\script2\00_rng.h">
       <Filter>script2</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\script2\01_itos_and_stoi.h">
-      <Filter>script2</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\script2\02_socket.h">
-      <Filter>script2</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\script2\03_utf_and_strand.h">
-      <Filter>script2</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\script2\04_ftos_and_stof.h">
-      <Filter>script2</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\script2\05_clock.h">
-      <Filter>script2</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\script2\06_stack.h">
       <Filter>script2</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\script2\07_array.h">
@@ -335,6 +320,18 @@
       <Filter>script2</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\script2\public.h">
+      <Filter>script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\script2\03_utf.h">
+      <Filter>script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\script2\05_clock.h">
+      <Filter>script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\script2\01_itos_stoi.h">
+      <Filter>script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\script2\04_ftos_stof.h">
       <Filter>script2</Filter>
     </ClInclude>
   </ItemGroup>
