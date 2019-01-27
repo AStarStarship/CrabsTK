@@ -22,7 +22,7 @@
 namespace _ {
 
 template<typename T>
-class API Rect2D<T>
+class SDK Rect2D<T>
 {
     public:
 
@@ -43,7 +43,7 @@ class API Rect2D<T>
     {
     }
 
-    /** Constructs a rectangle from the given point and vector. */
+    /** Constructs a rectangle from the given point and TArray. */
     Rect2D<T> (const Point3D<T>& p, const Vect<T>& v) :
         x (p.x),
         y (p.y),
@@ -116,14 +116,14 @@ class API Rect2D<T>
         return true;
     }
 
-    /** Sets the rectangle's width and height to the given vector. */
+    /** Sets the rectangle's width and height to the given TArray. */
     void SetDimensions (const Vect<T>& v) {
         width  = v.x;
         height = v.y;
     }
 
     /** Gets true if this object's Point is the same as the given coordinates. */
-    bool Equals (T x2, T y2) const {
+    BOL Equals (T x2, T y2) const {
         // @note This algoirhm assumes that it's a lower probability that 
         //       the two are equal.
         if (x == x2 && y == y2)
@@ -132,12 +132,12 @@ class API Rect2D<T>
     }
 
     /** Gets true if this object's Point is the same as the given coordinates. */
-    bool Equals (const Rect2D<T>& r) const {
+    BOL Equals (const Rect2D<T>& r) const {
         return Equals (r.x, r.y);
     }
 
     /** Gets true if this rectangle contains the given point. */
-    bool Contains (const Point2D<T>& point) const {
+    BOL Contains (const Point2D<T>& point) const {
         T x      = p.x,
           y      = p.y,
           left   = x,
@@ -150,7 +150,7 @@ class API Rect2D<T>
     }
 
     /** Gets true if this object contains the given point. */
-    bool Contains (T x_value, T y_value) const {
+    BOL Contains (T x_value, T y_value) const {
         T left   = x,
           top    = y,
           right  = left + width,
@@ -161,7 +161,7 @@ class API Rect2D<T>
     }
 
     /** Gets true if this rectangle contains the given rectangle. */
-    bool Contains (const Rect2D<T>& r) {
+    BOL Contains (const Rect2D<T>& r) {
         if ((value.x < x) || (value.y > y) || (value.width < width) || (value.height > height)) return false;
         return true;
     }
@@ -185,7 +185,7 @@ class API Rect2D<T>
     }
 
     /** Gets true of this rectangle intersects/overlaps the given rectangle. */
-    bool Intersects (T x2, T y2, T width2, T height2) const {
+    BOL Intersects (T x2, T y2, T width2, T height2) const {
         T left = x,
             top = y,
             right = left + width,
@@ -201,7 +201,7 @@ class API Rect2D<T>
     }
 
     /** Gets true of this rectangle intersects/overlaps the given rectangle. */
-    bool Intersects (const Rect2D<T>& r) const {
+    BOL Intersects (const Rect2D<T>& r) const {
         return Intersects (r.x, r.y, r.width, r.height);
     }
 
@@ -217,12 +217,12 @@ class API Rect2D<T>
         y += dy;
     }
 
-    bool operator== (const Rect2D<T>& r) const {
+    BOL operator== (const Rect2D<T>& r) const {
         return (width == value.width) && (height == value.height) && 
                (x == value.x) && (y == value.y);
     }
 
-    bool operator!= (const Rect2D<T>& r) const {
+    BOL operator!= (const Rect2D<T>& r) const {
         return (width != value.width) || (height != value.height) || 
                (x != value.x) || (y != value.y);
     }

@@ -20,13 +20,13 @@ specific language governing permissions and limitations under the License. */
 
 namespace _ {
 
-char* PrintMsld(uint32_t value, char* text, char* text_end) {
+CH1* PrintMsld(uint32_t value, CH1* text, CH1* text_end) {
   // Lookup table for powers of 10.
   static const uint32_t k10ToThe[]{1,         10,         100,         1000,
                                    10000,     100000,     1000000,     10000000,
                                    100000000, 1000000000, ~(uint32_t)0};
 
-  /** Lookup table of ASCII char pairs for 00, 01, ..., 99.
+  /** Lookup table of ASCII CH1 pairs for 00, 01, ..., 99.
       To convert this algorithm to big-endian, flip the digit pair bytes. */
   static const uint16_t kDigits00To99[100] = {
       0x3030, 0x3130, 0x3230, 0x3330, 0x3430, 0x3530, 0x3630, 0x3730, 0x3830,
@@ -43,7 +43,7 @@ char* PrintMsld(uint32_t value, char* text, char* text_end) {
       0x3939,
   };
 
-  static const char kMsbShift[] = {
+  static const CH1 kMsbShift[] = {
       4, 7, 10, 14, 17, 20, 24, 27, 30,
   };
 
@@ -53,24 +53,24 @@ char* PrintMsld(uint32_t value, char* text, char* text_end) {
 
   const uint32_t* power_of_ten;
   uint16_t* text16;
-  char index,  //< Temp multi-purpose variable.
+  CH1 index,  //< Temp multi-purpose variable.
       length;
   uint16_t digits;  //<
   uint32_t comparator, offset;
 
 #if SEAM == SEAM_0_0_0
   // Write a bunches of xxxxxx to the buffer for debug purposes.
-  for (int i = 0; i <= 21; ++i) {
+  for (SI4 i = 0; i <= 21; ++i) {
     *(text + i) = 'x';
   }
   *(text + 21) = 0;
-  char* begin = text;
-  char buffer[256];
+  CH1* begin = text;
+  CH1 buffer[256];
 #endif
   if (value < 10) {
     PRINTF("\n    Range:[0, 9] length:1 ");
     if (text + 1 >= text_end) return nullptr;
-    *text++ = '0' + (char)value;
+    *text++ = '0' + (CH1)value;
     PRINT_PRINTED;
     return text;
   }
@@ -99,7 +99,7 @@ char* PrintMsld(uint32_t value, char* text, char* text_end) {
   Print3:
     PRINTF("\n    Print3:%u", value);
     PRINT_BINARY_TABLE;
-    index = 2 + (char)(value >> 7);
+    index = 2 + (CH1)(value >> 7);
     offset = 100;
     comparator = index * offset;
     PRINTF("\n    [%c] comparator:%u", index + '0', comparator);
@@ -125,20 +125,20 @@ char* PrintMsld(uint32_t value, char* text, char* text_end) {
       if (value >> 30) {
         power_of_ten = &k10ToThe[10];
         length = 10;
-        index = 2 + (char)(value >> 30);
+        index = 2 + (CH1)(value >> 30);
       } else if (value >> 27) {
         power_of_ten = &k10ToThe[9];
         length = 9;
-        index = 2 + (char)(value >> 27);
+        index = 2 + (CH1)(value >> 27);
       } else {  // if (value >> 24) {
         power_of_ten = &k10ToThe[8];
         length = 8;
-        index = 2 + (char)(value >> 24);
+        index = 2 + (CH1)(value >> 24);
       }
     } else if (value >> 20) {
       power_of_ten = &k10ToThe[7];
       length = 7;
-      index = 2 + (char)(value >> 21);
+      index = 2 + (CH1)(value >> 21);
     } else {  // if (value >> 17) {
       if (text + 6 >= text_end) return nullptr;
       text16 = reinterpret_cast<uint16_t*>(text + 4);
@@ -293,7 +293,7 @@ NextMsd:
     PRINT_BINARY_TABLE;
     PRINTF("\n    Shifting %u >> %u bits to equal %u", value, (uint)index,
            (uint)(value >> index));
-    index = 2 + (char)(value >> index);
+    index = 2 + (CH1)(value >> index);
     comparator = index * offset;
     PRINTF("\n    [%c] comparator:%u offset:%u", index + '0', comparator,
            offset);
@@ -326,7 +326,7 @@ NextMsd:
         return text_end;
       }
       if (length - 1 == 0) {
-        *text = (char)value + '0';
+        *text = (CH1)value + '0';
         PRINT_PRINTED;
         return text_end;
       }
@@ -356,7 +356,7 @@ NextMsd:
     PRINT_BINARY_TABLE;
     PRINTF("\n    Shifting %u >> %u bits to equal %u", value, (uint)index,
            (uint)(value >> index));
-    index = 2 + (char)(value >> index);
+    index = 2 + (CH1)(value >> index);
     comparator = index * offset;
     goto BeginConversion;
   }
@@ -364,7 +364,7 @@ NextMsd:
   if (length - 4 == 0) goto Print4;
   if (length - 3 == 0) goto Print3;
   if (length - 1 == 0) {
-    *text = (char)value + '0';
+    *text = (CH1)value + '0';
     return text_end;
   }
   // else (length == 2)

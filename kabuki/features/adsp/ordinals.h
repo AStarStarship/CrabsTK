@@ -67,7 +67,7 @@ typedef uint64_t FLAC__uint64;
 
 #endif
 
-typedef int FLAC__bool;
+typedef SI4 FLAC__bool;
 
 typedef FLAC__uint8 FLAC__byte;
 

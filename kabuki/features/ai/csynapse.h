@@ -19,7 +19,7 @@ specific language governing permissions and limitations under the License. */
 #define HEADER_FOR_KABUKI_TOOLKIT_AIML_SYNAPSE
 
 typedef float        float_t;
-typedef unsigned int uint;
+typedef unsigned SI4 uint;
 
 namespace _ {
 

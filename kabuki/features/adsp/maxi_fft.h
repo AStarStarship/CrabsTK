@@ -46,14 +46,14 @@ class maxiFFT {
     buffer = magnitudes = phases = window = avgPower = NULL;
   };
   ~maxiFFT();
-  void setup(int fftSize, int windowSize, int hopSize);
-  bool process(float value);
+  void setup(SI4 fftSize, SI4 windowSize, SI4 hopSize);
+  BOL process(float value);
   float *magsToDB();
   float *magnitudes, *phases, *magnitudesDB;
   float *avgPower;
-  int windowSize;
-  int hopSize;
-  int bins;
+  SI4 windowSize;
+  SI4 hopSize;
+  SI4 bins;
 
   // features
   float spectralFlatness();
@@ -61,28 +61,28 @@ class maxiFFT {
 
  private:
   float *buffer, *window;
-  int pos;
+  SI4 pos;
   float nextValue;
-  int fftSize;
+  SI4 fftSize;
   fft *_fft;
-  bool newFFT;
+  BOL newFFT;
 };
 
 class maxiIFFT {
  public:
   maxiIFFT() { _fft = 0; };
   ~maxiIFFT();
-  void setup(int fftSize, int windowSize, int hopSize);
+  void setup(SI4 fftSize, SI4 windowSize, SI4 hopSize);
   float process(float *magnitudes, float *phases);
 
  private:
   float *ifftOut, *buffer, *window;
-  int windowSize;
-  int bins;
-  int hopSize;
-  int pos;
+  SI4 windowSize;
+  SI4 bins;
+  SI4 hopSize;
+  SI4 pos;
   float nextValue;
-  int fftSize;
+  SI4 fftSize;
   fft *_fft;
 };
 
@@ -92,9 +92,9 @@ class maxiFFTOctaveAnalyzer {
  public:
   float samplingRate;      // sampling rate in Hz (needed to calculate frequency
                            // spans)
-  int nSpectrum;           // number of spectrum bins in the fft
-  int nAverages;           // number of averaging bins here
-  int nAveragesPerOctave;  // number of averages per octave as requested by user
+  SI4 nSpectrum;           // number of spectrum bins in the fft
+  SI4 nAverages;           // number of averaging bins here
+  SI4 nAveragesPerOctave;  // number of averages per octave as requested by user
   float spectrumFrequencySpan;  // the "width" of an fft spectrum bin in Hz
   float
       firstOctaveFrequency;  // the "top" of the first averaging bin here in Hz
@@ -103,11 +103,11 @@ class maxiFFTOctaveAnalyzer {
   float *averages;                  // the actual averages
   float *peaks;         // peaks of the averages, aka "maxAverages" in other
                         // implementations
-  int *peakHoldTimes;   // how long to hold THIS peak meter?  decay if == 0
-  int peakHoldTime;     // how long do we hold peaks? (in fft frames)
+  SI4 *peakHoldTimes;   // how long to hold THIS peak meter?  decay if == 0
+  SI4 peakHoldTime;     // how long do we hold peaks? (in fft frames)
   float peakDecayRate;  // how quickly the peaks decay:  0f=instantly .. 1f=not
                         // at all
-  int *
+  SI4 *
       spe2avg;  // the mapping between spectrum[] indices and averages[] indices
   // the fft's log equalizer() is no longer of any use (it would be nonsense to
   // log scale the spectrum values into log-sized average bins) so here's a
@@ -119,7 +119,7 @@ class maxiFFTOctaveAnalyzer {
   // so.. note that clever use of it can also provide a "gain" control of sorts
   // (fe: set intercept to 2f and slope to 0f to double gain)
 
-  void setup(float samplingRate, int nBandsInTheFFT, int nAveragesPerOctave);
+  void setup(float samplingRate, SI4 nBandsInTheFFT, SI4 nAveragesPerOctave);
 
   void calculate(float *fftData);
 };

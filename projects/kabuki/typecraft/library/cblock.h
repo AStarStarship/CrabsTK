@@ -29,20 +29,20 @@ namespace typecraft {
 class Block : public Item {
  public:
   /* Constructor creates a Block with the given count of the same Item. */
-  Block(int type, int variant, int count = 0);
+  Block(SI4 type, SI4 variant, SI4 count = 0);
 
   /* Gets the type of Block. */
-  int GetNumItems();
+  SI4 GetNumItems();
 
   /* Gets the type. */
   Item::Type Getype();
 
   /* Mines a block.
       @return Returns 0 if not mined and */
-  int Mine(Item* tool);
+  SI4 Mine(Item* tool);
 
  private:
-  int strenth_,          //< Block strength.
+  SI4 strenth_,          //< Block strength.
       regeneration_;     //< How fast the block regenerates.
   Array<Item*>* items_;  //< Items contained in this block.
 };

@@ -166,7 +166,7 @@ void CellEvolutionaryInterface::keyTyped (KeyEvent e)
 
 void CellEvolutionaryInterface::keyPressed (KeyEvent e)
 {
-  char key = e.getKeyChar ();
+  CH1 key = e.getKeyChar ();
 
   if (key == 'c' || key == 'C')
   {
@@ -197,7 +197,7 @@ void CellEvolutionaryInterface::keyPressed (KeyEvent e)
 
 void CellEvolutionaryInterface::keyReleased (KeyEvent e)
 {
-  char key = e.getKeyChar ();
+  CH1 key = e.getKeyChar ();
 
   if (key == 'k' || key == 'K')
   {

@@ -67,12 +67,12 @@ there is an 80% chance of spawning a wither skeleton instead
 
 */
 
-Spawn::Spawn(const char* name);
+Spawn::Spawn(const CH1* name);
 
-int Spawn::GetType() {}
+SI4 Spawn::GetType() {}
 
 /** Sets the type. */
-const char* Spawn::Setype(int type) {}
+const CH1* Spawn::Setype(SI4 type) {}
 
 void Spawn::Mine() {}
 }  // namespace typecraft

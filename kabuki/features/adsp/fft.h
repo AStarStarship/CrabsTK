@@ -47,31 +47,31 @@ class fft {
 	
 public:
 	
-	fft(int fftSize);
+	fft(SI4 fftSize);
 	~fft();	
 	
-	int n; //fftSize
-	int half; //halfFFTSize
+	SI4 n; //fftSize
+	SI4 half; //halfFFTSize
 	
 	float			*in_real, *out_real, *in_img, *out_img;
     
 #ifdef __APPLE_CC__
-	int log2n; //log2(n);
+	SI4 log2n; //log2(n);
     FFTSetup        setupReal;
     COMPLEX_SPLIT   A;
 	float *polar;
-	void powerSpectrum_vdsp(int start, float *data, float *window, float *magnitude,float *phase);	
-	void inversePowerSpectrum_vdsp(int start, float *finalOut, float *window, float *magnitude,float *phase);	
+	void powerSpectrum_vdsp(SI4 start, float *data, float *window, float *magnitude,float *phase);	
+	void inversePowerSpectrum_vdsp(SI4 start, float *finalOut, float *window, float *magnitude,float *phase);	
 	void convToDB_vdsp(float *in, float *out);
 #endif
 	
 	/* Calculate the power spectrum */
-	void powerSpectrum(int start, float *data, float *window, float *magnitude, float *phase);
+	void powerSpectrum(SI4 start, float *data, float *window, float *magnitude, float *phase);
 	/* ... the inverse */
-	void inversePowerSpectrum(int start, float *finalOut, float *window, float *magnitude,float *phase);	
+	void inversePowerSpectrum(SI4 start, float *finalOut, float *window, float *magnitude,float *phase);	
 	void convToDB(float *in, float *out);
     
-	static void genWindow(int whichFunction, int NumSamples, float *window);
+	static void genWindow(SI4 whichFunction, SI4 NumSamples, float *window);
 	
 };
 

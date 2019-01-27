@@ -35,7 +35,7 @@ class BlackjackGame : public Game {
         kMinPlayers = 1,  //< Min players.
     };
 
-    static const int kDenominations[14];
+    static const SI4 kDenominations[14];
 
     /** Constructor.
         The maximum number of players in Blackjack is set by the house. The more
@@ -45,8 +45,8 @@ class BlackjackGame : public Game {
                    int64_t buy_in      = Dealer::kDefaultAnte,
                    int64_t ante        = Dealer::kDefaultAnte,
                    int64_t min_bet     = Dealer::kDefaultMinBet,
-                   int     min_players = kMinPlayers,
-                   int     max_players = Dealer::kDefaultMaxPlayer);
+                   SI4     min_players = kMinPlayers,
+                   SI4     max_players = Dealer::kDefaultMaxPlayer);
 
     /** Virtual destructor. */
     virtual ~BlackjackGame ();
@@ -55,16 +55,16 @@ class BlackjackGame : public Game {
     virtual void RestartGame ();
 
     /** Gets the round_number_. */
-    int GetRoundNumber ();
+    SI4 GetRoundNumber ();
 
     /** Sets the round_number_. */
-    bool SetRoundNumber (int value);
+    BOL SetRoundNumber (SI4 value);
 
     /** Gets the pot_. */
-    int GetPot ();
+    SI4 GetPot ();
 
     /** Sets the pot_. */
-    bool SetPot (int value);
+    BOL SetPot (SI4 value);
 
     /** Gets the dealer_. */
     BlackjackDealer* GetDealer ();
@@ -87,11 +87,11 @@ class BlackjackGame : public Game {
         @param text     Beginning of the Text buffer. 
         @param strand_end End of the Text buffer.
         @return Returns nil upon success and an error string upon failure. */
-    virtual const char* Sudo (const char* text, const char* strand_end);
+    virtual const CH1* Sudo (const CH1* text, const CH1* strand_end);
 
     private:
 
-    int              round_number_, //< Current round number.
+    SI4              round_number_, //< Current round number.
                      pot_,          //< Current number of points in the pot.
                      num_ai_players;//< Num AI players.
     BlackjackDealer* dealer_;       //< Dealer.

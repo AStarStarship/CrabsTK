@@ -46,31 +46,31 @@ class Game : public _::Operation {
     };
 
     /** Default constructor. */
-    Game (id::UserList& users, const char* game_name, int min_players,
-              int max_players);
+    Game (id::UserList& users, const CH1* game_name, SI4 min_players,
+              SI4 max_players);
 
     /** Constructor. */
     virtual ~Game ();
 
     /** Gets the game_name_. */
-    const char* GetName ();
+    const CH1* GetName ();
 
     /** Gets the FSM state. */
     int32_t GetState ();
 
     /** Virtual function sets the FSM state to a positive value. */
-    virtual bool SetState (int state);
+    virtual BOL SetState (SI4 state);
 
     /** The number of players_.
     min_players_ must be between the min and max number of players_. */
-    int GetNumPlayers ();
+    SI4 GetNumPlayers ();
 
     /** The minimum number of players_.
     min_players_ can not be greater than max_players_. */
-    int GetMinPlayers ();
+    SI4 GetMinPlayers ();
 
     /** The maximum number of players_. */
-    int GetMaxPlayers ();
+    SI4 GetMaxPlayers ();
 
     /** Restart the game to a new state with a preset number of players_. */
     virtual void RestartGame () = 0;
@@ -87,12 +87,12 @@ class Game : public _::Operation {
     /** Attempts to add an observer user to the game.
         @return Returns -1 upon failure and the number of observers upon
                 success. */
-    virtual int Join (id::User* user);
+    virtual SI4 Join (id::User* user);
 
     /** Attempts to add an observer user to the game.
         @return Returns -1 upon failure and the number of observers upon
                 success. */
-    virtual int Leave (id::User* user);
+    virtual SI4 Leave (id::User* user);
 
     /** Gets a reference to the observers_. */
     TArray<id::User*>& GetObservers ();
@@ -111,11 +111,11 @@ class Game : public _::Operation {
         @param text     Beginning of the Text buffer. 
         @param strand_end End of the Text buffer.
         @return Returns nil upon success and an error string upon failure. */
-    virtual const char* Sudo (const char* text,
-                            const char* strand_end) = 0;
+    virtual const CH1* Sudo (const CH1* text,
+                            const CH1* strand_end) = 0;
     protected:
 
-    const char           * name_;  //< Game name.
+    const CH1           * name_;  //< Game name.
     int32_t                state_,      //< Game state.
                            min_players_;//< Min players.
     id::UserList         & users_;      //< Server UserList.
@@ -124,7 +124,7 @@ class Game : public _::Operation {
 };      //< class Game
 
 /** Returns the default play again or quit string. */
-KABUKI const char* DefaultPlayAgainText ();
+KABUKI const CH1* DefaultPlayAgainText ();
 
 }       //< namespace cards
 }       //< namespace kabuki

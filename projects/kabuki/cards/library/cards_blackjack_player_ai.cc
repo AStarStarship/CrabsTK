@@ -38,8 +38,8 @@ Array<CardCombo> BlackjackPlayerAi::GetHandCombos () {
     scores.low = 0;  //< scores.low is the total of the cards with aces as 1
     scores.high = 0; //< scores.high is the number of aces to add on an opt 10.
 
-    for (int s = 0; s < GetCount (); ++s) {
-        int currentValue = GetCard (s)->GetPip ();
+    for (SI4 s = 0; s < GetCount (); ++s) {
+        SI4 currentValue = GetCard (s)->GetPip ();
 
         if (currentValue == 1) // First check if its an ace
         {
@@ -62,7 +62,7 @@ Array<CardCombo> BlackjackPlayerAi::GetHandCombos () {
 }*/
 
 /**
-bool BlackjackPlayerAi::PlayOrPass () {
+BOL BlackjackPlayerAi::PlayOrPass () {
     // Estimated chances of winning. 
     static const float chanes_of_winning_low[] = {
         0.1f, 0.2f, 0.3f, 0.4f, 0.5f, 0.6f, 0.7f, 0.8f, 0.9f
@@ -71,7 +71,7 @@ bool BlackjackPlayerAi::PlayOrPass () {
         0.6f, 0.6f, 0.5f, 0.5f, 0.4f, 0.4f, 0.2f, 0.2f, 0.2f
     };
 
-    int this_high_score  = GetScore (Deck::kAcesHigh),
+    SI4 this_high_score  = GetScore (Deck::kAcesHigh),
         this_low_score   = GetScore (Deck::kAcesLow),
         other_high_score = other_score.GetScore (Deck::kAcesHigh),
         other_low_score  = other_score.GetScore (Deck::kAcesLow);
@@ -105,10 +105,10 @@ bool BlackjackPlayerAi::PlayOrPass () {
     float chance_of_winning;
 
     if (this_high_score < 21) {
-        int numPointsLeft = 21 - this_high_score;
+        SI4 numPointsLeft = 21 - this_high_score;
         chance_of_winning = chanes_of_winning_low[numPointsLeft];
     } else {
-        int numPointsLeft = 21 - this_low_score;
+        SI4 numPointsLeft = 21 - this_low_score;
         chance_of_winning = chanes_of_winning_high[numPointsLeft];
     }
 

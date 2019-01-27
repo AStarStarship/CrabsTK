@@ -1,6 +1,6 @@
 /* Kabuki Toolkit @version 0.x
 @link    https://github.com/kabuki-starship/kabuki-toolkit.git
-@file    /kabuki/features/hmi/hmi_parameter_set.h
+@file    /kabuki/features/touch/touch_parameter_set.h
 @author  Cale McCollough <https://calemccollough.github.io>
 @license Copyright (C) 2014-19 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -13,7 +13,7 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <pch.h>
-#if SEAM >= SEAM_00_03_00_00__00
+#if SEAM >= KABUKI_FEATURES_TOUCH_1
 #ifndef HEADER_FOR_KT_HMI_PARAMETERSET
 #define HEADER_FOR_KT_HMI_PARAMETERSET
 
@@ -24,7 +24,7 @@ namespace _ {
 /* A set of Parameter<T> that can be addressed by index.
  */
 template <typename T>
-class API ParameterSet {
+class SDK ParameterSet {
  public:
   enum {
     MinNumElements = 2,    //< The minimum number of columns.
@@ -35,7 +35,7 @@ class API ParameterSet {
   ParameterSet(size_type newNumControls = MinNumElements);
 
   /* Constructor creates a row with pointers to the newControls. */
-  ParameterSet(const _::Array<Parameter<T>*>& controls);
+  ParameterSet(const ::_::TArray<Parameter<T>*>& controls);
 
   //< Copy constrcutor.
   ParameterSet(const ParameterSet& o);
@@ -60,12 +60,12 @@ class API ParameterSet {
   size_type getNumParams() const;
   //< gets the number of parameters in the set.
 
-  _::Utf& Print(_::Utf& print) const;
+  ::_::Utf& Print(_::Utf& print) const;
   /* Prints this object to a string. */
 
  private:
-  _::Array<Parameter<T>> params;  //< An array of Parameter<T> pointers.
+  ::_::TArray<Parameter<T>> params;  //< An array of Parameter<T> pointers.
 };                                //< class ParameterSet
 }  // namespace _
 #endif  //< HEADER_FOR_KT_HMI_PARAMETERSET
-#endif  //< #if SEAM >= SEAM_00_03_00_00__00
+#endif  //< #if SEAM >= KABUKI_FEATURES_TOUCH_1

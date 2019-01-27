@@ -20,7 +20,7 @@ using namespace std;
 
 namespace kabuki { namespace cards {
 
-Card::Card (int pip, Suit* suit, int denomination) {
+Card::Card (SI4 pip, Suit* suit, SI4 denomination) {
     Set (pip, suit, denomination);
 }
 
@@ -31,7 +31,7 @@ Card::Card (const Card& other) :
     // Nothing to do here. :-)
 }
 
-void Card::Set (int pip, Suit* suit, int denomination) {
+void Card::Set (SI4 pip, Suit* suit, SI4 denomination) {
     // First we have to ensure that the input values were in bounds.
     //< Pip values range from 0 - 13 J=0, A=1, J=10, Q=11, K=13
     if (pip < 0) {
@@ -42,28 +42,28 @@ void Card::Set (int pip, Suit* suit, int denomination) {
     pip_ = pip;
     suit = (suit == nullptr) ? SuitError () : suit;
     suit_ = suit;
-    int offset = 13 * suit->GetDenomination ();
+    SI4 offset = 13 * suit->GetDenomination ();
     denomination_ = offset + ((denomination == ~0) ? pip : denomination);
     //LoadCardImage (folder_path);
 }
 
-int Card::Compare (Card* other) {
+SI4 Card::Compare (Card* other) {
     return other->denomination_ - denomination_;
 }
 
-bool Card::Equals (Card* other) {
+BOL Card::Equals (Card* other) {
     return !Compare (other);
 }
 
-int Card::GetPip () {
+SI4 Card::GetPip () {
     return pip_;
 }
 
-int Card::GetDenomination () {
+SI4 Card::GetDenomination () {
     return denomination_;
 }
 
-void Card::SetDenomination (int value) {
+void Card::SetDenomination (SI4 value) {
     // The user might want to use a negative point value in a game.
     denomination_ = value;
 }
@@ -73,7 +73,7 @@ Suit* Card::GetSuit () {
 }
 
 /*
-int Card::LoadCardImage (const char* directory) {
+SI4 Card::LoadCardImage (const CH1* directory) {
     // First, check to see if the directory is valid.
     File filePath = File (directory);
 

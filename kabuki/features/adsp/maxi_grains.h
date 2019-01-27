@@ -89,18 +89,18 @@ struct gaussianWinFunctor {
 template<typename F>
 class maxiGrainWindowCache {
 public:
-    unsigned int cacheSize;
+    unsigned SI4 cacheSize;
     
     maxiGrainWindowCache() {
         cacheSize = maxiSettings::sampleRate / 2.0; //allocate mem for up to 500ms grains
         cache = (double**)malloc(cacheSize * sizeof(double*));
-        for(int i=0; i < cacheSize; i++) {
+        for(SI4 i=0; i < cacheSize; i++) {
             cache[i] = NULL;
         }
     }
     
     ~maxiGrainWindowCache() {
-        for(int i=0; i < cacheSize; i++) {
+        for(SI4 i=0; i < cacheSize; i++) {
             if(NULL != cache[i]) {
                 free(cache[i]);
             }
@@ -108,10 +108,10 @@ public:
         free(cache);
     }
     
-    double* getWindow(const unsigned int length) {
+    double* getWindow(const unsigned SI4 length) {
         if (NULL == cache[length]) {
             cache[length] = (double*)malloc(length * sizeof(double));
-            for(int i=0; i < length; i++) {
+            for(SI4 i=0; i < length; i++) {
                 cache[length][i] = F()(length, i);
             }
         }
@@ -127,7 +127,7 @@ class maxiGrainBase {
 public:
 	virtual double play() = 0;
     virtual ~maxiGrainBase() {}
-    bool finished;
+    BOL finished;
 };
 
 template<class F, class maxiSample>
@@ -306,7 +306,7 @@ public:
     }
     
     
-    bool hasEnded() {
+    BOL hasEnded() {
         return position == loopEnd;
     }
     
@@ -314,14 +314,14 @@ public:
         delete grainPlayer;
     }
     
-    inline double play(double speed, double rate, double grainLength, int overlaps, double posMod=0.0) {
+    inline double play(double speed, double rate, double grainLength, SI4 overlaps, double posMod=0.0) {
         position = position + rate;
         if (position >= loopEnd) position-= loopLength;
         if (position < loopStart) position += loopLength;
         return playNextGrain(speed, rate, grainLength, overlaps, posMod);
     }
     
-    inline double playOnce(double speed, double rate, double grainLength, int overlaps, double posMod=0.0) {
+    inline double playOnce(double speed, double rate, double grainLength, SI4 overlaps, double posMod=0.0) {
         position = position + rate;
         if (position >= loopEnd) position = loopEnd;
         if (position < loopStart) position = loopEnd;
@@ -332,7 +332,7 @@ public:
     }
     
 protected:
-    inline double playNextGrain(double speed, double rate, double grainLength, int overlaps, double posMod) {
+    inline double playNextGrain(double speed, double rate, double grainLength, SI4 overlaps, double posMod) {
         looper++;
         double cycleLength = grainLength * maxiSettings::sampleRate  / overlaps;
         if (looper > cycleLength + randomOffset) {
@@ -449,18 +449,18 @@ protected:
 //template<typename F>
 //class maxiGrainWindowCache {
 //public:
-//	unsigned int cacheSize;
+//	unsigned SI4 cacheSize;
 //
 //	maxiGrainWindowCache() {
 //		cacheSize = maxiSettings::sampleRate / 2.0; //allocate mem for up to 500ms grains
 //		cache = (double**)malloc(cacheSize * sizeof(double*));
-//		for(int i=0; i < cacheSize; i++) {
+//		for(SI4 i=0; i < cacheSize; i++) {
 //			cache[i] = NULL;
 //		}
 //	}
 //
 //	~maxiGrainWindowCache() {
-//		for(int i=0; i < cacheSize; i++) {
+//		for(SI4 i=0; i < cacheSize; i++) {
 //			if(NULL != cache[i]) {
 //				free(cache[i]);
 //			}
@@ -468,10 +468,10 @@ protected:
 //        free(cache);
 //	}
 //
-//	double* getWindow(const unsigned int length) {
+//	double* getWindow(const unsigned SI4 length) {
 //		if (NULL == cache[length]) {
 //			cache[length] = (double*)malloc(length * sizeof(double));
-//			for(int i=0; i < length; i++) {
+//			for(SI4 i=0; i < length; i++) {
 //				cache[length][i] = F()(length, i);
 //			}
 //		}
@@ -487,7 +487,7 @@ protected:
 //public:
 //	virtual double play() {}
 //    virtual ~maxiGrainBase() {}
-//	bool finished;
+//	BOL finished;
 //};
 //
 //template<typename F>
@@ -536,7 +536,7 @@ protected:
 //		window = windowCache->getWindow(sampleDur);
 //
 //#if defined(__APPLE_CC__) && defined(MAXIGRAINFAST)
-//		//premake the grain using fast vector functions, and quadratic interpolation
+//		//premake the grain using fast TArray functions, and quadratic interpolation
 //		double *sourceData = (double*)malloc(sampleDur * sizeof(double));
 //		short* buffer = (short *)sample->temp;
 //		//convert sample to double data
@@ -547,7 +547,7 @@ protected:
 //		//make list of interpolation indexes
 //		double* interpIndexes = (double*)malloc(sampleDur * sizeof(double));
 //		double interpPos = sampleStartPos;
-//		for(int i=0; i < sampleDur; i++) {
+//		for(SI4 i=0; i < sampleDur; i++) {
 //			interpIndexes[i] = interpPos - sampleStartPos;
 //			interpPos += fabs(inc);
 //		}
@@ -675,7 +675,7 @@ protected:
 //
 //
 //	//play at a speed
-//    inline double play(double speed, double grainLength, int overlaps, double posMod=0.0) {
+//    inline double play(double speed, double grainLength, SI4 overlaps, double posMod=0.0) {
 //		position = position + speed;
 //        looper++;
 //		if (position > sample->length) position-= sample->length;
@@ -693,7 +693,7 @@ protected:
 //
 //
 //    //provide your own position iteration
-//	inline double play2(double pos, double grainLength, int overlaps) {
+//	inline double play2(double pos, double grainLength, SI4 overlaps) {
 //		looper++;
 //		pos *= sample->length;
 //		if (0 == floor(fmod(looper, grainLength * maxiSettings::sampleRate / overlaps))) {
@@ -729,7 +729,7 @@ protected:
 //		delete grainPlayer;
 //	}
 //
-//	double play(double speed, double grainLength, int overlaps, double posMod=0.0) {
+//	double play(double speed, double grainLength, SI4 overlaps, double posMod=0.0) {
 //		position = position + 1;
 //		cycles++;
 //		if (position > sample->length) position=0;
@@ -802,7 +802,7 @@ protected:
 //		delete grainPlayer;
 //	}
 //
-//	inline double play(double speed, double rate, double grainLength, int overlaps, double posMod=0.0) {
+//	inline double play(double speed, double rate, double grainLength, SI4 overlaps, double posMod=0.0) {
 //		position = position + (1 * rate);
 //        looper++;
 //		if (position >= loopEnd) position-= loopLength;

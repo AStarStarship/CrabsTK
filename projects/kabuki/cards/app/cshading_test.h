@@ -142,7 +142,7 @@ class ShadingDemo: public _G::Kabuki3D
         aspectRatio;
     SI4 step = 0,
         lineStep = 0;
-    bool trip = false;
+    BOL trip = false;
     Entity3D testModel;
     _3D::Vector_f viewPoint,
         lightSource,

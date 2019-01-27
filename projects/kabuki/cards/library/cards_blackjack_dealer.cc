@@ -24,8 +24,8 @@ using namespace kabuki::id;
 namespace kabuki { namespace cards {
 
 BlackjackDealer::BlackjackDealer (id::User* user, int64_t buy_in, int64_t ante,
-                                  int64_t min_bet, int min_players,
-                                  int max_players) :
+                                  int64_t min_bet, SI4 min_players,
+                                  SI4 max_players) :
     Dealer (user, buy_in, ante, min_bet, min_players, max_players) {
     // Nothing to do here :-)
 }
@@ -38,7 +38,7 @@ void Dealer::AddPlayer (Player* player) {
     players_.push_back (player);
 }
 
-bool BlackjackDealer::RaiseAnte (int64_t value) {
+BOL BlackjackDealer::RaiseAnte (int64_t value) {
     // You have to have enough points to play the game or else we have to exit.
     if (value < 0) {
         return false;
@@ -54,13 +54,13 @@ bool BlackjackDealer::RaiseAnte (int64_t value) {
     return true;
 }
 
-int BlackjackDealer::CalcScore (int ace_value) {
-    int score = 0;  //< Always set the variable before you start using it!!!
+SI4 BlackjackDealer::CalcScore (SI4 ace_value) {
+    SI4 score = 0;  //< Always set the variable before you start using it!!!
 
     Card* card;
-    for (int i = 0; i < hand_.GetVisibleCards ().Length (); ++i) {
+    for (SI4 i = 0; i < hand_.GetVisibleCards ().Length (); ++i) {
         card = hand_.GetVisibleCards ().GetCard (i);
-        int denomination = card->GetDenomination ();
+        SI4 denomination = card->GetDenomination ();
         score += ((denomination == Card::kAce)?ace_value:denomination);
     }
 
@@ -126,15 +126,15 @@ void BlackjackDealer::EndGame () {
 
 }
 
-int BlackjackDealer::Compare (Hand& other) {
+SI4 BlackjackDealer::Compare (Hand& other) {
         return BlackjackCompareHands (hand_, other);
     }
 
-bool BlackjackDealer::Wins (Hand& other) {
+BOL BlackjackDealer::Wins (Hand& other) {
     return BlackjackCompareHands (hand_, other) > 0;
 }
 
-int BlackjackDealer::AddAgent (id::User* user) {
+SI4 BlackjackDealer::AddAgent (id::User* user) {
     Player* player = new BlackjackPlayerAi (user, GetStock ());
     players_.push_back (player);
     return players_.size () - 1;
@@ -162,12 +162,12 @@ void BlackjackDealer::PrintStats () {
 }*/
 
 Text& BlackjackDealer::Print (_::Text& txt) {
-    int num_players = GetPlayersCount ();
+    SI4 num_players = GetPlayersCount ();
     if (!num_players) {
         return txt << "\n| Players: none";
     }
     txt << "\n| Players:";
-    for (int i = 0; i < num_players - 1; ++i) {
+    for (SI4 i = 0; i < num_players - 1; ++i) {
         players_[i]->Print (txt);
     }
     return players_[num_players - 1]->Print ();
@@ -178,9 +178,9 @@ const Operation* BlackjackDealer::Star (uint index, Expression* expr) {
         OperationCount (0), OperationFirst ('A'),
         "Player in a Blackjack game.", 0 };
     void* args[2];
-    char handle[id::Handle::kMaxLength],
+    CH1 handle[id::Handle::kMaxLength],
         tweet[141];
-    int session;
+    SI4 session;
     uint64_t public_key,
              num_points;
     BlackjackPlayer* player;
@@ -266,9 +266,9 @@ const Operation* BlackjackDealer::Star (uint index, Expression* expr) {
     return nullptr;
 }
 
-const char* BlackjackDealer::Sudo (const char* text, const char* strand_end) {
-    const char* token_end;
-    int num_players;
+const CH1* BlackjackDealer::Sudo (const CH1* text, const CH1* strand_end) {
+    const CH1* token_end;
+    SI4 num_players;
 
     BlackjackPlayer* player = dynamic_cast<BlackjackPlayer*> (GetPlayer ());
     text = TextSkipSpaces (text, strand_end);

@@ -38,13 +38,13 @@ DigitalOut Spi1CS (D10);
 Ticker pollInputsTicker;
 PortIn GPIPort (PortA);
 
-char InputStates[5];
+CH1 InputStates[5];
 Debouncer<SI4> GPIPortDebouncer ((SI4*)&InputStates[0]);
-Debouncer<char> ShiftRegisterDebouncer (&InputStates[4]);
+Debouncer<CH1> ShiftRegisterDebouncer (&InputStates[4]);
 
 void PollInputsHandler () {
         Spi1CS = 1;
-        char shift = ShiftRegisterDebouncer.Debounce (Spi1.write (0));
+        CH1 shift = ShiftRegisterDebouncer.Debounce (Spi1.write (0));
         SI4 portA = GPIPortDebouncer.Debounce (GPIPort);
         Spi1CS = 0;
 }
@@ -108,7 +108,7 @@ PortIn GPIPort (PortA);
 
 void pollInputsHandler () {
   Spi1CS = 1;
-  char dataIn = ShiftRegisterDebouncer.debounce (Spi1.write (0));
+  CH1 dataIn = ShiftRegisterDebouncer.debounce (Spi1.write (0));
   SI4 portA = GPIPortDebouncer.debounce (GPIPort);
   if (dataIn & 0b001) RedLED = RedLED == 0?1:0;
   if (dataIn & 0b010) GreenLED = GreenLED == 0?1:0;

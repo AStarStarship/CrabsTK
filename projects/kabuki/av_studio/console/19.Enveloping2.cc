@@ -8,11 +8,11 @@ maxiOsc timer,snarePhase; //and a timer
 
 maxiEnv envelope;//this is going to be an envelope
 
-int currentCount,lastCount,playHead,
+SI4 currentCount,lastCount,playHead,
 
 sequence[16]={1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0}; //This is the sequence for the kick
 
-int sampleTrigger;
+SI4 sampleTrigger;
 
 double sampleOut;
 
@@ -29,10 +29,10 @@ void setup() {//some inits
 
 void play(double *output) {//this is where the magic happens. Very slow magic.
 	
-	currentCount=(int)timer.phasor(8);//this sets up a metronome that ticks 8 times a second
+	currentCount=(SI4)timer.phasor(8);//this sets up a metronome that ticks 8 times a second
 	
 	
-	if (lastCount!=currentCount) {//if we have a new timer int this sample, play the sound
+	if (lastCount!=currentCount) {//if we have a new timer SI4 this sample, play the sound
 		
 		sampleTrigger=sequence[playHead%16];
 		playHead++;//iterate the playhead

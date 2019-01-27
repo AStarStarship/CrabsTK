@@ -1,6 +1,6 @@
 /* Kabuki Toolkit @version 0.x
 @link    https://github.com/kabuki-starship/kabuki-toolkit.git
-@file    /kabuki/features/hmi/hmi_/wiidget_nanager.h
+@file    /kabuki/features/touch/touch_/wiidget_nanager.h
 @author  Cale McCollough <https://calemccollough.github.io>
 @license Copyright (C) 2014-19 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -13,15 +13,15 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <pch.h>
-#if SEAM >= SEAM_00_03_00_00__00
+#if SEAM >= KABUKI_FEATURES_TOUCH_1
 #ifndef HEADER_FOR_KT_HMI_WIDGETPAGE
 #define HEADER_FOR_KT_HMI_WIDGETPAGE
 
 #include "config.h"
 
 #include "widget.h";
-class API ControlsPage;
-class API Controller;
+class SDK ControlsPage;
+class SDK Controller;
 
 namespace _ {
 
@@ -31,9 +31,9 @@ namespace _ {
 
     There is one main global instance of the WidgetManager. Through the GUI, a
    user can edit only one parameter on either ControlLayer through a drop
-   down/up menu on either the top or bottom of the screen. The separation of API
+   down/up menu on either the top or bottom of the screen. The separation of SDK
    from GUI allows the GUI to be programmed much easier by simply having them
-   wrap the functions to the API. Because of this separation, there is not going
+   wrap the functions to the SDK. Because of this separation, there is not going
    to be any checking to see if a template has been saved in before applying any
    changes that this classes functions might make.
 
@@ -41,7 +41,7 @@ namespace _ {
     The data for the Template file will be in the same order as the data
    declarations in this object followed by a packed array of the ControlsPage.
 */
-class API WidgetManager {
+class SDK WidgetManager {
  public:
   /* Default constructor. */
   WidgetManager(Controller* controller = nullptr);
@@ -53,10 +53,10 @@ class API WidgetManager {
   void ResetEditor();
 
   /* Checks to see if the current template is saved. */
-  int CheckIfTemplateIsSaved();
+  SI4 CheckIfTemplateIsSaved();
 
   /* Checks to see if the current page is saved. */
-  int CheckIfPageIsSaved();
+  SI4 CheckIfPageIsSaved();
 
   /* Saves the current TemplatePage being edited.
       @warning Does not compare to previous state! */
@@ -67,25 +67,25 @@ class API WidgetManager {
   void saveCurrentTemplate();
 
   /* Loads an Template into the editors currentTempalte. */
-  int LoadTemplate(Template* new_template);
+  SI4 LoadTemplate(Template* new_template);
 
   /* Loads an TemplatePage into the editors currentPage. */
-  int LoadPage(ControlsPage* thisPage);
+  SI4 LoadPage(ControlsPage* thisPage);
 
   /* Creates a new template. */
   void NewTemplate();
 
   /* Creates a new Template with the name. */
-  void NewTemplate(const char* name);
+  void NewTemplate(const CH1* name);
 
   /* Saves the current template. */
   void SaveTemplate();
 
   /* Renames the current page being edited. */
-  void RenamePage(const char* name);
+  void RenamePage(const CH1* name);
 
   /* Renames the current template being edited. */
-  void RenameTemplate(const char* name);
+  void RenameTemplate(const CH1* name);
 
   /* Removes the current page being edited. */
   void RemovePage();
@@ -115,4 +115,4 @@ class API WidgetManager {
 };
 }  // namespace _
 #endif  //< HEADER_FOR_KT_HMI_WIDGETPAGE
-#endif  //< #if SEAM >= SEAM_00_03_00_00__00
+#endif  //< #if SEAM >= KABUKI_FEATURES_TOUCH_1

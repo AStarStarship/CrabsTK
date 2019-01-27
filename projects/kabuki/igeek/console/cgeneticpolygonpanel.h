@@ -19,15 +19,15 @@ namespace igeek {
 
 class GeneticPolygonPanel : public JPanel
 {
-  static const int defaultMargin = 30;
+  static const SI4 defaultMargin = 30;
 
-  GeneticPolygonPanel (GeneticPolygon thisShape, String thisShapeLabel, int width, int height);
+  GeneticPolygonPanel (GeneticPolygon thisShape, String thisShapeLabel, SI4 width, SI4 height);
 
   void paintComponent (Graphics g);
 
   GeneticPolygon getGeneticPolygon ();
 
-  void respawn (int numPoints, int width, int height, int color, int lifespan, double angle);
+  void respawn (SI4 numPoints, SI4 width, SI4 height, SI4 color, SI4 lifespan, double angle);
 
   void setGeneticPolygon (GeneticPolygon newPoly);
 

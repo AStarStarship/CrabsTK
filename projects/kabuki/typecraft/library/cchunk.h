@@ -32,22 +32,22 @@ class Chunk {
   Chunk();
 
   /* Gets the X coordinate. */
-  inline int GetX();
+  inline SI4 GetX();
 
   /* Gets the Y coordinate. */
-  inline int GetY();
+  inline SI4 GetY();
 
   /* Gets the Y coordinate. */
-  inline int GetZ();
+  inline SI4 GetZ();
 
   /* Gets inventory count. */
-  inline Block* GetBlock(int x_, int y_, int z_);
+  inline Block* GetBlock(SI4 x_, SI4 y_, SI4 z_);
 
   /* Adds set's the block at the given index. */
-  inline bool SetBlock(Block* block, int const x, int y, int z);
+  inline BOL SetBlock(Block* block, SI4 const x, SI4 y, SI4 z);
 
  private:
-  int x_,                 //< The farthest x position to the left.
+  SI4 x_,                 //< The farthest x position to the left.
       y_,                 //< The farthest y position to the fight.
       z_;                 //< The lowest z value.
   ArX<Item*> items_;      //< The Item(s) in the Chunk.

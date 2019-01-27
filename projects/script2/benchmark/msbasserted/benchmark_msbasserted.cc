@@ -34,7 +34,7 @@ uint32_t BSR(uint32_t value) {
 }
 
 inline uint32_t BSRLoop(uint32_t n) {
-  int shift = 31;
+  SI4 shift = 31;
   uint32_t shift_count = 31;
   while (shift-- > 0) {
     if (n >> shift_count--) return shift_count + 1;
@@ -67,7 +67,7 @@ void BenchmarkBSR() {
     kSize = 24,
   };
 
-  static const char kBenchmarkHeader[] =
+  static const CH1 kBenchmarkHeader[] =
       "\nReverse Scan Bit Benchmark,,,"
       "\nnil, rsb32, manual32, rsb64, manual64";
 
@@ -133,7 +133,7 @@ void BenchmarkBSR() {
   COut(delta).Print(',');
 
   start = high_resolution_clock::now();
-  for (int count = kLoopCount; count > 0; --count) {
+  for (SI4 count = kLoopCount; count > 0; --count) {
     spinner4 += BSRLoop(random_ui4(eng));
   }
   stop = high_resolution_clock::now();

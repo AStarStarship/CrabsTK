@@ -1,6 +1,6 @@
 /* Kabuki Toolkit @version 0.x
 @link    https://github.com/kabuki-starship/kabuki-toolkit.git
-@file    /kabuki/features/hmi/hmi_/button_scroller.h
+@file    /kabuki/features/touch/touch_/button_scroller.h
 @author  Cale McCollough <https://calemccollough.github.io>
 @license Copyright (C) 2014-19 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -13,7 +13,7 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <pch.h>
-#if SEAM >= SEAM_00_03_00_00__00
+#if SEAM >= KABUKI_FEATURES_TOUCH_1
 #ifndef HEADER_FOR_KT_HMI_BUTTONSCROLLER
 #define HEADER_FOR_KT_HMI_BUTTONSCROLLER
 
@@ -23,7 +23,7 @@ specific language governing permissions and limitations under the License. */
 namespace _ {
 
 /* A scrollable array Button (s). */
-class API ButtonScroller : public HmiComponent {
+class SDK ButtonScroller : public HmiComponent {
  public:
   enum {
     kDefaultNumVisibleButtons = 5,  //< Default number of visible numbers.
@@ -31,7 +31,7 @@ class API ButtonScroller : public HmiComponent {
 
   /* Default constructor. */
   ButtonScroller(String* newLabel = "",
-                 int new_array_size = kDefaultNumVisibleButtons);
+                 SI4 new_array_size = kDefaultNumVisibleButtons);
 
   /* Copy constructor. */
   ButtonScroller(const ButtonScroller& o);
@@ -40,31 +40,31 @@ class API ButtonScroller : public HmiComponent {
   IButton** GetButtons();
 
   /* Gets the number of buttons in the array. */
-  int GetNumButtons() const;
+  SI4 GetNumButtons() const;
 
   /* Gets the number of visible buttons. */
-  int GetNumVisibleButtons() const;
+  SI4 GetNumVisibleButtons() const;
 
   /* Gets the index of the first visible button. */
-  int GetCurrentIndex() const;
+  SI4 GetCurrentIndex() const;
 
   /* Sets the number of visible buttons to the new value. */
-  void SetNumVisibleButtons(int value);
+  void SetNumVisibleButtons(SI4 value);
 
   /* Removes the button at the given index from the array. */
-  void RemoveButton(int index);
+  void RemoveButton(SI4 index);
 
   /* Scrolls up the list. */
   void ScrollUp();
 
   /* Scrolls up the list. */
-  void ScrollUp(int numNodes);
+  void ScrollUp(SI4 numNodes);
 
   /* Scrolls down the list. */
   void ScrollDown();
 
   /* Scrolls down the list. */
-  void ScrollDown(int numNodes);
+  void ScrollDown(SI4 numNodes);
 
   /* Scrolls up one page. */
   void ScrollPageUp();
@@ -73,17 +73,17 @@ class API ButtonScroller : public HmiComponent {
   void ScrollPageDown();
 
   /* Presses the Button at the specified index. */
-  int Press(int index);
+  SI4 Press(SI4 index);
 
   /* Prints this object to a string. */
   Utf& Print(Utf& printer) const;
 
  private:
-  int current_index_,           //< Index of the first visible button.
+  SI4 current_index_,           //< Index of the first visible button.
       visible_button_count_;    //< Number of physical buttons.
-  _::Array<IButton*> buttons_;  //< Array of buttons.
+  ::_::TArray<IButton*> buttons_;  //< Array of buttons.
 };
 
 }  // namespace _
 #endif  //< HEADER_FOR_KT_HMI_BUTTONSCROLLER
-#endif  //< #if SEAM >= SEAM_00_03_00_00__00
+#endif  //< #if SEAM >= KABUKI_FEATURES_TOUCH_1

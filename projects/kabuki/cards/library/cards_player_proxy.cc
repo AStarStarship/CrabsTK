@@ -21,7 +21,7 @@ using namespace std;
 namespace kabuki { namespace cards {
 
 PlayerProxy::PlayerProxy (Deck& pack) :
-    status_        (new char[User::kMaxStatusLength + 1]),
+    status_        (new CH1[User::kMaxStatusLength + 1]),
     num_wins_      (0),
     num_points_    (0),
     pack_          (pack),
@@ -34,11 +34,11 @@ PlayerProxy::~PlayerProxy () {
     delete status_;
 }
 
-const char* PlayerProxy::GetDislpayName () {
+const CH1* PlayerProxy::GetDislpayName () {
     return status_;
 }
 
-const char* PlayerProxy::SetDislpayName (const char* name) {
+const CH1* PlayerProxy::SetDislpayName (const CH1* name) {
     if (name == nullptr) {
         return "name can't be nil";
     }
@@ -46,11 +46,11 @@ const char* PlayerProxy::SetDislpayName (const char* name) {
     return nullptr;
 }
 
-const char* PlayerProxy::GetHandle () {
+const CH1* PlayerProxy::GetHandle () {
     return handle_;
 }
 
-const char* PlayerProxy::SetHandle (const char* handle) {
+const CH1* PlayerProxy::SetHandle (const CH1* handle) {
     if (!handle) {
         return "\n| Error: handle can't be nil!";
     }
@@ -59,28 +59,28 @@ const char* PlayerProxy::SetHandle (const char* handle) {
     return nullptr;
 }
 
-bool PlayerProxy::IsDealer () {
+BOL PlayerProxy::IsDealer () {
     return is_dealer_;
 }
 
-void PlayerProxy::SetIsDealer (bool is_dealer) {
+void PlayerProxy::SetIsDealer (BOL is_dealer) {
     is_dealer = is_dealer_;
 }
 
-int PlayerProxy::GetState () {
+SI4 PlayerProxy::GetState () {
     return state_;
 }
 
-const char* PlayerProxy::SetState (int32_t state) {
+const CH1* PlayerProxy::SetState (int32_t state) {
     state_ = state;
     return nullptr;
 }
 
-int PlayerProxy::GetNumPoints () {
+SI4 PlayerProxy::GetNumPoints () {
     return num_points_;
 }
 
-bool PlayerProxy::SetNumPoints (int num_points) {
+BOL PlayerProxy::SetNumPoints (SI4 num_points) {
     if (num_points < 0) {
         return false;
     }
@@ -88,11 +88,11 @@ bool PlayerProxy::SetNumPoints (int num_points) {
     return true;
 }
 
-int PlayerProxy::GetNumWins () {
+SI4 PlayerProxy::GetNumWins () {
     return num_wins_;
 }
 
-bool PlayerProxy::SetNumWins (int num_wins) {
+BOL PlayerProxy::SetNumWins (SI4 num_wins) {
     if (num_wins < 0) {
         return false;
     }
@@ -105,12 +105,12 @@ CardStack& PlayerProxy::GetVisibleCards () {
 }
 
 void PlayerProxy::DeleteVisibleCards () {
-    for (int i = 0; i < visible_cards_.Length (); ++i) {
+    for (SI4 i = 0; i < visible_cards_.Length (); ++i) {
         delete visible_cards_.Draw ();
     }
 }
 
-int PlayerProxy::AddCard (byte pip, byte suit) {
+SI4 PlayerProxy::AddCard (byte pip, byte suit) {
     if (pip < 0) {
         return -1;
     }

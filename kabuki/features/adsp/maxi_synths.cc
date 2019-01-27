@@ -279,7 +279,7 @@ void maxiClock::ticker() {
     tick=false;
     currentCount=floor(timer.phasor(bps));//this sets up a metronome that ticks n times a second
     
-    if (lastCount!=currentCount) {//if we have a new timer int this sample,
+    if (lastCount!=currentCount) {//if we have a new timer SI4 this sample,
         
         tick=true;
         playHead++;//iterate the playhead
@@ -296,7 +296,7 @@ void maxiClock::setTempo(double bpmIn) {
 }
 
 
-void maxiClock::setTicksPerBeat(int ticksPerBeat) {
+void maxiClock::setTicksPerBeat(SI4 ticksPerBeat) {
     
     ticks=ticksPerBeat;
     maxiClock::setTempo(bpm);
@@ -309,7 +309,7 @@ maxiSampler::maxiSampler() {
     maxiSampler::currentVoice=0;
 
     
-    for (int i=0;i<voices;i++) {
+    for (SI4 i=0;i<voices;i++) {
     
         maxiSampler::envelopes[i].setAttack(0);
         maxiSampler::envelopes[i].setDecay(1);
@@ -325,7 +325,7 @@ maxiSampler::maxiSampler() {
     }
 }
 
-void maxiSampler::setNumVoices(int numVoices) {
+void maxiSampler::setNumVoices(SI4 numVoices) {
     
     voices=numVoices;
     
@@ -335,12 +335,12 @@ double maxiSampler::play() {
     
     output=0;
     
-    for (int i=0;i<voices;i++) {
+    for (SI4 i=0;i<voices;i++) {
         
             envOut[i]=envelopes[i].adsr(envOutGain[i],envelopes[i].trigger);
 
           if (envOut[i]>0.) {
-              outputs[i]=samples[i].play(pitchRatios[(int)pitch[i]+originalPitch]*((1./samples[i].length)*maxiSettings::sampleRate),0,samples[i].length)*envOut[i];
+              outputs[i]=samples[i].play(pitchRatios[(SI4)pitch[i]+originalPitch]*((1./samples[i].length)*maxiSettings::sampleRate),0,samples[i].length)*envOut[i];
             output+=outputs[i]/voices;
               
             if (envelopes[i].trigger==1 && !sustain) {
@@ -354,10 +354,10 @@ double maxiSampler::play() {
 
 }
 
-void maxiSampler::load(string inFile, bool setall) {
+void maxiSampler::load(string inFile, BOL setall) {
     
     if (setall) {
-        for (int i=0;i<voices;i++) {
+        for (SI4 i=0;i<voices;i++) {
             
             samples[i].load(inFile);
             
@@ -372,10 +372,10 @@ void maxiSampler::load(string inFile, bool setall) {
     
 }
 
-void maxiSampler::setPitch(double pitchIn, bool setall) {
+void maxiSampler::setPitch(double pitchIn, BOL setall) {
     
     if (setall) {
-        for (int i=0;i<voices;i++) {
+        for (SI4 i=0;i<voices;i++) {
             
             pitch[i]=pitchIn;
             
@@ -389,10 +389,10 @@ void maxiSampler::setPitch(double pitchIn, bool setall) {
     
 }
 
-void maxiSampler::midiNoteOn(double pitchIn, double velocity, bool setall) {
+void maxiSampler::midiNoteOn(double pitchIn, double velocity, BOL setall) {
     
     if (setall) {
-        for (int i=0;i<voices;i++) {
+        for (SI4 i=0;i<voices;i++) {
             
             pitch[i]=pitchIn;
             
@@ -407,10 +407,10 @@ void maxiSampler::midiNoteOn(double pitchIn, double velocity, bool setall) {
     
 }
 
-void maxiSampler::midiNoteOff(double pitchIn, double velocity, bool setall) {
+void maxiSampler::midiNoteOff(double pitchIn, double velocity, BOL setall) {
     
         
-        for (int i=0;i<voices;i++){
+        for (SI4 i=0;i<voices;i++){
             
             if (pitch[i]==pitchIn) {
                 
@@ -422,11 +422,11 @@ void maxiSampler::midiNoteOff(double pitchIn, double velocity, bool setall) {
 }
 
 
-void maxiSampler::setAttack(double attackD, bool setall) {
+void maxiSampler::setAttack(double attackD, BOL setall) {
     
     if (setall) {
         
-        for (int i=0;i<voices;i++) {
+        for (SI4 i=0;i<voices;i++) {
             
             envelopes[i].setAttack(attackD);
             
@@ -442,11 +442,11 @@ void maxiSampler::setAttack(double attackD, bool setall) {
     
 }
 
-void maxiSampler::setDecay(double decayD, bool setall) {
+void maxiSampler::setDecay(double decayD, BOL setall) {
     
     if (setall) {
         
-        for (int i=0;i<voices;i++) {
+        for (SI4 i=0;i<voices;i++) {
             
             envelopes[i].setDecay(decayD);
             
@@ -462,11 +462,11 @@ void maxiSampler::setDecay(double decayD, bool setall) {
     
 }
 
-void maxiSampler::setSustain(double sustainD, bool setall) {
+void maxiSampler::setSustain(double sustainD, BOL setall) {
     
     if (setall) {
         
-        for (int i=0;i<voices;i++) {
+        for (SI4 i=0;i<voices;i++) {
             
             envelopes[i].setSustain(sustainD);
             
@@ -482,11 +482,11 @@ void maxiSampler::setSustain(double sustainD, bool setall) {
     
 }
 
-void maxiSampler::setRelease(double releaseD, bool setall) {
+void maxiSampler::setRelease(double releaseD, BOL setall) {
     
     if (setall) {
         
-        for (int i=0;i<voices;i++) {
+        for (SI4 i=0;i<voices;i++) {
             
             envelopes[i].setRelease(releaseD);
             
@@ -502,11 +502,11 @@ void maxiSampler::setRelease(double releaseD, bool setall) {
     
 }
 
-void maxiSampler::setPosition(double positionD, bool setall){
+void maxiSampler::setPosition(double positionD, BOL setall){
     
     if (setall) {
         
-        for (int i=0;i<voices;i++) {
+        for (SI4 i=0;i<voices;i++) {
             
             samples[i].setPosition(positionD);
             

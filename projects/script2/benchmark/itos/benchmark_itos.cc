@@ -22,7 +22,7 @@ specific language governing permissions and limitations under the License. */
 #include <fstream>
 #include <random>
 
-typename const char* (*ItoS32)(const char* buffer, intptr_t size,
+typename const CH1* (*ItoS32)(const CH1* buffer, intptr_t size,
                                uint32_t value);
 
 using namespace std;
@@ -41,21 +41,21 @@ void BenchmarkScriptItos() {
       1,      10,      100,      1000,      10000,
       100000, 1000000, 10000000, 100000000, 1000000000};
 
-  // static const char kBenchmarkHeader[] = "\nScript ItoS Benchmarks,,,,"
+  // static const CH1 kBenchmarkHeader[] = "\nScript ItoS Benchmarks,,,,"
   //                                       "\n#Bits, Null, sprintf_s, Mod10, "
   //                                       "Mod100, Script, % Faster\n";
-  static const char kBenchmarkDecimalHeader[] =
+  static const CH1 kBenchmarkDecimalHeader[] =
       "\nScript ItoS Benchmarks per Decimal,,,,"
       "\n#Bits, Null, Mod10, Mod100, Script, % Faster\n";
-  static const char kBenchmarkHeader[] =
+  static const CH1 kBenchmarkHeader[] =
       "\nScript ItoS Benchmarks per Bit,,,,"
       "\n#Bits, Null, Mod10, "
       "Mod100, Script, % Faster\n";
-  char buffer[kSize], expecting[kSize];
-  char* result;
+  CH1 buffer[kSize], expecting[kSize];
+  CH1* result;
   uint32_t value;
   uint32_t bits_mask = ~(uint32_t)0, value_mask;
-  int count;
+  SI4 count;
   auto start = high_resolution_clock::now(),
        stop = high_resolution_clock::now();
   auto delta = duration_cast<milliseconds>(stop - start).count();
@@ -68,7 +68,7 @@ void BenchmarkScriptItos() {
 
   Print("\n\nTesting random numbers...\n\n");
 
-  for (int i = 0; i < kNumTests / 10; ++i) {
+  for (SI4 i = 0; i < kNumTests / 10; ++i) {
     value = distr(eng);
     sprintf_s(expecting, kSize, "%u", value);
     result = _::Print<>(buffer, kSize, value);
@@ -103,8 +103,8 @@ void BenchmarkScriptItos() {
     if (StringCompare<>(expecting, buffer)) {
       Pausef(
           "\n\nERROR in PrintMod100: Expecting \"%s\":%u and found \"%s\":%i",
-          expecting, (int)StringLength<>(expecting), buffer,
-          (int)StringLength<>(buffer));
+          expecting, (SI4)StringLength<>(expecting), buffer,
+          (SI4)StringLength<>(buffer));
     }
   }
 
@@ -123,7 +123,7 @@ void BenchmarkScriptItos() {
 
   const uint32_t* power_of_ten = &kPow10Ranges[0];
   uint32_t min, max = *power_of_ten++, range;
-  for (int num_digits = 1; num_digits <= 10; ++num_digits) {
+  for (SI4 num_digits = 1; num_digits <= 10; ++num_digits) {
     uint32_t min = max, max = *power_of_ten++, range = max - min, last_value;
     COut("\n    Range:").Print(range);
     uint32_t num_loops = kNumTests / range;
@@ -187,7 +187,7 @@ void BenchmarkScriptItos() {
     start = high_resolution_clock::now();
     for (uint32_t j = num_loops; j > 0; --j) {
       for (uint32_t value = min; value < max; ++value) {
-        result = _::Print<char>(buffer, buffer + kSize, value);
+        result = _::Print<CH1>(buffer, buffer + kSize, value);
       }
     }
     stop = high_resolution_clock::now();
@@ -203,7 +203,7 @@ void BenchmarkScriptItos() {
 
   COut("\n\n").Print(kBenchmarkHeader);
   file << kBenchmarkHeader;
-  for (int num_bits = 1; num_bits <= 32; ++num_bits) {
+  for (SI4 num_bits = 1; num_bits <= 32; ++num_bits) {
     bits_mask = bits_mask << 1;
     value_mask = ~bits_mask;
     file << num_bits << ",";
@@ -256,7 +256,7 @@ void BenchmarkScriptItos() {
     start = high_resolution_clock::now();
     for (count = kNumTests; count > 0; --count) {
       value = distr(eng) & value_mask;
-      result = _::Print<char>(buffer, buffer + kSize, value);
+      result = _::Print<CH1>(buffer, buffer + kSize, value);
     }
     stop = high_resolution_clock::now();
     delta = duration_cast<milliseconds>(stop - start).count();
@@ -291,7 +291,7 @@ void PrintDigits99To99Lut() {
   Pause();
 }
 
-int main() {
+SI4 main() {
   BenchmarkScriptItos();
   Pause();
   return 0;

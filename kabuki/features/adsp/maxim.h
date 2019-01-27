@@ -41,7 +41,7 @@
 #include "maxiAtoms.h"
 
 
-//typedef maxiSignal vector<double>;
+//typedef maxiSignal TArray<double>;
 //
 //class maxiBase {
 //    virtual maxiSignal play() = {};
@@ -71,27 +71,27 @@
 //};
 //
 //class maxiAnotherUGen : public maxiBase {
-//    maxiBase* update(double param1, bool param2);
+//    maxiBase* update(double param1, BOL param2);
 //};
 //
 //class maxiYetAnotherUGen : public maxiBase {
-//    maxiBase* update(int something, float somethingElse);
+//    maxiBase* update(SI4 something, float somethingElse);
 //};
 //
 //void maxiProcess(maxiSignal &signal, maxiBase *ugen) {
 //    double val = ugen->play();
-//    for(int i=0; i < signal.size(); i++) {
+//    for(SI4 i=0; i < signal.size(); i++) {
 //        signal[i] = val;
 //    }
 //}
 //
 //void maxiBlock(maxiSignal &signal, maxiBase *ugen) {
-//    for (int i=0; i < 64; i++) {
+//    for (SI4 i=0; i < 64; i++) {
 //        maxiProcess(signal, ugen);
 //    }
 //}
 //
-//typedef maxiUGens vector<maxiBase>
+//typedef maxiUGens TArray<maxiBase>
 //
 //maxiNoise ugen1;
 //maxiAnotherUGen ugen2;

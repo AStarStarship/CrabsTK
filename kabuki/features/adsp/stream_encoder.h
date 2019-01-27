@@ -285,7 +285,7 @@ typedef enum {
  *  Using a FLAC__StreamEncoderState as the index to this array
  *  will give the string equivalent.  The contents should not be modified.
  */
-extern FLAC_API const char * const FLAC__StreamEncoderStateString[];
+extern FLAC_API const CH1 * const FLAC__StreamEncoderStateString[];
 
 
 /** Possible return values for the FLAC__stream_encoder_init_*() functions.
@@ -355,7 +355,7 @@ typedef enum {
  *  Using a FLAC__StreamEncoderInitStatus as the index to this array
  *  will give the string equivalent.  The contents should not be modified.
  */
-extern FLAC_API const char * const FLAC__StreamEncoderInitStatusString[];
+extern FLAC_API const CH1 * const FLAC__StreamEncoderInitStatusString[];
 
 
 /** Return values for the FLAC__StreamEncoder read callback.
@@ -381,7 +381,7 @@ typedef enum {
  *  Using a FLAC__StreamEncoderReadStatus as the index to this array
  *  will give the string equivalent.  The contents should not be modified.
  */
-extern FLAC_API const char * const FLAC__StreamEncoderReadStatusString[];
+extern FLAC_API const CH1 * const FLAC__StreamEncoderReadStatusString[];
 
 
 /** Return values for the FLAC__StreamEncoder write callback.
@@ -401,7 +401,7 @@ typedef enum {
  *  Using a FLAC__StreamEncoderWriteStatus as the index to this array
  *  will give the string equivalent.  The contents should not be modified.
  */
-extern FLAC_API const char * const FLAC__StreamEncoderWriteStatusString[];
+extern FLAC_API const CH1 * const FLAC__StreamEncoderWriteStatusString[];
 
 
 /** Return values for the FLAC__StreamEncoder seek callback.
@@ -424,7 +424,7 @@ typedef enum {
  *  Using a FLAC__StreamEncoderSeekStatus as the index to this array
  *  will give the string equivalent.  The contents should not be modified.
  */
-extern FLAC_API const char * const FLAC__StreamEncoderSeekStatusString[];
+extern FLAC_API const CH1 * const FLAC__StreamEncoderSeekStatusString[];
 
 
 /** Return values for the FLAC__StreamEncoder tell callback.
@@ -447,7 +447,7 @@ typedef enum {
  *  Using a FLAC__StreamEncoderTellStatus as the index to this array
  *  will give the string equivalent.  The contents should not be modified.
  */
-extern FLAC_API const char * const FLAC__StreamEncoderTellStatusString[];
+extern FLAC_API const CH1 * const FLAC__StreamEncoderTellStatusString[];
 
 
 /***********************************************************************
@@ -952,7 +952,7 @@ FLAC_API FLAC__bool FLAC__stream_encoder_set_loose_mid_side_stereo(FLAC__StreamE
  * \retval FLAC__bool
  *    \c false if the encoder is already initialized, else \c true.
  */
-FLAC_API FLAC__bool FLAC__stream_encoder_set_apodization(FLAC__StreamEncoder *encoder, const char *specification);
+FLAC_API FLAC__bool FLAC__stream_encoder_set_apodization(FLAC__StreamEncoder *encoder, const CH1 *specification);
 
 /** Set the maximum LPC order, or \c 0 to use only the fixed predictors.
  *
@@ -1211,10 +1211,10 @@ FLAC_API FLAC__StreamDecoderState FLAC__stream_encoder_get_verify_decoder_state(
  * \param  encoder  A encoder instance to query.
  * \assert
  *    \code encoder != NULL \endcode
- * \retval const char *
+ * \retval const CH1 *
  *    The encoder state as a C string.  Do not modify the contents.
  */
-FLAC_API const char *FLAC__stream_encoder_get_resolved_state_string(const FLAC__StreamEncoder *encoder);
+FLAC_API const CH1 *FLAC__stream_encoder_get_resolved_state_string(const FLAC__StreamEncoder *encoder);
 
 /** Get relevant values about the nature of a verify decoder error.
  *  Useful when the stream encoder state is
@@ -1639,7 +1639,7 @@ FLAC_API FLAC__StreamEncoderInitStatus FLAC__stream_encoder_init_ogg_FILE(FLAC__
  *    \c FLAC__STREAM_ENCODER_INIT_STATUS_OK if initialization was successful;
  *    see FLAC__StreamEncoderInitStatus for the meanings of other return values.
  */
-FLAC_API FLAC__StreamEncoderInitStatus FLAC__stream_encoder_init_file(FLAC__StreamEncoder *encoder, const char *filename, FLAC__StreamEncoderProgressCallback progress_callback, void *client_data);
+FLAC_API FLAC__StreamEncoderInitStatus FLAC__stream_encoder_init_file(FLAC__StreamEncoder *encoder, const CH1 *filename, FLAC__StreamEncoderProgressCallback progress_callback, void *client_data);
 
 /** Initialize the encoder instance to encode Ogg FLAC files.
  *
@@ -1671,7 +1671,7 @@ FLAC_API FLAC__StreamEncoderInitStatus FLAC__stream_encoder_init_file(FLAC__Stre
  *    \c FLAC__STREAM_ENCODER_INIT_STATUS_OK if initialization was successful;
  *    see FLAC__StreamEncoderInitStatus for the meanings of other return values.
  */
-FLAC_API FLAC__StreamEncoderInitStatus FLAC__stream_encoder_init_ogg_file(FLAC__StreamEncoder *encoder, const char *filename, FLAC__StreamEncoderProgressCallback progress_callback, void *client_data);
+FLAC_API FLAC__StreamEncoderInitStatus FLAC__stream_encoder_init_ogg_file(FLAC__StreamEncoder *encoder, const CH1 *filename, FLAC__StreamEncoderProgressCallback progress_callback, void *client_data);
 
 /** Finish the encoding process.
  *  Flushes the encoding buffer, releases resources, resets the encoder

@@ -44,7 +44,7 @@ class KABUKI Card {
         of cards. Cards are taken from the pack and shuffled into the deck_
         using pointers.
     */
-    Card (int pip = 0, Suit* suit = nullptr, int denomination = 0);
+    Card (SI4 pip = 0, Suit* suit = nullptr, SI4 denomination = 0);
 
     /** Copy constructor deep-copies the state of the other object. */
     Card (const Card& other);
@@ -53,28 +53,28 @@ class KABUKI Card {
     virtual ~Card () {}
 
     /** Sets the values of the cards. */
-    void Set (int pip, Suit* suit, int denomination = ~0);
+    void Set (SI4 pip, Suit* suit, SI4 denomination = ~0);
 
     /** Compares this Card to the other Card.
         @return Returns 0 if they are identical.
         @return Returns 1 if this Card is greater than the other Card. */
-    virtual int Compare (Card* other);
+    virtual SI4 Compare (Card* other);
                                           
     /** Compares this Card to the other Card and returns true if the two are
         identical. */     
-    bool Equals (Card* other);
+    BOL Equals (Card* other);
 
     /** Returns the pip value of this Card 0-13.
         The pip value is a number between 0-13 that represents which card it is: 
         J=0, A=1, 2-10, J=11, Q=12, K=13. */
-    int GetPip ();
+    SI4 GetPip ();
     
     /** Returns the point value of this Card
         The face value represents how many points this card is worth. */
-    int GetDenomination ();
+    SI4 GetDenomination ();
                                      
     /** Sets the point value to the value. */          
-    void SetDenomination (int value);
+    void SetDenomination (SI4 value);
 
     /** Returns the Suit of this card. */
     Suit* GetSuit ();
@@ -87,7 +87,7 @@ class KABUKI Card {
         @return Returns 1 if the directory doesn't exist.
         @return Returns 2 if the file doesn't.
         @return Returns 3 if the image didn't load right. */
-    //int SetCardImage (const char* directory);
+    //SI4 SetCardImage (const CH1* directory);
                        
     /** Returns the address of this Card's image. */                            
     //Image& GetImage ();
@@ -100,7 +100,7 @@ class KABUKI Card {
 
     private:
 
-    int   pip_,          //< Pip value of this Card from 0-13.
+    SI4   pip_,          //< Pip value of this Card from 0-13.
           denomination_; //< Rank of this card in the deck.
     Suit* suit_;         //< Suit of this Card.
     //Image* image_;     //< Image of this Card.

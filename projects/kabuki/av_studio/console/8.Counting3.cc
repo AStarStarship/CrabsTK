@@ -1,7 +1,7 @@
 #include "maximilian.h"
 
 maxiOsc myCounter,mySwitchableOsc;//these oscillators will help us count and make sound.
-int CurrentCount;//we're going to put the current count in this variable so that we can use it more easily.
+SI4 CurrentCount;//we're going to put the current count in this variable so that we can use it more easily.
 double myOscOutput;//we're going to stick the output here to make it easier to mess with stuff.
 
 void setup() {//some inits

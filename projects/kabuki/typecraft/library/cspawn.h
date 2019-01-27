@@ -23,19 +23,19 @@ namespace typecraft {
 class Spawn : public Item {
  public:
   /* Constructs a Spawn of the given key. */
-  Spawn(const char* name);
+  Spawn(const CH1* name);
 
   /* Gets the type. */
-  int GetType();
+  SI4 GetType();
 
   /* Sets the type. */
-  const char* Setype(int type);
+  const CH1* Setype(SI4 type);
 
   /* Mines a block. */
   void Mine();
 
  private:
-  int type_;  //< What type of Spawn it is.
+  SI4 type_;  //< What type of Spawn it is.
 };
 
 }  // namespace typecraft

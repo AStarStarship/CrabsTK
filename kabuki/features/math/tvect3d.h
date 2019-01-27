@@ -20,15 +20,15 @@
 
 namespace _ {
 
- /** A 3D vector. */
+ /** A 3D TArray. */
 template<typename T>
-struct API Vect3D
+struct SDK Vect3D
 {
     T x,            //< The x component.
       y,          //< The y component.
       z;          //< THe z component.
     
-    /** Constructs an uninitialized vector. */
+    /** Constructs an uninitialized TArray. */
     Vect3D () {
         /// Nothing to do here!
     }
@@ -65,7 +65,7 @@ struct API Vect3D
     } 
 
     /** Compares this object's Vect3D to a and returns true if the two Positions are identical. */
-    bool Equals (const Vect3D& v) const {
+    BOL Equals (const Vect3D& v) const {
         if (x != v.x)
             return false;
         if (z != v.z)
@@ -91,7 +91,7 @@ struct API Vect3D
     }
 
     /** C== Operator== overloader. */
-    bool operator== (const Vect3D& v) const {
+    BOL operator== (const Vect3D& v) const {
         if (x != v.x) return false;
         if (y != v.y) return false;
         if (z != v.z) return false;
@@ -99,7 +99,7 @@ struct API Vect3D
     }
 
     /** C== Operator!= overloader. */
-    bool operator!= (const Vect3D& v) const {
+    BOL operator!= (const Vect3D& v) const {
         if (x != v.x) return true;
         if (y != v.y) return true;
         if (z != v.z) return true;

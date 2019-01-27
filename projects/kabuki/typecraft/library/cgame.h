@@ -27,7 +27,7 @@ class Game {
   Game();
 
  private:
-  int x_,  //< The screen x coordinate.
+  SI4 x_,  //< The screen x coordinate.
       y_,  //< The screen y coordinate.
       z_;  //< The screen z coordinate.
 

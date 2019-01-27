@@ -33,8 +33,8 @@ inline float AbsValue (float a);
 /** Gets the absolute Value of the value. */
 inline double AbsValue (double a);
 
-/** Gets the absolute Value of an int Value. */
-inline int AbsValue (int a);
+/** Gets the absolute Value of an SI4 Value. */
+inline SI4 AbsValue (SI4 a);
 
 /** Gets the absolute Value of a long Value. */
 inline long AbsValue (long a);
@@ -106,9 +106,9 @@ inline float Floor (float a);
 inline double Floor (double a);
 
 /** Gets the unbiased exponent used in the representation of a float. */
-inline int Exponent (float d);
+inline SI4 Exponent (float d);
 
-inline int Exponent (double d);
+inline SI4 Exponent (double d);
 /** Gets the unbiased exponent used in the representation of a double. */
 
 /** Gets SquareROot (x2 +y2) without intermediate overflow or underflow. */
@@ -147,8 +147,8 @@ inline float Max (float a, float b);
 /** Gets the greater of two double Values. */
 inline double Max (double a, double b);
 
-/** Gets the greater of two int Values. */
-inline int Max (int a, int b);
+/** Gets the greater of two SI4 Values. */
+inline SI4 Max (SI4 a, SI4 b);
 
 /** Gets the greater of two long Values. */
 inline long Max (long a, long b);
@@ -159,8 +159,8 @@ inline float Min (float a, float b);
 /** Gets the smaller of two double Values. */
 inline double Min (double a, double b);
 
-/** Gets the smaller of two int Values. */
-inline int Min (int a, int b);
+/** Gets the smaller of two SI4 Values. */
+inline SI4 Min (SI4 a, SI4 b);
 
 /** Gets the smaller of two long Values. */
 inline long Min (long a, long b);
@@ -195,25 +195,25 @@ inline float Round (float a);
 /** Gets the double Value that is closest in Value to the argument and is equal to a mathematical integer. */
 inline double Round (double a);
 
-/** Gets the closest int to the argument, with ties Rounding up. */
-inline int RoundToInt (float a);
+/** Gets the closest SI4 to the argument, with ties Rounding up. */
+inline SI4 RoundToInt (float a);
 
 /** Gets the closest long to the argument, with ties Rounding up. */
 inline long RoundToInt (double a);
 
 /** Return d × 2scaleFactor Rounded as if performed by a single correctly Rounded floating-point multiply to a member of the double Value set. */
-inline float ScaleB (float d, int scaleFactor);
+inline float ScaleB (float d, SI4 scaleFactor);
 
 /** Return d × 2scaleFactor Rounded as if performed by a single correctly Rounded floating-point multiply to a member of the double Value set. */
-inline double ScaleB (double d, int scaleFactor);
+inline double ScaleB (double d, SI4 scaleFactor);
 
 /** Return f × 2scaleFactor.
     Rounded as if performed by a single correctly Rounded floating-point multiply to a member of the float Value set. */
-inline float FScaleFactor (float f, int scaleFactor);
+inline float FScaleFactor (float f, SI4 scaleFactor);
 
 /** Return f × 2scaleFactor.
     Rounded as if performed by a single correctly Rounded floating-point multiply to a member of the float Value set. */
-inline double FScaleFactor (double f, int scaleFactor);
+inline double FScaleFactor (double f, SI4 scaleFactor);
 
 /** Gets the signum function of the argument
     @return 0.0 if the argument is 0.0, 1.0 if the argument is greater than 0, -1.0 if the argument is less than zero. */
@@ -283,7 +283,7 @@ inline float Factoral (float thisNumber);
 inline double Factoral (double thisNumber);
 
 /** Method calculates the factorial of thisNumber */
-inline int Factoral (int thisNumber);
+inline SI4 Factoral (SI4 thisNumber);
 
 /** Method calculates the factorial of thisNumber */
 inline long Factoral (long thisNumber);
@@ -306,12 +306,12 @@ inline double GetMaxDouble ();
     @return Gets the next prime number after thisNumber if it is not prime.
     @return Gets 0 if thisNumber is greater then the biggest prime number in the Numbers array.
 */
-inline int GetNextPrime (int thisNumber);
+inline SI4 GetNextPrime (SI4 thisNumber);
 
 /** An Inter-process calculator for doing math on distributed systems.
     @todo Map the above functions to the I2P operations.
 */
-class API Calc : public _::Operand {
+class SDK Calc : public _::Operand {
     public:
 
     /** Constructs a calculator. */

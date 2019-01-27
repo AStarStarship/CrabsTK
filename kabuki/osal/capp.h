@@ -28,7 +28,7 @@ namespace _ {
 */
 struct App {
     /*
-    const int MaxWindows = 256;
+    const SI4 MaxWindows = 256;
         
     uint32_t UID;
     numWindows;
@@ -44,22 +44,22 @@ struct App {
     virtual uint32_t GetUID () = 0;
 
     /** Sets the activeWindow to the new index. */
-    virtual int ActivateWindow (int i) = 0;
+    virtual SI4 ActivateWindow (SI4 i) = 0;
         
     /** Sets the activeWindow to the new window. */
-    virtual int ActivateWindow (Window w) = 0;
+    virtual SI4 ActivateWindow (Window w) = 0;
 
     /**  */
     virtual ProcessTree GetWindows () = 0;
 
     /**  */
-    virtual int Show () = 0;
+    virtual SI4 Show () = 0;
         
     /**  */
-    virtual int Hide () = 0;
+    virtual SI4 Hide () = 0;
         
     /**  */
-    virtual int Close () = 0;
+    virtual SI4 Close () = 0;
 
     /** Returns a link to this application's osal context. */
     virtual _g::Cell& GetDrawCell () = 0;

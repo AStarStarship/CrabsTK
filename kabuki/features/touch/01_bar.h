@@ -28,7 +28,7 @@ inline const CH1* _1_Bar (CH1* seam_log, CH1* seam_end, const CH1* args) {
   TEST_BEGIN;
   control_array a();
 
-  PRINTF("Testing const char* print (_::Expr& slot)...");
+  PRINTF("Testing const CH1* print (_::Expr& slot)...");
   a.Print();
 
   DMXControl c1("Control 1", 50, 33);
@@ -65,16 +65,16 @@ inline const CH1* _1_Bar (CH1* seam_log, CH1* seam_end, const CH1* args) {
   a.AddControl(&c6);
   a.AddControl(&c7);
 
-  PRINTF("Attempted to add some buttons:\n");
+  PRINT("Attempted to add some buttons:\n");
   a.Print();
 
   PRINTF("_::control_array tests completed successfully. :-)");
 
-  PRINTF("_::DMXButton class API\n");
+  PRINTF("_::DMXButton class SDK\n");
 
   DMXButton a("DMX Button A");
 
-  PRINTF("Testing const char* print (_::Expr& slot)...");
+  PRINTF("Testing const CH1* print (_::Expr& slot)...");
   a.Print();
 
   PRINTF("Testing void processPress () and void processDepress ()");
@@ -92,9 +92,9 @@ inline const CH1* _1_Bar (CH1* seam_log, CH1* seam_end, const CH1* args) {
 
   PRINTF("\n\n_Theater::ProjectTests completed.\n\n");
 
-  PRINTF("Testing _::ControlMatrix class.");
+  PRINTF("Testing ::_::ControlMatrix class.");
 
-  PRINTF("Testing const char* print (_::Expr& slot):\n");
+  PRINTF("Testing const CH1* print (_::Expr& slot):\n");
   ControlMatrix cm(5, 2);
   cm.Print();
 
@@ -126,27 +126,27 @@ inline const CH1* _1_Bar (CH1* seam_log, CH1* seam_end, const CH1* args) {
 
   cm.Print();
 
-  PRINTF("Done testing _::ControlMatrix class API! :-)");
+  PRINTF("Done testing ::_::ControlMatrix class SDK! :-)");
 
   PRINTF("\n\n_Theater::ProjectTests completed.\n\n");
 
   PRINTF("Running Widget tests...");
 
-  PRINTF("Testing _::Widget class API\n");
+  PRINTF("Testing ::_::Widget class SDK\n");
   PRINT_LINE('~');
 
   Widget w("Test Widget");
 
-  PRINTF("Testing const char* ToString ()\n");
+  PRINTF("Testing const CH1* ToString ()\n");
 
   w.Print();
 
-  PRINTF("Testing InsertPage  (const char*&)\n");
+  PRINTF("Testing InsertPage  (const CH1*&)\n");
 
-  const char* page_name_string;
-  char pageIndex = '1';
+  const CH1* page_name_string;
+  CH1 pageIndex = '1';
 
-  for (int i = 0; i < 6; ++i) {
+  for (SI4 i = 0; i < 6; ++i) {
     page_name_string = "Page " + pageIndex;
     PRINTF("Inserting Page %s...", page_name_string);
     CHECK(!w.InsertPage(page_name_string),
@@ -156,13 +156,13 @@ inline const CH1* _1_Bar (CH1* seam_log, CH1* seam_end, const CH1* args) {
 
   PRINTF(w.ToString());
 
-  PRINTF("Testing contains  (const char*&)...");
+  PRINTF("Testing contains  (const CH1*&)...");
 
   CHECK(!w.contains("Page 1"), "Error: w does not contains \"Page 1\"");
 
-  PRINTF("Testing deletePage  (int)... ");
+  PRINTF("Testing deletePage  (SI4)... ");
 
-  int debug_code;
+  SI4 debug_code;
 
   debug_code = w.deletePage(1);
 
@@ -185,7 +185,7 @@ inline const CH1* _1_Bar (CH1* seam_log, CH1* seam_end, const CH1* args) {
 
   PRINTF("Testing inserting duplicate page names...");
 
-  for (int i = 0; i < 5; ++i) {
+  for (SI4 i = 0; i < 5; ++i) {
     debug_code = w.InsertPage("Untitled");
     PRINTF((i + 1) + ".) Debug code: " + debug_code);
   }
@@ -200,18 +200,18 @@ inline const CH1* _1_Bar (CH1* seam_log, CH1* seam_end, const CH1* args) {
   Widget wc(w);
   wc.Print();
 
-  PRINTF("Done testing Widget class API");
+  PRINTF("Done testing Widget class SDK");
 
-  PRINTF("\n\nRunning _::Widget tests completed.\n\n");
+  PRINTF("\n\nRunning ::_::Widget tests completed.\n\n");
 
-  PRINTF("Testing _::WidgetPage");
+  PRINTF("Testing ::_::WidgetPage");
 
   PRINTF("Testing Page class\n");
   PRINT_LINE('~');
 
   WidgetPage p("Test Page");
 
-  PRINTF("Testing const char* toString ()");
+  PRINTF("Testing const CH1* toString ()");
   p.Print();
 
   PRINTF("Testing copy constructor...");
@@ -220,9 +220,9 @@ inline const CH1* _1_Bar (CH1* seam_log, CH1* seam_end, const CH1* args) {
 
   PRINTF("Done testing Page class");
 
-  PRINTF("\n\nRunning _::WidgetPage tests completed.\n\n");
+  PRINTF("\n\nRunning ::_::WidgetPage tests completed.\n\n");
 
-  PRINTF("Testing _::MIDIControl\n");
+  PRINTF("Testing ::_::MIDIControl\n");
 
   MIDIControl a("MIDI Control A");
   a.Print();
@@ -237,39 +237,39 @@ inline const CH1* _1_Bar (CH1* seam_log, CH1* seam_end, const CH1* args) {
   a.Print();
   CHECK(a.GetCC() == 0);
 
-  PRINTF("Done testing _::MIDIControl class API. :-)\n");
+  PRINTF("Done testing ::_::MIDIControl class SDK. :-)\n");
 
   PRINTF("_::MIDIButton...\n");
 
   MIDIButton a("MIDI Button A");
 
-  PRINTF("Testing const char* print (_::Expr& slot)");
+  PRINTF("Testing const CH1* print (_::Expr& slot)");
   a.Print();
 
   PRINTF("\n\n_Theater::MIDIButton tests completed.\n\n");
 
-  PRINTF("Testing _::MacroButton class API:\n");
+  PRINTF("Testing ::_::MacroButton class SDK:\n");
 
   auto macroA = MacroButton("Macro Button A");
 
-  PRINTF("Testing const char* print (_::verifier&)...");
+  PRINTF("Testing const CH1* print (_::verifier&)...");
   PRINTF(macroA.Print(_::Expr & slot));
-  PRINTF("Testing add  (Parameter<int>*)");
+  PRINTF("Testing add  (Parameter<SI4>*)");
   macroA.add(new DMXControl("Macro 1"));
   macroA.add(new MIDIControl("Macro 2"));
   macroA.add(new DMXButton("Macro 3"));
   macroA.add(new MIDIButton("Macro 4"));
-  PRINTF("Added " + const char*(macroA.numControls()) + " test controls.\n" +
+  PRINTF("Added " + const CH1*(macroA.numControls()) + " test controls.\n" +
          macroA.Print(_::Expr & slot));
   PRINTF("Testing void trigger ()");
   macroA.trigger();
-  PRINTF("Testing Parameter<int>* remove  (index);");
+  PRINTF("Testing Parameter<SI4>* remove  (index);");
 
   PRINTF("\n\n_Theater::ProjectTests completed.\n\n");
 
   PRINTF("_::Label Class.\n");
 
-  const char *invalid_string = "Invalid label ~",
+  const CH1 *invalid_string = "Invalid label ~",
              *valid_string_1 = "Valid label 1",
              *valid_string_2 = "Valid label !@%^",
              *valid_string_3 = "Valid label &* ()";
@@ -281,7 +281,7 @@ inline const CH1* _1_Bar (CH1* seam_log, CH1* seam_end, const CH1* args) {
 
   PRINTF("Testing valid string input.");
 
-  PRINTF("Testing int isValid  (const char* &)");
+  PRINTF("Testing SI4 isValid  (const CH1* &)");
   PRINTF("isValidString(valid_string_1): %b", is_valid_label(valid_string_1));
   CHECK(is_valid_label(valid_string_1) == Valid);
   PRINTF("Testing invalid string input.");
@@ -289,7 +289,7 @@ inline const CH1* _1_Bar (CH1* seam_log, CH1* seam_end, const CH1* args) {
   CHECK(is_valid_label("") != 0);
   CHECK(is_valid_label("123456789012345678901") != 0);
 
-  PRINTF("Testing int compare  (const char* &)\n");
+  PRINTF("Testing SI4 compare  (const CH1* &)\n");
   invalid_label.Print();
   PRINTF("Testing valid comparisons...");
   CHECK(!valid_label_1.Compare(valid_string_1));
@@ -305,7 +305,7 @@ inline const CH1* _1_Bar (CH1* seam_log, CH1* seam_end, const CH1* args) {
   valid_label_1.SetLabel(valid_string_3);
   CHECK(valid_label_1.GetLabel() == valid_string_3);
 
-  PRINTF("Done testing _::Label class API.");
+  PRINTF("Done testing ::_::Label class SDK.");
 
   PRINTF("\n\n_Theater::ProjectTests completed.\n\n");
 
@@ -335,11 +335,11 @@ inline const CH1* _1_Bar (CH1* seam_log, CH1* seam_end, const CH1* args) {
   DMXControl control_b(control_a);
   PRINTF("Printing control_b.Print (_::Expr& slot)\n");
   control_b.Print();
-  PRINTF("Testing int Compare  (const Control&)");
+  PRINTF("Testing SI4 Compare  (const Control&)");
 
   CHECK(control_a.Compare(control_b) == 0);
-  int compare_value = control_a.Compare(control_b);
-  PRINTF("Testing int Compare  (const Control&): " + compare_value);
+  SI4 compare_value = control_a.Compare(control_b);
+  PRINTF("Testing SI4 Compare  (const Control&): " + compare_value);
   CHECK(compare_value == 0);
 
   PRINTF("Testing valid inputs...");
@@ -378,13 +378,13 @@ inline const CH1* _1_Bar (CH1* seam_log, CH1* seam_end, const CH1* args) {
   control_a.SetChannel(1);
   CHECK(control_a.GetChannel() == 1);
 
-  PRINTF("Done testing DMXControl class API");
+  PRINTF("Done testing DMXControl class SDK");
 
-  PRINTF("_::DMXButton class API\n");
+  PRINTF("_::DMXButton class SDK\n");
 
   DMXButton a("DMX Button A");
 
-  PRINTF("Testing const char* print (_::Expr& slot)...");
+  PRINTF("Testing const CH1* print (_::Expr& slot)...");
   a.Print();
 
   PRINTF("Testing void processPress () and void processDepress ()");

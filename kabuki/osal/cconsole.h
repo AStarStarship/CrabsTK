@@ -24,7 +24,7 @@
 
 namespace _ {
 
-int WindowsConosleColoredTextExampleMain ()
+SI4 WindowsConosleColoredTextExampleMain ()
 {
 	const WORD colors[] =
 		{

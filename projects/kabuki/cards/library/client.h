@@ -53,7 +53,7 @@ class Client : public id::AuthenticatorDefault, public _::Operation {
     uint GetState ();
 
     /** Virtual function sets the FSM state to a positive value. */
-    virtual bool SetState (int state);
+    virtual BOL SetState (SI4 state);
 
     /** Prints out the PlayerProxy(s). */
     void Client::PrintPlayers ();
@@ -70,7 +70,7 @@ class Client : public id::AuthenticatorDefault, public _::Operation {
     protected:
 
     id::Authenticator  * authenticator_;
-    char                 game_name_[kMaxGameNameLength]; //< Current game name.
+    CH1                 game_name_[kMaxGameNameLength]; //< Current game name.
     uint32_t             state_,        //< Client app state.
                          round_number_; //< Current round number.
     id::User             user_;         //< User.

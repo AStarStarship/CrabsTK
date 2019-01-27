@@ -35,43 +35,43 @@ class PlayerProxy: public Player {
     virtual ~PlayerProxy ();
 
     /** Gets the Player's status_. */
-    const char* GetDislpayName ();
+    const CH1* GetDislpayName ();
 
     /** Sets the Player's status_. */
-    const char* SetDislpayName (const char* name);
+    const CH1* SetDislpayName (const CH1* name);
 
     /** Gets the Player's status_. */
-    const char* GetHandle ();
+    const CH1* GetHandle ();
 
     /** Sets the Player's status_. */
-    const char* SetHandle (const char* name);
+    const CH1* SetHandle (const CH1* name);
 
     /** Gets is_dealer_. */
-    bool IsDealer ();
+    BOL IsDealer ();
 
     /** Sets is_dealer_. */
-    void SetIsDealer (bool is_dealer);
+    void SetIsDealer (BOL is_dealer);
 
     /** Gets this Player's state. */
-    int GetState ();
+    SI4 GetState ();
 
     /** Attempts to set the state. 
         @return Returns nil upon success and an error string upon
                 failure. */
-    virtual const char* SetState (int32_t state);
+    virtual const CH1* SetState (int32_t state);
 
     /** Gets the num_points. */
-    int GetNumPoints ();
+    SI4 GetNumPoints ();
 
     /** Sets the num_points.
         @return Returns false if num_points is < 0. */
-    bool SetNumPoints (int num_points);
+    BOL SetNumPoints (SI4 num_points);
 
     /** Returns the number of wins. */
-    int GetNumWins ();
+    SI4 GetNumWins ();
 
     /** Returns the number of wins. */
-    bool SetNumWins (int num_wins);
+    BOL SetNumWins (SI4 num_wins);
 
     /** Gets the visible_cards_. */
     CardStack& GetVisibleCards ();
@@ -82,7 +82,7 @@ class PlayerProxy: public Player {
     /** Adds a new Card to the visible_cards_.
         @return Returns -1 upon failure and the new number of visible cards upon
                 success. */
-    int AddCard (byte pip, byte suit);
+    SI4 AddCard (byte pip, byte suit);
 
     /** Prints this object to the console. */
     virtual _::Text& Print (_::Text& txt = _::Text ());
@@ -92,9 +92,9 @@ class PlayerProxy: public Player {
 
     protected:
 
-    char      * status_,        //< PlayerProxy's name.
+    CH1      * status_,        //< PlayerProxy's name.
               * handle_;        //< Display handle.
-    bool        is_dealer_;     //< Flags if this player is the dealer.
+    BOL        is_dealer_;     //< Flags if this player is the dealer.
     int32_t     state_,         //< The state of the player.
                 num_points_,    //< Number of points.
                 num_wins_;      //< Total number of wins.

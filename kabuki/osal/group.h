@@ -24,11 +24,11 @@ class ProcessTree {
 
     ProcessTree ();
     ProcessTree (Window thisWindow);
-    ProcessTree (vector<Window> initWindows);
+    ProcessTree (TArray<Window> initWindows);
     uint32_t GetUID () { return uID; }
 
 /** Gets and sets the maximum number of windows in this group */
-    int ProcessTree::GetMaxWindows () { return maxWindows; }
+    SI4 ProcessTree::GetMaxWindows () { return maxWindows; }
 
     void ProcessTree::SetMaxWindows (uint32_t value)
     {
@@ -37,9 +37,9 @@ class ProcessTree {
     }
 
     /**  */
-    int Select (int windowNumber);
+    SI4 Select (SI4 windowNumber);
 
-    int GetNumWindows{ return numWindows; }
+    SI4 GetNumWindows{ return numWindows; }
 
     /** Adds a newWindow to the group. */
     void AddWindow (Window newWindow);

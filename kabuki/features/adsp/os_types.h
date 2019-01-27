@@ -38,14 +38,14 @@
 #    include <sys/types.h>
      typedef short ogg_int16_t;
      typedef unsigned short ogg_uint16_t;
-     typedef int ogg_int32_t;
-     typedef unsigned int ogg_uint32_t;
+     typedef SI4 ogg_int32_t;
+     typedef unsigned SI4 ogg_uint32_t;
      typedef long long ogg_int64_t;
      typedef unsigned long long ogg_uint64_t;
 #  elif defined(__MWERKS__)
      typedef long long ogg_int64_t;
-     typedef int ogg_int32_t;
-     typedef unsigned int ogg_uint32_t;
+     typedef SI4 ogg_int32_t;
+     typedef unsigned SI4 ogg_uint32_t;
      typedef short ogg_int16_t;
      typedef unsigned short ogg_uint16_t;
 #  else
@@ -81,8 +81,8 @@
 #  include <sys/types.h>
    typedef short ogg_int16_t;
    typedef unsigned short ogg_uint16_t;
-   typedef int ogg_int32_t;
-   typedef unsigned int ogg_uint32_t;
+   typedef SI4 ogg_int32_t;
+   typedef unsigned SI4 ogg_uint32_t;
    typedef long long ogg_int64_t;
 
 #elif defined(__BEOS__)
@@ -100,23 +100,23 @@
    /* OS/2 GCC */
    typedef short ogg_int16_t;
    typedef unsigned short ogg_uint16_t;
-   typedef int ogg_int32_t;
-   typedef unsigned int ogg_uint32_t;
+   typedef SI4 ogg_int32_t;
+   typedef unsigned SI4 ogg_uint32_t;
    typedef long long ogg_int64_t;
 
 #elif defined (DJGPP)
 
    /* DJGPP */
    typedef short ogg_int16_t;
-   typedef int ogg_int32_t;
-   typedef unsigned int ogg_uint32_t;
+   typedef SI4 ogg_int32_t;
+   typedef unsigned SI4 ogg_uint32_t;
    typedef long long ogg_int64_t;
 
 #elif defined(R5900)
 
    /* PS2 EE */
    typedef long ogg_int64_t;
-   typedef int ogg_int32_t;
+   typedef SI4 ogg_int32_t;
    typedef unsigned ogg_uint32_t;
    typedef short ogg_int16_t;
 
@@ -125,18 +125,18 @@
    /* Symbian GCC */
    typedef signed short ogg_int16_t;
    typedef unsigned short ogg_uint16_t;
-   typedef signed int ogg_int32_t;
-   typedef unsigned int ogg_uint32_t;
-   typedef long long int ogg_int64_t;
+   typedef signed SI4 ogg_int32_t;
+   typedef unsigned SI4 ogg_uint32_t;
+   typedef long long SI4 ogg_int64_t;
 
 #elif defined(__TMS320C6X__)
 
    /* TI C64x compiler */
    typedef signed short ogg_int16_t;
    typedef unsigned short ogg_uint16_t;
-   typedef signed int ogg_int32_t;
-   typedef unsigned int ogg_uint32_t;
-   typedef long long int ogg_int64_t;
+   typedef signed SI4 ogg_int32_t;
+   typedef unsigned SI4 ogg_uint32_t;
+   typedef long long SI4 ogg_int64_t;
 
 #else
 

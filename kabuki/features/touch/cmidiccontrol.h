@@ -1,6 +1,6 @@
 /* Kabuki Toolkit @version 0.x
 @link    https://github.com/kabuki-starship/kabuki-toolkit.git
-@file    /kabuki/features/hmi/hmi_control_midi.h
+@file    /kabuki/features/touch/touch_control_midi.h
 @author  Cale McCollough <https://calemccollough.github.io>
 @license Copyright (C) 2014-19 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -13,7 +13,7 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <pch.h>
-#if SEAM >= SEAM_00_03_00_00__00
+#if SEAM >= KABUKI_FEATURES_TOUCH_1
 #ifndef HEADER_FOR_KT_HMI_MIDICONTROL
 #define HEADER_FOR_KT_HMI_MIDICONTROL
 
@@ -26,16 +26,16 @@ namespace _ {
 
 
 */
-class API MidiControl : public Parameter<int> {
+class SDK MidiControl : public Parameter<SI4> {
  public:
   enum {
     NumChannels = 16  //< Number of MIDI channels.
   };
 
   /* Constructor. */
-  MidiControl(const string& label = "", int cc = 0, int channel = 0,
-              int init_value = 0, int newMinValue = 0, int min_value = 127,
-              int word_size = 7, int type = Parameter<int>::MidiControl);
+  MidiControl(const string& label = "", SI4 cc = 0, SI4 channel = 0,
+              SI4 init_value = 0, SI4 newMinValue = 0, SI4 min_value = 127,
+              SI4 word_size = 7, SI4 type = Parameter<SI4>::MidiControl);
 
   /* Copy constructor. */
   MidiControl(const MidiControl& o);
@@ -44,21 +44,21 @@ class API MidiControl : public Parameter<int> {
   virtual ~MidiControl() {}
 
   /* gets the MIDI control change (CC) parameter. */
-  int GetCc() const;
+  SI4 GetCc() const;
 
   /* sets the control change (CC) parameter. */
-  void SetCc(int value);
+  void SetCc(SI4 value);
 
   /* Sets the min and max values. */
-  void SetMinMaxValues(int newMin, int newMax) override;
+  void SetMinMaxValues(SI4 newMin, SI4 newMax) override;
 
   /* sets the min value to the value. */
-  void SetMinValue(int value) override;
+  void SetMinValue(SI4 value) override;
 
   /* sets the max value to the value. */
-  void SetMaxValue(int value) override;
+  void SetMaxValue(SI4 value) override;
 
-  /* Triggers the Parameter<int> to fire. */
+  /* Triggers the Parameter<SI4> to fire. */
   virtual void Trigger();
 
   /* gets the header for toStringRow (). */
@@ -68,7 +68,7 @@ class API MidiControl : public Parameter<int> {
   void PrintRow() const override;
 
   /* Prints this object to the stdout. */
-  _::Utf& Print(_::Utf& print) const;
+  ::_::Utf& Print(_::Utf& print) const;
 
  private:
   uint16_t cc_;  //< The control change (CC) parameter.
@@ -76,4 +76,4 @@ class API MidiControl : public Parameter<int> {
 
 }  // namespace _
 #endif  //< HEADER_FOR_KT_HMI_MIDICONTROL
-#endif  //< #if SEAM >= SEAM_00_03_00_00__00
+#endif  //< #if SEAM >= KABUKI_FEATURES_TOUCH_1

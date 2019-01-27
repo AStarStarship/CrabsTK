@@ -23,31 +23,31 @@ using namespace kabuki::id;
 
 namespace kabuki { namespace cards {
 
-int BlackjackScore (Hand& hand, int ace_value) {
-    int score = 0;  //< Always set the variable before you start using it!!!
+SI4 BlackjackScore (Hand& hand, SI4 ace_value) {
+    SI4 score = 0;  //< Always set the variable before you start using it!!!
 
     CardStack& cards = hand.GetVisibleCards ();
     Card* card;
-    for (int i = 0; i < cards.Length (); ++i) {
+    for (SI4 i = 0; i < cards.Length (); ++i) {
         card = cards.GetCard (i);
-        int denomination = card->GetDenomination ();
+        SI4 denomination = card->GetDenomination ();
         score += ((denomination == Card::kAce) ? ace_value : denomination);
     }
 
     return score;
 }
 
-int BlackjackMinScore (Hand& hand) {
+SI4 BlackjackMinScore (Hand& hand) {
     return BlackjackScore (hand, 1);
 }
 
-int BlackjackMaxScore (Hand& hand) {
+SI4 BlackjackMaxScore (Hand& hand) {
     return BlackjackScore (hand, 11);
 }
 
 
-int BlackjackCompareHands (Hand& a, Hand& b) {
-    int a_min = BlackjackMinScore (a),
+SI4 BlackjackCompareHands (Hand& a, Hand& b) {
+    SI4 a_min = BlackjackMinScore (a),
         a_max = BlackjackMaxScore (a),
         b_min = BlackjackMinScore (b),
         b_max = BlackjackMaxScore (b);
@@ -61,7 +61,7 @@ int BlackjackCompareHands (Hand& a, Hand& b) {
     if (b_min == 21 || b_max == 21) //< We lost.
         return -2;
 
-    int best_score = a_max > 21?a_min:a_max,
+    SI4 best_score = a_max > 21?a_min:a_max,
         other_best_score = b_max > 21?b_min:b_max;
 
     if (best_score > 21)           //< We lost :-(
@@ -82,7 +82,7 @@ int BlackjackCompareHands (Hand& a, Hand& b) {
 
 
 BlackjackPlayer::BlackjackPlayer (id::User* user, CardStack& stock,
-                                  bool is_dealder) :
+                                  BOL is_dealder) :
     Player (user, is_dealder),
     stock_ (stock) {
     // Nothing to do here!
@@ -109,8 +109,8 @@ void BlackjackPlayer::Hold () {
 
 }
 
-const char* BlackjackPlayer::SetState (int state) {
-    static const char* error = "Invalid state";
+const CH1* BlackjackPlayer::SetState (SI4 state) {
+    static const CH1* error = "Invalid state";
     if (state < 0) {
         return error;
     }
@@ -121,7 +121,7 @@ const char* BlackjackPlayer::SetState (int state) {
     return nullptr;
 }
 
-bool BlackjackPlayer::IsHolding () {
+BOL BlackjackPlayer::IsHolding () {
     return state_ == kStateHolding;
 }
 
@@ -133,8 +133,8 @@ Array<CardCombo> BlackjackPlayer::GetHandCombos () {
     scores.low = 0;  //< scores.low is the total of the cards with aces as 1
     scores.high = 0; //< scores.high is the number of aces to add on an opt 10.
 
-    for (int s = 0; s < GetCount (); ++s) {
-        int currentValue = GetCard (s)->GetPip ();
+    for (SI4 s = 0; s < GetCount (); ++s) {
+        SI4 currentValue = GetCard (s)->GetPip ();
 
         if (currentValue == 1) // First check if its an ace
         {
@@ -156,16 +156,16 @@ Array<CardCombo> BlackjackPlayer::GetHandCombos () {
     return scores;
 }*/
 
-bool BlackjackPlayer::Is21 () {
+BOL BlackjackPlayer::Is21 () {
     return BlackjackMinScore (hand_) == 21 || BlackjackMaxScore (hand_) == 21;
 }
 
-bool BlackjackPlayer::IsBust () {
+BOL BlackjackPlayer::IsBust () {
     return BlackjackMaxScore (hand_) > 21;
 }
 
 /**
-bool BlackjackPlayer::PlayOrPass () {
+BOL BlackjackPlayer::PlayOrPass () {
     // Estimated chances of winning. 
     static const float chanes_of_winning_low[] = {
         0.1f, 0.2f, 0.3f, 0.4f, 0.5f, 0.6f, 0.7f, 0.8f, 0.9f
@@ -174,7 +174,7 @@ bool BlackjackPlayer::PlayOrPass () {
         0.6f, 0.6f, 0.5f, 0.5f, 0.4f, 0.4f, 0.2f, 0.2f, 0.2f
     };
 
-    int this_high_score  = GetScore (Deck::kAcesHigh),
+    SI4 this_high_score  = GetScore (Deck::kAcesHigh),
         this_low_score   = GetScore (Deck::kAcesLow),
         other_high_score = other_score.GetScore (Deck::kAcesHigh),
         other_low_score  = other_score.GetScore (Deck::kAcesLow);
@@ -208,10 +208,10 @@ bool BlackjackPlayer::PlayOrPass () {
     float chance_of_winning;
 
     if (this_high_score < 21) {
-        int numPointsLeft = 21 - this_high_score;
+        SI4 numPointsLeft = 21 - this_high_score;
         chance_of_winning = chanes_of_winning_low[numPointsLeft];
     } else {
-        int numPointsLeft = 21 - this_low_score;
+        SI4 numPointsLeft = 21 - this_low_score;
         chance_of_winning = chanes_of_winning_high[numPointsLeft];
     }
 
@@ -271,11 +271,11 @@ void BlackjackPlayer::EndGame () {
 
 }
 
-int BlackjackPlayer::Compare (Hand& other) {
+SI4 BlackjackPlayer::Compare (Hand& other) {
     return BlackjackCompareHands (hand_, other);
 }
 
-bool BlackjackPlayer::Wins (Hand& other) {
+BOL BlackjackPlayer::Wins (Hand& other) {
     return BlackjackCompareHands (hand_, other) > 0;
 }
 
@@ -299,7 +299,7 @@ const Operation* BlackjackPlayer::Star (uint index, _::Expression* expr) {
         OperationCount (0), OperationFirst ('A'),
         "Player in a Blackjack game.", 0 };
     void* args[2];
-    char handle[Handle::kMaxLength],
+    CH1 handle[Handle::kMaxLength],
         tweet[141];
     switch (index) {
         case '?': return ExpressionOperation (expr, &This);
@@ -339,8 +339,8 @@ const Operation* BlackjackPlayer::Star (uint index, _::Expression* expr) {
     return Result (expr, Bin::kErrorInvalidOperation);
 }
 
-const char* BlackjackPlayer::Sudo (const char* text,
-                                         const char* strand_end) {
+const CH1* BlackjackPlayer::Sudo (const CH1* text,
+                                         const CH1* strand_end) {
     return nullptr;
 }
 

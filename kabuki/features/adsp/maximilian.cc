@@ -50,9 +50,9 @@ extern "C" {
 //This used to be important for dealing with multichannel playback
 float chandiv= 1;
 
-int maxiSettings::sampleRate = 44100;
-int maxiSettings::channels = 2;
-int maxiSettings::bufferSize = 1024;
+SI4 maxiSettings::sampleRate = 44100;
+SI4 maxiSettings::channels = 2;
+SI4 maxiSettings::bufferSize = 1024;
 
 
 //this is a 514-point sinewave table that has many uses. 
@@ -366,7 +366,7 @@ double maxiOsc::triangle(double frequency) {
 
 // don't use this nonsense. Use ramps instead.
 // ..er... I mean "This method is deprecated"
-double maxiEnvelope::line(int numberofsegments,double segments[1000]) {
+double maxiEnvelope::line(SI4 numberofsegments,double segments[1000]) {
 	//This is a basic multi-segment ramp generator that you can use for more or less anything.
     //However, it's not that intuitive.
     if (isPlaying==1) {//only make a sound once you've been triggered
@@ -394,14 +394,14 @@ double maxiEnvelope::line(int numberofsegments,double segments[1000]) {
 }
 
 //and this is also deprecated
-void maxiEnvelope::trigger(int index, double amp) {
+void maxiEnvelope::trigger(SI4 index, double amp) {
 	isPlaying=1;//ok the envelope is being used now.
 	valindex=index;
 	amplitude=amp;
 	
 }
 
-void maxiEnvelope::trigger(bool noteOn) {
+void maxiEnvelope::trigger(BOL noteOn) {
     
     if (noteOn) trig=1;
     if (noteOn==false) trig=0;
@@ -596,7 +596,7 @@ maxiDelayline::maxiDelayline() {
 }
 
 
-double maxiDelayline::dl(double input, int size, double feedback)  {
+double maxiDelayline::dl(double input, SI4 size, double feedback)  {
 	if ( phase >=size ) {
 		phase = 0;
 	}
@@ -607,7 +607,7 @@ double maxiDelayline::dl(double input, int size, double feedback)  {
 	
 }
 
-double maxiDelayline::dl(double input, int size, double feedback, int position)  {
+double maxiDelayline::dl(double input, SI4 size, double feedback, SI4 position)  {
 	if ( phase >=size ) phase = 0;
 	if ( position >=size ) position = 0;
 	output=memory[position];
@@ -720,21 +720,21 @@ double *maxiMix::ambisonic(double input,double eight[8],double x,double y,double
 }
 
 //This is the maxiSample load function. It just calls read.
-bool maxiSample::load(string fileName, int channel) {
+BOL maxiSample::load(string fileName, SI4 channel) {
 	myPath = fileName;
 	readChannel=channel;
 	return read();
 }
 
 // This is for OGG loading
-bool maxiSample::loadOgg(string fileName, int channel) {
+BOL maxiSample::loadOgg(string fileName, SI4 channel) {
 #ifdef VORBIS
-    bool result;
+    BOL result;
 	readChannel=channel;
-    int channelx;
+    SI4 channelx;
 //    cout << fileName << endl;
     free(temp);
-    myDataSize = stb_vorbis_decode_filename(const_cast<char*>(fileName.c_str()), &channelx, &temp);
+    myDataSize = stb_vorbis_decode_filename(const_cast<CH1*>(fileName.c_str()), &channelx, &temp);
     result = myDataSize > 0;
     printf("\nchannels = %d\nlength = %d",channelx,myDataSize);
     printf("\n");
@@ -743,9 +743,9 @@ bool maxiSample::loadOgg(string fileName, int channel) {
     mySampleRate=44100;
     
     if (myChannels>1) {
-        int position=0;
-        int channel=readChannel;
-        for (int i=channel;i<myDataSize*2;i+=myChannels) {
+        SI4 position=0;
+        SI4 channel=readChannel;
+        for (SI4 i=channel;i<myDataSize*2;i+=myChannels) {
             temp[position]=temp[i];
             position++;
         }
@@ -764,46 +764,46 @@ void maxiSample::trigger() {
 }
 
 //This is the main read function.
-bool maxiSample::read()
+BOL maxiSample::read()
 {
-	bool result;
+	BOL result;
 	ifstream inFile( myPath.c_str(), ios::in | ios::binary);
 	result = inFile.is_open();
 	if (result) {
-		bool datafound = false;
+		BOL datafound = false;
 		inFile.seekg(4, ios::beg);
-		inFile.read( (char*) &myChunkSize, 4 ); // read the ChunkSize
+		inFile.read( (CH1*) &myChunkSize, 4 ); // read the ChunkSize
 		
 		inFile.seekg(16, ios::beg);
-		inFile.read( (char*) &mySubChunk1Size, 4 ); // read the SubChunk1Size
+		inFile.read( (CH1*) &mySubChunk1Size, 4 ); // read the SubChunk1Size
 		
 		//inFile.seekg(20, ios::beg);
-		inFile.read( (char*) &myFormat, sizeof(short) ); // read the file format.  This should be 1 for PCM
+		inFile.read( (CH1*) &myFormat, sizeof(short) ); // read the file format.  This should be 1 for PCM
 		
 		//inFile.seekg(22, ios::beg);
-		inFile.read( (char*) &myChannels, sizeof(short) ); // read the # of channels (1 or 2)
+		inFile.read( (CH1*) &myChannels, sizeof(short) ); // read the # of channels (1 or 2)
 		
 		//inFile.seekg(24, ios::beg);
-		inFile.read( (char*) &mySampleRate, sizeof(int) ); // read the samplerate
+		inFile.read( (CH1*) &mySampleRate, sizeof(SI4) ); // read the samplerate
 		
 		//inFile.seekg(28, ios::beg);
-		inFile.read( (char*) &myByteRate, sizeof(int) ); // read the byterate
+		inFile.read( (CH1*) &myByteRate, sizeof(SI4) ); // read the byterate
 		
 		//inFile.seekg(32, ios::beg);
-		inFile.read( (char*) &myBlockAlign, sizeof(short) ); // read the blockalign
+		inFile.read( (CH1*) &myBlockAlign, sizeof(short) ); // read the blockalign
 		
 		//inFile.seekg(34, ios::beg);
-		inFile.read( (char*) &myBitsPerSample, sizeof(short) ); // read the bitspersample
+		inFile.read( (CH1*) &myBitsPerSample, sizeof(short) ); // read the bitspersample
 		
 		//ignore any extra chunks
-		char chunkID[5]="";
+		CH1 chunkID[5]="";
 		chunkID[4] = 0;
-		int filePos = 20 + mySubChunk1Size;
+		SI4 filePos = 20 + mySubChunk1Size;
 		while(!datafound && !inFile.eof()) {
 			inFile.seekg(filePos, ios::beg);
-			inFile.read((char*) &chunkID, sizeof(char) * 4);
+			inFile.read((CH1*) &chunkID, sizeof(CH1) * 4);
 			inFile.seekg(filePos + 4, ios::beg);
-			inFile.read( (char*) &myDataSize, sizeof(int) ); // read the size of the data
+			inFile.read( (CH1*) &myDataSize, sizeof(SI4) ); // read the size of the data
 			filePos += 8;
 			if (strcmp(chunkID,"data") == 0) {
 				datafound = true;
@@ -813,7 +813,7 @@ bool maxiSample::read()
 		}
 		
 		// read the data chunk
-		char * myData = (char*) malloc(myDataSize * sizeof(char));
+		CH1 * myData = (CH1*) malloc(myDataSize * sizeof(CH1));
 		inFile.seekg(filePos, ios::beg);
 		inFile.read(myData, myDataSize);
 		length=myDataSize*(0.5/myChannels);
@@ -821,17 +821,17 @@ bool maxiSample::read()
 		
         cout << "Ch: " << myChannels << ", len: " << length << endl;
 		if (myChannels>1) {
-			int position=0;
-			int channel=readChannel*2;
-			for (int i=channel;i<myDataSize+6;i+=(myChannels*2)) {
+			SI4 position=0;
+			SI4 channel=readChannel*2;
+			for (SI4 i=channel;i<myDataSize+6;i+=(myChannels*2)) {
 				myData[position]=myData[i];
 				myData[position+1]=myData[i+1];
 				position+=2;
 			}
 		}
         free(temp);
-        temp = (short*) malloc(myDataSize * sizeof(char));
-        memcpy(temp, myData, myDataSize * sizeof(char));
+        temp = (short*) malloc(myDataSize * sizeof(CH1));
+        memcpy(temp, myData, myDataSize * sizeof(CH1));
         
         free(myData);
 		
@@ -1021,7 +1021,7 @@ double maxiSample::play4(double frequency, double start, double end) {
 		position += ((end-start)/(maxiSettings::sampleRate/(frequency*chandiv)));
 		remainder = position - floor(position);
 		if (position>0) {
-			a=temp[(int)(floor(position))-1];
+			a=temp[(SI4)(floor(position))-1];
 
 		} else {
 			a=temp[0];
@@ -1086,7 +1086,7 @@ double maxiSample::play4(double frequency, double start, double end) {
 
 
 //You don't need to worry about this stuff.
-double maxiSample::bufferPlay(unsigned char &bufferin,long length) {
+double maxiSample::bufferPlay(unsigned CH1 &bufferin,long length) {
 	double remainder;
 	short* buffer = (short *)&bufferin;
 	position=(position+1);
@@ -1096,7 +1096,7 @@ double maxiSample::bufferPlay(unsigned char &bufferin,long length) {
 	return(output);
 }
 
-double maxiSample::bufferPlay(unsigned char &bufferin,double speed,long length) {
+double maxiSample::bufferPlay(unsigned CH1 &bufferin,double speed,long length) {
 	double remainder;
 	long a,b;
 	short* buffer = (short *)&bufferin;
@@ -1142,7 +1142,7 @@ double maxiSample::bufferPlay(unsigned char &bufferin,double speed,long length) 
 	return(output);
 }
 
-double maxiSample::bufferPlay(unsigned char &bufferin,double frequency, double start, double end) {
+double maxiSample::bufferPlay(unsigned CH1 &bufferin,double frequency, double start, double end) {
 	double remainder;
 	length=end;
 	long a,b;
@@ -1199,7 +1199,7 @@ double maxiSample::bufferPlay(unsigned char &bufferin,double frequency, double s
 }
 
 //better cubic inerpolation. Cobbled together from various (pd externals, yehar, other places).
-double maxiSample::bufferPlay4(unsigned char &bufferin,double frequency, double start, double end) {
+double maxiSample::bufferPlay4(unsigned CH1 &bufferin,double frequency, double start, double end) {
 	double remainder;
 	double a,b,c,d,a1,a2,a3;
 	short* buffer = (short*)&bufferin;
@@ -1211,7 +1211,7 @@ double maxiSample::bufferPlay4(unsigned char &bufferin,double frequency, double 
 		position += ((end-start)/(maxiSettings::sampleRate/(frequency*chandiv)));
 		remainder = position - floor(position);
 		if (position>0) {
-			a=buffer[(int)(floor(position))-1];
+			a=buffer[(SI4)(floor(position))-1];
 			
 		} else {
 			a=buffer[0];
@@ -1287,7 +1287,7 @@ void maxiSample::setLength(unsigned long numSamples) {
         memcpy(newData, temp, sizeof(short) * copyLength);
     }
     temp = newData;
-    myDataSize = int(numSamples * 2);
+    myDataSize = SI4(numSamples * 2);
     length=numSamples;
     position=0;
     recordPosition=0;
@@ -1303,20 +1303,20 @@ void maxiSample::reset() {
 
 void maxiSample::normalise(float maxLevel) {
     short maxValue = 0;
-    for(int i=0; i < length; i++) {
+    for(SI4 i=0; i < length; i++) {
         if (abs(temp[i]) > maxValue) {
             maxValue = abs(temp[i]);
         }
     }
     float scale = 32767.0 * maxLevel / (float) maxValue;
-    for(int i=0; i < length; i++) {
+    for(SI4 i=0; i < length; i++) {
         temp[i] = round(scale * (float) temp[i]);
     }
 }
 
-void maxiSample::autoTrim(float alpha, float threshold, bool trimStart, bool trimEnd) {
+void maxiSample::autoTrim(float alpha, float threshold, BOL trimStart, BOL trimEnd) {
     
-    int startMarker=0;
+    SI4 startMarker=0;
     if(trimStart) {
         maxiLagExp<float> startLag(alpha, 0);
         while(startMarker < length) {
@@ -1328,7 +1328,7 @@ void maxiSample::autoTrim(float alpha, float threshold, bool trimStart, bool tri
         }
     }
     
-    int endMarker = int(length-1);
+    SI4 endMarker = SI4(length-1);
     if(trimEnd) {
         maxiLagExp<float> endLag(alpha, 0);
         while(endMarker > 0) {
@@ -1342,10 +1342,10 @@ void maxiSample::autoTrim(float alpha, float threshold, bool trimStart, bool tri
     
     cout << "Autotrim: start: " << startMarker << ", end: " << endMarker << endl;
     
-    int newLength = endMarker - startMarker;
+    SI4 newLength = endMarker - startMarker;
     if (newLength > 0) {
         short *newData = (short*) malloc(sizeof(short) * newLength);
-        for(int i=0; i < newLength; i++) {
+        for(SI4 i=0; i < newLength; i++) {
             newData[i] = temp[i+startMarker];
         }
         free(temp);
@@ -1355,8 +1355,8 @@ void maxiSample::autoTrim(float alpha, float threshold, bool trimStart, bool tri
         position=0;
         recordPosition=0;
         //envelope the start
-        int fadeSize=int(min((long)100, length));
-        for(int i=0; i < fadeSize; i++) {
+        SI4 fadeSize=SI4(min((long)100, length));
+        for(SI4 i=0; i < fadeSize; i++) {
             float factor = i / (float) fadeSize;
             temp[i] = round(temp[i] * factor);
             temp[length - 1 - i] = round(temp[length - 1 - i] * factor);
@@ -1476,7 +1476,7 @@ double maxiDyn::compress(double input) {
 /* Lots of people struggle with the envelope generators so here's a new easy one.
  It takes mental numbers for attack and release tho. Basically, they're exponentials.
  I'll map them out later so that it's a bit more intuitive */
-double maxiEnv::ar(double input, double attack, double release, long holdtime, int trigger) {
+double maxiEnv::ar(double input, double attack, double release, long holdtime, SI4 trigger) {
 	
 	if (trigger==1 && attackphase!=1 && holdphase!=1){ 
 		holdcount=0;
@@ -1519,7 +1519,7 @@ double maxiEnv::ar(double input, double attack, double release, long holdtime, i
 
 /* adsr. It's not bad, very simple to use*/
 
-double maxiEnv::adsr(double input, double attack, double decay, double sustain, double release, long holdtime, int trigger) {
+double maxiEnv::adsr(double input, double attack, double decay, double sustain, double release, long holdtime, SI4 trigger) {
     
     if (trigger==1 && attackphase!=1 && holdphase!=1 && decayphase!=1){
         holdcount=0;
@@ -1572,7 +1572,7 @@ double maxiEnv::adsr(double input, double attack, double decay, double sustain, 
     return output;
 }
 
-double maxiEnv::adsr(double input, int trigger) {
+double maxiEnv::adsr(double input, SI4 trigger) {
     
     if (trigger==1 && attackphase!=1 && holdphase!=1 && decayphase!=1){
         holdcount=0;
@@ -1659,7 +1659,7 @@ void maxiDyn::setRatio(double ratioF) {
 }
 
 
-double convert::mtof(int midinote) {
+double convert::mtof(SI4 midinote) {
 	
 	return mtofarray[midinote];
 }
@@ -1944,7 +1944,7 @@ void maxiClock::ticker() {
     tick=false;
     currentCount=floor(timer.phasor(bps));//this sets up a metronome that ticks n times a second
     
-    if (lastCount!=currentCount) {//if we have a new timer int this sample,
+    if (lastCount!=currentCount) {//if we have a new timer SI4 this sample,
         
         tick=true;
         playHead++;//iterate the playhead
@@ -1961,7 +1961,7 @@ void maxiClock::setTempo(double bpmIn) {
 }
 
 
-void maxiClock::setTicksPerBeat(int ticksPerBeat) {
+void maxiClock::setTicksPerBeat(SI4 ticksPerBeat) {
     
     ticks=ticksPerBeat;
     maxiClock::setTempo(bpm);
@@ -1974,7 +1974,7 @@ maxiSampler::maxiSampler() {
     maxiSampler::currentVoice=0;
     
     
-    for (int i=0;i<voices;i++) {
+    for (SI4 i=0;i<voices;i++) {
         
         maxiSampler::envelopes[i].setAttack(0);
         maxiSampler::envelopes[i].setDecay(1);
@@ -1990,7 +1990,7 @@ maxiSampler::maxiSampler() {
     }
 }
 
-void maxiSampler::setNumVoices(int numVoices) {
+void maxiSampler::setNumVoices(SI4 numVoices) {
     
     voices=numVoices;
     
@@ -2000,12 +2000,12 @@ double maxiSampler::play() {
     
     output=0;
     
-    for (int i=0;i<voices;i++) {
+    for (SI4 i=0;i<voices;i++) {
         
         envOut[i]=envelopes[i].adsr(envOutGain[i],envelopes[i].trigger);
         
         if (envOut[i]>0.) {
-            outputs[i]=samples[i].play(pitchRatios[(int)pitch[i]+originalPitch]*((1./samples[i].length)*maxiSettings::sampleRate),0,samples[i].length)*envOut[i];
+            outputs[i]=samples[i].play(pitchRatios[(SI4)pitch[i]+originalPitch]*((1./samples[i].length)*maxiSettings::sampleRate),0,samples[i].length)*envOut[i];
             output+=outputs[i]/voices;
             
             if (envelopes[i].trigger==1 && !sustain) {
@@ -2019,10 +2019,10 @@ double maxiSampler::play() {
     
 }
 
-void maxiSampler::load(string inFile, bool setall) {
+void maxiSampler::load(string inFile, BOL setall) {
     
     if (setall) {
-        for (int i=0;i<voices;i++) {
+        for (SI4 i=0;i<voices;i++) {
             
             samples[i].load(inFile);
             
@@ -2037,10 +2037,10 @@ void maxiSampler::load(string inFile, bool setall) {
     
 }
 
-void maxiSampler::setPitch(double pitchIn, bool setall) {
+void maxiSampler::setPitch(double pitchIn, BOL setall) {
     
     if (setall) {
-        for (int i=0;i<voices;i++) {
+        for (SI4 i=0;i<voices;i++) {
             
             pitch[i]=pitchIn;
             
@@ -2054,10 +2054,10 @@ void maxiSampler::setPitch(double pitchIn, bool setall) {
     
 }
 
-void maxiSampler::midiNoteOn(double pitchIn, double velocity, bool setall) {
+void maxiSampler::midiNoteOn(double pitchIn, double velocity, BOL setall) {
     
     if (setall) {
-        for (int i=0;i<voices;i++) {
+        for (SI4 i=0;i<voices;i++) {
             
             pitch[i]=pitchIn;
             
@@ -2072,10 +2072,10 @@ void maxiSampler::midiNoteOn(double pitchIn, double velocity, bool setall) {
     
 }
 
-void maxiSampler::midiNoteOff(double pitchIn, double velocity, bool setall) {
+void maxiSampler::midiNoteOff(double pitchIn, double velocity, BOL setall) {
     
     
-    for (int i=0;i<voices;i++){
+    for (SI4 i=0;i<voices;i++){
         
         if (pitch[i]==pitchIn) {
             
@@ -2087,11 +2087,11 @@ void maxiSampler::midiNoteOff(double pitchIn, double velocity, bool setall) {
 }
 
 
-void maxiSampler::setAttack(double attackD, bool setall) {
+void maxiSampler::setAttack(double attackD, BOL setall) {
     
     if (setall) {
         
-        for (int i=0;i<voices;i++) {
+        for (SI4 i=0;i<voices;i++) {
             
             envelopes[i].setAttack(attackD);
             
@@ -2107,11 +2107,11 @@ void maxiSampler::setAttack(double attackD, bool setall) {
     
 }
 
-void maxiSampler::setDecay(double decayD, bool setall) {
+void maxiSampler::setDecay(double decayD, BOL setall) {
     
     if (setall) {
         
-        for (int i=0;i<voices;i++) {
+        for (SI4 i=0;i<voices;i++) {
             
             envelopes[i].setDecay(decayD);
             
@@ -2127,11 +2127,11 @@ void maxiSampler::setDecay(double decayD, bool setall) {
     
 }
 
-void maxiSampler::setSustain(double sustainD, bool setall) {
+void maxiSampler::setSustain(double sustainD, BOL setall) {
     
     if (setall) {
         
-        for (int i=0;i<voices;i++) {
+        for (SI4 i=0;i<voices;i++) {
             
             envelopes[i].setSustain(sustainD);
             
@@ -2147,11 +2147,11 @@ void maxiSampler::setSustain(double sustainD, bool setall) {
     
 }
 
-void maxiSampler::setRelease(double releaseD, bool setall) {
+void maxiSampler::setRelease(double releaseD, BOL setall) {
     
     if (setall) {
         
-        for (int i=0;i<voices;i++) {
+        for (SI4 i=0;i<voices;i++) {
             
             envelopes[i].setRelease(releaseD);
             
@@ -2167,11 +2167,11 @@ void maxiSampler::setRelease(double releaseD, bool setall) {
     
 }
 
-void maxiSampler::setPosition(double positionD, bool setall){
+void maxiSampler::setPosition(double positionD, BOL setall){
     
     if (setall) {
         
-        for (int i=0;i<voices;i++) {
+        for (SI4 i=0;i<voices;i++) {
             
             samples[i].setPosition(positionD);
             
@@ -2233,7 +2233,7 @@ void maxiRecorder::freeResources()
 {
     if (savedBuffers.size() > 0)
     {
-        for (int i = 0; i < savedBuffers.size(); ++i)
+        for (SI4 i = 0; i < savedBuffers.size(); ++i)
         {
             delete[] savedBuffers.front();
             savedBuffers.pop();
@@ -2246,7 +2246,7 @@ void maxiRecorder::freeResources()
 /// Simply return if we are recording or not
 ///
 ///*************************************************************
-bool maxiRecorder::isRecording() const
+BOL maxiRecorder::isRecording() const
 {
     return doRecord;
 }
@@ -2322,7 +2322,7 @@ void* maxiRecorder::update(void* _context)
 void maxiRecorder::startRecording()
 {
     doRecord = true;
-    for (int i = 0; i < bufferQueueSize; ++i)
+    for (SI4 i = 0; i < bufferQueueSize; ++i)
     {
         enqueueBuffer();
     }
@@ -2366,12 +2366,12 @@ void maxiRecorder::stopRecording()
 /// very similar to the attached code. 
 ///
 /// A clear optimisation would be to make getProcessedData()
-/// return a vector of shorts to prevent another loop
+/// return a TArray of shorts to prevent another loop
 ///
 ///*************************************************************
 template <typename T>
 void maxiRecorder::write(std::ofstream& _stream, const T& _t) {
-    _stream.write((const char*)&_t, sizeof(T));
+    _stream.write((const CH1*)&_t, sizeof(T));
 }
 
 void maxiRecorder::saveToWav()
@@ -2389,12 +2389,12 @@ void maxiRecorder::saveToWav()
 
     pcmDataInt.resize(pcmData.size());
 
-    for (int i = 0; i < pcmData.size(); ++i)
+    for (SI4 i = 0; i < pcmData.size(); ++i)
         pcmDataInt[i] = (short) (pcmData[i] * 3276.7);
 
-    int sampleRate = maxiSettings::sampleRate;
+    SI4 sampleRate = maxiSettings::sampleRate;
     short channels = maxiSettings::channels;
-    int   buffSize = int(pcmDataInt.size()) * 2;
+    SI4   buffSize = SI4(pcmDataInt.size()) * 2;
 
     std::ofstream stream(filename.c_str(), std::ios::binary);
 
@@ -2402,23 +2402,23 @@ void maxiRecorder::saveToWav()
     {
         /* Header */
         stream.write("RIFF", 4);
-        write<int>(stream, 36 + buffSize);
+        write<SI4>(stream, 36 + buffSize);
         stream.write("WAVE", 4);
 
         /* Format Chunk */
         stream.write("fmt ", 4);
-        write<int>(stream, 16);
+        write<SI4>(stream, 16);
         write<short>(stream, 1);
         write<short>(stream, channels);
-        write<int>(stream, sampleRate);
-        write<int>(stream, sampleRate * channels * sizeof(short));
+        write<SI4>(stream, sampleRate);
+        write<SI4>(stream, sampleRate * channels * sizeof(short));
         write<short>(stream, channels * sizeof(short));
         write<short>(stream, 8 * sizeof(short));
 
         /* Data Chunk */
         stream.write("data", 4);
-        stream.write((const char*) &buffSize, 4);
-        stream.write((const char*) pcmDataInt.data(), buffSize);
+        stream.write((const CH1*) &buffSize, 4);
+        stream.write((const CH1*) pcmDataInt.data(), buffSize);
 
         stream.close();
 
@@ -2435,18 +2435,18 @@ void maxiRecorder::saveToWav()
 ///*************************************************************
 ///
 /// This takes the queue of user generated arrays and whacks
-/// it into a vector of doubles which is easier to transverse
+/// it into a TArray of doubles which is easier to transverse
 /// and work with.
 ///
 ///*************************************************************
 TArray<double> maxiRecorder::getProcessedData()
 {
     TArray<double> userData;
-    int dataSize = int(savedBuffers.size()) * bufferSize;
+    SI4 dataSize = SI4(savedBuffers.size()) * bufferSize;
     userData.resize(dataSize);
 
-    int savedIndex = 0;
-    for (int i = 0; i < dataSize; ++i)
+    SI4 savedIndex = 0;
+    for (SI4 i = 0; i < dataSize; ++i)
     {
         if (i > 0 && i % bufferSize == 0)
         {
@@ -2476,9 +2476,9 @@ TArray<double> maxiRecorder::getProcessedData()
 /// / rtaudio's double
 ///
 ///*************************************************************
-void maxiRecorder::passData(double* _in, int _inBufferSize)
+void maxiRecorder::passData(double* _in, SI4 _inBufferSize)
 {
-    for (int i = 0; i < _inBufferSize; ++i)
+    for (SI4 i = 0; i < _inBufferSize; ++i)
     {
         if (bufferIndex >= bufferSize)
         {
@@ -2490,9 +2490,9 @@ void maxiRecorder::passData(double* _in, int _inBufferSize)
         ++recordedAmountFrames;
     }
 }
-void maxiRecorder::passData(float* _in, int _inBufferSize)
+void maxiRecorder::passData(float* _in, SI4 _inBufferSize)
 {
-    for (int i = 0; i < _inBufferSize; ++i)
+    for (SI4 i = 0; i < _inBufferSize; ++i)
     {
         if (bufferIndex >= bufferSize)
         {

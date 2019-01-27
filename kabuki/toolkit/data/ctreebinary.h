@@ -34,7 +34,7 @@ namespace _ {
     TBinaryNode<T> * root,          //< Pointer to the root node.
       *left,          //< Pointer to the left child node.
       *right;         //< Pointer to the right child node.
-    bool been_left,     //< Flag for if left child has been traversed.
+    BOL been_left,     //< Flag for if left child has been traversed.
       been_right;    //< Flag for if right child has been traversed.
     uintptr_t index;         //< The index of this node.
     T data;          //< Node contents.
@@ -95,11 +95,11 @@ namespace _ {
       return FindDepthFirst (root_, ptr);
     }
 
-    bool FindBreathFirst (void* ptr) {
+    BOL FindBreathFirst (void* ptr) {
       return false;
     }
 
-    bool Contains (void* ptr) {
+    BOL Contains (void* ptr) {
       if (FindDepthFirst (ptr) == nullptr)
         return false;
       return true;

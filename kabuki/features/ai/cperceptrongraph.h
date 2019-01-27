@@ -24,7 +24,7 @@
 namespace _ {
 
 /** A graph of Perceptrons with an input an output layer.
-    PercetronNode(s) store a vector of Perceptron(s) and a vector of 
+    PercetronNode(s) store a TArray of Perceptron(s) and a TArray of 
     child PerceptronGraph nodes. In order to connect the inputs to the outputs 
     you have to traverse the tree
 */

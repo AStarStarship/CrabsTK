@@ -51,7 +51,7 @@ public:
 		}
 	}
 	
-	void setup(unsigned int numBins, unsigned int numFilters, unsigned int numCoeffs, double minFreq, double maxFreq, unsigned int sampleRate) 
+	void setup(unsigned SI4 numBins, unsigned SI4 numFilters, unsigned SI4 numCoeffs, double minFreq, double maxFreq, unsigned SI4 sampleRate) 
 	{
 		this->numFilters = numFilters;
 		this->numCoeffs = numCoeffs;
@@ -75,11 +75,11 @@ public:
 	}
 	
 private:
-	unsigned int numFilters, numCoeffs;
+	unsigned SI4 numFilters, numCoeffs;
 	double minFreq, maxFreq;
-	unsigned int sampleRate;
+	unsigned SI4 sampleRate;
 	T *melFilters;
-	unsigned int numBins;
+	unsigned SI4 numBins;
 	T *dctMatrix;
 #ifdef __APPLE_CC__
 	T *doubleSpec;
@@ -89,16 +89,16 @@ private:
 	void dct(T *mfccs); //define later
 #else
 	void dct(T *mfccs) {
-		for(int i=0; i < numCoeffs; i++) {
+		for(SI4 i=0; i < numCoeffs; i++) {
 			mfccs[i] = 0.0;
 		}
-		for(int i=0; i < numCoeffs; i++ ) {
-			for(int j=0; j < numFilters; j++) {
-				int idx = i + (j * numCoeffs);
+		for(SI4 i=0; i < numCoeffs; i++ ) {
+			for(SI4 j=0; j < numFilters; j++) {
+				SI4 idx = i + (j * numCoeffs);
 				mfccs[i] += (dctMatrix[idx] * melBands[j]);
 			}
 		}
-		for(int i=0; i < numCoeffs; i++) {
+		for(SI4 i=0; i < numCoeffs; i++) {
 			mfccs[i] /= numCoeffs;
 		}
 	}
@@ -108,10 +108,10 @@ private:
 	void melFilterAndLogSq_Part2(float *powerSpectrum);
 
 	
-	void calcMelFilterBank(double sampleRate, int numBins) {
+	void calcMelFilterBank(double sampleRate, SI4 numBins) {
 
 		double mel, dMel, maxMel, minMel, nyquist, binFreq, start, end, thisF, nextF, prevF;
-		int numValidBins;
+		SI4 numValidBins;
 		
 		// ignore bins over nyquist
 		numValidBins = numBins;
@@ -130,7 +130,7 @@ private:
 		
 		// first generate an array of start and end freqs for each triangle
 		mel = minMel;
-		for (int i=0;i<numFilters + 2;i++) {
+		for (SI4 i=0;i<numFilters + 2;i++) {
 			// start of the triangle
 			filtPos[i] = melToHz(mel);
 			//		std::cout << "[" << i << "] MFCC: centre is at " <<filtPos[i]<<"hz "<<mel<<" mels" << endl;
@@ -139,14 +139,14 @@ private:
 		// now generate the coefficients for the mag spectrum
 		melFilters = (T*) malloc(sizeof(T) * numFilters * numValidBins);
 		
-		for (int filter = 1; filter < numFilters; filter++) {
-			for (int bin=0;bin<numValidBins;bin++) {
+		for (SI4 filter = 1; filter < numFilters; filter++) {
+			for (SI4 bin=0;bin<numValidBins;bin++) {
 				// frequency this bin represents
 				binFreq = (T) sampleRate / (T) numValidBins * (T) bin;
 				thisF = filtPos[filter];
 				nextF = filtPos[filter+1];
 				prevF = filtPos[filter-1];
-				int idx = filter + (bin * numFilters);
+				SI4 idx = filter + (bin * numFilters);
 				if (binFreq > nextF || binFreq < prevF) {
 					// outside this filter
 					melFilters[idx] = 0;
@@ -180,11 +180,11 @@ private:
 		
 		
 		//generate dct matrix
-		for(int i = 0; i < numCoeffs; i++)
+		for(SI4 i = 0; i < numCoeffs; i++)
 		{
-			for(int j = 0; j < numFilters; j++)
+			for(SI4 j = 0; j < numFilters; j++)
 			{
-				int idx = i + (j * numCoeffs);
+				SI4 idx = i + (j * numCoeffs);
 				if(i == 0)
 					dctMatrix[idx]= w1 * cos(k * (i+1) * (j + 0.5));
 				else

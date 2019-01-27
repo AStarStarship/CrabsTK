@@ -29,23 +29,23 @@ class ChunkRow {
 
   };
 
-  ChunkRow(int max_size);
+  ChunkRow(SI4 max_size);
 
   /* Gets inventory count. */
-  int GetCount();
+  SI4 GetCount();
 
   /* Adds a Chunk to the top of the Stack. */
-  int AddChunk(Chunk* chunk);
+  SI4 AddChunk(Chunk* chunk);
 
   /* Gets the Chunk at the given Index.
       @return Returns null if the index is out of bounds. */
-  Chunk* GetChunk(int index);
+  Chunk* GetChunk(SI4 index);
 
   /* Prints the World to the console. */
   void Print();
 
  private:
-  int row_;                  //< The row number of the chunk.
+  SI4 row_;                  //< The row number of the chunk.
   _::ArX<Chunk*> cunks_[4];  //< A stack of Chunks.
 };
 

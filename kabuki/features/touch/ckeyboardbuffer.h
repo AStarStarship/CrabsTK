@@ -1,6 +1,6 @@
 /* Kabuki Toolkit @version 0.x
 @link    https://github.com/kabuki-starship/kabuki-toolkit.git
-@file    /kabuki/features/hmi/real-time_keyboard.cc
+@file    /kabuki/features/touch/real-time_keyboard.cc
 @author  Cale McCollough <https://calemccollough.github.io>
 @license Copyright (C) 2014-19 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -13,7 +13,7 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <pch.h>
-#if SEAM >= SEAM_00_03_00_00__00
+#if SEAM >= KABUKI_FEATURES_TOUCH_1
 namespace _ {
 
 /* A computer keyboard.
@@ -26,7 +26,7 @@ class KeyboardBuffer {
   };
 
   /* Default constructor. **/
-  KeyboardBuffer(int a = DefaultBufferSize) {
+  KeyboardBuffer(SI4 a = DefaultBufferSize) {
     if (a < MinBufferSize)
       bufferSize = MinBufferSize;
     else if (a > MaxBufferSize)
@@ -55,18 +55,18 @@ class KeyboardBuffer {
   /* Updates the  */
   void Update() {
     if (start > stop) {
-      for (int i = start; i <= end; ++i) buffer[i]();
-      for (int i = begin; i <= stop; ++i) buffer[i]();
+      for (SI4 i = start; i <= end; ++i) buffer[i]();
+      for (SI4 i = begin; i <= stop; ++i) buffer[i]();
       start = stop = begin;
       return;
     }
 
-    for (int i = start; i <= end; ++i) buffer[i]();
+    for (SI4 i = start; i <= end; ++i) buffer[i]();
     start = stop = begin;
   }
 
  private:
-  int begin,       //< The begning of the
+  SI4 begin,       //< The begning of the
       end,         //< The end of the
       start,       //< The start of the events.
       stop,        //< The stop of the events.
@@ -76,4 +76,4 @@ class KeyboardBuffer {
 };                 //< KeyboardBuffer
 }  // namespace _
 }  //< namespace _ {tek
-#endif  //< #if SEAM >= SEAM_00_03_00_00__00
+#endif  //< #if SEAM >= KABUKI_FEATURES_TOUCH_1

@@ -14,8 +14,8 @@ specific language governing permissions and limitations under the License. */
 #include "../Library/world.h"
 #include "pch.h"
 
-char ScanKeyboard() {
-  char key = 127;
+CH1 ScanKeyboard() {
+  CH1 key = 127;
 
   key = _getch();
 
@@ -42,9 +42,9 @@ char ScanKeyboard() {
 
 void FrameUpdateHandler() { ScanKeyboard(); }
 
-int main() {
+SI4 main() {
   CONSOLE_SCREEN_BUFFER_INFO csbi;
-  int columns, rows;
+  SI4 columns, rows;
 
   cout << "Welcome to TypeCraft!";
 

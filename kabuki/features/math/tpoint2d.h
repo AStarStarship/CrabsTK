@@ -23,7 +23,7 @@ namespace _ {
 
 /** A 2D point storted as Type types. */
 template<typename T>
-class API Point2D {
+class SDK Point2D {
     public:
 
     T x,    //< The X position.
@@ -49,20 +49,20 @@ class API Point2D {
         y = P.y;
     }
 
-    /** Translates the given vector to the point. */
+    /** Translates the given TArray to the point. */
     void Translate (const Vect<T>& V) {
         y += V.y;
         x += V.x;
     }
 
-    /** Translates the given vector to the point. */
+    /** Translates the given TArray to the point. */
     void Translate (T dx, T dy) {
         y += dy;
         x += dx;
     }
 
     /** Compares this Point2D to the other and returns true if the two Positions are identical. */
-    bool Equals (const Point2D& P) const {
+    BOL Equals (const Point2D& P) const {
         if (x != P.x || y != P.y)
             return false;
         return true;

@@ -33,7 +33,7 @@ SI4 Client::GetState () {
     return state_;
 }
 
-bool Client::SetState (SI4 state) {
+BOL Client::SetState (SI4 state) {
     if (state < 0) {
         return false;
     }

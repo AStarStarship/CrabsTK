@@ -44,7 +44,7 @@ public:
   }
 
   T getNextobject () {
-      int = index;
+      SI4 = index;
       index++;
       if (index > size_ ()) {
           index = 1;
@@ -94,7 +94,7 @@ public:
       return currentLink;
   }
 
-  bool isNotDone () {
+  BOL isNotDone () {
       if (index > inde)// iterating forwards
       {
           if (currentLink.getRightChild () == head_)
@@ -107,7 +107,7 @@ public:
       return true;
   }
 
-  bool isNotDone (int forwardsOrBackwards)// Value to be < or > 0
+  BOL isNotDone (SI4 forwardsOrBackwards)// Value to be < or > 0
   {
       if (forwardsOrBackwards > 0)// iterating forwards
       {
@@ -142,7 +142,7 @@ public:
       add (ptr, currentLink);
   }
 
-  int direction ()// returns position if last iterator went forwards
+  SI4 direction ()// returns position if last iterator went forwards
   {
       if (index > inde)// and -1 if the last iterator was backwards
           return 1;
@@ -150,26 +150,26 @@ public:
       return -1;
   }
 
-  void setDirection (int positiveNegative) {
+  void setDirection (SI4 positiveNegative) {
       if (positiveNegative < 0)
           inde = inde + 1;
       else
           inde = inde - 1;
   }
 
-  bool setIndex (int toHere) {
+  BOL setIndex (SI4 toHere) {
       if (toHere < 1 || toHere > size_)
           return false;
       if (toHere > index) {
           if (toHere < index - toHere) {
-              for (int i = index; i < toHere; i++)
+              for (SI4 i = index; i < toHere; i++)
                   currentLink = currentLink.getRightChild ();
           } else {
               currentLink = linkAtIndex (toHere);
           }
       } else {
           if (toHere < toHere - index) {
-              for (int i = index; i > toHere; i--)
+              for (SI4 i = index; i > toHere; i--)
                   currentLink = currentLink.getLeftChild ();
           } else {
               currentLink = linkAtIndex (toHere);
@@ -178,11 +178,11 @@ public:
       return true;
   }
 
-  int index () {
+  SI4 index () {
       return index;
   }
 
-  int size_ () {
+  SI4 size_ () {
       return size_;
   }*/
 };

@@ -23,7 +23,7 @@ namespace _ {
 
 /** Class that represents a n order Bezier. */
 template<typename T>
-class API Bezier2D {
+class SDK Bezier2D {
     public:
 
     enum { 
@@ -32,7 +32,7 @@ class API Bezier2D {
 
     /** Constructor.
         @pre The length of XPoints and YPoints must equal NumPoints or curve will not be created correctly. */
-    Bezier2D  (T* initXPoints, T* initYPoints, int initNumPoints) :
+    Bezier2D  (T* initXPoints, T* initYPoints, SI4 initNumPoints) :
         x_points ((float*)theXPoints),
         y_points ((float*)theYPoints),
         numPoints (theNumPoints) {
@@ -43,7 +43,7 @@ class API Bezier2D {
     
     /** Constructor.
         @pre The length of XPoints and YPoints must equal NumPoints or curve will not be created correctly. */
-    Bezier2D  (const T* initXPoints, const T* initYPoints, int initNumPoints)
+    Bezier2D  (const T* initXPoints, const T* initYPoints, SI4 initNumPoints)
         : x_points ((float*)theXPoints),
         y_points ((float*)theYPoints),
         numPoints (theNumPoints)
@@ -72,14 +72,14 @@ class API Bezier2D {
 
     /** Copy constructor initializes curve with the given points. */
     Bezier2D  (const Bezier2D& o) {
-        int newNumPoints = o.numPoints;
+        SI4 newNumPoints = o.numPoints;
         numPoints = newNumPoints;
         float* newXPoints = new float[newNumPoints],
             *newYPoints = new float[newNumPoints];
         x_points = newXPoints;
         y_points = newYPoints;
 
-        for (int i = 0; i < newNumPoints; ++i) {
+        for (SI4 i = 0; i < newNumPoints; ++i) {
             newXPoints[i] = o.x_points[i];
             newYPoints[i] = o.y_points[i];
         }
@@ -98,7 +98,7 @@ class API Bezier2D {
     T* GetYPoints ();
 
     /** Gets the number of points. */
-    int GetNumPoints () {
+    SI4 GetNumPoints () {
         return numPoints;
     }
 
@@ -108,9 +108,9 @@ class API Bezier2D {
             y = 0,                                  //< The y position to return.
             factn = factoral (numPoints);    //< Local copy of n!.
 
-        int n = numPoints;                          //< Local copy on stack.
+        SI4 n = numPoints;                          //< Local copy on stack.
 
-        for (int i = 0; i <= n; i++)
+        for (SI4 i = 0; i <= n; i++)
         {
             //< calculate binomial coefficient.
             float b = factn / (factoral (i) * factoral (n - i));
@@ -136,7 +136,7 @@ class API Bezier2D {
     T* x_points,  //< Array of X points.
      * y_points;  //< Array of Y points.
 
-    int numPoints;                  //< The number of points in the polygon.
+    SI4 numPoints;                  //< The number of points in the polygon.
 };
 
 }       //< namespace _

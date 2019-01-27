@@ -1,6 +1,6 @@
 # kabuki.features.touch
 
-This module contains the Kabuki Touch API for interfacing with common tactile controls.
+This module contains the Kabuki Touch SDK for interfacing with common tactile controls.
 
 # The License
 

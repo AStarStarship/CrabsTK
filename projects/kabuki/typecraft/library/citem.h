@@ -489,42 +489,42 @@ class Item {
     NUM_ITEMS,
   } Types;
 
-  static const char* names[];
+  static const CH1* names[];
 
   /* Default constructs an initialized Item. */
   Item();
 
   /* Gets the type. */
-  int GetType();
+  SI4 GetType();
 
   /* Gets the Item Variant. */
-  int GetVariant();
+  SI4 GetVariant();
 
   /* Gets the condition of the Item. */
-  int GetCondition();
+  SI4 GetCondition();
 
   /* Sets the condition of the Item. */
-  int SetContition(int condition);
+  SI4 SetContition(SI4 condition);
 
   /* Gets the Item's Label */
-  const char* GetLabel();
+  const CH1* GetLabel();
 
   /* Attempts to set the label POINTER to the new one.
       @return Returns the */
-  const char* SetLabel(const char* label);
+  const CH1* SetLabel(const CH1* label);
 
   /* Attempts to set the label to a clone of the new one.
       @return Returns null upon success and a pointer to an error string upon
      failure. */
-  const char* CloneLabel(const char* label);
+  const CH1* CloneLabel(const CH1* label);
 
   /* Prints the Item to the console. */
   void Print(_::Log& log);
 
  private:
-  const char *label_,  //< Proper English Item's label.
+  const CH1 *label_,  //< Proper English Item's label.
       *name_;          //< Name of the Item.
-  int type_,           //< The type of Item.
+  SI4 type_,           //< The type of Item.
       variant_,        //< Variant type of Item.
       condition_,      //< Condition of the Item.
       hunger_,         //< Hunger points you get from this.
@@ -533,7 +533,7 @@ class Item {
 };
 
 /* Gets an Item name. */
-Item* Items(int item_number);
+Item* Items(SI4 item_number);
 
 }  // namespace typecraft
 #endif  //< TYPECRAFT_ITEM_H

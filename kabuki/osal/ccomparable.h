@@ -30,7 +30,7 @@ class Comparable
     public:
 
     /** Numerically compares this object to the other. */
-    virtual int compare (Comparable* o) = 0;
+    virtual SI4 compare (Comparable* o) = 0;
 };
 
 }       //< namespace _

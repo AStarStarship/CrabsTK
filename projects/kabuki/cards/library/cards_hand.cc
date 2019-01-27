@@ -20,7 +20,7 @@ using namespace std;
 
 namespace kabuki { namespace cards {
 
-Hand::Hand (int max_cards, int min_cards) :
+Hand::Hand (SI4 max_cards, SI4 min_cards) :
     max_cards_ (max_cards),
     min_cards_ (min_cards),
     visible_cards_ (max_cards),
@@ -32,26 +32,26 @@ void Hand::Clear () {
     hidden_cards_.Clear ();
 }
 
-int Hand::Length () const {
+SI4 Hand::Length () const {
     return visible_cards_.Length () + hidden_cards_.Length ();
 }
 
-int Hand::GetMinNumCards () {
+SI4 Hand::GetMinNumCards () {
     return min_cards_;
 }
 
-int Hand::SetMinCards (int value) {
+SI4 Hand::SetMinCards (SI4 value) {
     if (value < 0)
         return value;
     min_cards_ = value;
     return 0;
 }
 
-int Hand::GetMaxCards () {
+SI4 Hand::GetMaxCards () {
     return max_cards_;
 }
 
-int Hand::SetMaxCards (int value) {
+SI4 Hand::SetMaxCards (SI4 value) {
     if (value < 0)
         return 1;
     min_cards_ = value;
@@ -77,12 +77,12 @@ _::Text& Hand::Print (_::Text& txt) {
     }
 }
 
-const char* Hand::Sudo (const char* text, const char* strand_end) {
-    const char* token = TextSkipSpaces (text, strand_end);
+const CH1* Hand::Sudo (const CH1* text, const CH1* strand_end) {
+    const CH1* token = TextSkipSpaces (text, strand_end);
     if (!token) {
         return nullptr;
     }
-    char c = *text;
+    CH1 c = *text;
     if (++text > strand_end) {
         return nullptr;
     }

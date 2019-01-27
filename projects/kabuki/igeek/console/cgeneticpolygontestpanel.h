@@ -51,10 +51,10 @@ private:
 
   GeneticPolygon population[]; //< The population of GeneticPolygon (s)
 
-    int timerUpdateInterval = 1000, //< The durration of time tha the timer is updated
+    SI4 timerUpdateInterval = 1000, //< The durration of time tha the timer is updated
     populationSize; //< The size of the pupulation.
     Timer timer; //< The timer for the
-    bool timerOn; //< Represents if the timer is on or off.
+    BOL timerOn; //< Represents if the timer is on or off.
 
     class StartAction : public ActionListener
   {

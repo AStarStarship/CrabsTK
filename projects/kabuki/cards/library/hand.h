@@ -31,7 +31,7 @@ class Hand : public CardStack {
         In order to create a Hand, first create a CardStack with a
         max_num_cards, and add the minimumNumCards to it.
         @pre    stock.getNumCards must be > minCards!!! */
-    Hand (int max_cards, int min_cards = 1);
+    Hand (SI4 max_cards, SI4 min_cards = 1);
     
     /** Virtual destructor. */
     virtual ~Hand () {}
@@ -40,19 +40,19 @@ class Hand : public CardStack {
     void Clear ();
 
     /** Returns the number of Cards in this Hand. */
-    int Length () const;
+    SI4 Length () const;
 
     /** Returns the minNumCards in a Hand. */
-    int GetMinNumCards ();
+    SI4 GetMinNumCards ();
     
     /** Sets the minNumCards to the newNumCards. */
-    int SetMinCards (int newNumCards);
+    SI4 SetMinCards (SI4 newNumCards);
 
     /** Returns the max_num_cards in a Hand. */
-    int GetMaxCards ();
+    SI4 GetMaxCards ();
     
     /** Sets the minNumCards to the newNumCards. */
-    int SetMaxCards (int newNumCards);
+    SI4 SetMaxCards (SI4 newNumCards);
     
     /** Returns the visibleCards. */
     CardStack& GetVisibleCards ();
@@ -70,7 +70,7 @@ class Hand : public CardStack {
         @param text     Beginning of the Text buffer. 
         @param strand_end End of the Text buffer.
         @return Returns nil upon success and an error string upon failure. */
-    virtual const char* Sudo (const char* text, const char* strand_end);
+    virtual const CH1* Sudo (const CH1* text, const CH1* strand_end);
 
     /** Abstract Script Operation(s).
         @param index The index of the expression.
@@ -81,7 +81,7 @@ class Hand : public CardStack {
 
     protected:
 
-    int       max_cards_,     //< Max number of cards in a Hand.
+    SI4       max_cards_,     //< Max number of cards in a Hand.
               min_cards_;     //< Min number of cards in a Hand.
     CardStack visible_cards_, //< Visible cards.
               hidden_cards_;  //< Hidden cards.

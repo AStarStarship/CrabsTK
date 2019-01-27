@@ -20,15 +20,15 @@ using namespace std;
 
 namespace kabuki { namespace cards {
 
-const int Deck::kDefaultSuitValues[4] = { 1, 2, 3, 4 };
+const SI4 Deck::kDefaultSuitValues[4] = { 1, 2, 3, 4 };
 /** The default deck_ art directory. */
-const char Deck::kDefaultDeckArtDirectory[] = "./\0";
+const CH1 Deck::kDefaultDeckArtDirectory[] = "./\0";
 
 /** The default rear deck_ image. */
-const char Deck::kDefaultRearDeckImage[] = "card.png\0";
+const CH1 Deck::kDefaultRearDeckImage[] = "card.png\0";
 
-Deck::Deck (int num_decks, bool has_jokers, int aces_high, Suit::Format format,
-            const char* deck_name, const char* directory_path,
+Deck::Deck (SI4 num_decks, BOL has_jokers, SI4 aces_high, Suit::Format format,
+            const CH1* deck_name, const CH1* directory_path,
             Suit::Color color) :
     has_jokers_    (has_jokers),
     num_decks_     ((num_decks < 1) ? 1 : num_decks),
@@ -59,8 +59,8 @@ Deck::~Deck () {
     }
 }
 
-void Deck::Set (bool has_jokers, int aces_high, Suit::Format format,
-                const char* deck_name, const char* directory_path,
+void Deck::Set (BOL has_jokers, SI4 aces_high, Suit::Format format,
+                const CH1* deck_name, const CH1* directory_path,
                 Suit::Color color) {
     has_jokers_    = has_jokers;
     aces_high_     = aces_high;
@@ -69,24 +69,24 @@ void Deck::Set (bool has_jokers, int aces_high, Suit::Format format,
 
     // Depending on if aces are high, the value of an Ace will be either 1
     // followed by the 2 card, or 14.
-    int start_value = aces_high_?1:2;
-    const char* format_string = Suit::kFormatTexts[format];
+    SI4 start_value = aces_high_?1:2;
+    const CH1* format_string = Suit::kFormatTexts[format];
 
     // First we want to start by creating the Aces because their pipValue is 1,
     // but might have a faceValue of 14.
-    int aceValue = aces_high_ ? 14 : 1;
+    SI4 aceValue = aces_high_ ? 14 : 1;
 
     pack_.clear ();
     pack_.reserve (num_cards_);
     // This is a nested for loop. It makes it so that our deck_ will be sorted
     // by suit and value.
-    int i = 0;
-    for (int i = 0; i < num_decks_; ++i) {
-        for (int suit = 0; suit <= 3; ++suit) { // If we had switched the order of
+    SI4 i = 0;
+    for (SI4 i = 0; i < num_decks_; ++i) {
+        for (SI4 suit = 0; suit <= 3; ++suit) { // If we had switched the order of
             // the for loops, it would sort it by value then suit.
             Suit* suit_ptr = suits_[suit];
             //suit_ptr->Set (suit, format);
-            for (int pip = 1; pip <= 13; ++pip) {
+            for (SI4 pip = 1; pip <= 13; ++pip) {
                 // There are 13 different face values { A,2,3,4,5,6,7,8,9,10,J,Q,K }
                 pack_.emplace_back (new Card (pip, suit_ptr));
                 // The (Card::Suit) "casts" the suitValue to a Card::Suit.
@@ -113,23 +113,23 @@ void Deck::SetFormat (Suit::Format format) {
     spade_.SetFormat   (format);
 }
 
-bool Deck::HasJokers () {
+BOL Deck::HasJokers () {
     return has_jokers_;
 }
 
-int Deck::GetSize ( ) {
+SI4 Deck::GetSize ( ) {
     return num_cards_;
 }
 
-bool Deck::AcesHigh () {
+BOL Deck::AcesHigh () {
     return aces_high_;
 }
 
-Card* Deck::GetCard (int suit, int pip) {
+Card* Deck::GetCard (SI4 suit, SI4 pip) {
     if (suit < 0) {
         return pack_[0];
     }
-    int index;
+    SI4 index;
     if (pip == Card::kJoker) {
         if (!has_jokers_) { // Error!
             return nullptr;
@@ -145,7 +145,7 @@ Card* Deck::GetCard (int suit, int pip) {
     return pack_[index];
 }
 
-Card* Deck::GetCard (int index) {
+Card* Deck::GetCard (SI4 index) {
     if (index < 0) {
         return pack_[0];
     }
@@ -156,7 +156,7 @@ Card* Deck::GetCard (int index) {
 }
 
 /*
-int Deck::SetRearImage (const File& thisFile) {
+SI4 Deck::SetRearImage (const File& thisFile) {
     Image tempImage = ImageCache::getFromFile (thisFile);
 
     if (tempImage.isNull)
@@ -167,7 +167,7 @@ int Deck::SetRearImage (const File& thisFile) {
     return 1;
 }
 
-int Deck::checkDeckArtFolder (const char* directory_path) {
+SI4 Deck::checkDeckArtFolder (const CH1* directory_path) {
     // Make a file from the directory_path string.
     File artFolder = File (directory_path);
 
@@ -183,9 +183,9 @@ int Deck::checkDeckArtFolder (const char* directory_path) {
         return 54;
     // Note: I'm assuming that the directory_path is sorted by name.
     // Then check to see if all of the images were named correctly.
-    for (int suit = 1; suit <= 4; ++suit) {
-        for (int pipValue = 1; pipValue <= 13; ++pipValue) {
-            int index = suit*pipValue;
+    for (SI4 suit = 1; suit <= 4; ++suit) {
+        for (SI4 pipValue = 1; pipValue <= 13; ++pipValue) {
+            SI4 index = suit*pipValue;
 
             string expectedFileName = string (pipValue) + "-" + string (suit) + ".svg"; // Examples "1-2.svg" = Ace of Diamond "13-4" = King of Spades
 
@@ -199,17 +199,17 @@ int Deck::checkDeckArtFolder (const char* directory_path) {
         return -54;
 }
 
-int Deck::SetDeckArt (const char* directory_path) {
-    int returnValue = Deck::checkDeckArtFolder ();
+SI4 Deck::SetDeckArt (const CH1* directory_path) {
+    SI4 returnValue = Deck::checkDeckArtFolder ();
 
     // Now we know that all of the files are in the directory and are named
     // correctly. Now lets actually change the images.
-    for (int suit = 1; suit <= 4; ++suit) {
-        for (int pipValue = 1; pipValue <= 13; ++pipValue) {
-            int index = suit*pipValue;
+    for (SI4 suit = 1; suit <= 4; ++suit) {
+        for (SI4 pipValue = 1; pipValue <= 13; ++pipValue) {
+            SI4 index = suit*pipValue;
             string filename = string (pipValue) + "-" + string (suit) + ".svg";
 
-            int returnValue = deck_[index]->setCardImage (ImageCache::getFromFile (filename));
+            SI4 returnValue = deck_[index]->setCardImage (ImageCache::getFromFile (filename));
 
             if (returnValue != 0)
                 return returnValue;
@@ -237,8 +237,8 @@ Suit** Deck::Suits () {
     return suits_;
 }
 
-void Deck::SetSuitDenominations (int column_0, int column_1, int column_2,
-                                 int column_4) {
+void Deck::SetSuitDenominations (SI4 column_0, SI4 column_1, SI4 column_2,
+                                 SI4 column_4) {
     heart_.SetDenomination   (column_0);
     diamond_.SetDenomination (column_1);
     club_.SetDenomination    (column_2);

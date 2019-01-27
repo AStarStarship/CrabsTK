@@ -23,7 +23,7 @@ BCD::BCD ()
 {
     // Note: for 32-bit float return int64_t.
 
-    char* floatingPointString = new char[maxDigitsDouble + 1];
+    CH1* floatingPointString = new CH1[maxDigitsDouble + 1];
     /// This solution  is for a 64-bit floating point number. Use 
     maxDigitsFloat for a float.
 
@@ -36,17 +36,17 @@ BCD::BCD ()
     {
         ++significantDigits;  //< ditch the '.'
 
-        char decimalPlaceString[9];
-        char percentString = "%\0";
+        CH1 decimalPlaceString[9];
+        CH1 percentString = "%\0";
         sprintf (decimalPlaceString, "%s%if", percentString , significantDigits);
         sprintf (floatingPointString , decimalPlaceString, floatingPointNumber);
     }
 
     isNegative = floatingPointNumber >= 0.0f ? 0 : -1;
 
-    char* decimalLocation = strchr (floatingPointString, '.');
+    CH1* decimalLocation = strchr (floatingPointString, '.');
 
-    int startIndex = isNegative ? 1 : 0,
+    SI4 startIndex = isNegative ? 1 : 0,
     stopIndex = !decimalLocation ? maxDigitsDouble : decimalLocation -  floatingPointString,
     stringLength = strlen (floatingPointNumber);
 
@@ -56,7 +56,7 @@ BCD::BCD ()
     numFractionBCDs = stringLength - stopIndex;
     fractionBCDs = new int8_t[numFractionBCDs];
 
-    int i = stopIndex - 1,
+    SI4 i = stopIndex - 1,
     j = 0;
     for (; i >= startIndex; ++i) // Reverse the whole BCDs for power of 10 lookup
         wholeBCDs[j++] = floatingPointString[i] - '0'; // Subtract ASCII '0' to convert to integer
@@ -66,12 +66,12 @@ BCD::BCD ()
 } */
 
 
-BCD::BCD (float floatingPointNumber, int numDecimalPlaces = -1)
+BCD::BCD (float floatingPointNumber, SI4 numDecimalPlaces = -1)
 {
 
 }
 
-BCD::BCD (double floatingPointNumber, int numDecimalPlaces = -1)
+BCD::BCD (double floatingPointNumber, SI4 numDecimalPlaces = -1)
 {
 
 }
@@ -101,17 +101,17 @@ void BCD::SetValue (double Value)
 
 }
 
-bool BCD::IsNegative ()
+BOL BCD::IsNegative ()
 {
     return false;
 }
 
-int8_t BCD::GetNumWholeDigits (int index)
+int8_t BCD::GetNumWholeDigits (SI4 index)
 {
     return 0;
 }
 
-int8_t BCD::GetNumFractionalDigits (int index)
+int8_t BCD::GetNumFractionalDigits (SI4 index)
 {
     return 0;
 }
@@ -121,7 +121,7 @@ void BCD::Plus (const BCD& Value)
 
 }
 
-void BCD::Plus (int Value)
+void BCD::Plus (SI4 Value)
 {
 
 }
@@ -146,7 +146,7 @@ void BCD::Minus (const BCD& Value)
 
 }
 
-void BCD::Minus (int Value)
+void BCD::Minus (SI4 Value)
 {
 
 }
@@ -171,7 +171,7 @@ void BCD::Times (const BCD& Value)
 
 }
 
-void BCD::Times (int Value)
+void BCD::Times (SI4 Value)
 {
 
 }
@@ -196,7 +196,7 @@ void BCD::Divide (const BCD& Value)
 
 }
 
-void BCD::Divide (int Value)
+void BCD::Divide (SI4 Value)
 {
 
 }

@@ -96,25 +96,25 @@ void Project::CloneReadMe(const CH1* new_readme) {
   StealReadMe(TextClone(new_readme));
 }
 
-bool Project::AddProject(const CH1* key) {
+BOL Project::AddProject(const CH1* key) {
   if (!IsToken(key)) return false;
   StackPush<Project*>(projects_, new Project(key));
   return true;
 }
 
-bool Project::AddProject(Project* project) {
+BOL Project::AddProject(Project* project) {
   if (!project) return false;
   StackPush<Project*>(projects_, project);
   return true;
 }
 
-bool Project::AddSchedule(const CH1* key) {
+BOL Project::AddSchedule(const CH1* key) {
   if (!IsToken(key)) return false;
   StackPush<Schedule*>(schedules_, new Schedule(key));
   return true;
 }
 
-bool Project::AddSchedule(Schedule* schedule) {
+BOL Project::AddSchedule(Schedule* schedule) {
   if (!schedule) return false;
   StackPush<Schedule*>(schedules_, schedule);
   return true;
@@ -139,11 +139,11 @@ Schedule* Project::GetSchedule(const CH1* query) {
   return schedules_[ScheduleIndex(query)];
 }
 
-bool Project::RemoveSchedule(SI4 index) {
+BOL Project::RemoveSchedule(SI4 index) {
   return StackRemove<Schedule*>(schedules_, index);
 }
 
-bool Project::RemoveSchedule(const CH1* key) {
+BOL Project::RemoveSchedule(const CH1* key) {
   return RemoveSchedule(ScheduleIndex(key));
 }
 
@@ -166,15 +166,15 @@ Project* Project::GetProject(const CH1* key) {
   return StackGet<Project*>(projects_, ProjectIndex(key));
 }
 
-bool Project::RemoveProject(SI4 index) {
+BOL Project::RemoveProject(SI4 index) {
   return StackRemove<Project*>(projects_, index);
 }
 
-bool Project::RemoveProject(const CH1* key) {
+BOL Project::RemoveProject(const CH1* key) {
   return RemoveProject(ProjectIndex(key));
 }
 
-bool Project::Select(SI4 index) {
+BOL Project::Select(SI4 index) {
   if (index < 0) return false;
   if (index >= schedules_->count) return false;
   task_ = StackGet<Schedule*>(schedules_, index);

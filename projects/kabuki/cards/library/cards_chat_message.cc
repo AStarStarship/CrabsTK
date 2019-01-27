@@ -22,11 +22,11 @@ ChatMessage::ChatMessage () :
     body_length_ (0) {
 }
 
-const char* ChatMessage::Data () const {
+const CH1* ChatMessage::Data () const {
     return data_;
 }
 
-char* ChatMessage::Data () {
+CH1* ChatMessage::Data () {
     return data_;
 }
 
@@ -34,11 +34,11 @@ std::size_t ChatMessage::Length () const {
     return kHeaderLength + body_length_;
 }
 
-const char* ChatMessage::Body () const {
+const CH1* ChatMessage::Body () const {
     return data_ + kHeaderLength;
 }
 
-char* ChatMessage::Body () {
+CH1* ChatMessage::Body () {
     return data_ + kHeaderLength;
 }
 
@@ -52,8 +52,8 @@ void ChatMessage::BodyLength (std::size_t new_length) {
         body_length_ = kMaxBodyLength;
 }
 
-bool ChatMessage::DecodeHeader () {
-    char header[kHeaderLength + 1] = "";
+BOL ChatMessage::DecodeHeader () {
+    CH1 header[kHeaderLength + 1] = "";
     //std::strncat (header, data_, kHeaderLength);
     body_length_ = std::atoi (header);
     if (body_length_ > kMaxBodyLength) {
@@ -64,8 +64,8 @@ bool ChatMessage::DecodeHeader () {
 }
 
 void ChatMessage::EncodeHeader () {
-    char header[kHeaderLength + 1] = "";
-    //std::sprintf (header, "%4d", static_cast<int>(body_length_));
+    CH1 header[kHeaderLength + 1] = "";
+    //std::sprintf (header, "%4d", static_cast<SI4>(body_length_));
     //std::memcpy (data_, header, kHeaderLength);
 }
 

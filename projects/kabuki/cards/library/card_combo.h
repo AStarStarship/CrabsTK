@@ -27,56 +27,56 @@ class CardCombo : public CardStack {
     public:
 
     /** Default constructor. */
-    CardCombo (const CardStack& cards, bool aces_high = false,
-               int joker_pip_1 = 0, int joker_suit_1 = 1,
-               int joker_pip_2 = 0, int joker_suit_2 = 2);
+    CardCombo (const CardStack& cards, BOL aces_high = false,
+               SI4 joker_pip_1 = 0, SI4 joker_suit_1 = 1,
+               SI4 joker_pip_2 = 0, SI4 joker_suit_2 = 2);
 
     /** Virtual destructor. */
     virtual ~CardCombo ();
 
     /** Sets the given variables settings. */
-    void Set (bool aces_high = false, int joker_pip_1 = 0, int joker_suit_1 = 1,
-              int joker_pip_2 = 0, int joker_suit_2 = 2);
+    void Set (BOL aces_high = false, SI4 joker_pip_1 = 0, SI4 joker_suit_1 = 1,
+              SI4 joker_pip_2 = 0, SI4 joker_suit_2 = 2);
 
     /** Function that returns the point value with the wild card and ace
         values. */
-    virtual int GetValue () = 0;
+    virtual SI4 GetValue () = 0;
 
     /** Returns the joker_pip_1. */
-    int GetJokerPip1 ();
+    SI4 GetJokerPip1 ();
     
     /** Sets the joker_pip_1 to the value. */
-    bool SetJokerPip1 (int value);
+    BOL SetJokerPip1 (SI4 value);
 
     /** Returns the joker_suit_1. */
-    int GetJokerSuitValue1 ();
+    SI4 GetJokerSuitValue1 ();
     
     /** Sets the joker_suit_1 to the value. */
-    bool SetJokerSuitValue1 (int value);
+    BOL SetJokerSuitValue1 (SI4 value);
 
     /** Returns the joker_pip_2. */
-    int GetJokerPip2 ();
+    SI4 GetJokerPip2 ();
     
     /** Sets the joker_pip_2 to the value. */
-    bool SetJokerPip2 (int value);
+    BOL SetJokerPip2 (SI4 value);
 
     /** Returns the joker_suit_2. */
-    int GetJokerSuitValue2 ();
+    SI4 GetJokerSuitValue2 ();
     
     /** Sets the joker_suit_2 to the value. */
-    bool SetJokerSuitValue2 (int value);
+    BOL SetJokerSuitValue2 (SI4 value);
 
     /** Returns the joker_pip_1. */
-    int AcesHigh ();
+    SI4 AcesHigh ();
     
     /** Sets the joker_pip_1 to the value. */
-    void SetAcesHigh (int value);
+    void SetAcesHigh (SI4 value);
     
     private:
 
-    bool aces_high_;     //< Flag represents if aces are high (>1) or 
+    BOL aces_high_;     //< Flag represents if aces are high (>1) or 
                          //< low (0), or either (<0).
-    int  joker_pip_1_,   //< Black joker wildcard pip value.
+    SI4  joker_pip_1_,   //< Black joker wildcard pip value.
          joker_suit_1_,  //< Black joker wildcard suit value.
          joker_pip_2_,   //< Red joker wildcard pip value.
          joker_suit_2_;  //< Red joker wildcard suit value.

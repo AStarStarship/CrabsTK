@@ -47,7 +47,7 @@ public:
     ResetList ();
   }
 
-  ListFifo (int max_elements) {
+  ListFifo (SI4 max_elements) {
 
     if (max_elements > 0) {
       max_size_ = max_elements;
@@ -60,7 +60,7 @@ public:
     count_ = 0;
   }
 
-  bool Add (T node) {
+  BOL Add (T node) {
     if (link == head_ || count_ == max_size_)
       return false;
 
@@ -79,7 +79,7 @@ public:
     return Insert (link, head_);
   }
 
-  const CH1* Insert (T node, int index) {
+  const CH1* Insert (T node, SI4 index) {
     return Insert (link, GetLink (index)) {
       if (link == head_) {
         return false;
@@ -115,7 +115,7 @@ public:
     return Remove (find (ptr));
   }
 
-  const CH1* Remove (int index) {
+  const CH1* Remove (SI4 index) {
     if (index < 0) {
       return false;
     }
@@ -125,14 +125,14 @@ public:
     Iterator iterator = new LLListIterator ();
     void* thisobject;
 
-    for (int i = 0; i < index; i++)
+    for (SI4 i = 0; i < index; i++)
       iterator.Next ();
 
     iterator.currentLink ().delete ();
     return true;
   }
 
-  const CH1* Remove (int begin, int end) {
+  const CH1* Remove (SI4 begin, SI4 end) {
     if (begin < 0) {
       return false;
     }
@@ -144,10 +144,10 @@ public:
     }
     Iterator iterator = new LLListIterator ();
 
-    for (int i = 0; i < begin; i++)
+    for (SI4 i = 0; i < begin; i++)
       iterator.GetNext ();
 
-    for (int i = begin; i < end; i++) {
+    for (SI4 i = begin; i < end; i++) {
       iterator.currentLink ().delete ();
       count_--;
     }
@@ -164,7 +164,7 @@ public:
     return true;
   }
 
-  const CH1* Replace (int index, T new_data) {
+  const CH1* Replace (SI4 index, T new_data) {
     if (index < 0) {
       return false;
     }
@@ -175,7 +175,7 @@ public:
     return true;
   }
 
-  const CH1* KeepOnlyThese (const int* indexes, int indexes_count) {
+  const CH1* KeepOnlyThese (const SI4* indexes, SI4 indexes_count) {
     if (!indexes) {
       return "\n indexes can't be nil!";
     }
@@ -185,7 +185,7 @@ public:
     if (indexes_count >= count_) {
       return "\n indexes_count to big!";
     }
-    for (int i = 0; i < indexes_count; i++) {
+    for (SI4 i = 0; i < indexes_count; i++) {
       if (indexList[i] < 0) {
         return "\n indexes_count can't be negative!";
       }
@@ -196,8 +196,8 @@ public:
 
     Iterator iterator = new LLListIterator ();
 
-    for (int i = 1; i < indexes_count; i++) {
-      for (int a = indexList[i - 1]; a < indexList[i]; a++) {
+    for (SI4 i = 1; i < indexes_count; i++) {
+      for (SI4 a = indexList[i - 1]; a < indexList[i]; a++) {
         delete iterator.GetCurrent ();
       }
     }
@@ -218,40 +218,40 @@ public:
     return false;
   }
 
-  T Element (int index) {
+  T Element (SI4 index) {
     if (index > 0 && index < count_) {
       Iterator iterator = new LLListIterator ();
-      for (int i = 0; i < index; i++)
+      for (SI4 i = 0; i < index; i++)
         iterator.GetNext ();
       return iterator.currentobject ();
     }
     return nullptr;
   }
 
-  NodeFifo* LinkAtIndex (int index) {
+  NodeFifo* LinkAtIndex (SI4 index) {
     if (index > 0 && index < count_) {
       Iterator iterator = new LLListIterator ();
 
-      for (int i = 0; i < index; i++)
+      for (SI4 i = 0; i < index; i++)
         iterator.GetNext ();
       return iterator.currentLink ();
     }
     return nullptr;
   }
 
-  bool IsEmpty () {
+  BOL IsEmpty () {
     return size_ == 0;
   }
 
-  int Length () {
+  SI4 Length () {
     return count_;
   }
 
-  int GetMaxCount () {
+  SI4 GetMaxCount () {
 
   }
 
-  const CH1* IncreaseMaxCount (int increase) {
+  const CH1* IncreaseMaxCount (SI4 increase) {
     if (increase < 0)
       return;
     max_size_ += increase;
@@ -260,7 +260,7 @@ public:
   T* ToArray () {
     void** objects = new void*[count_];
 
-    int i = 0;
+    SI4 i = 0;
     Iterator iterator = GetIterator ();
     while (iterator.IsNotDone ()) {
       objects[i] = iterator.GetNext ();
@@ -283,7 +283,7 @@ private:
     return "\n Function not implemented!";
   }
 
-  int       count_,
+  SI4       count_,
     cout_max_;
   NodeFifo* head_;
 };
@@ -309,7 +309,7 @@ public:
     ResetList ();
   }
 
-  ListFifo (int max_elements) {
+  ListFifo (SI4 max_elements) {
 
     if (max_elements > 0) {
       max_size_ = max_elements;
@@ -322,7 +322,7 @@ public:
     count_ = 0;
   }
 
-  bool Add (T node) {
+  BOL Add (T node) {
     if (link == head_ || count_ == max_size_)
       return false;
 
@@ -341,7 +341,7 @@ public:
     return Insert (link, head_);
   }
 
-  const CH1* Insert (T node, int index) {
+  const CH1* Insert (T node, SI4 index) {
     return Insert (link, GetLink (index)) {
       if (link == head_) {
         return false;
@@ -377,7 +377,7 @@ public:
     return Remove (find (ptr));
   }
 
-  const CH1* Remove (int index) {
+  const CH1* Remove (SI4 index) {
     if (index < 0) {
       return false;
     }
@@ -387,14 +387,14 @@ public:
     Iterator iterator = new LLListIterator ();
     void* thisobject;
 
-    for (int i = 0; i < index; i++)
+    for (SI4 i = 0; i < index; i++)
       iterator.Next ();
 
     iterator.currentLink ().delete ();
     return true;
   }
 
-  const CH1* Remove (int begin, int end) {
+  const CH1* Remove (SI4 begin, SI4 end) {
     if (begin < 0) {
       return false;
     }
@@ -406,10 +406,10 @@ public:
     }
     Iterator iterator = new LLListIterator ();
 
-    for (int i = 0; i < begin; i++)
+    for (SI4 i = 0; i < begin; i++)
       iterator.GetNext ();
 
-    for (int i = begin; i < end; i++) {
+    for (SI4 i = begin; i < end; i++) {
       iterator.currentLink ().delete ();
       count_--;
     }
@@ -426,7 +426,7 @@ public:
     return true;
   }
 
-  const CH1* Replace (int index, T new_data) {
+  const CH1* Replace (SI4 index, T new_data) {
     if (index < 0) {
       return false;
     }
@@ -437,7 +437,7 @@ public:
     return true;
   }
 
-  const CH1* KeepOnlyThese (const int* indexes, int indexes_count) {
+  const CH1* KeepOnlyThese (const SI4* indexes, SI4 indexes_count) {
     if (!indexes) {
       return "\n indexes can't be nil!";
     }
@@ -447,7 +447,7 @@ public:
     if (indexes_count >= count_) {
       return "\n indexes_count to big!";
     }
-    for (int i = 0; i < indexes_count; i++) {
+    for (SI4 i = 0; i < indexes_count; i++) {
       if (indexList[i] < 0) {
         return "\n indexes_count can't be negative!";
       }
@@ -458,8 +458,8 @@ public:
 
     Iterator iterator = new LLListIterator ();
 
-    for (int i = 1; i < indexes_count; i++) {
-      for (int a = indexList[i - 1]; a < indexList[i]; a++) {
+    for (SI4 i = 1; i < indexes_count; i++) {
+      for (SI4 a = indexList[i - 1]; a < indexList[i]; a++) {
         delete iterator.GetCurrent ();
       }
     }
@@ -480,40 +480,40 @@ public:
     return false;
   }
 
-  T Element (int index) {
+  T Element (SI4 index) {
     if (index > 0 && index < count_) {
       Iterator iterator = new LLListIterator ();
-      for (int i = 0; i < index; i++)
+      for (SI4 i = 0; i < index; i++)
         iterator.GetNext ();
       return iterator.currentobject ();
     }
     return nullptr;
   }
 
-  NodeFifo* LinkAtIndex (int index) {
+  NodeFifo* LinkAtIndex (SI4 index) {
     if (index > 0 && index < count_) {
       Iterator iterator = new LLListIterator ();
 
-      for (int i = 0; i < index; i++)
+      for (SI4 i = 0; i < index; i++)
         iterator.GetNext ();
       return iterator.currentLink ();
     }
     return nullptr;
   }
 
-  bool IsEmpty () {
+  BOL IsEmpty () {
     return size_ == 0;
   }
 
-  int Length () {
+  SI4 Length () {
     return count_;
   }
 
-  int GetMaxCount () {
+  SI4 GetMaxCount () {
 
   }
 
-  const CH1* IncreaseMaxCount (int increase) {
+  const CH1* IncreaseMaxCount (SI4 increase) {
     if (increase < 0)
       return;
     max_size_ += increase;
@@ -522,7 +522,7 @@ public:
   T* ToArray () {
     void** objects = new void*[count_];
 
-    int i = 0;
+    SI4 i = 0;
     Iterator iterator = GetIterator ();
     while (iterator.IsNotDone ()) {
       objects[i] = iterator.GetNext ();
@@ -545,7 +545,7 @@ private:
     return "\n Function not implemented!";
   }
 
-  int       count_,
+  SI4       count_,
     cout_max_;
   NodeFifo* head_;
 };

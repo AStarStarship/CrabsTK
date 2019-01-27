@@ -23,22 +23,22 @@ class RealTimeApp: public App
 {
 	public:
 
-	int delay;
+	SI4 delay;
 	//Thread runner;
 
-	RealTimeApp (int width, int height, int timerDelay) 
+	RealTimeApp (SI4 width, SI4 height, SI4 timerDelay) 
     :   App (width, height)
 	{
 		delay = timerDelay;
 	}
 
 	/** Gets and sets the timer delay. */
-	int getTimerDelay ()
+	SI4 getTimerDelay ()
 	{
 		return delay;
 	}
     
-    void setTimerDelay (int value)
+    void setTimerDelay (SI4 value)
     {
         if (value < 0) return;
         delay = value;

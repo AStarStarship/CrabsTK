@@ -1,6 +1,6 @@
 /* Kabuki Toolkit @version 0.x
 @link    https://github.com/kabuki-starship/kabuki-toolkit.git
-@file    /kabuki/features/hmi/hmi_dummy_button.h
+@file    /kabuki/features/touch/touch_dummy_button.h
 @author  Cale McCollough <https://calemccollough.github.io>
 @license Copyright (C) 2014-19 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -13,7 +13,7 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <pch.h>
-#if SEAM >= SEAM_00_03_00_00__00
+#if SEAM >= KABUKI_FEATURES_TOUCH_1
 #ifndef HEADER_FOR_KT_HMI_DUMMYBUTTON
 #define HEADER_FOR_KT_HMI_DUMMYBUTTON
 
@@ -23,10 +23,10 @@ specific language governing permissions and limitations under the License. */
 namespace _ {
 
 /* A dummy Button that doesn't do anything. */
-class API ButtonDummy : public Button {
+class SDK ButtonDummy : public Button {
  public:
   //< Creates a ButtonDummy with the initLabel.
-  ButtonDummy(const char* initLabel = "");
+  ButtonDummy(const CH1* initLabel = "");
 
   //< Action that gets performed when this button gets pressed.
   void Press(ButtonEvent buttonEvent);
@@ -40,4 +40,4 @@ class API ButtonDummy : public Button {
 };  //< class ButtonDummy
 }  // namespace _
 #endif  //< HEADER_FOR_KT_HMI_DUMMYBUTTON
-#endif  //< #if SEAM >= SEAM_00_03_00_00__00
+#endif  //< #if SEAM >= KABUKI_FEATURES_TOUCH_1

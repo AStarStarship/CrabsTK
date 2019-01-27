@@ -1,6 +1,6 @@
 /* Kabuki Toolkit @version 0.x
 @link    https://github.com/kabuki-starship/kabuki-toolkit.git
-@file    /kabuki/features/hmi/hmi_/ButtonMacro.h
+@file    /kabuki/features/touch/touch_/ButtonMacro.h
 @author  Cale McCollough <https://calemccollough.github.io>
 @license Copyright (C) 2014-19 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -13,11 +13,11 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <pch.h>
-#if SEAM >= SEAM_00_03_00_00__00
+#if SEAM >= KABUKI_FEATURES_TOUCH_1
 #ifndef HEADER_FOR_KT_HMI_BUTTONMACRO
 #define HEADER_FOR_KT_HMI_BUTTONMACRO
 
-#include <vector>
+#include <TArray>
 #include "button.h"
 #include "button_midi.h"
 #include "control_midi.h"
@@ -27,11 +27,11 @@ specific language governing permissions and limitations under the License. */
 
 namespace _ {
 
-/* Parameter<int> and Button that can trigger multiple events.
+/* Parameter<SI4> and Button that can trigger multiple events.
     Controls are stored as pointers in a linear linked list to optimize for
    speed.
 */
-class API ButtonMacro : public Parameter<int>, public Button {
+class SDK ButtonMacro : public Parameter<SI4>, public Button {
  public:
   /* Default constructor creates a ButtonMacro with no controls.
       A ButtonMacro without any controls triggers system functions only.*/
@@ -44,7 +44,7 @@ class API ButtonMacro : public Parameter<int>, public Button {
   ~ButtonMacro();
 
   /* Gets the number of controls. */
-  int GetNumControls() const;
+  SI4 GetNumControls() const;
 
   /* Clears all of the controls from the list. */
   void ClearControls();
@@ -52,37 +52,37 @@ class API ButtonMacro : public Parameter<int>, public Button {
   /* Adds an Event to the event list.
       @return gets Success upon success.
       @return gets -1 if the newEvent is null. */
-  int Add(Parameter<int>* newEvent);
+  SI4 Add(Parameter<SI4>* newEvent);
 
   /* Adds an array of newEvents to the list. */
-  int Add(_::Array<Parameter<int>*>& newEvents);
+  SI4 Add(_::Array<Parameter<SI4>*>& newEvents);
 
   /* sets the Event at the given index to the newEvent. */
-  int Set(int index, Parameter<int>* newEvent);
+  SI4 Set(SI4 index, Parameter<SI4>* newEvent);
 
   /* Removes the first removes in the list. */
-  Parameter<int>* Remove();
+  Parameter<SI4>* Remove();
 
   /* Removes the oldEvent from the list.
       @return gets nullptr if the index was out of
           bounds. */
-  Parameter<int>* Remove(int index);
+  Parameter<SI4>* Remove(SI4 index);
 
   /* Removes the oldEvent from the list.
       @return gets nullptr if the oldEvent was null or if
           it not in the list. */
-  Parameter<int>* Remove(Parameter<int>* oldEvent);
+  Parameter<SI4>* Remove(Parameter<SI4>* oldEvent);
 
   /* Gets the event at the given index.
       @return gets nullptr if the index is invalid. */
-  Parameter<int>* GetControl(int index);
+  Parameter<SI4>* GetControl(SI4 index);
 
   /* Gets the first event in the list.
       @return gets nullptr if list is empty. */
-  Parameter<int>* GetFirstControl();
+  Parameter<SI4>* GetFirstControl();
 
-  /* Gets the max value of a Parameter<int> word. */
-  int GetMaxWordValue() const override;
+  /* Gets the max value of a Parameter<SI4> word. */
+  SI4 GetMaxWordValue() const override;
 
   /* Gets the label. */
   string& GetLabel() const override;
@@ -90,8 +90,8 @@ class API ButtonMacro : public Parameter<int>, public Button {
   /* Sets the label to the new label.
       @return gets 0 upon success and 1 if the newLabel is
       too uint32_t.
-      @see    HmiComponent::isValid (char). */
-  int SetLabel(const string& newLabel) override;
+      @see    HmiComponent::isValid (CH1). */
+  SI4 SetLabel(const string& newLabel) override;
 
   /* Toggles the state of the Button if type is latching. */
   void Toggle() override;
@@ -118,12 +118,12 @@ class API ButtonMacro : public Parameter<int>, public Button {
   void PrintRow() const override;
 
   /* Prints this object to a terminal. */
-  _::Utf& Print(_::Utf& print) const;
+  ::_::Utf& Print(_::Utf& print) const;
 
  private:
-  _::Array<Parameter<int>*> controls;  //< A vector of Parameter<int> points.
+  ::_::TArray<Parameter<SI4>*> controls;  //< A TArray of Parameter<SI4> points.
 };
 
 }  // namespace _
 #endif  //< #ifndef HEADER_FOR_KT_HMI_BUTTONMACRO
-#endif  //< #if SEAM >= SEAM_00_03_00_00__00
+#endif  //< #if SEAM >= KABUKI_FEATURES_TOUCH_1

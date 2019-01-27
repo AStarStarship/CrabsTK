@@ -10,7 +10,7 @@ maxiEnv ADSR;
 //This is a bunch of control signals so that we can hear something
 
 maxiOsc timer;//this is the metronome
-int currentCount,lastCount;//these values are used to check if we have a new beat this sample
+SI4 currentCount,lastCount;//these values are used to check if we have a new beat this sample
 
 //and these are some variables we can use to pass stuff around
 
@@ -29,10 +29,10 @@ void play(double *output) {
     
     //so this first bit is just a basic metronome so we can hear what we're doing.
     
-    currentCount=(int)timer.phasor(0.5);//this sets up a metronome that ticks every 2 seconds
+    currentCount=(SI4)timer.phasor(0.5);//this sets up a metronome that ticks every 2 seconds
     
     
-    if (lastCount!=currentCount) {//if we have a new timer int this sample, play the sound
+    if (lastCount!=currentCount) {//if we have a new timer SI4 this sample, play the sound
         ADSR.trigger=1;
         
         cout << "tick\n";//the clock ticks

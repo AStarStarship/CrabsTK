@@ -30,6 +30,9 @@
     <ClInclude Include="01_bar.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="test_tree.h" />
+    <ClInclude Include="t_library.h" />
+    <ClInclude Include="t_tag.h" />
+    <ClInclude Include="t_tagtibrary.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cc" />

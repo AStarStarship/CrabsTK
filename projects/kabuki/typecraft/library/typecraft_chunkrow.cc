@@ -18,16 +18,16 @@ specific language governing permissions and limitations under the License. */
 
 namespace typecraft {
 
-ChunkRow::ChunkRow (int max_size) {
+ChunkRow::ChunkRow (SI4 max_size) {
 }
 
-int ChunkRow::GetCount() {
+SI4 ChunkRow::GetCount() {
 }
 
-int ChunkRow::AddChunk(Chunk* chunk) {
+SI4 ChunkRow::AddChunk(Chunk* chunk) {
 }
 
-Chunk* ChunkRow::GetChunk(int index) {
+Chunk* ChunkRow::GetChunk(SI4 index) {
 }
 
 void ChunkRow::Print() {

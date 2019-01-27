@@ -1,6 +1,6 @@
 /* Kabuki Toolkit @version 0.x
 @link    https://github.com/kabuki-starship/kabuki-toolkit.git
-@file    /kabuki/features/hmi/hmi_set.h
+@file    /kabuki/features/touch/touch_set.h
 @author  Cale McCollough <https://calemccollough.github.io>
 @license Copyright (C) 2014-19 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -13,7 +13,7 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <pch.h>
-#if SEAM >= SEAM_00_03_00_00__00
+#if SEAM >= KABUKI_FEATURES_TOUCH_1
 #ifndef HEADER_FOR_KT_HMI_SET
 #define HEADER_FOR_KT_HMI_SET
 
@@ -22,7 +22,7 @@ specific language governing permissions and limitations under the License. */
 namespace _ {
 
 /* A collection of shared objects, . */
-class API Set {
+class SDK Set {
  public:
   /* Constructor. */
   Set();
@@ -37,14 +37,14 @@ class API Set {
   void Add(Project& project);
 
   /* Gets the number of projects in the set. */
-  int GetNumProjects();
+  SI4 GetNumProjects();
 
   /* Prints this object to the terminal. */
   void Print();
 
  private:
-  _::Array<Project&> projects;  //< Array of Project(s).
+  ::_::TArray<Project&> projects;  //< Array of Project(s).
 };                              //< class Set
 }  // namespace _
 #endif  //< HEADER_FOR_KT_HMI_SET
-#endif  //< #if SEAM >= SEAM_00_03_00_00__00
+#endif  //< #if SEAM >= KABUKI_FEATURES_TOUCH_1

@@ -248,7 +248,7 @@ typedef enum {
  *  Using a FLAC__StreamDecoderState as the index to this array
  *  will give the string equivalent.  The contents should not be modified.
  */
-extern FLAC_API const char * const FLAC__StreamDecoderStateString[];
+extern FLAC_API const CH1 * const FLAC__StreamDecoderStateString[];
 
 
 /** Possible return values for the FLAC__stream_decoder_init_*() functions.
@@ -286,7 +286,7 @@ typedef enum {
  *  Using a FLAC__StreamDecoderInitStatus as the index to this array
  *  will give the string equivalent.  The contents should not be modified.
  */
-extern FLAC_API const char * const FLAC__StreamDecoderInitStatusString[];
+extern FLAC_API const CH1 * const FLAC__StreamDecoderInitStatusString[];
 
 
 /** Return values for the FLAC__StreamDecoder read callback.
@@ -317,7 +317,7 @@ typedef enum {
  *  Using a FLAC__StreamDecoderReadStatus as the index to this array
  *  will give the string equivalent.  The contents should not be modified.
  */
-extern FLAC_API const char * const FLAC__StreamDecoderReadStatusString[];
+extern FLAC_API const CH1 * const FLAC__StreamDecoderReadStatusString[];
 
 
 /** Return values for the FLAC__StreamDecoder seek callback.
@@ -340,7 +340,7 @@ typedef enum {
  *  Using a FLAC__StreamDecoderSeekStatus as the index to this array
  *  will give the string equivalent.  The contents should not be modified.
  */
-extern FLAC_API const char * const FLAC__StreamDecoderSeekStatusString[];
+extern FLAC_API const CH1 * const FLAC__StreamDecoderSeekStatusString[];
 
 
 /** Return values for the FLAC__StreamDecoder tell callback.
@@ -363,7 +363,7 @@ typedef enum {
  *  Using a FLAC__StreamDecoderTellStatus as the index to this array
  *  will give the string equivalent.  The contents should not be modified.
  */
-extern FLAC_API const char * const FLAC__StreamDecoderTellStatusString[];
+extern FLAC_API const CH1 * const FLAC__StreamDecoderTellStatusString[];
 
 
 /** Return values for the FLAC__StreamDecoder length callback.
@@ -386,7 +386,7 @@ typedef enum {
  *  Using a FLAC__StreamDecoderLengthStatus as the index to this array
  *  will give the string equivalent.  The contents should not be modified.
  */
-extern FLAC_API const char * const FLAC__StreamDecoderLengthStatusString[];
+extern FLAC_API const CH1 * const FLAC__StreamDecoderLengthStatusString[];
 
 
 /** Return values for the FLAC__StreamDecoder write callback.
@@ -406,7 +406,7 @@ typedef enum {
  *  Using a FLAC__StreamDecoderWriteStatus as the index to this array
  *  will give the string equivalent.  The contents should not be modified.
  */
-extern FLAC_API const char * const FLAC__StreamDecoderWriteStatusString[];
+extern FLAC_API const CH1 * const FLAC__StreamDecoderWriteStatusString[];
 
 
 /** Possible values passed back to the FLAC__StreamDecoder error callback.
@@ -445,7 +445,7 @@ typedef enum {
  *  Using a FLAC__StreamDecoderErrorStatus as the index to this array
  *  will give the string equivalent.  The contents should not be modified.
  */
-extern FLAC_API const char * const FLAC__StreamDecoderErrorStatusString[];
+extern FLAC_API const CH1 * const FLAC__StreamDecoderErrorStatusString[];
 
 
 /***********************************************************************
@@ -894,10 +894,10 @@ FLAC_API FLAC__StreamDecoderState FLAC__stream_decoder_get_state(const FLAC__Str
  * \param  decoder  A decoder instance to query.
  * \assert
  *    \code decoder != NULL \endcode
- * \retval const char *
+ * \retval const CH1 *
  *    The decoder state as a C string.  Do not modify the contents.
  */
-FLAC_API const char *FLAC__stream_decoder_get_resolved_state_string(const FLAC__StreamDecoder *decoder);
+FLAC_API const CH1 *FLAC__stream_decoder_get_resolved_state_string(const FLAC__StreamDecoder *decoder);
 
 /** Get the "MD5 signature checking" flag.
  *  This is the value of the setting, not whether or not the decoder is
@@ -1295,7 +1295,7 @@ FLAC_API FLAC__StreamDecoderInitStatus FLAC__stream_decoder_init_ogg_FILE(
  */
 FLAC_API FLAC__StreamDecoderInitStatus FLAC__stream_decoder_init_file(
 	FLAC__StreamDecoder *decoder,
-	const char *filename,
+	const CH1 *filename,
 	FLAC__StreamDecoderWriteCallback write_callback,
 	FLAC__StreamDecoderMetadataCallback metadata_callback,
 	FLAC__StreamDecoderErrorCallback error_callback,
@@ -1341,7 +1341,7 @@ FLAC_API FLAC__StreamDecoderInitStatus FLAC__stream_decoder_init_file(
  */
 FLAC_API FLAC__StreamDecoderInitStatus FLAC__stream_decoder_init_ogg_file(
 	FLAC__StreamDecoder *decoder,
-	const char *filename,
+	const CH1 *filename,
 	FLAC__StreamDecoderWriteCallback write_callback,
 	FLAC__StreamDecoderMetadataCallback metadata_callback,
 	FLAC__StreamDecoderErrorCallback error_callback,

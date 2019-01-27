@@ -18,13 +18,13 @@ namespace typecraft {
 
 Chunk::Chunk() {}
 
-int Chunk::GetX() { return x_; }
+SI4 Chunk::GetX() { return x_; }
 
-int Chunk::GetY() { return y_; }
+SI4 Chunk::GetY() { return y_; }
 
-int Chunk::GetZ() { return z_; }
+SI4 Chunk::GetZ() { return z_; }
 
-Block* Chunk::GetBlock(int x, int y, int z) {
+Block* Chunk::GetBlock(SI4 x, SI4 y, SI4 z) {
   if (x < 0) return nullptr;
   if (y < 0) return nullptr;
   if (z < 0) return nullptr;
@@ -34,7 +34,7 @@ Block* Chunk::GetBlock(int x, int y, int z) {
   return blocks_[x][y][z];
 }
 
-void Chunk::SetBlock(Block* block, int const x, int y, int z) {
+void Chunk::SetBlock(Block* block, SI4 const x, SI4 y, SI4 z) {
   if (x < 0) return;
   if (y < 0) return;
   if (z < 0) return;

@@ -16,7 +16,7 @@
  ********************************************************************/
 
 /** \file
- * Libvorbisenc is a convenient API for setting up an encoding
+ * Libvorbisenc is a convenient SDK for setting up an encoding
  * environment using libvorbis. Libvorbisenc encapsulates the
  * actions needed to set up the encoder properly.
  */
@@ -37,7 +37,7 @@ extern "C"
  *
  * Before this function is called, the \ref vorbis_info
  * struct should be initialized by using vorbis_info_init() from the libvorbis
- * API.  After encoding, vorbis_info_clear() should be called.
+ * SDK.  After encoding, vorbis_info_clear() should be called.
  *
  * The max_bitrate, nominal_bitrate, and min_bitrate settings are used to set
  * constraints for the encoded file.  This function uses these settings to
@@ -57,7 +57,7 @@ extern "C"
  * \retval OV_EINVAL  Invalid setup request, eg, out of range argument.
  * \retval OV_EIMPL   Unimplemented mode; unable to comply with bitrate request.
  */
-extern int vorbis_encode_init(vorbis_info *vi,
+extern SI4 vorbis_encode_init(vorbis_info *vi,
                               long channels,
                               long rate,
 
@@ -73,7 +73,7 @@ extern int vorbis_encode_init(vorbis_info *vi,
  * vorbis_encode_setup_init to complete the setup process.
  *
  * Before this function is called, the \ref vorbis_info struct should be
- * initialized by using vorbis_info_init() from the libvorbis API.  After
+ * initialized by using vorbis_info_init() from the libvorbis SDK.  After
  * encoding, vorbis_info_clear() should be called.
  *
  * The max_bitrate, nominal_bitrate, and min_bitrate settings are used to set
@@ -94,7 +94,7 @@ extern int vorbis_encode_init(vorbis_info *vi,
  * \retval OV_EINVAL   Invalid setup request, eg, out of range argument.
  * \retval OV_EIMPL    Unimplemented mode; unable to comply with bitrate request.
  */
-extern int vorbis_encode_setup_managed(vorbis_info *vi,
+extern SI4 vorbis_encode_setup_managed(vorbis_info *vi,
                                        long channels,
                                        long rate,
 
@@ -111,7 +111,7 @@ extern int vorbis_encode_setup_managed(vorbis_info *vi,
  * process.
  *
  * Before this function is called, the \ref vorbis_info struct should be
- * initialized by using \ref vorbis_info_init() from the libvorbis API.  After
+ * initialized by using \ref vorbis_info_init() from the libvorbis SDK.  After
  * encoding, vorbis_info_clear() should be called.
  *
  * \param vi        Pointer to an initialized vorbis_info struct.
@@ -126,7 +126,7 @@ extern int vorbis_encode_setup_managed(vorbis_info *vi,
  * \retval  OV_EINVAL  Invalid setup request, eg, out of range argument.
  * \retval  OV_EIMPL   Unimplemented mode; unable to comply with quality level request.
  */
-extern int vorbis_encode_setup_vbr(vorbis_info *vi,
+extern SI4 vorbis_encode_setup_vbr(vorbis_info *vi,
                                   long channels,
                                   long rate,
 
@@ -139,7 +139,7 @@ extern int vorbis_encode_setup_vbr(vorbis_info *vi,
  *
  *
  * Before this function is called, the vorbis_info struct should be
- * initialized by using vorbis_info_init() from the libvorbis API. After
+ * initialized by using vorbis_info_init() from the libvorbis SDK. After
  * encoding, vorbis_info_clear() should be called.
  *
  * \param vi           Pointer to an initialized vorbis_info struct.
@@ -155,7 +155,7 @@ extern int vorbis_encode_setup_vbr(vorbis_info *vi,
  * \retval OV_EINVAL   Invalid setup request, eg, out of range argument.
  * \retval OV_EIMPL    Unimplemented mode; unable to comply with quality level request.
  */
-extern int vorbis_encode_init_vbr(vorbis_info *vi,
+extern SI4 vorbis_encode_init_vbr(vorbis_info *vi,
                                   long channels,
                                   long rate,
 
@@ -164,10 +164,10 @@ extern int vorbis_encode_init_vbr(vorbis_info *vi,
 
 /**
  * This function performs the last stage of three-step encoding setup, as
- * described in the API overview under managed bitrate modes.
+ * described in the SDK overview under managed bitrate modes.
  *
  * Before this function is called, the \ref vorbis_info struct should be
- * initialized by using vorbis_info_init() from the libvorbis API, one of
+ * initialized by using vorbis_info_init() from the libvorbis SDK, one of
  * \ref vorbis_encode_setup_managed() or \ref vorbis_encode_setup_vbr() called to
  * initialize the high-level encoding setup, and \ref vorbis_encode_ctl()
  * called if necessary to make encoding setup changes.
@@ -189,7 +189,7 @@ extern int vorbis_encode_init_vbr(vorbis_info *vi,
  * initialize the high-level encoding setup
  *
  */
-extern int vorbis_encode_setup_init(vorbis_info *vi);
+extern SI4 vorbis_encode_setup_init(vorbis_info *vi);
 
 /**
  * This function implements a generic interface to miscellaneous encoder
@@ -217,7 +217,7 @@ extern int vorbis_encode_setup_init(vorbis_info *vi);
  *
  * \retval OV_EIMPL   Unimplemented or unknown request
  */
-extern int vorbis_encode_ctl(vorbis_info *vi,int number,void *arg);
+extern SI4 vorbis_encode_ctl(vorbis_info *vi,SI4 number,void *arg);
 
 /**
  * \deprecated This is a deprecated interface. Please use vorbis_encode_ctl()
@@ -231,7 +231,7 @@ extern int vorbis_encode_ctl(vorbis_info *vi,int number,void *arg);
  * configuration.
 */
 struct ovectl_ratemanage_arg {
-  int    management_active; /**< nonzero if bitrate management is active*/
+  SI4    management_active; /**< nonzero if bitrate management is active*/
 /** hard lower limit (in kilobits per second) below which the stream bitrate
     will never be allowed for any given bitrate_hard_window seconds of time.*/
   long   bitrate_hard_min;
@@ -268,7 +268,7 @@ struct ovectl_ratemanage_arg {
  *
 */
 struct ovectl_ratemanage2_arg {
-  int    management_active; /**< nonzero if bitrate management is active */
+  SI4    management_active; /**< nonzero if bitrate management is active */
 /** Lower allowed bitrate limit in kilobits per second */
   long   bitrate_limit_min_kbps;
 /** Upper allowed bitrate limit in kilobits per second */
@@ -359,17 +359,17 @@ struct ovectl_ratemanage2_arg {
 #define OV_ECTL_IBLOCK_SET           0x31
 
 /**
- *  Returns the current encoder coupling setting in the int pointed
+ *  Returns the current encoder coupling setting in the SI4 pointed
  *  to by arg.
  *
- * Argument: <tt>int *</tt>
+ * Argument: <tt>SI4 *</tt>
 */
 #define OV_ECTL_COUPLING_GET         0x40
 
 /**
  *  Enables/disables channel coupling in multichannel encoding according to arg.
  *
- * Argument: <tt>int *</tt>
+ * Argument: <tt>SI4 *</tt>
  *
  *  Zero disables channel coupling for multichannel inputs, nonzer enables
  *  channel coupling.  Setting has no effect on monophonic encoding or

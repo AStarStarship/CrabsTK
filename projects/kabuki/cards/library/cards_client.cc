@@ -35,7 +35,7 @@ Client::~Client () {
 }
 
 void Client::DeleteRemotePlayers () {
-    for (int i = players_.size (); i > 0; --i) {
+    for (SI4 i = players_.size (); i > 0; --i) {
         PlayerProxy* player = players_.back ();
         players_.pop_back ();
         delete player;
@@ -46,7 +46,7 @@ uint Client::GetState () {
     return state_;
 }
 
-bool Client::SetState (int state) {
+BOL Client::SetState (SI4 state) {
     if (state < 0) {
         return false;
     }
@@ -79,7 +79,7 @@ Text& Client::Print (_::Text& txt) {
     PrintLine ('_');
 }
 
-const char* Client::Sudo (const char* text, const char* strand_end) {
+const CH1* Client::Sudo (const CH1* text, const CH1* strand_end) {
     if (!(text = TextSkipSpaces (text, strand_end))) {
         return nullptr;
     }
@@ -112,7 +112,7 @@ const Operation* Client::Star (uint index, _::Expression* expr) {
                 "Sets the client state.", 0
             };
             if (!expr) return &OpB;
-            char buffer[kMaxMessageLength + 1];
+            CH1 buffer[kMaxMessageLength + 1];
             if (!ExpressionArgs (expr, Params<1, STR, kMaxMessageLength + 1> (),
                            Args (args, buffer)))
                 return expr->result;
@@ -130,7 +130,7 @@ const Operation* Client::Star (uint index, _::Expression* expr) {
             };
             if (!expr) return &OpC;
             int32_t player_number;
-            char status[User::kMaxStatusLength + 1],
+            CH1 status[User::kMaxStatusLength + 1],
                  handle[Handle::kMaxLength];
             if (!ExpressionArgs (expr, kRxHeaderC, Args (args, &player_number,
                                                    status, handle)))

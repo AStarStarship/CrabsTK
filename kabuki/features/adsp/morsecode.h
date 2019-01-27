@@ -16,7 +16,7 @@ specific language governing permissions and limitations under the License. */
 
 namespace _ {
 
-API const char* toMorseCode(char value);
-/*< Gets the Morse code for the given char. */
+SDK const CH1* toMorseCode(CH1 value);
+/*< Gets the Morse code for the given CH1. */
 
 }   //< _

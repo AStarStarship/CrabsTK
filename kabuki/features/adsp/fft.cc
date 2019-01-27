@@ -43,10 +43,10 @@
 #include <math.h>
 #include <string.h>
 
-int **gFFTBitTable = NULL;
-const int MaxFastBits = 16;
+SI4 **gFFTBitTable = NULL;
+const SI4 MaxFastBits = 16;
 
-int IsPowerOfTwo(int x)
+SI4 IsPowerOfTwo(SI4 x)
 {
 	if (x < 2)
 		return false;
@@ -57,9 +57,9 @@ int IsPowerOfTwo(int x)
 	return true;
 }
 
-int NumberOfBitsNeeded(int PowerOfTwo)
+SI4 NumberOfBitsNeeded(SI4 PowerOfTwo)
 {
-	int i;
+	SI4 i;
 	
 	if (PowerOfTwo < 2) {
 		fprintf(stderr, "Error: FFT called with size %d\n", PowerOfTwo);
@@ -71,9 +71,9 @@ int NumberOfBitsNeeded(int PowerOfTwo)
 			return i;
 }
 
-int ReverseBits(int index, int NumBits)
+SI4 ReverseBits(SI4 index, SI4 NumBits)
 {
-	int i, rev;
+	SI4 i, rev;
 	
 	for (i = rev = 0; i < NumBits; i++) {
 		rev = (rev << 1) | (index & 1);
@@ -85,24 +85,24 @@ int ReverseBits(int index, int NumBits)
 
 void InitFFT()
 {
-    //	gFFTBitTable = new int *[MaxFastBits];
+    //	gFFTBitTable = new SI4 *[MaxFastBits];
 	//use malloc for 16 byte alignment
-	gFFTBitTable = (int**) malloc(MaxFastBits * sizeof(int*));
+	gFFTBitTable = (SI4**) malloc(MaxFastBits * sizeof(SI4*));
 	
-	int len = 2;
-	for (int b = 1; b <= MaxFastBits; b++) {
+	SI4 len = 2;
+	for (SI4 b = 1; b <= MaxFastBits; b++) {
 		
-        //		gFFTBitTable[b - 1] = new int[len];
-		gFFTBitTable[b - 1] = (int*) malloc(len * sizeof(int));
+        //		gFFTBitTable[b - 1] = new SI4[len];
+		gFFTBitTable[b - 1] = (SI4*) malloc(len * sizeof(SI4));
 		
-		for (int i = 0; i < len; i++)
+		for (SI4 i = 0; i < len; i++)
 			gFFTBitTable[b - 1][i] = ReverseBits(i, b);
 		
 		len <<= 1;
 	}
 }
 
-inline int FastReverseBits(int i, int NumBits)
+inline SI4 FastReverseBits(SI4 i, SI4 NumBits)
 {
 	if (NumBits <= MaxFastBits)
 		return gFFTBitTable[NumBits - 1][i];
@@ -114,13 +114,13 @@ inline int FastReverseBits(int i, int NumBits)
  * Complex Fast Fourier Transform
  */
 
-void FFT(int NumSamples,
-         bool InverseTransform,
+void FFT(SI4 NumSamples,
+         BOL InverseTransform,
          float *RealIn, float *ImagIn, float *RealOut, float *ImagOut)
 {
-	int NumBits;                 /* Number of bits needed to store indices */
-	int i, j, k, n;
-	int BlockSize, BlockEnd;
+	SI4 NumBits;                 /* Number of bits needed to store indices */
+	SI4 i, j, k, n;
+	SI4 BlockSize, BlockEnd;
 	
 	double angle_numerator = 2.0 * M_PI;
 	float tr, ti;                /* temp real, temp imaginary */
@@ -224,10 +224,10 @@ void FFT(int NumSamples,
  * i4  <->  imag[n/2-i]
  */
 
-void RealFFT(int NumSamples, float *RealIn, float *RealOut, float *ImagOut)
+void RealFFT(SI4 NumSamples, float *RealIn, float *RealOut, float *ImagOut)
 {
-	int Half = NumSamples / 2;
-	int i;
+	SI4 Half = NumSamples / 2;
+	SI4 i;
 	
 	float theta = M_PI / Half;
 	
@@ -248,7 +248,7 @@ void RealFFT(int NumSamples, float *RealIn, float *RealOut, float *ImagOut)
 	float wr = 1.0 + wpr;
 	float wi = wpi;
 	
-	int i3;
+	SI4 i3;
 	
 	float h1r, h1i, h2r, h2i;
 	
@@ -289,10 +289,10 @@ void RealFFT(int NumSamples, float *RealIn, float *RealOut, float *ImagOut)
  * of its code.
  */
 
-void PowerSpectrum(int NumSamples, float *In, float *Out)
+void PowerSpectrum(SI4 NumSamples, float *In, float *Out)
 {
-	int Half = NumSamples / 2;
-	int i;
+	SI4 Half = NumSamples / 2;
+	SI4 i;
 	
 	float theta = M_PI / Half;
 	
@@ -315,7 +315,7 @@ void PowerSpectrum(int NumSamples, float *In, float *Out)
 	float wr = 1.0 + wpr;
 	float wi = wpi;
 	
-	int i3;
+	SI4 i3;
 	
 	float h1r, h1i, h2r, h2i, rt, it;
 	//float total=0;
@@ -357,9 +357,9 @@ void PowerSpectrum(int NumSamples, float *In, float *Out)
 	delete[]ImagOut;
 }
 
-void WindowFunc(int whichFunction, int NumSamples, float *in)
+void WindowFunc(SI4 whichFunction, SI4 NumSamples, float *in)
 {
-	int i;
+	SI4 i;
 	
 	if (whichFunction == 1) {
 		// Bartlett (triangular) window
@@ -383,9 +383,9 @@ void WindowFunc(int whichFunction, int NumSamples, float *in)
 	}
 }
 
-void fft::genWindow(int whichFunction, int NumSamples, float *window)
+void fft::genWindow(SI4 whichFunction, SI4 NumSamples, float *window)
 {
-	int i;
+	SI4 i;
 	
 	if (whichFunction == 1) {
 		// Bartlett (triangular) window
@@ -410,7 +410,7 @@ void fft::genWindow(int whichFunction, int NumSamples, float *window)
 }
 
 /* constructor */
-fft::fft(int fftSize) {
+fft::fft(SI4 fftSize) {
 	n = fftSize;
 	half = fftSize / 2;
 	//use malloc for 16 byte alignment
@@ -445,8 +445,8 @@ fft::~fft() {
 }
 
 /* Calculate the power spectrum */
-void fft::powerSpectrum(int start, float *data, float *window, float *magnitude,float *phase) {
-	int i;
+void fft::powerSpectrum(SI4 start, float *data, float *window, float *magnitude,float *phase) {
+	SI4 i;
 	
 	//windowing
 	for (i = 0; i < n; i++) {
@@ -473,7 +473,7 @@ void fft::powerSpectrum(int start, float *data, float *window, float *magnitude,
 }
 
 void fft::convToDB(float *in, float *out) {
-	for (int i = 0; i < half; i++) {
+	for (SI4 i = 0; i < half; i++) {
 		if (in[i] < 0.000001){ // less than 0.1 nV
 			out[i] = 0; // out of range
 		} else {
@@ -486,7 +486,7 @@ void fft::convToDB(float *in, float *out) {
 #ifdef __APPLE_CC__
 
 /* Calculate the power spectrum */
-void fft::powerSpectrum_vdsp(int start, float *data, float *window, float *magnitude,float *phase) {
+void fft::powerSpectrum_vdsp(SI4 start, float *data, float *window, float *magnitude,float *phase) {
 	
     uint32_t        i;
 	
@@ -531,8 +531,8 @@ void fft::convToDB_vdsp(float *in, float *out) {
 
 #endif
 
-void fft::inversePowerSpectrum(int start, float *finalOut, float *window, float *magnitude,float *phase) {
-	int i;
+void fft::inversePowerSpectrum(SI4 start, float *finalOut, float *window, float *magnitude,float *phase) {
+	SI4 i;
 	
 	/* get real and imag part */
 	for (i = 0; i < half; i++) {
@@ -558,7 +558,7 @@ void fft::inversePowerSpectrum(int start, float *finalOut, float *window, float 
 
 
 #ifdef __APPLE_CC__
-void fft::inversePowerSpectrum_vdsp(int start, float *finalOut, float *window, float *magnitude,float *phase) {
+void fft::inversePowerSpectrum_vdsp(SI4 start, float *finalOut, float *window, float *magnitude,float *phase) {
 	uint32_t i;
 	
 	for (i = 0; i < half; i++) {

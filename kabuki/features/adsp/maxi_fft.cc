@@ -42,7 +42,7 @@ using namespace std;
 //F F T
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void maxiFFT::setup(int _fftSize, int _windowSize, int _hopSize) {
+void maxiFFT::setup(SI4 _fftSize, SI4 _windowSize, SI4 _hopSize) {
 	_fft = new fft(_fftSize);
 	fftSize = _fftSize;
 	windowSize = _windowSize;
@@ -65,7 +65,7 @@ void maxiFFT::setup(int _fftSize, int _windowSize, int _hopSize) {
 	fft::genWindow(3, windowSize, window);
 }
 
-bool maxiFFT::process(float value) {
+BOL maxiFFT::process(float value) {
 	//add value to buffer at current pos
 	buffer[pos++] = value;
 	//if buffer full, run fft
@@ -97,7 +97,7 @@ float* maxiFFT::magsToDB() {
 
 float maxiFFT::spectralFlatness() {
 	float geometricMean=0, arithmaticMean=0;
-	for(int i=0; i < bins; i++) {
+	for(SI4 i=0; i < bins; i++) {
 		if (magnitudes[i] != 0)
 			geometricMean += logf(magnitudes[i]);
 		arithmaticMean += magnitudes[i];
@@ -109,7 +109,7 @@ float maxiFFT::spectralFlatness() {
 
 float maxiFFT::spectralCentroid() {
 	float x=0, y=0;
-	for(int i=0; i < bins; i++) {
+	for(SI4 i=0; i < bins; i++) {
 		x += fabs(magnitudes[i]) * i;
 		y += fabs(magnitudes[i]);
 	}
@@ -131,7 +131,7 @@ maxiFFT::~maxiFFT() {
 //I N V E R S E  F F T
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void maxiIFFT::setup(int _fftSize, int _windowSize, int _hopSize) {
+void maxiIFFT::setup(SI4 _fftSize, SI4 _windowSize, SI4 _hopSize) {
 	_fft = new fft(_fftSize);	
 	fftSize = _fftSize;
 	windowSize = _windowSize;
@@ -161,7 +161,7 @@ float maxiIFFT::process(float *magnitudes, float *phases) {
 		//clear the end chunk
 		memset(buffer + (fftSize - hopSize), 0, hopSize * sizeof(float)); 
 		//merge new output
-		for(int i=0; i < fftSize; i++) {
+		for(SI4 i=0; i < fftSize; i++) {
 			buffer[i] += ifftOut[i];
 		}
 	}
@@ -194,7 +194,7 @@ maxiIFFT::~maxiIFFT() {
 
 
 
-void maxiFFTOctaveAnalyzer::setup(float samplingRate, int nBandsInTheFFT, int nAveragesPerOctave){
+void maxiFFTOctaveAnalyzer::setup(float samplingRate, SI4 nBandsInTheFFT, SI4 nAveragesPerOctave){
 	
     samplingRate = samplingRate;
     nSpectrum = nBandsInTheFFT;
@@ -223,14 +223,14 @@ void maxiFFTOctaveAnalyzer::setup(float samplingRate, int nBandsInTheFFT, int nA
     // at the requested number per octave then you'll end up with "empty" averaging bins, where
     // there is no spectrum available to map into it.  (so... if you have "nonreactive" averages,
     // either increase fft buffer size, or decrease number of averages per octave, etc)
-    spe2avg = new int[nSpectrum];
-    int avgidx = 0;
+    spe2avg = new SI4[nSpectrum];
+    SI4 avgidx = 0;
     float averageFreq = firstOctaveFrequency; // the "top" of the first averaging bin
     // we're looking for the "top" of the first spectrum bin, and i'm just sort of
     // guessing that this is where it is (or possibly spectrumFrequencySpan/2?)
     // ... either way it's probably close enough for these purposes
     float spectrumFreq = spectrumFrequencySpan;
-    for (int speidx=0; speidx < nSpectrum; speidx++) {
+    for (SI4 speidx=0; speidx < nSpectrum; speidx++) {
 		while (spectrumFreq > averageFreq) {
 			avgidx++;
 			averageFreq *= averageFrequencyIncrement;
@@ -241,7 +241,7 @@ void maxiFFTOctaveAnalyzer::setup(float samplingRate, int nBandsInTheFFT, int nA
     nAverages = avgidx;
     averages = new float[nAverages];
     peaks = new float[nAverages];
-    peakHoldTimes = new int[nAverages];
+    peakHoldTimes = new SI4[nAverages];
     peakHoldTime = 0; // arbitrary
     peakDecayRate = 0.9f; // arbitrary
     linearEQIntercept = 1.0f; // unity -- no eq by default
@@ -250,16 +250,16 @@ void maxiFFTOctaveAnalyzer::setup(float samplingRate, int nBandsInTheFFT, int nA
 
 void maxiFFTOctaveAnalyzer::calculate(float * fftData){
 	
-	int last_avgidx = 0; // tracks when we've crossed into a new averaging bin, so store current average
+	SI4 last_avgidx = 0; // tracks when we've crossed into a new averaging bin, so store current average
     float sum = 0.0f; // running total of spectrum data
-    int count = 0; // count of spectrums accumulated (for averaging)
-    for (int speidx=0; speidx < nSpectrum; speidx++) {
+    SI4 count = 0; // count of spectrums accumulated (for averaging)
+    for (SI4 speidx=0; speidx < nSpectrum; speidx++) {
 		count++;
 		sum += fftData[speidx] * (linearEQIntercept + (float)(speidx) * linearEQSlope);
-		int avgidx = spe2avg[speidx];
+		SI4 avgidx = spe2avg[speidx];
 		if (avgidx != last_avgidx) {
 			
-			for (int j = last_avgidx; j < avgidx; j++){
+			for (SI4 j = last_avgidx; j < avgidx; j++){
 				averages[j] = sum / (float)(count);
 			}
 			count = 0;
@@ -273,7 +273,7 @@ void maxiFFTOctaveAnalyzer::calculate(float * fftData){
 	}
 	
     // update the peaks separately
-    for (int i=0; i < nAverages; i++) {
+    for (SI4 i=0; i < nAverages; i++) {
 		if (averages[i] >= peaks[i]) {
 			// save new peak level, also reset the hold timer
 			peaks[i] = averages[i];

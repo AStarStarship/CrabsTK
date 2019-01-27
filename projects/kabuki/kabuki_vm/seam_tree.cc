@@ -73,10 +73,10 @@ specific language governing permissions and limitations under the License. */
 */
 using namespace _;
 
-int main(int arg_count, char** args) {
+SI4 main(SI4 arg_count, CH1** args) {
   enum { kSize = 1024 };
-  char seam_log[kSize];
-  const char* result = ArgsToString(arg_count, args);
+  CH1 seam_log[kSize];
+  const CH1* result = ArgsToString(arg_count, args);
   result = _0_0_0_F2(seam_log, seam_log + kSize - 1, result);
   return result == nullptr ? APP_EXIT_SUCCESS ? APP_EXIT_FAILURE;
   /*

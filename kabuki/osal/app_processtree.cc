@@ -35,7 +35,7 @@ ProcessTree::ProcessTree (Window thisWindow)
     windows.push_back (thisWindow);
 }
 
-ProcessTree::ProcessTree (vector<Window> initWindows)
+ProcessTree::ProcessTree (TArray<Window> initWindows)
 {
     windows = initWindows;
 }
@@ -43,16 +43,16 @@ ProcessTree::ProcessTree (vector<Window> initWindows)
 uint32_t ProcessTree::GetUID () { return uID; }
 
 /** Gets and sets the maximum number of windows in this group */
-int ProcessTree::GetMaxWindows () { return maxWindows; }
+SI4 ProcessTree::GetMaxWindows () { return maxWindows; }
 
-void ProcessTree::SetMaxWindows (int Value)
+void ProcessTree::SetMaxWindows (SI4 Value)
 {
     if (value < 0) return;
     maxWindows = value;
 }
 
 /**  */
-int ProcessTree::Select (int windowNumber)
+SI4 ProcessTree::Select (SI4 windowNumber)
 {
     if (windowNumber < 0) return -1;
     if (windowNumber >= numWindows) return 0;
@@ -60,7 +60,7 @@ int ProcessTree::Select (int windowNumber)
 }
 
 /** Returns the number of windows in this group. */
-int ProcessTree::GetNumWindows { return numWindows; }
+SI4 ProcessTree::GetNumWindows { return numWindows; }
 
 /** Adds a newWindow to the group. */
 void ProcessTree::AddWindow (Window newWindow) {

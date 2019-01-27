@@ -979,7 +979,7 @@ persistent: rules, a set of condition–action rules
                 e, observed values for variables E
                 bn, a Bayesian network
                 N, the total number of samples to be generated
-        local variables: N, a vector of counts for each value of X, initially zero
+        local variables: N, a TArray of counts for each value of X, initially zero
 
         for j = 1 to N do
             x←PRIOR-SAMPLE(bn)
@@ -997,7 +997,7 @@ persistent: rules, a set of condition–action rules
                 e, observed values for variables E
                 bn, a Bayesian network specifying joint distribution P(X1, . . . , Xn)
                 N, the total number of samples to be generated
-        local variables: W, a vector of weighted counts for each value of X, initially zero
+        local variables: W, a TArray of weighted counts for each value of X, initially zero
 
         for j = 1 to N do
             x,w ←WEIGHTED-SAMPLE(bn, e)
@@ -1019,7 +1019,7 @@ persistent: rules, a set of condition–action rules
 
     @code
     function GIBBS-ASK(X, e, bn,N) returns an estimate of P(X|e)
-        local variables: N, a vector of counts for each value of X, initially zero
+        local variables: N, a TArray of counts for each value of X, initially zero
                 Z, the nonevidence variables in bn
                 x, the current state of the network, initially copied from e
         initialize x with random values for the variables in Z
@@ -1036,12 +1036,12 @@ persistent: rules, a set of condition–action rules
 /** Figure 15.4 The forward–backward algorithm for smoothing: computing posterior probabilities of a sequence of states given a sequence of observations. The FORWARD and BACKWARD operators are defined by Equations (15.5) and (15.9), respectively.
 
     @code
-    function FORWARD-BACKWARD(ev, prior ) returns a vector of probability distributions
-        inputs: ev, a vector of evidence values for steps 1, . . . , t
+    function FORWARD-BACKWARD(ev, prior ) returns a TArray of probability distributions
+        inputs: ev, a TArray of evidence values for steps 1, . . . , t
                 prior , the prior distribution on the initial state, P(X0)
-        local variables: fv, a vector of forward messages for steps 0, . . . , t
+        local variables: fv, a TArray of forward messages for steps 0, . . . , t
                 b, a representation of the backward message, initially all 1s
-                sv, a vector of smoothed estimates for steps 1, . . . , t
+                sv, a TArray of smoothed estimates for steps 1, . . . , t
 
         fv[0]←prior
         for i= 1to t do
@@ -1087,8 +1087,8 @@ persistent: rules, a set of condition–action rules
         inputs: e, the new incoming evidence
                 N, the number of samples to be maintained
                 dbn, a DBN with prior P(X0), transition model P(X1|X0), sensor model P(E1|X1)
-        persistent: S, a vector of samples of size N, initially generated from P(X0)
-        local variables: W, a vector of weights of size N
+        persistent: S, a TArray of samples of size N, initially generated from P(X0)
+        local variables: W, a TArray of weights of size N
 
         for i = 1 to N do
             S[i ]←sample from P(X1 | X0 = S[i ]) // step 1
@@ -1143,8 +1143,8 @@ persistent: rules, a set of condition–action rules
     @code
     function POLICY-ITERATION(mdp) returns a policy
         inputs: mdp, an MDP with states S, actions A(s), transition model P(s | s, a)
-        local variables: U, a vector of utilities for states in S, initially zero
-                π, a policy vector indexed by state, initially random
+        local variables: U, a TArray of utilities for states in S, initially zero
+                π, a policy TArray indexed by state, initially random
 
         repeat
             U ←POLICY-EVALUATION(π,U,mdp)
@@ -1262,9 +1262,9 @@ persistent: rules, a set of condition–action rules
 
     @code
     function BACK-PROP-LEARNING(examples, network ) returns a neural network
-        inputs: examples, a set of examples, each with input vector x and output vector y
+        inputs: examples, a set of examples, each with input TArray x and output TArray y
                 network , a multilayer network with L layers, weights wi,j , activation function g
-        local variables: Δ, a vector of errors, indexed by network node
+        local variables: Δ, a TArray of errors, indexed by network node
 
         repeat
             for each weight wi,j in network do
@@ -1304,9 +1304,9 @@ persistent: rules, a set of condition–action rules
         inputs: examples, set of N labeled examples (x1, y1), . . . , (xN, yN)
                 L, a learning algorithm
                 K, the number of hypotheses in the ensemble
-        local variables: w, a vector of N example weights, initially 1/N
-                h, a vector of K hypotheses
-                z, a vector of K hypothesis weights
+        local variables: w, a TArray of N example weights, initially 1/N
+                h, a TArray of K hypotheses
+                z, a TArray of K hypothesis weights
 
         for k = 1 to K do
             h[k]←L(examples,w)
@@ -1541,10 +1541,10 @@ persistent: rules, a set of condition–action rules
             P(X|X, v, ω), motion model
             P(z|z∗), range sensor noise model
             m, 2D map of the environment
-    persistent: S, a vector of samples of size N
-    local variables: W, a vector of weights of size N
-            S, a temporary vector of particles of size N
-            W, a vector of weights of size N
+    persistent: S, a TArray of samples of size N
+    local variables: W, a TArray of weights of size N
+            S, a temporary TArray of particles of size N
+            W, a TArray of weights of size N
 
     if S is empty then // initialization phase
         for i = 1 to N do

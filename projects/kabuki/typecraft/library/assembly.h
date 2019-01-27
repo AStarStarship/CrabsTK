@@ -46,7 +46,7 @@ specific language governing permissions and limitations under the License. */
 
 #define MAX_ERRORS 8                 //< Max errors before locking up.
 #define MAX_NUM_PARAMS 26            //< Max number of parameters.
-#define MAX_STRING_LENGTH 64 * 1024  //< The max char length.
+#define MAX_STRING_LENGTH 64 * 1024  //< The max CH1 length.
 #define COM_TIMEOUT_TICKS \
   100                            //< The number of seconds before a timeout.
                                  //< over a generic communication link.

@@ -52,12 +52,12 @@ inline const CH1* _0_Foo (CH1* seam_log, CH1* seam_end, const CH1* args) {
     std::chrono::duration<double> elapsed_seconds_cout = end - start;
 
     cout << "\n\nputchar vs printf vs cout benchmark\n\n"
-        "512 * 1024 single char calls:\n"
-        "putchar (char) calls: " <<
+        "512 * 1024 single CH1 calls:\n"
+        "putchar (CH1) calls: " <<
         elapsed_seconds_putchar.count () << "s\n" <<
-        "printf (const char*) calls: " <<
+        "printf (const CH1*) calls: " <<
         elapsed_seconds_printf.count () << "s\n" <<
-        "cout << const char* calls: " <<
+        "cout << const CH1* calls: " <<
         elapsed_seconds_cout.count () << "s\n";
 
     start = chrono::system_clock::now ();
@@ -105,11 +105,11 @@ inline const CH1* _0_Foo (CH1* seam_log, CH1* seam_end, const CH1* args) {
     end = chrono::system_clock::now ();
 
     cout << "\n512 * 1024 * 10 chars calls:\n"
-        "putchar (char) calls: " <<
+        "putchar (CH1) calls: " <<
         elapsed_seconds_putchar.count () << "s\n" <<
-        "printf (const char*) calls: " <<
+        "printf (const CH1*) calls: " <<
         elapsed_seconds_printf.count () << "s\n" <<
-        "cout << const char* calls: " <<
+        "cout << const CH1* calls: " <<
         elapsed_seconds_cout.count () << "s\n";
 
     start = chrono::system_clock::now ();
@@ -140,11 +140,11 @@ inline const CH1* _0_Foo (CH1* seam_log, CH1* seam_end, const CH1* args) {
     end = chrono::system_clock::now ();
 
     cout << "\n512 * 1024 * 10 chars calls:\n"
-        "putchar (char) calls: " <<
+        "putchar (CH1) calls: " <<
         elapsed_seconds_putchar.count () << "s\n" <<
-        "printf (const char*) calls: " <<
+        "printf (const CH1*) calls: " <<
         elapsed_seconds_printf.count () << "s\n" <<
-        "cout << const char* calls: " <<
+        "cout << const CH1* calls: " <<
         elapsed_seconds_cout.count () << "s\n";
 
 #endif

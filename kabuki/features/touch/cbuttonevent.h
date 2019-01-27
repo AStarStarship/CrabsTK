@@ -1,6 +1,6 @@
 /* Kabuki Toolkit @version 0.x
 @link    https://github.com/kabuki-starship/kabuki-toolkit.git
-@file    /kabuki/features/hmi/hmi_event_button.h
+@file    /kabuki/features/touch/touch_event_button.h
 @author  Cale McCollough <https://calemccollough.github.io>
 @license Copyright (C) 2014-19 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -13,7 +13,7 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <pch.h>
-#if SEAM >= SEAM_00_03_00_00__00
+#if SEAM >= KABUKI_FEATURES_TOUCH_1
 #ifndef HEADER_FOR_KT_HMI_EVENTBUTTON
 #define HEADER_FOR_KT_HMI_EVENTBUTTON
 
@@ -29,7 +29,7 @@ namespace _ {
 class EventButton : public Button {
  public:
   /* Default constructor. */
-  EventButton(const char *initLabel = "", int initAction = Button::Momentary);
+  EventButton(const CH1 *initLabel = "", SI4 initAction = Button::Momentary);
 
   /* Copy constructor. */
   EventButton(const EventButton &initState);
@@ -52,4 +52,4 @@ class EventButton : public Button {
 };  //< class EventButton
 }  // namespace _
 #endif  //< HEADER_FOR_KT_HMI_EVENTBUTTON
-#endif  //< #if SEAM >= SEAM_00_03_00_00__00
+#endif  //< #if SEAM >= KABUKI_FEATURES_TOUCH_1

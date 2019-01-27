@@ -1,6 +1,6 @@
 /* Kabuki Toolkit @version 0.x
 @link    https://github.com/kabuki-starship/kabuki-toolkit.git
-@file    /kabuki/features/hmi/hmi_/channel_group.h
+@file    /kabuki/features/touch/touch_/channel_group.h
 @author  Cale McCollough <https://calemccollough.github.io>
 @license Copyright (C) 2014-19 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -13,7 +13,7 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <pch.h>
-#if SEAM >= SEAM_00_03_00_00__00
+#if SEAM >= KABUKI_FEATURES_TOUCH_1
 #ifndef HEADER_FOR_KT_HMI_CHANNELGROUP
 #define HEADER_FOR_KT_HMI_CHANNELGROUP
 
@@ -22,7 +22,7 @@ specific language governing permissions and limitations under the License. */
 namespace _ {
 
 /* A group of */
-class API ChannelGroup {
+class SDK ChannelGroup {
  public:
   /* Constructs a group of channels. */
   ChannelGroup();
@@ -38,15 +38,15 @@ class API ChannelGroup {
 
   /* Removes the channel at the given index if it exists.
       @return Returns false if the index is out of bounds. */
-  bool RemoveChannel(uint_t index);
+  BOL RemoveChannel(uint_t index);
 
   /* Prints this object to a string. */
-  _::Utf& Print(_::Utf& print) const;
+  ::_::Utf& Print(_::Utf& print) const;
 
  private:
-  _::Array<const byte*> channels_;  //< List of Script address for the channels.
+  ::_::TArray<const byte*> channels_;  //< List of Script address for the channels.
 
 };  //< class ChannelGroup
 }  // namespace _
 #endif  //< HEADER_FOR_KT_HMI_CHANNELGROUP
-#endif  //< #if SEAM >= SEAM_00_03_00_00__00
+#endif  //< #if SEAM >= KABUKI_FEATURES_TOUCH_1

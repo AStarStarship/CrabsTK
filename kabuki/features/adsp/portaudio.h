@@ -3,7 +3,7 @@
 /*
  * $Id: portaudio.h 1337 2008-02-15 07:32:09Z rossb $
  * PortAudio Portable Real-Time Audio Library
- * PortAudio API Header File
+ * PortAudio SDK Header File
  * Latest version available at: http://www.portaudio.com/
  *
  * Copyright (c) 1999-2002 Ross Bencina and Phil Burk
@@ -41,7 +41,7 @@
 
 /** @file
  @ingroup public_header
- @brief The portable PortAudio API.
+ @brief The portable PortAudio SDK.
 */
 
 
@@ -54,20 +54,20 @@ extern "C"
 /** Retrieve the release number of the currently running PortAudio build,
  eg 1900.
 */
-int Pa_GetVersion( void );
+SI4 Pa_GetVersion( void );
 
 
 /** Retrieve a textual description of the current PortAudio build,
  eg "PortAudio V19-devel 13 October 2002".
 */
-const char* Pa_GetVersionText( void );
+const CH1* Pa_GetVersionText( void );
 
 
 /** Error codes returned by PortAudio functions.
  Note that with the exception of paNoError, all PaErrorCodes are negative.
 */
 
-typedef int PaError;
+typedef SI4 PaError;
 typedef enum PaErrorCode
 {
     paNoError = 0,
@@ -107,14 +107,14 @@ typedef enum PaErrorCode
 /** Translate the supplied PortAudio error code into a human readable
  message.
 */
-const char *Pa_GetErrorText( PaError errorCode );
+const CH1 *Pa_GetErrorText( PaError errorCode );
 
 
 /** Library initialization function - call this before using PortAudio.
  This function initialises internal data structures and prepares underlying
  host APIs for use.  With the exception of Pa_GetVersion(), Pa_GetVersionText(),
  and Pa_GetErrorText(), this function MUST be called before using any other
- PortAudio API functions.
+ PortAudio SDK functions.
 
  If Pa_Initialize() is called multiple times, each successful 
  call must be matched with a corresponding call to Pa_Terminate(). 
@@ -158,7 +158,7 @@ PaError Pa_Terminate( void );
 
  @see Pa_GetDeviceCount, paNoDevice, paUseHostApiSpecificDeviceSpecification
 */
-typedef int PaDeviceIndex;
+typedef SI4 PaDeviceIndex;
 
 
 /** A special PaDeviceIndex value indicating that no device is available,
@@ -177,17 +177,17 @@ typedef int PaDeviceIndex;
 #define paUseHostApiSpecificDeviceSpecification ((PaDeviceIndex)-2)
 
 
-/* Host API enumeration mechanism */
+/* Host SDK enumeration mechanism */
 
 /** The type used to enumerate to host APIs at runtime. Values of this type
  range from 0 to (Pa_GetHostApiCount()-1).
 
  @see Pa_GetHostApiCount
 */
-typedef int PaHostApiIndex;
+typedef SI4 PaHostApiIndex;
 
 
-/** Retrieve the number of available host APIs. Even if a host API is
+/** Retrieve the number of available host APIs. Even if a host SDK is
  available it may have no devices available.
 
  @return A non-negative value indicating the number of available host APIs
@@ -199,23 +199,23 @@ typedef int PaHostApiIndex;
 PaHostApiIndex Pa_GetHostApiCount( void );
 
 
-/** Retrieve the index of the default host API. The default host API will be
- the lowest common denominator host API on the current platform and is
+/** Retrieve the index of the default host SDK. The default host SDK will be
+ the lowest common denominator host SDK on the current platform and is
  unlikely to provide the best performance.
 
  @return A non-negative value ranging from 0 to (Pa_GetHostApiCount()-1)
- indicating the default host API index or, a PaErrorCode (which are always
+ indicating the default host SDK index or, a PaErrorCode (which are always
  negative) if PortAudio is not initialized or an error is encountered.
 */
 PaHostApiIndex Pa_GetDefaultHostApi( void );
 
 
-/** Unchanging unique identifiers for each supported host API. This type
+/** Unchanging unique identifiers for each supported host SDK. This type
  is used in the PaHostApiInfo structure. The values are guaranteed to be
  unique and to never change, thus allowing code to be written that
- conditionally uses host API specific extensions.
+ conditionally uses host SDK specific extensions.
 
- New type ids will be allocated when support for a host API reaches
+ New type ids will be allocated when support for a host SDK reaches
  "public alpha" status, prior to that developers should use the
  paInDevelopment type id.
 
@@ -223,7 +223,7 @@ PaHostApiIndex Pa_GetDefaultHostApi( void );
 */
 typedef enum PaHostApiTypeId
 {
-    paInDevelopment=0, /* use while developing support for a new host API */
+    paInDevelopment=0, /* use while developing support for a new host SDK */
     paDirectSound=1,
     paMME=2,
     paASIO=3,
@@ -240,31 +240,31 @@ typedef enum PaHostApiTypeId
 } PaHostApiTypeId;
 
 
-/** A structure containing information about a particular host API. */
+/** A structure containing information about a particular host SDK. */
 
 typedef struct PaHostApiInfo
 {
     /** this is struct version 1 */
-    int structVersion;
-    /** The well known unique identifier of this host API @see PaHostApiTypeId */
+    SI4 structVersion;
+    /** The well known unique identifier of this host SDK @see PaHostApiTypeId */
     PaHostApiTypeId type;
-    /** A textual description of the host API for display on user interfaces. */
-    const char *name;
+    /** A textual description of the host SDK for display on user interfaces. */
+    const CH1 *name;
 
-    /**  The number of devices belonging to this host API. This field may be
+    /**  The number of devices belonging to this host SDK. This field may be
      used in conjunction with Pa_HostApiDeviceIndexToDeviceIndex() to enumerate
-     all devices for this host API.
+     all devices for this host SDK.
      @see Pa_HostApiDeviceIndexToDeviceIndex
     */
-    int deviceCount;
+    SI4 deviceCount;
 
-    /** The default input device for this host API. The value will be a
+    /** The default input device for this host SDK. The value will be a
      device index ranging from 0 to (Pa_GetDeviceCount()-1), or paNoDevice
      if no default input device is available.
     */
     PaDeviceIndex defaultInputDevice;
 
-    /** The default output device for this host API. The value will be a
+    /** The default output device for this host SDK. The value will be a
      device index ranging from 0 to (Pa_GetDeviceCount()-1), or paNoDevice
      if no default output device is available.
     */
@@ -276,10 +276,10 @@ typedef struct PaHostApiInfo
 /** Retrieve a pointer to a structure containing information about a specific
  host Api.
 
- @param hostApi A valid host API index ranging from 0 to (Pa_GetHostApiCount()-1)
+ @param hostApi A valid host SDK index ranging from 0 to (Pa_GetHostApiCount()-1)
 
  @return A pointer to an immutable PaHostApiInfo structure describing
- a specific host API. If the hostApi parameter is out of range or an error
+ a specific host SDK. If the hostApi parameter is out of range or an error
  is encountered, the function returns NULL.
 
  The returned structure is owned by the PortAudio implementation and must not
@@ -289,17 +289,17 @@ typedef struct PaHostApiInfo
 const PaHostApiInfo * Pa_GetHostApiInfo( PaHostApiIndex hostApi );
 
 
-/** Convert a static host API unique identifier, into a runtime
- host API index.
+/** Convert a static host SDK unique identifier, into a runtime
+ host SDK index.
 
- @param type A unique host API identifier belonging to the PaHostApiTypeId
+ @param type A unique host SDK identifier belonging to the PaHostApiTypeId
  enumeration.
 
  @return A valid PaHostApiIndex ranging from 0 to (Pa_GetHostApiCount()-1) or,
  a PaErrorCode (which are always negative) if PortAudio is not initialized
  or an error is encountered.
  
- The paHostApiNotFound error code indicates that the host API specified by the
+ The paHostApiNotFound error code indicates that the host SDK specified by the
  type parameter is not available.
 
  @see PaHostApiTypeId
@@ -307,11 +307,11 @@ const PaHostApiInfo * Pa_GetHostApiInfo( PaHostApiIndex hostApi );
 PaHostApiIndex Pa_HostApiTypeIdToHostApiIndex( PaHostApiTypeId type );
 
 
-/** Convert a host-API-specific device index to standard PortAudio device index.
+/** Convert a host-SDK-specific device index to standard PortAudio device index.
  This function may be used in conjunction with the deviceCount field of
- PaHostApiInfo to enumerate all devices for the specified host API.
+ PaHostApiInfo to enumerate all devices for the specified host SDK.
 
- @param hostApi A valid host API index ranging from 0 to (Pa_GetHostApiCount()-1)
+ @param hostApi A valid host SDK index ranging from 0 to (Pa_GetHostApiCount()-1)
 
  @param hostApiDeviceIndex A valid per-host device index in the range
  0 to (Pa_GetHostApiInfo(hostApi)->deviceCount-1)
@@ -320,7 +320,7 @@ PaHostApiIndex Pa_HostApiTypeIdToHostApiIndex( PaHostApiTypeId type );
  or, a PaErrorCode (which are always negative) if PortAudio is not initialized
  or an error is encountered.
 
- A paInvalidHostApi error code indicates that the host API index specified by
+ A paInvalidHostApi error code indicates that the host SDK index specified by
  the hostApi parameter is out of range.
 
  A paInvalidDevice error code indicates that the hostApiDeviceIndex parameter
@@ -329,16 +329,16 @@ PaHostApiIndex Pa_HostApiTypeIdToHostApiIndex( PaHostApiTypeId type );
  @see PaHostApiInfo
 */
 PaDeviceIndex Pa_HostApiDeviceIndexToDeviceIndex( PaHostApiIndex hostApi,
-        int hostApiDeviceIndex );
+        SI4 hostApiDeviceIndex );
 
 
 
 /** Structure used to return information about a host error condition.
 */
 typedef struct PaHostErrorInfo{
-    PaHostApiTypeId hostApiType;    /**< the host API which returned the error code */
+    PaHostApiTypeId hostApiType;    /**< the host SDK which returned the error code */
     long errorCode;                 /**< the error code returned */
-    const char *errorText;          /**< a textual description of the error if available, otherwise a zero-length string */
+    const CH1 *errorText;          /**< a textual description of the error if available, otherwise a zero-length string */
 }PaHostErrorInfo;
 
 
@@ -374,7 +374,7 @@ PaDeviceIndex Pa_GetDeviceCount( void );
 /** Retrieve the index of the default input device. The result can be
  used in the inputDevice parameter to Pa_OpenStream().
 
- @return The default input device index for the default host API, or paNoDevice
+ @return The default input device index for the default host SDK, or paNoDevice
  if no default input device is available or an error was encountered.
 */
 PaDeviceIndex Pa_GetDefaultInputDevice( void );
@@ -383,7 +383,7 @@ PaDeviceIndex Pa_GetDefaultInputDevice( void );
 /** Retrieve the index of the default output device. The result can be
  used in the outputDevice parameter to Pa_OpenStream().
 
- @return The default output device index for the defualt host API, or paNoDevice
+ @return The default output device index for the defualt host SDK, or paNoDevice
  if no default output device is available or an error was encountered.
 
  @note
@@ -444,12 +444,12 @@ typedef unsigned long PaSampleFormat;
 */
 typedef struct PaDeviceInfo
 {
-    int structVersion;  /* this is struct version 2 */
-    const char *name;
-    PaHostApiIndex hostApi; /* note this is a host API index, not a type id*/
+    SI4 structVersion;  /* this is struct version 2 */
+    const CH1 *name;
+    PaHostApiIndex hostApi; /* note this is a host SDK index, not a type id*/
     
-    int maxInputChannels;
-    int maxOutputChannels;
+    SI4 maxInputChannels;
+    SI4 maxOutputChannels;
 
     /* Default latency values for interactive performance. */
     PaTime defaultLowInputLatency;
@@ -495,7 +495,7 @@ typedef struct PaStreamParameters
      It can range from 1 to the value of maxInputChannels in the
      PaDeviceInfo record for the device specified by the device parameter.
     */
-    int channelCount;
+    SI4 channelCount;
 
     /** The sample format of the buffer provided to the stream callback,
      a_ReadStream() or Pa_WriteStream(). It may be any of the formats described
@@ -564,7 +564,7 @@ PaError Pa_IsFormatSupported( const PaStreamParameters *inputParameters,
  A single PaStream can provide multiple channels of real-time
  streaming audio input and output to a client application. A stream
  provides access to audio hardware represented by one or more
- PaDevices. Depending on the underlying Host API, it may be possible 
+ PaDevices. Depending on the underlying Host SDK, it may be possible 
  to open multiple streams using the same device, however this behavior 
  is implementation defined. Portable applications should assume that 
  a PaDevice may be simultaneously used by at most one PaStream.
@@ -741,9 +741,9 @@ typedef enum PaStreamCallbackResult
  @see Pa_OpenStream, Pa_OpenDefaultStream
 
  @note With the exception of Pa_GetStreamCpuLoad() it is not permissable to call
- PortAudio API functions from within the stream callback.
+ PortAudio SDK functions from within the stream callback.
 */
-typedef int PaStreamCallback(
+typedef SI4 PaStreamCallback(
     const void *input, void *output,
     unsigned long frameCount,
     const PaStreamCallbackTimeInfo* timeInfo,
@@ -846,8 +846,8 @@ PaError Pa_OpenStream( PaStream** stream,
  @see Pa_OpenStream, PaStreamCallback
 */
 PaError Pa_OpenDefaultStream( PaStream** stream,
-                              int numInputChannels,
-                              int numOutputChannels,
+                              SI4 numInputChannels,
+                              SI4 numOutputChannels,
                               PaSampleFormat sampleFormat,
                               double sampleRate,
                               unsigned long framesPerBuffer,
@@ -955,7 +955,7 @@ PaError Pa_IsStreamActive( PaStream *stream );
 typedef struct PaStreamInfo
 {
     /** this is struct version 1 */
-    int structVersion;
+    SI4 structVersion;
 
     /** The input latency of the stream in seconds. This value provides the most
      accurate estimate of input latency available to the implementation. It may

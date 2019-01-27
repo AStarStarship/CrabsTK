@@ -23,29 +23,29 @@ namespace typecraft {
 class ItemGroup {
  public:
   /* Constructs an ItemGroup with the given max_size. */
-  ItemGroup(int max_size);
+  ItemGroup(SI4 max_size);
 
   /* Destructor */
   ~ItemGroup();
 
   /* Gets the inventory count. */
-  int GetCount();
+  SI4 GetCount();
 
   /* Gets the max size of the Inventory. */
-  int GetSize();
+  SI4 GetSize();
 
   /* Gets the Item at the given index. */
-  Item* GetItem(int index);
+  Item* GetItem(SI4 index);
 
   /* Adds the Item at the given index.
   @param  item Th Item to add.
   @return Returns -1 if the Inventory is full. */
-  int AddItem(Item* item);
+  SI4 AddItem(Item* item);
 
   /* Removes the Item at the given index.
   @param  The index of the Item to remove.
   @return Returns nullptr if the Index is out of bounds. */
-  Item* RemoveItem(int index);
+  Item* RemoveItem(SI4 index);
 
   /* Prints the ItemGroup to the console. */
   void Print();

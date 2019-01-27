@@ -21,7 +21,7 @@ using namespace std;
 
 namespace kabuki { namespace cards {
 
-Server::Server (const char* password, uint32_t port, int max_games) :
+Server::Server (const CH1* password, uint32_t port, SI4 max_games) :
                 Room           ("Kabuki_Cards_Server"),
                 authenticator_ (),
                 password_      (&authenticator_, password),
@@ -36,16 +36,16 @@ Server::Server (const char* password, uint32_t port, int max_games) :
 Server::~Server () {
 }
 
-const char* Server::Exit () {
+const CH1* Server::Exit () {
     SetState (kStateShuttingDown);
     return nullptr;
 }
 
-const char* Server::Restart () {
+const CH1* Server::Restart () {
     return nullptr;
 }
 
-int Server::GetState () {
+SI4 Server::GetState () {
     return state_;
 }
 
@@ -70,7 +70,7 @@ uint32_t Server::GetPort () {
     return port_;
 }
 
-bool Server::SetPort (uint32_t port_number) {
+BOL Server::SetPort (uint32_t port_number) {
     if (port_number <= 1024) {
         // Can't use a well known TCP port.
         return false;
@@ -83,17 +83,17 @@ id::UserList& Server::Users () {
     return users_;
 }
 
-int Server::GetNumTables () {
+SI4 Server::GetNumTables () {
     return games_.size ();
 }
 
-int Server::AddGame (Game* game) {
+SI4 Server::AddGame (Game* game) {
     games_.push_back (game);
     return GetNumTables () - 1;
 }
 
-int Server::AddBlackjackGame () {
-    char handle[64];
+SI4 Server::AddBlackjackGame () {
+    CH1 handle[64];
     StrandWrite (StrandWrite (handle, handle + 64, "Dealer"),
                handle + 64, users_.PeekNextUid ());
     User* user = users_.GetUser (AddAgent (handle));
@@ -104,7 +104,7 @@ int Server::AddBlackjackGame () {
     return AddGame (new BlackjackGame (users_, user));
 }
 
-bool Server::RemoveGame (int index) {
+BOL Server::RemoveGame (SI4 index) {
     if (index < 0) {
         return false;
     }
@@ -116,11 +116,11 @@ bool Server::RemoveGame (int index) {
     return true;
 }
 
-const char* Server::GetDirections () {
+const CH1* Server::GetDirections () {
     return directions_;
 }
 
-bool Server::SetDirections (const char* directions) {
+BOL Server::SetDirections (const CH1* directions) {
     if (!directions) {
         return false;
     }
@@ -133,10 +133,10 @@ void Server::Print (_::Text& txt) {
     cout << "\n| Server: " << GetRoomName ();
 }
 
-int Server::AddAgent (const char* handle_prefix,
+SI4 Server::AddAgent (const CH1* handle_prefix,
                       double balance, uint64_t value) {
-    char handle[32];
-    char* token;
+    CH1 handle[32];
+    CH1* token;
     if (!(token = StrandWrite (handle, handle + 32, handle_prefix))) {
         return -1;
     }
@@ -146,10 +146,10 @@ int Server::AddAgent (const char* handle_prefix,
     return users_.Add (handle, password_.GetKey (), balance, value);
 }
 
-const char* Server::Sudo (const char* text, const char* strand_end) {
-    const char* token_end;
-    int         index;
-    //char      handle[Handle::kMaxLength + 1],
+const CH1* Server::Sudo (const CH1* text, const CH1* strand_end) {
+    const CH1* token_end;
+    SI4         index;
+    //CH1      handle[Handle::kMaxLength + 1],
     //          password[Password::kMaxLength + 1];
     //int32_t   game_number;
     //          session;
@@ -245,12 +245,12 @@ const Operation* Server::Star (uint index, Expression* expr) {
     };
 
     void* args[2];
-    char handle[Handle::kMaxLength + 1],
+    CH1 handle[Handle::kMaxLength + 1],
         password[Password::kMaxLength + 1];
     //buffer[kMaxTextLength + 1];
     User  * user;
     int32_t session;
-    uid_t   public_key;
+    UID   public_key;
 
     switch (index) {
         case '?': return &This;
@@ -302,7 +302,7 @@ const Operation* Server::Star (uint index, Expression* expr) {
             //}
             session     = user->GetSession ();
             public_key = user->GetSessionKey ();
-            public_key = Random<uid_t> ();
+            public_key = Random<UID> ();
             return ExprResult (expr, Params<2, UI8, UI8> (),
                                Args (args, &session, &public_key));
         }
@@ -355,7 +355,7 @@ const Operation* Server::Star (uint index, Expression* expr) {
                 Params<1, STR, kMaxTextLength> (),
                 "Lists the current games.", 0 };
             if (!expr) return &OpF;
-            for (int i = 0; i < GetNumTables (); ++i) {
+            for (SI4 i = 0; i < GetNumTables (); ++i) {
 
             }
         }

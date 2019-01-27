@@ -159,103 +159,103 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="hmi_button.cc">
-      <Filter>kabuki\features\touch</Filter>
-    </ClCompile>
-    <ClCompile Include="hmi_buttondmx.cc">
-      <Filter>kabuki\features\touch</Filter>
-    </ClCompile>
-    <ClCompile Include="hmi_buttondummy.cc">
-      <Filter>kabuki\features\touch</Filter>
-    </ClCompile>
-    <ClCompile Include="hmi_buttonevent.cc">
-      <Filter>kabuki\features\touch</Filter>
-    </ClCompile>
-    <ClCompile Include="hmi_buttonmacro.cc">
-      <Filter>kabuki\features\touch</Filter>
-    </ClCompile>
-    <ClCompile Include="hmi_buttonmidi.cc">
-      <Filter>kabuki\features\touch</Filter>
-    </ClCompile>
-    <ClCompile Include="hmi_buttonmode.cc">
-      <Filter>kabuki\features\touch</Filter>
-    </ClCompile>
-    <ClCompile Include="hmi_buttonpage.cc">
-      <Filter>kabuki\features\touch</Filter>
-    </ClCompile>
-    <ClCompile Include="hmi_buttonradio.cc">
-      <Filter>kabuki\features\touch</Filter>
-    </ClCompile>
-    <ClCompile Include="hmi_buttonscroller.cc">
-      <Filter>kabuki\features\touch</Filter>
-    </ClCompile>
-    <ClCompile Include="hmi_channelgroup.cc">
-      <Filter>kabuki\features\touch</Filter>
-    </ClCompile>
-    <ClCompile Include="hmi_component.cc">
-      <Filter>kabuki\features\touch</Filter>
-    </ClCompile>
-    <ClCompile Include="hmi_controldmx.cc">
-      <Filter>kabuki\features\touch</Filter>
-    </ClCompile>
-    <ClCompile Include="hmi_controlmatrix.cc">
-      <Filter>kabuki\features\touch</Filter>
-    </ClCompile>
-    <ClCompile Include="hmi_controlmidi.cc">
-      <Filter>kabuki\features\touch</Filter>
-    </ClCompile>
-    <ClCompile Include="hmi_devicebutton.cc">
-      <Filter>kabuki\features\touch</Filter>
-    </ClCompile>
-    <ClCompile Include="hmi_event.cc">
-      <Filter>kabuki\features\touch</Filter>
-    </ClCompile>
-    <ClCompile Include="hmi_isymmetriccontroller.cc">
-      <Filter>kabuki\features\touch</Filter>
-    </ClCompile>
-    <ClCompile Include="hmi_key_event.cc">
-      <Filter>kabuki\features\touch</Filter>
-    </ClCompile>
-    <ClCompile Include="hmi_keyboardbuffer.cc">
-      <Filter>kabuki\features\touch</Filter>
-    </ClCompile>
-    <ClCompile Include="hmi_keyboardrealtime.cc">
-      <Filter>kabuki\features\touch</Filter>
-    </ClCompile>
-    <ClCompile Include="hmi_mixer.cc">
-      <Filter>kabuki\features\touch</Filter>
-    </ClCompile>
-    <ClCompile Include="hmi_mixerchannel.cc">
-      <Filter>kabuki\features\touch</Filter>
-    </ClCompile>
-    <ClCompile Include="hmi_mixerpage.cc">
-      <Filter>kabuki\features\touch</Filter>
-    </ClCompile>
-    <ClCompile Include="hmi_parameter.cc">
-      <Filter>kabuki\features\touch</Filter>
-    </ClCompile>
-    <ClCompile Include="hmi_parameterset.cc">
-      <Filter>kabuki\features\touch</Filter>
-    </ClCompile>
-    <ClCompile Include="hmi_set.cc">
-      <Filter>kabuki\features\touch</Filter>
-    </ClCompile>
-    <ClCompile Include="hmi_swapbutton.cc">
-      <Filter>kabuki\features\touch</Filter>
-    </ClCompile>
-    <ClCompile Include="hmi_widget.cc">
-      <Filter>kabuki\features\touch</Filter>
-    </ClCompile>
-    <ClCompile Include="hmi_widgetmidi.cc">
-      <Filter>kabuki\features\touch</Filter>
-    </ClCompile>
-    <ClCompile Include="hmi_widgetpage.cc">
-      <Filter>kabuki\features\touch</Filter>
-    </ClCompile>
-    <ClCompile Include="hmi_xycontrol.cc">
-      <Filter>kabuki\features\touch</Filter>
-    </ClCompile>
     <ClCompile Include="pch.cc">
+      <Filter>kabuki\features\touch</Filter>
+    </ClCompile>
+    <ClCompile Include="touch_button.cc">
+      <Filter>kabuki\features\touch</Filter>
+    </ClCompile>
+    <ClCompile Include="touch_buttondmx.cc">
+      <Filter>kabuki\features\touch</Filter>
+    </ClCompile>
+    <ClCompile Include="touch_buttondummy.cc">
+      <Filter>kabuki\features\touch</Filter>
+    </ClCompile>
+    <ClCompile Include="touch_buttonevent.cc">
+      <Filter>kabuki\features\touch</Filter>
+    </ClCompile>
+    <ClCompile Include="touch_buttonmacro.cc">
+      <Filter>kabuki\features\touch</Filter>
+    </ClCompile>
+    <ClCompile Include="touch_buttonmidi.cc">
+      <Filter>kabuki\features\touch</Filter>
+    </ClCompile>
+    <ClCompile Include="touch_buttonmode.cc">
+      <Filter>kabuki\features\touch</Filter>
+    </ClCompile>
+    <ClCompile Include="touch_buttonpage.cc">
+      <Filter>kabuki\features\touch</Filter>
+    </ClCompile>
+    <ClCompile Include="touch_buttonradio.cc">
+      <Filter>kabuki\features\touch</Filter>
+    </ClCompile>
+    <ClCompile Include="touch_buttonscroller.cc">
+      <Filter>kabuki\features\touch</Filter>
+    </ClCompile>
+    <ClCompile Include="touch_channelgroup.cc">
+      <Filter>kabuki\features\touch</Filter>
+    </ClCompile>
+    <ClCompile Include="touch_component.cc">
+      <Filter>kabuki\features\touch</Filter>
+    </ClCompile>
+    <ClCompile Include="touch_controldmx.cc">
+      <Filter>kabuki\features\touch</Filter>
+    </ClCompile>
+    <ClCompile Include="touch_controlmatrix.cc">
+      <Filter>kabuki\features\touch</Filter>
+    </ClCompile>
+    <ClCompile Include="touch_controlmidi.cc">
+      <Filter>kabuki\features\touch</Filter>
+    </ClCompile>
+    <ClCompile Include="touch_devicebutton.cc">
+      <Filter>kabuki\features\touch</Filter>
+    </ClCompile>
+    <ClCompile Include="touch_event.cc">
+      <Filter>kabuki\features\touch</Filter>
+    </ClCompile>
+    <ClCompile Include="touch_isymmetriccontroller.cc">
+      <Filter>kabuki\features\touch</Filter>
+    </ClCompile>
+    <ClCompile Include="touch_key_event.cc">
+      <Filter>kabuki\features\touch</Filter>
+    </ClCompile>
+    <ClCompile Include="touch_keyboardbuffer.cc">
+      <Filter>kabuki\features\touch</Filter>
+    </ClCompile>
+    <ClCompile Include="touch_keyboardrealtime.cc">
+      <Filter>kabuki\features\touch</Filter>
+    </ClCompile>
+    <ClCompile Include="touch_mixer.cc">
+      <Filter>kabuki\features\touch</Filter>
+    </ClCompile>
+    <ClCompile Include="touch_mixerchannel.cc">
+      <Filter>kabuki\features\touch</Filter>
+    </ClCompile>
+    <ClCompile Include="touch_mixerpage.cc">
+      <Filter>kabuki\features\touch</Filter>
+    </ClCompile>
+    <ClCompile Include="touch_parameter.cc">
+      <Filter>kabuki\features\touch</Filter>
+    </ClCompile>
+    <ClCompile Include="touch_parameterset.cc">
+      <Filter>kabuki\features\touch</Filter>
+    </ClCompile>
+    <ClCompile Include="touch_set.cc">
+      <Filter>kabuki\features\touch</Filter>
+    </ClCompile>
+    <ClCompile Include="touch_swapbutton.cc">
+      <Filter>kabuki\features\touch</Filter>
+    </ClCompile>
+    <ClCompile Include="touch_widget.cc">
+      <Filter>kabuki\features\touch</Filter>
+    </ClCompile>
+    <ClCompile Include="touch_widgetmidi.cc">
+      <Filter>kabuki\features\touch</Filter>
+    </ClCompile>
+    <ClCompile Include="touch_widgetpage.cc">
+      <Filter>kabuki\features\touch</Filter>
+    </ClCompile>
+    <ClCompile Include="touch_xycontrol.cc">
       <Filter>kabuki\features\touch</Filter>
     </ClCompile>
   </ItemGroup>

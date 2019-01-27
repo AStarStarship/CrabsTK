@@ -73,22 +73,22 @@ class Project : public Operand {
   /* Adds a Project.
   @param project The project to add.
   @return Returns false if the key is not a token. */
-  bool AddProject(const CH1* key);
+  BOL AddProject(const CH1* key);
 
   /* Adds a Project.
   @param project The project to add.
   @return Returns false if the key is not a token. */
-  bool AddProject(Project* project);
+  BOL AddProject(Project* project);
 
   /* Adds a Schedule.
   @param key The key of the new schedule to add.
   @return Returns false if the key is not a token. */
-  bool AddSchedule(const CH1* key);
+  BOL AddSchedule(const CH1* key);
 
   /* Adds a currently existing Schedule.
   @param schedule A new schedule this object now owns the memory of.
   @return Returns false if the key is not a token. */
-  bool AddSchedule(Schedule* schedule);
+  BOL AddSchedule(Schedule* schedule);
 
   /* Lists the keys in the given scope. */
   void ListObjs();
@@ -107,10 +107,10 @@ class Project : public Operand {
   Schedule* GetSchedule(const CH1* key);
 
   /* Attempts to remove the Schedule at the given index. */
-  bool RemoveSchedule(SI4 index);
+  BOL RemoveSchedule(SI4 index);
 
   /* Attempts to remove the Schedule at the given index. */
-  bool RemoveSchedule(const CH1* key);
+  BOL RemoveSchedule(const CH1* key);
 
   /* Searches for a Project with the given key. */
   SI4 ProjectIndex(const CH1* key);
@@ -126,13 +126,13 @@ class Project : public Operand {
   Project* GetProject(const CH1* key);
 
   /* Attempts to remove the Project at the given index. */
-  bool RemoveProject(SI4 index);
+  BOL RemoveProject(SI4 index);
 
   /* Attempts to remove the Project at the given index. */
-  bool RemoveProject(const CH1* key);
+  BOL RemoveProject(const CH1* key);
 
   /* Selects the task at the given index. */
-  bool Select(SI4 index);
+  BOL Select(SI4 index);
 
   /* De-serializes the file with the stored key.
       @return Returns 0 upon success and a pointer to an error CH1 upon

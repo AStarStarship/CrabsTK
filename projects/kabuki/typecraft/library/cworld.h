@@ -74,16 +74,16 @@ class World {
   World();
 
   /* Gets inventory count. */
-  int GetCount();
+  SI4 GetCount();
 
   /* Adds an Item. */
-  int AddItem(Item* item);
+  SI4 AddItem(Item* item);
 
   /* Removes the Item with the given index.
   @param  The index of the Item to remove.
   @return Returns nullptr if the index is out of bounds and a pointer to
   the Item it removed upon success. */
-  Item* RemoveItem(int index);
+  Item* RemoveItem(SI4 index);
 
   /* Deletes the entire World. */
   void DeleteAll();
@@ -92,8 +92,8 @@ class World {
   void Print();
 
  private:
-  const char* name_;  //< The World's name.
-  int difficulty_;    //< The difficulty level.
+  const CH1* name_;  //< The World's name.
+  SI4 difficulty_;    //< The difficulty level.
   Chunk* zone;        //< The current Chunk the PLayer is in.
   ArX<Chunk*>
       quad_[4];  //< The 4 Quadrant Chunks ordered like a Cartesian plane.

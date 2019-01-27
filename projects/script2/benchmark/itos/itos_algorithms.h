@@ -19,35 +19,35 @@ specific language governing permissions and limitations under the License. */
 
 #include "config.h"
 
-TestCase PrintNil(const char* args);
+TestCase PrintNil(const CH1* args);
 
-char* PrintNil(char* begin, char* end, uint32_t value);
+CH1* PrintNil(CH1* begin, CH1* end, uint32_t value);
 
-char* PrintSprintf(char* begin, char* end, uint32_t value);
+CH1* PrintSprintf(CH1* begin, CH1* end, uint32_t value);
 
-TestCase PrintSprintf(const char* args);
+TestCase PrintSprintf(const CH1* args);
 
-char* PrintMod10(char* begin, char* end, uint32_t value);
+CH1* PrintMod10(CH1* begin, CH1* end, uint32_t value);
 
-TestCase PrintMod10(const char* args);
+TestCase PrintMod10(const CH1* args);
 
-char* PrintMod100(char* begin, char* end, uint32_t value);
+CH1* PrintMod100(CH1* begin, CH1* end, uint32_t value);
 
-TestCase PrintMod100(const char* args);
+TestCase PrintMod100(const CH1* args);
 
-char* PrintSprintf(char* begin, char* end, uint32_t value);
+CH1* PrintSprintf(CH1* begin, CH1* end, uint32_t value);
 
-TestCase PrintSprintf(const char* args);
+TestCase PrintSprintf(const CH1* args);
 
-char* PrintStbSprintf(char* begin, char* end, uint32_t value);
+CH1* PrintStbSprintf(CH1* begin, CH1* end, uint32_t value);
 
-TestCase PrintStbSprintf(const char* args);
+TestCase PrintStbSprintf(const CH1* args);
 
-char* PrintMsd10(char* begin, char* end, uint32_t value);
+CH1* PrintMsd10(CH1* begin, CH1* end, uint32_t value);
 
-TestCase PrintMsd10(const char* args);
+TestCase PrintMsd10(const CH1* args);
 
-char* PrintSizeLut(char* begin, char* end, uint32_t value);
+CH1* PrintSizeLut(CH1* begin, CH1* end, uint32_t value);
 
 void TestItoSSizeLut();
 

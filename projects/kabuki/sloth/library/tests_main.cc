@@ -18,18 +18,18 @@
 #include "../../../cpputest/include/CppUTest/CommandLineTestRunner.h"
 #include "../../../cpputest/include/CppUTest/TestHarness.h"
 
-int main(int args_count, char** args) {
+SI4 main(SI4 args_count, CH1** args) {
   Print ('+');
-  for (int i = 81; i > 0; --i) {
+  for (SI4 i = 81; i > 0; --i) {
     Print ('-');
   }
   std::cout << "\n| Kabuki Toolkit Tests\n+";
-  for (int i = 81; i > 0; --i) {
+  for (SI4 i = 81; i > 0; --i) {
     Print ('-');
   }
   Print ('\n');
   MemoryLeakWarningPlugin::turnOffNewDeleteOverloads();
-  int result = CommandLineTestRunner::RunAllTests(args_count, args);
+  SI4 result = CommandLineTestRunner::RunAllTests(args_count, args);
   system("PAUSE");
   return result;
 }
@@ -43,10 +43,10 @@ VOID CALLBACK TimerRoutine (PVOID lpParam, BOOLEAN TimerOrWaitFired) {
     }
     else
     {
-        // lpParam points to the argument; in this case it is an int
+        // lpParam points to the argument; in this case it is an SI4
 
         Printf ("Timer routine called. Parameter is %d.\n",
-                *(int*)lpParam);
+                *(SI4*)lpParam);
         if (TimerOrWaitFired) {
             Printf ("The wait timed out.\n");
         }
@@ -58,10 +58,10 @@ VOID CALLBACK TimerRoutine (PVOID lpParam, BOOLEAN TimerOrWaitFired) {
 
     SetEvent (gDoneEvent);
 }
-int main () {
+SI4 main () {
     HANDLE hTimer = NULL;
     HANDLE hTimerQueue = NULL;
-    int arg = 123;
+    SI4 arg = 123;
 
     // Use an event object to track the TimerRoutine execution
     gDoneEvent = CreateEvent (NULL, TRUE, FALSE, NULL);
