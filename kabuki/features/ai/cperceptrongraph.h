@@ -1,4 +1,4 @@
-/** Kabuki Toolkit
+/* Kabuki Toolkit
     @version 0.x
     @file    ~/library/kabuki/toolkit/ai/perceptron.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
@@ -23,7 +23,7 @@
 
 namespace _ {
 
-/** A graph of Perceptrons with an input an output layer.
+/* A graph of Perceptrons with an input an output layer.
     PercetronNode(s) store a TArray of Perceptron(s) and a TArray of 
     child PerceptronGraph nodes. In order to connect the inputs to the outputs 
     you have to traverse the tree
@@ -31,23 +31,23 @@ namespace _ {
 class PerceptronGraph {
     public:
 
-    /** Contructs an empty network.
+    /* Contructs an empty network.
         @param input_count  Number of input perceptrons.
         @param output_count Number of output perceptrons.
         @param bias         The network bias. */
     PerceptronGraph  (size_t input_count, float_t input_bias,
                       size_t output_cout, float_t output_bias);
 
-    /** Gets the output node. */
+    /* Gets the output node. */
     TArray<float_t>& GetX ();
 
-    /** Gets the output node. */
+    /* Gets the output node. */
     float_t* GetX (size_t index);
 
-    /** Gets the output node. */
+    /* Gets the output node. */
     TArray<float_t>& GetY ();
 
-    /** Updates this network. */
+    /* Updates this network. */
     void Update ();
 
     private:

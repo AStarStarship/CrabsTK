@@ -1,4 +1,4 @@
-/** Kabuki Toolkit @version 0.x
+/* Kabuki Toolkit @version 0.x
 @link    https://github.com/kabuki-starship/kabuki-toolkit.git
 @file    //benchmarks/0_0_benchmark_f2/itos/print_mod100sc.cc
 @author  Cale McCollough <cale.mccollough@gmail.com>
@@ -26,7 +26,7 @@ CH1* Print(uint32_t value, CH1* text, CH1* text_end) {
                                    10000,     100000,    1000000, 10000000,
                                    100000000, 1000000000};
 
-  /** Lookup table of ASCII CH1 pairs for 00, 01, ..., 99.
+  /* Lookup table of ASCII CH1 pairs for 00, 01, ..., 99.
       To convert this algorithm to big-endian, flip the digit pair bytes. */
   static const uint16_t kDigits00To99[100] = {
       0x3030, 0x3130, 0x3230, 0x3330, 0x3430, 0x3530, 0x3630, 0x3730, 0x3830,

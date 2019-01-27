@@ -1,4 +1,4 @@
-/** Kabuki Toolkit @version 0.x
+/* Kabuki Toolkit @version 0.x
 @file     ~/tests/script_itos_competition.ccCopyright(c) 2014
 @author  Florian Loitsch, Milo Yip (miloyip@gmail.com) and Cale McCollough
 <cale.mccollough@gmail.com>

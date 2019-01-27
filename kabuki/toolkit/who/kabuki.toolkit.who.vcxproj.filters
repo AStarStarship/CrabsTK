@@ -98,7 +98,7 @@
     <ClInclude Include="global.h">
       <Filter>kabuki\toolkit\who</Filter>
     </ClInclude>
-    <ClInclude Include="t_uidserver.h">
+    <ClInclude Include="t_uidassigner.h">
       <Filter>kabuki\toolkit\who</Filter>
     </ClInclude>
   </ItemGroup>

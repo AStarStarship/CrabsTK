@@ -1,4 +1,4 @@
-/** Kabuki Toolkit
+/* Kabuki Toolkit
     @file ~/kt/math/bezier2d.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017-2018 Cale McCollough <calemccollough@gmail.com>;
@@ -21,7 +21,7 @@
 
 namespace _ {
 
-/** Class that represents a n order Bezier. */
+/* Class that represents a n order Bezier. */
 template<typename T>
 class SDK Bezier2D {
     public:
@@ -30,30 +30,30 @@ class SDK Bezier2D {
         MinmumNumPoints = 3     //< The minimum number of points reqruied for a bezier curve.
     };
 
-    /** Constructor.
+    /* Constructor.
         @pre The length of XPoints and YPoints must equal NumPoints or curve will not be created correctly. */
     Bezier2D  (T* initXPoints, T* initYPoints, SI4 initNumPoints) :
         x_points ((float*)theXPoints),
         y_points ((float*)theYPoints),
         numPoints (theNumPoints) {
-        assert (theXPoints != nullptr);
-        assert (theYPoints != nullptr);
-        assert (theNumPoints >= 0);
+        DASSERT (theXPoints != nullptr);
+        DASSERT (theYPoints != nullptr);
+        DASSERT (theNumPoints >= 0);
     }
     
-    /** Constructor.
+    /* Constructor.
         @pre The length of XPoints and YPoints must equal NumPoints or curve will not be created correctly. */
     Bezier2D  (const T* initXPoints, const T* initYPoints, SI4 initNumPoints)
         : x_points ((float*)theXPoints),
         y_points ((float*)theYPoints),
         numPoints (theNumPoints)
     {
-        assert (theXPoints != nullptr);
-        assert (theYPoints != nullptr);
-        assert (theNumPoints >= 0);
+        DASSERT (theXPoints != nullptr);
+        DASSERT (theYPoints != nullptr);
+        DASSERT (theNumPoints >= 0);
     }
     
-    /** Constructs a quadratic bezier curve with the given points. */
+    /* Constructs a quadratic bezier curve with the given points. */
     Bezier2D  (T x0, T y0, T x1, T y1, T x2, T y2, T x3, T y3) :
         x_points (new float[3]),
         y_points (new float[3]),
@@ -70,7 +70,7 @@ class SDK Bezier2D {
         y_points[3] = y3;
     }
 
-    /** Copy constructor initializes curve with the given points. */
+    /* Copy constructor initializes curve with the given points. */
     Bezier2D  (const Bezier2D& o) {
         SI4 newNumPoints = o.numPoints;
         numPoints = newNumPoints;
@@ -85,24 +85,24 @@ class SDK Bezier2D {
         }
     }
 
-    /** Destructs dynamic memory if used. */
+    /* Destructs dynamic memory if used. */
     ~Bezier2D () {
         delete x_points;
         delete y_points;
     }
 
-    /** Retuns a pointer to the x points. */
+    /* Retuns a pointer to the x points. */
     T* GetXPoints () 
 
-    /** Retuns a pointer to the y points. */
+    /* Retuns a pointer to the y points. */
     T* GetYPoints ();
 
-    /** Gets the number of points. */
+    /* Gets the number of points. */
     SI4 GetNumPoints () {
         return numPoints;
     }
 
-    /** Gets a Point<T> along the path of the of curve at time t. */
+    /* Gets a Point<T> along the path of the of curve at time t. */
     Point2D<T> GetPoint  (T p) {
         float x = 0,                                //< The x position to return.
             y = 0,                                  //< The y position to return.
@@ -126,7 +126,7 @@ class SDK Bezier2D {
         return Point3D<float> (x, y);
     }
 
-    /** Prints this object to the terminal. */
+    /* Prints this object to the terminal. */
     _::Printer& Print (_::Printer& printer) {
 
     }

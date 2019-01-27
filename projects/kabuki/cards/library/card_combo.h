@@ -1,4 +1,4 @@
-/** Kabuki Arcade
+/* Kabuki Arcade
     @file    ~/source/kabuki/arcade/cards/card_combo.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017-2018 Cale McCollough <calemccollough@gmail.com>;
@@ -13,63 +13,63 @@
              permissions and limitations under the License.
 */
 
-#ifndef HEADER_FOR_KABUKI_ARCADE_CARDS_CARDCOMBO
-#define HEADER_FOR_KABUKI_ARCADE_CARDS_CARDCOMBO
+#ifndef KABUKI_ARCADE_CARDS_CARDCOMBO
+#define KABUKI_ARCADE_CARDS_CARDCOMBO
 
 #include "card_stack.h"
 
 namespace kabuki { namespace cards {
     
-/** A CardStack point combination in a playing card game.
+/* A CardStack point combination in a playing card game.
     There are two major things that will effect a combination's rank besides
     suit rank; the presence of jokers, and if aces are high or low. */
 class CardCombo : public CardStack { 
     public:
 
-    /** Default constructor. */
+    /* Default constructor. */
     CardCombo (const CardStack& cards, BOL aces_high = false,
                SI4 joker_pip_1 = 0, SI4 joker_suit_1 = 1,
                SI4 joker_pip_2 = 0, SI4 joker_suit_2 = 2);
 
-    /** Virtual destructor. */
+    /* Virtual destructor. */
     virtual ~CardCombo ();
 
-    /** Sets the given variables settings. */
+    /* Sets the given variables settings. */
     void Set (BOL aces_high = false, SI4 joker_pip_1 = 0, SI4 joker_suit_1 = 1,
               SI4 joker_pip_2 = 0, SI4 joker_suit_2 = 2);
 
-    /** Function that returns the point value with the wild card and ace
+    /* Function that returns the point value with the wild card and ace
         values. */
     virtual SI4 GetValue () = 0;
 
-    /** Returns the joker_pip_1. */
+    /* Returns the joker_pip_1. */
     SI4 GetJokerPip1 ();
     
-    /** Sets the joker_pip_1 to the value. */
+    /* Sets the joker_pip_1 to the value. */
     BOL SetJokerPip1 (SI4 value);
 
-    /** Returns the joker_suit_1. */
+    /* Returns the joker_suit_1. */
     SI4 GetJokerSuitValue1 ();
     
-    /** Sets the joker_suit_1 to the value. */
+    /* Sets the joker_suit_1 to the value. */
     BOL SetJokerSuitValue1 (SI4 value);
 
-    /** Returns the joker_pip_2. */
+    /* Returns the joker_pip_2. */
     SI4 GetJokerPip2 ();
     
-    /** Sets the joker_pip_2 to the value. */
+    /* Sets the joker_pip_2 to the value. */
     BOL SetJokerPip2 (SI4 value);
 
-    /** Returns the joker_suit_2. */
+    /* Returns the joker_suit_2. */
     SI4 GetJokerSuitValue2 ();
     
-    /** Sets the joker_suit_2 to the value. */
+    /* Sets the joker_suit_2 to the value. */
     BOL SetJokerSuitValue2 (SI4 value);
 
-    /** Returns the joker_pip_1. */
+    /* Returns the joker_pip_1. */
     SI4 AcesHigh ();
     
-    /** Sets the joker_pip_1 to the value. */
+    /* Sets the joker_pip_1 to the value. */
     void SetAcesHigh (SI4 value);
     
     private:
@@ -84,4 +84,4 @@ class CardCombo : public CardStack {
 };      //< class CardCombo
 }       //< namespace cards
 }       //< namespace kabuki
-#endif  //< HEADER_FOR_KABUKI_ARCADE_CARDS_CARDCOMBO
+#endif  //< KABUKI_ARCADE_CARDS_CARDCOMBO

@@ -32,41 +32,26 @@
     <ClInclude Include="global.h">
       <Filter>kabuki\toolkit\pro</Filter>
     </ClInclude>
-    <ClInclude Include="cschedule.h">
-      <Filter>kabuki\toolkit\pro</Filter>
-    </ClInclude>
-    <ClInclude Include="ctask.h">
-      <Filter>kabuki\toolkit\pro</Filter>
-    </ClInclude>
-    <ClInclude Include="cworkspace.h">
-      <Filter>kabuki\toolkit\pro</Filter>
-    </ClInclude>
-    <ClInclude Include="cproject.h">
-      <Filter>kabuki\toolkit\pro</Filter>
-    </ClInclude>
-    <ClInclude Include="cgit.h">
-      <Filter>kabuki\toolkit\pro</Filter>
-    </ClInclude>
     <ClInclude Include="cdoxygen.h">
+      <Filter>kabuki\toolkit\pro</Filter>
+    </ClInclude>
+    <ClInclude Include="t_git.h">
+      <Filter>kabuki\toolkit\pro</Filter>
+    </ClInclude>
+    <ClInclude Include="t_project.h">
+      <Filter>kabuki\toolkit\pro</Filter>
+    </ClInclude>
+    <ClInclude Include="t_schedule.h">
+      <Filter>kabuki\toolkit\pro</Filter>
+    </ClInclude>
+    <ClInclude Include="t_task.h">
+      <Filter>kabuki\toolkit\pro</Filter>
+    </ClInclude>
+    <ClInclude Include="t_workspace.h">
       <Filter>kabuki\toolkit\pro</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="pro_git.cc">
-      <Filter>kabuki\toolkit\pro</Filter>
-    </ClCompile>
-    <ClCompile Include="pro_project.cc">
-      <Filter>kabuki\toolkit\pro</Filter>
-    </ClCompile>
-    <ClCompile Include="pro_schedule.cc">
-      <Filter>kabuki\toolkit\pro</Filter>
-    </ClCompile>
-    <ClCompile Include="pro_task.cc">
-      <Filter>kabuki\toolkit\pro</Filter>
-    </ClCompile>
-    <ClCompile Include="pro_workspace.cc">
-      <Filter>kabuki\toolkit\pro</Filter>
-    </ClCompile>
     <ClCompile Include="pch.cc">
       <Filter>kabuki\toolkit\pro</Filter>
     </ClCompile>

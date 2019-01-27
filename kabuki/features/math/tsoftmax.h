@@ -1,4 +1,4 @@
-/** Kabuki Toolkit
+/* Kabuki Toolkit
     @file ~/kt/math/bezier2d.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017-2018 Cale McCollough <calemccollough@gmail.com>;
@@ -25,9 +25,9 @@ namespace _ {
 
 template<typename F, typename U>
 void Softmax (F* x, U count, F* y) {
-    assert (x);
-    assert (x_count > 0);
-    assert (y);
+    DASSERT (x);
+    DASSERT (x_count > 0);
+    DASSERT (y);
     F sum_of_e_j_to_the_x = 0.0;
     intptr_t delta_yx = y - x;
     for (F* x_cursor = x; x_cursor <= x + count; ++x_cursor) {

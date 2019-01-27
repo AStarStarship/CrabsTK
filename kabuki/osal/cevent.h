@@ -1,4 +1,4 @@
-/** Kabuki Tek
+/* Kabuki Tek
     @file    $kabuki-toolkit/kabuki/toolkit/app/event.h
     @author  Cale McCollough <calemccollough.github.io>
     @license Copyright (C) 2014-2017 Cale McCollough <calemccollough@gmail.com>;
@@ -49,5 +49,5 @@ class IEvent
 };
 
 }       //< namespace _
-#endif  //< HEADER_FOR_KABUKI_TOOLKIT_APP_EVENT
+#endif  //< KABUKI_TOOLKIT_APP_EVENT
 #endif  //< #if MAJOR_SEAM >= 2 && MINOR_SEAM >= 1

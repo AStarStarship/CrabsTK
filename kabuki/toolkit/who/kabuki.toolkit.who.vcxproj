@@ -43,7 +43,7 @@
     <ClInclude Include="t_relationship.h" />
     <ClInclude Include="t_role.h" />
     <ClInclude Include="t_roster.h" />
-    <ClInclude Include="t_uidserver.h" />
+    <ClInclude Include="t_uidassigner.h" />
     <ClInclude Include="t_symbol.h" />
     <ClInclude Include="t_user.h" />
     <ClInclude Include="t_userlist.h" />

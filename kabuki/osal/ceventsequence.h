@@ -1,4 +1,4 @@
-/** Kabuki Tek
+/* Kabuki Tek
     @file    $kabuki-toolkit/kabuki/toolkit/app/EventSequence.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 [Cale McCollough](calemccollough.github.io)
@@ -31,22 +31,22 @@ class EventNode
 {
     public:
     
-    /** Constructs an event node with the given Event. */
+    /* Constructs an event node with the given Event. */
     EventNode (Event* nodeEvent);
 
-    /** Gets the next Event */
-    EventNode* GetNext ();
+    /* Gets the next Event */
+    EventNode* Next ();
     
-    /** Gets the event this node triggers. */
+    /* Gets the event this node triggers. */
     Event* GetEvent ();
 
-    /** Sets the event this node triggers. */
+    /* Sets the event this node triggers. */
     void SetEvent (Event* newEvent);
 
-    /** Triggers the event. */
+    /* Triggers the event. */
     void Trigger (EventSequence* source);
 
-    /** Prints this object to the terminal. */
+    /* Prints this object to the terminal. */
     inline void Print (Expr& slot);
     
     private:
@@ -56,18 +56,18 @@ class EventNode
     EventNode* next;    //< The next node in the LLL.
 };
 
-/** A sequence of events stored as a linear linked list. */
+/* A sequence of events stored as a linear linked list. */
 class EventSequence : public _::Event
 {
     public:
     
-    /** Constructs an empty event sequence. */
+    /* Constructs an empty event sequence. */
     EventSequence ();
 
-    /** Triggers the event. */
+    /* Triggers the event. */
     void Trigger ();
 
-    /** Prints this object to the terminal. */
+    /* Prints this object to the terminal. */
     inline void Print (Expr& slot);
 
     private:

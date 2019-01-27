@@ -1,4 +1,4 @@
-/** Kabuki Toolkit
+/* Kabuki Toolkit
     @file    $kabuki-toolkit/kabuki/toolkit/app/comparable.h
     @author  Cale McCollough <calemccollough.github.io>
     @license Copyright (C) 2014-2017 Cale McCollough <calemccollough@gmail.com>;
@@ -24,15 +24,15 @@
 
 namespace _ {
 
-/** Interface for a numerically comparable object. */
+/* Interface for a numerically comparable object. */
 class Comparable
 {
     public:
 
-    /** Numerically compares this object to the other. */
+    /* Numerically compares this object to the other. */
     virtual SI4 compare (Comparable* o) = 0;
 };
 
 }       //< namespace _
-#endif  //< HEADER_FOR_KABUKI_TOOLKIT_APP_COMPARABLE
+#endif  //< KABUKI_TOOLKIT_APP_COMPARABLE
 #endif  //< #if MAJOR_SEAM >= 2 && MINOR_SEAM >= 1

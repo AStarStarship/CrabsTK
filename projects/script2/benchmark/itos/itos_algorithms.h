@@ -1,4 +1,4 @@
-/** Kabuki Toolkit @version 0.x
+/* Kabuki Toolkit @version 0.x
 @link    https://github.com/kabuki-starship/kabuki-toolkit.git
 @file    //seams/0_0_benchmark_f2/itos_algoihrms.h
 @author  Cale McCollough <cale.mccollough@gmail.com>

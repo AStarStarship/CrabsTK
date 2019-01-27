@@ -1,4 +1,4 @@
-﻿/** Kabuki Arcade
+﻿/* Kabuki Arcade
     @file    ~/source/kabuki/arcade/cards/arcade_card_game.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017-2018 Cale McCollough <calemccollough@gmail.com>;
@@ -13,8 +13,8 @@
              permissions and limitations under the License.
 */
 
-#ifndef HEADER_FOR_KABAUKI_ARCADE_CARDS_CARDGAME
-#define HEADER_FOR_KABAUKI_ARCADE_CARDS_CARDGAME
+#ifndef KABAUKI_ARCADE_CARDS_CARDGAME
+#define KABAUKI_ARCADE_CARDS_CARDGAME
 
 #include "deck.h"
 #include "dealer.h"
@@ -22,7 +22,7 @@
 
 namespace kabuki { namespace cards {
 
-/** A playing card game client that can play many types of games in the console.
+/* A playing card game client that can play many types of games in the console.
     The server does most of the game logic and feeds the client data on a 
     need to know basis. */
 class Game : public _::Operation {
@@ -45,69 +45,69 @@ class Game : public _::Operation {
         kMaxGameNameLength   = 63,        //< Max game name length.
     };
 
-    /** Default constructor. */
+    /* Default constructor. */
     Game (id::UserList& users, const CH1* game_name, SI4 min_players,
               SI4 max_players);
 
-    /** Constructor. */
+    /* Constructor. */
     virtual ~Game ();
 
-    /** Gets the game_name_. */
+    /* Gets the game_name_. */
     const CH1* GetName ();
 
-    /** Gets the FSM state. */
+    /* Gets the FSM state. */
     int32_t GetState ();
 
-    /** Virtual function sets the FSM state to a positive value. */
+    /* Virtual function sets the FSM state to a positive value. */
     virtual BOL SetState (SI4 state);
 
-    /** The number of players_.
+    /* The number of players_.
     min_players_ must be between the min and max number of players_. */
     SI4 GetNumPlayers ();
 
-    /** The minimum number of players_.
+    /* The minimum number of players_.
     min_players_ can not be greater than max_players_. */
     SI4 GetMinPlayers ();
 
-    /** The maximum number of players_. */
+    /* The maximum number of players_. */
     SI4 GetMaxPlayers ();
 
-    /** Restart the game to a new state with a preset number of players_. */
+    /* Restart the game to a new state with a preset number of players_. */
     virtual void RestartGame () = 0;
 
-    /** Processes the beginning of round logic. */
+    /* Processes the beginning of round logic. */
     virtual void BeginRound () = 0;
 
-    /** Processes the end of round logic. */
+    /* Processes the end of round logic. */
     virtual void EndRound () = 0;
 
-    /** Prints the observers to the console. */
+    /* Prints the observers to the console. */
     void PrintObservers ();
 
-    /** Attempts to add an observer user to the game.
+    /* Attempts to add an observer user to the game.
         @return Returns -1 upon failure and the number of observers upon
                 success. */
     virtual SI4 Join (id::User* user);
 
-    /** Attempts to add an observer user to the game.
+    /* Attempts to add an observer user to the game.
         @return Returns -1 upon failure and the number of observers upon
                 success. */
     virtual SI4 Leave (id::User* user);
 
-    /** Gets a reference to the observers_. */
+    /* Gets a reference to the observers_. */
     TArray<id::User*>& GetObservers ();
 
-    /** Prints this game out to the console. */
+    /* Prints this game out to the console. */
     virtual _::Text& Print (_::Text& txt = _::Text ());
 
-    /** Abstract Script Operation(s).
+    /* Abstract Script Operation(s).
         @param index The index of the expression.
         @param expr  The Expression to read and write from.
         @return      Returns null upon success, a Set header upon query, and an 
                      error_t ticket upon Read-Write failure. */
     virtual const _::Operation* Star (uint index, _::Expression* expr);
 
-    /** Handles Text input.
+    /* Handles Text input.
         @param text     Beginning of the Text buffer. 
         @param strand_end End of the Text buffer.
         @return Returns nil upon success and an error string upon failure. */
@@ -123,9 +123,9 @@ class Game : public _::Operation {
 
 };      //< class Game
 
-/** Returns the default play again or quit string. */
+/* Returns the default play again or quit string. */
 KABUKI const CH1* DefaultPlayAgainText ();
 
 }       //< namespace cards
 }       //< namespace kabuki
-#endif  //< HEADER_FOR_KABAUKI_ARCADE_CARDS_CARDGAME
+#endif  //< KABAUKI_ARCADE_CARDS_CARDGAME

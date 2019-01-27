@@ -1,7 +1,7 @@
-/** Kabuki Toolkit@version 0.x
+/* Kabuki Toolkit@version 0.x
 @file    /kabuki/f2sdk/ai/aiml_perceptron.cc
 @author  Cale McCollough <cale.mccollough@gmail.com>
-@license Copyright (C) 2014-19 Cale McCollough <calemccollough.github.io>;
+@license Copyright (C) 2014-19 Cale McCollough <cale@astartup.net>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
 "License"); you may not use this file except in compliance with the License.
 You may obtain a copy of the License at www.apache.org/licenses/LICENSE-2.0.
@@ -46,7 +46,7 @@ size_t Perceptron::GetAxionCount () {
 
 void Perceptron::Update () {
     size_t n = w_.size ();
-    assert (n);
+    DASSERT (n);
 
     float_t sum = 0.0;
     float_t* x = x_,

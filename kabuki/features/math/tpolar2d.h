@@ -1,4 +1,4 @@
-/** Kabuki Toolkit
+/* Kabuki Toolkit
     @file    ~/kt/math/polar2d.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017-2018 Cale McCollough <calemccollough@gmail.com>;
@@ -20,7 +20,7 @@
 
 namespace _ {
 
-/** A point in a polar coordinate system. */
+/* A point in a polar coordinate system. */
 template<typename Float>
 class Polar2D
 {
@@ -29,7 +29,7 @@ class Polar2D
     Float angle,  //< The angle in radians.
           radius; //< The radius in abstract units.
 
-    /** Constructor initializes with given values
+    /* Constructor initializes with given values
         @param  thisAngle   The angle of the coordinate.
         @param  thisNumber  The magnitude of the coordinate.
     */
@@ -38,14 +38,14 @@ class Polar2D
         radius (radius) {
     }
 
-    /** Calculates the magnitude of the . */
+    /* Calculates the magnitude of the . */
     T Magnitude () {
         T angle = angle,
             radius = radius;
         return Sqrt (angle * angle + radius * radius);
     }
 
-    /** Prints this object to the terminal. */
+    /* Prints this object to the terminal. */
     _::Printer& Print (_::Printer& printer) {
 
     }

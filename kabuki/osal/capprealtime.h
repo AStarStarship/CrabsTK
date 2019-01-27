@@ -1,4 +1,4 @@
-/** Kabuki Toolkit
+/* Kabuki Toolkit
     @file    $kabuki-toolkit/kabuki/toolkit/app/realtime_app.h
     @author  Cale McCollough <calemccollough.github.io>
     @license Copyright (C) 2014-2017 Cale McCollough <calemccollough@gmail.com>;
@@ -32,7 +32,7 @@ class RealTimeApp: public App
 		delay = timerDelay;
 	}
 
-	/** Gets and sets the timer delay. */
+	/* Gets and sets the timer delay. */
 	SI4 getTimerDelay ()
 	{
 		return delay;

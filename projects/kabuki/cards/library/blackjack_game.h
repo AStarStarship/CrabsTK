@@ -1,4 +1,4 @@
-﻿/** Kabuki Arcade
+﻿/* Kabuki Arcade
     @file    ~/source/kabuki/arcade/cards/hand.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017-2018 Cale McCollough <calemccollough@gmail.com>;
@@ -13,15 +13,15 @@
              permissions and limitations under the License.
 */
 
-#ifndef HEADER_FOR_KABUKI_ARCADE_BLACKJACK_GAME
-#define HEADER_FOR_KABUKI_ARCADE_BLACKJACK_GAME
+#ifndef KABUKI_ARCADE_BLACKJACK_GAME
+#define KABUKI_ARCADE_BLACKJACK_GAME
 
 #include "blackjack_dealer.h"
 #include "game.h"
 
 namespace kabuki { namespace cards {
 
-/** A blackjack card game. */
+/* A blackjack card game. */
 class BlackjackGame : public Game {
     public:
 
@@ -37,7 +37,7 @@ class BlackjackGame : public Game {
 
     static const SI4 kDenominations[14];
 
-    /** Constructor.
+    /* Constructor.
         The maximum number of players in Blackjack is set by the house. The more
         players there are, the greater the chance of the house loosing points, 
         so the maximum number we are going to set is 13. */
@@ -48,42 +48,42 @@ class BlackjackGame : public Game {
                    SI4     min_players = kMinPlayers,
                    SI4     max_players = Dealer::kDefaultMaxPlayer);
 
-    /** Virtual destructor. */
+    /* Virtual destructor. */
     virtual ~BlackjackGame ();
 
-    /** Restarts the game. */
+    /* Restarts the game. */
     virtual void RestartGame ();
 
-    /** Gets the round_number_. */
+    /* Gets the round_number_. */
     SI4 GetRoundNumber ();
 
-    /** Sets the round_number_. */
+    /* Sets the round_number_. */
     BOL SetRoundNumber (SI4 value);
 
-    /** Gets the pot_. */
+    /* Gets the pot_. */
     SI4 GetPot ();
 
-    /** Sets the pot_. */
+    /* Sets the pot_. */
     BOL SetPot (SI4 value);
 
-    /** Gets the dealer_. */
+    /* Gets the dealer_. */
     BlackjackDealer* GetDealer ();
 
-    /** Processes the beginning of round logic.
+    /* Processes the beginning of round logic.
         Any player can hold, and sit out a round, but they still need to ante
         up to stay in the game. */
     virtual void BeginRound ();
 
-    /** Processes the end of round logic. */
+    /* Processes the end of round logic. */
     virtual void EndRound ();
 
-    /** Prints this object to the console */
+    /* Prints this object to the console */
     virtual _::Text& Print (_::Text& txt = _::Text ());
 
-    /** Script operations. */
+    /* Script operations. */
     virtual const _::Operation* Star (uint index, _::Expression* expr);
 
-    /** Handles Text input.
+    /* Handles Text input.
         @param text     Beginning of the Text buffer. 
         @param strand_end End of the Text buffer.
         @return Returns nil upon success and an error string upon failure. */
@@ -99,4 +99,4 @@ class BlackjackGame : public Game {
 };      //< class BlackjackGame
 }       //< namespace cards
 }       //< namespace kabuki
-#endif  //< HEADER_FOR_KABUKI_ARCADE_BLACKJACK_GAME
+#endif  //< KABUKI_ARCADE_BLACKJACK_GAME

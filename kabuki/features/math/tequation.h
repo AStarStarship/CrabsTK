@@ -1,4 +1,4 @@
-/** Kabuki Toolkit
+/* Kabuki Toolkit
     @file    ~/kt/math/equation.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017-2018 Cale McCollough <calemccollough@gmail.com>;
@@ -20,17 +20,17 @@
 
 namespace _ {
 
-/** A mathmatical equation. */
+/* A mathmatical equation. */
 template<typename T>
 class Equation {
     public:
 
-    /** Constructs an empty equation. */
+    /* Constructs an empty equation. */
     Equation () {
 
     }
 
-    /** Prints this object to the given Printer. */
+    /* Prints this object to the given Printer. */
     _::Printer& Print (_::Printer& printer) {
 
     }

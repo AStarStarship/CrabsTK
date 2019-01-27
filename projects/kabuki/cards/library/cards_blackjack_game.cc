@@ -1,4 +1,4 @@
-﻿/** Kabuki Arcade
+﻿/* Kabuki Arcade
     @file    ~/source/kabuki/arcade/cards/arcade_blackjack_game.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017-2018 Cale McCollough <calemccollough@gmail.com>;

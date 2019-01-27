@@ -2,7 +2,7 @@
 @link    https://github.com/kabuki-starship/kabuki-toolkit.git
 @file    /kabuki/features/lights/ccolor.h
 @author  Cale McCollough <cale.mccollough@gmail.com>
-@license Copyright (C) 2014-19 Cale McCollough <calemccollough.github.io>;
+@license Copyright (C) 2014-19 Cale McCollough <cale@astartup.net>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
 "License"); you may not use this file except in compliance with the License.
 You may obtain a copy of the License at www.apache.org/licenses/LICENSE-2.0.
@@ -19,7 +19,7 @@ specific language governing permissions and limitations under the License. */
 
 #include "config.h"
 
-/** Data is defined as numerical or other information represented in a form 
+/* Data is defined as numerical or other information represented in a form 
     suitable for processing by computer. */
 
 // A ABGR Color where A is brightness.
@@ -60,72 +60,72 @@ enum {
     kDefaultBrightness = 255,   //< The default LED brightness.
 };
 
-/** Returns a pointer to an array of the rainbow colors. */
+/* Returns a pointer to an array of the rainbow colors. */
 const color_t* RainbowColors ();
 
-/** Returns a pointer to an array of the present colors. */
+/* Returns a pointer to an array of the present colors. */
 const color_t* PresetColors ();
 
-/** Gets one of the rainbow colors. */
+/* Gets one of the rainbow colors. */
 color_t ColorRainbow (SI4 index);
 
-/** Gets one of the preset colors. */
+/* Gets one of the preset colors. */
 color_t ColorPreset (SI4 index);
 
-/** Gets a random preset colors. */
+/* Gets a random preset colors. */
 color_t RandomPresetColor ();
 
-/** Gets a random color. */
+/* Gets a random color. */
 color_t RandomColor (SI4 index);
     
-/** Mixes the color with the  */
+/* Mixes the color with the  */
 color_t ColorMix (color_t a, color_t b);
 
-/** Increases the alpha value of the given color by the given delta. */
+/* Increases the alpha value of the given color by the given delta. */
 color_t ChangeBrightness (color_t color, SI4 delta);
 
-/** Increases the alpha value of the given color by the given delta. */
+/* Increases the alpha value of the given color by the given delta. */
 color_t DecreaseBrightness (color_t color, SI4 delta);
 
-/** Creates a Color from the given RGB values. */
+/* Creates a Color from the given RGB values. */
 color_t ColorMake (byte red, byte green, byte blue);
 
-/** Creates a Color from the given RGBA values. */
+/* Creates a Color from the given RGBA values. */
 color_t ColorMake (byte red, byte green, byte blue, byte alpha);
 
-/** Gets the red value. */
+/* Gets the red value. */
 byte ColorGetRed (color_t color);
 
-/** Sets the red value. */
+/* Sets the red value. */
 void ColorSetRed (color_t color, byte value);
 
-/** Gets the green value. */
+/* Gets the green value. */
 byte ColorGetGreen (color_t color);
 
-/** Sets the green value. */
+/* Sets the green value. */
 void ColorSetGreen (color_t color, byte value);
 
-/** Gets the blue value. */
+/* Gets the blue value. */
 byte ColorGetBlue (color_t color);
 
-/** Sets the blue value. */
+/* Sets the blue value. */
 void ColorSetBlue (color_t color, byte value);
 
-/** Gets the alpha value. */
+/* Gets the alpha value. */
 byte ColorGetAlpha (color_t color);
 
-/** Sets the alpha value. */
+/* Sets the alpha value. */
 void ColorSetAlpha (color_t color, byte value);
 
-/** Converts this color to HSV. */
+/* Converts this color to HSV. */
 void ColorToHSV (color_t color, float& fR, float& fG, float fB,
                  float& fH, float& fS, float& fV);
 
-/** Sets this color to the HSV values. */
+/* Sets this color to the HSV values. */
 void ColorSetHSV (color_t color, float& fR, float& fG, float& fB,
                   float& fH, float& fS, float& fV);
 
-/** Prints this object to the log. */
+/* Prints this object to the log. */
 void ColorPrint (color_t color);
 
 }       //< namespace _

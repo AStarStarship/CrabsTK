@@ -1,4 +1,4 @@
-/** TypeCraft - Teaching Typing through Mining and Crafting.
+/* TypeCraft - Teaching Typing through Mining and Crafting.
 @link    https://github.com/kabuki-starship/kabuki-projects/typecraft
 @file    /projects/typecraft/block.cc
 @author  Cale McCollough <cale.mccollough@gmail.com>
@@ -18,7 +18,7 @@ specific language governing permissions and limitations under the License. */
 
 namespace typecraft {
 
-/** Each individual spawn attempt succeeds only if all of the following
+/* Each individual spawn attempt succeeds only if all of the following
 conditions are met:
 
 There must be no players and no player spawn points within a 24 block distance
@@ -71,7 +71,7 @@ Spawn::Spawn(const CH1* name);
 
 SI4 Spawn::GetType() {}
 
-/** Sets the type. */
+/* Sets the type. */
 const CH1* Spawn::Setype(SI4 type) {}
 
 void Spawn::Mine() {}

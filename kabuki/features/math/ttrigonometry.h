@@ -38,7 +38,7 @@ namespace smath {
     ////////////////////////////////////////////////////////////
     // Trigonometric functions
 
-    /**
+    /*
      * @brief Cotangent function.
      * @param x Angle in radians
      */
@@ -46,7 +46,7 @@ namespace smath {
     constexpr auto cot(Float x)
         -> Float;
 
-    /**
+    /*
      * @brief Secant function.
      * @param x Angle in radians
      */
@@ -54,7 +54,7 @@ namespace smath {
     constexpr auto sec(Float x)
         -> Float;
 
-    /**
+    /*
      * @brief Cosecant function.
      * @param x Angle in radians
      */
@@ -65,7 +65,7 @@ namespace smath {
     ////////////////////////////////////////////////////////////
     // Hyperbolic functions
 
-    /**
+    /*
      * @brief Hyperbolic cotangent function.
      * @param x Hyperbolic angle in radians
      */
@@ -73,7 +73,7 @@ namespace smath {
     constexpr auto coth(Float x)
         -> Float;
 
-    /**
+    /*
      * @brief Hyperbolic secant function.
      * @param x Hyperbolic angle in radians
      */
@@ -81,7 +81,7 @@ namespace smath {
     constexpr auto sech(Float x)
         -> Float;
 
-    /**
+    /*
      * @brief Hyperbolic cosecant function.
      * @param x Hyperbolic angle in radians
      */

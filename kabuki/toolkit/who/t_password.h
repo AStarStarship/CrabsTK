@@ -61,7 +61,7 @@ class TPassword {
   BOL SetKey(const TStrand<>& password) {
     if (password == nullptr) return false;
 
-    if (auth_->PasswordIsInvalid (password)) {
+    if (auth_->PasswordInvalid (password)) {
       return false;
     }
     delete key_;

@@ -21,21 +21,19 @@
   <ItemGroup>
     <ClInclude Include="00_foo.h" />
     <ClInclude Include="01_bar.h" />
-    <ClInclude Include="cclient.h" />
-    <ClInclude Include="clistfifo.h" />
-    <ClInclude Include="tlistfifoiterator.h" />
-    <ClInclude Include="cmorsecode.h" />
-    <ClInclude Include="ctext.h" />
-    <ClInclude Include="ctreebinary.h" />
+    <ClInclude Include="t_client.h" />
+    <ClInclude Include="t_listfifo.h" />
+    <ClInclude Include="t_listfifoiterator.h" />
+    <ClInclude Include="c_morsecode.h" />
+    <ClInclude Include="t_treebinary.h" />
     <ClInclude Include="global.h" />
-    <ClInclude Include="citerator.h" />
+    <ClInclude Include="t_iterator.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="test_tree.h" />
-    <ClInclude Include="tserver.h" />
+    <ClInclude Include="t_server.h" />
     <ClInclude Include="ttreebinaryiterator.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="data_client.cc" />
     <ClCompile Include="data_codemorse.cc" />
     <ClCompile Include="data_server.cc" />
     <ClCompile Include="pch.cc" />

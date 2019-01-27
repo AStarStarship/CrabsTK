@@ -1,4 +1,4 @@
-/** Kabuki Toolkit
+/* Kabuki Toolkit
     @file    $kabuki-toolkit/kabuki/toolkit/app/app.h
     @author  Cale McCollough <calemccollough.github.io>
     @license Copyright (C) 2014-2017 Cale McCollough <calemccollough@gmail.com>;
@@ -17,14 +17,14 @@
 #include <pch.h>
 #if MAJOR_SEAM >= 2 && MINOR_SEAM >= 1
 
-#ifndef HEADER_FOR_KABUKI_TOOLKIT_APP
-#define HEADER_FOR_KABUKI_TOOLKIT_APP
+#ifndef KABUKI_TOOLKIT_APP
+#define KABUKI_TOOLKIT_APP
 
 #include "config.h"
 
 namespace _ {
 
-/** Interface for an Kabuki Starship app.
+/* Interface for an Kabuki Starship app.
 */
 struct App {
     /*
@@ -37,43 +37,43 @@ struct App {
     Window activeWindow;
     */
     
-    /** Initializer. */
+    /* Initializer. */
     virtual void Initialize () = 0;
         
-    /** Returns the process ID of this App. */
+    /* Returns the process ID of this App. */
     virtual uint32_t GetUID () = 0;
 
-    /** Sets the activeWindow to the new index. */
+    /* Sets the activeWindow to the new index. */
     virtual SI4 ActivateWindow (SI4 i) = 0;
         
-    /** Sets the activeWindow to the new window. */
+    /* Sets the activeWindow to the new window. */
     virtual SI4 ActivateWindow (Window w) = 0;
 
-    /**  */
+    /*  */
     virtual ProcessTree GetWindows () = 0;
 
-    /**  */
+    /*  */
     virtual SI4 Show () = 0;
         
-    /**  */
+    /*  */
     virtual SI4 Hide () = 0;
         
-    /**  */
+    /*  */
     virtual SI4 Close () = 0;
 
-    /** Returns a link to this application's osal context. */
+    /* Returns a link to this application's osal context. */
     virtual _g::Cell& GetDrawCell () = 0;
         
-    /**  */
+    /*  */
     virtual void Draw (_g::Cell& c) = 0;
         
-    /**  */
+    /*  */
     virtual void Redraw () = 0;
         
-    /** Prints this object to a Expression.  */
+    /* Prints this object to a Expression.  */
     virtual void Print () = 0;
 };      //< struct App
 
 }       //< namespace _
-#endif  //< HEADER_FOR_KABUKI_TOOLKIT_APP_APP
+#endif  //< KABUKI_TOOLKIT_APP_APP
 #endif  //< #if MAJOR_SEAM >= 2 && MINOR_SEAM >= 1

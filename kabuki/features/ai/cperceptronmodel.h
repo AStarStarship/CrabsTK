@@ -1,4 +1,4 @@
-/** Kabuki Toolkit
+/* Kabuki Toolkit
     @version 0.x
     @file    ~/library/kabuki/toolkit/ai/perceptron_model.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
@@ -18,12 +18,12 @@
 #include <pch.h>
 #if MAJOR_SEAM >= 5 && MINOR_SEAM >= 1
 #include "perceptron_graph.h"
-#ifndef HEADER_FOR_KABUKI_TOOLKIT_AIML_PERCEPTRONMODEL
+#ifndef KABUKI_TOOLKIT_AIML_PERCEPTRONMODEL
 
 
 namespace _ {
 
-/** A 2D grid of Perceptron(s) created from a PerceptronLayer. */
+/* A 2D grid of Perceptron(s) created from a PerceptronLayer. */
 class PerceptronModel : public PerceptronGraph {
     public:
 
@@ -35,5 +35,5 @@ class PerceptronModel : public PerceptronGraph {
 };
 
 }       //< namespace _
-#endif  //< #ifndef HEADER_FOR_KABUKI_TOOLKIT_AIML_PERCEPTRONGRAPH2D
+#endif  //< #ifndef KABUKI_TOOLKIT_AIML_PERCEPTRONGRAPH2D
 #endif  //< #if MAJOR_SEAM >= 5 && MINOR_SEAM >= 1

@@ -53,9 +53,6 @@
     <ClInclude Include="..\..\..\script2\15_door.h">
       <Filter>script2</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\script2\16_room_and_wall.h">
-      <Filter>script2</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\script2\c_address.h">
       <Filter>script2</Filter>
     </ClInclude>
@@ -249,6 +246,9 @@
       <Filter>script2</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\script2\test_tree.h">
+      <Filter>script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\script2\16_room_wall.h">
       <Filter>script2</Filter>
     </ClInclude>
   </ItemGroup>

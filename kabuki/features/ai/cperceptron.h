@@ -1,4 +1,4 @@
-w/** Kabuki Toolkit
+w/* Kabuki Toolkit
     @version 0.x
     @file    ~/library/kabuki/toolkit/ai/perceptron.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
@@ -19,14 +19,14 @@ w/** Kabuki Toolkit
 
 #if MAJOR_SEAM >= 5 && MINOR_SEAM >= 1
 
-#ifndef HEADER_FOR_PERCEPTRON
-#define HEADER_FOR_PERCEPTRON
+#ifndef PERCEPTRON
+#define PERCEPTRON
 
 #include "synapse.h"
 
 namespace _ {
 
-/** A Perceptron.
+/* A Perceptron.
 
     A Perceptron needs to get it's input from either floating-point or 
     integers.
@@ -44,25 +44,25 @@ namespace _ {
 class Perceptron {
     public:
 
-    /** Constructs a unconnected Perceptron. */
+    /* Constructs a unconnected Perceptron. */
     Perceptron ();
 
-    /** Gets the perceptron y. */
+    /* Gets the perceptron y. */
     float_t& GetY ();
 
-    /** Sets the perceptron value. */
+    /* Sets the perceptron value. */
     void SetY (float_t& y);
 
-    /** Gets the perceptron x TArray. */
+    /* Gets the perceptron x TArray. */
     float_t* GetX ();
 
-    /** Gets the perceptron weight TArray. */
+    /* Gets the perceptron weight TArray. */
     float_t* GetWeights ();
 
-    /** Gets the count of the axions. */
+    /* Gets the count of the axions. */
     size_t GetAxionCount ();
 
-    /** Updates the Perceptron. */
+    /* Updates the Perceptron. */
     void Update ();
 
     private:
@@ -73,5 +73,5 @@ class Perceptron {
 };
 
 }       //< namespace _
-#endif  //< #ifndef HEADER_FOR_PERCEPTRON
+#endif  //< #ifndef PERCEPTRON
 #endif  //< #if MAJOR_SEAM >= 5 && MINOR_SEAM >= 1

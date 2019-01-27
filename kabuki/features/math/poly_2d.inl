@@ -1,4 +1,4 @@
-/** Kabuki Toolkit
+/* Kabuki Toolkit
     @file    ~/kt/math/poly2d.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017-2018 Cale McCollough <calemccollough@gmail.com>;
@@ -383,7 +383,7 @@ BOL Poly2DPathIterator<T>::IsDone() {
     return index > polygon.GetNumPoints ();
 }
 
-void Poly2DPathIterator<T>::GetNext() {
+void Poly2DPathIterator<T>::Next() {
     index++;
 }
 

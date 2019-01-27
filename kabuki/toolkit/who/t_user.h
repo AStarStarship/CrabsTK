@@ -260,7 +260,7 @@ class TUser {
       if (!token) {
         return nullptr;
       }
-      if (auth_->PasswordIsInvalid(input)) {
+      if (auth_->PasswordInvalid(input)) {
         return "\n| Error: Password in invalid format!";
       }
       password_.SetKey(input);

@@ -13,9 +13,9 @@
              permissions and limitations under the License.
 */
 
-#ifndef HEADER_FOR_KABUKI_SLOTH_GLOBAL
-#define HEADER_FOR_KABUKI_SLOTH_GLOBAL
+#ifndef KABUKI_SLOTH_GLOBAL
+#define KABUKI_SLOTH_GLOBAL
 
 #include "sloth.h"
 
-#endif  //< HEADER_FOR_KABUKI_SLOTH_GLOBAL
+#endif  //< KABUKI_SLOTH_GLOBAL

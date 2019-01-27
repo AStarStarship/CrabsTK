@@ -507,7 +507,7 @@ class Item {
   SI4 SetContition(SI4 condition);
 
   /* Gets the Item's Label */
-  const CH1* GetLabel();
+  const CH1* Label();
 
   /* Attempts to set the label POINTER to the new one.
       @return Returns the */

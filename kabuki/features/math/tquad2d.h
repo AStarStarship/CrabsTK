@@ -1,4 +1,4 @@
-/** Kabuki Toolkit
+/* Kabuki Toolkit
     @file    ~/kt/math/quad2d.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017-2018 Cale McCollough <calemccollough@gmail.com>;
@@ -19,7 +19,7 @@
 
 namespace _ {
 
-/** A 2D quadralateral storted as Type types. */
+/* A 2D quadralateral storted as Type types. */
 template<typename T>
 struct SDK Quad {
     T x0,   //< The x0 coordinate.
@@ -31,7 +31,7 @@ struct SDK Quad {
       y2,     //< The y2 coordinate.
       y3;     //< The y2 coordinate.
     
-    /** Constructs an uninitialized quadralateral. */
+    /* Constructs an uninitialized quadralateral. */
     Quad () :
         x0 (0),
         x1 (0),
@@ -45,7 +45,7 @@ struct SDK Quad {
         // Nothing to do here! :-)
     }
 
-    /** Default constructor initializes with given Point. */
+    /* Default constructor initializes with given Point. */
     Quad (T initX0, T initY0, T initX1, T initY1, T initX2, T initY2, T initX3, 
         T initY3) :
         x1 (initX1),
@@ -59,7 +59,7 @@ struct SDK Quad {
         /// Nothing to do here!
     }
 
-    /** Sets the X and Y Values to the new values. */
+    /* Sets the X and Y Values to the new values. */
     inline void Set (T newX0, T newY0, T newX1, T newY1, T newX2, T newY2, T newX3, 
         T newY3) {
         x1 = newX1;
@@ -72,7 +72,7 @@ struct SDK Quad {
         y4 = newY4;
     }
 
-    /** Sets the quad to a rectangle with the given coordinates. */
+    /* Sets the quad to a rectangle with the given coordinates. */
     inline void Set (T x, T y, T width, T height) {
         // 1<----4
         // |     ^
@@ -90,22 +90,22 @@ struct SDK Quad {
         y4 = y;
     }
 
-    /** Sets the xn and yn values to the given rectangle. */
+    /* Sets the xn and yn values to the given rectangle. */
     inline void Set (const Rect2D<T>& r) {
         set (r.getX (), r.getY (), r.getWidth (), r.getHeight ());
     }
 
-    /** Sets the X and Y values to the the given point and TArray. */
+    /* Sets the X and Y values to the the given point and TArray. */
     inline void Set (const Point2D<T>& p, const Vect<T>& v) {
         return Set (p.x, p.y, v.x, v.y);
     }
 
-    /** Sets the */
+    /* Sets the */
     inline void Set (const Quad2D<T>& q) {
         return Set (q.x, q.y, q.x, q.y);
     }
 
-    /** translates the given TArray to the point. */
+    /* translates the given TArray to the point. */
     inline void Translate (T dx, T dy) {
         y1 += dy;
         x1 += dx;
@@ -117,19 +117,19 @@ struct SDK Quad {
         x4 += dx;
     }
 
-    /** Translates the given TArray to the point. */
+    /* Translates the given TArray to the point. */
     inline void Translate (const Vect<T>& v) {
         return Translate (v.x, v.y);
     }
 
-    /** Compares this object to the other and returns true if the two are identical. */
+    /* Compares this object to the other and returns true if the two are identical. */
     inline BOL Equals (const Quad2D<T>& p) const {
         if (x != q.x || y != q.y)
             return false;
         return true;
     }
 
-    /** Compares this object to the other and returns a numberetical zero true value. */
+    /* Compares this object to the other and returns a numberetical zero true value. */
     inline SI4 Compare (const Quad2D<T>& p) const {
         if (x >= q.x)
             if (y >= q.y)
@@ -144,7 +144,7 @@ struct SDK Quad {
         return 0;   //< There are equal.
     }
 
-    /** Swaps this object's Point with a. */
+    /* Swaps this object's Point with a. */
     inline void Swap (Quad2D<T> p) {
         T tempX0 = q.x0,
             tempY0 = q.y0;
@@ -183,7 +183,7 @@ struct SDK Quad {
         y0 = tempY0;
     }
 
-    /** Prints this object to the terminal. */
+    /* Prints this object to the terminal. */
     _::Printer& Print (_::Printer& print) {
 
     }

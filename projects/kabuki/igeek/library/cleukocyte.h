@@ -1,4 +1,4 @@
-/** Cell Evolutionary Interface
+/* Cell Evolutionary Interface
     @version   0.x
     @file      /.../CellEvolutionaryInterface/Leukocyte.hpp
     @author  Cale McCollough <cale.mccollough@gmail.com>

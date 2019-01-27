@@ -1,4 +1,4 @@
-/** Cell Evolutionary Interface
+/* Cell Evolutionary Interface
     @version   0.x
     @file      /.../CellEvolutionaryInterface/BezierCurve.hpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
@@ -23,7 +23,7 @@
 
 namespace CellEvolutionaryInterface {
     
-/** A fourth order BezierCurve.
+/* A fourth order BezierCurve.
 */
 class BezierCurve
 {

@@ -130,7 +130,7 @@ class UserList : public Operand {
     if (password == nullptr) {
       password = StrandClone (TPassword::kDefault);
     }
-    if (auth_->PasswordIsInvalid (password)) {
+    if (auth_->PasswordInvalid (password)) {
       cout << "\n| Invalid password!";
       return -1;
     }

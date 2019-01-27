@@ -1,4 +1,4 @@
-/** Kabuki Toolkit
+/* Kabuki Toolkit
     @file    ~/kt/math/Vect.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017-2018 Cale McCollough <calemccollough@gmail.com>;
@@ -21,7 +21,7 @@
 
 namespace _ {
 
-/** Binary coded decimal for precise math.
+/* Binary coded decimal for precise math.
     This BCD class uses optional dynamic memory. The is_dynamic flag if true 
     will trigger the destructor on the ptr. */
 class SDK BCD {
@@ -32,97 +32,97 @@ class SDK BCD {
         maxDigitsDouble = 3 + DBL_MANT_DIG - DBL_MIN_EXP
     };
 
-    /** Constructs a BCD from a float. */
+    /* Constructs a BCD from a float. */
     BCD (float floatingPointNumber, SI4 numDecimalPlaces = -1);
 
-    /** Constructs a BCD from a double. */
+    /* Constructs a BCD from a double. */
     BCD (double floatingPointNumber, SI4 numDecimalPlaces = -1);
 
-    /** Destructor destructs if dynamic memory is used. */
+    /* Destructor destructs if dynamic memory is used. */
     ~BCD ();
 
-    /** Gets the BCD value as a float. */
+    /* Gets the BCD value as a float. */
     float GetFloat ();
 
-    /** Gets the BCD value as a double. */
+    /* Gets the BCD value as a double. */
     double GetDouble ();
 
-    /** Sets the BCD value to the new Value. */
+    /* Sets the BCD value to the new Value. */
     void SetValue (float value);
 
-    /** Sets the BCD value to the new Value. */
+    /* Sets the BCD value to the new Value. */
     void SetValue (double value);
 
-    /** Returns true of this BCD is negative. */
+    /* Returns true of this BCD is negative. */
     BOL IsNegative ();
 
-    /** Gets the number of whole BCDs. */
+    /* Gets the number of whole BCDs. */
     int8_t GetNumWholeDigits (SI4 index);
 
-    /** Gets the number of fractional digits. */
+    /* Gets the number of fractional digits. */
     int8_t GetNumFractionalDigits (SI4 index);
 
-    /** Adds the given Value to this BCD. */
+    /* Adds the given Value to this BCD. */
     void Plus (const BCD& value);
 
-    /** Adds the given Value to this BCD. */
+    /* Adds the given Value to this BCD. */
     void Plus (SI4 value);
 
-    /** Adds the given Value to this BCD. */
+    /* Adds the given Value to this BCD. */
     void Plus (long value);
 
-    /** Adds the given Value to this BCD. */
+    /* Adds the given Value to this BCD. */
     void Plus (float value);
 
-    /** Adds the given Value to this BCD. */
+    /* Adds the given Value to this BCD. */
     void Plus (double value);
 
-    /** Subtracts the given Value to this BCD. */
+    /* Subtracts the given Value to this BCD. */
     void Minus (const BCD& value);
 
-    /** Subtracts the given Value to this BCD. */
+    /* Subtracts the given Value to this BCD. */
     void Minus (SI4 value);
 
-    /** Subtracts the given Value to this BCD. */
+    /* Subtracts the given Value to this BCD. */
     void Minus (long value);
 
-    /** Subtracts the given Value to this BCD. */
+    /* Subtracts the given Value to this BCD. */
     void Minus (float value);
 
-    /** Subtracts the given Value to this BCD. */
+    /* Subtracts the given Value to this BCD. */
     void Minus (double value);
 
-    /** Multiples the given Value to this BCD. */
+    /* Multiples the given Value to this BCD. */
     void Times (const BCD& value);
 
-    /** Multiples the given Value to this BCD. */
+    /* Multiples the given Value to this BCD. */
     void Times (SI4 value);
 
-    /** Multiples the given Value to this BCD. */
+    /* Multiples the given Value to this BCD. */
     void Times (long value);
 
-    /** Multiples the given Value to this BCD. */
+    /* Multiples the given Value to this BCD. */
     void Times (float value);
 
-    /** Multiples the given Value to this BCD. */
+    /* Multiples the given Value to this BCD. */
     void Times (double value);
 
-    /** Divides the given Value to this BCD. */
+    /* Divides the given Value to this BCD. */
     void Divide (const BCD& value);
 
-    /** Divides the given Value to this BCD. */
+    /* Divides the given Value to this BCD. */
     void Divide (SI4 value);
 
-    /** Divides the given Value to this BCD. */
+    /* Divides the given Value to this BCD. */
     void Divide (long value);
 
-    /** Divides the given Value to this BCD. */
+    /* Divides the given Value to this BCD. */
     void Divide (float value);
 
-    /** Divides the given Value to this BCD. */
+    /* Divides the given Value to this BCD. */
     void Divide (double value);
 
-    /** Prints the BCD to the terminal. */
+    /* Prints the BCD to the terminal. */
     _::Printer& Print (_::Printer& printer);
 
     private:

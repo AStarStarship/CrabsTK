@@ -36,7 +36,7 @@
 #include "ordinals.h"
 #include <stdlib.h> /* for size_t */
 
-/** \file include/FLAC/callback.h
+/* \file include/FLAC/callback.h
  *
  *  \brief
  *  This module defines the structures for describing I/O callbacks
@@ -46,7 +46,7 @@
  *  \link flac_callbacks callbacks \endlink module.
  */
 
-/** \defgroup flac_callbacks FLAC/callback.h: I/O callback structures
+/* \defgroup flac_callbacks FLAC/callback.h: I/O callback structures
  *  \ingroup flac
  *
  *  \brief
@@ -83,12 +83,12 @@
 extern "C" {
 #endif
 
-/** This is the opaque handle type used by the callbacks.  Typically
+/* This is the opaque handle type used by the callbacks.  Typically
  *  this is a \c FILE* or address of a file descriptor.
  */
 typedef void* FLAC__IOHandle;
 
-/** Signature for the read callback.
+/* Signature for the read callback.
  *  The signature and semantics match POSIX fread() implementations
  *  and can generally be used interchangeably.
  *
@@ -101,7 +101,7 @@ typedef void* FLAC__IOHandle;
  */
 typedef size_t (*FLAC__IOCallback_Read) (void *ptr, size_t size, size_t nmemb, FLAC__IOHandle handle);
 
-/** Signature for the write callback.
+/* Signature for the write callback.
  *  The signature and semantics match POSIX fwrite() implementations
  *  and can generally be used interchangeably.
  *
@@ -114,7 +114,7 @@ typedef size_t (*FLAC__IOCallback_Read) (void *ptr, size_t size, size_t nmemb, F
  */
 typedef size_t (*FLAC__IOCallback_Write) (const void *ptr, size_t size, size_t nmemb, FLAC__IOHandle handle);
 
-/** Signature for the seek callback.
+/* Signature for the seek callback.
  *  The signature and semantics mostly match POSIX fseek() WITH ONE IMPORTANT
  *  EXCEPTION: the offset is a 64-bit type whereas fseek() is generally 'long'
  *  and 32-bits wide.
@@ -127,7 +127,7 @@ typedef size_t (*FLAC__IOCallback_Write) (const void *ptr, size_t size, size_t n
  */
 typedef SI4 (*FLAC__IOCallback_Seek) (FLAC__IOHandle handle, FLAC__int64 offset, SI4 whence);
 
-/** Signature for the tell callback.
+/* Signature for the tell callback.
  *  The signature and semantics mostly match POSIX ftell() WITH ONE IMPORTANT
  *  EXCEPTION: the offset is a 64-bit type whereas ftell() is generally 'long'
  *  and 32-bits wide.
@@ -138,7 +138,7 @@ typedef SI4 (*FLAC__IOCallback_Seek) (FLAC__IOHandle handle, FLAC__int64 offset,
  */
 typedef FLAC__int64 (*FLAC__IOCallback_Tell) (FLAC__IOHandle handle);
 
-/** Signature for the EOF callback.
+/* Signature for the EOF callback.
  *  The signature and semantics mostly match POSIX feof() but WATCHOUT:
  *  on many systems, feof() is a macro, so in this case a wrapper function
  *  must be provided instead.
@@ -149,7 +149,7 @@ typedef FLAC__int64 (*FLAC__IOCallback_Tell) (FLAC__IOHandle handle);
  */
 typedef SI4 (*FLAC__IOCallback_Eof) (FLAC__IOHandle handle);
 
-/** Signature for the close callback.
+/* Signature for the close callback.
  *  The signature and semantics match POSIX fclose() implementations
  *  and can generally be used interchangeably.
  *
@@ -159,7 +159,7 @@ typedef SI4 (*FLAC__IOCallback_Eof) (FLAC__IOHandle handle);
  */
 typedef SI4 (*FLAC__IOCallback_Close) (FLAC__IOHandle handle);
 
-/** A structure for holding a set of callbacks.
+/* A structure for holding a set of callbacks.
  *  Each FLAC interface that requires a FLAC__IOCallbacks structure will
  *  describe which of the callbacks are required.  The ones that are not
  *  required may be set to NULL.

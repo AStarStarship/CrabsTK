@@ -1,4 +1,4 @@
-/** TypeCraft - Teaching Typing through Mining and Crafting.
+/* TypeCraft - Teaching Typing through Mining and Crafting.
 @link    https://github.com/kabuki-starship/kabuki-projects/typecraft
 @file    /projects/typecraft/typecraft_item.cc
 @author  Cale McCollough <cale.mccollough@gmail.com>
@@ -28,7 +28,7 @@ SI4 Item::SetContition(SI4 condition) {
   condition_ = condition;
 }
 
-const CH1* Item::GetLabel() { return label_; }
+const CH1* Item::Label() { return label_; }
 
 const CH1* Item::SetLabel(const CH1* label) {
   if (label == nullptr) return nullptr;

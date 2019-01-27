@@ -1,4 +1,4 @@
-/** Kabuki Toolkit
+/* Kabuki Toolkit
     @file    ~/kt/math/rect_rotor2d.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017-2018 Cale McCollough <calemccollough@gmail.com>;
@@ -19,55 +19,55 @@
 
 namespace _ {
 
-/** Utility class for rotating rectangles.
+/* Utility class for rotating rectangles.
 */
 template<typename T>
 class SDK Rect2DRotor
 {
     public:
 
-    /** Constructs a RectRotar with an unrotated rectangle. */
+    /* Constructs a RectRotar with an unrotated rectangle. */
     Rect2DRotor (const Rect2D<T>& area) {
         // @todo Write me!
     }
 
-    /** Gets the X value. */
+    /* Gets the X value. */
     T GetX () const;
 
-    /** Gets the X reference value. */
+    /* Gets the X reference value. */
     T& GetX_ref ();
 
-    /** Gets the Y value. */
+    /* Gets the Y value. */
     T GetY () const;
 
-    /** Gets the Y reference value. */
+    /* Gets the Y reference value. */
     T& GetY_ref ();
 
-    /** Gets the width. */
+    /* Gets the width. */
     T GetWidth () const;
 
-    /** Gets the width reference. */
+    /* Gets the width reference. */
     T& GetWidth_ref ();
 
-    /** Gets the height. */
+    /* Gets the height. */
     T GetHeight () const;
 
-    /** Gets the height reference. */
+    /* Gets the height reference. */
     T& GetHeight_ref ();
 
-    /** Gets the right x value. */
+    /* Gets the right x value. */
     T GetRight () const;
 
-    /** Gets the  */
+    /* Gets the  */
     Quad2D<T>& GetQuad_ref () const;
 
-    /** Gets the bottom y value. */
+    /* Gets the bottom y value. */
     T GetBottom () const;
 
-    /** Rotates the original TArray and returns the outter bounds. */
+    /* Rotates the original TArray and returns the outter bounds. */
     const Rect2D<T>& Rotate () const;
 
-    /** Returns the outer bounds. */
+    /* Returns the outer bounds. */
     Rect2D<T> GetBounds () {
         T tempX1,
           tempY1,
@@ -87,7 +87,7 @@ class SDK Rect2DRotor
         return r;
     }
 
-    /** Prints this object to the terminal. */
+    /* Prints this object to the terminal. */
     _::Printer& Print (_::Printer& print) {
         return print;
     }

@@ -1,4 +1,4 @@
-/** Kabuki Toolkit
+/* Kabuki Toolkit
     @version 0.x
     @file    ~/library/kabuki/toolkit/ai/perceptron_layer.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
@@ -19,15 +19,15 @@
 
 #if MAJOR_SEAM >= 5 && MINOR_SEAM >= 1
 
-#ifndef HEADER_FOR_PERCEPTRON_LAYER
-#define HEADER_FOR_PERCEPTRON_LAYER
+#ifndef PERCEPTRON_LAYER
+#define PERCEPTRON_LAYER
 
 #include "perceptron.h"
 #include "asyncronous.h"
 
 namespace _ {
 
-/** A layer in a Multi-layer Perceptron Network.
+/* A layer in a Multi-layer Perceptron Network.
     Each Perceptron is individually controlled, but it is convenient to 
 
     # Operational Steps
@@ -37,41 +37,41 @@ namespace _ {
 class PerceptronLayer {
     public:
 
-    /** A group of one or more perceptrons with */
+    /* A group of one or more perceptrons with */
     PerceptronLayer (size_t neuron_count, float_t bias);
 
-    /** Gets the node bias. */
+    /* Gets the node bias. */
     float_t GetBias ();
 
-    /** Gets the node bias. */
+    /* Gets the node bias. */
     void SetBias (float_t value);
 
-    /** Fully connects the perceptron to this layer. */
+    /* Fully connects the perceptron to this layer. */
     void SetRx (Perceptron* p);
 
-    /** Fully connects the given layer. */
+    /* Fully connects the given layer. */
     void SetRx (PerceptronLayer* node);
 
-    /** Fully connects the given layer. */
+    /* Fully connects the given layer. */
     void AddNode (size_t perceptron_count, float_t bias);
 
-    /** Gets a perceptron.
+    /* Gets a perceptron.
         @param  index The index of the perceptron to return.
         @return Nil if the perceptron does not exist. */
     Perceptron* GetPerceptron (size_t index);
 
-    /** Gets a node.
+    /* Gets a node.
         @param  index The index of the node to return.
         @return Nil if the perceptron does not exist. */
     PerceptronLayer* GetNode (size_t index);
 
-    /** Gets the perceptron count. */
+    /* Gets the perceptron count. */
     size_t GetPerceptronCount ();
 
-    /** Gets the perceptron count. */
+    /* Gets the perceptron count. */
     size_t GetChildNodeCount ();
 
-    /** Updates the layer. */
+    /* Updates the layer. */
     void Update ();
 
     private:
@@ -83,5 +83,5 @@ class PerceptronLayer {
 };
 
 }       //< namespace _
-#endif  //< #ifndef HEADER_FOR_PERCEPTRON_LAYER
+#endif  //< #ifndef PERCEPTRON_LAYER
 #endif  //< #if MAJOR_SEAM >= 5 && MINOR_SEAM >= 1

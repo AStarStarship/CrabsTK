@@ -1,4 +1,4 @@
-/** Kabuki Toolkit
+/* Kabuki Toolkit
     @file    ~/kt/math/point3d.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017-2018 Cale McCollough <calemccollough@gmail.com>;
@@ -20,7 +20,7 @@
 
 namespace _ {
 
-/** A 3D point.
+/* A 3D point.
 */
 template <typename T>
 class Point3D
@@ -31,29 +31,29 @@ class Point3D
       y,
       z;
 
-    /** Translated the z position by the given delta. */
+    /* Translated the z position by the given delta. */
     Point3D<T> (T initX, T initY, T initZ) :
         x (initX),
         y (initY),
         z (initZ) {
     }
 
-    /** Translated the x position by the given delta. */
+    /* Translated the x position by the given delta. */
     void TranslateX (T deltaX) {
         x += dx;
     }
 
-    /** Translated the y position by the given delta. */
+    /* Translated the y position by the given delta. */
     void TranslateY (T deltaY) {
         y += dy;
     }
 
-    /** Translated the z position by the given delta. */
+    /* Translated the z position by the given delta. */
     void TranslateZ (T deltaZ) {
         z += dz;
     }
 
-    /** Prints this object to a Expression. */
+    /* Prints this object to a Expression. */
     _::Printer& Print (_::Printer& printer) {
         return print << "Point3D {x, y, z) = { " << x << ", " << y << ", " 
                      << z << " }";

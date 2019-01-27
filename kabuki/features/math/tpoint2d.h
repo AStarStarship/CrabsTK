@@ -1,4 +1,4 @@
-/** Kabuki Toolkit
+/* Kabuki Toolkit
     @file    ~/kt/math/point2d.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017-2018 Cale McCollough <calemccollough@gmail.com>;
@@ -21,7 +21,7 @@
 
 namespace _ {
 
-/** A 2D point storted as Type types. */
+/* A 2D point storted as Type types. */
 template<typename T>
 class SDK Point2D {
     public:
@@ -29,7 +29,7 @@ class SDK Point2D {
     T x,    //< The X position.
       y;    //< The Y position.
 
-    /** Default constructor initializes with given Point2D. */
+    /* Default constructor initializes with given Point2D. */
     Point2D (T initX = 0, T initY = 0) :
         x (x),
         y (y)
@@ -37,38 +37,38 @@ class SDK Point2D {
         /// Nothing to do here!
     }
 
-    /** Sets the X and Y Values to the new Values. */
+    /* Sets the X and Y Values to the new Values. */
     void Set (T newX = 0, T newY = 0) {
         x = x;
         y = y;
     }
 
-    /** Sets the X and Y Values to the this Point2D's X and Y. */
+    /* Sets the X and Y Values to the this Point2D's X and Y. */
     void Set (const Point2D& P) {
         x = P.x;
         y = P.y;
     }
 
-    /** Translates the given TArray to the point. */
+    /* Translates the given TArray to the point. */
     void Translate (const Vect<T>& V) {
         y += V.y;
         x += V.x;
     }
 
-    /** Translates the given TArray to the point. */
+    /* Translates the given TArray to the point. */
     void Translate (T dx, T dy) {
         y += dy;
         x += dx;
     }
 
-    /** Compares this Point2D to the other and returns true if the two Positions are identical. */
+    /* Compares this Point2D to the other and returns true if the two Positions are identical. */
     BOL Equals (const Point2D& P) const {
         if (x != P.x || y != P.y)
             return false;
         return true;
     }
 
-    /** Compares this Point2D to the other and the quadrant this point is in relation to the other. */
+    /* Compares this Point2D to the other and the quadrant this point is in relation to the other. */
     double Compare (const Point2D& P) const {
         if (x >= P.x)
             if (y >= P.y)
@@ -83,7 +83,7 @@ class SDK Point2D {
         return 0;   //< There are equal.
     }
 
-    /** Swaps this object's Point2D with a. */
+    /* Swaps this object's Point2D with a. */
     void Swap (Point2D P) {
         T tempX = P.x,
             tempY = P.y;
@@ -95,7 +95,7 @@ class SDK Point2D {
         y = tempY;
     }
 
-    /** Prints this object to the terminal. */
+    /* Prints this object to the terminal. */
     _::Printer& Print (_::Printer& printer) {
         cout << "Point2D: x=" << x << ", y=" << y << '\n';
     }

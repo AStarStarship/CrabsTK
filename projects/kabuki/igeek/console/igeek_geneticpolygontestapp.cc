@@ -1,4 +1,4 @@
-/** Kabuki Theater - Cell Interactive Genetic Algorihm
+/* Kabuki Theater - Cell Interactive Genetic Algorihm
     @version   0.x
     @file      /.../Source/Kabuki_Theater/Cell_IGA-Impl/GeneticPolygonTestApp.cpp
     @author  Cale McCollough <cale.mccollough@gmail.com>

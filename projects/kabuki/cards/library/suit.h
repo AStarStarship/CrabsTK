@@ -1,4 +1,4 @@
-/** Kabuki Arcade
+/* Kabuki Arcade
     @file    ~/source/kabuki/arcade/cards/card.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017-2018 Cale McCollough <calemccollough@gmail.com>;
@@ -16,14 +16,14 @@
 #pragma once
 #include <stdafx.h>
 
-#ifndef HEADER_FOR_KABUKI_ARCADE_CARDS_SUIT
-#define HEADER_FOR_KABUKI_ARCADE_CARDS_SUIT
+#ifndef KABUKI_ARCADE_CARDS_SUIT
+#define KABUKI_ARCADE_CARDS_SUIT
 
 #include "config.h"
 
 namespace kabuki { namespace cards {
 
-/** A playing card suit.
+/* A playing card suit.
 */
 class KABUKI Suit {
     public:
@@ -40,7 +40,7 @@ class KABUKI Suit {
         kWhiteClub           = 2667, //< Unicode CH1 for White club suit.
     };
 
-    /** Enumerated list of the different suites on playing cards in various
+    /* Enumerated list of the different suites on playing cards in various
          countries.
          |    Format    |    0   |    1     |   2    |    3    |
          |:------------:|:------:|:--------:|:------:|:-------:|
@@ -62,7 +62,7 @@ class KABUKI Suit {
         kWhite = 2  //< White Unicode suit color.
     } Color;
 
-    /** Enumerated list of the different French playing cards suites.
+    /* Enumerated list of the different French playing cards suites.
     typedef enum class FrenchSuits {
         kClub = 1, 
         kDiamond, 
@@ -70,7 +70,7 @@ class KABUKI Suit {
         kSpade
     } FrenchSuit; */
 
-    /** Enumerated list of the different German playing cards suites.
+    /* Enumerated list of the different German playing cards suites.
     typedef enum class GermanSuits {
         kAcorn = 1,
         kBell,
@@ -78,7 +78,7 @@ class KABUKI Suit {
         kLief
     } GermanSuit; */
 
-    /** Enumerated list of the different German playing cards suites.
+    /* Enumerated list of the different German playing cards suites.
     typedef enum class SwissGermanSuits {
         kAcorn = 1,
         kBell,
@@ -86,7 +86,7 @@ class KABUKI Suit {
         kShield
     } SwissGermanSuit; */
 
-    /** Enumerated list of the different Latin playing cards suites.
+    /* Enumerated list of the different Latin playing cards suites.
     typedef enum class LatinSuits {
         kClub = 1,
         kCoin,
@@ -94,7 +94,7 @@ class KABUKI Suit {
         kSword,
     } LatinSuit; */
 
-    /** Enumerated list of different European-style playing card suites.
+    /* Enumerated list of different European-style playing card suites.
          Piacentine, Napoletane, Spagnole, Bergamasche suits are also known as
          Latin suites, because they are from countries that speak Romantic
          languages. */
@@ -108,71 +108,71 @@ class KABUKI Suit {
         kBergamasche
     } Format;
 
-    /** A list of the strings "Clubs", "Diamonds", "Hearts", "Spades". */
+    /* A list of the strings "Clubs", "Diamonds", "Hearts", "Spades". */
     static const CH1* kFrenchSuit[4];
 
-    /** A list of the strings "Acorns", "Bells", "Hearts", "Levies". */
+    /* A list of the strings "Acorns", "Bells", "Hearts", "Levies". */
     static const CH1* kGermanSuit[4];
 
-    /** A list of the strings "Acorns", "Bells", "Roses", "Shields". */
+    /* A list of the strings "Acorns", "Bells", "Roses", "Shields". */
     static const CH1* kSwissGermanSuit[4];
 
-    /** A list of the strings "Clubs", "Coins", "Cups", "Swords". */
+    /* A list of the strings "Clubs", "Coins", "Cups", "Swords". */
     static const CH1* kLatinSuit[4];
 
-    /** An array of strings that represent the 7 different directories for the
+    /* An array of strings that represent the 7 different directories for the
         suit icon file. */
     static const CH1* kFormatTexts[];
 
-    /** Default constructor.
+    /* Default constructor.
         There exists a single unique card for each of the 54 cards in a pack
         of cards. Cards are taken from the pack and shuffled into the deck_
         using pointers. */
     Suit (SI4 column, SI4 denomination = 0, Format format = kFrench,
           Color color = Color::kWhite);
 
-    /** Copy constructor. */
+    /* Copy constructor. */
     Suit (const Suit& other);
     
-    /** Virtual destructor just in case we want to make a sub-class later. */
+    /* Virtual destructor just in case we want to make a sub-class later. */
     virtual ~Suit () {}
 
-    /** Sets the values of the cards. */
+    /* Sets the values of the cards. */
     void Set (SI4    denomination = kDefaultDenomination,
               Format format       = Format::kFrench,
               Color  color        = Color::kBlack);
 
-    /** Compares this Suit to the other Suit.
+    /* Compares this Suit to the other Suit.
         @return Returns 0 if they are identical.
         @return Returns 1 if this Suit is greater than the other Suit. */
     virtual SI4 Compare (Suit* other);
                            
-    /** Compares this Suit to the other Suit and returns true if the two are
+    /* Compares this Suit to the other Suit and returns true if the two are
         identical. */     
     BOL Equals (Suit* other);
     
-    /** Returns the rank of the denomination of this Suit
+    /* Returns the rank of the denomination of this Suit
         The face value represents how many points this card is worth. */
     SI4 GetDenomination ();
 
-    /** Sets the suit denomination (rank among other suits). */
+    /* Sets the suit denomination (rank among other suits). */
     void SetDenomination (SI4 denomination);
 
-    /** Returns the Unicode wchar_t color (white or black) for this suit. */
+    /* Returns the Unicode wchar_t color (white or black) for this suit. */
     wchar_t GetChar ();
 
-    /** Gets the suit's color. */
+    /* Gets the suit's color. */
     Color GetColor ();
 
-    /** Sets the Unicode wchar_t color (white or black) for this suit. */
+    /* Sets the Unicode wchar_t color (white or black) for this suit. */
     void SetColor (Color color);
 
-    /** Returns a string representation of the suit. */
-    const CH1* GetLabel ();
+    /* Returns a string representation of the suit. */
+    const CH1* Label ();
 
     void SetFormat (Format format);
 
-    /** Loads and sets the cardImage to the on in the given directory.
+    /* Loads and sets the cardImage to the on in the given directory.
         Yes this goes in the library, just no file IO or hardware dependent
         stuff (besides OpenGL, OpenAL, etc).
         @param  uri Image directory relative to the compiled executable.
@@ -183,15 +183,15 @@ class KABUKI Suit {
         @return Returns 3 if the image didn't load right. */
     //SI4 SetImage (const CH1* uri);
                        
-    /** Returns the address of this Suit's image. */
+    /* Returns the address of this Suit's image. */
     //Image& GetImage ();
     
-    /** Returns a the label_. */
+    /* Returns a the label_. */
     _::Text& Print (_::Text& txt = _::Text ());
 
     private:
 
-    /** Loads the cardImage from the specified directory.
+    /* Loads the cardImage from the specified directory.
          We can address images in DLL(s) but not files or anything
          hardware specific.
     */
@@ -210,4 +210,4 @@ KABUKI Suit* SuitError ();
 
 }       //< namespace cards
 }       //< namespace kabuki
-#endif  //< HEADER_FOR_KABUKI_ARCADE_CARDS_SUIT
+#endif  //< KABUKI_ARCADE_CARDS_SUIT

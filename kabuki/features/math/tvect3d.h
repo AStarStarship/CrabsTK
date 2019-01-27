@@ -1,4 +1,4 @@
-/** Kabuki Toolkit
+/* Kabuki Toolkit
     @file ~/kt/math/vect2d.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017-2018 Cale McCollough <calemccollough@gmail.com>;
@@ -20,7 +20,7 @@
 
 namespace _ {
 
- /** A 3D TArray. */
+ /* A 3D TArray. */
 template<typename T>
 struct SDK Vect3D
 {
@@ -28,12 +28,12 @@ struct SDK Vect3D
       y,          //< The y component.
       z;          //< THe z component.
     
-    /** Constructs an uninitialized TArray. */
+    /* Constructs an uninitialized TArray. */
     Vect3D () {
         /// Nothing to do here!
     }
 
-    /** Default constructor initializes with given component. */
+    /* Default constructor initializes with given component. */
     Vect3D (T x, T y, T z) :
         x (x),
         y (y),
@@ -41,7 +41,7 @@ struct SDK Vect3D
     {
     }
 
-    /** Copy constructor. */
+    /* Copy constructor. */
     Vect3D (const Vect3D<T>& v) :
         x (v.x),
         y (v.y),
@@ -50,21 +50,21 @@ struct SDK Vect3D
 
     }
 
-    /** Sets the X and Y Values to the new Values. */
+    /* Sets the X and Y Values to the new Values. */
     void Set (T newX = 0, T newY = 0, T newZ = 0) {
         x = newX;
         y = newY;
         z = newZ;
     }
 
-    /** Sets the X and Y Values to the this Vect3D's X and Y. */
+    /* Sets the X and Y Values to the this Vect3D's X and Y. */
     void Set (const Vect3D<T>& v) {
         x = v.x;
         y = v.y;
         y = v.y;
     } 
 
-    /** Compares this object's Vect3D to a and returns true if the two Positions are identical. */
+    /* Compares this object's Vect3D to a and returns true if the two Positions are identical. */
     BOL Equals (const Vect3D& v) const {
         if (x != v.x)
             return false;
@@ -75,7 +75,7 @@ struct SDK Vect3D
         return true;
     }
 
-    /** Swaps this object's Vect3D with thiscomponent. */
+    /* Swaps this object's Vect3D with thiscomponent. */
     void Swap (Vect3D v) {
         T tempX = v.x,
             tempY = v.y,
@@ -90,7 +90,7 @@ struct SDK Vect3D
         z = tempZ;
     }
 
-    /** C== Operator== overloader. */
+    /* C== Operator== overloader. */
     BOL operator== (const Vect3D& v) const {
         if (x != v.x) return false;
         if (y != v.y) return false;
@@ -98,7 +98,7 @@ struct SDK Vect3D
         return true;
     }
 
-    /** C== Operator!= overloader. */
+    /* C== Operator!= overloader. */
     BOL operator!= (const Vect3D& v) const {
         if (x != v.x) return true;
         if (y != v.y) return true;
@@ -106,17 +106,17 @@ struct SDK Vect3D
         return false;
     }
 
-    /** C== Operator- overloader. */
+    /* C== Operator- overloader. */
     Vect3D operator- (const Vect3D& v) const {
         return { x - v.x, y - v.y, z - v.z };
     }
 
-    /** C== Operator+ overloader. */
+    /* C== Operator+ overloader. */
     Vect3D operator+ (const Vect3D& v) const {
         return { x + v.x, y + v.y, z + v.z };
     }
 
-    /** C== Operator-= overloader. */
+    /* C== Operator-= overloader. */
     Vect3D& operator-= (const Vect3D& v) {
         x -= v.x;
         y -= v.y;
@@ -124,7 +124,7 @@ struct SDK Vect3D
         return *this;
     }
 
-    /** C== Operator+= overloader. */
+    /* C== Operator+= overloader. */
     Vect3D& operator+= (const Vect3D& v) {
         x += v.x;
         y += v.y;
@@ -132,7 +132,7 @@ struct SDK Vect3D
         return *this;
     }
 
-    /** Prints this object to the stdout. */
+    /* Prints this object to the stdout. */
     _::Printer& Print (_::Printer& printer) const {
         cout << "Vect3D: x=" << x << ", y=" << y << ", z=" << z << '\n';
     }

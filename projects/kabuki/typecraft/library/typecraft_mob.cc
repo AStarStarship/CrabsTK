@@ -1,4 +1,4 @@
-/** TypeCraft - Teaching Typing through Mining and Crafting.
+/* TypeCraft - Teaching Typing through Mining and Crafting.
 @link    https://github.com/kabuki-starship/kabuki-projects/typecraft
 @file    /projects/typecraft/mob.cc
 @author  Cale McCollough <cale.mccollough@gmail.com>
@@ -21,13 +21,13 @@ class Mob : public Entity {
  public:
   Mob(const CH1* name, );
 
-  /** Constructs an Mob with the given max_size. */
+  /* Constructs an Mob with the given max_size. */
   Mob(SI4 max_size);
 
-  /** Destructor */
+  /* Destructor */
   ~Mob();
 
-  /** Prints the Item to the console. */
+  /* Prints the Item to the console. */
   virtual void Print();
 
  private:
@@ -37,187 +37,187 @@ class Mob : public Entity {
 
 class Blaze : public Mob {
  public:
-  /** Constructs a new Blaze. */
+  /* Constructs a new Blaze. */
   Blaze();
 };
 
 class CaveSpider : public Mob {
  public:
-  /** Constructs a new CaveSpider. */
+  /* Constructs a new CaveSpider. */
   CaveSpider();
 };
 
 class Creeper : public Mob {
  public:
-  /** Constructs a new Creeper. */
+  /* Constructs a new Creeper. */
   Creeper();
 };
 
 class Ghast : public Mob {
  public:
-  /** Constructs a new Ghast. */
+  /* Constructs a new Ghast. */
   Ghast();
 };
 
 class MagmaCube : public Mob {
  public:
-  /** Constructs a new MagmaCube. */
+  /* Constructs a new MagmaCube. */
   MagmaCube();
 };
 
 class Silverfish : public Mob {
  public:
-  /** Constructs a new Silverfish. */
+  /* Constructs a new Silverfish. */
   Silverfish();
 };
 
 class Skeleton : public Mob {
  public:
-  /** Constructs a new Skeleton. */
+  /* Constructs a new Skeleton. */
   Skeleton();
 };
 
-/** A slime.
+/* A slime.
 Small slimes are passive, and Medium and Large Slimes are Hostile. */
 class Slime : public Mob {
  public:
-  /** Constructs a new Slime. */
+  /* Constructs a new Slime. */
   Slime();
 };
 
-/** A Spider.
+/* A Spider.
 Starts being and remains hostile if light level is below 10, otherwise
 Neutral.
 */
 class Spider : public Mob {
  public:
-  /** Constructs a new Spider. */
+  /* Constructs a new Spider. */
   Spider();
 };
 
 class SpiderJockey {
  public:
-  /** Constructs a new BlazeSpiderJockey. */
+  /* Constructs a new BlazeSpiderJockey. */
   SpiderJockey();
 };
 
 class Zombie {
  public:
-  /** Constructs a new BlazeZombie. */
+  /* Constructs a new BlazeZombie. */
   Zombie();
 };
 
 class ZombieVillager {
  public:
-  /** Constructs a new ZombieVillager. */
+  /* Constructs a new ZombieVillager. */
   ZombieVillager();
 };
 
 class WitherSkeleton {
  public:
-  /** Constructs a new WitherSkeleton. */
+  /* Constructs a new WitherSkeleton. */
   WitherSkeleton();
 };
 
 class Witch {
  public:
-  /** Constructs a new Witch. */
+  /* Constructs a new Witch. */
   Witch();
 };
 
 class Evoker {
  public:
-  /** Constructs a new Evoker. */
+  /* Constructs a new Evoker. */
   Evoker();
 };
 
 class Vindicator {
  public:
-  /** Constructs a new Vindicator. */
+  /* Constructs a new Vindicator. */
   Vindicator();
 };
 
 class Vex {
  public:
-  /** Constructs a new Vex. */
+  /* Constructs a new Vex. */
   Vex();
 };
 
 class ChickenJockey {
  public:
-  /** Constructs a new ChickenJockey. */
+  /* Constructs a new ChickenJockey. */
   ChickenJockey();
 };
 
 class Endermite {
  public:
-  /** Constructs a new Endermite. */
+  /* Constructs a new Endermite. */
   Endermite();
 };
 
 class Guardian {
  public:
-  /** Constructs a new Guardian. */
+  /* Constructs a new Guardian. */
   Guardian();
 };
 
 class ElderGuardian {
  public:
-  /** Constructs a new ElderGuardian. */
+  /* Constructs a new ElderGuardian. */
   ElderGuardian();
 };
 
 class KillerRabbit {
  public:
-  /** Constructs a new KillerRabbit. */
+  /* Constructs a new KillerRabbit. */
   KillerRabbit();
 };
 
 class BabyZombie {
  public:
-  /** Constructs a new BabyZombie. */
+  /* Constructs a new BabyZombie. */
   BabyZombie();
 };
 
 class Shulker {
  public:
-  /** Constructs a new Shulker. */
+  /* Constructs a new Shulker. */
   Shulker();
 };
 
 class SkeletonTrapHorse {
  public:
-  /** Constructs a new SkeletonTrapHorse. */
+  /* Constructs a new SkeletonTrapHorse. */
   SkeletonTrapHorse();
 };
 
 class SkeletonHorseman {
  public:
-  /** Constructs a new SkeletonHorseman. */
+  /* Constructs a new SkeletonHorseman. */
   SkeletonHorseman();
 };
 
 class HuskFace {
  public:
-  /** Constructs a new HuskFace. */
+  /* Constructs a new HuskFace. */
   HuskFace();
 };
 
 class Husk {
  public:
-  /** Constructs a new Husk. */
+  /* Constructs a new Husk. */
   Husk();
 };
 
 class StrayFace {
  public:
-  /** Constructs a new StrayFace. */
+  /* Constructs a new StrayFace. */
   StrayFace();
 };
 
 class Stray {
  public:
-  /** Constructs a new Stray. */
+  /* Constructs a new Stray. */
   Stray();
 };
 
@@ -225,165 +225,165 @@ class Stray {
 
 class Enderman {
  public:
-  /** Constructs a new StrayFace. */
+  /* Constructs a new StrayFace. */
   Enderman();
 };
 
 class ZombiePigman {
  public:
-  /** Constructs a new ZombiePigman. */
+  /* Constructs a new ZombiePigman. */
   ZombiePigman();
 };
 
 class BetterWolfFace {
  public:
-  /** Constructs a new BetterWolfFace. */
+  /* Constructs a new BetterWolfFace. */
   BetterWolfFace();
 };
 
-/** A Wolf mob.
+/* A Wolf mob.
     Tamable */
 class Wolf {
  public:
-  /** Constructs a new Wolf. */
+  /* Constructs a new Wolf. */
   Wolf();
 };
-/** A spider.
+/* A spider.
    (Hostile if light level is below 10, otherwise Neutral) */
 class Spider {
  public:
-  /** Constructs a new Spider. */
+  /* Constructs a new Spider. */
   Spider();
 };
 
 class PolarBear {
  public:
-  /** Constructs a new PolarBear. */
+  /* Constructs a new PolarBear. */
   PolarBear();
 };
 
-/** A big ass smell farm Llama.
+/* A big ass smell farm Llama.
     aggressive to untamed wolves, attacks once if player attacks. */
 class Llama {
  public:
-  /** Constructs a new Llama. */
+  /* Constructs a new Llama. */
   Llama();
 };
 
 // Passive Mobs
 
-/** A Chicken. */
+/* A Chicken. */
 class Chicken {
  public:
-  /** Constructs a new Chicken. */
+  /* Constructs a new Chicken. */
   Chicken();
 };
 
-/** A Cow. */
+/* A Cow. */
 class Cow {
  public:
-  /** Constructs a new Cow. */
+  /* Constructs a new Cow. */
   Cow();
 };
 
-/** A Mooshroom. */
+/* A Mooshroom. */
 class Mooshroom {
  public:
-  /** Constructs a new Mooshroom. */
+  /* Constructs a new Mooshroom. */
   Mooshroom();
 };
 
-/** A Pig. */
+/* A Pig. */
 class Pig {
  public:
-  /** Constructs a new Pig. */
+  /* Constructs a new Pig. */
   Pig();
 };
 
-/** A Sheep. */
+/* A Sheep. */
 class Sheep {
  public:
-  /** Constructs a new Sheep. */
+  /* Constructs a new Sheep. */
   Sheep();
 };
 
-/** A Squid. */
+/* A Squid. */
 class Squid {
  public:
-  /** Constructs a new Squid. */
+  /* Constructs a new Squid. */
   Squid();
 };
 
-/** A Villager. */
+/* A Villager. */
 class Villager {
  public:
-  /** Constructs a new Villager. */
+  /* Constructs a new Villager. */
   Villager();
 };
 
-/** A Bat. */
+/* A Bat. */
 class Bat {
  public:
-  /** Constructs a new Bat. */
+  /* Constructs a new Bat. */
   Bat();
 };
 
-/** A Ocelot.
+/* A Ocelot.
     Tamable. */
 class Ocelot {
  public:
-  /** Constructs a new Ocelot. */
+  /* Constructs a new Ocelot. */
   Ocelot();
 };
 
-/** A Horse. */
+/* A Horse. */
 class Horse {
  public:
-  /** Constructs a new Horse. */
+  /* Constructs a new Horse. */
   Horse();
 };
 
-/** A Donkey. */
+/* A Donkey. */
 class Donkey {
  public:
-  /** Constructs a new Donkey. */
+  /* Constructs a new Donkey. */
   Donkey();
 };
 
-/** A Mule. */
+/* A Mule. */
 class Mule {
  public:
-  /** Constructs a new Mule. */
+  /* Constructs a new Mule. */
   Mule();
 };
 
-/** A Cat.
+/* A Cat.
     Domesticated Ocelot*/
 class Cat {
  public:
-  /** Constructs a new Cat. */
+  /* Constructs a new Cat. */
   Cat();
 };
 
-/** A Dog.
+/* A Dog.
     Domesticated Wolf. */
 class Dog {
  public:
-  /** Constructs a new Dog. */
+  /* Constructs a new Dog. */
   Dog();
 };
 
-/** A Rabbit. */
+/* A Rabbit. */
 class Rabbit {
  public:
-  /** Constructs a new Rabbit. */
+  /* Constructs a new Rabbit. */
   Rabbit();
 };
 
-/** A Parrot. */
+/* A Parrot. */
 class Parrot {
  public:
-  /** Constructs a new Parrot. */
+  /* Constructs a new Parrot. */
   Parrot();
 };
 

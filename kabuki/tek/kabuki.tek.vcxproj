@@ -19,68 +19,71 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="c_button.h" />
+    <ClInclude Include="c_debouncer.h" />
+    <ClInclude Include="c_display.h" />
+    <ClInclude Include="c_dmxanimation.h" />
+    <ClInclude Include="c_dmxbuffer.h" />
+    <ClInclude Include="c_dmxreceiver.h" />
+    <ClInclude Include="c_dmxtransceiver.h" />
+    <ClInclude Include="c_dmxtransmitter.h" />
+    <ClInclude Include="c_flowcontroller.h" />
+    <ClInclude Include="c_flyingfader.h" />
+    <ClInclude Include="c_ioexpander.h" />
+    <ClInclude Include="c_led.h" />
+    <ClInclude Include="c_ledmatrix.h" />
+    <ClInclude Include="c_ledrgb.h" />
+    <ClInclude Include="c_ledvumeter.h" />
+    <ClInclude Include="c_ledvumeterarray.h" />
+    <ClInclude Include="c_micelectrolytic.h" />
+    <ClInclude Include="c_motorhbridge.h" />
+    <ClInclude Include="c_octows28xx.h" />
+    <ClInclude Include="c_photosensor.h" />
+    <ClInclude Include="c_portali2c.h" />
+    <ClInclude Include="c_portalserial.h" />
+    <ClInclude Include="c_portalspi.h" />
+    <ClInclude Include="c_portaltcp.h" />
+    <ClInclude Include="c_portalwifi.h" />
+    <ClInclude Include="c_pot.h" />
+    <ClInclude Include="c_rgbstatusled.h" />
+    <ClInclude Include="c_rotaryknob.h" />
+    <ClInclude Include="c_rotaryknobbank.h" />
+    <ClInclude Include="c_statusled.h" />
+    <ClInclude Include="c_switch.h" />
+    <ClInclude Include="c_unicontroller.h" />
+    <ClInclude Include="global.h" />
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="c_keyboardbuffer.h" />
+    <ClInclude Include="c_keyevent.h" />
+    <ClInclude Include="c_keyeventbuffer.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="global_config.inl" />
+    <None Include="readme.md" />
+  </ItemGroup>
+  <ItemGroup>
     <ClCompile Include="pch.cc" />
     <ClCompile Include="tek_button.cc" />
     <ClCompile Include="tek_dmxanimation.cc" />
     <ClCompile Include="tek_dmxbuffer.cc" />
-    <ClCompile Include="tek_micelectrolytic.cc" />
     <ClCompile Include="tek_flowcontroller.cc" />
     <ClCompile Include="tek_flyingfader.cc" />
+    <ClCompile Include="tek_ioexpander.cc" />
+    <ClCompile Include="tek_keyboardbuffer.cc" />
+    <ClCompile Include="tek_knobrotary.cc" />
+    <ClCompile Include="tek_knobrotarybank.cc" />
+    <ClCompile Include="tek_led.cc" />
+    <ClCompile Include="tek_ledrgb.cc" />
+    <ClCompile Include="tek_micelectrolytic.cc" />
     <ClCompile Include="tek_motorhbridge.cc" />
     <ClCompile Include="tek_portali2c.cc" />
-    <ClCompile Include="tek_ioexpander.cc" />
-    <ClCompile Include="tek_led.cc" />
     <ClCompile Include="tek_portalserial.cc" />
     <ClCompile Include="tek_portalspi.cc" />
     <ClCompile Include="tek_portaltcp.cc" />
     <ClCompile Include="tek_pot.cc" />
     <ClCompile Include="tek_potosensor.cc" />
-    <ClCompile Include="tek_ledrgb.cc" />
-    <ClCompile Include="tek_knobrotary.cc" />
-    <ClCompile Include="tek_knobrotarybank.cc" />
     <ClCompile Include="tek_switch.cc" />
     <ClCompile Include="tek_unicontroller.cc" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="cbutton.h" />
-    <ClInclude Include="cdebouncer.h" />
-    <ClInclude Include="cdisplay.h" />
-    <ClInclude Include="cdmxanimation.h" />
-    <ClInclude Include="cdmxbuffer.h" />
-    <ClInclude Include="cdmxreceiver.h" />
-    <ClInclude Include="cdmxtransceiver.h" />
-    <ClInclude Include="cdmxtransmitter.h" />
-    <ClInclude Include="cmicelectrolytic.h" />
-    <ClInclude Include="cflowcontroller.h" />
-    <ClInclude Include="cflyingfader.h" />
-    <ClInclude Include="cmotorhbridge.h" />
-    <ClInclude Include="cioexpander.h" />
-    <ClInclude Include="cled.h" />
-    <ClInclude Include="cledmatrix.h" />
-    <ClInclude Include="cledvumeter.h" />
-    <ClInclude Include="cledvumeterarray.h" />
-    <ClInclude Include="coctows28xx.h" />
-    <ClInclude Include="config.h" />
-    <ClInclude Include="cphotosensor.h" />
-    <ClInclude Include="cportali2c.h" />
-    <ClInclude Include="cportalserial.h" />
-    <ClInclude Include="cportalspi.h" />
-    <ClInclude Include="cportaltcp.h" />
-    <ClInclude Include="cpot.h" />
-    <ClInclude Include="cledrgb.h" />
-    <ClInclude Include="crgbstatusled.h" />
-    <ClInclude Include="crotaryknob.h" />
-    <ClInclude Include="crotaryknobbank.h" />
-    <ClInclude Include="cstatusled.h" />
-    <ClInclude Include="cswitch.h" />
-    <ClInclude Include="cunicontroller.h" />
-    <ClInclude Include="cportalwifi.h" />
-    <ClInclude Include="global.h" />
-    <ClInclude Include="pch.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="global_config.inl" />
-    <None Include="readme.md" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

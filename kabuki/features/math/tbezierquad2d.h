@@ -1,4 +1,4 @@
-/** Kabuki Toolkit
+/* Kabuki Toolkit
     @file    ~/kt/math/quad_bezier2d.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017-2018 Cale McCollough <calemccollough@gmail.com>;
@@ -26,7 +26,7 @@
 
 namespace _ {
 
-/** Class that represents a 4th order Bezier. */
+/* Class that represents a 4th order Bezier. */
 template<typename T>
 class SDK QuadBezier2D
 {
@@ -36,7 +36,7 @@ class SDK QuadBezier2D
         NumPoints = 4     //< 4 points in a quad Bezier curve.
     };
     
-    /** Constructor.
+    /* Constructor.
         @pre The length of XPoints and YPoints must equal NumPoints or curve will not be created correctly. */
     QuadBezier2D (const T* initXPoints, const T* initYPoints) {
         x0 = initXPoints[0];
@@ -49,7 +49,7 @@ class SDK QuadBezier2D
         y3 = initXPoints[3];
     }
 
-    /** Constructs a bezier curve with the given points. */
+    /* Constructs a bezier curve with the given points. */
     QuadBezier2D (T initX0, T initY0, T initX1, T initY1, T initX2, T initY2, 
                 T initX3, T initY3) :
         x0 (initX0),
@@ -59,7 +59,7 @@ class SDK QuadBezier2D
     {
     }
 
-    /** Copy constructor initializes curve with the given points. */
+    /* Copy constructor initializes curve with the given points. */
     QuadBezier2D (const QuadBezier2D& o) :
         x0 (o.x0),
         y0 (o.y0),
@@ -73,13 +73,13 @@ class SDK QuadBezier2D
         /// Nothing to do here! :-)
     }
 
-    /** Gets a pointer to the x points. */
+    /* Gets a pointer to the x points. */
     T* GetXPoints () { return &x0; }
 
-    /** Gets a pointer to the y points. */
+    /* Gets a pointer to the y points. */
     T* GetYPoints () { return &y0; }
 
-    /** Sets the x and y points to the given arrays. */
+    /* Sets the x and y points to the given arrays. */
     void SetXPoints (const T* x_points) {
         x0 = x_points[0];
         x1 = x_points[1];
@@ -87,7 +87,7 @@ class SDK QuadBezier2D
         x3 = x_points[3];
     }
 
-    /** Sets the x and y points to the given arrays. */
+    /* Sets the x and y points to the given arrays. */
     void SetYPoints (const T* y_points) {
         y0 = y_points[0];
         y1 = y_points[1];
@@ -95,7 +95,7 @@ class SDK QuadBezier2D
         y3 = y_points[3];
     }
 
-    /** Sets the x and y points to the given arrays. */
+    /* Sets the x and y points to the given arrays. */
     void SetPoints (const T* x_points, const T* y_points) {
         x0 = x_points[0];
         x1 = x_points[1];
@@ -108,7 +108,7 @@ class SDK QuadBezier2D
         y3 = y_points[3];
     }
 
-    /** Sets the x and y values to the new ones. */
+    /* Sets the x and y values to the new ones. */
     void SetPoints (T new_x0, T newY0, T newX1, T newY1, T newX2, T newY2, T newX3, T newY3) {
         x0 = new_x0;
         y0 = new_y0;
@@ -120,12 +120,12 @@ class SDK QuadBezier2D
         y3 = new_y3;
     }
 
-    /** Gets the NumPoints. */
+    /* Gets the NumPoints. */
     SI4 GetNumPoints () {
         return NumPoints;
     }
 
-    /** Gets a Point2D<T> along the path of the of curve at time t. */
+    /* Gets a Point2D<T> along the path of the of curve at time t. */
     Point2D<T> GetPoint (T t) {
         T x = (1 - t) * (1 - t) * x0 + 2 * (1 - t) * t * x1 + t * t * x2,
             y = (1 - t) * (1 - t) * y0 + 2 * (1 - t) * t * y1 + t * t * y2;
@@ -133,7 +133,7 @@ class SDK QuadBezier2D
         return Point3D<T> (x, y);
     }
 
-    /** Prints this object to the terminal. */
+    /* Prints this object to the terminal. */
     _::Printer& Print (_::Printer& print) {
         return print;
     }

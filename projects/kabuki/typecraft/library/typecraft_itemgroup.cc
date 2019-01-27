@@ -1,4 +1,4 @@
-/** TypeCraft - Teaching Typing through Mining and Crafting.
+/* TypeCraft - Teaching Typing through Mining and Crafting.
 @link    https://github.com/kabuki-starship/kabuki-projects/typecraft
 @file    /projects/typecraft/inventory.cc
 @author  Cale McCollough <cale.mccollough@gmail.com>
@@ -18,32 +18,32 @@ namespace typecraft {
 
 class ItemGroup {
  public:
-  /** Constructs an ItemGroup with the given max_size. */
+  /* Constructs an ItemGroup with the given max_size. */
   ItemGroup(SI4 max_size);
 
-  /** Destructor */
+  /* Destructor */
   ~ItemGroup();
 
-  /** Gets the inventory count. */
+  /* Gets the inventory count. */
   SI4 GetCount();
 
-  /** Gets the max size of the Inventory. */
+  /* Gets the max size of the Inventory. */
   SI4 GetSize();
 
-  /** Gets the Item at the given index. */
+  /* Gets the Item at the given index. */
   Item* GetItem(SI4 index);
 
-  /** Adds the Item at the given index.
+  /* Adds the Item at the given index.
   @param  item Th Item to add.
   @return Returns -1 if the Inventory is full. */
   SI4 AddItem(Item* item);
 
-  /** Removes the Item at the given index.
+  /* Removes the Item at the given index.
   @param  The index of the Item to remove.
   @return Returns nullptr if the Index is out of bounds. */
   Item* RemoveItem(SI4 index);
 
-  /** Prints the ItemGroup to the console. */
+  /* Prints the ItemGroup to the console. */
   void Print();
 
  private:

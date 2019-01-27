@@ -35,7 +35,7 @@
 
 #include "export.h"
 
-#include "assert.h"
+#include "DASSERT.h"
 #include "callback.h"
 #include "format.h"
 #include "metadata.h"
@@ -43,7 +43,7 @@
 #include "stream_decoder.h"
 #include "stream_encoder.h"
 
-/** \mainpage
+/* \mainpage
  *
  * \section intro Introduction
  *
@@ -152,7 +152,7 @@
  * binaries.
  */
 
-/** \defgroup porting Porting Guide for New Versions
+/* \defgroup porting Porting Guide for New Versions
  *
  * This module describes differences in the library interfaces from
  * version to version.  It assists in the porting of code that uses
@@ -186,7 +186,7 @@
  * error.
  */
 
-/** \defgroup porting_1_1_2_to_1_1_3 Porting from FLAC 1.1.2 to 1.1.3
+/* \defgroup porting_1_1_2_to_1_1_3 Porting from FLAC 1.1.2 to 1.1.3
  *  \ingroup porting
  *
  *  \brief
@@ -324,7 +324,7 @@
  * is now \c size_t instead of \c unsigned.
  */
 
-/** \defgroup porting_1_1_3_to_1_1_4 Porting from FLAC 1.1.3 to 1.1.4
+/* \defgroup porting_1_1_3_to_1_1_4 Porting from FLAC 1.1.3 to 1.1.4
  *  \ingroup porting
  *
  *  \brief
@@ -339,7 +339,7 @@
  * maintained until the call to FLAC__stream_encoder_finish().
  */
 
-/** \defgroup porting_1_1_4_to_1_2_0 Porting from FLAC 1.1.4 to 1.2.0
+/* \defgroup porting_1_1_4_to_1_2_0 Porting from FLAC 1.1.4 to 1.2.0
  *  \ingroup porting
  *
  *  \brief
@@ -357,7 +357,7 @@
  * \c FLAC__FRAME_HEADER_BLOCKING_STRATEGY_LEN
  */
 
-/** \defgroup flac FLAC C SDK
+/* \defgroup flac FLAC C SDK
  *
  * The FLAC C SDK is the interface to libFLAC, a set of structures
  * describing the components of FLAC streams, and functions for

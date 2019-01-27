@@ -1,4 +1,4 @@
-/** Kabuki Toolkit
+/* Kabuki Toolkit
     @file    ~/projects/kabuki_cards_client.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
@@ -33,7 +33,7 @@ class TextOperation :public _::Text<1024>, public Operand {
 
     }
 
-    /** Handles Script Commands.
+    /* Handles Script Commands.
         @param text     Beginning of the Text buffer. 
         @param strand_end End of the Text buffer.
         @return Returns nil upon success and an error string upon failure. */
@@ -42,7 +42,7 @@ class TextOperation :public _::Text<1024>, public Operand {
         return nullptr
     }
 
-    /** Script Operations. */
+    /* Script Operations. */
     virtual const Operation* Star (uint index, _::Expression* expr) {
         return OperationInvalid;
     }

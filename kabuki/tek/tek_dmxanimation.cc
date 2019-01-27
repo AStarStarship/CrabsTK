@@ -11,7 +11,7 @@ under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
 CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License. */
 
-#include "cdmxanimation.h"
+#include "c_dmxanimation.h"
 
 namespace _ {
 
@@ -23,7 +23,7 @@ DmxAnimation::DmxAnimation(UI4 kChannelCount, UI4 NumChases, UI4 NumVariants)
       current_chase_(0),
       current_chase_length_(0),
       current_variant_(0),
-      num_channels_(kChannelCount),
+      channel_count_(kChannelCount),
       num_chases_(NumChases),
       num_variants_(NumVariants),
       data_(0) {

@@ -1,4 +1,4 @@
-/** TypeCraft - Teaching Typing through Mining and Crafting.
+/* TypeCraft - Teaching Typing through Mining and Crafting.
 @link    https://github.com/kabuki-starship/kabuki-projects/typecraft
 @file    /projects/typecraft/typecraft_server.cc
 @author  Cale McCollough <cale.mccollough@gmail.com>
@@ -15,7 +15,7 @@ specific language governing permissions and limitations under the License. */
 
 namespace typecraft {
 
-/** Key	Type	Default Value	Description
+/* Key	Type	Default Value	Description
 allow-flight	boolean	false	Allows users to use flight on your server while
 in Survival mode, if they have a mod that provides flight installed. With
 allow-flight enabled, griefers will possibly be more common, because it will

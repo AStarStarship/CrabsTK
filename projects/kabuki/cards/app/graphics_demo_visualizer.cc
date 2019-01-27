@@ -1,4 +1,4 @@
-/** Kabuki Starship
+/* Kabuki Starship
     @file    /.../KabukiTheater-Examples/_2D/Entity.cpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright  (C) 2016 [Cale McCollough](calemccollough.github.io)

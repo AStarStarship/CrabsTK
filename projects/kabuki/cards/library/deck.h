@@ -1,4 +1,4 @@
-/** Kabuki Arcade
+/* Kabuki Arcade
     @file    ~/source/kabuki/arcade/cards/deck.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017-2018 Cale McCollough <calemccollough@gmail.com>;
@@ -22,7 +22,7 @@ namespace kabuki { namespace cards {
 
 using pack_ptr = std::unique_ptr<Card*>;
     
-/** A Deck of playing cards.
+/* A Deck of playing cards.
     A Deck of cards usually has 52 cards, but can also have 2 jokers, a black
     one, and a red one. Not all card games have this many cards, so this class
     is setup for you to create decks of cards for just about any card game you
@@ -43,11 +43,11 @@ class Deck {
     // The default suit value order, Clubs=1, Diamonds=2, Hearts=3, and Spades=4.
     static const SI4 kDefaultSuitValues[4];
 
-    /** The default deck art directory. */
+    /* The default deck art directory. */
     static const CH1 kDefaultDeckArtDirectory[],
                       kDefaultRearDeckImage[]; //< Default rear deck image.
     
-    /** Constructor.
+    /* Constructor.
         In most card games, jokers are no used, and aces are high, so we use
         those are the default values.
         @param  contains_jokers True if the deck contains jokers, and false
@@ -63,68 +63,68 @@ class Deck {
           const CH1* directory_path = kDefaultDeckArtDirectory,
           Suit::Color color = Suit::Color::kWhite);
 
-    /** Destructor. */
+    /* Destructor. */
     virtual ~Deck ();
 
-    /** Sets the given parameters of the deck. */
+    /* Sets the given parameters of the deck. */
     void Set (BOL has_jokers = kNoJokers, SI4 aces_high = kAcesHigh,
               Suit::Format format = Suit::kFrench,
               const CH1* deck_name = kDefaultRearDeckImage,
               const CH1* directory_path = kDefaultDeckArtDirectory,
               Suit::Color color = Suit::Color::kWhite);
 
-    /** Returns true if this deck has Jokers. */
+    /* Returns true if this deck has Jokers. */
     BOL HasJokers ();
 
-    /** Returns the number of cards in the deck. */
+    /* Returns the number of cards in the deck. */
     SI4 GetSize ();
 
-    /** Returns a pointer to a static Suit for the column 0 types AKA
+    /* Returns a pointer to a static Suit for the column 0 types AKA
         Hearts. */
    Suit* Heart ();
 
-    /** Returns a pointer to a static Suit for the column 1 types AKA
+    /* Returns a pointer to a static Suit for the column 1 types AKA
         Diamonds. */
    Suit* Diamond ();
 
-    /** Returns a pointer to a static Suit for the column 2 types AKA
+    /* Returns a pointer to a static Suit for the column 2 types AKA
         Clubs. */
     Suit* Club ();
 
-    /** Returns a pointer to a static Suit for the column 3 types AKA
+    /* Returns a pointer to a static Suit for the column 3 types AKA
         Spades. */
     Suit* Spade ();
 
-    /** Returns an array of the static Card objects for the 4 columns 0-3. */
+    /* Returns an array of the static Card objects for the 4 columns 0-3. */
     Suit** Suits ();
 
-    /** Function sets the suit values to the new values.
+    /* Function sets the suit values to the new values.
         @pre    valueN must be between 1-4.
         @return Returns 0 upon success, and a number 1-4 if the valueN is not
         between 1-4. The number will be negative if the inputed number
         was, and vice-versa. */
     void SetSuitDenominations (SI4 column_0, SI4 column_1, SI4 column_2, SI4 column_3);
 
-    /** Sets the format to the one given. */
+    /* Sets the format to the one given. */
     void SetFormat (Suit::Format format);
     
-    /** Returns the if aces are high or low. */
+    /* Returns the if aces are high or low. */
     BOL AcesHigh ();
 
-    /** Returns a pointer to the Card with the given suit and pip.
+    /* Returns a pointer to the Card with the given suit and pip.
         @return Returns nil if the index is out of bounds. */
     Card* GetCard (SI4 suit, SI4 pip);
     
-    /** Returns a pointer to the Card at the specified index.
+    /* Returns a pointer to the Card at the specified index.
         @return Returns nil if the index is out of bounds. */
     Card* GetCard (SI4 index);
 
-    /** Sets the frontImage to a new Image from thisFile.
+    /* Sets the frontImage to a new Image from thisFile.
         @pre    thisFile must be a valid existing Image file.
         @return returns -1 if thisFile is not a valid Image. */
     //SI4 SetRearImage (const File& thisFile);
         
-    /** Loads the deck art from the directory_path.
+    /* Loads the deck art from the directory_path.
         @pre    directory_path must contain all 54 card Images in 
                 [1-13]-[1-4].svg/J-1.svg/J-2.svg format.
         @return Returns 0 upon success, 54 if the directory doesn't contain 
@@ -132,12 +132,12 @@ class Deck {
                 where x is the first failed filename. */
     //SI4 SetDeckArt (const CH1* directory_path);
     
-    /** Prints this object to the console. */
+    /* Prints this object to the console. */
     _::Text& Print (_::Text& txt = _::Text ());
 
     private:
 
-    /** Function that checks the artFolder to see if the it has 54 Images in 
+    /* Function that checks the artFolder to see if the it has 54 Images in 
         [1-13]-[1-4].svg/J-1.svg/J-2.svg format. */
     //SI4 CheckDeckArtFolder (const CH1* directory_path);
 

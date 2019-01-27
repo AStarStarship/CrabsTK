@@ -1,4 +1,4 @@
-/** Kabuki Arcade
+/* Kabuki Arcade
     @file    ~/source/kabuki/arcade/cards/player.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017-2018 Cale McCollough <calemccollough@gmail.com>;
@@ -13,29 +13,29 @@
              permissions and limitations under the License.
 */
 
-#ifndef HEADER_FOR_KABUKI_ARCADE_BLACKJACKPLAYER
-#define HEADER_FOR_KABUKI_ARCADE_BLACKJACKPLAYER
+#ifndef KABUKI_ARCADE_BLACKJACKPLAYER
+#define KABUKI_ARCADE_BLACKJACKPLAYER
 
 #include "player.h"
 
 namespace kabuki { namespace cards {
 
-/** Calculates the blackjack store of the given hand and ace_value.
+/* Calculates the blackjack store of the given hand and ace_value.
     @param hand The hand.
     @param ace_value Use value of either 1 or 13.
     @return Returns the score. */
 KABUKI SI4 BlackjackScore (Hand& hand, SI4 ace_value);
 
-/** Returns the min score of this hand where Aces are worth 1. */
+/* Returns the min score of this hand where Aces are worth 1. */
 KABUKI SI4 BlackjackMinScore (Hand& hand);
 
-/** Returns the max score of this hand where Aces are worth 11. */
+/* Returns the max score of this hand where Aces are worth 11. */
 KABUKI SI4 BlackjackMaxScore (Hand& hand);
 
-/** Compares the two Blackjack hands. */
+/* Compares the two Blackjack hands. */
 KABUKI SI4 BlackjackCompareHands (Hand& a, Hand& b);
 
-/** A player in a Blackjack game. */
+/* A player in a Blackjack game. */
 class BlackjackPlayer : public Player {
     public:
 
@@ -47,68 +47,68 @@ class BlackjackPlayer : public Player {
         kStateOutOfGame     = 4  //< State when player has lost game.
     };
 
-    /** Default Constructor. */
+    /* Default Constructor. */
     BlackjackPlayer (id::User* user, CardStack& stock,
                      BOL is_dealer = false);
 
-    /** Destructor. */
+    /* Destructor. */
     virtual ~BlackjackPlayer ();
 
-    /** Sets the state of the player. */
+    /* Sets the state of the player. */
     const CH1* SetState (SI4 state) override;
 
-    /** Handles hit signal. */
+    /* Handles hit signal. */
     void Hit ();
 
-    /** Handles hold signal. */
+    /* Handles hold signal. */
     void Hold ();
 
-    /** Returns the HighLowScore. */
+    /* Returns the HighLowScore. */
     //Array<CardCombo> GetHandCombos ();
 
-    /** Returns true if the player is holding. */
+    /* Returns true if the player is holding. */
     virtual BOL IsHolding ();
 
-    /** Function returns if this hand is 21. */
+    /* Function returns if this hand is 21. */
     BOL Is21 ();
 
-    /** Function returns true if the hand is a bust.
+    /* Function returns true if the hand is a bust.
         A hand is a bust if it is over 21 points. */
     BOL IsBust ();
 
-    /** Pure virtual new game logic handler. */
+    /* Pure virtual new game logic handler. */
     virtual void RestartGame ();
 
-    /** Processes beginning of round logic. */
+    /* Processes beginning of round logic. */
     virtual void BeginRound ();
 
-    /** Performs round logic. */
+    /* Performs round logic. */
     virtual void PlayRound ();
 
-    /** Processes beginning of round logic. */
+    /* Processes beginning of round logic. */
     virtual void EndRound ();
 
-    /** Processes beginning of round logic. */
+    /* Processes beginning of round logic. */
     virtual void EndGame ();
 
-    /** Compares this hand to the other.
+    /* Compares this hand to the other.
     @return Returns 0 if the hands are equal, > 1 if the other hand beats
     this hand and < 0 if the other hand wins.. */
     virtual SI4 Compare (Hand& hand);
 
-    /** Returns true if this hand wins compared to the other one. */
+    /* Returns true if this hand wins compared to the other one. */
     virtual BOL Wins (Hand& hand);
 
-    /** Prints the abridged player stats to the console. */
+    /* Prints the abridged player stats to the console. */
     virtual _::Text& PrintStats (_::Text& txt);
 
-    /** Prints the player to the console. */
+    /* Prints the player to the console. */
     virtual _::Text& Print (_::Text& txt = _::Text ());
 
-    /** Script operations. */
+    /* Script operations. */
     virtual const _::Operation* Star (uint index, _::Expression* expr);
 
-    /** Handles Text input.
+    /* Handles Text input.
         @param text     Beginning of the Text buffer. 
         @param strand_end End of the Text buffer.
         @return Returns nil upon success and an error string upon failure. */
@@ -121,4 +121,4 @@ class BlackjackPlayer : public Player {
 };
 }       //< namespace cards
 }       //< namespace kabuki
-#endif  //< HEADER_FOR_KABUKI_ARCADE_BLACKJACKPLAYER
+#endif  //< KABUKI_ARCADE_BLACKJACKPLAYER

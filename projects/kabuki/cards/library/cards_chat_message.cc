@@ -1,4 +1,4 @@
-/** kabuki:cards
+/* kabuki:cards
     @file    ~/source/kabuki/arcade/cards/chat_message.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017-2018 Cale McCollough <calemccollough@gmail.com>;

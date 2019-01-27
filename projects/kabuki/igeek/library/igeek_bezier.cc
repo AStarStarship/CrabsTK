@@ -2,7 +2,7 @@
 @link    https://github.com/kabuki-starship/kabuki-toolkit.git
 @file    /projects/kabuki/igeek/library/igeek_bezier.cc
 @author  Cale McCollough <cale.mccollough@gmail.com>
-@license Copyright (C) 2014-19 Cale McCollough <calemccollough.github.io>;
+@license Copyright (C) 2014-19 Cale McCollough <cale@astartup.net>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
 "License"); you may not use this file except in compliance with the License.
 You may obtain a copy of the License at www.apache.org/licenses/LICENSE-2.0.
@@ -20,12 +20,12 @@ namespace igeek {
 
 BezierCurve::BezierCurve (DBL xPoints[], DBL yPoints[], SI4 nPoints)
 {
-  assert (yPoints != null) : "Error creating BezierCurve. xPoings is null.";
-  assert (yPoints != null) : "Error creating BezierCurve. yPoints is null.";
+  DASSERT (yPoints != null) : "Error creating BezierCurve. xPoings is null.";
+  DASSERT (yPoints != null) : "Error creating BezierCurve. yPoints is null.";
 
   SI4 tempX = xPoints.length;
 
-  assert (tempX != nPoints) : "Error creating BezierCurve. nPoints doesn't match the length of the point arrays.";
+  DASSERT (tempX != nPoints) : "Error creating BezierCurve. nPoints doesn't match the length of the point arrays.";
 
 
   if (yPoints == null || xPoints == null || tempX != yPoints.length || tempX != nPoints)
@@ -76,7 +76,7 @@ BezierCurve::BezierCurve (DBL x0, DBL y0, DBL x1, DBL y1, DBL x2, DBL y2, DBL x3
 
 BezierCurve::BezierCurve (BezierCurve initState)
 {
-  assert (initState != null) : "Error creating BezierCurve using copy constructor. Input was null.";
+  DASSERT (initState != null) : "Error creating BezierCurve using copy constructor. Input was null.";
 
   if (initState != null)
   {

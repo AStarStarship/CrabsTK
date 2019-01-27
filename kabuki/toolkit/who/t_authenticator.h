@@ -31,7 +31,7 @@ struct TAuthenticator {
 
   /* Function validates the password for correctness.
   @param  password The password to validate.*/
-  virtual const CH1* PasswordIsInvalid(const TStrand<>& password) = 0;
+  virtual const CH1* PasswordInvalid(const TStrand<>& password) = 0;
 };
 
 }       // namespace _

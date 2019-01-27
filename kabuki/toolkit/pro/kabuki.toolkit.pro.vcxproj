@@ -22,22 +22,17 @@
     <ClInclude Include="00_foo.h" />
     <ClInclude Include="01_bar.h" />
     <ClInclude Include="cdoxygen.h" />
-    <ClInclude Include="cgit.h" />
+    <ClInclude Include="t_git.h" />
     <ClInclude Include="global.h" />
     <ClInclude Include="pch.h" />
-    <ClInclude Include="cproject.h" />
-    <ClInclude Include="cschedule.h" />
-    <ClInclude Include="ctask.h" />
+    <ClInclude Include="t_project.h" />
+    <ClInclude Include="t_schedule.h" />
+    <ClInclude Include="t_task.h" />
     <ClInclude Include="test_tree.h" />
-    <ClInclude Include="cworkspace.h" />
+    <ClInclude Include="t_workspace.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cc" />
-    <ClCompile Include="pro_git.cc" />
-    <ClCompile Include="pro_project.cc" />
-    <ClCompile Include="pro_schedule.cc" />
-    <ClCompile Include="pro_task.cc" />
-    <ClCompile Include="pro_workspace.cc" />
   </ItemGroup>
   <ItemGroup>
     <None Include="global_config.inl" />

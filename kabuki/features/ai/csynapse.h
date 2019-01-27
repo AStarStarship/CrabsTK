@@ -1,7 +1,7 @@
-/** Kabuki Toolkit @version 0.x
+/* Kabuki Toolkit @version 0.x
 @file    /kabuki/f2sdk/ai/perceptron.h
 @author  Cale McCollough <cale.mccollough@gmail.com>
-@license Copyright (C) 2014-19 Cale McCollough <calemccollough.github.io>;
+@license Copyright (C) 2014-19 Cale McCollough <cale@astartup.net>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
 "License"); you may not use this file except in compliance with the License.
 You may obtain a copy of the License at www.apache.org/licenses/LICENSE-2.0.
@@ -15,8 +15,8 @@ specific language governing permissions and limitations under the License. */
 
 #if MAJOR_SEAM >= 5 && MINOR_SEAM >= 1
 
-#ifndef HEADER_FOR_KABUKI_TOOLKIT_AIML_SYNAPSE
-#define HEADER_FOR_KABUKI_TOOLKIT_AIML_SYNAPSE
+#ifndef KABUKI_TOOLKIT_AIML_SYNAPSE
+#define KABUKI_TOOLKIT_AIML_SYNAPSE
 
 typedef float        float_t;
 typedef unsigned SI4 uint;
@@ -29,38 +29,38 @@ static const float_t kSynapseMin,      //< Synapse value min.
                      kSynapseNoiseMin, //< Min synapse noise.
                      kSynapseNoiseMax; //< Max synapse noise.
 
-/** Generates uniform random noise in the given range. */
+/* Generates uniform random noise in the given range. */
 float_t SynapseNoise (float_t min_value = kSynapseNoiseMin,
                       float_t max_value = kSynapseNoiseMax);
 class Perceptron;
 
-/** A synapse between an axon and dendrite. */
+/* A synapse between an axon and dendrite. */
 class Synapse {
     public:
 
-    /** Constructs a Synapse with the given min/max noise range. */
+    /* Constructs a Synapse with the given min/max noise range. */
     Synapse (Perceptron* rx);
 
-    /** Constructs a Synapse with the given weight. */
+    /* Constructs a Synapse with the given weight. */
     Synapse (Perceptron* rx, float_t weight);
 
-    /** Constructs a Synapse with the given min/max noise range. */
+    /* Constructs a Synapse with the given min/max noise range. */
     Synapse (Perceptron* rx, float_t min_value,
              float_t max_value);
 
-    /** Copy constructor shallow copies the rx_ perceptron. */
+    /* Copy constructor shallow copies the rx_ perceptron. */
     Synapse (const Synapse& other);
 
-    /** Gets the weight (i.e. how far apart they are). */
+    /* Gets the weight (i.e. how far apart they are). */
     float_t GetWeight ();
 
-    /** Sets the weight. */
+    /* Sets the weight. */
     void SetWeight (float_t weight);
 
-    /** Gets the rx terminal. */
+    /* Gets the rx terminal. */
     Perceptron* GetRx ();
 
-    /** Gets the rx terminal. */
+    /* Gets the rx terminal. */
     void SetRx (Perceptron* rx);
 
     private:
@@ -70,5 +70,5 @@ class Synapse {
 };
 
 }       //< namespace _
-#endif  //< #ifndef HEADER_FOR_KABUKI_TOOLKIT_AIML_SYNAPSE
+#endif  //< #ifndef KABUKI_TOOLKIT_AIML_SYNAPSE
 #endif  //< #if MAJOR_SEAM >= 5 && MINOR_SEAM >= 1

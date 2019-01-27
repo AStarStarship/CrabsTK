@@ -752,7 +752,7 @@ BOL maxiSample::loadOgg(string fileName, SI4 channel) {
     }
 	return result; // this should probably be something more descriptive
 #else
-  assert(false); // called but VORBIS not defined!
+  DASSERT(false); // called but VORBIS not defined!
 #endif
     return 0;
 }
@@ -2196,11 +2196,11 @@ void maxiSampler::trigger() {
     
 }
 
-///*************************************************************
+///************************************************************
 ///
 /// Init most variables
 ///
-///*************************************************************
+///************************************************************
 maxiRecorder::maxiRecorder() :
 bufferSize(maxiSettings::sampleRate * 2),
 bufferQueueSize(3),
@@ -2211,24 +2211,24 @@ threadRunning(false)
 
 }
 
-///*************************************************************
+///************************************************************
 ///
 /// Free resources in RAII manner and save to wav when this
 /// object lifetime is up!
 ///
-///*************************************************************
+///************************************************************
 maxiRecorder::~maxiRecorder()
 {
     if (isRecording()) saveToWav();
     freeResources();
 }
 
-///*************************************************************
+///************************************************************
 ///
 /// Free resources only if they exist; may be called multiple
 /// times in it's lifetime becasuse of destructor.
 ///
-///*************************************************************
+///************************************************************
 void maxiRecorder::freeResources()
 {
     if (savedBuffers.size() > 0)
@@ -2241,27 +2241,27 @@ void maxiRecorder::freeResources()
     }
 }
 
-///*************************************************************
+///************************************************************
 ///
 /// Simply return if we are recording or not
 ///
-///*************************************************************
+///************************************************************
 BOL maxiRecorder::isRecording() const
 {
     return doRecord;
 }
 
-///*************************************************************
+///************************************************************
 ///
 /// Set the filename (and path)
 ///
-///*************************************************************
+///************************************************************
 void maxiRecorder::setup(std::string _filename)
 {
     filename = _filename;
 }
 
-///*************************************************************
+///************************************************************
 ///
 /// You don't need to worry calling about this, this runs in a
 /// detached thread after calling startRecording() and means
@@ -2276,7 +2276,7 @@ void maxiRecorder::setup(std::string _filename)
 /// function from a static helper func and need to access object 
 /// specific variables.
 ///
-///*************************************************************
+///************************************************************
 #if defined(OS_IS_UNIX)
 void* maxiRecorder::update(void* _context)
 {
@@ -2313,12 +2313,12 @@ void* maxiRecorder::update(void* _context)
 }
 #endif
 
-///*************************************************************
+///************************************************************
 ///
 /// This whacks the update method into a detached thread which
 /// will ensure there are enough buffers available in the queue.
 ///
-///*************************************************************
+///************************************************************
 void maxiRecorder::startRecording()
 {
     doRecord = true;
@@ -2340,12 +2340,12 @@ void maxiRecorder::startRecording()
 
 }
 
-///*************************************************************
+///************************************************************
 ///
 /// stops the recording thread by allowing the stack to unwind
 /// in update() and stops the Windows thread if necessary
 ///
-///*************************************************************
+///************************************************************
 void maxiRecorder::stopRecording()
 {
 #if defined(OS_IS_WIN)
@@ -2354,7 +2354,7 @@ void maxiRecorder::stopRecording()
     doRecord = false;
 }
 
-///*************************************************************
+///************************************************************
 ///
 /// Shamelessly hacked together largely using this link
 /// http://stackoverflow.com/questions/22226872/two-problems-
@@ -2368,7 +2368,7 @@ void maxiRecorder::stopRecording()
 /// A clear optimisation would be to make getProcessedData()
 /// return a TArray of shorts to prevent another loop
 ///
-///*************************************************************
+///************************************************************
 template <typename T>
 void maxiRecorder::write(std::ofstream& _stream, const T& _t) {
     _stream.write((const CH1*)&_t, sizeof(T));
@@ -2432,13 +2432,13 @@ void maxiRecorder::saveToWav()
     }
 }
 
-///*************************************************************
+///************************************************************
 ///
 /// This takes the queue of user generated arrays and whacks
 /// it into a TArray of doubles which is easier to transverse
 /// and work with.
 ///
-///*************************************************************
+///************************************************************
 TArray<double> maxiRecorder::getProcessedData()
 {
     TArray<double> userData;
@@ -2468,14 +2468,14 @@ TArray<double> maxiRecorder::getProcessedData()
     return userData;
 }
 
-///*************************************************************
+///************************************************************
 ///
 /// Pass the buffer of audio to this method and it will write
 /// it to the right place. This method is real-time safe and
 /// is overriden for ofx's / port's floats array or maximilian's
 /// / rtaudio's double
 ///
-///*************************************************************
+///************************************************************
 void maxiRecorder::passData(double* _in, SI4 _inBufferSize)
 {
     for (SI4 i = 0; i < _inBufferSize; ++i)
@@ -2505,12 +2505,12 @@ void maxiRecorder::passData(float* _in, SI4 _inBufferSize)
     }
 }
 
-///*************************************************************
+///************************************************************
 ///
 /// The method to instanciate new memory and ensure the correct
 /// structures have the correct addresses.
 ///
-///*************************************************************
+///************************************************************
 void maxiRecorder::enqueueBuffer()
 {
     double* b = new double[bufferSize];

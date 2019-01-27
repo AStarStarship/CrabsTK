@@ -1,4 +1,4 @@
-/** Kabuki Toolkit
+/* Kabuki Toolkit
     @file    ~/kt/math/operator_divide.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017-2018 Cale McCollough <calemccollough@gmail.com>;
@@ -26,22 +26,22 @@ class Fraction
 {
     public:
 
-    /** Constructs an object with the given numberator and demonitor. */
+    /* Constructs an object with the given numberator and demonitor. */
     Fraction (float Numberator, float Denominator);
 
-    /** Gets the numberator. */
+    /* Gets the numberator. */
     float GetNumberator ();
 
-    /** Sets the numberator. */
+    /* Sets the numberator. */
     void SetNumberator (float Value);
 
-    /** Gets  the denominator. */
+    /* Gets  the denominator. */
     float GetDenominator ();
 
-    /** Sets the denominator. */
+    /* Sets the denominator. */
     void SetDenominator (float Value);
 
-    /** Prints this object to the terminal. */
+    /* Prints this object to the terminal. */
     _::Printer& Print (_::Printer& printer);
 
     private:

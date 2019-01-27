@@ -1,4 +1,4 @@
-/** Kabuki Arcade
+/* Kabuki Arcade
     @file    ~/source/project/kabuki/cards_card.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017-2018 Cale McCollough <calemccollough@gmail.com>;
@@ -146,7 +146,7 @@ void Card::Print (_::Text& txt) {
             break;
         }
     }
-    cout << suit_->GetLabel ();
+    cout << suit_->Label ();
 }
 
 }   //< namespace cards
