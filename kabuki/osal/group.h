@@ -1,4 +1,4 @@
-/** Kabuki Toolkit
+/* Kabuki Toolkit
     @file    $kabuki-toolkit/kabuki/toolkit/app/window_group.h
     @author  Cale McCollough <calemccollough.github.io>
     @license Copyright (C) 2014-2017 Cale McCollough <calemccollough@gmail.com>;
@@ -27,7 +27,7 @@ class ProcessTree {
     ProcessTree (TArray<Window> initWindows);
     uint32_t GetUID () { return uID; }
 
-/** Gets and sets the maximum number of windows in this group */
+/* Gets and sets the maximum number of windows in this group */
     SI4 ProcessTree::GetMaxWindows () { return maxWindows; }
 
     void ProcessTree::SetMaxWindows (uint32_t value)
@@ -36,14 +36,14 @@ class ProcessTree {
         maxWindows = value;
     }
 
-    /**  */
+    /*  */
     SI4 Select (SI4 windowNumber);
 
     SI4 GetNumWindows{ return numWindows; }
 
-    /** Adds a newWindow to the group. */
+    /* Adds a newWindow to the group. */
     void AddWindow (Window newWindow);
-    /** Returns a string representation of this object. */
+    /* Returns a string representation of this object. */
     _::Printer& Print (_::Printer& print);
 
     private:
@@ -53,6 +53,6 @@ class ProcessTree {
 };
 
 }       //< namespace _
-#endif  //< HEADER_FOR_KABUKI_TOOLKIT_APP_GROUP
+#endif  //< KABUKI_TOOLKIT_APP_GROUP
 #endif  //< #if MAJOR_SEAM >= 2 && MINOR_SEAM >= 1
     

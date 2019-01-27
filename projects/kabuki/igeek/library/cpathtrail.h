@@ -1,4 +1,4 @@
-/** Cell Evolutionary Interface
+/* Cell Evolutionary Interface
     @version   0.x
     @file      /.../CellEvolutionaryInterface/PathTrail.hpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
@@ -22,7 +22,7 @@
 namespace CellEvolutionaryInterface {
  
 class PathTrail
-/** A class that represents a trail of lines.
+/* A class that represents a trail of lines.
     This class is represented by a circular cue of 2 dimensionsal points.
  */
  {

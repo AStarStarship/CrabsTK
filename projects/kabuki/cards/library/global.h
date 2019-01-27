@@ -1,4 +1,4 @@
-/** Kabuki Arcade  
+/* Kabuki Arcade  
     @file    ~/source/kabuki/arcade/cards/global.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017-2018 Cale McCollough <calemccollough@gmail.com>;
@@ -13,8 +13,8 @@
              permissions and limitations under the License.
 */
 
-#ifndef HEADER_FOR_KABUKI_ARCADE_CARDS_GLOBAL
-#define HEADER_FOR_KABUKI_ARCADE_CARDS_GLOBAL
+#ifndef KABUKI_ARCADE_CARDS_GLOBAL
+#define KABUKI_ARCADE_CARDS_GLOBAL
 
 #include "../id/global.h"
 #include "blackjack_game.h"
@@ -22,4 +22,4 @@
 #include "client.h"
 #include "server.h"
 
-#endif  //< HEADER_FOR_KABUKI_ARCADE_CARDS_GLOBAL
+#endif  //< KABUKI_ARCADE_CARDS_GLOBAL

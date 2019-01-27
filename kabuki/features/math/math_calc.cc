@@ -1,4 +1,4 @@
-/** Kabuki Toolkit
+/* Kabuki Toolkit
     @file       ~/kt/math/Calc.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017-2018 Cale McCollough <calemccollough@gmail.com>;
@@ -546,7 +546,7 @@ inline double GetMaxDouble ()
 SI4 GetNextPrime (SI4 value)
 {
 
-    /** A list of prime numbers between 0 and 2999. */
+    /* A list of prime numbers between 0 and 2999. */
     SI4 PrimeNumbers[] = {
         2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47,
         53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101, 103, 107,

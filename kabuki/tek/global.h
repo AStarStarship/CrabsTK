@@ -16,6 +16,6 @@ specific language governing permissions and limitations under the License. */
 #ifndef INCLUDED_KABUKI_FEATURE_TEK_GLOBAL
 #define INCLUDED_KABUKI_FEATURE_TEK_GLOBAL 1
 
-#include "cunicontroller.h"
+#include "c_unicontroller.h"
 
 #endif	//< INCLUDED_KABUKI_FEATURE_TEK_GLOBAL

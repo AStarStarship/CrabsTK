@@ -1,7 +1,7 @@
-/** Kabuki Toolkit @version 0.x
+/* Kabuki Toolkit @version 0.x
 @file    /kabuki/f2sdk/ai/include/agent.h
 @author  Cale McCollough <cale.mccollough@gmail.com>
-@license Copyright (C) 2014-19 Cale McCollough <calemccollough.github.io>;
+@license Copyright (C) 2014-19 Cale McCollough <cale@astartup.net>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
 "License"); you may not use this file except in compliance with the License.
 You may obtain a copy of the License at www.apache.org/licenses/LICENSE-2.0.
@@ -24,7 +24,7 @@ namespace kabuki { namespace ai {
 
 // ## Chapter 2 - Intelligent Agents
 
-/** Invoked for each new percept and returns an action each time.
+/* Invoked for each new percept and returns an action each time.
     Figure 2.7 The TABLE-DRIVEN-AGENT program is invoked for each new percept and returns an action each time. It retains the complete percept sequence in memory.
 
     Figure 2.2 A vacuum-cleaner world with just two locations.
@@ -58,7 +58,7 @@ namespace kabuki { namespace ai {
     @endcode
 */
 
-/** Figure 2.8 The agent program for a simple reflex agent in the two-state vacuum environment. This program implements the agent function tabulated in Figure 2.3.
+/* Figure 2.8 The agent program for a simple reflex agent in the two-state vacuum environment. This program implements the agent function tabulated in Figure 2.3.
     function REFLEX-VACUUM-AGENT([location,status]) returns an action
 
     @code
@@ -68,7 +68,7 @@ namespace kabuki { namespace ai {
     @endcode
 */
 
-/** Figure 2.12 A model-based reflex agent. It keeps track of the current state of the world, using an internal model. It then chooses an action in the same way as the reflex agent.
+/* Figure 2.12 A model-based reflex agent. It keeps track of the current state of the world, using an internal model. It then chooses an action in the same way as the reflex agent.
     function SIMPLE-REFLEX-AGENT(percept ) returns an action
 persistent: rules, a set of condition–action rules
     @code
@@ -81,13 +81,13 @@ persistent: rules, a set of condition–action rules
 
 // 3. Problem-Solving Agents
 
-/**
+/*
 
     @code
     @endcode
 */
 
-/**
+/*
     Figure 3.1 A simple problem-solving agent. It first formulates a goal and a problem, searches for a sequence of actions that would solve the problem, and then executes the actions one at a time. When this is complete, it formulates another goal and starts over.
     @code
     function SIMPLE-PROBLEM-SOLVING-AGENT(percept ) returns an action
@@ -109,7 +109,7 @@ persistent: rules, a set of condition–action rules
 */
 
 
-/**
+/*
     Figure 3.7 An informal description of the general tree-search and graph-search algorithms. The parts of GRAPH-SEARCH marked in bold italic are the additions needed to handle repeated states.
     @code
     function TREE-SEARCH(problem) returns a solution, or failure
@@ -135,7 +135,7 @@ persistent: rules, a set of condition–action rules
     @endcode
 */
 
-/**
+/*
 
     @code
     function CHILD-NODE(problem, parent , action) returns a node
@@ -146,7 +146,7 @@ persistent: rules, a set of condition–action rules
     @endcode
 */
 
-/** Figure 3.11 Breadth-first search on a graph.
+/* Figure 3.11 Breadth-first search on a graph.
     @code
     function BREADTH-FIRST-SEARCH(problem) returns a solution, or failure
 
@@ -168,7 +168,7 @@ persistent: rules, a set of condition–action rules
     @endcode
 */
 
-/**
+/*
 
     @code
     function UNIFORM-COST-SEARCH(problem) returns a solution, or failure
@@ -191,7 +191,7 @@ persistent: rules, a set of condition–action rules
     @endcode
 */
 
-/** Figure 3.17 A recursive implementation of depth-limited tree search.
+/* Figure 3.17 A recursive implementation of depth-limited tree search.
 
     @code
     function DEPTH-LIMITED-SEARCH(problem, limit ) returns a solution, or failure/cutoff
@@ -211,7 +211,7 @@ persistent: rules, a set of condition–action rules
     @endcode
 */
 
-/** Figure 3.18 The iterative deepening search algorithm, which repeatedly applies depth-limited search with increasing limits. It terminates when a solution is found or if the depth-limited search returns failure, meaning that no solution exists.
+/* Figure 3.18 The iterative deepening search algorithm, which repeatedly applies depth-limited search with increasing limits. It terminates when a solution is found or if the depth-limited search returns failure, meaning that no solution exists.
 
     @code
     function ITERATIVE-DEEPENING-SEARCH(problem) returns a solution, or failure
@@ -221,7 +221,7 @@ persistent: rules, a set of condition–action rules
     @endcode
 */
 
-/** Figure 3.26 The algorithm for recursive best-first search.
+/* Figure 3.26 The algorithm for recursive best-first search.
 
     @code
 
@@ -247,7 +247,7 @@ persistent: rules, a set of condition–action rules
 
 // 4. Beyond Classical Search
 
-/** Figure 4.5 The simulated annealing algorithm, a version of stochastic hill climbing where some downhill moves are allowed. Downhill moves are accepted readily early in the annealing schedule and then less often as time goes on. The schedule input determines the value of the temperature T as a function of time.
+/* Figure 4.5 The simulated annealing algorithm, a version of stochastic hill climbing where some downhill moves are allowed. Downhill moves are accepted readily early in the annealing schedule and then less often as time goes on. The schedule input determines the value of the temperature T as a function of time.
 
     @code
     function SIMULATED-ANNEALING(problem, schedule) returns a solution state
@@ -265,7 +265,7 @@ persistent: rules, a set of condition–action rules
     @endcode
 */
 
-/** Figure 4.8 A genetic algorithm. The algorithm is the same as the one diagrammed in Figure 4.6, with one variation: in this more popular version, each mating of two parents produces only one offspring, not two.
+/* Figure 4.8 A genetic algorithm. The algorithm is the same as the one diagrammed in Figure 4.6, with one variation: in this more popular version, each mating of two parents produces only one offspring, not two.
 
     @code
     function GENETIC-ALGORITHM(population, FITNESS-FN) returns an individual
@@ -292,7 +292,7 @@ persistent: rules, a set of condition–action rules
     @endcode
 */
 
-/** Figure 4.11 An algorithm for searching AND–OR graphs generated by nondeterministic environments. It returns a conditional plan that reaches a goal state in all circumstances. (The notation [x | l] refers to the list formed by adding object x to the front of list l.)
+/* Figure 4.11 An algorithm for searching AND–OR graphs generated by nondeterministic environments. It returns a conditional plan that reaches a goal state in all circumstances. (The notation [x | l] refers to the list formed by adding object x to the front of list l.)
 
     @code
     function AND-OR-GRAPH-SEARCH(problem) returns a conditional plan, or failure
@@ -314,7 +314,7 @@ persistent: rules, a set of condition–action rules
     @endcode
 */
 
-/** Figure 4.21 An online search agent that uses depth-first exploration. The agent is applicable only in state spaces in which every action can be “undone” by some other action.
+/* Figure 4.21 An online search agent that uses depth-first exploration. The agent is applicable only in state spaces in which every action can be “undone” by some other action.
 
     @code
     function ONLINE-DFS-AGENT(s) returns an action
@@ -338,7 +338,7 @@ persistent: rules, a set of condition–action rules
     @endcode
 */
 
-/** Figure 4.24 LRTA*-AGENT selects an action according to the values of neighboring states, which are updated as the agent moves about the state space.
+/* Figure 4.24 LRTA*-AGENT selects an action according to the values of neighboring states, which are updated as the agent moves about the state space.
 
     @code
     function LRTA*-AGENT(s) returns an action
@@ -366,7 +366,7 @@ persistent: rules, a set of condition–action rules
 
 // 5. Adversarial Search
 
-/** Figure 5.3 An algorithm for calculating minimax decisions. It returns the action corresponding to the best possible move, that is, the move that leads to the outcome with the best utility, under the assumption that the opponent plays to minimize utility. The functions MAX-VALUE and MIN-VALUE go through the whole game tree, all the way to the leaves, to determine the backed-up value of a state. The notation argmaxa∈ S f(a) computes the element a of set S that has the maximum value of f(a).
+/* Figure 5.3 An algorithm for calculating minimax decisions. It returns the action corresponding to the best possible move, that is, the move that leads to the outcome with the best utility, under the assumption that the opponent plays to minimize utility. The functions MAX-VALUE and MIN-VALUE go through the whole game tree, all the way to the leaves, to determine the backed-up value of a state. The notation argmaxa∈ S f(a) computes the element a of set S that has the maximum value of f(a).
 
     @code
     function MINIMAX-DECISION(state) returns an action
@@ -390,7 +390,7 @@ persistent: rules, a set of condition–action rules
     @endcode
 */
 
-/** Figure 5.7 The alpha–beta search algorithm. Notice that these routines are the same as the MINIMAX functions in Figure 5.3, except for the two lines in each of MIN-VALUE and MAX-VALUE that maintain α and β (and the bookkeeping to pass these parameters along).
+/* Figure 5.7 The alpha–beta search algorithm. Notice that these routines are the same as the MINIMAX functions in Figure 5.3, except for the two lines in each of MIN-VALUE and MAX-VALUE that maintain α and β (and the bookkeeping to pass these parameters along).
 
     @code
     function ALPHA-BETA-SEARCH(state) returns an action
@@ -419,7 +419,7 @@ persistent: rules, a set of condition–action rules
 
 // 6. Constraint Satisfaction Problems
 
-/** Figure 6.3 The arc-consistency algorithm AC-3. After applying AC-3, either every arc is arc-consistent, or some variable has an empty domain, indicating that the CSP cannot be solved. The name “AC-3” was used by the algorithm’s inventor (Mackworth, 1977) because it’s the third version developed in the paper.
+/* Figure 6.3 The arc-consistency algorithm AC-3. After applying AC-3, either every arc is arc-consistent, or some variable has an empty domain, indicating that the CSP cannot be solved. The name “AC-3” was used by the algorithm’s inventor (Mackworth, 1977) because it’s the third version developed in the paper.
 
     @code
     function AC-3(csp) returns false if an inconsistency is found and true otherwise
@@ -445,7 +445,7 @@ persistent: rules, a set of condition–action rules
     @endcode
 */
 
-/** Figure 6.5 A simple backtracking algorithm for constraint satisfaction problems. The algorithm is modeled on the recursive depth-first search of Chapter 3. By varying the functions SELECT-UNASSIGNED-VARIABLE and ORDER-DOMAIN-VALUES, we can implement the general-purpose heuristics discussed in the text. The function INFERENCE can optionally be used to impose arc-, path-, or k-consistency, as desired. If a value choice leads to failure (noticed either by INFERENCE or by BACKTRACK), then value assignments (including those made by INFERENCE) are removed from the current assignment and a new value is tried.
+/* Figure 6.5 A simple backtracking algorithm for constraint satisfaction problems. The algorithm is modeled on the recursive depth-first search of Chapter 3. By varying the functions SELECT-UNASSIGNED-VARIABLE and ORDER-DOMAIN-VALUES, we can implement the general-purpose heuristics discussed in the text. The function INFERENCE can optionally be used to impose arc-, path-, or k-consistency, as desired. If a value choice leads to failure (noticed either by INFERENCE or by BACKTRACK), then value assignments (including those made by INFERENCE) are removed from the current assignment and a new value is tried.
 
     @code
     function BACKTRACKING-SEARCH(csp) returns a solution, or failure
@@ -468,7 +468,7 @@ persistent: rules, a set of condition–action rules
     @endcode
 */
 
-/** Figure 6.8 The MIN-CONFLICTS algorithm for solving CSPs by local search. The initial state may be chosen randomly or by a greedy assignment process that chooses a minimal conflict value for each variable in turn. The CONFLICTS function counts the number of constraints violated by a particular value, given the rest of the current assignment.
+/* Figure 6.8 The MIN-CONFLICTS algorithm for solving CSPs by local search. The initial state may be chosen randomly or by a greedy assignment process that chooses a minimal conflict value for each variable in turn. The CONFLICTS function counts the number of constraints violated by a particular value, given the rest of the current assignment.
 
     @codefunction MIN-CONFLICTS(csp,max steps) returns a solution or failure
     inputs: csp, a constraint satisfaction problem
@@ -484,7 +484,7 @@ persistent: rules, a set of condition–action rules
     @endcode
 */
 
-/** Figure 6.11 The TREE-CSP-SOLVER algorithm for solving tree-structured CSPs. If the CSP has a solution, we will find it in linear time; if not, we will detect a contradiction.
+/* Figure 6.11 The TREE-CSP-SOLVER algorithm for solving tree-structured CSPs. If the CSP has a solution, we will find it in linear time; if not, we will detect a contradiction.
 
     @code
     function TREE-CSP-SOLVER(csp) returns a solution, or failure
@@ -506,7 +506,7 @@ persistent: rules, a set of condition–action rules
 
 // 7. Logical Agents
 
-/** Figure 7.1 A generic knowledge-based agent. Given a percept, the agent adds the percept to its knowledge base, asks the knowledge base for the best action, and tells the knowledge base that it has in fact taken that action.
+/* Figure 7.1 A generic knowledge-based agent. Given a percept, the agent adds the percept to its knowledge base, asks the knowledge base for the best action, and tells the knowledge base that it has in fact taken that action.
 
     @code
     function KB-AGENT(percept ) returns an action
@@ -520,7 +520,7 @@ persistent: rules, a set of condition–action rules
         return action
     @endcode
 */
-/**  Figure 7.7 A BNF (Backus–Naur Form) grammar of sentences in propositional logic, along with operator precedences, from highest to lowest.
+/*  Figure 7.7 A BNF (Backus–Naur Form) grammar of sentences in propositional logic, along with operator precedences, from highest to lowest.
 |
 |  Logic Type         | Logic |
 |--------------------:|:------|
@@ -533,7 +533,7 @@ persistent: rules, a set of condition–action rules
 */
 
 
-/** Figure 7.10 A truth-table enumeration algorithm for deciding propositional entailment. (TT stands for truth table.) PL-TRUE? returns true if a sentence holds within a model. The variable model represents a partial model—an assignment to some of the symbols. The keyword “and” is used here as a logical operation on its two arguments, returning true or false.
+/* Figure 7.10 A truth-table enumeration algorithm for deciding propositional entailment. (TT stands for truth table.) PL-TRUE? returns true if a sentence holds within a model. The variable model represents a partial model—an assignment to some of the symbols. The keyword “and” is used here as a logical operation on its two arguments, returning true or false.
 
     @code
     function TT-ENTAILS?(KB,α) returns true or false
@@ -555,7 +555,7 @@ persistent: rules, a set of condition–action rules
     @endcode
 */
 
-/** Figure 7.11 Standard logical equivalences. The symbols α, β, and γ stand for arbitrary sentences of propositional logic.
+/* Figure 7.11 Standard logical equivalences. The symbols α, β, and γ stand for arbitrary sentences of propositional logic.
 
 |           Identity                      | Description. |
 |:---------------------------------------:|:-------------|
@@ -573,7 +573,7 @@ persistent: rules, a set of condition–action rules
 | (α ∨ (β ∧ γ)) ≡ ((α ∨ β) ∧ (α ∨ γ)) | Distributivity of ∨ over ∧ |
 */
 
-/** Figure 7.12 A simple resolution algorithm for propositional logic. The function PL-RESOLVE returns the set of all possible clauses obtained by resolving its two inputs.
+/* Figure 7.12 A simple resolution algorithm for propositional logic. The function PL-RESOLVE returns the set of all possible clauses obtained by resolving its two inputs.
 
     @code
     function PL-RESOLUTION(KB,α) returns true or false
@@ -592,7 +592,7 @@ persistent: rules, a set of condition–action rules
     @endcode
 */
 
-/** Figure 7.15 The forward-chaining algorithm for propositional logic. The agenda keeps track of symbols known to be true but not yet “processed.” The count table keeps track of how many premises of each implication are as yet unknown. Whenever a new symbol p from the agenda is processed, the count is reduced by one for each implication in whose premise p appears (easily identified in constant time with appropriate indexing.) If a count reaches zero, all the premises of the implication are known, so its conclusion can be added to the agenda. Finally, we need to keep track of which symbols have been processed; a symbol that is already in the set of inferred symbols need not be added to the agenda again. This avoids redundant work and prevents loops caused by implications such as P ⇒ Q and Q ⇒ P.
+/* Figure 7.15 The forward-chaining algorithm for propositional logic. The agenda keeps track of symbols known to be true but not yet “processed.” The count table keeps track of how many premises of each implication are as yet unknown. Whenever a new symbol p from the agenda is processed, the count is reduced by one for each implication in whose premise p appears (easily identified in constant time with appropriate indexing.) If a count reaches zero, all the premises of the implication are known, so its conclusion can be added to the agenda. Finally, we need to keep track of which symbols have been processed; a symbol that is already in the set of inferred symbols need not be added to the agenda again. This avoids redundant work and prevents loops caused by implications such as P ⇒ Q and Q ⇒ P.
 
     @code
     function PL-FC-ENTAILS?(KB, q) returns true or false
@@ -613,7 +613,7 @@ persistent: rules, a set of condition–action rules
     @endcode
 */
 
-/** Figure 7.17 The DPLL algorithm for checking satisfiability of a sentence in propositional logic. The ideas behind FIND-PURE-SYMBOL and FIND-UNIT-CLAUSE are described in the text; each returns a symbol (or null) and the truth value to assign to that symbol. Like TT-ENTAILS?, DPLL operates over partial models.
+/* Figure 7.17 The DPLL algorithm for checking satisfiability of a sentence in propositional logic. The ideas behind FIND-PURE-SYMBOL and FIND-UNIT-CLAUSE are described in the text; each returns a symbol (or null) and the truth value to assign to that symbol. Like TT-ENTAILS?, DPLL operates over partial models.
 
     @code
     function DPLL-SATISFIABLE?(s) returns true or false
@@ -636,7 +636,7 @@ persistent: rules, a set of condition–action rules
     @endcode
 */
 
-/** Figure 7.18 The WALKSAT algorithm for checking satisfiability by randomly flipping the values of variables. Many versions of the algorithm exist.
+/* Figure 7.18 The WALKSAT algorithm for checking satisfiability by randomly flipping the values of variables. Many versions of the algorithm exist.
 
     @code
     function WALKSAT(clauses, p,max flips) returns a satisfying model or failure
@@ -654,7 +654,7 @@ persistent: rules, a set of condition–action rules
     @endcode
 */
 
-/** Figure 7.20 A hybrid agent program for the wumpus world. It uses a propositional knowledge base to infer the state of the world, and a combination of problem-solving search and domain-specific code to decide what actions to take.
+/* Figure 7.20 A hybrid agent program for the wumpus world. It uses a propositional knowledge base to infer the state of the world, and a combination of problem-solving search and domain-specific code to decide what actions to take.
 
     @code
     function HYBRID-WUMPUS-AGENT(percept ) returns an action
@@ -697,7 +697,7 @@ persistent: rules, a set of condition–action rules
     @endcode
 */
 
-/** Figure 7.22 The SATPLAN algorithm. The planning problem is translated into a CNF sentence in which the goal is asserted to hold at a fixed time step t and axioms are included for each time step up to t. If the satisfiability algorithm finds a model, then a plan is extracted by looking at those proposition symbols that refer to actions and are assigned true in the model. If no model exists, then the process is repeated with the goal moved one step later.
+/* Figure 7.22 The SATPLAN algorithm. The planning problem is translated into a CNF sentence in which the goal is asserted to hold at a fixed time step t and axioms are included for each time step up to t. If the satisfiability algorithm finds a model, then a plan is extracted by looking at those proposition symbols that refer to actions and are assigned true in the model. If no model exists, then the process is repeated with the goal moved one step later.
 
     @code
     function SATPLAN(init , transition, goal , T max) returns solution or failure
@@ -712,7 +712,7 @@ persistent: rules, a set of condition–action rules
     @endcode
 */
 
-/** Figure 8.3 The syntax of first-order logic with equality, specified in Backus–Naur form (see page 1060 if you are not familiar with this notation). Operator precedences are specified, from highest to lowest. The precedence of quantifiers is such that a quantifier holds over everything to the right of it.
+/* Figure 8.3 The syntax of first-order logic with equality, specified in Backus–Naur form (see page 1060 if you are not familiar with this notation). Operator precedences are specified, from highest to lowest. The precedence of quantifiers is such that a quantifier holds over everything to the right of it.
 
 |                 logic | Equality                            |
 |----------------------:|:-----------------------------------:|
@@ -730,7 +730,7 @@ persistent: rules, a set of condition–action rules
 
 
 
-/** Figure 9.1 The unification algorithm. The algorithm works by comparing the structures of the inputs, element by element. The substitution θ that is the argument to UNIFY is built up along the way and is used to make sure that later comparisons are consistent with bindings that were established earlier. In a compound expression such as F(A,B), the OP field picks out the function symbol F and the ARGS field picks out the argument list (A,B).
+/* Figure 9.1 The unification algorithm. The algorithm works by comparing the structures of the inputs, element by element. The substitution θ that is the argument to UNIFY is built up along the way and is used to make sure that later comparisons are consistent with bindings that were established earlier. In a compound expression such as F(A,B), the OP field picks out the function symbol F and the ARGS field picks out the argument list (A,B).
 
     @code
     function UNIFY(x , y, θ) returns a substitution to make x and y identical
@@ -755,7 +755,7 @@ persistent: rules, a set of condition–action rules
     @endcode
 */
 
-/** Figure 9.3 A conceptually straightforward, but very inefficient, forward-chaining algorithm. On each iteration, it adds to KB all the atomic sentences that can be inferred in one step from the implication sentences and the atomic sentences already in KB. The function STANDARDIZE-VARIABLES replaces all variables in its arguments with new ones that have not been used before.
+/* Figure 9.3 A conceptually straightforward, but very inefficient, forward-chaining algorithm. On each iteration, it adds to KB all the atomic sentences that can be inferred in one step from the implication sentences and the atomic sentences already in KB. The function STANDARDIZE-VARIABLES replaces all variables in its arguments with new ones that have not been used before.
 
     @code
     function FOL-FC-ASK(KB,α) returns a substitution or false
@@ -784,7 +784,7 @@ persistent: rules, a set of condition–action rules
     @endcode
 */
 
-/** Figure 9.6 A simple backward-chaining algorithm for first-order knowledge bases.
+/* Figure 9.6 A simple backward-chaining algorithm for first-order knowledge bases.
 
     @code
     function FOL-BC-ASK(KB, query) returns a generator of substitutions
@@ -808,7 +808,7 @@ persistent: rules, a set of condition–action rules
     @endcode
 */
 
-/** Figure 9.8 Pseudocode representing the result of compiling the Append predicate. The function NEW-VARIABLE returns a new variable, distinct from all other variables used so far. The procedure CALL(continuation) continues execution with the specified continuation.
+/* Figure 9.8 Pseudocode representing the result of compiling the Append predicate. The function NEW-VARIABLE returns a new variable, distinct from all other variables used so far. The procedure CALL(continuation) continues execution with the specified continuation.
 
     @code
     procedure APPEND(ax , y, az , continuation)
@@ -823,7 +823,7 @@ persistent: rules, a set of condition–action rules
 
 // 10. Classical Planning
 
-/** Figure 10.9 The GRAPHPLAN algorithm. GRAPHPLAN calls EXPAND-GRAPH to add a level until either a solution is found by EXTRACT-SOLUTION, or no solution is possible.
+/* Figure 10.9 The GRAPHPLAN algorithm. GRAPHPLAN calls EXPAND-GRAPH to add a level until either a solution is found by EXTRACT-SOLUTION, or no solution is possible.
 
     @code
     function GRAPHPLAN(problem) returns solution or failure
@@ -842,7 +842,7 @@ persistent: rules, a set of condition–action rules
 
 // 11. Planning and Acting in the Real World
 
-/** Figure 11.5 A breadth-first implementation of hierarchical forward planning search. The initial plan supplied to the algorithm is [Act]. The REFINEMENTS function returns a set of action sequences, one for each refinement of the HLA whose preconditions are satisfied by the specified state, outcome.
+/* Figure 11.5 A breadth-first implementation of hierarchical forward planning search. The initial plan supplied to the algorithm is [Act]. The REFINEMENTS function returns a set of action sequences, one for each refinement of the HLA whose preconditions are satisfied by the specified state, outcome.
 
     @code
     function HIERARCHICAL-SEARCH(problem, hierarchy) returns a solution, or failure
@@ -861,7 +861,7 @@ persistent: rules, a set of condition–action rules
     @endcode
 */
 
-/** Figure 11.8 A hierarchical planning algorithm that uses angelic semantics to identify and commit to high-level plans that work while avoiding high-level plans that don’t. The predicate MAKING-PROGRESS checks to make sure that we aren’t stuck in an infinite regression of refinements. At top level, call ANGELIC-SEARCH with [Act ] as the initialPlan .
+/* Figure 11.8 A hierarchical planning algorithm that uses angelic semantics to identify and commit to high-level plans that work while avoiding high-level plans that don’t. The predicate MAKING-PROGRESS checks to make sure that we aren’t stuck in an infinite regression of refinements. At top level, call ANGELIC-SEARCH with [Act ] as the initialPlan .
 
     @code
     function ANGELIC-SEARCH(problem, hierarchy, initialPlan ) returns solution or fail
@@ -900,7 +900,7 @@ persistent: rules, a set of condition–action rules
 
 // 13. Quantifying Uncertainty
 
-/** Figure 13.1 A decision-theoretic agent that selects rational actions.
+/* Figure 13.1 A decision-theoretic agent that selects rational actions.
 
     @code
     function DT-AGENT(percept ) returns an action
@@ -918,7 +918,7 @@ persistent: rules, a set of condition–action rules
 
 // 14. Probabilistic Learning
 
-/** Figure 14.9 The enumeration algorithm for answering queries on Bayesian networks.
+/* Figure 14.9 The enumeration algorithm for answering queries on Bayesian networks.
 
     @code
     function ENUMERATION-ASK(X, e, bn) returns a distribution over X
@@ -942,7 +942,7 @@ persistent: rules, a set of condition–action rules
     @endcode
 */
 
-/** Figure 14.11 The variable elimination algorithm for inference in Bayesian networks.
+/* Figure 14.11 The variable elimination algorithm for inference in Bayesian networks.
 
     @code
     function ELIMINATION-ASK(X, e, bn) returns a distribution over X
@@ -958,7 +958,7 @@ persistent: rules, a set of condition–action rules
     @endcode
 */
 
-/** Figure 14.13 A sampling algorithm that generates events from a Bayesian network. Each variable is sampled according to the conditional distribution given the values already sampled for the variable’s parents.
+/* Figure 14.13 A sampling algorithm that generates events from a Bayesian network. Each variable is sampled according to the conditional distribution given the values already sampled for the variable’s parents.
 
     @code
     function PRIOR-SAMPLE(bn) returns an event sampled from the prior specified by bn
@@ -971,7 +971,7 @@ persistent: rules, a set of condition–action rules
     @endcode
 */
 
-/** Figure 14.14 The rejection-sampling algorithm for answering queries given evidence in a Bayesian network.
+/* Figure 14.14 The rejection-sampling algorithm for answering queries given evidence in a Bayesian network.
 
     @code
     function REJECTION-SAMPLING(X, e, bn,N) returns an estimate of P(X|e)
@@ -989,7 +989,7 @@ persistent: rules, a set of condition–action rules
     @endcode
 */
 
-/** Figure 14.15 The likelihood-weighting algorithm for inference in Bayesian networks. In WEIGHTED-SAMPLE, each nonevidence variable is sampled according to the conditional distribution given the values already sampled for the variable’s parents, while a weight is accumulated based on the likelihood for each evidence variable.
+/* Figure 14.15 The likelihood-weighting algorithm for inference in Bayesian networks. In WEIGHTED-SAMPLE, each nonevidence variable is sampled according to the conditional distribution given the values already sampled for the variable’s parents, while a weight is accumulated based on the likelihood for each evidence variable.
 
     @code
     function LIKELIHOOD-WEIGHTING(X, e, bn,N) returns an estimate of P(X|e)
@@ -1015,7 +1015,7 @@ persistent: rules, a set of condition–action rules
     @endcode
 */
 
-/** Figure 14.16 The Gibbs sampling algorithm for approximate inference in Bayesian networks; this version cycles through the variables, but choosing variables at random also works.
+/* Figure 14.16 The Gibbs sampling algorithm for approximate inference in Bayesian networks; this version cycles through the variables, but choosing variables at random also works.
 
     @code
     function GIBBS-ASK(X, e, bn,N) returns an estimate of P(X|e)
@@ -1033,7 +1033,7 @@ persistent: rules, a set of condition–action rules
 
 // 15. Probabilistic Reasoning over Time
 
-/** Figure 15.4 The forward–backward algorithm for smoothing: computing posterior probabilities of a sequence of states given a sequence of observations. The FORWARD and BACKWARD operators are defined by Equations (15.5) and (15.9), respectively.
+/* Figure 15.4 The forward–backward algorithm for smoothing: computing posterior probabilities of a sequence of states given a sequence of observations. The FORWARD and BACKWARD operators are defined by Equations (15.5) and (15.9), respectively.
 
     @code
     function FORWARD-BACKWARD(ev, prior ) returns a TArray of probability distributions
@@ -1053,7 +1053,7 @@ persistent: rules, a set of condition–action rules
     @endcode
 */
 
-/** Figure 15.6 An algorithm for smoothing with a fixed time lag of d steps, implemented as an online algorithm that outputs the new smoothed estimate given the observation for a new time step. Notice that the final output NORMALIZE(f×B1) is just α f×b, by Equation (15.14).
+/* Figure 15.6 An algorithm for smoothing with a fixed time lag of d steps, implemented as an online algorithm that outputs the new smoothed estimate given the observation for a new time step. Notice that the final output NORMALIZE(f×B1) is just α f×b, by Equation (15.14).
 
     @code
     function FIXED-LAG-SMOOTHING(et,hmm, d) returns a distribution over Xt−d
@@ -1080,7 +1080,7 @@ persistent: rules, a set of condition–action rules
     @endcode
 */
 
-/** Figure 15.17 The particle filtering algorithm implemented as a recursive update operation with state (the set of samples). Each of the sampling operations involves sampling the relevant slice variables in topological order, much as in PRIOR-SAMPLE. The WEIGHTED-SAMPLE-WITH-REPLACEMENT operation can be implemented to run in O(N) expected time. The step numbers refer to the description in the text.
+/* Figure 15.17 The particle filtering algorithm implemented as a recursive update operation with state (the set of samples). Each of the sampling operations involves sampling the relevant slice variables in topological order, much as in PRIOR-SAMPLE. The WEIGHTED-SAMPLE-WITH-REPLACEMENT operation can be implemented to run in O(N) expected time. The step numbers refer to the description in the text.
 
     @code
     function PARTICLE-FILTERING(e,N, dbn) returns a set of samples for the next time step
@@ -1100,7 +1100,7 @@ persistent: rules, a set of condition–action rules
 
 // 16. Making Simple Decisions
 
-/** Figure 16.9 Design of a simple information-gathering agent. The agent works by repeatedly selecting the observation with the highest information value, until the cost of the next observation is greater than its expected benefit.
+/* Figure 16.9 Design of a simple information-gathering agent. The agent works by repeatedly selecting the observation with the highest information value, until the cost of the next observation is greater than its expected benefit.
 
     @code
     function INFORMATION-GATHERING-AGENT(percept ) returns an action
@@ -1114,7 +1114,7 @@ persistent: rules, a set of condition–action rules
     @endcode
 */
 
-/** Figure 17.4 The value iteration algorithm for calculating utilities of states. The termination condition is from Equation (17.8).
+/* Figure 17.4 The value iteration algorithm for calculating utilities of states. The termination condition is from Equation (17.8).
 
     @code
     function VALUE-ITERATION(mdp, ) returns a utility function
@@ -1138,7 +1138,7 @@ persistent: rules, a set of condition–action rules
     @endcode
 */
 
-/** Figure 17.7 The policy iteration algorithm for calculating an optimal policy.
+/* Figure 17.7 The policy iteration algorithm for calculating an optimal policy.
 
     @code
     function POLICY-ITERATION(mdp) returns a policy
@@ -1174,7 +1174,7 @@ persistent: rules, a set of condition–action rules
     @endcode
 */
 
-/** Figure 17.9 A high-level sketch of the value iteration algorithm for POMDPs. The REMOVE-DOMINATED-PLANS step and MAX-DIFFERENCE test are typically implemented as linear programs.
+/* Figure 17.9 A high-level sketch of the value iteration algorithm for POMDPs. The REMOVE-DOMINATED-PLANS step and MAX-DIFFERENCE test are typically implemented as linear programs.
 
     @code
     function POMDP-VALUE-ITERATION(pomdp, ) returns a utility function
@@ -1196,7 +1196,7 @@ persistent: rules, a set of condition–action rules
 
 // 18. Learning from Examples
 
-/** Figure 18.5 The decision-tree learning algorithm. The function IMPORTANCE is described in Section 18.3.4. The function PLURALITY-VALUE selects the most common output value among a set of examples, breaking ties randomly.
+/* Figure 18.5 The decision-tree learning algorithm. The function IMPORTANCE is described in Section 18.3.4. The function PLURALITY-VALUE selects the most common output value among a set of examples, breaking ties randomly.
 
     @code
     function DECISION-TREE-LEARNING(examples, attributes, parent examples) returns
@@ -1216,7 +1216,7 @@ persistent: rules, a set of condition–action rules
     @endcode
 */
 
-/** Figure 18.8 An algorithm to select the model that has the lowest error rate on validation data by building models of increasing complexity, and choosing the one with best empirical error rate on validation data. Here errT means error rate on the training data, and errV means error rate on the validation data. Learner (size, examples) returns a hypothesis whose complexity is set by the parameter size, and which is trained on the examples. PARTITION(examples, fold, k) splits examples into two subsets: a validation set of size N/k and a training set with all the other examples. The split is different for each value of fold.
+/* Figure 18.8 An algorithm to select the model that has the lowest error rate on validation data by building models of increasing complexity, and choosing the one with best empirical error rate on validation data. Here errT means error rate on the training data, and errV means error rate on the validation data. Learner (size, examples) returns a hypothesis whose complexity is set by the parameter size, and which is trained on the examples. PARTITION(examples, fold, k) splits examples into two subsets: a validation set of size N/k and a training set with all the other examples. The split is different for each value of fold.
 
     @code
     function CROSS-VALIDATION-WRAPPER(Learner , k, examples) returns a hypothesis
@@ -1243,7 +1243,7 @@ persistent: rules, a set of condition–action rules
     @endcode
 */
 
-/** Figure 18.11 An algorithm for learning decision lists.
+/* Figure 18.11 An algorithm for learning decision lists.
 
     @code
     function DECISION-LIST-LEARNING(examples) returns a decision list, or failure
@@ -1258,7 +1258,7 @@ persistent: rules, a set of condition–action rules
     @endcode
 */
 
-/** Figure 18.24 The back-propagation algorithm for learning in multilayer networks.
+/* Figure 18.24 The back-propagation algorithm for learning in multilayer networks.
 
     @code
     function BACK-PROP-LEARNING(examples, network ) returns a neural network
@@ -1297,7 +1297,7 @@ persistent: rules, a set of condition–action rules
     @endcode
 */
 
-/** Figure 18.34 The ADABOOST variant of the boosting method for ensemble learning. The algorithmgenerates hypotheses by successively reweighting the training examples. The function WEIGHTED-MAJORITY generates a hypothesis that returns the output value with the highest vote from the hypotheses in h, with votes weighted by z.
+/* Figure 18.34 The ADABOOST variant of the boosting method for ensemble learning. The algorithmgenerates hypotheses by successively reweighting the training examples. The function WEIGHTED-MAJORITY generates a hypothesis that returns the output value with the highest vote from the hypotheses in h, with votes weighted by z.
 
     @code
     function ADABOOST(examples,L,K) returns a weighted-majority hypothesis
@@ -1321,7 +1321,7 @@ persistent: rules, a set of condition–action rules
     @endcode
 */
 
-/** Figure 19.2 The current-best-hypothesis learning algorithm. It searches for a consistent hypothesis that fits all the examples and backtracks when no consistent specialization/ generalization can be found. To start the algorithm, any hypothesis can be passed in; it will be specialized or gneralized as needed.
+/* Figure 19.2 The current-best-hypothesis learning algorithm. It searches for a consistent hypothesis that fits all the examples and backtracks when no consistent specialization/ generalization can be found. To start the algorithm, any hypothesis can be passed in; it will be specialized or gneralized as needed.
 
     @code
     function CURRENT-BEST-LEARNING(examples, h) returns a hypothesis or fail
@@ -1342,7 +1342,7 @@ persistent: rules, a set of condition–action rules
     @endcode
 */
 
-/** Figure 19.3 The version space learning algorithm. It finds a subset of V that is consistent with all the examples.
+/* Figure 19.3 The version space learning algorithm. It finds a subset of V that is consistent with all the examples.
 
     @code
     function VERSION-SPACE-LEARNING(examples) returns a version space
@@ -1359,7 +1359,7 @@ persistent: rules, a set of condition–action rules
     @endcode
 */
 
-/** Figure 19.8 An algorithm for finding a minimal consistent determination.
+/* Figure 19.8 An algorithm for finding a minimal consistent determination.
 
     @code
     function MINIMAL-CONSISTENT-DET(E,A) returns a set of attributes
@@ -1383,7 +1383,7 @@ persistent: rules, a set of condition–action rules
     @endcode
 */
 
-/** Figure 19.12 Sketch of the FOIL algorithm for learning sets of first-order Horn clauses from examples. NEW-LITERALS and CHOOSE-LITERAL are explained in the text.
+/* Figure 19.12 Sketch of the FOIL algorithm for learning sets of first-order Horn clauses from examples. NEW-LITERALS and CHOOSE-LITERAL are explained in the text.
 
     @code
     function FOIL(examples, target) returns a set of Horn clauses
@@ -1421,7 +1421,7 @@ persistent: rules, a set of condition–action rules
 
 // 21. Reinforcement Learning
 
-/** Figure 21.2 A passive reinforcement learning agent based on adaptive dynamic programming. The POLICY-EVALUATION function solves the fixed-policy Bellman equations, as described on page 657.
+/* Figure 21.2 A passive reinforcement learning agent based on adaptive dynamic programming. The POLICY-EVALUATION function solves the fixed-policy Bellman equations, as described on page 657.
 
     @code
     function PASSIVE-ADP-AGENT(percept ) returns an action
@@ -1444,7 +1444,7 @@ persistent: rules, a set of condition–action rules
     @endcode
 */
 
-/** Figure 21.4 A passive reinforcement learning agent that learns utility estimates using temporal differences. The step-size function α(n) is chosen to ensure convergence, as described in the text.
+/* Figure 21.4 A passive reinforcement learning agent that learns utility estimates using temporal differences. The step-size function α(n) is chosen to ensure convergence, as described in the text.
 
     @code
     function PASSIVE-TD-AGENT(percept ) returns an action
@@ -1463,7 +1463,7 @@ persistent: rules, a set of condition–action rules
     @endcode
 */
 
-/** Figure 21.8 An exploratory Q-learning agent. It is an active learner that learns the value Q(s, a) of each action in each situation. It uses the same exploration function f as the exploratory ADP agent, but avoids having to learn the transition model because the Q-value of a state can be related directly to those of its neighbors.
+/* Figure 21.8 An exploratory Q-learning agent. It is an active learner that learns the value Q(s, a) of each action in each situation. It uses the same exploration function f as the exploratory ADP agent, but avoids having to learn the transition model because the Q-value of a state can be related directly to those of its neighbors.
 
     @code
     function Q-LEARNING-AGENT(percept ) returns an action
@@ -1483,7 +1483,7 @@ persistent: rules, a set of condition–action rules
 
 // 22. Natural Language Processing
 
-/** Figure 22.1 The HITS algorithm for computing hubs and authorities with respect to a query. RELEVANT-PAGES fetches the pages that match the query, and EXPAND-PAGES adds in every page that links to or is linked from one of the relevant pages. NORMALIZE divides each page’s score by the sum of the squares of all pages’ scores (separately for both the authority and hubs scores).
+/* Figure 22.1 The HITS algorithm for computing hubs and authorities with respect to a query. RELEVANT-PAGES fetches the pages that match the query, and EXPAND-PAGES adds in every page that links to or is linked from one of the relevant pages. NORMALIZE divides each page’s score by the sum of the squares of all pages’ scores (separately for both the authority and hubs scores).
 
     @code
     function HITS(query) returns pages with hub and authority numbers
@@ -1502,7 +1502,7 @@ persistent: rules, a set of condition–action rules
 
 // 23. Natural Language for Communication
 
-/** Figure 23.5 The CYK algorithm for parsing. Given a sequence of words, it finds the most probable derivation for the whole sequence and for each subsequence. It returns the whole table, P, in which an entry P[X, start , len] is the probability of the most probable X of length len starting at position start . If there is no X of that size at that location, the probability is 0.
+/* Figure 23.5 The CYK algorithm for parsing. Given a sequence of words, it finds the most probable derivation for the whole sequence and for each subsequence. It returns the whole table, P, in which an entry P[X, start , len] is the probability of the most probable X of length len starting at position start . If there is no X of that size at that location, the probability is 0.
 
     @code
     function CYK-PARSE(words, grammar ) returns P, a table of probabilities
@@ -1532,7 +1532,7 @@ persistent: rules, a set of condition–action rules
 
 // 25. Robotics
 
-/** Figure 25.9 A Monte Carlo localization algorithm using a range-scan sensor model with independent noise.
+/* Figure 25.9 A Monte Carlo localization algorithm using a range-scan sensor model with independent noise.
 
     @code
     function MONTE-CARLO-LOCALIZATION(a, z , N, P(X|X, v, ω), P(z|z∗), m) returns a set of samples for the next time step

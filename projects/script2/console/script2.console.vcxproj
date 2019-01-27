@@ -35,7 +35,7 @@
     <ClInclude Include="..\..\..\script2\13_dictionary.h" />
     <ClInclude Include="..\..\..\script2\14_expr.h" />
     <ClInclude Include="..\..\..\script2\15_door.h" />
-    <ClInclude Include="..\..\..\script2\16_room_and_wall.h" />
+    <ClInclude Include="..\..\..\script2\16_room_wall.h" />
     <ClInclude Include="..\..\..\script2\c_address.h" />
     <ClInclude Include="..\..\..\script2\c_args.h" />
     <ClInclude Include="..\..\..\script2\c_ascii.h" />

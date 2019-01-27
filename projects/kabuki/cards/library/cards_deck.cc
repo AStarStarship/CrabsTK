@@ -1,4 +1,4 @@
-/** Kabuki Arcade
+/* Kabuki Arcade
     @file    ~/source/kabuki/arcade/cards/deck_.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017-2018 Cale McCollough <calemccollough@gmail.com>;
@@ -21,10 +21,10 @@ using namespace std;
 namespace kabuki { namespace cards {
 
 const SI4 Deck::kDefaultSuitValues[4] = { 1, 2, 3, 4 };
-/** The default deck_ art directory. */
+/* The default deck_ art directory. */
 const CH1 Deck::kDefaultDeckArtDirectory[] = "./\0";
 
-/** The default rear deck_ image. */
+/* The default rear deck_ image. */
 const CH1 Deck::kDefaultRearDeckImage[] = "card.png\0";
 
 Deck::Deck (SI4 num_decks, BOL has_jokers, SI4 aces_high, Suit::Format format,

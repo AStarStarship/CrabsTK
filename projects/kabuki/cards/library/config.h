@@ -1,4 +1,4 @@
-/** Kabuki Arcade
+/* Kabuki Arcade
     @file    ~/source/kabuki/arcade/cards/config.h
     @author  Cale McCollough <calemccollough.github.io>
     @license Copyright (C) 2017-2018 Cale McCollough <calemccollough@gmail.com>;
@@ -13,12 +13,12 @@
              permissions and limitations under the License.
 */
  
-#ifndef HEADER_FOR_KABUKI_ARCADE_CARDS_COFIG
-#define HEADER_FOR_KABUKI_ARCADE_CARDS_COFIG
+#ifndef KABUKI_ARCADE_CARDS_COFIG
+#define KABUKI_ARCADE_CARDS_COFIG
 
 #include "../config.h"
 #include "../id/global.h"
 #include "../data/global.h"
 #include "../store/global.h"
 
-#endif	//< HEADER_FOR_KABUKI_ARCADE_CARDS_COFIG
+#endif	//< KABUKI_ARCADE_CARDS_COFIG

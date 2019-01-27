@@ -14,6 +14,139 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="c_dmxbuffer.h">
+      <Filter>kabuki\tek</Filter>
+    </ClInclude>
+    <ClInclude Include="c_dmxreceiver.h">
+      <Filter>kabuki\tek</Filter>
+    </ClInclude>
+    <ClInclude Include="c_dmxtransceiver.h">
+      <Filter>kabuki\tek</Filter>
+    </ClInclude>
+    <ClInclude Include="c_dmxtransmitter.h">
+      <Filter>kabuki\tek</Filter>
+    </ClInclude>
+    <ClInclude Include="c_flowcontroller.h">
+      <Filter>kabuki\tek</Filter>
+    </ClInclude>
+    <ClInclude Include="c_flyingfader.h">
+      <Filter>kabuki\tek</Filter>
+    </ClInclude>
+    <ClInclude Include="c_ioexpander.h">
+      <Filter>kabuki\tek</Filter>
+    </ClInclude>
+    <ClInclude Include="c_led.h">
+      <Filter>kabuki\tek</Filter>
+    </ClInclude>
+    <ClInclude Include="c_ledmatrix.h">
+      <Filter>kabuki\tek</Filter>
+    </ClInclude>
+    <ClInclude Include="c_ledrgb.h">
+      <Filter>kabuki\tek</Filter>
+    </ClInclude>
+    <ClInclude Include="c_ledvumeter.h">
+      <Filter>kabuki\tek</Filter>
+    </ClInclude>
+    <ClInclude Include="c_ledvumeterarray.h">
+      <Filter>kabuki\tek</Filter>
+    </ClInclude>
+    <ClInclude Include="c_micelectrolytic.h">
+      <Filter>kabuki\tek</Filter>
+    </ClInclude>
+    <ClInclude Include="c_motorhbridge.h">
+      <Filter>kabuki\tek</Filter>
+    </ClInclude>
+    <ClInclude Include="c_octows28xx.h">
+      <Filter>kabuki\tek</Filter>
+    </ClInclude>
+    <ClInclude Include="c_photosensor.h">
+      <Filter>kabuki\tek</Filter>
+    </ClInclude>
+    <ClInclude Include="c_portali2c.h">
+      <Filter>kabuki\tek</Filter>
+    </ClInclude>
+    <ClInclude Include="c_portalserial.h">
+      <Filter>kabuki\tek</Filter>
+    </ClInclude>
+    <ClInclude Include="c_portalspi.h">
+      <Filter>kabuki\tek</Filter>
+    </ClInclude>
+    <ClInclude Include="c_portaltcp.h">
+      <Filter>kabuki\tek</Filter>
+    </ClInclude>
+    <ClInclude Include="c_portalwifi.h">
+      <Filter>kabuki\tek</Filter>
+    </ClInclude>
+    <ClInclude Include="c_pot.h">
+      <Filter>kabuki\tek</Filter>
+    </ClInclude>
+    <ClInclude Include="c_rgbstatusled.h">
+      <Filter>kabuki\tek</Filter>
+    </ClInclude>
+    <ClInclude Include="c_rotaryknob.h">
+      <Filter>kabuki\tek</Filter>
+    </ClInclude>
+    <ClInclude Include="c_rotaryknobbank.h">
+      <Filter>kabuki\tek</Filter>
+    </ClInclude>
+    <ClInclude Include="c_statusled.h">
+      <Filter>kabuki\tek</Filter>
+    </ClInclude>
+    <ClInclude Include="c_switch.h">
+      <Filter>kabuki\tek</Filter>
+    </ClInclude>
+    <ClInclude Include="c_unicontroller.h">
+      <Filter>kabuki\tek</Filter>
+    </ClInclude>
+    <ClInclude Include="global.h">
+      <Filter>kabuki\tek</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.h">
+      <Filter>kabuki\tek</Filter>
+    </ClInclude>
+    <ClInclude Include="c_button.h">
+      <Filter>kabuki\tek</Filter>
+    </ClInclude>
+    <ClInclude Include="c_debouncer.h">
+      <Filter>kabuki\tek</Filter>
+    </ClInclude>
+    <ClInclude Include="c_display.h">
+      <Filter>kabuki\tek</Filter>
+    </ClInclude>
+    <ClInclude Include="c_dmxanimation.h">
+      <Filter>kabuki\tek</Filter>
+    </ClInclude>
+    <ClInclude Include="c_keyboardbuffer.h">
+      <Filter>kabuki\tek</Filter>
+    </ClInclude>
+    <ClInclude Include="c_keyevent.h">
+      <Filter>kabuki\tek</Filter>
+    </ClInclude>
+    <ClInclude Include="c_keyeventbuffer.h">
+      <Filter>kabuki\tek</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="global_config.inl">
+      <Filter>kabuki\tek</Filter>
+    </None>
+    <None Include="readme.md">
+      <Filter>kabuki\tek</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="pch.cc">
+      <Filter>kabuki\tek</Filter>
+    </ClCompile>
+    <ClCompile Include="tek_button.cc">
+      <Filter>kabuki\tek</Filter>
+    </ClCompile>
+    <ClCompile Include="tek_dmxanimation.cc">
+      <Filter>kabuki\tek</Filter>
+    </ClCompile>
+    <ClCompile Include="tek_dmxbuffer.cc">
+      <Filter>kabuki\tek</Filter>
+    </ClCompile>
     <ClCompile Include="tek_flowcontroller.cc">
       <Filter>kabuki\tek</Filter>
     </ClCompile>
@@ -23,7 +156,28 @@
     <ClCompile Include="tek_ioexpander.cc">
       <Filter>kabuki\tek</Filter>
     </ClCompile>
+    <ClCompile Include="tek_keyboardbuffer.cc">
+      <Filter>kabuki\tek</Filter>
+    </ClCompile>
+    <ClCompile Include="tek_knobrotary.cc">
+      <Filter>kabuki\tek</Filter>
+    </ClCompile>
+    <ClCompile Include="tek_knobrotarybank.cc">
+      <Filter>kabuki\tek</Filter>
+    </ClCompile>
     <ClCompile Include="tek_led.cc">
+      <Filter>kabuki\tek</Filter>
+    </ClCompile>
+    <ClCompile Include="tek_ledrgb.cc">
+      <Filter>kabuki\tek</Filter>
+    </ClCompile>
+    <ClCompile Include="tek_micelectrolytic.cc">
+      <Filter>kabuki\tek</Filter>
+    </ClCompile>
+    <ClCompile Include="tek_motorhbridge.cc">
+      <Filter>kabuki\tek</Filter>
+    </ClCompile>
+    <ClCompile Include="tek_portali2c.cc">
       <Filter>kabuki\tek</Filter>
     </ClCompile>
     <ClCompile Include="tek_portalserial.cc">
@@ -47,150 +201,5 @@
     <ClCompile Include="tek_unicontroller.cc">
       <Filter>kabuki\tek</Filter>
     </ClCompile>
-    <ClCompile Include="tek_button.cc">
-      <Filter>kabuki\tek</Filter>
-    </ClCompile>
-    <ClCompile Include="tek_dmxanimation.cc">
-      <Filter>kabuki\tek</Filter>
-    </ClCompile>
-    <ClCompile Include="tek_dmxbuffer.cc">
-      <Filter>kabuki\tek</Filter>
-    </ClCompile>
-    <ClCompile Include="pch.cc">
-      <Filter>kabuki\tek</Filter>
-    </ClCompile>
-    <ClCompile Include="tek_micelectrolytic.cc">
-      <Filter>kabuki\tek</Filter>
-    </ClCompile>
-    <ClCompile Include="tek_motorhbridge.cc">
-      <Filter>kabuki\tek</Filter>
-    </ClCompile>
-    <ClCompile Include="tek_portali2c.cc">
-      <Filter>kabuki\tek</Filter>
-    </ClCompile>
-    <ClCompile Include="tek_ledrgb.cc">
-      <Filter>kabuki\tek</Filter>
-    </ClCompile>
-    <ClCompile Include="tek_knobrotary.cc">
-      <Filter>kabuki\tek</Filter>
-    </ClCompile>
-    <ClCompile Include="tek_knobrotarybank.cc">
-      <Filter>kabuki\tek</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="cbutton.h">
-      <Filter>kabuki\tek</Filter>
-    </ClInclude>
-    <ClInclude Include="cdebouncer.h">
-      <Filter>kabuki\tek</Filter>
-    </ClInclude>
-    <ClInclude Include="cdisplay.h">
-      <Filter>kabuki\tek</Filter>
-    </ClInclude>
-    <ClInclude Include="cdmxanimation.h">
-      <Filter>kabuki\tek</Filter>
-    </ClInclude>
-    <ClInclude Include="cdmxbuffer.h">
-      <Filter>kabuki\tek</Filter>
-    </ClInclude>
-    <ClInclude Include="cdmxreceiver.h">
-      <Filter>kabuki\tek</Filter>
-    </ClInclude>
-    <ClInclude Include="cdmxtransceiver.h">
-      <Filter>kabuki\tek</Filter>
-    </ClInclude>
-    <ClInclude Include="cdmxtransmitter.h">
-      <Filter>kabuki\tek</Filter>
-    </ClInclude>
-    <ClInclude Include="cflowcontroller.h">
-      <Filter>kabuki\tek</Filter>
-    </ClInclude>
-    <ClInclude Include="cflyingfader.h">
-      <Filter>kabuki\tek</Filter>
-    </ClInclude>
-    <ClInclude Include="cioexpander.h">
-      <Filter>kabuki\tek</Filter>
-    </ClInclude>
-    <ClInclude Include="cled.h">
-      <Filter>kabuki\tek</Filter>
-    </ClInclude>
-    <ClInclude Include="cledmatrix.h">
-      <Filter>kabuki\tek</Filter>
-    </ClInclude>
-    <ClInclude Include="cledvumeter.h">
-      <Filter>kabuki\tek</Filter>
-    </ClInclude>
-    <ClInclude Include="cledvumeterarray.h">
-      <Filter>kabuki\tek</Filter>
-    </ClInclude>
-    <ClInclude Include="coctows28xx.h">
-      <Filter>kabuki\tek</Filter>
-    </ClInclude>
-    <ClInclude Include="config.h">
-      <Filter>kabuki\tek</Filter>
-    </ClInclude>
-    <ClInclude Include="cphotosensor.h">
-      <Filter>kabuki\tek</Filter>
-    </ClInclude>
-    <ClInclude Include="cportali2c.h">
-      <Filter>kabuki\tek</Filter>
-    </ClInclude>
-    <ClInclude Include="cportalserial.h">
-      <Filter>kabuki\tek</Filter>
-    </ClInclude>
-    <ClInclude Include="cportalspi.h">
-      <Filter>kabuki\tek</Filter>
-    </ClInclude>
-    <ClInclude Include="cportaltcp.h">
-      <Filter>kabuki\tek</Filter>
-    </ClInclude>
-    <ClInclude Include="cpot.h">
-      <Filter>kabuki\tek</Filter>
-    </ClInclude>
-    <ClInclude Include="crgbstatusled.h">
-      <Filter>kabuki\tek</Filter>
-    </ClInclude>
-    <ClInclude Include="crotaryknob.h">
-      <Filter>kabuki\tek</Filter>
-    </ClInclude>
-    <ClInclude Include="crotaryknobbank.h">
-      <Filter>kabuki\tek</Filter>
-    </ClInclude>
-    <ClInclude Include="cstatusled.h">
-      <Filter>kabuki\tek</Filter>
-    </ClInclude>
-    <ClInclude Include="cswitch.h">
-      <Filter>kabuki\tek</Filter>
-    </ClInclude>
-    <ClInclude Include="cunicontroller.h">
-      <Filter>kabuki\tek</Filter>
-    </ClInclude>
-    <ClInclude Include="global.h">
-      <Filter>kabuki\tek</Filter>
-    </ClInclude>
-    <ClInclude Include="pch.h">
-      <Filter>kabuki\tek</Filter>
-    </ClInclude>
-    <ClInclude Include="cledrgb.h">
-      <Filter>kabuki\tek</Filter>
-    </ClInclude>
-    <ClInclude Include="cportalwifi.h">
-      <Filter>kabuki\tek</Filter>
-    </ClInclude>
-    <ClInclude Include="cmicelectrolytic.h">
-      <Filter>kabuki\tek</Filter>
-    </ClInclude>
-    <ClInclude Include="cmotorhbridge.h">
-      <Filter>kabuki\tek</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="readme.md">
-      <Filter>kabuki\tek</Filter>
-    </None>
-    <None Include="global_config.inl">
-      <Filter>kabuki\tek</Filter>
-    </None>
   </ItemGroup>
 </Project>

@@ -14,12 +14,6 @@ specific language governing permissions and limitations under the License. */
 #pragma once
 #include <pch.h>
 
-#if SEAM == KABUKI_TOOLKIT_PRO_0
-#include "test_debug.inl"
-#else
-#include "test_release.inl"
-#endif
-
 using namespace _;
 
 namespace kabuki { namespace toolkit { namespace pro {

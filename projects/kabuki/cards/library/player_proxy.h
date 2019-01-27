@@ -1,4 +1,4 @@
-/** Kabuki Arcade
+/* Kabuki Arcade
     @file    ~/source/kabuki/arcade/cards/player.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017-2018 Cale McCollough <calemccollough@gmail.com>;
@@ -13,14 +13,14 @@
              permissions and limitations under the License.
 */
 
-#ifndef HEADER_FOR_KABUKI_ARCADE_CARDS_REMOTEPLAYER
-#define HEADER_FOR_KABUKI_ARCADE_CARDS_REMOTEPLAYER
+#ifndef KABUKI_ARCADE_CARDS_REMOTEPLAYER
+#define KABUKI_ARCADE_CARDS_REMOTEPLAYER
 
 #include "player.h"
 
 namespace kabuki { namespace cards {
 
-/** A Remote player in an abstract card game.
+/* A Remote player in an abstract card game.
     It would be a poor design choice to allow the client app to have any data
     about the other player's hands, so the PlayerProxy is on a need to know
     basis only.
@@ -28,66 +28,66 @@ namespace kabuki { namespace cards {
 class PlayerProxy: public Player {
     public:
 
-    /** Default Constructor. */
+    /* Default Constructor. */
     PlayerProxy (Deck& pack);
     
-    /** Virtual destructor. */
+    /* Virtual destructor. */
     virtual ~PlayerProxy ();
 
-    /** Gets the Player's status_. */
+    /* Gets the Player's status_. */
     const CH1* GetDislpayName ();
 
-    /** Sets the Player's status_. */
+    /* Sets the Player's status_. */
     const CH1* SetDislpayName (const CH1* name);
 
-    /** Gets the Player's status_. */
+    /* Gets the Player's status_. */
     const CH1* GetHandle ();
 
-    /** Sets the Player's status_. */
+    /* Sets the Player's status_. */
     const CH1* SetHandle (const CH1* name);
 
-    /** Gets is_dealer_. */
+    /* Gets is_dealer_. */
     BOL IsDealer ();
 
-    /** Sets is_dealer_. */
+    /* Sets is_dealer_. */
     void SetIsDealer (BOL is_dealer);
 
-    /** Gets this Player's state. */
+    /* Gets this Player's state. */
     SI4 GetState ();
 
-    /** Attempts to set the state. 
+    /* Attempts to set the state. 
         @return Returns nil upon success and an error string upon
                 failure. */
     virtual const CH1* SetState (int32_t state);
 
-    /** Gets the num_points. */
+    /* Gets the num_points. */
     SI4 GetNumPoints ();
 
-    /** Sets the num_points.
+    /* Sets the num_points.
         @return Returns false if num_points is < 0. */
     BOL SetNumPoints (SI4 num_points);
 
-    /** Returns the number of wins. */
+    /* Returns the number of wins. */
     SI4 GetNumWins ();
 
-    /** Returns the number of wins. */
+    /* Returns the number of wins. */
     BOL SetNumWins (SI4 num_wins);
 
-    /** Gets the visible_cards_. */
+    /* Gets the visible_cards_. */
     CardStack& GetVisibleCards ();
 
-    /** Deletes the visible cards. */
+    /* Deletes the visible cards. */
     void DeleteVisibleCards ();
 
-    /** Adds a new Card to the visible_cards_.
+    /* Adds a new Card to the visible_cards_.
         @return Returns -1 upon failure and the new number of visible cards upon
                 success. */
     SI4 AddCard (byte pip, byte suit);
 
-    /** Prints this object to the console. */
+    /* Prints this object to the console. */
     virtual _::Text& Print (_::Text& txt = _::Text ());
 
-    /** Script Operations. */
+    /* Script Operations. */
     virtual const _::Operation* Star (uint index, _::Expression* expr);
 
     protected:
@@ -104,4 +104,4 @@ class PlayerProxy: public Player {
 };      //< class PlayerProxy
 }       //< namespace cards
 }       //< namespace kabuki
-#endif  //< HEADER_FOR_KABUKI_ARCADE_CARDS_REMOTEPLAYER
+#endif  //< KABUKI_ARCADE_CARDS_REMOTEPLAYER

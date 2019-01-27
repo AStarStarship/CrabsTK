@@ -1,4 +1,4 @@
-/** Kabuki Toolkit @version 0.x
+/* Kabuki Toolkit @version 0.x
 @link    https://github.com/kabuki-starship/kabuki-toolkit.git
 @file    /kabuki/features//ai/task.h
 @author  Cale McCollough <cale.mccollough@gmail.com>

@@ -1,4 +1,4 @@
-/** Kabuki Arcade
+/* Kabuki Arcade
     @file    ~/source/project/kabuki/cards_suit.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017-2018 Cale McCollough <calemccollough@gmail.com>;
@@ -112,7 +112,7 @@ void Suit::SetColor (Color color) {
     }
 }
 
-const CH1* Suit::GetLabel () {
+const CH1* Suit::Label () {
     return label_;
 }
 

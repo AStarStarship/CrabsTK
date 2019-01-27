@@ -1,4 +1,4 @@
-/** Kabuki Toolkit @version 0.x
+/* Kabuki Toolkit @version 0.x
 @link    https://github.com/kabuki-starship/kabuki-toolkit.git
 @file    /kabuki/features//ai/perceptron.h
 @author  Cale McCollough <cale.mccollough@gmail.com>
@@ -22,17 +22,17 @@ namespace _ {
 
 typedef float_t (*PerceptronSensor) ();
 
-#ifndef HEADER_FOR_SENSORY_PERCEPTRON
-#define HEADER_FOR_SENSORY_PERCEPTRON
+#ifndef SENSORY_PERCEPTRON
+#define SENSORY_PERCEPTRON
 
-/** A Sensory Perceptron that takes in data from various types and outputs.
+/* A Sensory Perceptron that takes in data from various types and outputs.
     
 */
 template<typename T>
 class Persenseron {
     public:
 
-    /** Constructs a Persenseron from the given Perceptron. */
+    /* Constructs a Persenseron from the given Perceptron. */
     Persenseron (Perceptron* y);
 
     void Update ();
@@ -43,5 +43,5 @@ class Persenseron {
 };
 
 }       //< namespace _
-#endif  //< #ifndef HEADER_FOR_SENSORY_PERCEPTRON
+#endif  //< #ifndef SENSORY_PERCEPTRON
 #endif  //< #if MAJOR_SEAM >= 5 && MINOR_SEAM >= 1

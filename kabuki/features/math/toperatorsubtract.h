@@ -1,4 +1,4 @@
-/** Kabuki Toolkit
+/* Kabuki Toolkit
     @file    ~/kt/math/operator_subtract.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017-2018 Cale McCollough <calemccollough@gmail.com>;
@@ -20,29 +20,29 @@
 
 namespace _ {
 
-/** A fractional number.
+/* A fractional number.
 */
 template<typename T>
 class Fraction
 {
     public:
 
-    /** Constructs an object with the given numberator and demonitor. */
+    /* Constructs an object with the given numberator and demonitor. */
     Fraction (T Numberator, T Denominator);
 
-    /** Gets the numberator. */
+    /* Gets the numberator. */
     T GetNumberator ();
 
-    /** Sets the numberator. */
+    /* Sets the numberator. */
     void SetNumberator (T Value);
 
-    /** Gets  the denominator. */
+    /* Gets  the denominator. */
     T GetDenominator ();
 
-    /** Sets the denominator. */
+    /* Sets the denominator. */
     void SetDenominator (T Value);
 
-    /** Prints this object to the terminal. */
+    /* Prints this object to the terminal. */
     _::Printer& Print (_::Printer& printer);
 
     private:

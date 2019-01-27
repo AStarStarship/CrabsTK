@@ -1,4 +1,4 @@
-/** Kabuki Arcade
+/* Kabuki Arcade
     @file    ~/source/kabuki/arcade/cards/card.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017-2018 Cale McCollough <calemccollough@gmail.com>;
@@ -13,14 +13,14 @@
              permissions and limitations under the License.
 */
 
-#ifndef HEADER_FOR_KABUKI_ARCADE_CARDS_CARD
-#define HEADER_FOR_KABUKI_ARCADE_CARDS_CARD
+#ifndef KABUKI_ARCADE_CARDS_CARD
+#define KABUKI_ARCADE_CARDS_CARD
 
 #include "suit.h"
 
 namespace kabuki { namespace cards {
 
-/** Class that represents a card in a card game.
+/* Class that represents a card in a card game.
     Cards as we know them originated in Europe. We traditionally think of cards
     as only being clubs, hearts, diamonds, and spades, but there are also some
     other variations from other European countries. For more information on
@@ -39,47 +39,47 @@ class KABUKI Card {
         kKing  = 13, //< Pip value of a King.
     };
 
-    /** Default constructor.
+    /* Default constructor.
         There exists a single unique card for each of the 54 cards in a pack
         of cards. Cards are taken from the pack and shuffled into the deck_
         using pointers.
     */
     Card (SI4 pip = 0, Suit* suit = nullptr, SI4 denomination = 0);
 
-    /** Copy constructor deep-copies the state of the other object. */
+    /* Copy constructor deep-copies the state of the other object. */
     Card (const Card& other);
     
-    /** Virtual destructor just in case we want to make a sub-class later. */
+    /* Virtual destructor just in case we want to make a sub-class later. */
     virtual ~Card () {}
 
-    /** Sets the values of the cards. */
+    /* Sets the values of the cards. */
     void Set (SI4 pip, Suit* suit, SI4 denomination = ~0);
 
-    /** Compares this Card to the other Card.
+    /* Compares this Card to the other Card.
         @return Returns 0 if they are identical.
         @return Returns 1 if this Card is greater than the other Card. */
     virtual SI4 Compare (Card* other);
                                           
-    /** Compares this Card to the other Card and returns true if the two are
+    /* Compares this Card to the other Card and returns true if the two are
         identical. */     
     BOL Equals (Card* other);
 
-    /** Returns the pip value of this Card 0-13.
+    /* Returns the pip value of this Card 0-13.
         The pip value is a number between 0-13 that represents which card it is: 
         J=0, A=1, 2-10, J=11, Q=12, K=13. */
     SI4 GetPip ();
     
-    /** Returns the point value of this Card
+    /* Returns the point value of this Card
         The face value represents how many points this card is worth. */
     SI4 GetDenomination ();
                                      
-    /** Sets the point value to the value. */          
+    /* Sets the point value to the value. */          
     void SetDenomination (SI4 value);
 
-    /** Returns the Suit of this card. */
+    /* Returns the Suit of this card. */
     Suit* GetSuit ();
 
-    /** Loads and sets the cardImage to the on in the given directory.
+    /* Loads and sets the cardImage to the on in the given directory.
         Yes this goes in the library, just no file IO or hardware dependent
         stuff (besides OpenGL, OpenAL, etc).
         @return Returns 0 upon success.
@@ -89,13 +89,13 @@ class KABUKI Card {
         @return Returns 3 if the image didn't load right. */
     //SI4 SetCardImage (const CH1* directory);
                        
-    /** Returns the address of this Card's image. */                            
+    /* Returns the address of this Card's image. */                            
     //Image& GetImage ();
     
-    /** Returns a string representation of this Object. */
+    /* Returns a string representation of this Object. */
     _::Text& Print (_::Text& txt = _::Text ());
 
-    /** Overloaded binary operator=. */
+    /* Overloaded binary operator=. */
     Card& operator= (const Card& other);
 
     private:
@@ -108,4 +108,4 @@ class KABUKI Card {
 };      //< class Card
 }       //< namespace cards
 }       //< namespace kabuki
-#endif  //< HEADER_FOR_KABUKI_ARCADE_CARDS_CARD
+#endif  //< KABUKI_ARCADE_CARDS_CARD

@@ -1,4 +1,4 @@
-/** Kabuki Toolkit
+/* Kabuki Toolkit
     @file    $kabuki-toolkit/kabuki/toolkit/app/key_listener.h
     @author  Cale McCollough <calemccollough.github.io>
     @license Copyright (C) 2014-2017 Cale McCollough <calemccollough@gmail.com>;
@@ -24,7 +24,7 @@
 
 namespace _ {
 
-/** Interface with an event.
+/* Interface with an event.
     
     @code
     #include <_/IEvent.h>
@@ -45,19 +45,19 @@ namespace _ {
 class KeyListener {
     public:
     
-    /** Event handler for when key is pressed. */
+    /* Event handler for when key is pressed. */
     virtual void PressKey (KeyEvent e) = 0;
     
-    /** Event handler for when key is pressed. */
+    /* Event handler for when key is pressed. */
     virtual void ReleaseKey (KeyEvent e) = 0;
     
-    /** Event handler for when key is typed. */
+    /* Event handler for when key is typed. */
     virtual void TypeKey (KeyEvent e) = 0;
 
-    /** Prints this object to the terminal. */
+    /* Prints this object to the terminal. */
     virtual void Print () = 0;
 };      //< class KeyListener
 
 }       //< namespace _
-#endif  //< HEADER_FOR_KABUKI_TOOLKIT_APP_KEYLISTENER
+#endif  //< KABUKI_TOOLKIT_APP_KEYLISTENER
 #endif  //< #if MAJOR_SEAM >= 2 && MINOR_SEAM >= 1

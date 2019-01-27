@@ -1,4 +1,4 @@
-/** Kabuki Arcade
+/* Kabuki Arcade
     @file       ~/source/kabuki/arcade/cards/player.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017-2018 Cale McCollough <calemccollough@gmail.com>;
@@ -13,14 +13,14 @@
              permissions and limitations under the License.
 */
 
-#ifndef HEADER_FOR_KABUKI_ARCADE_BLACKJACKAIPLAYER
-#define HEADER_FOR_KABUKI_ARCADE_BLACKJACKAIPLAYER
+#ifndef KABUKI_ARCADE_BLACKJACKAIPLAYER
+#define KABUKI_ARCADE_BLACKJACKAIPLAYER
 
 #include "blackjack_player.h"
 
 namespace kabuki { namespace cards {
 
-/** A player in a Blackjack game. */
+/* A player in a Blackjack game. */
 class BlackjackPlayerAi : public BlackjackPlayer {
     public:
 
@@ -31,13 +31,13 @@ class BlackjackPlayerAi : public BlackjackPlayer {
         kStateOutOfGame     = 3  //< State when player has lost game.
     };
 
-    /** Default Constructor. */
+    /* Default Constructor. */
     BlackjackPlayerAi (id::User* user, CardStack& stock);
 
-    /** Destructor. */
+    /* Destructor. */
     virtual ~BlackjackPlayerAi ();
 
-    /** Attempts to take a card from the Deck for a player.
+    /* Attempts to take a card from the Deck for a player.
         @pre    The Deck must not be empty.
         @pre    The player must have a max hand score of 21. */
     void PlayRound () override;
@@ -45,4 +45,4 @@ class BlackjackPlayerAi : public BlackjackPlayer {
 };
 }       //< namespace cards
 }       //< namespace kabuki
-#endif  //< HEADER_FOR_KABUKI_ARCADE_BLACKJACKAIPLAYER
+#endif  //< KABUKI_ARCADE_BLACKJACKAIPLAYER

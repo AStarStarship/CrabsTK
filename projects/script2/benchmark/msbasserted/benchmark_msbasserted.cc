@@ -1,4 +1,4 @@
-/** Kabuki Toolkit @version 0.x
+/* Kabuki Toolkit @version 0.x
 @link    https://github.com/kabuki-starship/kabuki-toolkit.git
 @file    //tests/script_itos_benchmark.cc
 @author  Cale McCollough <cale.mccollough@gmail.com>

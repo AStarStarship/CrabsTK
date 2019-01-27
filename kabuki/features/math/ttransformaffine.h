@@ -1,4 +1,4 @@
-/** Kabuki Toolkit
+/* Kabuki Toolkit
     @file    ~/kt/math/AffineTransform.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017-2018 Cale McCollough <calemccollough@gmail.com>;
@@ -20,17 +20,17 @@
 
 namespace math {
 
-/** A 2D affine transformation. */
+/* A 2D affine transformation. */
 template<typename T>
 class SDK AffineTransform {
     public:
 
-    /** Constructs an unintialized object. */
+    /* Constructs an unintialized object. */
     AffineTransform () {
 
     }
 
-    /** Prints this object to the terminal. */
+    /* Prints this object to the terminal. */
     _::Printer& Print (_::Printer& print) {
         return print;
     }

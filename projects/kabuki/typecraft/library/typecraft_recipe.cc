@@ -1,4 +1,4 @@
-/** TypeCraf/** TypeCraft - Teaching Typing through Mining and Crafting.
+/* TypeCraf/* TypeCraft - Teaching Typing through Mining and Crafting.
 @link    https://github.com/kabuki-starship/kabuki-projects/typecraft
 @file    /projects/typecraft/crafting_table.cc
 @author  Cale McCollough <cale.mccollough@gmail.com>
@@ -18,16 +18,16 @@ specific language governing permissions and limitations under the License. */
 
 namespace typecraft {
 
-/** A Crafting Table recipe.
+/* A Crafting Table recipe.
 Recipes do not take up the entire crafting table. For this reason, the
 width and height of the recipe are stored.
 */
 class Recipe : public Item {
  public:
-  /** Default constructs a empty CraftingTable. */
+  /* Default constructs a empty CraftingTable. */
   Recipe();
 
-  /** Prints the Recipe to the Console. */
+  /* Prints the Recipe to the Console. */
   void Print();
 
  private:

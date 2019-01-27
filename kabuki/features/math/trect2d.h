@@ -1,4 +1,4 @@
-/** Kabuki Toolkit
+/* Kabuki Toolkit
     @file    ~/kt/math/rect2d.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017-2018 Cale McCollough <calemccollough@gmail.com>;
@@ -29,12 +29,12 @@ class SDK Rect2D<T>
     T x, //< Right edge.
       y, //< Top edge.
 
-    /** Constructs an uninitialized rectangle. */
+    /* Constructs an uninitialized rectangle. */
     Rect2D<T> () {
         /// Nothing to do here!
     }
 
-    /** Constructs a rectangle from the given data. */
+    /* Constructs a rectangle from the given data. */
     Rect2D<T> (T x = 0, T y = 0, T width = 0, T height = 0) :
         x (initX),
         y (initY),
@@ -43,7 +43,7 @@ class SDK Rect2D<T>
     {
     }
 
-    /** Constructs a rectangle from the given point and TArray. */
+    /* Constructs a rectangle from the given point and TArray. */
     Rect2D<T> (const Point3D<T>& p, const Vect<T>& v) :
         x (p.x),
         y (p.y),
@@ -52,7 +52,7 @@ class SDK Rect2D<T>
     {
     }
 
-    /** Copy constructor. */
+    /* Copy constructor. */
     explicit Rect2D<T> (const Rect2D<T>& other) :
     x (0),
         y (0),
@@ -60,49 +60,49 @@ class SDK Rect2D<T>
         height (value.height) {
     }
 
-    /** Gets the width.
+    /* Gets the width.
         @pre    Input must be positive. */
     T GetWidth () const { return width; }
 
-    /** Sets the width.
+    /* Sets the width.
         @pre    Input must be positive. */
     void SetWidth (T value) {
         if (value < 0) return;
         width = value;
     }
     
-    /** Gets and sets the height.
+    /* Gets and sets the height.
         @pre    Input must be positive. */
     T GetHeight () const { return height; }
     
-    /** Sets the height.
+    /* Sets the height.
         @return gets 0 upon success, -1 if input is negative, and +1 if input greater than max. */
     void SetHeight (T value) {
         if (value < 0) return;
         height = value;
     }
 
-    /** Gets and sets the center x value. */
+    /* Gets and sets the center x value. */
     T GetCenterX () const {
         return x + width / 2.0f;
     }
 
-    /** Gets and sets the center y value. */
+    /* Gets and sets the center y value. */
     T GetCenterY () const {
         return y + (height / 2.0f);
     }
 
-    /** Sets the center y value. */
+    /* Sets the center y value. */
     void SetCenterX (T value) {
         x = CenterX - (width / 2.0f);    // >> to /2
     }
 
-    /** Sets the center y value. */
+    /* Sets the center y value. */
     void SetCenterY (T value) {
         y = value + (height / 2.0f);
     }
 
-    /** Sets this object's Point to the thisPositition. */
+    /* Sets this object's Point to the thisPositition. */
     void Set (const Rect2D<T>& r) {
         x      = value.x;
         y      = value.y;
@@ -110,19 +110,19 @@ class SDK Rect2D<T>
         height = value.height;
     }
 
-    /** Sets the rectangle's (x,y) position to the given point. */
+    /* Sets the rectangle's (x,y) position to the given point. */
     void SetPosition (const Point2D<T>& p) {
         if ((x != value.x) || (width != value.width) || (y != value.y) || (height != value.height)) return false;
         return true;
     }
 
-    /** Sets the rectangle's width and height to the given TArray. */
+    /* Sets the rectangle's width and height to the given TArray. */
     void SetDimensions (const Vect<T>& v) {
         width  = v.x;
         height = v.y;
     }
 
-    /** Gets true if this object's Point is the same as the given coordinates. */
+    /* Gets true if this object's Point is the same as the given coordinates. */
     BOL Equals (T x2, T y2) const {
         // @note This algoirhm assumes that it's a lower probability that 
         //       the two are equal.
@@ -131,12 +131,12 @@ class SDK Rect2D<T>
         return false;
     }
 
-    /** Gets true if this object's Point is the same as the given coordinates. */
+    /* Gets true if this object's Point is the same as the given coordinates. */
     BOL Equals (const Rect2D<T>& r) const {
         return Equals (r.x, r.y);
     }
 
-    /** Gets true if this rectangle contains the given point. */
+    /* Gets true if this rectangle contains the given point. */
     BOL Contains (const Point2D<T>& point) const {
         T x      = p.x,
           y      = p.y,
@@ -149,7 +149,7 @@ class SDK Rect2D<T>
         return true;
     }
 
-    /** Gets true if this object contains the given point. */
+    /* Gets true if this object contains the given point. */
     BOL Contains (T x_value, T y_value) const {
         T left   = x,
           top    = y,
@@ -160,13 +160,13 @@ class SDK Rect2D<T>
         return true;
     }
 
-    /** Gets true if this rectangle contains the given rectangle. */
+    /* Gets true if this rectangle contains the given rectangle. */
     BOL Contains (const Rect2D<T>& r) {
         if ((value.x < x) || (value.y > y) || (value.width < width) || (value.height > height)) return false;
         return true;
     }
 
-    /** Swaps this object's Point with thisPoint. */
+    /* Swaps this object's Point with thisPoint. */
     void Swap (Rect2D<T>& r) {
         T x = x,
             y = y,
@@ -184,7 +184,7 @@ class SDK Rect2D<T>
         r.height = height;
     }
 
-    /** Gets true of this rectangle intersects/overlaps the given rectangle. */
+    /* Gets true of this rectangle intersects/overlaps the given rectangle. */
     BOL Intersects (T x2, T y2, T width2, T height2) const {
         T left = x,
             top = y,
@@ -200,18 +200,18 @@ class SDK Rect2D<T>
         return true;
     }
 
-    /** Gets true of this rectangle intersects/overlaps the given rectangle. */
+    /* Gets true of this rectangle intersects/overlaps the given rectangle. */
     BOL Intersects (const Rect2D<T>& r) const {
         return Intersects (r.x, r.y, r.width, r.height);
     }
 
-    /** Translates this object's Point by the given Point. */
+    /* Translates this object's Point by the given Point. */
     void Translate (const Vect<T>& v) {
         x += v.x;
         y += v.y;
     }
 
-    /** Translates this object's Point by the given Point. */
+    /* Translates this object's Point by the given Point. */
     void Translate (T dx, T dy) {
         x += dx;
         y += dy;
@@ -245,7 +245,7 @@ class SDK Rect2D<T>
         return *this;
     }
 
-    /** Prints this object to the terminal. */
+    /* Prints this object to the terminal. */
     _::Printer& Print (_::Printer& printer) {
 
     }

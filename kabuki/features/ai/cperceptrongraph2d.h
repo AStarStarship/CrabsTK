@@ -1,4 +1,4 @@
-/** Kabuki Toolkit
+/* Kabuki Toolkit
     @version 0.x
     @file    ~/library/kabuki/toolkit/ai/perceptron.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
@@ -17,28 +17,28 @@
 #pragma once
 #include <pch.h>
 #if MAJOR_SEAM >= 5 && MINOR_SEAM >= 1
-#ifndef HEADER_FOR_KABUKI_TOOLKIT_AIML_PERCEPTRONGRAPH2D
-#define HEADER_FOR_KABUKI_TOOLKIT_AIML_PERCEPTRONGRAPH2D
+#ifndef KABUKI_TOOLKIT_AIML_PERCEPTRONGRAPH2D
+#define KABUKI_TOOLKIT_AIML_PERCEPTRONGRAPH2D
 
 #include "perceptron_layer.h"
 
 namespace _ {
 
-/** A 2D grid of Perceptron(s) created from a PerceptronLayer. */
+/* A 2D grid of Perceptron(s) created from a PerceptronLayer. */
 class PerceptronGraph2D : public PerceptronGraph {
     public:
 
-    /** A 2D grid of perceptrons mapped to a PerceptronLayer in the C array 
+    /* A 2D grid of perceptrons mapped to a PerceptronLayer in the C array 
         format. */
     PerceptronGraph2D (size_t width, size_t height, float_t bias);
 
-    /** Gets the width in pixels. */
+    /* Gets the width in pixels. */
     size_t GetWidth ();
 
-    /** Gets the height in pixels. */
+    /* Gets the height in pixels. */
     size_t GetHeight ();
 
-    /** Gets the Perceptron at the given (X, Y) coordinate. */
+    /* Gets the Perceptron at the given (X, Y) coordinate. */
     Perceptron* GetPixel (size_t x, size_t y);
 
     private:
@@ -48,5 +48,5 @@ class PerceptronGraph2D : public PerceptronGraph {
 };
 
 }       //< namespace _
-#endif  //< #ifndef HEADER_FOR_KABUKI_TOOLKIT_AIML_PERCEPTRONGRAPH2D
+#endif  //< #ifndef KABUKI_TOOLKIT_AIML_PERCEPTRONGRAPH2D
 #endif  //< #if MAJOR_SEAM >= 5 && MINOR_SEAM >= 1

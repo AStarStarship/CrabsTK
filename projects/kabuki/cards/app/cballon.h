@@ -1,4 +1,4 @@
-/** Kabuki Card Games
+/* Kabuki Card Games
     @file    /.../KabukiTheater-Examples/ShapesDrawingDemo/BallonTest.hpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2016 [Cale McCollough](calemccollough.github.io)

@@ -33,7 +33,7 @@
 #ifndef FLAC__EXPORT_H
 #define FLAC__EXPORT_H
 
-/** \file include/FLAC/export.h
+/* \file include/FLAC/export.h
  *
  *  \brief
  *  This module contains #defines and symbols for exporting function
@@ -42,7 +42,7 @@
  *  See the \link flac_export export \endlink module.
  */
 
-/** \defgroup flac_export FLAC/export.h: export symbols
+/* \defgroup flac_export FLAC/export.h: export symbols
  *  \ingroup flac
  *
  *  \brief
@@ -74,18 +74,18 @@
 
 #endif
 
-/** These #defines will mirror the libtool-based library version number, see
+/* These #defines will mirror the libtool-based library version number, see
  * http://www.gnu.org/software/libtool/manual/libtool.html#Libtool-versioning
  */
 #define FLAC_API_VERSION_CURRENT 11
-#define FLAC_API_VERSION_REVISION 0 /**< see above */
-#define FLAC_API_VERSION_AGE 3 /**< see above */
+#define FLAC_API_VERSION_REVISION 0 /*< see above */
+#define FLAC_API_VERSION_AGE 3 /*< see above */
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-/** \c 1 if the library has been compiled with support for Ogg FLAC, else \c 0. */
+/* \c 1 if the library has been compiled with support for Ogg FLAC, else \c 0. */
 extern FLAC_API SI4 FLAC_API_SUPPORTS_OGG_FLAC;
 
 #ifdef __cplusplus

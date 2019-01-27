@@ -54,19 +54,21 @@ All currently broken. Sorry. Please contribute as a developer. Thanks.
 | graphics    | Graphics library. |
 | midi        | Musical instrument digital interface. |
 | sound       | Sound library. |
-| touch       | Human-Machine interface. |
 
 ## kabuki.toolkit Modules
 
 | Module   | Description |
 |:--------:|:------------|
+| av       | Audio-visual library. |
 | adsp     | Audio Digital Signal Processing library. |
 | data     | Database library. |
 | drawing  | Vector drawing library. |
 | gui      | Graphical user interface. |
 | plotting | Plotting library. |
+| orm      | Object Relational Mapping library. |
 | pro      | Project library. |
 | uweb     | HTTP server and web microframework. |
+| video    | Video library. |
 | who      | Identification and authorization library. |
 
 ## projects.kabuki

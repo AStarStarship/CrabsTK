@@ -1,4 +1,4 @@
-/** Kabuki Toolkit
+/* Kabuki Toolkit
     @file    ~/kt/math/poly3d.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017-2018 Cale McCollough <calemccollough@gmail.com>;
@@ -22,11 +22,11 @@
 
 namespace _ {
 
-/** A 3D polygon. */
+/* A 3D polygon. */
 template<typename T>
 class Poly3D
 {
-    /**  */   
+    /*  */   
     Poly3D (SI4* indexOfPoints, Point3D<T>* pointValues, SI4 aNumPoints) :
         shading_type_ (FlatShading),
         is_two_sided_ (false),
@@ -42,22 +42,22 @@ class Poly3D
         base.data = this;
     }
     
-    /** Returns the point at the given vertex. */  
+    /* Returns the point at the given vertex. */  
     Point3D<float> Vertex (SI4 vertex_index) {
         return vertexPoint[vertex_index];
     }
     
-    /**  */  
+    /*  */  
     SI4 VertexIndex (SI4 forThisPoint) {
         return vertex_index_[forThisPoint];
     }
     
-    /**  */  
+    /*  */  
     Point3D<float> getNormal () {
         return normal;
     }
     
-    /**  */  
+    /*  */  
     void UpdateNormal () {
         Point3D u (vertexPoint[0], vertexPoint[1]);
         v = new Point3D (vertexPoint[0], vertexPoint[2]);
@@ -67,22 +67,22 @@ class Poly3D
         normalMagnitude = normal.magnitude ();
     }
     
-    /**  */  
+    /*  */  
     double NormalMagnitude () {
         return normalMagnitude;
     }
     
-    /**  */  
+    /*  */  
     void ScaleNormalMagnitude (double scaleFactor) {
         normalMagnitude* = scaleFactor;
     }
 
-    /**  */  
+    /*  */  
     double GetZAverage () {
         return zAverage;
     }
     
-    /**  */  
+    /*  */  
     void ComputeZAverge () {
         if (vertex_index_.Length == 3)
             zAverage = (T)0.33333 * (vertexPoint[0].z + vertexPoint[2].z + vertexPoint[2].z);

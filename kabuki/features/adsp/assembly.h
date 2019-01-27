@@ -1,7 +1,7 @@
-/** Kabuki Toolkit @version 0.x
+/* Kabuki Toolkit @version 0.x
 @file    ~/assembly.h
 @author  Cale McCollough <cale.mccollough@gmail.com>
-@license Copyright (C) 2014-19 Cale McCollough <calemccollough.github.io>;
+@license Copyright (C) 2014-19 Cale McCollough <cale@astartup.net>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
 "License"); you may not use this file except in compliance with the License.
 You may obtain a copy of the License at www.apache.org/licenses/LICENSE-2.0.
@@ -31,7 +31,7 @@ looking in this file. Please see config.h for configuration details. */
 #define DEBUG_CHINESE_ROOM YES
 #endif  //< DEBUG_CHINESE_ROOM
 
-/** @brief The RAM Use Levels 1-3 control how much RAM is used by adjusting the
+/* @brief The RAM Use Levels 1-3 control how much RAM is used by adjusting the
 size of the uint_t type.
 For constrained memory devices, use RAM_USE_LEVEL 1. For most uses use
 RAM_USE_LEVEL 2. For applications that require 64-bit memory addresses, use

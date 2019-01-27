@@ -11,7 +11,7 @@ under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
 CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License. */
 
-#include "cunicontroller.h"
+#include "c_unicontroller.h"
 
 namespace _ {
 
@@ -30,7 +30,7 @@ Unicontroller::Unicontroller(UI1* mixer, ch_t num_channels, Led** leds,
       pulse_count_(0),
       num_pulses_(0),
       spi_index_(0),
-      num_channels_(num_channels),
+      channel_count_(num_channels),
       num_leds_(num_leds),
       num_rgb_leds_(num_rgb_leds),
       num_buttons_(num_buttons),

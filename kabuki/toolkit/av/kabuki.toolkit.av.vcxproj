@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\data\00_foo.h" />
+    <ClInclude Include="..\data\01_bar.h" />
+    <ClInclude Include="..\data\c_morsecode.h" />
+    <ClInclude Include="..\data\global.h" />
+    <ClInclude Include="..\data\pch.h" />
+    <ClInclude Include="..\data\test_tree.h" />
+    <ClInclude Include="..\data\t_treebinaryiterator.h" />
+    <ClInclude Include="..\data\t_dataclient.h" />
+    <ClInclude Include="..\data\t_iterator.h" />
+    <ClInclude Include="..\data\t_listfifo.h" />
+    <ClInclude Include="..\data\t_listfifoiterator.h" />
+    <ClInclude Include="..\data\t_server.h" />
+    <ClInclude Include="..\data\t_treebinary.h" />
+    <ClInclude Include="..\pro\00_foo.h" />
+    <ClInclude Include="..\pro\01_bar.h" />
+    <ClInclude Include="..\pro\cdoxygen.h" />
+    <ClInclude Include="..\pro\global.h" />
+    <ClInclude Include="..\pro\pch.h" />
+    <ClInclude Include="..\pro\test_tree.h" />
+    <ClInclude Include="..\pro\t_git.h" />
+    <ClInclude Include="..\pro\t_project.h" />
+    <ClInclude Include="..\pro\t_schedule.h" />
+    <ClInclude Include="..\pro\t_task.h" />
+    <ClInclude Include="..\pro\t_workspace.h" />
+    <ClInclude Include="..\who\00_foo.h" />
+    <ClInclude Include="..\who\01_bar.h" />
+    <ClInclude Include="..\who\global.h" />
+    <ClInclude Include="..\who\pch.h" />
+    <ClInclude Include="..\who\test_tree.h" />
+    <ClInclude Include="..\who\t_account.h" />
+    <ClInclude Include="..\who\t_address.h" />
+    <ClInclude Include="..\who\t_addressemail.h" />
+    <ClInclude Include="..\who\t_authenticator.h" />
+    <ClInclude Include="..\who\t_authenticatordefault.h" />
+    <ClInclude Include="..\who\t_entity.h" />
+    <ClInclude Include="..\who\t_entitygroup.h" />
+    <ClInclude Include="..\who\t_entitylist.h" />
+    <ClInclude Include="..\who\t_handle.h" />
+    <ClInclude Include="..\who\t_name.h" />
+    <ClInclude Include="..\who\t_organization.h" />
+    <ClInclude Include="..\who\t_password.h" />
+    <ClInclude Include="..\who\t_person.h" />
+    <ClInclude Include="..\who\t_privilege.h" />
+    <ClInclude Include="..\who\t_profile.h" />
+    <ClInclude Include="..\who\t_registrar.h" />
+    <ClInclude Include="..\who\t_relationship.h" />
+    <ClInclude Include="..\who\t_role.h" />
+    <ClInclude Include="..\who\t_roster.h" />
+    <ClInclude Include="..\who\t_symbol.h" />
+    <ClInclude Include="..\who\t_uidassigner.h" />
+    <ClInclude Include="..\who\t_user.h" />
+    <ClInclude Include="..\who\t_userlist.h" />
+    <ClInclude Include="00_foo.h" />
+    <ClInclude Include="01_bar.h" />
+    <ClInclude Include="c_event.h" />
+    <ClInclude Include="global_config.h" />
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="test_tree.h" />
+    <ClInclude Include="t_adsr.h" />
+    <ClInclude Include="t_button.h" />
+    <ClInclude Include="t_buttondmx.h" />
+    <ClInclude Include="t_buttondummy.h" />
+    <ClInclude Include="t_buttonevent.h" />
+    <ClInclude Include="t_buttonmacro.h" />
+    <ClInclude Include="t_buttonmidi.h" />
+    <ClInclude Include="t_buttonmode.h" />
+    <ClInclude Include="t_buttonpage.h" />
+    <ClInclude Include="t_buttonradio.h" />
+    <ClInclude Include="t_buttonscroller.h" />
+    <ClInclude Include="t_buttonswap.h" />
+    <ClInclude Include="t_buttonwidget.h" />
+    <ClInclude Include="t_channelgroup.h" />
+    <ClInclude Include="t_component.h" />
+    <ClInclude Include="t_controldmx.h" />
+    <ClInclude Include="t_controller.h" />
+    <ClInclude Include="t_controlmaster.h" />
+    <ClInclude Include="t_controlmatrix.h" />
+    <ClInclude Include="t_controlmidi.h" />
+    <ClInclude Include="t_isymmetriccontroller.h" />
+    <ClInclude Include="t_library.h" />
+    <ClInclude Include="t_mixer.h" />
+    <ClInclude Include="t_mixerchannel.h" />
+    <ClInclude Include="t_mixerpage.h" />
+    <ClInclude Include="t_param.h" />
+    <ClInclude Include="t_paramset.h" />
+    <ClInclude Include="t_set.h" />
+    <ClInclude Include="t_tag.h" />
+    <ClInclude Include="t_tagtibrary.h" />
+    <ClInclude Include="t_widget.h" />
+    <ClInclude Include="t_widgetmanager.h" />
+    <ClInclude Include="t_widgetmidi.h" />
+    <ClInclude Include="t_widgetpage.h" />
+    <ClInclude Include="t_xycontrol.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\data\global_config.inl" />
+    <None Include="..\data\readme.md" />
+    <None Include="..\data\test_debug.inl" />
+    <None Include="..\data\test_footer.inl" />
+    <None Include="..\data\test_release.inl" />
+    <None Include="..\pro\global_config.inl" />
+    <None Include="..\pro\readme.md" />
+    <None Include="..\pro\test_debug.inl" />
+    <None Include="..\pro\test_footer.inl" />
+    <None Include="..\pro\test_release.inl" />
+    <None Include="..\who\global_config.inl" />
+    <None Include="..\who\readme.md" />
+    <None Include="..\who\test_debug.inl" />
+    <None Include="..\who\test_footer.inl" />
+    <None Include="..\who\test_release.inl" />
+    <None Include="global_config.inl" />
+    <None Include="readme.md" />
+    <None Include="test_debug.inl" />
+    <None Include="test_footer.inl" />
+    <None Include="test_release.inl" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\data\data_codemorse.cc" />
+    <ClCompile Include="..\data\data_server.cc" />
+    <ClCompile Include="..\data\pch.cc" />
+    <ClCompile Include="..\pro\pch.cc" />
+    <ClCompile Include="..\who\pch.cc" />
+    <ClCompile Include="pch.cc" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>15.0</VCProjectVersion>
+    <ProjectGuid>{F32CD971-7315-4EED-BC24-5165B88E0C8E}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>kabukisdkdata</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+    <ProjectName>kabuki.toolkit.av</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>$(ProjectDir).\;$(ProjectDir).\..\..\..\</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

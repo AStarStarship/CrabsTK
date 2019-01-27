@@ -1,4 +1,4 @@
-/** Kabuki Arcade
+/* Kabuki Arcade
     @file    ~/source/kabuki/arcade/cards/player.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017-2018 Cale McCollough <calemccollough@gmail.com>;
@@ -13,15 +13,15 @@
              permissions and limitations under the License.
 */
 
-#ifndef HEADER_FOR_KABUKI_ARCADE_CARDS_PLAYER
-#define HEADER_FOR_KABUKI_ARCADE_CARDS_PLAYER
+#ifndef KABUKI_ARCADE_CARDS_PLAYER
+#define KABUKI_ARCADE_CARDS_PLAYER
 
 #include "hand.h"
 #include "card_stack.h"
 
 namespace kabuki { namespace cards {
 
-/** An abstract player in an abstract card game.
+/* An abstract player in an abstract card game.
 */
 class Player : public _::Operand {
     public:
@@ -32,98 +32,98 @@ class Player : public _::Operand {
         kStateBetting        = 2, //< Player betting state.
     } State;
 
-    /** Default Constructor. */
+    /* Default Constructor. */
     Player (id::User* user = nullptr, BOL is_dealer = false);
     
-    /** Virtual destructor. */
+    /* Virtual destructor. */
     virtual ~Player ();
 
-    /** Gets the user attached to this Player. */
+    /* Gets the user attached to this Player. */
     id::User* GetUser ();
 
-    /** Gets the user's handle. */
+    /* Gets the user's handle. */
     const CH1* GetHandle ();
 
-    /** Gets is_turn_. */
+    /* Gets is_turn_. */
     BOL IsTurn ();
 
-    /** Sets is_turn_. */
+    /* Sets is_turn_. */
     virtual void SetIsTurn (BOL is_turn);
 
-    /** Gets is_dealer_. */
+    /* Gets is_dealer_. */
     BOL IsDealer ();
 
-    /** Sets is_dealer_. */
+    /* Sets is_dealer_. */
     virtual void SetIsDealer (BOL is_dealer);
 
-    /** Gets this Player's state. */
+    /* Gets this Player's state. */
     SI4 GetState ();
 
-    /** Attempts to set the state. 
+    /* Attempts to set the state. 
         @return Returns nil upon success and an error string upon
                 failure. */
     virtual const CH1* SetState (SI4 state);
 
-    /** Returns the number of wins. */
+    /* Returns the number of wins. */
     SI4 GetNumWins ();
 
-    /** Returns the number of wins. */
+    /* Returns the number of wins. */
     BOL SetNumWins (SI4 num_wins);
 
-    /** Adds a win to the players numWins. */
+    /* Adds a win to the players numWins. */
     void AddWin ();
 
-    /** Returns the player's hand. */
+    /* Returns the player's hand. */
     Hand& GetHand ();
 
-    /** Pushes a card onto the visible_cards_.
+    /* Pushes a card onto the visible_cards_.
         @return Returns -1 upon failure. */
     SI4 TakeCardUp (Card* card);
 
-    /** Pushes a card onto the hidden_cards_.
+    /* Pushes a card onto the hidden_cards_.
         @return Returns -1 upon failure. */
     SI4 TakeCardDown (Card* card);
                    
-    /** Resets the numWins to 0. */
+    /* Resets the numWins to 0. */
     void ResetWins ();
 
-    /** Pure virtual new game logic handler. */
+    /* Pure virtual new game logic handler. */
     virtual void RestartGame () = 0;
 
-    /** Processes beginning of round logic. */
+    /* Processes beginning of round logic. */
     virtual void BeginRound () = 0;
 
-    /** Performs round logic. */
+    /* Performs round logic. */
     virtual void PlayRound () = 0;
 
-    /** Processes beginning of round logic. */
+    /* Processes beginning of round logic. */
     virtual void EndRound () = 0;
 
-    /** Processes beginning of round logic. */
+    /* Processes beginning of round logic. */
     virtual void EndGame () = 0;
 
-    /** Compares this hand to the other.
+    /* Compares this hand to the other.
         @return Returns 0 if the hands are equal, > 1 if the other hand beats
                 this hand and < 0 if the other hand wins.. */
     virtual SI4 Compare (Hand& hand) = 0;
 
-    /** Returns true if this hand wins compared to the other one. */
+    /* Returns true if this hand wins compared to the other one. */
     virtual BOL Wins (Hand& hand) = 0;
 
-    /** Prints the abridged player stats to the console. */
+    /* Prints the abridged player stats to the console. */
     virtual _::Text& PrintStats (_::Text& txt) = 0;
 
-    /** Prints the player to the console. */
+    /* Prints the player to the console. */
     virtual _::Text& Print (_::Text& txt = _::Text ()) = 0;
     
-    /** Abstract Script Operation(s).
+    /* Abstract Script Operation(s).
         @param index The index of the expression.
         @param expr  The Expression to read and write from.
         @return      Returns null upon success, a Set header upon query, and an 
                      error_t ticket upon Read-Write failure. */
     virtual const _::Operation* Star (uint index, _::Expression* expr) = 0;
 
-    /** Handles Text input.
+    /* Handles Text input.
         @param text     Beginning of the Text buffer. 
         @param strand_end End of the Text buffer.
         @return Returns nil upon success and an error string upon failure. */
@@ -141,4 +141,4 @@ class Player : public _::Operand {
 
 }       //< namespace cards
 }       //< namespace kabuki
-#endif  //< HEADER_FOR_KABUKI_ARCADE_CARDS_PLAYER
+#endif  //< KABUKI_ARCADE_CARDS_PLAYER

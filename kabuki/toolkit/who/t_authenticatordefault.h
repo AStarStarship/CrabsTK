@@ -94,7 +94,7 @@ class TAuthenticatorDefault : public TAuthenticator {
   @param  password The password to validate.
   @return Returns null upon success and a pointer to an error string
   if the input is invalid. */
-  virtual const TStrand<>& PasswordIsInvalid(const TStrand<>& password) {
+  virtual const TStrand<>& PasswordInvalid(const TStrand<>& password) {
     if (input == nullptr) {
       return "nil input";
     }

@@ -18,7 +18,7 @@ namespace kabuki {
 namespace igeek {
 
 class BezierCurvePanel
-  /** This class draws a BezierCurve drawn on a JPanel.
+  /* This class draws a BezierCurve drawn on a JPanel.
 
   */
 {

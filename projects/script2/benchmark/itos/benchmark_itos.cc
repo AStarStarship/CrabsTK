@@ -1,4 +1,4 @@
-/** Kabuki Toolkit
+/* Kabuki Toolkit
     @version 0.x
     @file    //tests/benchmark_itos.cc
 @author  Cale McCollough <cale.mccollough@gmail.com>

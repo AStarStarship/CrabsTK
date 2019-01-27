@@ -1,4 +1,4 @@
-/** Kabuki Toolkit
+/* Kabuki Toolkit
     @file    $kabuki-toolkit/kabuki/toolkit/app/utils.h
     @author  Cale McCollough <calemccollough.github.io>
     @license Copyright (C) 2014-2017 Cale McCollough <calemccollough@gmail.com>;
@@ -17,12 +17,12 @@
 #include <pch.h>
 #if MAJOR_SEAM >= 2 && MINOR_SEAM >= 1
 
-#ifndef HEADER_FOR_KAUBKI_TOOLKIT_APP_CLIPBOARD
-#define HEADER_FOR_KAUBKI_TOOLKIT_APP_CLIPBOARD
+#ifndef KAUBKI_TOOLKIT_APP_CLIPBOARD
+#define KAUBKI_TOOLKIT_APP_CLIPBOARD
 
 namespace _ {
 
-/** Writes a block of memory to a file.
+/* Writes a block of memory to a file.
 @todo Move me over to Kabuki theater! */
 inline void WriteToFile (const CH1* filename, void* address, size_t size) {
     std::ofstream f;
@@ -38,7 +38,7 @@ inline void WriteToFile (const CH1* filename, void* address, size_t size) {
     f.close ();
 }
 
-/** Copies the given */
+/* Copies the given */
 inline void CopyByteArrayToClipBoard (void* address, size_t size) {
 
     /*

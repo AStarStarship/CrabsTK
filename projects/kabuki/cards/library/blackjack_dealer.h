@@ -1,4 +1,4 @@
-/** Kabuki Arcade
+/* Kabuki Arcade
     @version 0.x
     @file    ~/source/kabuki/arcade/cards/dealer.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
@@ -14,14 +14,14 @@
              permissions and limitations under the License.
 */
 
-#ifndef HEADER_FOR_KABUKI_ARCADE_CARDS_BLACKJACKDEADER
-#define HEADER_FOR_KABUKI_ARCADE_CARDS_BLACKJACKDEADER
+#ifndef KABUKI_ARCADE_CARDS_BLACKJACKDEADER
+#define KABUKI_ARCADE_CARDS_BLACKJACKDEADER
 
 #include "dealer.h"
 
 namespace kabuki { namespace cards {
 
-/** A dealer in a card game.
+/* A dealer in a card game.
     A dealer has the Deck of cards, but is not necessarily a player. A
     dealer needs to keep track of all of the Players. A BlackjackDealer is both
     a Player and a Dealer at the same time. */
@@ -39,58 +39,58 @@ class BlackjackDealer : public Dealer {
         //kMaxCardsPerHand    = Deck::kDefaultDeckSize, //< Max cards in a hand.
     };
 
-    /** Default constructor. */
+    /* Default constructor. */
     BlackjackDealer (id::User* user, int64_t buy_in = Dealer::kDefaultAnte,
                      int64_t ante    = Dealer::kDefaultAnte,
                      int64_t min_bet = Dealer::kDefaultMinBet,
                      SI4 min_players = kDefaultMinPlayers,
                      SI4 max_players = kDefaultMaxPlayer);
 
-    /** Virtually destructs nothing. */
+    /* Virtually destructs nothing. */
     virtual ~BlackjackDealer ();
 
-    /** Raises the ante by the given amount. */
+    /* Raises the ante by the given amount. */
     BOL RaiseAnte (int64_t value);
 
-    /** Gets the hand score with the given ace value. */
+    /* Gets the hand score with the given ace value. */
     SI4 CalcScore (SI4 ace_value);
 
-    /** Pure virtual new game logic handler. */
+    /* Pure virtual new game logic handler. */
     virtual void RestartGame ();
 
-    /** Processes beginning of round logic. */
+    /* Processes beginning of round logic. */
     virtual void BeginRound ();
 
-    /** Performs round logic. */
+    /* Performs round logic. */
     virtual void PlayRound ();
 
-    /** Processes beginning of round logic. */
+    /* Processes beginning of round logic. */
     virtual void EndRound ();
 
-    /** Processes beginning of round logic. */
+    /* Processes beginning of round logic. */
     virtual void EndGame ();
 
-    /** Compares this hand to the other.
+    /* Compares this hand to the other.
         @return Returns 0 if the hands are equal, > 1 if the other hand beats
         this hand and < 0 if the other hand wins.. */
     virtual SI4 Compare (Hand& hand);
 
-    /** Returns true if this hand wins compared to the other one. */
+    /* Returns true if this hand wins compared to the other one. */
     virtual BOL Wins (Hand& hand);
 
-    /** Adds a BlackjackPlayerAi to the . */
+    /* Adds a BlackjackPlayerAi to the . */
     virtual SI4 AddAgent (id::User* user);
 
-    /** Prints the abridged player stats to the console. */
+    /* Prints the abridged player stats to the console. */
     virtual _::Text& PrintStats (_::Text& txt);
 
-    /** Prints the player to the console. */
+    /* Prints the player to the console. */
     virtual _::Text& Print (_::Text& txt = _::Text ());
 
-    /** Script operations. */
+    /* Script operations. */
     virtual const _::Operation* Star (uint index, _::Expression* expr);
 
-    /** Handles Text input.
+    /* Handles Text input.
         @param text     Beginning of the Text buffer. 
         @param strand_end End of the Text buffer.
         @return Returns nil upon success and an error string upon failure. */
@@ -99,4 +99,4 @@ class BlackjackDealer : public Dealer {
 };      //< class BlackjackDealer
 }       //< namespace cards
 }       //< namespace kabuki
-#endif  //< HEADER_FOR_KABUKI_ARCADE_CARDS_BLACKJACKDEADER
+#endif  //< KABUKI_ARCADE_CARDS_BLACKJACKDEADER

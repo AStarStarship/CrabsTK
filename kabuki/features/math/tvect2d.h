@@ -1,4 +1,4 @@
-/** Kabuki Toolkit
+/* Kabuki Toolkit
     @file    ~/kt/math/vect2d.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017-2018 Cale McCollough <calemccollough@gmail.com>;
@@ -20,7 +20,7 @@
 
 namespace _ {
 
-/** A 2D TArray. */
+/* A 2D TArray. */
 template<typename T>
 struct KABUKI_THEATER Vect2D {
     T x, //< X component.
@@ -75,41 +75,41 @@ struct KABUKI_THEATER Vect2D {
         y = tempY;
     }
 
-    /** C++ Operator== overloader. */
+    /* C++ Operator== overloader. */
     BOL operator== (const Vect2D<T>& v) const {
         return ((x == v.x) && (y == v.y));
     }
 
-    /** C++ Operator!= overloader. */
+    /* C++ Operator!= overloader. */
     BOL operator!= (const Vect2D<T>& v) const {
         return ((x != v.x) || (y != v.y));
     }
 
-    /** C++ Operator- overloader. */
+    /* C++ Operator- overloader. */
     Vect2D<T> operator- (const Vect2D<T>& v) const {
         return { x - v.x, y - v.y };
     }
 
-    /** C++ Operator+ overloader. */
+    /* C++ Operator+ overloader. */
     Vect2D<T> operator+ (const Vect2D<T>& v) const {
         return { x + v.x, y + v.y };
     }
 
-    /** C++ Operator-= overloader. */
+    /* C++ Operator-= overloader. */
     Vect2D<T>& operator-= (const Vect2D<T>& v) {
         x -= v.x;
         y -= v.y;
         return *this;
     }
 
-    /** C++ Operator+= overloader. */
+    /* C++ Operator+= overloader. */
     Vect2D<T>& operator+= (const Vect2D<T>& v) {
         x += v.x;
         y += v.y;
         return *this;
     }
 
-    /** Prints this object to the stdout. */
+    /* Prints this object to the stdout. */
     _::Printer Print (_::Printer& print) const {
         print << "\nVect2D: x=" << x << ", y=" << y;
     }

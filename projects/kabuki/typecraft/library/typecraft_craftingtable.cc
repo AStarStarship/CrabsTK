@@ -1,4 +1,4 @@
-/** TypeCraft - Teaching Typing through Mining and Crafting.
+/* TypeCraft - Teaching Typing through Mining and Crafting.
 @link    https://github.com/kabuki-starship/kabuki-projects/typecraft
 @file    /projects/typecraft/typecraft_craftingtable.cc
 @author  Cale McCollough <cale.mccollough@gmail.com>

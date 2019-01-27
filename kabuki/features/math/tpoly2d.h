@@ -1,4 +1,4 @@
-/** Kabuki Toolkit
+/* Kabuki Toolkit
     @file    ~/kt/math/poly2d.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017-2018 Cale McCollough <calemccollough@gmail.com>;
@@ -145,7 +145,7 @@ class Poly2DPathIterator {
 
     BOL IsDone();
 
-    void GetNext();
+    void Next();
 
     SI4 CalcSegment (T* coords);
 

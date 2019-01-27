@@ -1,4 +1,4 @@
-﻿/** Kabuki Arcade
+﻿/* Kabuki Arcade
     @file    ~/source/kabuki/arcade/cards/arcade_card_game.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017-2018 Cale McCollough <calemccollough@gmail.com>;
@@ -13,8 +13,8 @@
              permissions and limitations under the License.
 */
 
-#ifndef HEADER_FOR_KABAUKI_CARDS_CLIENT
-#define HEADER_FOR_KABAUKI_CARDS_CLIENT
+#ifndef KABAUKI_CARDS_CLIENT
+#define KABAUKI_CARDS_CLIENT
 
 #include "deck.h"
 #include "dealer.h"
@@ -22,7 +22,7 @@
 
 namespace kabuki { namespace cards {
 
-/** A playing card game client that can play many types of games in the console.
+/* A playing card game client that can play many types of games in the console.
     The server does most of the game logic and feeds the client data on a 
     need to know basis. */
 class Client : public id::AuthenticatorDefault, public _::Operation {
@@ -41,30 +41,30 @@ class Client : public id::AuthenticatorDefault, public _::Operation {
         kMaxGameNameLength   = 63,        //< Max game name length.
     };
 
-    /** Default constructor. */
+    /* Default constructor. */
     Client ();
 
-    /** Virtual destructor. */
+    /* Virtual destructor. */
     virtual ~Client ();
 
     void DeleteRemotePlayers ();
 
-    /** Gets the FSM state. */
+    /* Gets the FSM state. */
     uint GetState ();
 
-    /** Virtual function sets the FSM state to a positive value. */
+    /* Virtual function sets the FSM state to a positive value. */
     virtual BOL SetState (SI4 state);
 
-    /** Prints out the PlayerProxy(s). */
+    /* Prints out the PlayerProxy(s). */
     void Client::PrintPlayers ();
 
-    /** Prints the round stats string. */
+    /* Prints the round stats string. */
     void PrintRoundStatsText ();
 
-    /** Prints this game out to the console. */
+    /* Prints this game out to the console. */
     virtual _::Text& Print (_::Text& txt = _::Text ());
 
-    /** Script operations. */
+    /* Script operations. */
     virtual const _::Operation* Star (uint index, _::Expression* expr);
 
     protected:
@@ -80,4 +80,4 @@ class Client : public id::AuthenticatorDefault, public _::Operation {
 
 }       //< namespace cards
 }       //< namespace kabuki
-#endif  //< HEADER_FOR_KABAUKI_CARDS_CLIENT
+#endif  //< KABAUKI_CARDS_CLIENT

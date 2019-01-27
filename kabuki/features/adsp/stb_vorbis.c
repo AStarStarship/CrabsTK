@@ -198,7 +198,7 @@
 #ifndef STB_VORBIS_NO_CRT
 #include <stdlib.h>
 #include <string.h>
-#include <assert.h>
+#include <DASSERT.h>
 #include <math.h>
 #if !(defined(__APPLE__) || defined(MACOSX) || defined(macintosh) || defined(Macintosh))
 #include <malloc.h>
@@ -681,7 +681,7 @@ static SI4 compute_codewords(Codebook *c, uint8 *len, SI4 n, uint32 *values)
    memset(available, 0, sizeof(available));
    // find the first entry
    for (k=0; k < n; ++k) if (len[k] < NO_CODE) break;
-   if (k == n) { assert(c->sorted_entries == 0); return TRUE; }
+   if (k == n) { DASSERT(c->sorted_entries == 0); return TRUE; }
    // add to the list
    add_entry(c, 0, k, m++, len[k], values);
    // add all available leaves
@@ -699,17 +699,17 @@ static SI4 compute_codewords(Codebook *c, uint8 *len, SI4 n, uint32 *values)
       // which is what the specification calls for)
       // note that this property, and the fact we can never have
       // more than one free leaf at a given level, isn't totally
-      // trivial to prove, but it seems true and the assert never
+      // trivial to prove, but it seems true and the DASSERT never
       // fires, so!
       while (z > 0 && !available[z]) --z;
-      if (z == 0) { assert(0); return FALSE; }
+      if (z == 0) { DASSERT(0); return FALSE; }
       res = available[z];
       available[z] = 0;
       add_entry(c, bit_reverse(res), i, m++, len[i], values);
       // propogate availability up the tree
       if (z != len[i]) {
          for (y=len[i]; y > z; --y) {
-            assert(available[y] == 0);
+            DASSERT(available[y] == 0);
             available[y] = res + (1 << (32-y));
          }
       }
@@ -750,7 +750,7 @@ static SI4 uint32_compare(const void *p, const void *q)
 
 static SI4 include_in_sort(Codebook *c, uint8 len)
 {
-   if (c->sparse) { assert(len != NO_CODE); return TRUE; }
+   if (c->sparse) { DASSERT(len != NO_CODE); return TRUE; }
    if (len == NO_CODE) return FALSE;
    if (len > STB_VORBIS_FAST_HUFFMAN_LENGTH) return TRUE;
    return FALSE;
@@ -770,7 +770,7 @@ static void compute_sorted_huffman(Codebook *c, uint8 *lengths, uint32 *values)
       for (i=0; i < c->entries; ++i)
          if (include_in_sort(c, lengths[i])) 
             c->sorted_codewords[k++] = bit_reverse(c->codewords[i]);
-      assert(k == c->sorted_entries);
+      DASSERT(k == c->sorted_entries);
    } else {
       for (i=0; i < c->sorted_entries; ++i)
          c->sorted_codewords[i] = bit_reverse(c->codewords[i]);
@@ -800,7 +800,7 @@ static void compute_sorted_huffman(Codebook *c, uint8 *lengths, uint32 *values)
                n >>= 1;
             }
          }
-         assert(c->sorted_codewords[x] == code);
+         DASSERT(c->sorted_codewords[x] == code);
          if (c->sparse) {
             c->sorted_values[x] = values[i];
             c->codeword_lengths[x] = huff_len;
@@ -825,8 +825,8 @@ static SI4 lookup1_values(SI4 entries, SI4 dim)
    SI4 r = (SI4) floor(exp((float) log((float) entries) / dim));
    if ((SI4) floor(pow((float) r+1, dim)) <= entries)   // (SI4) cast for MinGW warning;
       ++r;                                              // floor() to avoid _ftol() when non-CRT
-   assert(pow((float) r+1, dim) > entries);
-   assert((SI4) floor(pow((float) r, dim)) <= entries); // (SI4),floor() as above
+   DASSERT(pow((float) r+1, dim) > entries);
+   DASSERT((SI4) floor(pow((float) r, dim)) <= entries); // (SI4),floor() as above
    return r;
 }
 
@@ -1133,7 +1133,7 @@ static SI4 next_segment(vorb *f)
    }
    if (f->next_seg >= f->segment_count)
       f->next_seg = -1;
-   assert(f->bytes_in_seg == 0);
+   DASSERT(f->bytes_in_seg == 0);
    f->bytes_in_seg = len;
    return len;
 }
@@ -1146,7 +1146,7 @@ static SI4 get8_packet_raw(vorb *f)
    if (!f->bytes_in_seg)
       if (f->last_seg) return EOP;
       else if (!next_segment(f)) return EOP;
-   assert(f->bytes_in_seg > 0);
+   DASSERT(f->bytes_in_seg > 0);
    --f->bytes_in_seg;
    ++f->packet_bytes;
    return get8(f);
@@ -1235,7 +1235,7 @@ static SI4 codebook_decode_scalar_raw(vorb *f, Codebook *c)
    SI4 i;
    prep_huffman(f);
 
-   assert(c->sorted_codewords || c->codewords);
+   DASSERT(c->sorted_codewords || c->codewords);
    // cases to use binary search: sorted_codewords && !c->codewords
    //                             sorted_codewords && c->entries > 8
    if (c->entries > 8 ? c->sorted_codewords!=NULL : !c->codewords) {
@@ -1268,7 +1268,7 @@ static SI4 codebook_decode_scalar_raw(vorb *f, Codebook *c)
    }
 
    // if small, linear search
-   assert(!c->sparse);
+   DASSERT(!c->sparse);
    for (i=0; i < c->entries; ++i) {
       if (c->codeword_lengths[i] == NO_CODE) continue;
       if (c->codewords[i] == (f->acc & ((1 << c->codeword_lengths[i])-1))) {
@@ -1362,7 +1362,7 @@ static SI4 codebook_decode_start(vorb *f, Codebook *c, SI4 len)
       error(f, VORBIS_invalid_stream);
    else {
       DECODE_VQ(z,f,c);
-      if (c->sparse) assert(z < c->sorted_entries);
+      if (c->sparse) DASSERT(z < c->sorted_entries);
       if (z < 0) {  // check for EOP
          if (!f->bytes_in_seg)
             if (f->last_seg)
@@ -1456,7 +1456,7 @@ static SI4 codebook_decode_deinterleave_repeat(vorb *f, Codebook *c, float **out
       float last = CODEBOOK_ELEMENT_BASE(c);
       DECODE_VQ(z,f,c);
       #ifndef STB_VORBIS_DIVIDES_IN_CODEBOOK
-      assert(!c->sparse || z < c->sorted_entries);
+      DASSERT(!c->sparse || z < c->sorted_entries);
       #endif
       if (z < 0) {
          if (!f->bytes_in_seg)
@@ -2102,7 +2102,7 @@ static void imdct_step3_iter0_loop(SI4 n, float *e, SI4 i_off, SI4 k_off, float 
    float *ee2 = ee0 + k_off;
    SI4 i;
 
-   assert((n & 3) == 0);
+   DASSERT((n & 3) == 0);
    for (i=(n>>2); i > 0; --i) {
       float k00_20, k01_21;
       k00_20  = ee0[ 0] - ee2[ 0];
@@ -2506,7 +2506,7 @@ static void inverse_mdct(float *buffer, SI4 n, vorb *f, SI4 blocktype)
 
 
    // data must be in buf2
-   assert(v == buf2);
+   DASSERT(v == buf2);
 
    // step 7   (paper output is v, now v)
    // this is now in place
@@ -2692,7 +2692,7 @@ void inverse_mdct_naive(float *buffer, SI4 n)
    // step 4
    for (i=0; i < n8; ++i) {
       SI4 j = bit_reverse(i) >> (32-ld+3);
-      assert(j < n8);
+      DASSERT(j < n8);
       if (i == j) {
          // paper bug: original code probably swapped in place; if copying,
          //            need to directly copy in this case
@@ -2753,7 +2753,7 @@ static float *get_window(vorb *f, SI4 len)
    len <<= 1;
    if (len == f->blocksize_0) return f->window[0];
    if (len == f->blocksize_1) return f->window[1];
-   assert(0);
+   DASSERT(0);
    return NULL;
 }
 
@@ -2814,7 +2814,7 @@ static SI4 vorbis_decode_initial(vorb *f, SI4 *p_left_start, SI4 *p_left_end, SI
    }
 
    if (f->alloc.alloc_buffer)
-      assert(f->alloc.alloc_buffer_length_in_bytes == f->temp_offset);
+      DASSERT(f->alloc.alloc_buffer_length_in_bytes == f->temp_offset);
 
    i = get_bits(f, ilog(f->mode_count-1));
    if (i == EOP) return FALSE;
@@ -2964,7 +2964,7 @@ static SI4 vorbis_decode_packet_rest(vorb *f, SI4 *len, Mode *m, SI4 left_start,
    // at this point we've decoded all floors
 
    if (f->alloc.alloc_buffer)
-      assert(f->alloc.alloc_buffer_length_in_bytes == f->temp_offset);
+      DASSERT(f->alloc.alloc_buffer_length_in_bytes == f->temp_offset);
 
    // re-enable coupled channels if necessary
    memcpy(really_zero_channel, zero_channel, sizeof(really_zero_channel[0]) * f->channels);
@@ -2997,7 +2997,7 @@ static SI4 vorbis_decode_packet_rest(vorb *f, SI4 *len, Mode *m, SI4 left_start,
    }
 
    if (f->alloc.alloc_buffer)
-      assert(f->alloc.alloc_buffer_length_in_bytes == f->temp_offset);
+      DASSERT(f->alloc.alloc_buffer_length_in_bytes == f->temp_offset);
 
 // INVERSE COUPLING
    stb_prof(14);
@@ -3106,7 +3106,7 @@ static SI4 vorbis_decode_packet_rest(vorb *f, SI4 *len, Mode *m, SI4 left_start,
       f->current_loc += (right_start - left_start);
 
    if (f->alloc.alloc_buffer)
-      assert(f->alloc.alloc_buffer_length_in_bytes == f->temp_offset);
+      DASSERT(f->alloc.alloc_buffer_length_in_bytes == f->temp_offset);
    *len = right_end;  // ignore samples after the window goes to 0
    return TRUE;
 }
@@ -3385,7 +3385,7 @@ static SI4 start_decoder(vorb *f)
       // compute the size of the sorted tables
       if (c->sparse) {
          sorted_count = total;
-         //assert(total != 0);
+         //DASSERT(total != 0);
       } else {
          sorted_count = 0;
          #ifndef STB_VORBIS_NO_HUFFMAN_BINARY_SEARCH
@@ -3756,7 +3756,7 @@ static SI4 start_decoder(vorb *f)
    f->first_decode = TRUE;
 
    if (f->alloc.alloc_buffer) {
-      assert(f->temp_offset == f->alloc.alloc_buffer_length_in_bytes);
+      DASSERT(f->temp_offset == f->alloc.alloc_buffer_length_in_bytes);
       // check if there's enough temp memory so we don't error later
       if (f->setup_offset + sizeof(*f) + f->temp_memory_required > (unsigned) f->temp_offset)
          return error(f, VORBIS_outofmem);
@@ -4195,7 +4195,7 @@ static SI4 vorbis_analyze_page(stb_vorbis *f, ProbedPage *z)
 
    // parse the header
    getn(f, header, 27);
-   assert(header[0] == 'O' && header[1] == 'g' && header[2] == 'g' && header[3] == 'S');
+   DASSERT(header[0] == 'O' && header[1] == 'g' && header[2] == 'g' && header[3] == 'S');
    getn(f, lacing, header[26]);
 
    // determine the length of the payload
@@ -4375,7 +4375,7 @@ static SI4 vorbis_seek_frame_from_page(stb_vorbis *f, uint32 page_start, uint32 
       // (which means frame-2+1 total frames) then decode frame-1,
       // then leave frame pending
       frames_to_skip = frame - 1;
-      assert(frames_to_skip >= 0);
+      DASSERT(frames_to_skip >= 0);
       data_to_skip = -1;      
    }
 
@@ -4406,8 +4406,8 @@ static SI4 vorbis_seek_frame_from_page(stb_vorbis *f, uint32 page_start, uint32 
       if (target_sample != frame_start) {
          SI4 n;
          stb_vorbis_get_frame_float(f, &n, NULL);
-         assert(target_sample > frame_start);
-         assert(f->channel_buffer_start + (SI4) (target_sample-frame_start) < f->channel_buffer_end);
+         DASSERT(target_sample > frame_start);
+         DASSERT(f->channel_buffer_start + (SI4) (target_sample-frame_start) < f->channel_buffer_end);
          f->channel_buffer_start += (target_sample - frame_start);
       }
    }
@@ -4840,7 +4840,7 @@ static void convert_channels_short_interleaved(SI4 buf_c, short *buffer, SI4 dat
    SI4 i;
    check_endianness();
    if (buf_c != data_c && buf_c <= 2 && data_c <= 6) {
-      assert(buf_c == 2);
+      DASSERT(buf_c == 2);
       for (i=0; i < buf_c; ++i)
          compute_stereo_samples(buffer, data_c, data, d_offset, len);
    } else {

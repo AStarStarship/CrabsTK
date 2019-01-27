@@ -1,4 +1,4 @@
-/** kabuki:cards_
+/* kabuki:cards_
     @file    ~/source/kabuki/arcade/cards/arcade_card_stack.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017-2018 Cale McCollough <calemccollough@gmail.com>;

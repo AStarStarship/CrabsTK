@@ -14,8 +14,8 @@ specific language governing permissions and limitations under the License. */
 #pragma once
 #include <pch.h>
 #if SEAM >= KABUKI_TOOLKIT_WHO_1
-#ifndef HEADER_FOR_KABUKI_TOOLKIT_ID_ACCOUNT
-#define HEADER_FOR_KABUKI_TOOLKIT_ID_ACCOUNT 1
+#ifndef KABUKI_TOOLKIT_ID_ACCOUNT
+#define KABUKI_TOOLKIT_ID_ACCOUNT 1
 
 #include "t_handle.h"
 #include "t_password.h"
@@ -88,5 +88,5 @@ class TAccount {
 };
 
 }       // namespace _
-#endif  //< HEADER_FOR_KABUKI_TOOLKIT_ID_ACCOUNT
+#endif  //< KABUKI_TOOLKIT_ID_ACCOUNT
 #endif  //< #if SEAM >= KABUKI_TOOLKIT_WHO_1

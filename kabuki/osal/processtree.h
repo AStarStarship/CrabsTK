@@ -1,4 +1,4 @@
-/** Kabuki Toolkit
+/* Kabuki Toolkit
     @file    $kabuki-toolkit/kabuki/toolkit/app/process_tree.h
     @author  Cale McCollough <calemccollough.github.io>
     @license Copyright (C) 2014-2017 Cale McCollough <calemccollough@gmail.com>;
@@ -21,41 +21,41 @@
 
 namespace _ {
 
-/** Class that stores a group of app.Window objects. */
+/* Class that stores a group of app.Window objects. */
 class KTH_APP_API ProcessTree
 {
     public:
     
     static const SI4 DefaultMaxWindows = 1024;
 
-    /** Default constructor. **/
+    /* Default constructor. **/
     ProcessTree ();
 
-    /** Constructor initializes with a single window. */
+    /* Constructor initializes with a single window. */
     ProcessTree (Window& this_window);
 
-    /** Constructor initializes with an array of windows. */
+    /* Constructor initializes with an array of windows. */
     ProcessTree (TArray<Window> init_windows);
 
-    /** Returns the UID of this Group. */
+    /* Returns the UID of this Group. */
     uint32_t GetUID ();
 
-    /** Gets and sets the maximum number of windows in this group */
+    /* Gets and sets the maximum number of windows in this group */
     SI4 GetMaxWindows ();
     
-    /** Gets and sets the maximum number of windows in this group */
+    /* Gets and sets the maximum number of windows in this group */
     void SetMaxWindows (SI4 value);
 
-    /** . */
+    /* . */
     SI4 Select (SI4 window_number);
 
-    /** Returns the number of windows in this group. */
+    /* Returns the number of windows in this group. */
     SI4 GetNumWindows ();
 
-    /** Adds a newWindow to the group. */
+    /* Adds a newWindow to the group. */
     void AddWindow (Window newWindow);
 
-    /** Prints this object to the stdout. */
+    /* Prints this object to the stdout. */
     void Print ();
 
     private:
@@ -67,6 +67,6 @@ class KTH_APP_API ProcessTree
 };
 
 }       //< namespace _
-#endif  //< HEADER_FOR_KABUKI_TOOLKIT_APP_PROCESSTREE
+#endif  //< KABUKI_TOOLKIT_APP_PROCESSTREE
 #endif  //< #if MAJOR_SEAM >= 2 && MINOR_SEAM >= 1
 

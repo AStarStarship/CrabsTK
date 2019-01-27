@@ -1,4 +1,4 @@
-/**********************************************************************/
+/*********************************************************************/
 /*! \class RtMidi
     \brief An abstract base class for realtime MIDI input/output.
 
@@ -34,7 +34,7 @@
     CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
     WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
-/**********************************************************************/
+/*********************************************************************/
 
 #include "RtMidi.h"
 #include <sstream>
@@ -46,9 +46,9 @@
   #endif
 #endif
 
-//*********************************************************************//
+//********************************************************************//
 //  RtMidi Definitions
-//*********************************************************************//
+//********************************************************************//
 
 RtMidi :: RtMidi()
   : rtapi_(0)
@@ -90,9 +90,9 @@ void RtMidi :: getCompiledApi( TArray<RtMidi::Api> &apis ) throw()
 #endif
 }
 
-//*********************************************************************//
+//********************************************************************//
 //  RtMidiIn Definitions
-//*********************************************************************//
+//********************************************************************//
 
 void RtMidiIn :: openMidiApi( RtMidi::Api api, const std::string clientName, unsigned SI4 queueSizeLimit )
 {
@@ -159,9 +159,9 @@ RtMidiIn :: ~RtMidiIn() throw()
 }
 
 
-//*********************************************************************//
+//********************************************************************//
 //  RtMidiOut Definitions
-//*********************************************************************//
+//********************************************************************//
 
 void RtMidiOut :: openMidiApi( RtMidi::Api api, const std::string clientName )
 {
@@ -226,9 +226,9 @@ RtMidiOut :: ~RtMidiOut() throw()
 {
 }
 
-//*********************************************************************//
+//********************************************************************//
 //  Common MidiApi Definitions
-//*********************************************************************//
+//********************************************************************//
 
 MidiApi :: MidiApi( void )
   : apiData_( 0 ), connected_( false ), errorCallback_(0), errorCallbackUserData_(0)
@@ -274,9 +274,9 @@ void MidiApi :: error( RtMidiError::Type type, std::string errorString )
   }
 }
 
-//*********************************************************************//
+//********************************************************************//
 //  Common MidiInApi Definitions
-//*********************************************************************//
+//********************************************************************//
 
 MidiInApi :: MidiInApi( unsigned SI4 queueSizeLimit )
   : MidiApi()
@@ -357,9 +357,9 @@ double MidiInApi :: getMessage( TArray<unsigned CH1> *message )
   return deltaTime;
 }
 
-//*********************************************************************//
+//********************************************************************//
 //  Common MidiOutApi Definitions
-//*********************************************************************//
+//********************************************************************//
 
 MidiOutApi :: MidiOutApi( void )
   : MidiApi()
@@ -398,10 +398,10 @@ struct CoreMidiData {
   MIDISysexSendRequest sysexreq;
 };
 
-//*********************************************************************//
+//********************************************************************//
 //  SDK: OS-X
 //  Class Definitions: MidiInCore
-//*********************************************************************//
+//********************************************************************//
 
 static void midiInputCallback( const MIDIPacketList *list, void *procRef, void */*srcRef*/ )
 {
@@ -843,10 +843,10 @@ std::string MidiInCore :: getPortName( unsigned SI4 portNumber )
   return stringName = name;
 }
 
-//*********************************************************************//
+//********************************************************************//
 //  SDK: OS-X
 //  Class Definitions: MidiOutCore
-//*********************************************************************//
+//********************************************************************//
 
 MidiOutCore :: MidiOutCore( const std::string clientName ) : MidiOutApi()
 {
@@ -1069,9 +1069,9 @@ void MidiOutCore :: sendMessage( TArray<unsigned CH1> *message )
 #endif  // __MACOSX_CORE__
 
 
-//*********************************************************************//
+//********************************************************************//
 //  SDK: LINUX ALSA SEQUENCER
-//*********************************************************************//
+//********************************************************************//
 
 // SDK information found at:
 //   - http://www.alsa-project.org/documentation.php#Library
@@ -1113,10 +1113,10 @@ struct AlsaMidiData {
 
 #define PORT_TYPE( pinfo, bits ) ((snd_seq_port_info_get_capability(pinfo) & (bits)) == (bits))
 
-//*********************************************************************//
+//********************************************************************//
 //  SDK: LINUX ALSA
 //  Class Definitions: MidiInAlsa
-//*********************************************************************//
+//********************************************************************//
 
 static void *alsaMidiHandler( void *ptr )
 {
@@ -1653,10 +1653,10 @@ void MidiInAlsa :: closePort( void )
   }
 }
 
-//*********************************************************************//
+//********************************************************************//
 //  SDK: LINUX ALSA
 //  Class Definitions: MidiOutAlsa
-//*********************************************************************//
+//********************************************************************//
 
 MidiOutAlsa :: MidiOutAlsa( const std::string clientName ) : MidiOutApi()
 {
@@ -1892,9 +1892,9 @@ void MidiOutAlsa :: sendMessage( TArray<unsigned CH1> *message )
 #endif // __LINUX_ALSA__
 
 
-//*********************************************************************//
+//********************************************************************//
 //  SDK: Windows Multimedia Library (MM)
-//*********************************************************************//
+//********************************************************************//
 
 // SDK information deciphered from:
 //  - http://msdn.microsoft.com/library/default.asp?url=/library/en-us/multimed/htm/_win32_midi_reference.asp
@@ -1925,10 +1925,10 @@ struct WinMidiData {
   CRITICAL_SECTION _mutex; // [Patrice] see https://groups.google.com/forum/#!topic/mididev/6OUjHutMpEo
 };
 
-//*********************************************************************//
+//********************************************************************//
 //  SDK: Windows MM
 //  Class Definitions: MidiInWinMM
-//*********************************************************************//
+//********************************************************************//
 
 static void CALLBACK midiInputCallback( HMIDIIN /*hmin*/,
                                         UINT inputStatus, 
@@ -2212,10 +2212,10 @@ std::string MidiInWinMM :: getPortName( unsigned SI4 portNumber )
   return stringName;
 }
 
-//*********************************************************************//
+//********************************************************************//
 //  SDK: Windows MM
 //  Class Definitions: MidiOutWinMM
-//*********************************************************************//
+//********************************************************************//
 
 MidiOutWinMM :: MidiOutWinMM( const std::string clientName ) : MidiOutApi()
 {
@@ -2422,7 +2422,7 @@ void MidiOutWinMM :: sendMessage( TArray<unsigned CH1> *message )
 #endif  // __WINDOWS_MM__
 
 
-//*********************************************************************//
+//********************************************************************//
 //  SDK: UNIX JACK
 //
 //  Written primarily by Alexander Svetalkin, with updates for delta
@@ -2448,10 +2448,10 @@ struct JackMidiData {
   MidiInApi :: RtMidiInData *rtMidiIn;
   };
 
-//*********************************************************************//
+//********************************************************************//
 //  SDK: JACK
 //  Class Definitions: MidiInJack
-//*********************************************************************//
+//********************************************************************//
 
 static SI4 jackProcessIn( jack_nframes_t nframes, void *arg )
 {
@@ -2647,10 +2647,10 @@ void MidiInJack :: closePort()
   data->port = NULL;
 }
 
-//*********************************************************************//
+//********************************************************************//
 //  SDK: JACK
 //  Class Definitions: MidiOutJack
-//*********************************************************************//
+//********************************************************************//
 
 // Jack process callback
 static SI4 jackProcessOut( jack_nframes_t nframes, void *arg )

@@ -1,7 +1,7 @@
-/** Kabuki Toolkit@version 0.x
+/* Kabuki Toolkit@version 0.x
 @file    /kabuki/f2sdk/ai/nmist_importer.h
 @author  Cale McCollough <cale.mccollough@gmail.com>
-@license Copyright (C) 2014-19 Cale McCollough <calemccollough.github.io>;
+@license Copyright (C) 2014-19 Cale McCollough <cale@astartup.net>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
 "License"); you may not use this file except in compliance with the License.
 You may obtain a copy of the License at www.apache.org/licenses/LICENSE-2.0.
@@ -27,7 +27,7 @@ size_t EndianSwap (size_t value) {
 }
 
 
-/** TRAINING SET LABEL FILE (train-labels-idx1-ubyte):
+/* TRAINING SET LABEL FILE (train-labels-idx1-ubyte):
     [offset] [type]          [value]          [description]
     0000     32 bit integer  0x00000801(2049) magic number (MSB first)
     0004     32 bit integer  60000            number of items
@@ -52,7 +52,7 @@ struct MnistLabels {
              item_count;
 };
 
-/** The labels values are 0 to 9.
+/* The labels values are 0 to 9.
     TRAINING SET IMAGE FILE (train-images-idx3-ubyte):
     [offset] [type]          [value]          [description]
     0000     32 bit integer  0x00000803(2051) magic number
@@ -100,7 +100,7 @@ void MnistImport ();
 }       //< namespace _
 #endif  //< #if MAJOR_SEAM >= 5 && MINOR_SEAM >= 1
 
-/**  FILE FORMATS FOR THE MNIST DATABASE
+/*  FILE FORMATS FOR THE MNIST DATABASE
 The data is stored in a very simple file format designed for storing vectors and multidimensional matrices. General info on this format is given at the end of this page, but you don't need to read that to use the data files.
 
 All the integers in the files are stored in the MSB first (high endian) format used by most non-Intel processors. Users of Intel processors and other low-endian machines must flip the bytes of the header.

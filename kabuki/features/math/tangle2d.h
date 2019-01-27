@@ -1,4 +1,4 @@
-/** Kabuki Toolkit
+/* Kabuki Toolkit
     @file    ~/kt/math/Angle2D.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017-2018 Cale McCollough <calemccollough@gmail.com>;
@@ -20,7 +20,7 @@
 
 namespace _ {
 
-/** An angle between two lines stored in radians. */
+/* An angle between two lines stored in radians. */
 template<typename T>
 class Angle2D
 {
@@ -28,22 +28,22 @@ class Angle2D
 
     T rads;        //< The angle stored in radians.
 
-    /** Constructor. */
+    /* Constructor. */
     Angle2D (T value = 0) {
         
     }
 
-    /** Converts the angle to degrees. */
+    /* Converts the angle to degrees. */
     T GetDegs () {
         return (rads * 180.0) / pi;
     }
 
-    /** Sets the angle to the new value in degrees. */
+    /* Sets the angle to the new value in degrees. */
     void SetDegs (T angle) {
         rads = angle * Pi<T> ();
     }
 
-    /** Prints this object to the terminal. */
+    /* Prints this object to the terminal. */
     inline void Print (Expression& io) {
     }
 };

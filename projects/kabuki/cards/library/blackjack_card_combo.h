@@ -1,4 +1,4 @@
-/** Kabuki Arcade
+/* Kabuki Arcade
     @file    ~/source/kabuki/arcade/cards/blackjack/blackjackCardCombo.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017-2018 Cale McCollough <calemccollough@gmail.com>;
@@ -12,29 +12,29 @@
              implied. See the License for the specific language governing
              permissions and limitations under the License.
 */
-#ifndef HEADER_FOR_KABUKI_ARCADE_CARDS_BLACKJACKCARDCOMBO
-#define HEADER_FOR_KABUKI_ARCADE_CARDS_BLACKJACKCARDCOMBO
+#ifndef KABUKI_ARCADE_CARDS_BLACKJACKCARDCOMBO
+#define KABUKI_ARCADE_CARDS_BLACKJACKCARDCOMBO
 
 #include "card_combo.h"
 
 namespace kabuki { namespace cards {
-/** Class that represents a CardCombo in a game.
+/* Class that represents a CardCombo in a game.
     There are two major things that will effect a combination's rank besides
     suit rank; the presence of jokers, and if aces are high or low.
 */
 class BlackjackCardCombo : public CardCombo { 
     public:
 
-    /** Default constructor.
+    /* Default constructor.
     */
     BlackjackCardCombo (const CardStack& cards, BOL aces_high);
 
     virtual ~BlackjackCardCombo ();
 
-    /** Function that returns the point value based on the ace value. */
+    /* Function that returns the point value based on the ace value. */
     SI4 GetValue ();
     
 };      //< class BlackjackCardCombo
 }       //< namespace cards
 }       //< namespace kabuki
-#endif  //< HEADER_FOR_KABUKI_ARCADE_CARDS_BLACKJACKCARDCOMBO
+#endif  //< KABUKI_ARCADE_CARDS_BLACKJACKCARDCOMBO

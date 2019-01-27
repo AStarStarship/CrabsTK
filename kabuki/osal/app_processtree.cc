@@ -1,4 +1,4 @@
-/** Kabuki Toolkit
+/* Kabuki Toolkit
     @file    $kabuki-toolkit/kabuki/toolkit/app/app_process_tree.cc
     @author  Cale McCollough <calemccollough.github.io>
     @license Copyright (C) 2014-2017 Cale McCollough <calemccollough@gmail.com>;
@@ -42,7 +42,7 @@ ProcessTree::ProcessTree (TArray<Window> initWindows)
 
 uint32_t ProcessTree::GetUID () { return uID; }
 
-/** Gets and sets the maximum number of windows in this group */
+/* Gets and sets the maximum number of windows in this group */
 SI4 ProcessTree::GetMaxWindows () { return maxWindows; }
 
 void ProcessTree::SetMaxWindows (SI4 Value)
@@ -51,7 +51,7 @@ void ProcessTree::SetMaxWindows (SI4 Value)
     maxWindows = value;
 }
 
-/**  */
+/*  */
 SI4 ProcessTree::Select (SI4 windowNumber)
 {
     if (windowNumber < 0) return -1;
@@ -59,14 +59,14 @@ SI4 ProcessTree::Select (SI4 windowNumber)
     return windowNumber;
 }
 
-/** Returns the number of windows in this group. */
+/* Returns the number of windows in this group. */
 SI4 ProcessTree::GetNumWindows { return numWindows; }
 
-/** Adds a newWindow to the group. */
+/* Adds a newWindow to the group. */
 void ProcessTree::AddWindow (Window newWindow) {
 }
 
-/** Returns a string representation of this object. */
+/* Returns a string representation of this object. */
 _::UTF& ProcessTree::Print (_::UTF& print) {
     return "";
 }

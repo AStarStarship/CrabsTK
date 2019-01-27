@@ -11,14 +11,14 @@ under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
 CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License. */
 
-#include "crotaryknobbank.h"
+#include "c_rotaryknobbank.h"
 
 namespace _ {
 
 RotaryKnobBank::RotaryKnobBank(ch_t num_knobs, ch_t start_channel,
                                ch_t num_banks, const UI1* rows,
                                const UI1* columns)
-    : num_channels_(num_knobs),
+    : channel_count_(num_knobs),
       start_channel_(start_channel),
       num_banks_(num_banks),
       num_buttons_(0),
@@ -30,24 +30,24 @@ RotaryKnobBank::RotaryKnobBank(ch_t num_knobs, ch_t start_channel,
       buttons_(0),
       lights_(0) {}
 
-ch_t RotaryKnobBank::GetNumChannels() { return num_channels_ * num_banks_; }
+ch_t RotaryKnobBank::GetNumChannels() { return channel_count_ * num_banks_; }
 
 void RotaryKnobBank::SwitchBank(ch_t value) {
   if (value >= num_banks_) return;
 
   current_bank_ = value;
-  current_channel_ = start_channel_ + num_channels_ * value;
+  current_channel_ = start_channel_ + channel_count_ * value;
 }
 
 void RotaryKnobBank::CycleBank() {
-  current_channel_ += num_channels_;
-  if (current_channel_ > start_channel_ + num_channels_ * num_banks_)
+  current_channel_ += channel_count_;
+  if (current_channel_ > start_channel_ + channel_count_ * num_banks_)
     current_channel_ = start_channel_;
 }
 
-void RotaryKnobBank::Update(SI2* channels_, SI2* min_values_, SI2* max_values_,
-                            UI1* spi_out_bytes_, SI2 row_, int8_t count_) {
-  // for  (UI2 i = 0; i < num_channels_; ++i)
+void RotaryKnobBank::Update(SI2* channels, SI2* min_values, SI2* max_values,
+                            UI1* spi_out_bytes, SI2 row, int8_t count) {
+  // for  (UI2 i = 0; i < count; ++i)
   //   UpdateChannel  (i, channels, minValues, maxValues, spiOutBytes, row,
   //                   count, wiring_config_);
 }

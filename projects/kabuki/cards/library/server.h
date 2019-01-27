@@ -1,4 +1,4 @@
-﻿/** Kabuki Arcade
+﻿/* Kabuki Arcade
     @file    ~/source/kabuki/arcade/cards/cards_server.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017-2018 Cale McCollough <calemccollough@gmail.com>;
@@ -13,8 +13,8 @@
              permissions and limitations under the License.
 */
 
-#ifndef HEADER_FOR_KABAUKI_CARDS_SERVER
-#define HEADER_FOR_KABAUKI_CARDS_SERVER
+#ifndef KABAUKI_CARDS_SERVER
+#define KABAUKI_CARDS_SERVER
 
 #include "deck.h"
 #include "dealer.h"
@@ -22,7 +22,7 @@
 
 namespace kabuki { namespace cards {
 
-/** An abstract playing card game server.
+/* An abstract playing card game server.
     
     # Session System
 
@@ -61,70 +61,70 @@ class Server : public _::Room {
         kDefaultMaxGames     = 256,     //< Default max games.
     };
 
-    /** Default constructor. */
+    /* Default constructor. */
     Server (const CH1* password  = id::Password::kDefault,
             uint32_t    port      = kDefaultPort,
             SI4         max_games = kDefaultMaxGames);
 
-    /** Constructor. */
+    /* Constructor. */
     virtual ~Server ();
 
-    /** Quits the server. */
+    /* Quits the server. */
     const CH1* Exit ();
 
-    /** Restarts the server. */
+    /* Restarts the server. */
     const CH1* Restart ();
 
-    /** Gets the FSM state. */
+    /* Gets the FSM state. */
     SI4 GetState ();
 
-    /** Virtual function sets the FSM state to a positive value. */
+    /* Virtual function sets the FSM state to a positive value. */
     State SetState (State state);
 
-    /** Gets the FSM state. */
+    /* Gets the FSM state. */
     uint32_t GetPort ();
 
-    /** Virtual function sets the FSM state to a positive value. */
+    /* Virtual function sets the FSM state to a positive value. */
     virtual BOL SetPort (uint32_t port_number);
 
-    /** Gets the users_. */
+    /* Gets the users_. */
     id::UserList& Users ();
 
-    /** Gets the number of game tables on the server. */
+    /* Gets the number of game tables on the server. */
     SI4 GetNumTables ();
 
-    /** Adds a new Game to the games_. */
+    /* Adds a new Game to the games_. */
     SI4 AddGame (Game* game);
 
-    /** Adds a new BlackjackGame.
+    /* Adds a new BlackjackGame.
         @return The index of the new game SI4 he games_. */
     SI4 AddBlackjackGame ();
 
-    /** Removes the game at the given index. */
+    /* Removes the game at the given index. */
     BOL RemoveGame (SI4 index);
 
-    /** Gets the directions string. */
+    /* Gets the directions string. */
     const CH1* GetDirections ();
 
-    /** Sets the directions string. */
+    /* Sets the directions string. */
     BOL SetDirections (const CH1* directions);
 
-    /** Registers a new agent with the given handle prefix and User uid. */
+    /* Registers a new agent with the given handle prefix and User uid. */
     virtual SI4 AddAgent (const CH1* handle_prefix,
                           double balance = 1 * 1000.00 * 1000.00,
                           uint64_t value = 1 * 1000 * 1000);
 
-    /** Prints this game out to the console. */
+    /* Prints this game out to the console. */
     virtual _::Text& Print (_::Text& txt = _::Text ());
 
-    /** Handles Text input.
+    /* Handles Text input.
         @param text     Beginning of the Text buffer. 
         @param strand_end End of the Text buffer.
         @return Returns nil upon success and an error string upon failure. */
     virtual const CH1* Sudo (const CH1* text,
                                     const CH1* strand_end);
 
-    /** Script operations. */
+    /* Script operations. */
     virtual const _::Operation* Star (uint index, _::Expression* expr);
 
     protected:
@@ -141,4 +141,4 @@ class Server : public _::Room {
 };      //< class Server
 }       //< namespace cards
 }       //< namespace kabuki
-#endif  //< HEADER_FOR_KABAUKI_CARDS_SERVER
+#endif  //< KABAUKI_CARDS_SERVER

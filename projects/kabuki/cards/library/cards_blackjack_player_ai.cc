@@ -1,4 +1,4 @@
-/** Kabuki Arcade
+/* Kabuki Arcade
     @file    ~/source/kabuki/arcade/cards/arcade_blackjack_player.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017-2018 Cale McCollough <calemccollough@gmail.com>;
@@ -61,7 +61,7 @@ Array<CardCombo> BlackjackPlayerAi::GetHandCombos () {
     return scores;
 }*/
 
-/**
+/*
 BOL BlackjackPlayerAi::PlayOrPass () {
     // Estimated chances of winning. 
     static const float chanes_of_winning_low[] = {
@@ -95,7 +95,7 @@ BOL BlackjackPlayerAi::PlayOrPass () {
         return true;
     }
     */
-    /** From here on out, we don't actually have to take another card because
+    /* From here on out, we don't actually have to take another card because
         we might go over and loose, so we're playing a numbers game.
 
         At this point in time, we are less than 10 points away from going bust,
@@ -115,7 +115,7 @@ BOL BlackjackPlayerAi::PlayOrPass () {
     if (chance_of_winning >= 0.5)
         return true;*/
 
-    /** To do this, we're going to use a random number between 0 and 1, and
+    /* To do this, we're going to use a random number between 0 and 1, and
         multiply it by a number between 1-10 to get a percent.
         For example, a 50% chance of winning would get the number 5, then if you
         multiplied that by a random number between 0 and 1, then we have a 50%
