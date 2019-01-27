@@ -31,7 +31,7 @@ shift registers, and data is only sent and received on the correct UI1
 indexes.
     
 @code
-char OutputData[5];
+CH1 OutputData[5];
 SPIPort controller8 (D11, D12, D13, D10, 1, &OutputData[5], 4,
 &OutputData[0]);
 @endcode

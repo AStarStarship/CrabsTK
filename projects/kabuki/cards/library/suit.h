@@ -30,14 +30,14 @@ class KABUKI Suit {
 
     enum {
         kDefaultDenomination = 0,    //< Default suit value:0.
-        kBlackSpade          = 2660, //< Unicode char for Black spade suit.
-        kWhiteHeart          = 2661, //< Unicode char for White heart suit.
-        kWhiteDiamond        = 2662, //< Unicode char for White diamond suit.
-        kBlackClub           = 2663, //< Unicode char for Black club suit.
-        kWhiteSpade          = 2664, //< Unicode char for White spade suit.
-        kBlackHeart          = 2665, //< Unicode char for Black heart suit.
-        kBlackDiamond        = 2666, //< Unicode char for Black diamond suit.
-        kWhiteClub           = 2667, //< Unicode char for White club suit.
+        kBlackSpade          = 2660, //< Unicode CH1 for Black spade suit.
+        kWhiteHeart          = 2661, //< Unicode CH1 for White heart suit.
+        kWhiteDiamond        = 2662, //< Unicode CH1 for White diamond suit.
+        kBlackClub           = 2663, //< Unicode CH1 for Black club suit.
+        kWhiteSpade          = 2664, //< Unicode CH1 for White spade suit.
+        kBlackHeart          = 2665, //< Unicode CH1 for Black heart suit.
+        kBlackDiamond        = 2666, //< Unicode CH1 for Black diamond suit.
+        kWhiteClub           = 2667, //< Unicode CH1 for White club suit.
     };
 
     /** Enumerated list of the different suites on playing cards in various
@@ -109,26 +109,26 @@ class KABUKI Suit {
     } Format;
 
     /** A list of the strings "Clubs", "Diamonds", "Hearts", "Spades". */
-    static const char* kFrenchSuit[4];
+    static const CH1* kFrenchSuit[4];
 
     /** A list of the strings "Acorns", "Bells", "Hearts", "Levies". */
-    static const char* kGermanSuit[4];
+    static const CH1* kGermanSuit[4];
 
     /** A list of the strings "Acorns", "Bells", "Roses", "Shields". */
-    static const char* kSwissGermanSuit[4];
+    static const CH1* kSwissGermanSuit[4];
 
     /** A list of the strings "Clubs", "Coins", "Cups", "Swords". */
-    static const char* kLatinSuit[4];
+    static const CH1* kLatinSuit[4];
 
     /** An array of strings that represent the 7 different directories for the
         suit icon file. */
-    static const char* kFormatTexts[];
+    static const CH1* kFormatTexts[];
 
     /** Default constructor.
         There exists a single unique card for each of the 54 cards in a pack
         of cards. Cards are taken from the pack and shuffled into the deck_
         using pointers. */
-    Suit (int column, int denomination = 0, Format format = kFrench,
+    Suit (SI4 column, SI4 denomination = 0, Format format = kFrench,
           Color color = Color::kWhite);
 
     /** Copy constructor. */
@@ -138,25 +138,25 @@ class KABUKI Suit {
     virtual ~Suit () {}
 
     /** Sets the values of the cards. */
-    void Set (int    denomination = kDefaultDenomination,
+    void Set (SI4    denomination = kDefaultDenomination,
               Format format       = Format::kFrench,
               Color  color        = Color::kBlack);
 
     /** Compares this Suit to the other Suit.
         @return Returns 0 if they are identical.
         @return Returns 1 if this Suit is greater than the other Suit. */
-    virtual int Compare (Suit* other);
+    virtual SI4 Compare (Suit* other);
                            
     /** Compares this Suit to the other Suit and returns true if the two are
         identical. */     
-    bool Equals (Suit* other);
+    BOL Equals (Suit* other);
     
     /** Returns the rank of the denomination of this Suit
         The face value represents how many points this card is worth. */
-    int GetDenomination ();
+    SI4 GetDenomination ();
 
     /** Sets the suit denomination (rank among other suits). */
-    void SetDenomination (int denomination);
+    void SetDenomination (SI4 denomination);
 
     /** Returns the Unicode wchar_t color (white or black) for this suit. */
     wchar_t GetChar ();
@@ -168,7 +168,7 @@ class KABUKI Suit {
     void SetColor (Color color);
 
     /** Returns a string representation of the suit. */
-    const char* GetLabel ();
+    const CH1* GetLabel ();
 
     void SetFormat (Format format);
 
@@ -181,7 +181,7 @@ class KABUKI Suit {
         @return Returns 1 if the directory doesn't exist.
         @return Returns 2 if the file doesn't.
         @return Returns 3 if the image didn't load right. */
-    //int SetImage (const char* uri);
+    //SI4 SetImage (const CH1* uri);
                        
     /** Returns the address of this Suit's image. */
     //Image& GetImage ();
@@ -195,12 +195,12 @@ class KABUKI Suit {
          We can address images in DLL(s) but not files or anything
          hardware specific.
     */
-    //Image LoadCardImage (const char* directory);
+    //Image LoadCardImage (const CH1* directory);
 
-    int         column_,        //< The column of the suit.
+    SI4         column_,        //< The column of the suit.
                 denomination_;  //< Rank of this suit compared to the others.
     wchar_t     char_;          //< Suit of this Suit.
-    const char* label_;         //< Text label of the suit.
+    const CH1* label_;         //< Text label of the suit.
     Color       color_;         //< Color of the suit.
     //Image*    image_;         //< Image of this Suit.
 

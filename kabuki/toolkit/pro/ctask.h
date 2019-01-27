@@ -61,19 +61,19 @@ class Task {
   FLT GetWeight();
 
   /* Sets the weight. */
-  bool SetWeight(FLT new_value);
+  BOL SetWeight(FLT new_value);
 
   /* Gets the assessment. */
   FLT GetAssessment();
 
   /* Sets the self assessment. */
-  bool SetAssessment(FLT new_value);
+  BOL SetAssessment(FLT new_value);
 
   /* Gets the grade. */
   FLT GetGrade();
 
   /* Sets the grade. */
-  bool SetGrade(FLT new_value);
+  BOL SetGrade(FLT new_value);
 
   /* Gets the time_estimate. */
   Tms GetTimeEstimate();
@@ -132,7 +132,7 @@ class Task {
   /* Returns true if the task is complete.
   A Task is considered complete if the result CH1 is null.
   @return Returns true if the result CH1 is not null. */
-  bool IsDone();
+  BOL IsDone();
 
   /* Adds a Task that collides with this time slot. */
   void AddCollision(Task* task);
@@ -141,7 +141,7 @@ class Task {
   Task* Collision();
 
   /* Returns true if the event contains the given time. */
-  bool Contains(Tms t);
+  BOL Contains(Tms t);
 
   /* Prints the help menu. */
   static const CH1* GetHelpString();

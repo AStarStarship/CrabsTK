@@ -20,13 +20,13 @@
 
 namespace _ {
 
-/** A 2D vector. */
+/** A 2D TArray. */
 template<typename T>
 struct KABUKI_THEATER Vect2D {
     T x, //< X component.
       y; //< Y component.
     
-    /*< Constructs an uninitialized vector. */
+    /*< Constructs an uninitialized TArray. */
     Vect2D () {
         /// Nothing to do here!
     }
@@ -57,7 +57,7 @@ struct KABUKI_THEATER Vect2D {
     }
 
     /*< Compares this object's Vect2D<T> to a and returns true if the two Positions are identical. */
-    bool Equals (const Vect2D<T>& v) const {
+    BOL Equals (const Vect2D<T>& v) const {
         if (x != v.x || y != v.y)
             return false;
         return true;
@@ -76,12 +76,12 @@ struct KABUKI_THEATER Vect2D {
     }
 
     /** C++ Operator== overloader. */
-    bool operator== (const Vect2D<T>& v) const {
+    BOL operator== (const Vect2D<T>& v) const {
         return ((x == v.x) && (y == v.y));
     }
 
     /** C++ Operator!= overloader. */
-    bool operator!= (const Vect2D<T>& v) const {
+    BOL operator!= (const Vect2D<T>& v) const {
         return ((x != v.x) || (y != v.y));
     }
 

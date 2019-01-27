@@ -82,7 +82,7 @@ class ChatSession : public ChatParticipant,
     }
 
     void Deliver (const std::string& message) {
-        bool write_in_progress = !expression_queue.empty ();
+        BOL write_in_progress = !expression_queue.empty ();
         expression_queue.push_back (message);
         if (!write_in_progress) {
             Write ();
@@ -174,7 +174,7 @@ class KabukiCardsServer : public ::kabuki::cards::Server {
     ChatRoom      room_;
 };
 
-int main (int argc, char* argv[]) {
+SI4 main (SI4 argc, CH1* argv[]) {
     try {
         if (argc < 2) {
             std::cerr << "\n| Welcome to Kabuki Cards Usage: cards_server <port> [<port> ...]";
@@ -184,7 +184,7 @@ int main (int argc, char* argv[]) {
         boost::asio::io_service io_service;
 
         std::list<KabukiCardsServer> servers;
-        for (int i = 1; i < argc; ++i) {
+        for (SI4 i = 1; i < argc; ++i) {
             tcp::endpoint endpoint (tcp::v4 (), std::atoi (argv[i]));
             servers.emplace_back (io_service, endpoint);
         }

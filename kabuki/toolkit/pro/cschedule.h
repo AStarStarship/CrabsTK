@@ -91,7 +91,7 @@ class Schedule {
   /* Removes and deletes the Task at the given index.
       @param  index The index to remove.
       @return Returns false if the index is out of bounds. */
-  bool Remove(SI4 index);
+  BOL Remove(SI4 index);
 
   /* Searches for an event with the given time and creates one if it doesn't
       exist.

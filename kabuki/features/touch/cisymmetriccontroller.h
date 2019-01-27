@@ -1,6 +1,6 @@
 /* Kabuki Toolkit @version 0.x
 @link    https://github.com/kabuki-starship/kabuki-toolkit.git
-@file    /kabuki/features/hmi/hmi_/IsymmetricController.h
+@file    /kabuki/features/touch/touch_/IsymmetricController.h
 @author  Cale McCollough <https://calemccollough.github.io>
 @license Copyright (C) 2014-19 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -13,7 +13,7 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <pch.h>
-#if SEAM >= SEAM_00_03_00_00__00
+#if SEAM >= KABUKI_FEATURES_TOUCH_1
 #ifndef HEADER_FOR_KT_HMI_ISYMMETRICCONTROLLER
 #define HEADER_FOR_KT_HMI_ISYMMETRICCONTROLLER
 
@@ -75,11 +75,11 @@ class IsymmetricController : public Controller {
 
   /* Checks to see if thisWidget is currently loaded in to the SL! and if the
    * states are the same. */
-  int Compare(const Widget& other);
+  SI4 Compare(const Widget& other);
 
   /* The event that happens when a macro button is pressed.
       @pre 0 <= index <= 4 */
-  void PressMacro(int index);
+  void PressMacro(SI4 index);
 
   /* The event that happens when a macro button is pressed. */
   void PressMacro(MacroControl* thisMacro);
@@ -91,66 +91,66 @@ class IsymmetricController : public Controller {
   void Swap();
 
   /* Switches the mode on layer to the newMode. */
-  void SwitchMode(ParameterSet* layer, int newMode);
+  void SwitchMode(ParameterSet* layer, SI4 newMode);
 
   /* Determines if the press was a single click or a double click. */
-  void PressModeButton(ParameterSet* layer, int modeIndex);
+  void PressModeButton(ParameterSet* layer, SI4 modeIndex);
 
   /* Stores when the last time a mode button was depressed. */
-  void DepressModeButton(ParameterSet* layer, int modeIndex);
+  void DepressModeButton(ParameterSet* layer, SI4 modeIndex);
 
   /* Gets the template at index in templatesArray.
       @return if index < 0 or > num_Widgets */
-  Widget* GetWidget(int index);
+  Widget* GetWidget(SI4 index);
 
   /* Gets a pointer to thisWidget if thisTempalte is loaded.
        @return Gets 0 if thisWidget is loaded */
-  Widget* FindWidget(const char* s);
+  Widget* FindWidget(const CH1* s);
 
   /* Adds newWidget to the currently loaded templates
       @pre newWidget cannot be 0.
       @pre numWidgets must be <= MAX_TEMPLATES.
       @pre templatesArray cannot contain a temples with  newWidget's name.
   */
-  bool AddWidget(Widget& w);
+  BOL AddWidget(Widget& w);
 
   /* Checks to see if a template by thisName is loaded
       @return Gets true if so.
   */
-  bool ContainsWidget(const char* thisName);
+  BOL ContainsWidget(const CH1* thisName);
 
   /* Gets the number of currently loaded templates. */
-  int GetNumWidgets();
+  SI4 GetNumWidgets();
 
   /* Gets the number of templates currently loaded. */
-  int GetNumWidgets();
+  SI4 GetNumWidgets();
 
   /* Gets how fast the encoders accelerate. */
-  int GetEncoderAcceleration();
+  SI4 GetEncoderAcceleration();
 
   /* Gets the common MIDI Channel (0). */
-  int GetCommonChannel();
+  SI4 GetCommonChannel();
 
   /* Gets the keyboard MIDI out channel. */
-  int GetKeyboardChannel();
+  SI4 GetKeyboardChannel();
 
   /* Gets the drums MIDI out channel. */
-  int GetDrumsChannel();
+  SI4 GetDrumsChannel();
 
   /* Gets the number of MIDI ticks per quarter note beat. */
-  int GetNumTicksPerBeat();
+  SI4 GetNumTicksPerBeat();
 
   /* Gets the current index of the quarter note subdivisions. */
-  int GetTickCount();
+  SI4 GetTickCount();
 
   /* Gets the MIDI tempo. */
-  int GetTempo();
+  SI4 GetTempo();
 
   /* Syncs the MIDI clock to thisPort. */
   // void SyncToPort  (MIDI::Port * thisPort);
 
   /* Inter-process subroutines. */
-  const _::Op* Star(wchar_t index, _::Expression* expr);
+  const ::_::Op* Star(wchar_t index, ::_::Expression* expr);
 
   /* Prints this object to a Expression. */
   void Print() const;
@@ -165,13 +165,13 @@ class IsymmetricController : public Controller {
       *bottomControlsA,         //< Bottom controls a-b.
       *bottomControlsB;         //< Bottom controls c-d.
   Widget* mode;                 //< Current mode's template.
-  _::Array<Widget*> modes,      //< 5 different modes on the Symmetry Live!
+  ::_::TArray<Widget*> modes,      //< 5 different modes on the Symmetry Live!
       templatesArray;           //< Currently loaded templates.
   ButtonColumn *currentMacros,  //< Macros for the current mode.
       *mixerMacros,             //< Mixer macros.
       *auxMacros,               //< Aux send macros.
       *deviceMacros;            //< Device macros.
-  int numWidgets,               //< Number of templates currently loaded.
+  SI4 numWidgets,               //< Number of templates currently loaded.
       encoderAcceleration,      //< How fast the encoders accelerate.
       commonChannel,            //< Common MIDI Channel  (0).
       keyboardChannel,          //< Keyboard MIDI out channel.
@@ -181,11 +181,11 @@ class IsymmetricController : public Controller {
       tempo,                //< MIDI tempo.
       swappedFlippedState;  //< Represents if the controls are swapped
   //_::Array<MIDIDevice> devices; //< array of all of the MIDI devices currently
-  // attached to this system. int numMIDIInDev,            //< Number of MIDI
+  // attached to this system. SI4 numMIDIInDev,            //< Number of MIDI
   // input devices attached to the system.
   //     numMIDIOutDev;          //< Number of MIDI output devices attached to
   //     the system.
-  Time doubleClickTime;        //< vector of the double click time.
+  Time doubleClickTime;        //< TArray of the double click time.
   IPAddress controlSurfaceIP;  //< IPAddress of this control surface.
 
   /* Switches the mode or current page on Layer A and Layer B.
@@ -201,4 +201,4 @@ class IsymmetricController : public Controller {
 };  //< class IsymmetricController
 }  // namespace _
 #endif  //< HEADER_FOR_KT_HMI_ISYMMETRICCONTROLLER
-#endif  //< #if SEAM >= SEAM_00_03_00_00__00
+#endif  //< #if SEAM >= KABUKI_FEATURES_TOUCH_1

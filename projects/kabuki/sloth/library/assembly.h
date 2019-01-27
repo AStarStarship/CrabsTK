@@ -56,7 +56,7 @@
 // Max number of parameters.
 #define CRABS_MAX_PARAMS 26
 
-// The max char length.
+// The max CH1 length.
 #define CRABS_TEXT_SIZE_DEFAULT 2 * 1024
 
 // Max number of Slots.

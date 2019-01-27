@@ -22,7 +22,7 @@ Pot::Pot(ch_t channel, PinName adc_pin) : channel_(channel), ain_(adc_pin) {
 void Pot::Poll(UI2 new_value, Expr* expr, UI2 value, UI2 min_value,
                UI2 max_channel) {}
 
-void Pot::Print(Log& log) { log << "Pot"; }
+void Pot::Print(Log& log) { o << "Pot"; }
 
 const _::Operation* Pot::Star(char_t index, _::Expr* expr) {
   static const Operation This = {"Pot", NumOperations(0), FirstOperation('A'),

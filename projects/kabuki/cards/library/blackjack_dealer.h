@@ -43,17 +43,17 @@ class BlackjackDealer : public Dealer {
     BlackjackDealer (id::User* user, int64_t buy_in = Dealer::kDefaultAnte,
                      int64_t ante    = Dealer::kDefaultAnte,
                      int64_t min_bet = Dealer::kDefaultMinBet,
-                     int min_players = kDefaultMinPlayers,
-                     int max_players = kDefaultMaxPlayer);
+                     SI4 min_players = kDefaultMinPlayers,
+                     SI4 max_players = kDefaultMaxPlayer);
 
     /** Virtually destructs nothing. */
     virtual ~BlackjackDealer ();
 
     /** Raises the ante by the given amount. */
-    bool RaiseAnte (int64_t value);
+    BOL RaiseAnte (int64_t value);
 
     /** Gets the hand score with the given ace value. */
-    int CalcScore (int ace_value);
+    SI4 CalcScore (SI4 ace_value);
 
     /** Pure virtual new game logic handler. */
     virtual void RestartGame ();
@@ -73,13 +73,13 @@ class BlackjackDealer : public Dealer {
     /** Compares this hand to the other.
         @return Returns 0 if the hands are equal, > 1 if the other hand beats
         this hand and < 0 if the other hand wins.. */
-    virtual int Compare (Hand& hand);
+    virtual SI4 Compare (Hand& hand);
 
     /** Returns true if this hand wins compared to the other one. */
-    virtual bool Wins (Hand& hand);
+    virtual BOL Wins (Hand& hand);
 
     /** Adds a BlackjackPlayerAi to the . */
-    virtual int AddAgent (id::User* user);
+    virtual SI4 AddAgent (id::User* user);
 
     /** Prints the abridged player stats to the console. */
     virtual _::Text& PrintStats (_::Text& txt);
@@ -94,7 +94,7 @@ class BlackjackDealer : public Dealer {
         @param text     Beginning of the Text buffer. 
         @param strand_end End of the Text buffer.
         @return Returns nil upon success and an error string upon failure. */
-    const char* Sudo (const char* text, const char* strand_end);
+    const CH1* Sudo (const CH1* text, const CH1* strand_end);
 
 };      //< class BlackjackDealer
 }       //< namespace cards

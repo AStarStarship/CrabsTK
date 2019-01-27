@@ -20,67 +20,67 @@ namespace typecraft {
 
 class Entity {
  public:
-  Entity(const char* name = "Steve");
+  Entity(const CH1* name = "Steve");
 
   /** Gets the X coordinate. */
-  inline int GetX();
+  inline SI4 GetX();
 
   /** Sets the X Value. */
-  inline void SetX(int value);
+  inline void SetX(SI4 value);
 
   /** Gets the Y coordinate. */
-  inline int GetY();
+  inline SI4 GetY();
 
   /** Sets the X Value. */
-  inline void SetY(int value);
+  inline void SetY(SI4 value);
 
   /** Gets the Y coordinate. */
-  inline int GetZ();
+  inline SI4 GetZ();
 
   /** Sets the X Value. */
-  inline void SetZ(int value);
+  inline void SetZ(SI4 value);
 
   /** Gets the max number of blocks an Entity can reach to manipulate. */
-  int GetReach();
+  SI4 GetReach();
 
   /** Sets the max number of blocks an Entity can reach to manipulate.
       @return Returns zero upon success and the input value if it is < 0 . */
-  int SetReach(int value);
+  SI4 SetReach(SI4 value);
 
   /** Gets the Entity's health. */
-  int GetHealth();
+  SI4 GetHealth();
 
   /** Sets the Entity's health.
       @return Returns zero upon success and the input value if it is < 0 . */
-  int SetHealth(int value);
+  SI4 SetHealth(SI4 value);
 
   /** Gets the Entity's max health. */
-  int GetMaxHealth();
+  SI4 GetMaxHealth();
 
   /** Sets the max number of blocks an Entity can reach to manipulate.
       @return Returns zero upon success and the input value if it is < 0 . */
-  int SetMaxHealth(int value);
+  SI4 SetMaxHealth(SI4 value);
 
   /** Gets the Entity's armor rating. */
-  int GetArmor();
+  SI4 GetArmor();
 
   /** Sets the Entity's armor rating.
       @return Returns zero upon success and the input value if it is < 0 . */
-  int SetArmor(int value);
+  SI4 SetArmor(SI4 value);
 
   /** Gets the Entity's height measured in half blocks. */
-  int GetHeight();
+  SI4 GetHeight();
 
   /** Sets the Entity's height in half blocks.
       @return Returns zero upon success and the input value if it is < 0 . */
-  int SetHeight(int value);
+  SI4 SetHeight(SI4 value);
 
   /** Gets the Entity's hunger rating. */
-  int GetHunger();
+  SI4 GetHunger();
 
   /** Sets the Entity's hunger rating.
       @return Returns zero upon success and the input value if it is < 0 . */
-  int SetHunger(int value);
+  SI4 SetHunger(SI4 value);
 
   /** Print's the Entity to the console. */
   void Print();
@@ -92,7 +92,7 @@ class Entity {
   virtual void Print();
 
  private:
-  int x_,                //< The Entity's x position.
+  SI4 x_,                //< The Entity's x position.
       y_,                //< The Entity's y position.
       z_,                //< The Entity's z position.
       reach_,            //< How far the Entity can reach to Mine/Attack/etc.

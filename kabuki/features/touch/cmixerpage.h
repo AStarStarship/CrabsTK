@@ -13,50 +13,50 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <pch.h>
-#if SEAM >= SEAM_00_03_00_00__00
+#if SEAM >= KABUKI_FEATURES_TOUCH_1
 #ifndef HEADER_FOR_KT_HMI_MIXERPAGE
 #define HEADER_FOR_KT_HMI_MIXERPAGE
 
 namespace _ {
 
-class API Mixer;
-class API MixerChannel;
+class SDK Mixer;
+class SDK MixerChannel;
 
 /* Class that represents a page of mixer channels on the Symmetry Live!
     A MixerPage stores 8 TemplatePages in an array. The user can switch through
    banks of pages on the mixer. The mixer can either be sorted in ascending
    track index order or the page banks can be customized to make buses.
 */
-class API MixerPage {
+class SDK MixerPage {
  public:
   /* Constructor. */
-  MixerPage(Mixer* theMixer = nullptr, int initStartIndex = 0);
+  MixerPage(Mixer* theMixer = nullptr, SI4 initStartIndex = 0);
 
   /* Destructor. */
   ~MixerPage();
 
   /* Gets the startingIndex of this MixerPage. */
-  int GetStartIndex();
+  SI4 GetStartIndex();
 
   /* Sets the startingIndex to the newIndex. */
-  void SetStartIndex(int newIndex);
+  void SetStartIndex(SI4 newIndex);
 
   /* Replaces thisChannel with theNewOne. */
-  void SetChannel(int thisChannel, MixerChannel* theNewOne);
+  void SetChannel(SI4 thisChannel, MixerChannel* theNewOne);
 
   /* Gets a pointer to the channel[atThisIndex]. */
-  MixerChannel* GetChannel(int index);
+  MixerChannel* GetChannel(SI4 index);
 
   /* Prints this object to a terminal. */
-  _::Utf& Print(_::Utf& print);
+  ::_::Utf& Print(_::Utf& print);
 
  private:
-  int starting_index_;  //< Starting index of this page this MixerPage.
+  SI4 starting_index_;  //< Starting index of this page this MixerPage.
   Mixer* mixer_;        //< Pointer to the global kabuki::Mixer.
-  _::Array<MixerChannel*>
+  ::_::TArray<MixerChannel*>
       channels_;  //< Array of pointers to pointers to MixerChannel(s).
 
 };  //< class MixerPage
 }  // namespace _
 #endif  //< HEADER_FOR_KT_HMI_MIXERPAGE
-#endif  //< #if SEAM >= SEAM_00_03_00_00__00
+#endif  //< #if SEAM >= KABUKI_FEATURES_TOUCH_1

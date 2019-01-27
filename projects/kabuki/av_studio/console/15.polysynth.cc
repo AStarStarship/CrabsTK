@@ -10,7 +10,7 @@ maxiEnv ADSR[6];
 //This is a bunch of control signals so that we can hear something
 
 maxiOsc timer;//this is the metronome
-int currentCount,lastCount,voice=0;//these values are used to check if we have a new beat this sample
+SI4 currentCount,lastCount,voice=0;//these values are used to check if we have a new beat this sample
 
 //and these are some variables we can use to pass stuff around
 
@@ -19,7 +19,7 @@ double VCO1out[6],VCO2out[6],LFO1out[6],LFO2out[6],VCFout[6],ADSRout[6],mix,pitc
 
 void setup() {//some inits
     
-    for (int i=0;i<6;i++) {
+    for (SI4 i=0;i<6;i++) {
         
         ADSR[i].setAttack(0);
         ADSR[i].setDecay(200);
@@ -35,9 +35,9 @@ void play(double *output) {
     
     //so this first bit is just a basic metronome so we can hear what we're doing.
     
-    currentCount=(int)timer.phasor(8);//this sets up a metronome that ticks 8 times a second
+    currentCount=(SI4)timer.phasor(8);//this sets up a metronome that ticks 8 times a second
     
-    if (lastCount!=currentCount) {//if we have a new timer int this sample, play the sound
+    if (lastCount!=currentCount) {//if we have a new timer SI4 this sample, play the sound
         
         if (voice==6) {
             voice=0;
@@ -51,7 +51,7 @@ void play(double *output) {
     
     //and this is where we build the synth
     
-    for (int i=0; i<6; i++) {
+    for (SI4 i=0; i<6; i++) {
         
         
         ADSRout[i]=ADSR[i].adsr(1.,ADSR[i].trigger);//our ADSR env is passed a constant signal of 1 to generate the transient.
@@ -74,7 +74,7 @@ void play(double *output) {
     
     
     // This just sends note-off messages.
-    for (int i=0; i<6; i++) {
+    for (SI4 i=0; i<6; i++) {
         ADSR[i].trigger=0;
     }
     

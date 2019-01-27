@@ -50,17 +50,17 @@ template <class T>
 void maxiMFCCAnalyser<T>::melFilterAndLogSq_Part2(float *powerSpectrum) {
 #ifdef __APPLE_CC__
 #else
-	for (unsigned int filter = 0;filter < numFilters;filter++) {
+	for (unsigned SI4 filter = 0;filter < numFilters;filter++) {
 		melBands[filter] = 0.0;
-		for (unsigned int bin=0;bin<numBins;bin++) {
-			//			int idx = (numBins * filter) + bin;
-			int idx = filter + (bin * numFilters);
+		for (unsigned SI4 bin=0;bin<numBins;bin++) {
+			//			SI4 idx = (numBins * filter) + bin;
+			SI4 idx = filter + (bin * numFilters);
 			//			melBands[filter] += (melFilters[filter][bin] * powerSpectrum[bin]);
 			melBands[filter] += (melFilters[idx] * powerSpectrum[bin]);
 		}
 	}
 #endif
-	for(unsigned int filter=0; filter < numFilters; filter++) {
+	for(unsigned SI4 filter=0; filter < numFilters; filter++) {
 		// log the square
 		melBands[filter] = melBands[filter] > 0.000001 ? log(melBands[filter] * melBands[filter]) : 0.0;
 	}

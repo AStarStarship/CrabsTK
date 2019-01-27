@@ -66,16 +66,16 @@ class Enchantment {
    Enchantment ();
 
   /* Gets inventory count. */
-  int GetCount();
+  SI4 GetCount();
 
   /* Adds an Item. */
-  int AddItem(Item* item);
+  SI4 AddItem(Item* item);
 
   /* Removes the Item with the given index.
   @param  The index of the Item to remove.
   @return Returns nullptr if the index is out of bounds and a pointer to
   the Item it removed upon success. */
-  Item* RemoveItem(int index);
+  Item* RemoveItem(SI4 index);
 
   /* Deletes the entire Inventory. */
   void DeleteAll();

@@ -8,15 +8,15 @@ maxiFilter filter, filter2;//some filters
 maxiDelayline delay;//a delay
 convert mtof;//a method for converting midi notes to frequency
 double bassout,leadout, delayout;//some variables to hold the data and pass it around
-int trigger, trigger2, newnote;//some control variables
-int currentCount,lastCount,playHead=0, currentChord=0;//some other control variables
-int pitch[8]={57,57,59,60};//the bassline for the arpeggio
-int chord[8]={0,0,7,2,5,5,0,0};//the root chords for the arpeggio
+SI4 trigger, trigger2, newnote;//some control variables
+SI4 currentCount,lastCount,playHead=0, currentChord=0;//some other control variables
+SI4 pitch[8]={57,57,59,60};//the bassline for the arpeggio
+SI4 chord[8]={0,0,7,2,5,5,0,0};//the root chords for the arpeggio
 float currentPitch,leadPitch;//the final pitch variables
 
 //here's the lead line trigger array, followed by the pitches
-int leadLineTrigger[256]={1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
-int leadLinePitch[15]={69,67,65,64,67,66,64,62,65,64,62,57,55,60,57};
+SI4 leadLineTrigger[256]={1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+SI4 leadLinePitch[15]={69,67,65,64,67,66,64,62,65,64,62,57,55,60,57};
 
 
 
@@ -26,9 +26,9 @@ void setup() {//some inits
 
 void play(double *output) {//this is where the magic happens. Very slow magic.
     
-    currentCount=(int)timer.phasor(9);//this sets up a metronome that ticks every so often
+    currentCount=(SI4)timer.phasor(9);//this sets up a metronome that ticks every so often
     
-    if (lastCount!=currentCount) {//if we have a new timer int this sample, play the sound
+    if (lastCount!=currentCount) {//if we have a new timer SI4 this sample, play the sound
         trigger=1;//play the arpeggiator line
         trigger2=leadLineTrigger[playHead%256];//play the lead line
         if (trigger2==1) {//if we are going to play a note

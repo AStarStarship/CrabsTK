@@ -21,7 +21,7 @@ namespace _ {
 
 /** A 2D quadralateral storted as Type types. */
 template<typename T>
-struct API Quad {
+struct SDK Quad {
     T x0,   //< The x0 coordinate.
       x1,     //< The x1 coordinate.
       x2,     //< The x2 coordinate.
@@ -95,7 +95,7 @@ struct API Quad {
         set (r.getX (), r.getY (), r.getWidth (), r.getHeight ());
     }
 
-    /** Sets the X and Y values to the the given point and vector. */
+    /** Sets the X and Y values to the the given point and TArray. */
     inline void Set (const Point2D<T>& p, const Vect<T>& v) {
         return Set (p.x, p.y, v.x, v.y);
     }
@@ -105,7 +105,7 @@ struct API Quad {
         return Set (q.x, q.y, q.x, q.y);
     }
 
-    /** translates the given vector to the point. */
+    /** translates the given TArray to the point. */
     inline void Translate (T dx, T dy) {
         y1 += dy;
         x1 += dx;
@@ -117,20 +117,20 @@ struct API Quad {
         x4 += dx;
     }
 
-    /** Translates the given vector to the point. */
+    /** Translates the given TArray to the point. */
     inline void Translate (const Vect<T>& v) {
         return Translate (v.x, v.y);
     }
 
     /** Compares this object to the other and returns true if the two are identical. */
-    inline bool Equals (const Quad2D<T>& p) const {
+    inline BOL Equals (const Quad2D<T>& p) const {
         if (x != q.x || y != q.y)
             return false;
         return true;
     }
 
     /** Compares this object to the other and returns a numberetical zero true value. */
-    inline int Compare (const Quad2D<T>& p) const {
+    inline SI4 Compare (const Quad2D<T>& p) const {
         if (x >= q.x)
             if (y >= q.y)
                 return 1;

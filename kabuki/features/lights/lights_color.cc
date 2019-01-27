@@ -73,22 +73,22 @@ const color_t* PresetColors () {
     return &presetColorsArray[0];
 }
 
-color_t ColorRainbow (int index) {
+color_t ColorRainbow (SI4 index) {
     if (index < 0 || index >= 96) return Black;
     return RainbowColors ()[index];
 }
 
-color_t ColorPreset (int index) {
+color_t ColorPreset (SI4 index) {
     if (index < 0 || index >= 96) return Black;
     return PresetColors ()[index];
 }
 
 color_t RandomPresetColor () {
-    int index = rand () % kNumPresetColors;
+    SI4 index = rand () % kNumPresetColors;
     return PresetColors ()[index];
 }
 
-color_t RandomColor (int index) {
+color_t RandomColor (SI4 index) {
     return rand ();
 }
 
@@ -111,12 +111,12 @@ color_t MixColor (color_t a, color_t b) {
     return red & green & blue & alpha;
 }
 
-color_t ChangeBrightness (color_t color, int brightness_change) {
+color_t ChangeBrightness (color_t color, SI4 brightness_change) {
     color_t alpha = ((color & 0xff000000) >> 24) + brightness_change;
     return (color & 0xffffff) & (alpha << 24);
 }
 
-color_t DecreaseBrightness (color_t color, int brightness_change) {
+color_t DecreaseBrightness (color_t color, SI4 brightness_change) {
     color_t alpha = ((color & 0xff000000) >> 24) - brightness_change;
     return (color & 0xffffff) & (alpha << 24);
 }

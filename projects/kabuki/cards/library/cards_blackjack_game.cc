@@ -21,12 +21,12 @@ using namespace std;
 
 namespace kabuki { namespace cards {
 
-const int BlackjackGame::kDenominations[] = {
+const SI4 BlackjackGame::kDenominations[] = {
     0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10 };
 
 BlackjackGame::BlackjackGame (id::UserList& users, id::User* dealer_user,
                               int64_t buy_in, int64_t ante, int64_t min_bet,
-                              int min_players, int max_players) :
+                              SI4 min_players, SI4 max_players) :
     Game       (users, "Blackjack", min_players, max_players),
     round_number_  (0),
     pot_           (0),
@@ -54,11 +54,11 @@ void BlackjackGame::EndRound () {
     dealer_->EndRound ();
 }
 
-int BlackjackGame::GetRoundNumber () {
+SI4 BlackjackGame::GetRoundNumber () {
     return round_number_;
 }
 
-bool BlackjackGame::SetRoundNumber (int value) {
+BOL BlackjackGame::SetRoundNumber (SI4 value) {
     if (value < 0) {
         return false;
     }
@@ -66,11 +66,11 @@ bool BlackjackGame::SetRoundNumber (int value) {
     return true;
 }
 
-int BlackjackGame::GetPot () {
+SI4 BlackjackGame::GetPot () {
     return pot_;
 }
 
-bool BlackjackGame::SetPot (int value) {
+BOL BlackjackGame::SetPot (SI4 value) {
     if (value < 0) {
         return false;
     }
@@ -83,12 +83,12 @@ BlackjackDealer* BlackjackGame::GetDealer () {
 }
 
 /*
-bool BlackjackGame::PlayGameInConsole () {
+BOL BlackjackGame::PlayGameInConsole () {
     enum {
         kBufferSize = 80,
     };
     
-    char input[kBufferSize]; //< temp variable for console text input.
+    CH1 input[kBufferSize]; //< temp variable for console text input.
 
     BeginRound ();
 
@@ -116,13 +116,13 @@ bool BlackjackGame::PlayGameInConsole () {
             << ":\n";
 
         dealer_->PrintStats ();
-        for (int i = 0; i < GetObservers ().size (); ++i) {
+        for (SI4 i = 0; i < GetObservers ().size (); ++i) {
             observers_[i]->PrintStats ();
         }
 
         // The players need to either hit or hold first.
 
-        bool inputValid = false;
+        BOL inputValid = false;
         //< Always presume the data is false until proven correct.
 
         while (!inputValid) {
@@ -133,7 +133,7 @@ bool BlackjackGame::PlayGameInConsole () {
                 CardStack& cards = dealer_->GetHand ().GetVisibleCards ();
                 cards.Push (dealer_->GetStock ().Draw ());
                 cout << "\n| ";
-                for (int i = 0; i < GetObservers ().size (); ++i) {
+                for (SI4 i = 0; i < GetObservers ().size (); ++i) {
                     cout << "\n| " << i;
                     observers_[i]->Print (txt);
                 }
@@ -157,8 +157,8 @@ bool BlackjackGame::PlayGameInConsole () {
 
         // The way we know that the round is over is when everyone is holding. 
 
-        bool everyone_is_holding = dealer_->IsHolding ();
-        for (int i = GetObservers ().size (); i > 0; --i) {
+        BOL everyone_is_holding = dealer_->IsHolding ();
+        for (SI4 i = GetObservers ().size (); i > 0; --i) {
             if (observers_[i]->IsHolding ()) {
                 everyone_is_holding = false;
                 break;
@@ -282,19 +282,19 @@ const _::Operation* BlackjackGame::Star (uint index, _::Expression* expr) {
     return Result (expr, Bin::kErrorInvalidIndex);
 }
 
-const char* BlackjackGame:: Sudo (const char* text,
-                                        const char* strand_end) {
+const CH1* BlackjackGame:: Sudo (const CH1* text,
+                                        const CH1* strand_end) {
     if (!text) {
         return nullptr;
     }
     if (text >= strand_end) {
-        return "\n| Error: nil strand_end pointer in Star (const char*, "
-               "const char*):const char*!";
+        return "\n| Error: nil strand_end pointer in Star (const CH1*, "
+               "const CH1*):const CH1*!";
     }
 
     if (text > strand_end) {
-        return "\n| Error: text buffer overflow in Star (const char*, "
-               "const char*):const char*!";
+        return "\n| Error: text buffer overflow in Star (const CH1*, "
+               "const CH1*):const CH1*!";
     }
 
 

@@ -92,7 +92,7 @@ struct MnistDataSet {
 };
 
 struct MnistImage {
-    char pixel[28][28];
+    CH1 pixel[28][28];
 };
 
 void MnistImport ();
@@ -142,11 +142,11 @@ The third byte codes the type of the data:
 0x08: unsigned byte
 0x09: signed byte
 0x0B: short (2 bytes)
-0x0C: int (4 bytes)
+0x0C: SI4 (4 bytes)
 0x0D: float (4 bytes)
 0x0E: double (8 bytes)
 
-The 4-th byte codes the number of dimensions of the vector/matrix: 1 for vectors, 2 for matrices....
+The 4-th byte codes the number of dimensions of the TArray/matrix: 1 for vectors, 2 for matrices....
 
 The sizes in each dimension are 4-byte integers (MSB first, high endian, like in most non-Intel processors).
 

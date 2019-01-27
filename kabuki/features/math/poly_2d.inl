@@ -46,7 +46,7 @@ template<typename T>
 Poly2D::Poly2D()
 
 template<typename T>
-Poly2D::Poly2D (float* initXPoints, float* initYPoints, int initNumPoints, int initBufferSize)
+Poly2D::Poly2D (float* initXPoints, float* initYPoints, SI4 initNumPoints, SI4 initBufferSize)
 :   numPoints (initNumPoints),
     bufferSize (initBufferSize)
 {
@@ -107,13 +107,13 @@ float* Poly2D::getYPoints ()
 }
 
 template<typename T>
-int Poly2D::getNumPoints ()
+SI4 Poly2D::getNumPoints ()
 {
     return numPoints;
 }
 
 template<typename T>
-int Poly2D::getBufferSize ()
+SI4 Poly2D::getBufferSize ()
 {
     return bufferSize;
 }
@@ -121,7 +121,7 @@ int Poly2D::getBufferSize ()
 template<typename T>
 void Poly2D::translate (float dx, float dy)
 {
-    for (int i = 0; i < numPoints; i++)
+    for (SI4 i = 0; i < numPoints; i++)
     {
         x[i] += dx;
         y[i] += dy;
@@ -131,26 +131,26 @@ void Poly2D::translate (float dx, float dy)
 }
 
 template<typename T>
-void Poly2D::translate (int dx, int dy)
+void Poly2D::translate (SI4 dx, SI4 dy)
 {
     translate ((float)dx, (float)dy);
 }
 
 template<typename T>
-void Poly2D::translate (int dx, int dy)
+void Poly2D::translate (SI4 dx, SI4 dy)
 {
     translate ((float)dx, (float)dy);
 }
 
 template<typename T>
-void Poly2D::calculateBounds (float* x, float* y, int numPoints)
+void Poly2D::calculateBounds (float* x, float* y, SI4 numPoints)
 {
-    int boundsMinX = GetMinFloat (),
+    SI4 boundsMinX = GetMinFloat (),
         boundsMinY = GetMinFloat (),
         boundsMaxX = GetMaxFloat (),
         boundsMaxY = GetMaxFloat ();
 
-    for (int i = 0; i < numPoints; ++i)
+    for (SI4 i = 0; i < numPoints; ++i)
     {
         float xi = x[i],
             yi = y[i];
@@ -165,7 +165,7 @@ void Poly2D::calculateBounds (float* x, float* y, int numPoints)
 }
 
 template<typename T>
-void Poly2D::UpdateBounds (int x, int y)
+void Poly2D::UpdateBounds (SI4 x, SI4 y)
 {
     if (x < bounds.x) {
         bounds.setWidth (bounds.getWidth () + (bounds.x - x));
@@ -187,10 +187,10 @@ void Poly2D::UpdateBounds (int x, int y)
 }
 
 template<typename T>
-void Poly2D::AddPoint (int newX, int newY)
+void Poly2D::AddPoint (SI4 newX, SI4 newY)
 {
     if (numPoints >= bufferSize) {  //< Then double the buffer size.
-        int newBufferSize = bufferSize = 2;
+        SI4 newBufferSize = bufferSize = 2;
         bufferSize = newBufferSize;
 
         float* tempX = x,
@@ -215,7 +215,7 @@ void Poly2D::AddPoint (int newX, int newY)
 }
 
 template<typename T>
-void Poly2D::AddPoint (int newX, int newY) {
+void Poly2D::AddPoint (SI4 newX, SI4 newY) {
     AddPoint ((float)newX, (float)newY);
 }
 
@@ -225,12 +225,12 @@ const Rect2D& Poly2D::GetBounds () {
 }
 
 template<typename T>
-bool Contains (int x, int y) {
+BOL Contains (SI4 x, SI4 y) {
     return Contains((float) x, (float) y);
 }
 
 template<typename T>
-bool Poly2D::Contains (Point<float> p) {
+BOL Poly2D::Contains (Point<float> p) {
     return Contains (p.x, p.y);
 }
 
@@ -240,11 +240,11 @@ const Rect2D& Poly2D::GetBounds () {
 }
 
 template<typename T>
-bool Poly2D::Contains (float x, float y) {
+BOL Poly2D::Contains (float x, float y) {
     if (numPoints < 3)                  return false;
     if (!GetBounds ().Contains (x, y))  return false;
 
-    int hits = 0;
+    SI4 hits = 0;
 
     float prev_x = x[numPoints - 1],
         prev_y = y[numPoints - 1],
@@ -252,14 +252,14 @@ bool Poly2D::Contains (float x, float y) {
         current_y;
 
     // Walk the edges of the polygon
-    for (int i = 0; i < numPoints; prev_x = current_x, prev_y = current_y, i++) {
+    for (SI4 i = 0; i < numPoints; prev_x = current_x, prev_y = current_y, i++) {
         current_x = x[i];
         current_y = y[i];
 
         if (current_y == prev_y) 
             continue;
 
-        int leftX;
+        SI4 leftX;
         if (current_x < prev_x) {
             if (x >= prev_x) continue;
             leftX = current_x;
@@ -299,12 +299,12 @@ bool Poly2D::Contains (float x, float y) {
 }
 
 template<typename T>
-bool Poly2D::Contains (Point<float> p) {
+BOL Poly2D::Contains (Point<float> p) {
     return Contains (p.x, p.y);
 }
 
 template<typename T>
-bool Poly2D::Intersects (float x, float y, float w, float h) {
+BOL Poly2D::Intersects (float x, float y, float w, float h) {
     if (numPoints <= 0 || !GetBounds ().Intersects (x, y, w, h)) {
         return false;
     }
@@ -315,12 +315,12 @@ bool Poly2D::Intersects (float x, float y, float w, float h) {
 }
 
 template<typename T>
-bool Poly2D::intersects (Rect2D<T> r) {
+BOL Poly2D::intersects (Rect2D<T> r) {
     return Intersects (r.x, r.y, r.GetWidth (), r.GetHeight ());
 }
 
 template<typename T>
-bool Poly2D::Contains (float x, float y, float w, float h) {
+BOL Poly2D::Contains (float x, float y, float w, float h) {
     if (numPoints <= 0) return false;
     if (!GetBounds ().Intersects (x, y, w, h)) return false;
 
@@ -329,7 +329,7 @@ bool Poly2D::Contains (float x, float y, float w, float h) {
 }
 
 template<typename T>
-bool Poly2D::Contains (Rect2D<T> r) {
+BOL Poly2D::Contains (Rect2D<T> r) {
     return Contains (r.x, r.y, r.GetWidth (), r.GetHeight ());
 }
 
@@ -347,12 +347,12 @@ PathIterator_f Poly2D::GetPathIterator (AffineTransform<T> a, float flatness) {
 Crossings_f Poly2D::GetCrossings (float xlo, float ylo, float xhi, float yhi)
 {
     Crossings_f cross = new Crossings_f.EvenOdd (xlo, ylo, xhi, yhi);
-    int prev_x = x[numPoints - 1];
-    int prev_y = y[numPoints - 1];
-    int current_x, current_y;
+    SI4 prev_x = x[numPoints - 1];
+    SI4 prev_y = y[numPoints - 1];
+    SI4 current_x, current_y;
 
     // Walk the edges of the polygon
-    for (int i = 0; i < numPoints; i++) {
+    for (SI4 i = 0; i < numPoints; i++) {
         current_x = x[i];
         current_y = y[i];
         if (cross.accumulateLine (prev_x, prev_y, current_x, current_y)) {
@@ -375,11 +375,11 @@ Poly2DPathIterator<T>::Poly2DPathIterator<T> (Poly2D p, AffineTransform<T> a)
         index = 1;
 }
 
-int Poly2DPathIterator<T>::GetWindingRule() {
+SI4 Poly2DPathIterator<T>::GetWindingRule() {
     return WIND_EVEN_ODD;
 }
 
-bool Poly2DPathIterator<T>::IsDone() {
+BOL Poly2DPathIterator<T>::IsDone() {
     return index > polygon.GetNumPoints ();
 }
 
@@ -387,7 +387,7 @@ void Poly2DPathIterator<T>::GetNext() {
     index++;
 }
 
-int Poly2DPathIterator<T>::CurrentSegment (float* coords) {
+SI4 Poly2DPathIterator<T>::CurrentSegment (float* coords) {
     if (index >= polygon.GetNumPoints ())
         return SEG_CLOSE;
     
@@ -399,7 +399,7 @@ int Poly2DPathIterator<T>::CurrentSegment (float* coords) {
     return (index == 0 ? SEG_MOVETO : SEG_LINETO);
 }
 
-int Poly2DPathIterator<T>::CurrentSegment (float* coords) {
+SI4 Poly2DPathIterator<T>::CurrentSegment (float* coords) {
     if (index >= polygon.getNumPoints ())
         return SEG_CLOSE;
     

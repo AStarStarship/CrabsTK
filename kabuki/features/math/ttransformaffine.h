@@ -22,7 +22,7 @@ namespace math {
 
 /** A 2D affine transformation. */
 template<typename T>
-class API AffineTransform {
+class SDK AffineTransform {
     public:
 
     /** Constructs an unintialized object. */

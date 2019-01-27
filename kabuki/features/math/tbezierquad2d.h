@@ -20,7 +20,7 @@
 
 #include "point2d.h"
 
-#include <vector>
+#include <TArray>
 #include <string>
 #include <memory>
 
@@ -28,7 +28,7 @@ namespace _ {
 
 /** Class that represents a 4th order Bezier. */
 template<typename T>
-class API QuadBezier2D
+class SDK QuadBezier2D
 {
     public:
 
@@ -121,7 +121,7 @@ class API QuadBezier2D
     }
 
     /** Gets the NumPoints. */
-    int GetNumPoints () {
+    SI4 GetNumPoints () {
         return NumPoints;
     }
 

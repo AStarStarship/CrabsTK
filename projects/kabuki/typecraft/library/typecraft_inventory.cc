@@ -15,13 +15,13 @@ specific language governing permissions and limitations under the License. */
 
 namespace typecraft {
 
-Inventory::Inventory(int max_size) {}
+Inventory::Inventory(SI4 max_size) {}
 
-int Inventory::GetCount() { return 0; }
+SI4 Inventory::GetCount() { return 0; }
 
-int Inventory::AddItem(Item* item) { return 0; }
+SI4 Inventory::AddItem(Item* item) { return 0; }
 
-Item* Inventory::RemoveItem(int index) { return 0; }
+Item* Inventory::RemoveItem(SI4 index) { return 0; }
 
 void Inventory::DeleteAll() {}
 

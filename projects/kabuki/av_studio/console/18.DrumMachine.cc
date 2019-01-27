@@ -4,10 +4,10 @@ maxiSample kick,snare; //we've got two sampleplayers
 
 maxiOsc timer; //and a timer
 
-int currentCount,lastCount,playHead,hit[16]={1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1}; //This is the sequence for the kick
-int snarehit[16]={0,0,0,0,1,0,0,0,0,0,0,0,1,1,0,0};//This is the sequence for the snare
+SI4 currentCount,lastCount,playHead,hit[16]={1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1}; //This is the sequence for the kick
+SI4 snarehit[16]={0,0,0,0,1,0,0,0,0,0,0,0,1,1,0,0};//This is the sequence for the snare
 
-int kicktrigger,snaretrigger;
+SI4 kicktrigger,snaretrigger;
 
 double sampleOut;
 
@@ -25,10 +25,10 @@ void setup() {//some inits
 
 void play(double *output) {//this is where the magic happens. Very slow magic.
 	
-	currentCount=(int)timer.phasor(8);//this sets up a metronome that ticks 8 times a second
+	currentCount=(SI4)timer.phasor(8);//this sets up a metronome that ticks 8 times a second
 	
 	
-	if (lastCount!=currentCount) {//if we have a new timer int this sample, play the sound
+	if (lastCount!=currentCount) {//if we have a new timer SI4 this sample, play the sound
 		
 		kicktrigger=hit[playHead%16];//get the value out of the array for the kick
 		snaretrigger=snarehit[playHead%16];//same for the snare

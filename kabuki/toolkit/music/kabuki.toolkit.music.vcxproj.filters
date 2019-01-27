@@ -46,6 +46,15 @@
     <ClInclude Include="pch.h">
       <Filter>kabuki\toolkit\music</Filter>
     </ClInclude>
+    <ClInclude Include="t_tag.h">
+      <Filter>kabuki\toolkit\music</Filter>
+    </ClInclude>
+    <ClInclude Include="t_tagtibrary.h">
+      <Filter>kabuki\toolkit\music</Filter>
+    </ClInclude>
+    <ClInclude Include="t_library.h">
+      <Filter>kabuki\toolkit\music</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cc">

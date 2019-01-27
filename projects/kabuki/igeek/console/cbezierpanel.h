@@ -22,7 +22,7 @@ class BezierCurvePanel
 
   */
 {
-  static const int defaultNumPoints = 4, //< The default number of points.
+  static const SI4 defaultNumPoints = 4, //< The default number of points.
     defaultResolution = 1000, //< The default resolution.
     defaultPadding = 20, //< The default padding.
     defaultSize = 200; //< The default size of the
@@ -34,10 +34,10 @@ class BezierCurvePanel
     defaultBorderColor = Color.white; //< The border color.
 
 
-    BezierCurvePanel (int thisX, int thisY, BezierCurve thisCurve, Color thisBackgroundColor, Color thisCurveColor,
+    BezierCurvePanel (SI4 thisX, SI4 thisY, BezierCurve thisCurve, Color thisBackgroundColor, Color thisCurveColor,
       Color thisBorderColor);
 
-  int getNumPoints ();
+  SI4 getNumPoints ();
 
   void draw (Graphics g);
 
@@ -45,7 +45,7 @@ class BezierCurvePanel
 
 private:
 
-  int numPoints, //< The number of bezier points.
+  SI4 numPoints, //< The number of bezier points.
     resolution, //< The path resolution.
     padding, //< The panel padding.
     doublePadding, //< Double to padding for calculation acceleration.

@@ -1,6 +1,6 @@
 /* Kabuki Toolkit @version 0.x
 @link    https://github.com/kabuki-starship/kabuki-toolkit.git
-@file    /kabuki/features/hmi/mixer.h
+@file    /kabuki/features/touch/mixer.h
 @author  Cale McCollough <https://calemccollough.github.io>
 @license Copyright (C) 2014-19 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -13,7 +13,7 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <pch.h>
-#if SEAM >= SEAM_00_03_00_00__00
+#if SEAM >= KABUKI_FEATURES_TOUCH_1
 #ifndef HEADER_FOR_KT_HMI_MIXER
 #define HEADER_FOR_KT_HMI_MIXER
 
@@ -21,14 +21,14 @@ specific language governing permissions and limitations under the License. */
 
 namespace _ {
 
-class API MixerChannel;
+class SDK MixerChannel;
 
 /* A generic parameter mixer.
 
 
 */
 template <typename T>
-class API Mixer {
+class SDK Mixer {
  public:
   typedef enum {
     MIDI = 0,
@@ -46,75 +46,75 @@ class API Mixer {
   ~Mixer();
 
   /* Gets th number of channels on the mixer.
-  int GetNumChannels ();
+  SI4 GetNumChannels ();
 
   /* Resizes the mixer to the given value.
       @pre 0 <= num_channels_ <= newNumChannels. */
-  void SetNumChannels(int value);
+  void SetNumChannels(SI4 value);
 
   /* Gets th DAC resolution of the controls. */
-  int GetControlsResolution();
+  SI4 GetControlsResolution();
 
   /* Sets the resolution of the controls. */
-  void SetResolution(int value);
+  void SetResolution(SI4 value);
 
   /* Gets true if the mixer is in MIDI mode.
       i.e. controlResolution = 7 bits. */
-  int GetMixerType();
+  SI4 GetMixerType();
 
   /* Gets th volume of the ChannelNum. */
-  int GetVolume(int channel);
+  SI4 GetVolume(SI4 channel);
 
   /* Gets th pan value of the ChannelNum. */
-  int GetPan(int channel);
+  SI4 GetPan(SI4 channel);
 
   /* Sets the volume of the ChannelNum. */
-  void SetVol(int channel, int value);
+  void SetVol(SI4 channel, SI4 value);
 
   /* Sets the pan of the ChannelNum.
     @pre - (controlResolution/2) < value + (controlResolution/2)
     @pre 0 < ChannelNum < num_channels_ */
-  void SetPan(int channel, int value);
+  void SetPan(SI4 channel, SI4 value);
 
   /* Sets the mute flag to is_muted. */
-  void SetMute(int channel, bool is_muted);
+  void SetMute(SI4 channel, BOL is_muted);
 
   /* Sets the solo flag to is_soloed. */
-  void SetSolo(int channel, bool is_soloed);
+  void SetSolo(SI4 channel, BOL is_soloed);
 
   /* Gets true if the ChannelNum is muted. */
-  int IsMuted(int channel);
+  SI4 IsMuted(SI4 channel);
 
   /* Gets true if the ChannelNum is soloed. */
-  int IsSoloed(int channel);
+  SI4 IsSoloed(SI4 channel);
 
   /* Toggles the mute on channel. */
-  void ToggleMute(int channel);
+  void ToggleMute(SI4 channel);
 
   /* Toggles the solo on channel. */
-  void ToggleSolo(int channel);
+  void ToggleSolo(SI4 channel);
 
   /* Bounds and returns value to the controls resolution. */
-  int BoundValue(int value);
+  SI4 BoundValue(SI4 value);
 
   /* Moves channel to the index.
     @pre (0 < thisChannel < num_channels_)
     @pre (0 < index < num_channels_)  */
-  void MoveChannel(int channel, int index);
+  void MoveChannel(SI4 channel, SI4 index);
 
   /* Adds a specified num_channels_ to the mixer.
   @pre (0 < num_channels_ < NUM_MIXER_CHANNELS - num_channels_) */
-  void AddChannels(int num_channels);
+  void AddChannels(SI4 num_channels);
 
   /* Prints a string representation of mixer channels start_channel -
   stop_channel. */
-  void Print(int start_channel, int stop_channel);
+  void Print(SI4 start_channel, SI4 stop_channel);
 
   /* Prints this object to a terminal. */
   Utf& Print(Utf& printer);
 
  private:
-  int num_channels_,        //< number of active channels in the mixer.
+  SI4 num_channels_,        //< number of active channels in the mixer.
       mixer_size_,          //< Size of the mixer array.
       control_resolution_;  //< Resolution of the ADCs of for the controls.
 
@@ -125,8 +125,8 @@ class API Mixer {
 
   /* Deletes all of the channels after index.
   @pre 0 < index < num_channels_ */
-  void DeleteChannelsAfter(int index);
+  void DeleteChannelsAfter(SI4 index);
 };
 }  // namespace _
 #endif  //< HEADER_FOR_KT_HMI_MIXER
-#endif  //< #if SEAM >= SEAM_00_03_00_00__00
+#endif  //< #if SEAM >= KABUKI_FEATURES_TOUCH_1

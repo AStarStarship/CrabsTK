@@ -21,7 +21,7 @@ using namespace std;
 namespace kabuki {
 namespace cards {
 
-Player::Player (id::User* user, bool is_dealer) :
+Player::Player (id::User* user, BOL is_dealer) :
     user_       (user),
     is_turn_    (false),
     is_dealer_  (false),
@@ -35,31 +35,31 @@ id::User* Player::GetUser () {
     return user_;
 }
 
-const char* Player::GetHandle () {
+const CH1* Player::GetHandle () {
     return user_->GetHandleKey ();
 }
 
-bool Player::IsTurn () {
+BOL Player::IsTurn () {
     return is_turn_;
 }
 
-void Player::SetIsTurn (bool is_turn) {
+void Player::SetIsTurn (BOL is_turn) {
     is_turn_ = is_turn;
 }
 
-bool Player::IsDealer () {
+BOL Player::IsDealer () {
     return is_dealer_;
 }
 
-void Player::SetIsDealer (bool is_dealer) {
+void Player::SetIsDealer (BOL is_dealer) {
     is_dealer = is_dealer_;
 }
 
-int Player::GetState () {
+SI4 Player::GetState () {
     return state_;
 }
 
-const char* Player::SetState (int state) {
+const CH1* Player::SetState (SI4 state) {
     state_ = state;
     return nullptr;
 }
@@ -68,25 +68,25 @@ Hand& Player::GetHand () {
     return hand_;
 }
 
-int Player::TakeCardUp (Card* card) {
+SI4 Player::TakeCardUp (Card* card) {
     if (card == nullptr) {
         return -1;
     }
     return hand_.GetVisibleCards ().Push (card);
 }
 
-int Player::TakeCardDown (Card* card) {
+SI4 Player::TakeCardDown (Card* card) {
     if (card == nullptr) {
         return -1;
     }
     return hand_.GetHiddenCards ().Push (card);
 }
 
-int Player::GetNumWins () {
+SI4 Player::GetNumWins () {
     return num_wins_;
 }
 
-bool Player::SetNumWins (int num_wins) {
+BOL Player::SetNumWins (SI4 num_wins) {
     if (num_wins < 0) {
         return false;
     }

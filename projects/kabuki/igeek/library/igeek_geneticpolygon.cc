@@ -286,7 +286,7 @@ void GeneticPolygon::setupPoints (SI4 numberOfPoints)
     rebound ();
 }
 
-bool GeneticPolygon::age (SI4 ageTime)
+BOL GeneticPolygon::age (SI4 ageTime)
 {
     age += ageTime;
     
@@ -314,25 +314,25 @@ Color GeneticPolygon::breedColor (Color motherColor, Color fatherColor, Color  m
 SI4 GeneticPolygon::mutateInt (SI4 thisValue, SI4 mutateDirection)
 {
     DBL mutation,                //< The 
-           vector,                  // The vector tells you if its getting bigger or smaller
+           TArray,                  // The TArray tells you if its getting bigger or smaller
            scalar=0;                // Tells you how much of a mutation there will be.
     
     // Output = thisValue * (1 + scallar * trend)
     
     if (mutateDirection > 0)
     {
-        vector = 1.0;
+        TArray = 1.0;
     }
     else if (mutateDirection == 0)
     {
         if (Math.random () < 0.5)
-            vector = 1.0;
+            TArray = 1.0;
         else
-            vector = -1.0;
+            TArray = -1.0;
     }
     else // mutateDirection
     {
-        vector = -1.0;
+        TArray = -1.0;
     }
     
     mutation = Math.random ();
@@ -348,7 +348,7 @@ SI4 GeneticPolygon::mutateInt (SI4 thisValue, SI4 mutateDirection)
         }
     }
         
-    SI4 newValue = (SI4)((DBL) thisValue * (1.0 + vector*scalar));
+    SI4 newValue = (SI4)((DBL) thisValue * (1.0 + TArray*scalar));
         
     return newValue;
 }
@@ -356,25 +356,25 @@ SI4 GeneticPolygon::mutateInt (SI4 thisValue, SI4 mutateDirection)
 DBL GeneticPolygon::mutateFloat (DBL thisValue, SI4 mutateDirection)
 {
     DBL mutation,
-           vector,      // The vector tells you if its getting bigger or smaller
+           TArray,      // The TArray tells you if its getting bigger or smaller
            scalar=0;    // Tells you how much of a mutation there will be.
     
     // Output = thisValue * (1 + scallar*trend)
     
     if (mutateDirection > 0)
     {
-        vector = 1.0f;
+        TArray = 1.0f;
     }
     else if (mutateDirection == 0)
     {
         if (Math.random () < 0.5)
-            vector = 1.0;
+            TArray = 1.0;
         else
-            vector = -1.0;
+            TArray = -1.0;
     }
     else // mutateDirection
     {
-        vector = -1.0;
+        TArray = -1.0;
     }
     
     mutation = Math.random ();
@@ -389,7 +389,7 @@ DBL GeneticPolygon::mutateFloat (DBL thisValue, SI4 mutateDirection)
                 scalar = minorScalar;
         }
     }
-    return (DBL)((DBL)thisValue * (1.0 + vector*scalar));
+    return (DBL)((DBL)thisValue * (1.0 + TArray*scalar));
 }
 
 SI4 GeneticPolygon::breedInt (SI4 motherInt, SI4 fatherInt, SI4 matGrandInt, SI4 patGrandInt)
@@ -436,7 +436,7 @@ SI4 GeneticPolygon::breedInt (SI4 motherInt, SI4 fatherInt, SI4 matGrandInt, SI4
     return mutateInt (smallerValue, 0);
 }
 
-bool GeneticPolygon::containsGeneticPolygon (GeneticPolygon that)
+BOL GeneticPolygon::containsGeneticPolygon (GeneticPolygon that)
 {
     // The theory behind this algorithm is that in order for two polygons to intersect, at least one
     // point of either object has to be inside of the other.
@@ -445,7 +445,7 @@ bool GeneticPolygon::containsGeneticPolygon (GeneticPolygon that)
     // idea how efficient this is. The other method would be to compair their bitmaps. This might be 
     // able to be done in hardware via OpenCL.
     
-    Print ("bool contains (GeneticPolygon that)\n");
+    Print ("BOL contains (GeneticPolygon that)\n");
     SI4 i;
     
     for (i=0; i < this.npoints; i++)
@@ -531,7 +531,7 @@ void GeneticPolygon::printGenes (SI4[] thisStream, SI4 currentIndex)
 /* @brief   Function that compares 
  */
 
-bool GeneticPolygon::intersects (Polygon thatPolygon)
+BOL GeneticPolygon::intersects (Polygon thatPolygon)
 {
     Rectangle bounds = thatPolygon.getBounds ();
     
@@ -542,7 +542,7 @@ bool GeneticPolygon::intersects (Polygon thatPolygon)
     return intersects (thatPolygon, offsetX, offsetY);
 }
 
-bool GeneticPolygon::intersects (GeneticPolygon thatPolygon)
+BOL GeneticPolygon::intersects (GeneticPolygon thatPolygon)
 {
     SI4 offsetX = (width-thatPolygon.width)/2,
         offsetY = (height-thatPolygon.height)/2;
@@ -551,12 +551,12 @@ bool GeneticPolygon::intersects (GeneticPolygon thatPolygon)
     return intersects (thatPolygon, offsetX, offsetY);
 }
 
-bool GeneticPolygon::intersects (Polygon thatPolygon, DBL offsetX, DBL offsetY)
+BOL GeneticPolygon::intersects (Polygon thatPolygon, DBL offsetX, DBL offsetY)
 {
     return intersects (thatPolygon, (SI4)offsetX, (SI4)offsetY);
 }
 
-bool GeneticPolygon::intersects (Polygon thatPolygon, SI4 offsetX, SI4 offsetY)
+BOL GeneticPolygon::intersects (Polygon thatPolygon, SI4 offsetX, SI4 offsetY)
 {
     // In order to determine if one Polygons ccontain eachother, we have to check every point in both
     // Polygon(s).
@@ -688,9 +688,9 @@ DBL GeneticPolygon::crossOver (DBL dominant, DBL recessive)
         longestStringLength = (dominantStringLength > recessiveStringLength) ? recessiveStringLength : recessiveStringLength,
         i;
         
-    char[] newString = new char[longestStringLength];
+    CH1[] newString = new CH1[longestStringLength];
         
-    bool dominantTurn = true;
+    BOL dominantTurn = true;
     
     for (i=2; i < longestStringLength; i++)
     {

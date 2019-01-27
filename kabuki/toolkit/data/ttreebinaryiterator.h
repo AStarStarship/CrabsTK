@@ -68,7 +68,7 @@ class TTreeBinaryIterator {
     return current;
   }
 
-  bool IsNotDone() {
+  BOL IsNotDone() {
     if (index > prevIndex)  // iterating forwards
     {
       if (current->next == head) return false;
@@ -78,7 +78,7 @@ class TTreeBinaryIterator {
     }
     return true;
   }
-  bool IsNotDone(SI4 forwardsOrBackwards)  // Value to be < or > 0
+  BOL IsNotDone(SI4 forwardsOrBackwards)  // Value to be < or > 0
   {
     if (forwardsOrBackwards > 0)  // iterating forwards
     {
@@ -122,7 +122,7 @@ class TTreeBinaryIterator {
       prevIndex = prevIndex - 1;
   }
 
-  bool SetIndex(SI4 toHere) {
+  BOL SetIndex(SI4 toHere) {
     if (toHere < 1 || toHere > size) return false;
     if (toHere > index) {
       if (toHere < index - toHere) {

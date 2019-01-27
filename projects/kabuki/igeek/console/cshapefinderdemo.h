@@ -41,7 +41,7 @@ class LeukocyteWar : public JPanel, public MouseListener, KeyListener // , Actio
     VirusPopulation viruses; //< The Virus population array.
 
     Timer timer; //< The timer for the program.
-    bool timerOn, //< The time on status.
+    BOL timerOn, //< The time on status.
         drawCurrentBezierCurve, //< The the Bezier curve for the current selected virus.
         drawCurrentTrail, //< Draws the current selectred virus's trail.
         kill, //< Flag that determines if program is in "Kill Mode"
@@ -51,7 +51,7 @@ class LeukocyteWar : public JPanel, public MouseListener, KeyListener // , Actio
 
     BezierCurvePanel curvePanel; //< The graphic representation of the currentVirus's Bezier movement curve.
 
-    int curvePanelX,
+    SI4 curvePanelX,
         curvePanelY,
         currentVirusIndex; //< The index of the currently selected virus.
 

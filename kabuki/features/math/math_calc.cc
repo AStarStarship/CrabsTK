@@ -30,7 +30,7 @@ double AbsValue (double a)
     return a;
 }
 
-int AbsValue (int a)
+SI4 AbsValue (SI4 a)
 {
     return 0.0; // return System.Abs (a);
 }
@@ -150,12 +150,12 @@ double Floor (double a)
     return 0.0; // return System.Floor (a);
 }
 
-int Exponent (float f)
+SI4 Exponent (float f)
 {
     return 0; // return System.getExponent (f);
 }
 
-int Exponent (double d)
+SI4 Exponent (double d)
 {
     return 0; // return System.getExponent (d);
 }
@@ -220,7 +220,7 @@ double Max (double a, double b)
     return (a > b) ? a : b;
 }
 
-int Max (int a, int b)
+SI4 Max (SI4 a, SI4 b)
 {
     return (a > b) ? a : b;
 }
@@ -240,7 +240,7 @@ double Min (double a, double b)
     return 0.0; // return System.min (a, b);
 }
 
-int Min (int a, int b)
+SI4 Min (SI4 a, SI4 b)
 {
     return 0.0; // return System.min (a, b);
 }
@@ -300,7 +300,7 @@ double Round (double a)
     return 0.0; // return System.Rint (a);
 }
 
-int RoundToInt (float a)
+SI4 RoundToInt (float a)
 {
     return 0; // return System.Round (a);
 }
@@ -310,22 +310,22 @@ long RoundToInt (double a)
     return 0; // return System.Round (a);
 }
 
-float ScaleB (float d, int scaleFactor)
+float ScaleB (float d, SI4 scaleFactor)
 {
     return 0.0f; // return System.Scalb (d, scaleFactor);
 }
 
-double ScaleB (double d, int scaleFactor)
+double ScaleB (double d, SI4 scaleFactor)
 {
     return 0.0; // return System.Scalb (d, scaleFactor);
 }
 
-float FScaleFactor (float f, int scaleFactor)
+float FScaleFactor (float f, SI4 scaleFactor)
 {
     return 0.0f; // return System.Scalb (f, scaleFactor);
 }
 
-double FScaleFactor (double f, int scaleFactor)
+double FScaleFactor (double f, SI4 scaleFactor)
 {
     return 0.0; // return System.Scalb (f, scaleFactor);
 }
@@ -476,9 +476,9 @@ double Factoral (double value)
     return total;
 }
 
-int Factoral (int value)
+SI4 Factoral (SI4 value)
 {
-    int total;  //< The running total.
+    SI4 total;  //< The running total.
 
     if (value < 0)
     {
@@ -543,11 +543,11 @@ inline double GetMaxDouble ()
     return DBL_MAX;
 }
 
-int GetNextPrime (int value)
+SI4 GetNextPrime (SI4 value)
 {
 
     /** A list of prime numbers between 0 and 2999. */
-    int PrimeNumbers[] = {
+    SI4 PrimeNumbers[] = {
         2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47,
         53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101, 103, 107,
         109, 113, 127, 131, 137, 139, 149, 151, 157, 163, 167,
@@ -593,7 +593,7 @@ int GetNextPrime (int value)
         2851, 2857, 2861, 2879, 2887, 2897, 2903, 2909, 2917,
         2927, 2939, 2953, 2957, 2963, 2969, 2971, 2999
     };
-    static const int NumFastPrimeNumbers = &NumFastPrimeNumbers - &PrimeNumbers[0];
+    static const SI4 NumFastPrimeNumbers = &NumFastPrimeNumbers - &PrimeNumbers[0];
 
     // This function performs a binary search on the Numbers array to
     // 1.) determine if value is prime, or
@@ -602,7 +602,7 @@ int GetNextPrime (int value)
     if (value > NumFastPrimeNumbers - 1)
         return 0;
 
-    int index = 0,                              //< The mid index and return index
+    SI4 index = 0,                              //< The mid index and return index
         left_index = 0,                          //< The min search index
         right_index = NumFastPrimeNumbers - 1;   //< The max search index
 

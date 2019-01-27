@@ -1,6 +1,6 @@
 /* Kabuki Toolkit @version 0.x
 @link    https://github.com/kabuki-starship/kabuki-toolkit.git
-@file    /kabuki/features/hmi/hmi_parameter.h
+@file    /kabuki/features/touch/touch_parameter.h
 @author  Cale McCollough <https://calemccollough.github.io>
 @license Copyright (C) 2014-19 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -13,7 +13,7 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <pch.h>
-#if SEAM >= SEAM_00_03_00_00__00
+#if SEAM >= KABUKI_FEATURES_TOUCH_1
 #ifndef HEADER_FOR_KT_HMI_PARAMETER
 #define HEADER_FOR_KT_HMI_PARAMETER
 
@@ -26,14 +26,14 @@ namespace _ {
 
 
 */
-class API Parameter : public HmiComponent {
+class SDK Parameter : public HmiComponent {
  public:
   typedef enum {
     MidiControl = 0,
   };
 
   /* Default constructor. */
-  Parameter(uint16_t newType, const char* label = "", int channel = 0,
+  Parameter(uint16_t newType, const CH1* label = "", SI4 channel = 0,
             uint16_t init_value = 0, uint16_t min_value = 0,
             uint16_t max_value_ = 1);
 
@@ -47,13 +47,13 @@ class API Parameter : public HmiComponent {
   uint16_t GetType() const;
 
   /* Gets a string that says what type of Parameter this is. */
-  const char* GetTypeString() const;
+  const CH1* GetTypeString() const;
 
   /* Gets the output channel of this control. */
-  int GetChannel() const;
+  SI4 GetChannel() const;
 
   /* Gets the number of channels. */
-  int GetNumChannels() const;
+  SI4 GetNumChannels() const;
 
   /* Gets the number of bits of in a control word. */
   uint16_t GetWordSize() const;
@@ -110,7 +110,7 @@ class API Parameter : public HmiComponent {
   /* Compares this Parameter to the given Parameter.
       @return gets 0 if both Controls are the same.
       @return gets 1 if the controls are not identical. */
-  virtual int Compare(const Parameter& p) const;
+  virtual SI4 Compare(const Parameter& p) const;
 
   /* Gets the header for toStringRow (). */
   virtual void PrintHeader() const;
@@ -119,7 +119,7 @@ class API Parameter : public HmiComponent {
   virtual void PrintRow() const;
 
   /* Prints this object to a string. */
-  _::Utf& Print(_::Utf& print) const;
+  ::_::Utf& Print(_::Utf& print) const;
 
  private:
   const uint16_t* channel_;  //< Output channel.
@@ -151,4 +151,4 @@ class ParameterPair {
 };  //< ParameterPair
 }  // namespace _
 #endif  //< HEADER_FOR_KT_HMI_PARAMETER
-#endif  //< #if SEAM >= SEAM_00_03_00_00__00
+#endif  //< #if SEAM >= KABUKI_FEATURES_TOUCH_1

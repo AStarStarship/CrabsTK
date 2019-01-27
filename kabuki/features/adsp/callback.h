@@ -122,10 +122,10 @@ typedef size_t (*FLAC__IOCallback_Write) (const void *ptr, size_t size, size_t n
  * \param  handle   The handle to the data source.
  * \param  offset   The new position, relative to \a whence
  * \param  whence   \c SEEK_SET, \c SEEK_CUR, or \c SEEK_END
- * \retval int
+ * \retval SI4
  *    \c 0 on success, \c -1 on error.
  */
-typedef int (*FLAC__IOCallback_Seek) (FLAC__IOHandle handle, FLAC__int64 offset, int whence);
+typedef SI4 (*FLAC__IOCallback_Seek) (FLAC__IOHandle handle, FLAC__int64 offset, SI4 whence);
 
 /** Signature for the tell callback.
  *  The signature and semantics mostly match POSIX ftell() WITH ONE IMPORTANT
@@ -144,20 +144,20 @@ typedef FLAC__int64 (*FLAC__IOCallback_Tell) (FLAC__IOHandle handle);
  *  must be provided instead.
  *
  * \param  handle   The handle to the data source.
- * \retval int
+ * \retval SI4
  *    \c 0 if not at end of file, nonzero if at end of file.
  */
-typedef int (*FLAC__IOCallback_Eof) (FLAC__IOHandle handle);
+typedef SI4 (*FLAC__IOCallback_Eof) (FLAC__IOHandle handle);
 
 /** Signature for the close callback.
  *  The signature and semantics match POSIX fclose() implementations
  *  and can generally be used interchangeably.
  *
  * \param  handle   The handle to the data source.
- * \retval int
+ * \retval SI4
  *    \c 0 on success, \c EOF on error.
  */
-typedef int (*FLAC__IOCallback_Close) (FLAC__IOHandle handle);
+typedef SI4 (*FLAC__IOCallback_Close) (FLAC__IOHandle handle);
 
 /** A structure for holding a set of callbacks.
  *  Each FLAC interface that requires a FLAC__IOCallbacks structure will

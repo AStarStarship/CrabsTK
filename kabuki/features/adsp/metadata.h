@@ -156,7 +156,7 @@ extern "C" {
  *    or the file contained no STREAMINFO block.  (A memory allocation error
  *    is possible because this function must set up a file decoder.)
  */
-FLAC_API FLAC__bool FLAC__metadata_get_streaminfo(const char *filename, FLAC__StreamMetadata *streaminfo);
+FLAC_API FLAC__bool FLAC__metadata_get_streaminfo(const CH1 *filename, FLAC__StreamMetadata *streaminfo);
 
 /** Read the VORBIS_COMMENT metadata block of the given FLAC file.  This
  *  function will try to skip any ID3v2 tag at the head of the file.
@@ -175,7 +175,7 @@ FLAC_API FLAC__bool FLAC__metadata_get_streaminfo(const char *filename, FLAC__St
  *    decoder error, or the file contained no VORBIS_COMMENT block, and
  *    \a *tags will be set to \c NULL.
  */
-FLAC_API FLAC__bool FLAC__metadata_get_tags(const char *filename, FLAC__StreamMetadata **tags);
+FLAC_API FLAC__bool FLAC__metadata_get_tags(const CH1 *filename, FLAC__StreamMetadata **tags);
 
 /** Read the CUESHEET metadata block of the given FLAC file.  This
  *  function will try to skip any ID3v2 tag at the head of the file.
@@ -194,7 +194,7 @@ FLAC_API FLAC__bool FLAC__metadata_get_tags(const char *filename, FLAC__StreamMe
  *    error, a file decoder error, or the file contained no CUESHEET
  *    block, and \a *cuesheet will be set to \c NULL.
  */
-FLAC_API FLAC__bool FLAC__metadata_get_cuesheet(const char *filename, FLAC__StreamMetadata **cuesheet);
+FLAC_API FLAC__bool FLAC__metadata_get_cuesheet(const CH1 *filename, FLAC__StreamMetadata **cuesheet);
 
 /** Read a PICTURE metadata block of the given FLAC file.  This
  *  function will try to skip any ID3v2 tag at the head of the file.
@@ -234,7 +234,7 @@ FLAC_API FLAC__bool FLAC__metadata_get_cuesheet(const char *filename, FLAC__Stre
  *    error, a file decoder error, or the file contained no PICTURE
  *    block, and \a *picture will be set to \c NULL.
  */
-FLAC_API FLAC__bool FLAC__metadata_get_picture(const char *filename, FLAC__StreamMetadata **picture, FLAC__StreamMetadata_Picture_Type type, const char *mime_type, const FLAC__byte *description, unsigned max_width, unsigned max_height, unsigned max_depth, unsigned max_colors);
+FLAC_API FLAC__bool FLAC__metadata_get_picture(const CH1 *filename, FLAC__StreamMetadata **picture, FLAC__StreamMetadata_Picture_Type type, const CH1 *mime_type, const FLAC__byte *description, unsigned max_width, unsigned max_height, unsigned max_depth, unsigned max_colors);
 
 /* \} */
 
@@ -354,7 +354,7 @@ typedef enum {
  *  Using a FLAC__Metadata_SimpleIteratorStatus as the index to this array
  *  will give the string equivalent.  The contents should not be modified.
  */
-extern FLAC_API const char * const FLAC__Metadata_SimpleIteratorStatusString[];
+extern FLAC_API const CH1 * const FLAC__Metadata_SimpleIteratorStatusString[];
 
 
 /** Create a new iterator instance.
@@ -403,7 +403,7 @@ FLAC_API FLAC__Metadata_SimpleIteratorStatus FLAC__metadata_simple_iterator_stat
  *    \c false if a memory allocation error occurs, the file can't be
  *    opened, or another error occurs, else \c true.
  */
-FLAC_API FLAC__bool FLAC__metadata_simple_iterator_init(FLAC__Metadata_SimpleIterator *iterator, const char *filename, FLAC__bool read_only, FLAC__bool preserve_file_stats);
+FLAC_API FLAC__bool FLAC__metadata_simple_iterator_init(FLAC__Metadata_SimpleIterator *iterator, const CH1 *filename, FLAC__bool read_only, FLAC__bool preserve_file_stats);
 
 /** Returns \c true if the FLAC file is writable.  If \c false, calls to
  *  FLAC__metadata_simple_iterator_set_block() and
@@ -787,7 +787,7 @@ typedef enum {
  *  Using a FLAC__Metadata_ChainStatus as the index to this array
  *  will give the string equivalent.  The contents should not be modified.
  */
-extern FLAC_API const char * const FLAC__Metadata_ChainStatusString[];
+extern FLAC_API const CH1 * const FLAC__Metadata_ChainStatusString[];
 
 /*********** FLAC__Metadata_Chain ***********/
 
@@ -830,7 +830,7 @@ FLAC_API FLAC__Metadata_ChainStatus FLAC__metadata_chain_status(FLAC__Metadata_C
  *    \a filename, else \c false.  On failure, check the status with
  *    FLAC__metadata_chain_status().
  */
-FLAC_API FLAC__bool FLAC__metadata_chain_read(FLAC__Metadata_Chain *chain, const char *filename);
+FLAC_API FLAC__bool FLAC__metadata_chain_read(FLAC__Metadata_Chain *chain, const CH1 *filename);
 
 /** Read all metadata from an Ogg FLAC file into the chain.
  *
@@ -847,7 +847,7 @@ FLAC_API FLAC__bool FLAC__metadata_chain_read(FLAC__Metadata_Chain *chain, const
  *    \a filename, else \c false.  On failure, check the status with
  *    FLAC__metadata_chain_status().
  */
-FLAC_API FLAC__bool FLAC__metadata_chain_read_ogg(FLAC__Metadata_Chain *chain, const char *filename);
+FLAC_API FLAC__bool FLAC__metadata_chain_read_ogg(FLAC__Metadata_Chain *chain, const CH1 *filename);
 
 /** Read all metadata from a FLAC stream into the chain via I/O callbacks.
  *
@@ -1754,7 +1754,7 @@ FLAC_API FLAC__bool FLAC__metadata_object_vorbiscomment_delete_comment(FLAC__Str
  *    \c false if malloc() fails, or if \a field_name or \a field_value does
  *    not comply with the Vorbis comment specification, else \c true.
  */
-FLAC_API FLAC__bool FLAC__metadata_object_vorbiscomment_entry_from_name_value_pair(FLAC__StreamMetadata_VorbisComment_Entry *entry, const char *field_name, const char *field_value);
+FLAC_API FLAC__bool FLAC__metadata_object_vorbiscomment_entry_from_name_value_pair(FLAC__StreamMetadata_VorbisComment_Entry *entry, const CH1 *field_name, const CH1 *field_value);
 
 /** Splits a Vorbis comment entry into NUL-terminated name and value strings.
  *
@@ -1775,7 +1775,7 @@ FLAC_API FLAC__bool FLAC__metadata_object_vorbiscomment_entry_from_name_value_pa
  *    \c false if memory allocation fails or \a entry does not comply with the
  *    Vorbis comment specification, else \c true.
  */
-FLAC_API FLAC__bool FLAC__metadata_object_vorbiscomment_entry_to_name_value_pair(const FLAC__StreamMetadata_VorbisComment_Entry entry, char **field_name, char **field_value);
+FLAC_API FLAC__bool FLAC__metadata_object_vorbiscomment_entry_to_name_value_pair(const FLAC__StreamMetadata_VorbisComment_Entry entry, CH1 **field_name, CH1 **field_value);
 
 /** Check if the given Vorbis comment entry's field name matches the given
  *  field name.
@@ -1789,7 +1789,7 @@ FLAC_API FLAC__bool FLAC__metadata_object_vorbiscomment_entry_to_name_value_pair
  * \retval FLAC__bool
  *    \c true if the field names match, else \c false
  */
-FLAC_API FLAC__bool FLAC__metadata_object_vorbiscomment_entry_matches(const FLAC__StreamMetadata_VorbisComment_Entry entry, const char *field_name, unsigned field_name_length);
+FLAC_API FLAC__bool FLAC__metadata_object_vorbiscomment_entry_matches(const FLAC__StreamMetadata_VorbisComment_Entry entry, const CH1 *field_name, unsigned field_name_length);
 
 /** Find a Vorbis comment with the given field name.
  *
@@ -1804,11 +1804,11 @@ FLAC_API FLAC__bool FLAC__metadata_object_vorbiscomment_entry_matches(const FLAC
  *    \code object != NULL \endcode
  *    \code object->type == FLAC__METADATA_TYPE_VORBIS_COMMENT \endcode
  *    \code field_name != NULL \endcode
- * \retval int
+ * \retval SI4
  *    The offset in the comment array of the first comment whose field
  *    name matches \a field_name, or \c -1 if no match was found.
  */
-FLAC_API int FLAC__metadata_object_vorbiscomment_find_entry_from(const FLAC__StreamMetadata *object, unsigned offset, const char *field_name);
+FLAC_API SI4 FLAC__metadata_object_vorbiscomment_find_entry_from(const FLAC__StreamMetadata *object, unsigned offset, const CH1 *field_name);
 
 /** Remove first Vorbis comment matching the given field name.
  *
@@ -1817,11 +1817,11 @@ FLAC_API int FLAC__metadata_object_vorbiscomment_find_entry_from(const FLAC__Str
  * \assert
  *    \code object != NULL \endcode
  *    \code object->type == FLAC__METADATA_TYPE_VORBIS_COMMENT \endcode
- * \retval int
+ * \retval SI4
  *    \c -1 for memory allocation error, \c 0 for no matching entries,
  *    \c 1 for one matching entry deleted.
  */
-FLAC_API int FLAC__metadata_object_vorbiscomment_remove_entry_matching(FLAC__StreamMetadata *object, const char *field_name);
+FLAC_API SI4 FLAC__metadata_object_vorbiscomment_remove_entry_matching(FLAC__StreamMetadata *object, const CH1 *field_name);
 
 /** Remove all Vorbis comments matching the given field name.
  *
@@ -1830,11 +1830,11 @@ FLAC_API int FLAC__metadata_object_vorbiscomment_remove_entry_matching(FLAC__Str
  * \assert
  *    \code object != NULL \endcode
  *    \code object->type == FLAC__METADATA_TYPE_VORBIS_COMMENT \endcode
- * \retval int
+ * \retval SI4
  *    \c -1 for memory allocation error, \c 0 for no matching entries,
  *    else the number of matching entries deleted.
  */
-FLAC_API int FLAC__metadata_object_vorbiscomment_remove_entries_matching(FLAC__StreamMetadata *object, const char *field_name);
+FLAC_API SI4 FLAC__metadata_object_vorbiscomment_remove_entries_matching(FLAC__StreamMetadata *object, const CH1 *field_name);
 
 /** Create a new CUESHEET track instance.
  *
@@ -2069,7 +2069,7 @@ FLAC_API FLAC__bool FLAC__metadata_object_cuesheet_delete_track(FLAC__StreamMeta
  * \retval FLAC__bool
  *    \c false if cue sheet is illegal, else \c true.
  */
-FLAC_API FLAC__bool FLAC__metadata_object_cuesheet_is_legal(const FLAC__StreamMetadata *object, FLAC__bool check_cd_da_subset, const char **violation);
+FLAC_API FLAC__bool FLAC__metadata_object_cuesheet_is_legal(const FLAC__StreamMetadata *object, FLAC__bool check_cd_da_subset, const CH1 **violation);
 
 /** Calculate and return the CDDB/freedb ID for a cue sheet.  The function
  *  assumes the cue sheet corresponds to a CD; the result is undefined
@@ -2105,7 +2105,7 @@ FLAC_API FLAC__uint32 FLAC__metadata_object_cuesheet_calculate_cddb_id(const FLA
  * \retval FLAC__bool
  *    \c false if \a copy is \c true and malloc() fails, else \c true.
  */
-FLAC_API FLAC__bool FLAC__metadata_object_picture_set_mime_type(FLAC__StreamMetadata *object, char *mime_type, FLAC__bool copy);
+FLAC_API FLAC__bool FLAC__metadata_object_picture_set_mime_type(FLAC__StreamMetadata *object, CH1 *mime_type, FLAC__bool copy);
 
 /** Sets the description of a PICTURE block.
  *
@@ -2171,7 +2171,7 @@ FLAC_API FLAC__bool FLAC__metadata_object_picture_set_data(FLAC__StreamMetadata 
  * \retval FLAC__bool
  *    \c false if PICTURE block is illegal, else \c true.
  */
-FLAC_API FLAC__bool FLAC__metadata_object_picture_is_legal(const FLAC__StreamMetadata *object, const char **violation);
+FLAC_API FLAC__bool FLAC__metadata_object_picture_is_legal(const FLAC__StreamMetadata *object, const CH1 **violation);
 
 /* \} */
 

@@ -21,7 +21,7 @@
 
 namespace _ {
     
-App::App (int initWidth, int initHeight)
+App::App (SI4 initWidth, SI4 initHeight)
 {
     if (initWidth < MinWidthOrHeight)   initWidth = MinWidthOrHeight;
     else if (initWidth > MaxWidth)      initWidth = MaxWidth;
@@ -32,12 +32,12 @@ App::App (int initWidth, int initHeight)
 
 uint32_t App::getUID { return uid; }
 
-int App::activateWindow (int newWindowIndex)
+SI4 App::activateWindow (SI4 newWindowIndex)
 {
     return windows.select (newWindowIndex);
 }
 
-int App::activateWindow (Window& newWindow)
+SI4 App::activateWindow (Window& newWindow)
 {
     if (newWindow == nullptr)
         return -1;
@@ -49,17 +49,17 @@ int App::activateWindow (Window& newWindow)
 
 ProcessTree& getWindows { return windows; }
 
-int App::show  ()
+SI4 App::show  ()
 {
     return 0;
 }
 
-int App::hide  ()
+SI4 App::hide  ()
 {
     return 0;
 }
 
-int App::close ()
+SI4 App::close ()
 {
     return 0;
 }

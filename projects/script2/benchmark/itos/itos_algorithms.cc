@@ -23,7 +23,7 @@ using namespace std;
 #define PRINT_PAUSE(message) \
   // cout << '\n' << message << "               "; system ("PAUSE");
 
-char* PrintNil(char* text, char* text_end, uint32_t value) {
+CH1* PrintNil(CH1* text, CH1* text_end, uint32_t value) {
   if (!text) {
     return nullptr;
   }
@@ -33,8 +33,8 @@ char* PrintNil(char* text, char* text_end, uint32_t value) {
   return text;
 }
 
-char* PrintSprintf(char* text, char* text_end, uint32_t value) {
-  char buffer[24];
+CH1* PrintSprintf(CH1* text, CH1* text_end, uint32_t value) {
+  CH1 buffer[24];
   if (!text) {
     return nullptr;
   }
@@ -45,8 +45,8 @@ char* PrintSprintf(char* text, char* text_end, uint32_t value) {
   return text;
 }
 
-char* PrintMod100(uint32_t value, char* text, char* text_end) {
-  static const char kDigits00To99[201] = {
+CH1* PrintMod100(uint32_t value, CH1* text, CH1* text_end) {
+  static const CH1 kDigits00To99[201] = {
       "00010203040506070809"
       "10111213141516171819"
       "20212223242526272829"
@@ -68,7 +68,7 @@ char* PrintMod100(uint32_t value, char* text, char* text_end) {
     return text + 1;
   }
 
-  int size;
+  SI4 size;
   if (value >= k10ToThe[4]) {
     if (value >= k10ToThe[7]) {
       if (value >= k10ToThe[9])
@@ -104,7 +104,7 @@ char* PrintMod100(uint32_t value, char* text, char* text_end) {
   }
   text_end = &text[size - 1];
   while (value >= 100) {
-    int digits = value % 100;
+    SI4 digits = value % 100;
     value /= 100;
     *(short*)(text_end - 1) = *(short*)(kDigits00To99 + 2 * digits);
     text_end -= 2;
@@ -117,12 +117,12 @@ char* PrintMod100(uint32_t value, char* text, char* text_end) {
 }
 
 /*
-char* PrintMod100B (uint32_t value, char* text, char* text_end) {
+CH1* PrintMod100B (uint32_t value, CH1* text, CH1* text_end) {
     
 
 
 
-    // Lookup table of ASCII char pairs for 00, 01, ..., 99.
+    // Lookup table of ASCII CH1 pairs for 00, 01, ..., 99.
     static const uint16_t kDigits00To99[100] = {
         0x3030, 0x3130, 0x3230, 0x3330, 0x3430, 0x3530, 0x3630, 0x3730, 0x3830,
         0x3930, 0x3031, 0x3131, 0x3231, 0x3331, 0x3431, 0x3531, 0x3631, 0x3731,
@@ -147,7 +147,7 @@ char* PrintMod100B (uint32_t value, char* text, char* text_end) {
         return text + 1;
     }
 
-    int size;
+    SI4 size;
     if (value >= k10ToThe[4]) {
         if (value >= k10ToThe[7]) {
             if (value >= k10ToThe[9])
@@ -215,10 +215,10 @@ void TestPrintMod100() {
   std::uniform_int_distribution<uint32_t> distr;
 
   uint32_t value;
-  char expecting[kSize], text[kSize];
-  char* result;
+  CH1 expecting[kSize], text[kSize];
+  CH1* result;
 
-  for (int i = 0; i < 0x00ffffff; ++i) {
+  for (SI4 i = 0; i < 0x00ffffff; ++i) {
     value = distr(eng);
     sprintf_s(expecting, 24, "%u", value);
     // cout << '\n' << i + 1 << ".) Expecting " << expecting

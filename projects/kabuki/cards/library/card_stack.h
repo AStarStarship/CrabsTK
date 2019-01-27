@@ -33,15 +33,15 @@ class CardStack {
 
     /** Constructs an empty card stack with a max of 54 cards.
         @param size The number of array elements to reserve. */
-    CardStack (int size = 54);
+    CardStack (SI4 size = 54);
     
     /** Verbose constructor. */
-    //CardStack (const CardStack& cards, int min_num_cards, 
-    //           int max_num_cards = Deck::kFullDeckSize,
-    //           bool is_visible = false);
+    //CardStack (const CardStack& cards, SI4 min_num_cards, 
+    //           SI4 max_num_cards = Deck::kFullDeckSize,
+    //           BOL is_visible = false);
     
     /** Creates a CardStack from the deck. */
-    CardStack (Deck& deck, int min_cards = 0);
+    CardStack (Deck& deck, SI4 min_cards = 0);
     
     /** Copy constructor deep copies the state of the other object.
         The copy constructor is use shuffle the CardStack. */
@@ -55,10 +55,10 @@ class CardStack {
     /** Compares this CardStack to the other CardStack.
         @return Returns 0 if the two have equal values, 1 if this stack is
                 greater, and -1 if the other stack is greater. */
-    virtual int Compare (CardStack& other);
+    virtual SI4 Compare (CardStack& other);
         
     /** Returns the point value total of this stack of cards. */
-    int GetValue ();
+    SI4 GetValue ();
 
     /** Shuffles this CardStack. */
     void Shuffle ();
@@ -67,22 +67,22 @@ class CardStack {
     void Shuffle (Deck& deck);
 
     /** Returns the size of this stack. */
-    int GetSize () const;
+    SI4 GetSize () const;
 
     /** Returns the number of Card(s) in this stack. */
-    int Length () const;
+    SI4 Length () const;
 
     /** Adds the card to top of the stack.
          @param card The Card to add.
          @return Returns the number of cards in the deck or -1 if the operation
                  failed. */
-    int Push (Card* card);
+    SI4 Push (Card* card);
     
     /** Inserts the card into the stack at the specified index.
         @return Returns 0 upon success
         @return Returns 1 if the index is out of bounds.
         @return Returns 2 if adding a card about exceed the manNumCards. */
-    int InsertCard (Card* card, int index);
+    SI4 InsertCard (Card* card, SI4 index);
         
     /** Pushes the cards onto the stack.
         Functions takes the num_cards_take from the cards and adds
@@ -97,7 +97,7 @@ class CardStack {
         @return Returns 2 if the num_cards_take would put the user over the
                 maxNumCards.
     */
-    int Push (CardStack& cards);
+    SI4 Push (CardStack& cards);
 
     /** Pops a card off the stack. */
     Card* Draw ();
@@ -105,36 +105,36 @@ class CardStack {
     /** Attempts to draw the given number of cards from the deck if there is
         enough. 
         @return Returns the number of cards drawn. */
-    int DrawCards (CardStack& cards, int num_cards_take = 1);
+    SI4 DrawCards (CardStack& cards, SI4 num_cards_take = 1);
 
     /** Counts the number of times this stack contains the given card. */
-    int Count (Card* card);
+    SI4 Count (Card* card);
 
     /** Returns true if this stack contains the given card. */
-    int Contains (Card* card);
+    SI4 Contains (Card* card);
 
     /** Removes card from the stack.
         @return Returns true upon success and false if this stack doesn't 
                 contain the pointer. */
-    bool RemoveCard (Card* card);
+    BOL RemoveCard (Card* card);
 
     /** Copies the num_cards from the stack
         @pre    num_cards must be greater than the number of cards in the
                 stock. */
-    int SetCards (CardStack& stack, int num_cards);
+    SI4 SetCards (CardStack& stack, SI4 num_cards);
         
     /** Draws the specified num_cards and adds them to this stack
         @pre    num_cards must be greater than the number of cards in the stock.
         @return Returns -1 if num*/
-    int TakeCards (CardStack& stock, int num_cards);
+    SI4 TakeCards (CardStack& stock, SI4 num_cards);
         
     /** Returns a pointer to the Card at the specified index.
         @return Returns nil if the index is greater than the number of Cards
                 in this Hand. */
-    Card* GetCard (int index);
+    Card* GetCard (SI4 index);
         
     /** Returns and removes the Card at the specified index. */
-    Card* TakeCard (int index);
+    Card* TakeCard (SI4 index);
     
     /** Returns and removes the next Card off of the top of the Deck. */
     Card* TakeNextCard ();
@@ -143,7 +143,7 @@ class CardStack {
     Card* TakeRandomCard ();
 
     /** Returns true if there are no more cards in the deck. */
-    bool IsEmpty ();
+    BOL IsEmpty ();
 
     /** Prints this object to the log. */
     virtual _::Text& Print (_::Text& txt = _::Text ());
@@ -162,8 +162,8 @@ class CardStack {
         @param text     Beginning of the Text buffer. 
         @param strand_end End of the Text buffer.
         @return Returns nil upon success and an error string upon failure. */
-    virtual const char* Sudo (const char* text,
-                            const char* strand_end);
+    virtual const CH1* Sudo (const CH1* text,
+                            const CH1* strand_end);
 
     private:
 

@@ -53,7 +53,7 @@ SI4 Schedule::GetColor() { return color_; }
 
 void Schedule::SetColor(SI4 new_color) { color_ = new_color; }
 
-bool Schedule::Remove(SI4 index) { return tasks_.Remove(index); }
+BOL Schedule::Remove(SI4 index) { return tasks_.Remove(index); }
 
 void Schedule::Add(Task* task) { tasks_.Add(task); }
 

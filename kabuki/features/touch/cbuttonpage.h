@@ -1,6 +1,6 @@
 /* Kabuki Toolkit @version 0.x
 @link    https://github.com/kabuki-starship/kabuki-toolkit.git
-@file    /kabuki/features/hmi/hmi_page_button.h
+@file    /kabuki/features/touch/touch_page_button.h
 @author  Cale McCollough <https://calemccollough.github.io>
 @license Copyright (C) 2014-19 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -13,7 +13,7 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <pch.h>
-#if SEAM >= SEAM_00_03_00_00__00
+#if SEAM >= KABUKI_FEATURES_TOUCH_1
 #ifndef HEADER_FOR_KT_HMI_PAGEBUTTON
 #define HEADER_FOR_KT_HMI_PAGEBUTTON
 
@@ -28,7 +28,7 @@ namespace _ {
     swtiches between pages in a template and a PageButton will be able to
    perform other tasks in a virtual instrument such as loading one of the
    sub-menus. Not sure if this class is neccissary yet. */
-class API PageButton : public Button {
+class SDK PageButton : public Button {
  public:
   //< Constructor.
   PageButton(const WidgetPage& thePage = WidgetPage());
@@ -55,11 +55,11 @@ class API PageButton : public Button {
   void SetPage(WidgetPage* newPage);
 
   /* Prints this object to a terminal. */
-  _::Utf& Print(_::Utf& print) const;
+  ::_::Utf& Print(_::Utf& print) const;
 
  private:
   WidgetPage* thisPage;  //< The page to load.
 };
 }  // namespace _
 #endif  //< HEADER_FOR_KT_HMI_PAGEBUTTON
-#endif  //< #if SEAM >= SEAM_00_03_00_00__00
+#endif  //< #if SEAM >= KABUKI_FEATURES_TOUCH_1

@@ -22,8 +22,8 @@ using namespace kabuki::id;
 namespace kabuki {
 namespace cards {
 
-Game::Game (UserList& users, const char* game_name, int min_players,
-                    int max_players) :
+Game::Game (UserList& users, const CH1* game_name, SI4 min_players,
+                    SI4 max_players) :
     state_     (0),
     name_ (game_name),
     users_     (users),
@@ -34,7 +34,7 @@ Game::~Game () {
     // We don't delete the observers_.
 }
 
-const char* Game::GetName () {
+const CH1* Game::GetName () {
     return name_;
 }
 
@@ -42,7 +42,7 @@ int32_t Game::GetState () {
     return state_;
 }
 
-bool Game::SetState (int state) {
+BOL Game::SetState (SI4 state) {
     if (state < 0) {
         return false;
     }
@@ -50,15 +50,15 @@ bool Game::SetState (int state) {
     return true;
 }
 
-int Game::GetNumPlayers () {
+SI4 Game::GetNumPlayers () {
     return observers_.size ();
 }
 
-int Game::GetMinPlayers () {
+SI4 Game::GetMinPlayers () {
     return min_players_;
 }
 
-int Game::GetMaxPlayers () {
+SI4 Game::GetMaxPlayers () {
     return observers_.capacity ();
 }
 
@@ -68,7 +68,7 @@ void Game::PrintObservers () {
     }
 }
 
-int Game::Join (User* user) {
+SI4 Game::Join (User* user) {
     if (user == nullptr) {
         return -1;
     }
@@ -76,8 +76,8 @@ int Game::Join (User* user) {
     return observers_.size ();
 }
 
-int Game::Leave (User* user) {
-    for (int i = observers_.size (); i > 0; --i) {
+SI4 Game::Leave (User* user) {
+    for (SI4 i = observers_.size (); i > 0; --i) {
         User* user = observers_[i];
         // user will never be nil.
         if (user->Equals (user)) {
@@ -126,7 +126,7 @@ const Operation* Game::Star (uint index, Expression* expr) {
                 "Sets the client state.", 0
             };
             if (!expr) return &OpB;
-            char buffer[kMaxMessageLength + 1];
+            CH1 buffer[kMaxMessageLength + 1];
             if (!ExpressionArgs (expr, Params<1, STR, kMaxMessageLength + 1> (),
                                  Args (args, buffer))) {
                 return expr->result;
@@ -145,7 +145,7 @@ const Operation* Game::Star (uint index, Expression* expr) {
             };
             if (!expr) return &OpC;
             int32_t player_number;
-            char status[User::kMaxStatusLength + 1],
+            CH1 status[User::kMaxStatusLength + 1],
                  handle[Handle::kMaxLength];
             if (!ExpressionArgs (expr, kRxHeaderC, Args (args, &player_number,
                                                    status, handle))) {
@@ -169,8 +169,8 @@ const Operation* Game::Star (uint index, Expression* expr) {
     return nullptr;
 }
 
-const char* DefaultPlayAgainText () {
-    static const char play_again[] = "\n| Do you want to play again?"
+const CH1* DefaultPlayAgainText () {
+    static const CH1 play_again[] = "\n| Do you want to play again?"
         "\n| Enter y to continue, or n to quit."
         "\n< \0";
     return play_again;

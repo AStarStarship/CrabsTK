@@ -41,8 +41,8 @@ GeneticPolygonTestPanel::GeneticPolygonTestPanel ()
 
   initializePopulation ();
   cell = new GeneticPolygon (5,
-    (int)((double)GeneticPolygon.defaultSize*1.3),
-    (int)((double)GeneticPolygon.defaultSize*1.3),
+    (SI4)((double)GeneticPolygon.defaultSize*1.3),
+    (SI4)((double)GeneticPolygon.defaultSize*1.3),
     Color.blue.getRGB (),
     GeneticPolygon.defaultLifespan,
     GeneticPolygon.defaultAngle);
@@ -87,9 +87,9 @@ void GeneticPolygonTestPanel::initializePopulation ()
 
   population = new GeneticPolygon[initPopulationSize];
 
-  for (int i = 0; i < initPopulationSize; i++)
+  for (SI4 i = 0; i < initPopulationSize; i++)
   {
-    int numPoints = (int)(Math.floor (Math.random () * 5.0 + 3.0));
+    SI4 numPoints = (SI4)(Math.floor (Math.random () * 5.0 + 3.0));
     population[i] = new GeneticPolygon (numPoints, GeneticPolygon.getDefaultColor (numPoints).getRGB ());
   }
 }
@@ -105,12 +105,12 @@ void GeneticPolygonTestPanel::paintComponent (Graphics g)
 
 void GeneticPolygonTestPanel::iterateGeneration ()
 {
-  int numberToMate = (int)(GeneticPolygon.matingPercent * (double)populationSize);
+  SI4 numberToMate = (SI4)(GeneticPolygon.matingPercent * (double)populationSize);
 
-  for (int i = 0; i < numberToMate; i++)
+  for (SI4 i = 0; i < numberToMate; i++)
     mateRandom ();
 
-  for (int i = 0; i < populationSize; i++)
+  for (SI4 i = 0; i < populationSize; i++)
   {
     if (population[i] != null)
     {
@@ -125,13 +125,13 @@ void GeneticPolygonTestPanel::iterateGeneration ()
 void GeneticPolygonTestPanel::mateRandom ()
 {
 
-  int randomIndex,
+  SI4 randomIndex,
     numTries = 0,
     maxRandomTries = 2 * populationSize;
 
   do
   {
-    randomIndex = (int)(Math.random () * (double)(populationSize - 1));
+    randomIndex = (SI4)(Math.random () * (double)(populationSize - 1));
     numTries++;
 
     if (numTries == maxRandomTries)
@@ -163,7 +163,7 @@ void GeneticPolygonTestPanel::mateRandom ()
 
 void GeneticPolygonTestPanel::addChild (GeneticPolygon newChild)
 {
-  int i;
+  SI4 i;
   for (i = 0; i < populationSize; i++)
   {
     if (population[i] == null)

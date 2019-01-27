@@ -1,6 +1,6 @@
 /* Kabuki Toolkit @version 0.x
 @link    https://github.com/kabuki-starship/kabuki-toolkit.git
-@file    /kabuki/features/hmi/hmi_mode_button.h
+@file    /kabuki/features/touch/touch_mode_button.h
 @author  Cale McCollough <https://calemccollough.github.io>
 @license Copyright (C) 2014-19 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -13,7 +13,7 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <pch.h>
-#if SEAM >= SEAM_00_03_00_00__00
+#if SEAM >= KABUKI_FEATURES_TOUCH_1
 #ifndef HEADER_FOR_KT_HMI_MODEBUTTON
 #define HEADER_FOR_KT_HMI_MODEBUTTON
 
@@ -21,19 +21,19 @@ specific language governing permissions and limitations under the License. */
 
 namespace _ {
 
-class API ButtonMacro;
-class API MacroEvent;
-class API Device;
-class API ControlsPage;
+class SDK ButtonMacro;
+class SDK MacroEvent;
+class SDK Device;
+class SDK ControlsPage;
 
 /* A ModeButton is a ButtonMacro that has the ability to change the Device on a
    ControlSurfaces. A Device button is capable of changing the Device on a
    ControlSurface and triggering a MacroEvent.
 */
-class API ModeButton : public Button {
+class SDK ModeButton : public Button {
  public:
   /* Constructor. */
-  ModeButton(const char* label = "", const MacroEvent& macro = MacroEvent(),
+  ModeButton(const CH1* label = "", const MacroEvent& macro = MacroEvent(),
              const Device& device = Device::Dummy,
              const ControlsPage& page = ControlsPage::blank);
 
@@ -58,13 +58,13 @@ class API ModeButton : public Button {
   ControlsPage* focusPage();
 
   /* Sets this Device's focus to device. */
-  int setDevice(Device* device);
+  SI4 setDevice(Device* device);
 
   /* Sets the focusPage to page. */
-  int SetFocusPage(ControlsPage* page);
+  SI4 SetFocusPage(ControlsPage* page);
 
   /* Prints this object to a terminal. */
-  _::Utf& Print(_::Utf& print);
+  ::_::Utf& Print(_::Utf& print);
 
  private:
   Device* device_;      //< Device to load for this macro.
@@ -72,4 +72,4 @@ class API ModeButton : public Button {
 };
 }  // namespace _
 #endif  //< HEADER_FOR_KT_HMI_MODEBUTTON
-#endif  //< #if SEAM >= SEAM_00_03_00_00__00
+#endif  //< #if SEAM >= KABUKI_FEATURES_TOUCH_1

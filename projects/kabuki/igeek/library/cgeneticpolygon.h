@@ -36,7 +36,7 @@ class GeneticPolygon: public Polygon
                         majorScalar         = 0.15,     /< The scale of major mutations.
                         minorMutation       = 0.10,     /< The probability of a minor mutation.
                         majorMutation       = 0.05,     /< The probability of a major mutation.
-                        angularMutation     = 0.10;     /< The angular mutation vector.
+                        angularMutation     = 0.10;     /< The angular mutation TArray.
                                                         /*< When a GP sprouts a new point, the system tries to even out
                                                             the points at equal angles. The angular mutation is the amount that
                                                             the point will move over time. */
@@ -81,7 +81,7 @@ class GeneticPolygon: public Polygon
     
     void setupPoints (SI4 numberOfPoints);
     
-    bool age (SI4 ageTime);
+    BOL age (SI4 ageTime);
     
     static Color mixColors (Color motherColor, Color fatherColor);
     
@@ -93,7 +93,7 @@ class GeneticPolygon: public Polygon
     
     SI4 breedInt (SI4 motherInt, SI4 fatherInt, SI4 matGrandInt, SI4 patGrandInt);
     
-    bool containsGeneticPolygon (GeneticPolygon that);
+    BOL containsGeneticPolygon (GeneticPolygon that);
     
     DBL breedFloat (DBL motherInt, DBL fatherInt, DBL matGrandInt, DBL patGrandInt);
     
@@ -126,13 +126,13 @@ class GeneticPolygon: public Polygon
     /* @brief   Function that compares 
      */
     
-    bool intersects (Polygon thatPolygon);
+    BOL intersects (Polygon thatPolygon);
         
-    bool intersects (GeneticPolygon thatPolygon);
+    BOL intersects (GeneticPolygon thatPolygon);
     
-    bool intersects (Polygon thatPolygon, DBL offsetX, DBL offsetY);
+    BOL intersects (Polygon thatPolygon, DBL offsetX, DBL offsetY);
     
-    bool intersects (Polygon thatPolygon, SI4 offsetX, SI4 offsetY);
+    BOL intersects (Polygon thatPolygon, SI4 offsetX, SI4 offsetY);
     
     void equalizePoints ();
     

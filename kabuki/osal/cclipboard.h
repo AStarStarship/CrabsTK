@@ -24,7 +24,7 @@ namespace _ {
 
 /** Writes a block of memory to a file.
 @todo Move me over to Kabuki theater! */
-inline void WriteToFile (const char* filename, void* address, size_t size) {
+inline void WriteToFile (const CH1* filename, void* address, size_t size) {
     std::ofstream f;
     f.open (filename);
     byte* ptr = reinterpret_cast<byte*> (address);
@@ -58,7 +58,7 @@ inline void CopyByteArrayToClipBoard (void* address, size_t size) {
 
     using namespace std;
 
-    int main (){
+    SI4 main (){
 
         string AAA;
 

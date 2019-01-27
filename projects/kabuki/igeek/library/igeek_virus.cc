@@ -168,7 +168,7 @@ void Virus::updatePosition (SI4 hostWidth, SI4 hostHeight)
   lastX = x;
   lastY = y;
 
-  // Translate the movement vector deltaX and deltaY around the circle theta degrees and add to the x and y positions.
+  // Translate the movement TArray deltaX and deltaY around the circle theta degrees and add to the x and y positions.
 
   x += deltaX * cosTheta - deltaY * sinTheta;
   y += deltaX * sinTheta + deltaY * cosTheta;
@@ -199,12 +199,12 @@ void Virus::updateTrail ()
   trail.addPoint ((SI4)centerX (), (SI4)centerY ());
 }
 
-bool Virus::checkHostBoundsCollision (SI4 hostWidth, SI4 hostHeight)
+BOL Virus::checkHostBoundsCollision (SI4 hostWidth, SI4 hostHeight)
 {
   DBL dx = x - lastX,
     dy = y - lastY;
 
-  bool collisionDetected;
+  BOL collisionDetected;
 
   if (x < 0 || (SI4)x + Width () > hostWidth)
   {
@@ -250,12 +250,12 @@ void Virus::deselect ()
   selected = false;
 }
 
-bool Virus::containsPoint (SI4 thisX, SI4 thisY)
+BOL Virus::containsPoint (SI4 thisX, SI4 thisY)
 {
   return containsPoint ((DBL)thisX, (DBL)thisY);
 }
 
-bool Virus::containsPoint (DBL thisX, DBL thisY)
+BOL Virus::containsPoint (DBL thisX, DBL thisY)
 {
   DBL polyX = thisX - x,
     polyY = thisY - y;
@@ -272,7 +272,7 @@ bool Virus::containsPoint (DBL thisX, DBL thisY)
   return super.contains (polyX, polyY);
 }
 
-bool Virus::contains (Rectangle thisRectangle)
+BOL Virus::contains (Rectangle thisRectangle)
 {
   if (thisRectangle.x + Width () < x || thisRectangle.x > x + Width ()
     || thisRectangle.y + Height () < y || thisRectangle.y > y + Height ())
@@ -280,7 +280,7 @@ bool Virus::contains (Rectangle thisRectangle)
   return true;
 }
 
-bool Virus::intersects (Virus thatVirus)
+BOL Virus::intersects (Virus thatVirus)
 {
   if (thatVirus == null
     || x > thatVirus.rightEdge ()
@@ -363,11 +363,11 @@ void Virus::setTrailColor (Color newColor)
 {
   trailColor = newColor;
 }
-void Virus::setDrawTrail (bool newState)
+void Virus::setDrawTrail (BOL newState)
 {
   drawTrail = newState;
 }
-bool Virus::getDrawTrail ()
+BOL Virus::getDrawTrail ()
 {
   return drawTrail;
 }
@@ -376,7 +376,7 @@ void Virus::setCircleColor (Color newColor)
 {
   selectedColor = newColor;
 }
-void Virus::setDrawCircle (bool newState)
+void Virus::setDrawCircle (BOL newState)
 {
   ciricleVirus = newState;
 }
@@ -385,7 +385,7 @@ void Virus::setCircleFillColor (Color newColor)
 {
   outlineColor = newColor;
 }
-void Virus::setFillCircle (bool newState)
+void Virus::setFillCircle (BOL newState)
 {
   selected = newState;
 }

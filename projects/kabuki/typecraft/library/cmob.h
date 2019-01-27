@@ -22,10 +22,10 @@ namespace typecraft {
 
 class Mob : public Entity {
  public:
-  Mob(const char* name, );
+  Mob(const CH1* name, );
 
   /* Constructs an Mob with the given max_size. */
-  Mob(int max_size);
+  Mob(SI4 max_size);
 
   /* Destructor */
   ~Mob();

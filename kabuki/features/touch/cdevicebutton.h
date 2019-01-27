@@ -1,6 +1,6 @@
 /* Kabuki Toolkit @version 0.x
 @link    https://github.com/kabuki-starship/kabuki-toolkit.git
-@file    /kabuki/features/hmi/hmi_device_button.h
+@file    /kabuki/features/touch/touch_device_button.h
 @author  Cale McCollough <https://calemccollough.github.io>
 @license Copyright (C) 2014-19 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -13,7 +13,7 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <pch.h>
-#if SEAM >= SEAM_00_03_00_00__00
+#if SEAM >= KABUKI_FEATURES_TOUCH_1
 #ifndef HEADER_FOR_KT_HMI_DEVICEBUTTON
 #define HEADER_FOR_KT_HMI_DEVICEBUTTON
 
@@ -24,19 +24,19 @@ specific language governing permissions and limitations under the License. */
 namespace _ {
 
 /*
-class API ButtonMacro;
-class API MacroEvent;
-class API Device;
-class API ControlsPage; */
+class SDK ButtonMacro;
+class SDK MacroEvent;
+class SDK Device;
+class SDK ControlsPage; */
 
 /* A DeviceButton is a ButtonMacro that has the ability to change the Device
     on a ControlSurfaces.
     A Device button is capable of changing the Device on a ControlSurface and
     triggering a MacroEvent. */
-class API DeviceButton : public ButtonMacro {
+class SDK DeviceButton : public ButtonMacro {
  public:
   /* Constructor. */
-  DeviceButton(const char* HmiComponent = const char* ::empty,
+  DeviceButton(const CH1* HmiComponent = const CH1* ::empty,
                const MacroEvent& initMacro = MacroEvent(),
                const Device& initDevice = Device::empty,
                const ControlsPage& initPage = ControlsPage::blank);
@@ -63,10 +63,10 @@ class API DeviceButton : public ButtonMacro {
   ControlsPage* GetFocusPage();
 
   /* Sets this Device's focus to device. */
-  int SetDevice(Device* d);
+  SI4 SetDevice(Device* d);
 
   /* Sets the focusPage to page. */
-  int SetFocusPage(ControlsPage* page);
+  SI4 SetFocusPage(ControlsPage* page);
 
  private:
   Device* focus_device_;      //< Device to load for this macro.
@@ -74,4 +74,4 @@ class API DeviceButton : public ButtonMacro {
 };                            //< class DeviceButton
 }  // namespace _
 #endif  //< HEADER_FOR_KT_HMI_DEVICEBUTTON
-#endif  //< #if SEAM >= SEAM_00_03_00_00__00
+#endif  //< #if SEAM >= KABUKI_FEATURES_TOUCH_1

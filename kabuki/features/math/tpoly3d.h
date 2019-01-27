@@ -27,7 +27,7 @@ template<typename T>
 class Poly3D
 {
     /**  */   
-    Poly3D (int* indexOfPoints, Point3D<T>* pointValues, int aNumPoints) :
+    Poly3D (SI4* indexOfPoints, Point3D<T>* pointValues, SI4 aNumPoints) :
         shading_type_ (FlatShading),
         is_two_sided_ (false),
         is_clipped_ (false),
@@ -43,12 +43,12 @@ class Poly3D
     }
     
     /** Returns the point at the given vertex. */  
-    Point3D<float> Vertex (int vertex_index) {
+    Point3D<float> Vertex (SI4 vertex_index) {
         return vertexPoint[vertex_index];
     }
     
     /**  */  
-    int VertexIndex (int forThisPoint) {
+    SI4 VertexIndex (SI4 forThisPoint) {
         return vertex_index_[forThisPoint];
     }
     
@@ -95,7 +95,7 @@ class Poly3D
         print << "Poly3D:";
             //clour.prints (io);
 
-        for (int i = 0; i< vertex_count_; i++) {
+        for (SI4 i = 0; i< vertex_count_; i++) {
             static const index_t[] header = { 4, STR, STR, STR, STR };
             print << vertexPoint[i].Print (print)
                   << "\n localVertex[" << vertex_index_[i] << "] ";
@@ -111,20 +111,20 @@ class Poly3D
         Textured
     };
 
-    bool     is_two_sided_,
+    BOL     is_two_sided_,
              is_clipped_,
              is_active_,
              is_visible_;
     _G::Color color_,  //< The color of the polygon.
                   shade;   /*< The shade of the polygon
                                @todo Need to fix texture mapping.). */
-    int     shading_type_, //< The type of shadding: Flat, Textured.
+    SI4     shading_type_, //< The type of shadding: Flat, Textured.
             vertex_count_;
     double  normalMagnitude,
             zAverage;
     Point3D<float>   normal;
     Point3D<float>[] vertexPoint;
-    int            * vertex_index_;
+    SI4            * vertex_index_;
 };
 
 }       //< namespace _

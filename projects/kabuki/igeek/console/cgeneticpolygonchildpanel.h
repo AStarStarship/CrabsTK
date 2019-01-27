@@ -20,7 +20,7 @@ namespace igeek {
 class GeneticPolygonChildPanel : public Panel {
 public:
 
-  GeneticPolygonChildPanel (GeneticPolygon fitShape, GeneticPolygon initChild, String thisShapeLabel, int width, int height);
+  GeneticPolygonChildPanel (GeneticPolygon fitShape, GeneticPolygon initChild, String thisShapeLabel, SI4 width, SI4 height);
 
   void paintComponent (Graphics g);
 

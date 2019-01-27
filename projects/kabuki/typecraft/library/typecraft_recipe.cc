@@ -31,9 +31,9 @@ class Recipe : public Item {
   void Print();
 
  private:
-  char *name_,                  //< The name of the Recipe.
+  CH1 *name_,                  //< The name of the Recipe.
       *description_;            //< A description of the Recipe.
-  int width_,                   //< The width of the recipe in ingredients.
+  SI4 width_,                   //< The width of the recipe in ingredients.
       height_;                  //< The height of the recipe in ingredients.
   ItemType ingredients_[3][3];  //< The ingredients.
 };

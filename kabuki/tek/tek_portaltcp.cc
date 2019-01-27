@@ -30,7 +30,7 @@ printf ("Ethernet socket example\n");
 net.connect ();
 
 // Show the network address
-const char *ip = net.get_ip_address ();
+const CH1 *ip = net.get_ip_address ();
 printf ("IP address is: %s\n", ip?ip:"No IP");
 
 // Open a socket on the network interface, and create a TCP connection to
@@ -40,13 +40,13 @@ socket.open (&net);
 socket.connect ("developer.mbed.org", 80);
 
 // Send a simple http request
-char sbuffer[] = "GET / HTTP/1.1\r\nHost: developer.mbed.org\r\n\r\n";
+CH1 sbuffer[] = "GET / HTTP/1.1\r\nHost: developer.mbed.org\r\n\r\n";
 SI4 scount = socket.send (sbuffer, sizeof sbuffer);
 printf ("sent %d [%.*s]\n", scount, strstr (sbuffer, "\r\n") - sbuffer,
       sbuffer);
 
 // Receive a simple http response and print out the response line
-char rbuffer[64];
+CH1 rbuffer[64];
 SI4 rcount = socket.recv (rbuffer, sizeof rbuffer);
 printf ("recv %d [%.*s]\n", rcount, strstr (rbuffer, "\r\n") - rbuffer,
       rbuffer);

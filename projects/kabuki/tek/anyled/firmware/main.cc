@@ -29,7 +29,7 @@ public:
 	}
 };
 
-int main() {
+SI4 main() {
 
     DemoRoom room;
     Expression expr;

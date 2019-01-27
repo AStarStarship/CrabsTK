@@ -37,17 +37,17 @@ specific language governing permissions and limitations under the License. */
   PrintBinary(value);
 #define PRINT_BINARY_TABLE PrintBinaryTable(value);
 #define PRINT_HEADER                   \
-  for (int i = 0; i < 10; ++i) {       \
+  for (SI4 i = 0; i < 10; ++i) {       \
     *(cursor + i) = 'x';               \
   }                                    \
   *(cursor + 21) = 0;                  \
-  char* begin = cursor;                \
-  char buffer[256];                    \
+  CH1* begin = cursor;                \
+  CH1 buffer[256];                    \
   sprintf_s(buffer, 256, "%u", value); \
   printf("Expecting %s:%u", buffer, (uint)strlen(buffer));
 #define PRINT_HEADING \
   putchar('\n');      \
-  for (int i = 80; i > 0; --i) putchar('-')
+  for (SI4 i = 80; i > 0; --i) putchar('-')
 #else
 #define PUTCHAR(item)
 #define PRINTF(x, ...)
@@ -57,11 +57,11 @@ specific language governing permissions and limitations under the License. */
 #endif
 
 /* Writes the give value to the given buffer as an ASCII string.
-@return Nil upon buffer overflow and pointer to the nil-term char upon success.
+@return Nil upon buffer overflow and pointer to the nil-term CH1 upon success.
 @param  cursor The beginning address of the buffer.
 @param  end    The end address of the buffer.
 @param  value  The value to write. */
-template <typename Char = char>
+template <typename Char = CH1>
 Char* Print(Char* cursor, Char* end, uint32_t value) {
   PRINT_HEADING;
 

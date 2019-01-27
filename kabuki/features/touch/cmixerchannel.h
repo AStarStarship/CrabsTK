@@ -13,7 +13,7 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <pch.h>
-#if SEAM >= SEAM_00_03_00_00__00
+#if SEAM >= KABUKI_FEATURES_TOUCH_1
 #ifndef HEADER_FOR_KT_HMI_MIXERCHANNEL
 #define HEADER_FOR_KT_HMI_MIXERCHANNEL
 
@@ -22,7 +22,7 @@ specific language governing permissions and limitations under the License. */
 namespace _ {
 
 /* A mixer channel Operation. */
-class API MixerChannel : public _::Op {
+class SDK MixerChannel : public ::_::Op {
   NONCOPYABLE(MixerChannel)
  public:
   enum {
@@ -30,34 +30,34 @@ class API MixerChannel : public _::Op {
   };
 
   /* Constructs a mixer channel with the given name. */
-  MixerChannel(const char* initName = nullptr);
+  MixerChannel(const CH1* initName = nullptr);
 
   /* Destructor. */
   ~MixerChannel();
 
   /* Gets th volume of this channel. */
-  int GetVolume();
+  SI4 GetVolume();
 
   /* Gets th pan of of the channel. */
-  int GetPan();
+  SI4 GetPan();
 
   /* Gets if this channel is muted. */
-  int IsMuted();
+  SI4 IsMuted();
 
   /* Gets if this channel is soloed. */
-  int IsSoloed();
+  SI4 IsSoloed();
 
   /* Sets the channel volume to the value. */
-  void setVolume(int value);
+  void setVolume(SI4 value);
 
   /* Sets the channel pan to the value. */
-  void SetPan(int value);
+  void SetPan(SI4 value);
 
   /* Either mutes or unmutes this channel. */
-  void SetMute(bool isMuted);
+  void SetMute(BOL isMuted);
 
   /* Either solos or unsolos this channel. */
-  void SetSolo(bool isSoloed);
+  void SetSolo(BOL isSoloed);
 
   /* Toggles the mute variable. */
   void ToggleMute();
@@ -66,29 +66,29 @@ class API MixerChannel : public _::Op {
   void ToggleSolo();
 
   /* Gets thisAux level. */
-  int GetAux(int thisAux);
+  SI4 GetAux(SI4 thisAux);
 
   /* Sets thisAuxSend level. */
-  void SetAux(int thisAuxSend, int level);
+  void SetAux(SI4 thisAuxSend, SI4 level);
 
   /* Deletes the aux send channel at thisIndex.
     @warning This function does not trim the auxSend array size for speed
     considerations Inserts an aux send at thisIndex. */
-  void DeleteAux(int thisIndex);
+  void DeleteAux(SI4 thisIndex);
 
   /* Script Operations. */
-  const _::Op Star(uint index, _::Expression expr);
+  const ::_::Op Star(uint index, ::_::Expression expr);
 
  private:
-  const char* label_text_;  //< Name of this channel.
-  int vol_value_,           //< Volume value for this channel.
+  const CH1* label_text_;  //< Name of this channel.
+  SI4 vol_value_,           //< Volume value for this channel.
       pan_value_,           //< Pan value for this channel.
       mute_value_,          //< Mute value for this channel.
       solo_value_,          //< Solo value for this channel.
       num_aux_sends_;       //< Number of aux sends.
-  int* aux_send_;           //< Array of aux send levels.
+  SI4* aux_send_;           //< Array of aux send levels.
 
 };  //< class MixerChannel
 }  // namespace _
 #endif  //< HEADER_FOR_KT_HMI_MIXERCHANNEL
-#endif  //< #if SEAM >= SEAM_00_03_00_00__00
+#endif  //< #if SEAM >= KABUKI_FEATURES_TOUCH_1

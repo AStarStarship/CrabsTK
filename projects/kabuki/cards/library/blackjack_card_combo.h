@@ -27,12 +27,12 @@ class BlackjackCardCombo : public CardCombo {
 
     /** Default constructor.
     */
-    BlackjackCardCombo (const CardStack& cards, bool aces_high);
+    BlackjackCardCombo (const CardStack& cards, BOL aces_high);
 
     virtual ~BlackjackCardCombo ();
 
     /** Function that returns the point value based on the ace value. */
-    int GetValue ();
+    SI4 GetValue ();
     
 };      //< class BlackjackCardCombo
 }       //< namespace cards

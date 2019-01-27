@@ -53,10 +53,10 @@ class Perceptron {
     /** Sets the perceptron value. */
     void SetY (float_t& y);
 
-    /** Gets the perceptron x vector. */
+    /** Gets the perceptron x TArray. */
     float_t* GetX ();
 
-    /** Gets the perceptron weight vector. */
+    /** Gets the perceptron weight TArray. */
     float_t* GetWeights ();
 
     /** Gets the count of the axions. */
@@ -67,9 +67,9 @@ class Perceptron {
 
     private:
 
-    float_t            & y_; //< Y output address vector.
-    float_t            * x_; //< X input values vector.
-    TArray<float_t> w_; //< Weight input values vector.
+    float_t            & y_; //< Y output address TArray.
+    float_t            * x_; //< X input values TArray.
+    TArray<float_t> w_; //< Weight input values TArray.
 };
 
 }       //< namespace _

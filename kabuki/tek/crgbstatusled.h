@@ -48,15 +48,18 @@ Some boards have PWM on the RGB LED, some don't. This class uses
 DigitalOut (s). There are 8 potential combinations of color without PWM
 (@wiki:"Color Space"), Black, Red, Yellow, Green, Cyan, Blue, Magenta, and
 White.
-    
+    
+
 @code
 RGBStatusLED<0, 1> stausLED  (RED_LED, GREEN_LED, BLUE_LED);
 //< Use <0, 1> if you're LED is active low.
 RGBStatusLED<1, 0> stausLED  (p0, p1, p2);
 //< Use <0, 1> if you're LED is active high.
-    
+    
+
 status_led.SetColorA  (Color::);
-    
+    
+
 @endcode
 */
 template <SI4 On, SI4 Off>

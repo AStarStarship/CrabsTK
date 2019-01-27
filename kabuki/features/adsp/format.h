@@ -159,13 +159,13 @@ extern "C" {
  * This does not correspond to the shared library version number, which
  * is used to determine binary compatibility.
  */
-extern FLAC_API const char *FLAC__VERSION_STRING;
+extern FLAC_API const CH1 *FLAC__VERSION_STRING;
 
 /** The vendor string inserted by the encoder into the VORBIS_COMMENT block.
  *  This is a NUL-terminated ASCII string; when inserted into the
  *  VORBIS_COMMENT the trailing null is stripped.
  */
-extern FLAC_API const char *FLAC__VENDOR_STRING;
+extern FLAC_API const CH1 *FLAC__VENDOR_STRING;
 
 /** The byte string representation of the beginning of a FLAC stream. */
 extern FLAC_API const FLAC__byte FLAC__STREAM_SYNC_STRING[4]; /* = "fLaC" */
@@ -206,7 +206,7 @@ typedef enum {
  *  Using a FLAC__EntropyCodingMethodType as the index to this array will
  *  give the string equivalent.  The contents should not be modified.
  */
-extern FLAC_API const char * const FLAC__EntropyCodingMethodTypeString[];
+extern FLAC_API const CH1 * const FLAC__EntropyCodingMethodTypeString[];
 
 
 /** Contents of a Rice partitioned residual
@@ -276,7 +276,7 @@ typedef enum {
  *  Using a FLAC__SubframeType as the index to this array will
  *  give the string equivalent.  The contents should not be modified.
  */
-extern FLAC_API const char * const FLAC__SubframeTypeString[];
+extern FLAC_API const CH1 * const FLAC__SubframeTypeString[];
 
 
 /** CONSTANT subframe.  (c.f. <A HREF="../format.html#subframe_constant">format specification</A>)
@@ -322,7 +322,7 @@ typedef struct {
 	unsigned qlp_coeff_precision;
 	/**< Quantized FIR filter coefficient precision in bits. */
 
-	int quantization_level;
+	SI4 quantization_level;
 	/**< The qlp coeff shift needed. */
 
 	FLAC__int32 qlp_coeff[FLAC__MAX_LPC_ORDER];
@@ -390,7 +390,7 @@ typedef enum {
  *  Using a FLAC__ChannelAssignment as the index to this array will
  *  give the string equivalent.  The contents should not be modified.
  */
-extern FLAC_API const char * const FLAC__ChannelAssignmentString[];
+extern FLAC_API const CH1 * const FLAC__ChannelAssignmentString[];
 
 /** An enumeration of the possible frame numbering methods. */
 typedef enum {
@@ -403,7 +403,7 @@ typedef enum {
  *  Using a FLAC__FrameNumberType as the index to this array will
  *  give the string equivalent.  The contents should not be modified.
  */
-extern FLAC_API const char * const FLAC__FrameNumberTypeString[];
+extern FLAC_API const CH1 * const FLAC__FrameNumberTypeString[];
 
 
 /** FLAC frame header structure.  (c.f. <A HREF="../format.html#frame_header">format specification</A>)
@@ -519,7 +519,7 @@ typedef enum {
  *  Using a FLAC__MetadataType as the index to this array will
  *  give the string equivalent.  The contents should not be modified.
  */
-extern FLAC_API const char * const FLAC__MetadataTypeString[];
+extern FLAC_API const CH1 * const FLAC__MetadataTypeString[];
 
 
 /** FLAC STREAMINFO structure.  (c.f. <A HREF="../format.html#metadata_block_streaminfo">format specification</A>)
@@ -550,7 +550,7 @@ extern FLAC_API const unsigned FLAC__STREAM_METADATA_STREAMINFO_MD5SUM_LEN; /**<
 /** FLAC PADDING structure.  (c.f. <A HREF="../format.html#metadata_block_padding">format specification</A>)
  */
 typedef struct {
-	int dummy;
+	SI4 dummy;
 	/**< Conceptually this is an empty struct since we don't store the
 	 * padding bytes.  Empty structs are not allowed by some C compilers,
 	 * hence the dummy.
@@ -668,7 +668,7 @@ typedef struct {
 	FLAC__byte number;
 	/**< The track number. */
 
-	char isrc[13];
+	CH1 isrc[13];
 	/**< Track ISRC.  This is a 12-digit alphanumeric code plus a trailing \c NUL byte */
 
 	unsigned type:1;
@@ -699,7 +699,7 @@ extern FLAC_API const unsigned FLAC__STREAM_METADATA_CUESHEET_TRACK_NUM_INDICES_
  * for the full description of each field.)
  */
 typedef struct {
-	char media_catalog_number[129];
+	CH1 media_catalog_number[129];
 	/**< Media catalog number, in ASCII printable characters 0x20-0x7e.  In
 	 * general, the media catalog number may be 0 to 128 bytes long; any
 	 * unused characters should be right-padded with NUL characters.
@@ -758,7 +758,7 @@ typedef enum {
  *  will give the string equivalent.  The contents should not be
  *  modified.
  */
-extern FLAC_API const char * const FLAC__StreamMetadata_Picture_TypeString[];
+extern FLAC_API const CH1 * const FLAC__StreamMetadata_Picture_TypeString[];
 
 /** FLAC PICTURE structure.  (See the
  * <A HREF="../format.html#metadata_block_picture">format specification</A>
@@ -768,7 +768,7 @@ typedef struct {
 	FLAC__StreamMetadata_Picture_Type type;
 	/**< The kind of picture stored. */
 
-	char *mime_type;
+	CH1 *mime_type;
 	/**< Picture data's MIME type, in ASCII printable characters
 	 * 0x20-0x7e, NUL terminated.  For best compatibility with players,
 	 * use picture data of MIME type \c image/jpeg or \c image/png.  A
@@ -915,7 +915,7 @@ FLAC_API FLAC__bool FLAC__format_sample_rate_is_subset(unsigned sample_rate);
  * \retval FLAC__bool
  *    \c false if entry name is illegal, else \c true.
  */
-FLAC_API FLAC__bool FLAC__format_vorbiscomment_entry_name_is_legal(const char *name);
+FLAC_API FLAC__bool FLAC__format_vorbiscomment_entry_name_is_legal(const CH1 *name);
 
 /** Check a Vorbis comment entry value to see if it conforms to the Vorbis
  *  comment specification.
@@ -994,7 +994,7 @@ FLAC_API unsigned FLAC__format_seektable_sort(FLAC__StreamMetadata_SeekTable *se
  * \retval FLAC__bool
  *    \c false if cue sheet is illegal, else \c true.
  */
-FLAC_API FLAC__bool FLAC__format_cuesheet_is_legal(const FLAC__StreamMetadata_CueSheet *cue_sheet, FLAC__bool check_cd_da_subset, const char **violation);
+FLAC_API FLAC__bool FLAC__format_cuesheet_is_legal(const FLAC__StreamMetadata_CueSheet *cue_sheet, FLAC__bool check_cd_da_subset, const CH1 **violation);
 
 /** Check picture data to see if it conforms to the FLAC specification.
  *  See the format specification for limits on the contents of the
@@ -1012,7 +1012,7 @@ FLAC_API FLAC__bool FLAC__format_cuesheet_is_legal(const FLAC__StreamMetadata_Cu
  * \retval FLAC__bool
  *    \c false if picture data is illegal, else \c true.
  */
-FLAC_API FLAC__bool FLAC__format_picture_is_legal(const FLAC__StreamMetadata_Picture *picture, const char **violation);
+FLAC_API FLAC__bool FLAC__format_picture_is_legal(const FLAC__StreamMetadata_Picture *picture, const CH1 **violation);
 
 /* \} */
 

@@ -33,7 +33,7 @@ class Player : public _::Operand {
     } State;
 
     /** Default Constructor. */
-    Player (id::User* user = nullptr, bool is_dealer = false);
+    Player (id::User* user = nullptr, BOL is_dealer = false);
     
     /** Virtual destructor. */
     virtual ~Player ();
@@ -42,33 +42,33 @@ class Player : public _::Operand {
     id::User* GetUser ();
 
     /** Gets the user's handle. */
-    const char* GetHandle ();
+    const CH1* GetHandle ();
 
     /** Gets is_turn_. */
-    bool IsTurn ();
+    BOL IsTurn ();
 
     /** Sets is_turn_. */
-    virtual void SetIsTurn (bool is_turn);
+    virtual void SetIsTurn (BOL is_turn);
 
     /** Gets is_dealer_. */
-    bool IsDealer ();
+    BOL IsDealer ();
 
     /** Sets is_dealer_. */
-    virtual void SetIsDealer (bool is_dealer);
+    virtual void SetIsDealer (BOL is_dealer);
 
     /** Gets this Player's state. */
-    int GetState ();
+    SI4 GetState ();
 
     /** Attempts to set the state. 
         @return Returns nil upon success and an error string upon
                 failure. */
-    virtual const char* SetState (int state);
+    virtual const CH1* SetState (SI4 state);
 
     /** Returns the number of wins. */
-    int GetNumWins ();
+    SI4 GetNumWins ();
 
     /** Returns the number of wins. */
-    bool SetNumWins (int num_wins);
+    BOL SetNumWins (SI4 num_wins);
 
     /** Adds a win to the players numWins. */
     void AddWin ();
@@ -78,11 +78,11 @@ class Player : public _::Operand {
 
     /** Pushes a card onto the visible_cards_.
         @return Returns -1 upon failure. */
-    int TakeCardUp (Card* card);
+    SI4 TakeCardUp (Card* card);
 
     /** Pushes a card onto the hidden_cards_.
         @return Returns -1 upon failure. */
-    int TakeCardDown (Card* card);
+    SI4 TakeCardDown (Card* card);
                    
     /** Resets the numWins to 0. */
     void ResetWins ();
@@ -105,10 +105,10 @@ class Player : public _::Operand {
     /** Compares this hand to the other.
         @return Returns 0 if the hands are equal, > 1 if the other hand beats
                 this hand and < 0 if the other hand wins.. */
-    virtual int Compare (Hand& hand) = 0;
+    virtual SI4 Compare (Hand& hand) = 0;
 
     /** Returns true if this hand wins compared to the other one. */
-    virtual bool Wins (Hand& hand) = 0;
+    virtual BOL Wins (Hand& hand) = 0;
 
     /** Prints the abridged player stats to the console. */
     virtual _::Text& PrintStats (_::Text& txt) = 0;
@@ -127,14 +127,14 @@ class Player : public _::Operand {
         @param text     Beginning of the Text buffer. 
         @param strand_end End of the Text buffer.
         @return Returns nil upon success and an error string upon failure. */
-    virtual const char* Sudo (const char* text, const char* strand_end) = 0;
+    virtual const CH1* Sudo (const CH1* text, const CH1* strand_end) = 0;
 
     protected:
 
     id::User * user_;       //< User attached to this Player.
-    bool       is_turn_,    //< Flags if it's this player's turn.
+    BOL       is_turn_,    //< Flags if it's this player's turn.
                is_dealer_;  //< Flags if this player is the dealer or not.
-    int        state_,      //< The state of the player.
+    SI4        state_,      //< The state of the player.
                num_wins_;   //< Total number of wins.
     Hand       hand_;       //< Player's Hand.
 };

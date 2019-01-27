@@ -62,21 +62,21 @@ class Server : public _::Room {
     };
 
     /** Default constructor. */
-    Server (const char* password  = id::Password::kDefault,
+    Server (const CH1* password  = id::Password::kDefault,
             uint32_t    port      = kDefaultPort,
-            int         max_games = kDefaultMaxGames);
+            SI4         max_games = kDefaultMaxGames);
 
     /** Constructor. */
     virtual ~Server ();
 
     /** Quits the server. */
-    const char* Exit ();
+    const CH1* Exit ();
 
     /** Restarts the server. */
-    const char* Restart ();
+    const CH1* Restart ();
 
     /** Gets the FSM state. */
-    int GetState ();
+    SI4 GetState ();
 
     /** Virtual function sets the FSM state to a positive value. */
     State SetState (State state);
@@ -85,32 +85,32 @@ class Server : public _::Room {
     uint32_t GetPort ();
 
     /** Virtual function sets the FSM state to a positive value. */
-    virtual bool SetPort (uint32_t port_number);
+    virtual BOL SetPort (uint32_t port_number);
 
     /** Gets the users_. */
     id::UserList& Users ();
 
     /** Gets the number of game tables on the server. */
-    int GetNumTables ();
+    SI4 GetNumTables ();
 
     /** Adds a new Game to the games_. */
-    int AddGame (Game* game);
+    SI4 AddGame (Game* game);
 
     /** Adds a new BlackjackGame.
-        @return The index of the new game int he games_. */
-    int AddBlackjackGame ();
+        @return The index of the new game SI4 he games_. */
+    SI4 AddBlackjackGame ();
 
     /** Removes the game at the given index. */
-    bool RemoveGame (int index);
+    BOL RemoveGame (SI4 index);
 
     /** Gets the directions string. */
-    const char* GetDirections ();
+    const CH1* GetDirections ();
 
     /** Sets the directions string. */
-    bool SetDirections (const char* directions);
+    BOL SetDirections (const CH1* directions);
 
     /** Registers a new agent with the given handle prefix and User uid. */
-    virtual int AddAgent (const char* handle_prefix,
+    virtual SI4 AddAgent (const CH1* handle_prefix,
                           double balance = 1 * 1000.00 * 1000.00,
                           uint64_t value = 1 * 1000 * 1000);
 
@@ -121,8 +121,8 @@ class Server : public _::Room {
         @param text     Beginning of the Text buffer. 
         @param strand_end End of the Text buffer.
         @return Returns nil upon success and an error string upon failure. */
-    virtual const char* Sudo (const char* text,
-                                    const char* strand_end);
+    virtual const CH1* Sudo (const CH1* text,
+                                    const CH1* strand_end);
 
     /** Script operations. */
     virtual const _::Operation* Star (uint index, _::Expression* expr);
@@ -131,11 +131,11 @@ class Server : public _::Room {
 
     id::AuthenticatorDefault authenticator_;//< Handle & Password authenticator.
     id::Password             password_;     //< Sever root-level password.
-    int                      state_;        //< Server state.
+    SI4                      state_;        //< Server state.
     uint32_t                 port_;         //< Server port number.
     id::UserList             users_;        //< Global list of User(s).
     TArray<Game*>       games_;        //< Array of Game.
-    char                   * directions_;   //< Console input directions.
+    CH1                   * directions_;   //< Console input directions.
     store::Client            store_;        //< Store client.
 
 };      //< class Server

@@ -27,10 +27,10 @@ class CraftingTable : public Item {
   CraftingTable();
 
   /* Sets the Item at the given x and y coordinate. */
-  Item* GetItem(int x, int y);
+  Item* GetItem(SI4 x, SI4 y);
 
   /* Sets the Item at the given x and y coordinate. */
-  Item* SetItem(int x, int y, Item* block);
+  Item* SetItem(SI4 x, SI4 y, Item* block);
 
   /* Prints the CraftingTable to the console. */
   void Print();

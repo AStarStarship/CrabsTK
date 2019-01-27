@@ -40,7 +40,7 @@ class Client : public _::Room {
   SI4 GetState();
 
   /** Virtual function sets the FSM state to a positive value. */
-  virtual bool SetState(SI4 state);
+  virtual BOL SetState(SI4 state);
 
   /** Prints this object to the console. */
   virtual _::TUTF<Char>& Print(_::TUTF<Char>& printer);

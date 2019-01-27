@@ -1,6 +1,6 @@
 /* Kabuki Toolkit @version 0.x
 @link    https://github.com/kabuki-starship/kabuki-toolkit.git
-@file    /kabuki/features/hmi/hmi_component.h
+@file    /kabuki/features/touch/touch_component.h
 @author  Cale McCollough <https://calemccollough.github.io>
 @license Copyright (C) 2014-19 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -13,7 +13,7 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <pch.h>
-#if SEAM >= SEAM_00_03_00_00__00
+#if SEAM >= KABUKI_FEATURES_TOUCH_1
 #ifndef HEADER_FOR_KT_HMI_HMICOMPONENT
 #define HEADER_FOR_KT_HMI_HMICOMPONENT
 
@@ -28,26 +28,26 @@ typedef enum {
 } HMIComponentType;
 
 //< The non-alpha-numeric characters allowed in a label.
-const char* GetAllowedSymbols();
+const CH1* GetAllowedSymbols();
 
 /* Sets the allowed symbols to the given string. */
-void SetAllowedSymbols(const char* s);
+void SetAllowedSymbols(const CH1* s);
 
-/* Checks the given char c to see if any of the chars contain it. */
-inline bool ContainsChar(const char* chars, char c);
+/* Checks the given CH1 c to see if any of the chars contain it. */
+inline BOL ContainsChar(const CH1* chars, CH1 c);
 
 /* Checks the given string s to see if any of the chars are in it. */
-inline bool ContainsChar(const char* chars, const char* s);
+inline BOL ContainsChar(const CH1* chars, const CH1* s);
 
 /* Verifies if thisLabel is a valid label.
     @return Returns 0 if the label is valid.
     @return Returns 1 if the label is too uint32_t.
     @return Returns -1 thisLabel is "".
 */
-int IsValidLabel(const char* label);
+SI4 IsValidLabel(const CH1* label);
 
-/* All unnamed labels share the same char* pointer. */
-const char* GetUnnamedLabel();
+/* All unnamed labels share the same CH1* pointer. */
+const CH1* GetUnnamedLabel();
 
 /* A list of the most common Parameter types. */
 typedef enum ParameterTypes {
@@ -66,14 +66,14 @@ typedef enum ParameterTypes {
    label. 2.) Labels must contain printable ASCII characters that are HUI
    compatible.
 */
-class API HmiComponent {
+class SDK HmiComponent {
  public:
   enum {
     MaxLabelLength = 20,  //< The max label length of a label.
   };
 
   /* Default constructor. */
-  HmiComponent(const char* newLabel = "");
+  HmiComponent(const CH1* newLabel = "");
 
   /* Copy constructor. */
   HmiComponent(const HmiComponent& other);
@@ -82,32 +82,32 @@ class API HmiComponent {
   virtual ~HmiComponent() {}
 
   /* Gets the unique ID for the object. */
-  uid_t GetUid();
+  UID GetUid();
 
   /* Gets the unique string of the component type. */
-  const char* GetHMIComponentType();
+  const CH1* GetHMIComponentType();
 
   /* Gets the label. */
-  const char* GetLabel() const;
+  const CH1* GetLabel() const;
 
   /* Sets the label to the given string.
       @return Returns 0 upon success and 1 if the newLabel is too uint32_t.
-      @see    HmiComponent::isValid (char). */
-  virtual int SetLabel(const char* s);
+      @see    HmiComponent::isValid (CH1). */
+  virtual SI4 SetLabel(const CH1* s);
 
   /* Compares this label to the given string.
-      @return Returns 0 if they are identical and1 if the other char* is too
+      @return Returns 0 if they are identical and1 if the other CH1* is too
      uint32_t. */
-  int Compare(const char* s) const;
+  SI4 Compare(const CH1* s) const;
 
   /* Prints this object to a string. */
-  virtual _::UtfN& Print(_::Utf& print) const;
+  virtual ::_::UtfN& Print(_::Utf& print) const;
 
  private:
-  uid_t uid_,          //< Unique id.
+  UID uid_,          //< Unique id.
       type_;           //< Type of HMI component.
-  const char* label_;  //< This object's text label.
+  const CH1* label_;  //< This object's text label.
 };                     //< class HmiComponent
 }  // namespace _
 #endif  //< HEADER_FOR_KT_HMI_HMICOMPONENT
-#endif  //< #if SEAM >= SEAM_00_03_00_00__00
+#endif  //< #if SEAM >= KABUKI_FEATURES_TOUCH_1

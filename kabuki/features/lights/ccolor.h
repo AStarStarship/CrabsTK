@@ -47,7 +47,7 @@ typedef enum {
     Red         = 0x0000FF,
     Maroon      = 0x800000,
     Brown       = 0xA52A2A,
-    Black       = 0x000000      //< Black at the end as nil-term char.
+    Black       = 0x000000      //< Black at the end as nil-term CH1.
 } PresetColor;
     
 enum {
@@ -67,25 +67,25 @@ const color_t* RainbowColors ();
 const color_t* PresetColors ();
 
 /** Gets one of the rainbow colors. */
-color_t ColorRainbow (int index);
+color_t ColorRainbow (SI4 index);
 
 /** Gets one of the preset colors. */
-color_t ColorPreset (int index);
+color_t ColorPreset (SI4 index);
 
 /** Gets a random preset colors. */
 color_t RandomPresetColor ();
 
 /** Gets a random color. */
-color_t RandomColor (int index);
+color_t RandomColor (SI4 index);
     
 /** Mixes the color with the  */
 color_t ColorMix (color_t a, color_t b);
 
 /** Increases the alpha value of the given color by the given delta. */
-color_t ChangeBrightness (color_t color, int delta);
+color_t ChangeBrightness (color_t color, SI4 delta);
 
 /** Increases the alpha value of the given color by the given delta. */
-color_t DecreaseBrightness (color_t color, int delta);
+color_t DecreaseBrightness (color_t color, SI4 delta);
 
 /** Creates a Color from the given RGB values. */
 color_t ColorMake (byte red, byte green, byte blue);

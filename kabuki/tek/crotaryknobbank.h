@@ -101,7 +101,7 @@ class KABUKI RotaryKnobBank {
               UI1* spi_out_bytes, SI2 row, int8_t count);
 
   /* Prints this object to a terminal. */
-  void Print(Log& log);
+   Printer& Print (Printer& o) {
 
   /* Script operations. */
   const Operation* Star(char_t index, Expr* expr);

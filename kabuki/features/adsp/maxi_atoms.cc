@@ -76,12 +76,12 @@ inline void maxiCollider::createGabor(flArr &atom, const float freq, const float
 	vDSP_vsmul(&atom[0], 1, &amp, &atom[0], 1, length);
 #else
 	maxPhase *= TWOPI;
-    for(unsigned int i=0; i < length; i++) {
+    for(unsigned SI4 i=0; i < length; i++) {
 		//multiply by sinewave
 		float x = inc * i;
 		sine[i] = sin((x * maxPhase) + startPhase);
 	}
-	for(unsigned int i=0; i < length; i++) {
+	for(unsigned SI4 i=0; i < length; i++) {
         atom[i] *= sine[i];
 		atom[i] *= amp;
 	}
@@ -94,7 +94,7 @@ maxiAccelerator::maxiAccelerator() {
 	sampleIdx = 0;
 }
 
-void maxiAccelerator::addAtom(flArr &atom, unsigned int offset) {
+void maxiAccelerator::addAtom(flArr &atom, unsigned SI4 offset) {
 	queuedAtom quAtom;
 	quAtom.atom = atom;
 	quAtom.startTime = sampleIdx + offset;
@@ -102,15 +102,15 @@ void maxiAccelerator::addAtom(flArr &atom, unsigned int offset) {
 	atomQueue.push_back(quAtom);
 }
 
-void maxiAccelerator::fillNextBuffer(float *buffer, unsigned int bufferLength) {
+void maxiAccelerator::fillNextBuffer(float *buffer, unsigned SI4 bufferLength) {
 	queuedAtomList::iterator it = atomQueue.begin();
 	while(it != atomQueue.end()) {
-		int atomStart = (*it).startTime + (*it).pos;
+		SI4 atomStart = (*it).startTime + (*it).pos;
 		//include in this frame?
 		if (atomStart >= sampleIdx && atomStart < sampleIdx + bufferLength) {
 			//copy into buffer
-			int renderLength = min((int)bufferLength,(int)( (*it).atom.size() - (*it).pos));
-			for(int i=0; i < renderLength; i++) {
+			SI4 renderLength = min((SI4)bufferLength,(SI4)( (*it).atom.size() - (*it).pos));
+			for(SI4 i=0; i < renderLength; i++) {
 				buffer[i] += (*it).atom[i + (*it).pos];
 			}
 			(*it).pos += renderLength;
@@ -125,8 +125,8 @@ void maxiAccelerator::fillNextBuffer(float *buffer, unsigned int bufferLength) {
 	sampleIdx += bufferLength;
 }
 
-//bool maxiAtomBook::loadMPTKXmlBook(string filename, maxiAtomBook &book) {
-//	bool ok;
+//BOL maxiAtomBook::loadMPTKXmlBook(string filename, maxiAtomBook &book) {
+//	BOL ok;
 //	ifstream f;
 //	f.open(filename.c_str());
 //	if (f.fail()) {
@@ -134,8 +134,8 @@ void maxiAccelerator::fillNextBuffer(float *buffer, unsigned int bufferLength) {
 //		ok = false;
 //	}else {
 //		cout << "Reading " << filename << endl;
-//		const int lineBufferSize = 1024;
-//		char lineBuffer[lineBufferSize];
+//		const SI4 lineBufferSize = 1024;
+//		CH1 lineBuffer[lineBufferSize];
 //		string line("");
 //		//get dictionary definition xml
 //		while("</dict>" != line) {
@@ -158,7 +158,7 @@ void maxiAccelerator::fillNextBuffer(float *buffer, unsigned int bufferLength) {
 //		TiXmlElement *root = docHandle.FirstChildElement("book").ToElement();
 //		TiXmlAttribute *nAtomsAtt = root->FirstAttribute();
 //		cout << nAtomsAtt->Name() << ", " << nAtomsAtt->Value() << endl;
-//		int nAtoms = atoi(nAtomsAtt->Value());
+//		SI4 nAtoms = atoi(nAtomsAtt->Value());
 //		TiXmlAttribute *numSamplesAtt = nAtomsAtt->Next()->Next();
 //		cout << numSamplesAtt->Name() << ", " << numSamplesAtt->Value() << endl;
 //		book.numSamples = atoi(numSamplesAtt->Value());
@@ -166,7 +166,7 @@ void maxiAccelerator::fillNextBuffer(float *buffer, unsigned int bufferLength) {
 //		cout << sampleRateAtt->Name() << ", " << sampleRateAtt->Value() << endl;
 //		book.sampleRate = atoi(sampleRateAtt->Value());
 //		
-//		for(int atomIdx=0; atomIdx < nAtoms; atomIdx++) {
+//		for(SI4 atomIdx=0; atomIdx < nAtoms; atomIdx++) {
 //			maxiGaborAtom *newAtom = new maxiGaborAtom();
 //			newAtom->atomType = GABOR;
 //			TiXmlElement *atom = docHandle.FirstChildElement("book").ChildElement("atom", atomIdx).ToElement();
@@ -188,17 +188,17 @@ void maxiAccelerator::fillNextBuffer(float *buffer, unsigned int bufferLength) {
 //}
 
 maxiAtomBook::~maxiAtomBook() {
-	for(int i=0; i < atoms.size(); i++) delete atoms[i];
+	for(SI4 i=0; i < atoms.size(); i++) delete atoms[i];
 }
 
 maxiAtomBookPlayer::maxiAtomBookPlayer() {
 	atomIdx = 0;
 }
 
-void maxiAtomBookPlayer::play(maxiAtomBook &book, maxiAccelerator &atomStream, float *output, int bufferSize) {
+void maxiAtomBookPlayer::play(maxiAtomBook &book, maxiAccelerator &atomStream, float *output, SI4 bufferSize) {
 	//positions
 	long idx = atomStream.getSampleIdx();
-	int loopedSamplePos = idx % book.numSamples;
+	SI4 loopedSamplePos = idx % book.numSamples;
 
 	//reset loop?
 	if (loopedSamplePos < bufferSize)

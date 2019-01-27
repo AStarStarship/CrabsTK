@@ -15,12 +15,12 @@ specific language governing permissions and limitations under the License. */
 
 namespace typecraft {
 
-Block::Block(int type, int variant, int count) {}
+Block::Block(SI4 type, SI4 variant, SI4 count) {}
 
-int Block::GetNumItems() { return items->GetCount(); }
+SI4 Block::GetNumItems() { return items->GetCount(); }
 
 ItemType Block::Getype() { return type_; }
 
-int Block::Mine(Item* tool) { return 0; }
+SI4 Block::Mine(Item* tool) { return 0; }
 
 }  // namespace typecraft

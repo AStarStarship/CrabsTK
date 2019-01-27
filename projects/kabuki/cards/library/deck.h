@@ -41,10 +41,10 @@ class Deck {
     };
 
     // The default suit value order, Clubs=1, Diamonds=2, Hearts=3, and Spades=4.
-    static const int kDefaultSuitValues[4];
+    static const SI4 kDefaultSuitValues[4];
 
     /** The default deck art directory. */
-    static const char kDefaultDeckArtDirectory[],
+    static const CH1 kDefaultDeckArtDirectory[],
                       kDefaultRearDeckImage[]; //< Default rear deck image.
     
     /** Constructor.
@@ -56,28 +56,28 @@ class Deck {
                                 means that aces are high, a negative number
                                 means that aces are low.
         @param  format          Used to determine what suites we are using. */
-    Deck (int num_decks = 1, bool has_jokers = kNoJokers, 
-          int aces_high = kAcesHigh,
+    Deck (SI4 num_decks = 1, BOL has_jokers = kNoJokers, 
+          SI4 aces_high = kAcesHigh,
           Suit::Format format = Suit::kFrench,
-          const char* deck_name = kDefaultRearDeckImage,
-          const char* directory_path = kDefaultDeckArtDirectory,
+          const CH1* deck_name = kDefaultRearDeckImage,
+          const CH1* directory_path = kDefaultDeckArtDirectory,
           Suit::Color color = Suit::Color::kWhite);
 
     /** Destructor. */
     virtual ~Deck ();
 
     /** Sets the given parameters of the deck. */
-    void Set (bool has_jokers = kNoJokers, int aces_high = kAcesHigh,
+    void Set (BOL has_jokers = kNoJokers, SI4 aces_high = kAcesHigh,
               Suit::Format format = Suit::kFrench,
-              const char* deck_name = kDefaultRearDeckImage,
-              const char* directory_path = kDefaultDeckArtDirectory,
+              const CH1* deck_name = kDefaultRearDeckImage,
+              const CH1* directory_path = kDefaultDeckArtDirectory,
               Suit::Color color = Suit::Color::kWhite);
 
     /** Returns true if this deck has Jokers. */
-    bool HasJokers ();
+    BOL HasJokers ();
 
     /** Returns the number of cards in the deck. */
-    int GetSize ();
+    SI4 GetSize ();
 
     /** Returns a pointer to a static Suit for the column 0 types AKA
         Hearts. */
@@ -103,26 +103,26 @@ class Deck {
         @return Returns 0 upon success, and a number 1-4 if the valueN is not
         between 1-4. The number will be negative if the inputed number
         was, and vice-versa. */
-    void SetSuitDenominations (int column_0, int column_1, int column_2, int column_3);
+    void SetSuitDenominations (SI4 column_0, SI4 column_1, SI4 column_2, SI4 column_3);
 
     /** Sets the format to the one given. */
     void SetFormat (Suit::Format format);
     
     /** Returns the if aces are high or low. */
-    bool AcesHigh ();
+    BOL AcesHigh ();
 
     /** Returns a pointer to the Card with the given suit and pip.
         @return Returns nil if the index is out of bounds. */
-    Card* GetCard (int suit, int pip);
+    Card* GetCard (SI4 suit, SI4 pip);
     
     /** Returns a pointer to the Card at the specified index.
         @return Returns nil if the index is out of bounds. */
-    Card* GetCard (int index);
+    Card* GetCard (SI4 index);
 
     /** Sets the frontImage to a new Image from thisFile.
         @pre    thisFile must be a valid existing Image file.
         @return returns -1 if thisFile is not a valid Image. */
-    //int SetRearImage (const File& thisFile);
+    //SI4 SetRearImage (const File& thisFile);
         
     /** Loads the deck art from the directory_path.
         @pre    directory_path must contain all 54 card Images in 
@@ -130,7 +130,7 @@ class Deck {
         @return Returns 0 upon success, 54 if the directory doesn't contain 
                 54 .svg files, and -x if images are not named correctly,
                 where x is the first failed filename. */
-    //int SetDeckArt (const char* directory_path);
+    //SI4 SetDeckArt (const CH1* directory_path);
     
     /** Prints this object to the console. */
     _::Text& Print (_::Text& txt = _::Text ());
@@ -139,10 +139,10 @@ class Deck {
 
     /** Function that checks the artFolder to see if the it has 54 Images in 
         [1-13]-[1-4].svg/J-1.svg/J-2.svg format. */
-    //int CheckDeckArtFolder (const char* directory_path);
+    //SI4 CheckDeckArtFolder (const CH1* directory_path);
 
-    bool     has_jokers_;    //< Flag for if the deck has Jokers.
-    int      num_decks_,     //< Num decks in the pack.
+    BOL     has_jokers_;    //< Flag for if the deck has Jokers.
+    SI4      num_decks_,     //< Num decks in the pack.
              num_cards_,     //< Number of cards.
              aces_high_,     //< Flags for aces high or low.
              lowest_value_,  //< Lowest allowed card value.

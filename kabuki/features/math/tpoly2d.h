@@ -22,7 +22,7 @@
 namespace _ {
     
 template<typename T>
-class API Poly2D
+class SDK Poly2D
 /* A 2D polygon that uses 32-bit floating point values. 
 This class is a C++ implementation of Java's polygon interface that does not 
 use polymorphism.
@@ -51,7 +51,7 @@ use polymorphism.
 	}
 
     /* Constructs a polygon from the given x and y points. */
-    Poly2D (T* xPoints, T* yPoints, int aNumPoints, int aBufferSize);
+    Poly2D (T* xPoints, T* yPoints, SI4 aNumPoints, SI4 aBufferSize);
 
     /* Destroys the dynamic memory. */
     ~Poly2D ();
@@ -66,55 +66,55 @@ use polymorphism.
     T* GetYs ();
 
     /* Gets the number of points in the polygon. */
-    int PointCount ();
+    SI4 PointCount ();
 
     /* Gets the number of points the buffer can store. */
-    int BufferCount ();
+    SI4 BufferCount ();
 
     /* Translates the polygon by the given delta x and delta y. */
     void Translate (T dx, T dy);
 
     /* Translates the polygon by the given delta x and delta y. */
-    void Translate (int dx, int dy);
+    void Translate (SI4 dx, SI4 dy);
 
     /* Gets the upper bounds of the given x and y coordinates. */
     void UpdateBounds (T x, T y);
 
     /* Gets the upper bounds of the given x and y coordinates. */
-    void UpdateBounds (int x, int y);
+    void UpdateBounds (SI4 x, SI4 y);
 
     /* Translates the polygon by the given delta x and delta y. */
-    void Translate (int dx, int dy);
+    void Translate (SI4 dx, SI4 dy);
 
     /* Adds the given x and y points to the polygon. */
     void AddPoint (T x, T y);
 
     /* Adds the given x and y points to the polygon. */
-    void AddPoint (int x, int y);
+    void AddPoint (SI4 x, SI4 y);
 
     /* Gets a const reference to the bounding box. */
     const Rect2D& getBounds();
 
     /* Returns true if this polygon contains the given point. */
-    bool Contains (T x, T y);
+    BOL Contains (T x, T y);
 
     /* Returns true if this polygon contains the given point. */
-    bool Contains (T x, T y);
+    BOL Contains (T x, T y);
 
     /* Returns true if this polygon contains the given point. */
-    bool Contains (int x, int y);
+    BOL Contains (SI4 x, SI4 y);
 
     /* Returns true if this polygon contains the given point. */
-    bool Contains (Point<T> p);
+    BOL Contains (Point<T> p);
 
     /* Returns true if this polygon intersects the given rectangle. */
-    bool Intersects (T leftX, T topY, T width, T height);
+    BOL Intersects (T leftX, T topY, T width, T height);
 
     /* Returns true if this polygon intersects the given rectangle. */
-    bool Intersects (int leftX, int topY, int width, int height);
+    BOL Intersects (SI4 leftX, SI4 topY, SI4 width, SI4 height);
 
     /* Returns true if this polygon intersects the given rectangle. */
-    bool Intersects (Rect2D r);
+    BOL Intersects (Rect2D r);
 
     Poly2DPathIterator<T> GetPathIterator (Transform<T> a);
 
@@ -126,7 +126,7 @@ use polymorphism.
     
     private:
 	
-	int numPoints,          //< The number of points in the polygon.
+	SI4 numPoints,          //< The number of points in the polygon.
         bufferSize;         //< The size of the buffer.
 
     T* x,               //< Pointer to the x points array.
@@ -143,13 +143,13 @@ class Poly2DPathIterator {
 
     Poly2DPathIterator<T> (Poly2D p, AffineTransform<T> a);
 
-    bool IsDone();
+    BOL IsDone();
 
     void GetNext();
 
-    int CalcSegment (T* coords);
+    SI4 CalcSegment (T* coords);
 
-    int CalcSegment (T* coords);
+    SI4 CalcSegment (T* coords);
 
     private:
 
@@ -157,7 +157,7 @@ class Poly2DPathIterator {
 
     AffineTransform<T> transform;
 
-    int index;
+    SI4 index;
 };
 
 }       //< namespace _

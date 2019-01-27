@@ -11,13 +11,13 @@
 #include <iostream>
 #include "maximilian.h"
 #include <list>
-#include <vector>
+#include <TArray>
 #include "maxiGrains.h"
 
 
 using namespace std;
 
-typedef vector<float> flArr;
+typedef TArray<float> flArr;
 
 enum maxiAtomTypes {
 	GABOR
@@ -28,7 +28,7 @@ struct maxiAtom {
 	float length;
 	float position;
 	float amp;
-	static bool atomSortPositionAsc(maxiAtom* a, maxiAtom* b) {return a->position < b->position;}
+	static BOL atomSortPositionAsc(maxiAtom* a, maxiAtom* b) {return a->position < b->position;}
 };
 
 struct maxiGaborAtom : maxiAtom {
@@ -39,7 +39,7 @@ struct maxiGaborAtom : maxiAtom {
 //create atoms
 class maxiCollider {
 public:
-	static inline void createGabor(flArr &atom, const float freq, const float sampleRate, const unsigned int length, 
+	static inline void createGabor(flArr &atom, const float freq, const float sampleRate, const unsigned SI4 length, 
                                 float phase, const float kurtotis, const float amp);
     static maxiGrainWindowCache<gaussianWinFunctor> envCache;
 };
@@ -49,15 +49,15 @@ public:
 class maxiAccelerator {
 public:
 	maxiAccelerator();
-	void addAtom(flArr &atom, unsigned int offset=0);
-	void fillNextBuffer(float *buffer, unsigned int bufferLength);
+	void addAtom(flArr &atom, unsigned SI4 offset=0);
+	void fillNextBuffer(float *buffer, unsigned SI4 bufferLength);
 	inline long getSampleIdx(){return sampleIdx;}
 private:
 	long sampleIdx;
 	struct queuedAtom {
 		flArr atom;
 		long startTime;
-		unsigned int pos;
+		unsigned SI4 pos;
 	};
 	typedef list<queuedAtom> queuedAtomList;
 	queuedAtomList atomQueue;
@@ -72,20 +72,20 @@ private:
 class maxiAtomBook {
 public:
 	~maxiAtomBook();
-	typedef vector<maxiAtom*> maxiAtomBookData;
-	unsigned int numSamples;
-	unsigned int sampleRate;
+	typedef TArray<maxiAtom*> maxiAtomBookData;
+	unsigned SI4 numSamples;
+	unsigned SI4 sampleRate;
 	maxiAtomBookData atoms;
     //commented out for now, need to resolve tinyxml linker issues - we need tinyxml in the distrib, but it clashes if you also import ofxXmlSettings
-//	static bool loadMPTKXmlBook(string filename, maxiAtomBook &book);  
+//	static BOL loadMPTKXmlBook(string filename, maxiAtomBook &book);  
 	
 };
 
 class maxiAtomBookPlayer {
 public:
 	maxiAtomBookPlayer();
-	void play(maxiAtomBook &book, maxiAccelerator &atomStream, float *output, int bufferSize);
+	void play(maxiAtomBook &book, maxiAccelerator &atomStream, float *output, SI4 bufferSize);
 private:
-	unsigned int atomIdx;
+	unsigned SI4 atomIdx;
 };
 

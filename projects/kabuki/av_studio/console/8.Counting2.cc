@@ -8,7 +8,7 @@
 #include "maximilian.h"
 
 maxiOsc myCounter,mySquare;//these oscillators will help us count and play sound
-int CurrentCount;//we're going to put the current count in this variable so that we can use it more easily.
+SI4 CurrentCount;//we're going to put the current count in this variable so that we can use it more easily.
 
 
 void setup() {//some inits
@@ -17,8 +17,8 @@ void setup() {//some inits
 
 void play(double *output) {
     
-    // Here you can see that CurrentCount is an int. It's taking the continuous output of the phasor and convering it.
-    // You don't need to explicityly 'cast' (i.e. change) the value from a float to an int.
+    // Here you can see that CurrentCount is an SI4. It's taking the continuous output of the phasor and convering it.
+    // You don't need to explicityly 'cast' (i.e. change) the value from a float to an SI4.
     // It happens automagically in these cases.
     
     // Once every second, CurrentCount counts from 1 until it gets to 9, then resets itself.

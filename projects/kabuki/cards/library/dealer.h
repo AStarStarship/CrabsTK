@@ -39,44 +39,44 @@ class KABUKI Dealer : public Player {
             int64_t   buy_in      = kDefaultAnte,
             int64_t   ante        = kDefaultAnte,
             int64_t   min_bet     = kDefaultMinBet,
-            int       min_players = kDefaultMinPlayers,
-            int       max_players = kDefaultMaxPlayer,
-            int       num_decks   = Deck::kDefaultNumDecks);
+            SI4       min_players = kDefaultMinPlayers,
+            SI4       max_players = kDefaultMaxPlayer,
+            SI4       num_decks   = Deck::kDefaultNumDecks);
     
     /** Destructor. */
     virtual ~Dealer ();
 
     /** Gets the round_number_. */
-    int GetRoundNumber ();
+    SI4 GetRoundNumber ();
 
     /** Gets the number of Players. */
-    int GetPlayersCount ();
+    SI4 GetPlayersCount ();
 
     /** Creates and adds a mew player to the game from the given User. */
     virtual void AddPlayer (Player* player);
     
     /** Removes the Player with the specified handle from the players_.
         @returns the index number of the player if the player is found. */
-    virtual int RemovePlayer (const char* handle);
+    virtual SI4 RemovePlayer (const CH1* handle);
                                                     
     /** Removes a Player with the specified index from the game.
         @return Returns 0 upon success.
         @return Returns -1 if player_number is < 0.
         @return Returns 1 if the player_number is > getNumPlayers ().*/
-    virtual int RemovePlayer (int player_number);
+    virtual SI4 RemovePlayer (SI4 player_number);
 
     /** Gets the player_number_. */
     Player* GetPlayer ();
                                                     
     /** Gets a pointer to the player with the specified player_number.
         @return Returns nil if the player_number < 0 or > GetNumPlayers (). */
-    Player* GetPlayer (int player_number);
+    Player* GetPlayer (SI4 player_number);
 
     /** Gets the current_player_ */
-    int GetCurrentPlayer ();
+    SI4 GetCurrentPlayer ();
 
     /** Sets the current_player_ */
-    bool SetCurrentPlayer (int session);
+    BOL SetCurrentPlayer (SI4 session);
 
     /** Gets the address of the dealer's pack. */
     Deck& GetPack ();
@@ -113,16 +113,16 @@ class KABUKI Dealer : public Player {
     int64_t GetMinBet ();
     
     /** Sets the minBet to the value. */
-    virtual const char* SetMinBet (int64_t value);
+    virtual const CH1* SetMinBet (int64_t value);
 
     /** Gets the current min_players_. */
-    int GetMinPlayers ();
+    SI4 GetMinPlayers ();
 
     /** Gets the current min bet. */
-    int GetMaxPlayers ();
+    SI4 GetMaxPlayers ();
     
     /** Sets the player_number_. */
-    bool SetPlayerNumber (int player_number);
+    BOL SetPlayerNumber (SI4 player_number);
 
     /** Draws a card from the stock_. */
     virtual Card* Draw ();
@@ -149,10 +149,10 @@ class KABUKI Dealer : public Player {
     /** Compares this hand to the other.
         @return Returns 0 if the hands are equal, > 1 if the other hand beats
                 this hand and < 0 if the other hand wins. */
-    virtual int Compare (Hand& other) = 0;
+    virtual SI4 Compare (Hand& other) = 0;
 
     /** Gets true if this hand wins compared to the other one. */
-    virtual bool Wins (Hand& other) = 0;
+    virtual BOL Wins (Hand& other) = 0;
 
     /** Prints the abridged player stats to the console. */
     virtual Text& PrintStats () = 0;
@@ -171,11 +171,11 @@ class KABUKI Dealer : public Player {
         @param text     Beginning of the Text buffer. 
         @param strand_end End of the Text buffer.
         @return Returns nil upon success and an error string upon failure. */
-    virtual const char* Sudo (const char* strand, const char* strand_end);
+    virtual const CH1* Sudo (const CH1* strand, const CH1* strand_end);
 
     protected:
     
-    int            round_number_,  //< Current round number.
+    SI4            round_number_,  //< Current round number.
                    min_players_,   //< Min players to start game.
                    max_players_,   //< Max allowed in game.
                    current_player_,//< Index of the player who's turn it is.

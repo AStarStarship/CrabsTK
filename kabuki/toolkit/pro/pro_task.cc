@@ -80,7 +80,7 @@ void Task::StealReview(CH1* new_review) {
 
 FLT Task::GetWeight() { return weight_; }
 
-bool Task::SetWeight(FLT new_weight) {
+BOL Task::SetWeight(FLT new_weight) {
   if (new_weight < 0.0f) return false;
   weight_ = new_weight;
   return true;
@@ -88,7 +88,7 @@ bool Task::SetWeight(FLT new_weight) {
 
 FLT Task::GetAssessment() { return assessment_; }
 
-bool Task::SetAssessment(FLT new_assessment) {
+BOL Task::SetAssessment(FLT new_assessment) {
   if (new_assessment < 0.0f) return false;
   if (new_assessment > 1.0f) return false;
   assessment_ = new_assessment;
@@ -97,7 +97,7 @@ bool Task::SetAssessment(FLT new_assessment) {
 
 FLT Task::GetGrade() { return grade_; }
 
-bool Task::SetGrade(FLT new_grade) {
+BOL Task::SetGrade(FLT new_grade) {
   if (new_grade < 0.0f) return false;
   if (new_grade > 1.0f) return false;
   grade_ = new_grade;
@@ -161,9 +161,9 @@ void Task::AddCollision(Task* task) {
 
 Task* Task::Collision() { return collisions_; }
 
-bool Task::IsDone() { return summary_ != 0; }
+BOL Task::IsDone() { return summary_ != 0; }
 
-bool Task::Contains(Tms t) {
+BOL Task::Contains(Tms t) {
   if (t < time_begins_) return false;
   if (time_stopped_ != 0) {
     if (t > time_stopped_) return false;

@@ -22,7 +22,7 @@ specific language governing permissions and limitations under the License. */
 namespace _ {
 
 /*  */
-class API Project {
+class SDK Project {
  public:
   /* Constructor. */
   Project();

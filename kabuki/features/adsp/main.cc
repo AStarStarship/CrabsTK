@@ -2,7 +2,7 @@
 //
 //maxiOsc myOsc;
 //maxiEnvelope myEnv;
-//int counter;
+//SI4 counter;
 //double vals[12]={1,0.1,0.5,0.0,1.5,0.0,0.1,1,1.0,0.15,1.0,0.1};
 //TArray<double> rampsA(vals, vals+12);
 //
@@ -34,7 +34,7 @@
 //
 //maxiOsc myOsc;
 //maxiEnvelope myEnv;
-//int counter=0;
+//SI4 counter=0;
 //
 //void setup() {
 //}
@@ -64,7 +64,7 @@
 
 maxiOsc myOsc;
 maxiEnvelope myEnv;
-int counter;
+SI4 counter;
 
 void setup() {
 }

@@ -17,26 +17,26 @@ namespace typecraft {
 
 Item::Item() {}
 
-int Item::GetType() { return type_; }
+SI4 Item::GetType() { return type_; }
 
-int Item::GetVariant() { return variant_; }
+SI4 Item::GetVariant() { return variant_; }
 
-int Item::GetCondition() { return condition_; }
+SI4 Item::GetCondition() { return condition_; }
 
-int Item::SetContition(int condition) {
+SI4 Item::SetContition(SI4 condition) {
   if (condition < 0) return condition;
   condition_ = condition;
 }
 
-const char* Item::GetLabel() { return label_; }
+const CH1* Item::GetLabel() { return label_; }
 
-const char* Item::SetLabel(const char* label) {
+const CH1* Item::SetLabel(const CH1* label) {
   if (label == nullptr) return nullptr;
   label_ = label;
   return label;
 }
 
-const char* Item::CloneLabel(const char* label) {
+const CH1* Item::CloneLabel(const CH1* label) {
   if (label == nullptr) return nullptr;
   delete label_;
   label_ = _::StringClone(label);
@@ -45,7 +45,7 @@ const char* Item::CloneLabel(const char* label) {
 
 void Item::Print(_::Log& log) {}
 
-template <int kIndex, int kVarifant>
+template <SI4 kIndex, SI4 kVarifant>
 inline Item* ItemNumber() {
   Item items[];
   items[0]

@@ -20,14 +20,14 @@ specific language governing permissions and limitations under the License. */
 #include "test_release.inl"
 #endif
 
-using namespace _;
+
 
 namespace kabuki { namespace toolkit { namespace who {
-inline const CH1* _0_Foo (CH1* seam_log, CH1* seam_end, const CH1* args) {
+inline const TStrand<>& _0_Foo (TStrand<>& seam_log, TStrand<>& seam_end, const TStrand<>& args) {
 #if SEAM >= KABUKI_TOOLKIT_WHO_0
   TEST_BEGIN;
 
-  PRINT_HEADING ("Testing Foo Fun.");
+  PRINT_HEADING ("Testing user.");
 
 #endif
   return 0;

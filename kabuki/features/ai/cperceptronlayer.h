@@ -77,7 +77,7 @@ class PerceptronLayer {
     private:
 
     float_t                     bias_;        //< Layer bias value.
-    TArray<float_t>        x_;           //< Input x vector.
+    TArray<float_t>        x_;           //< Input x TArray.
     TArray<Perceptron>     perceptrons_; //< Layer perceptrons.
     TArray<PerceptronLayer> nodes_;      //< Vector of next layers in the list.
 };

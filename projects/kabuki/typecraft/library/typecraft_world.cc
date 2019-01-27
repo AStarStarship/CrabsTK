@@ -17,11 +17,11 @@ namespace typecraft {
 
 World::World() {}
 
-int World::GetCount() { return count_; }
+SI4 World::GetCount() { return count_; }
 
-int World::AddItem(Item* item);
+SI4 World::AddItem(Item* item);
 
-Item* World::RemoveItem(int index);
+Item* World::RemoveItem(SI4 index);
 
 void World::DeleteAll() {}
 

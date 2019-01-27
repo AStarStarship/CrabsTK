@@ -30,7 +30,7 @@ class Virus: public GeneticPolygon
 
 Movement:
 
-Drift Speed: This is a constant speed that is added onto a Virus's movement vector. This allows Viruses.
+Drift Speed: This is a constant speed that is added onto a Virus's movement TArray. This allows Viruses.
 
 Movement of Viruses is define by Bezier curves. There are two distinct patterns of movement:
 
@@ -81,19 +81,19 @@ Movement of Viruses is define by Bezier curves. There are two distinct patterns 
     
     void updateTrail ();
     
-    bool checkHostBoundsCollision (SI4 hostWidth, SI4 hostHeight);
+    BOL checkHostBoundsCollision (SI4 hostWidth, SI4 hostHeight);
     
     void select ();
     
     void deselect ();
 
-    bool containsPoint (SI4 thisX, SI4 thisY);
+    BOL containsPoint (SI4 thisX, SI4 thisY);
     
-    bool containsPoint (DBL thisX, DBL thisY);
+    BOL containsPoint (DBL thisX, DBL thisY);
     
-    bool contains (Rectangle thisRectangle);
+    BOL contains (Rectangle thisRectangle);
     
-    bool intersects (Virus thatVirus);
+    BOL intersects (Virus thatVirus);
     
     DBL getX ();
     
@@ -119,17 +119,17 @@ Movement of Viruses is define by Bezier curves. There are two distinct patterns 
     
     void setTrailColor (Color newColor);
     
-    void setDrawTrail (bool newState);
+    void setDrawTrail (BOL newState);
     
-    bool getDrawTrail ();
+    BOL getDrawTrail ();
     
     void setCircleColor (Color newColor);
     
-    void setDrawCircle (bool newState);
+    void setDrawCircle (BOL newState);
     
     void setCircleFillColor (Color newColor);
     
-    void setFillCircle (bool newState);
+    void setFillCircle (BOL newState);
     
   private:
 
@@ -165,7 +165,7 @@ Movement of Viruses is define by Bezier curves. There are two distinct patterns 
         outlineColor,             /< The outline color.
         selectedColor;            /< The color of the fill circle.
                   
-    bool drawTrail,              /< Determines whether to draw the trail or not.
+    BOL drawTrail,              /< Determines whether to draw the trail or not.
         ciricleVirus,           /< Draws a circle a round this Virus.
         selected;               /< Oh shit! I need to stop programming in class!!!!
     

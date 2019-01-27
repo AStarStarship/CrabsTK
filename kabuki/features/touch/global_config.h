@@ -1,6 +1,6 @@
 /* Kabuki Toolkit @version 0.x
 @link    https://github.com/kabuki-starship/kabuki-toolkit.git
-@file    /kabuki/features/hmi/hmi_config.h
+@file    /kabuki/features/touch/touch_config.h
 @author  Cale McCollough <https://calemccollough.github.io>
 @license Copyright (C) 2014-19 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -16,6 +16,6 @@ specific language governing permissions and limitations under the License. */
 #ifndef INCLUDED_KABUKI_HMI_COFIG
 #define INCLUDED_KABUKI_HMI_COFIG
 
-#define SEAM_0_0_4_2__00 19  //< kabuki.features.hmi
+#define SEAM_0_0_4_2__00 19  //< kabuki.features.touch
 
 #endif  //< INCLUDED_KABUKI_HMI_COFIG

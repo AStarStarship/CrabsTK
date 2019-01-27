@@ -22,7 +22,7 @@ namespace _ {
 /** Utility class for rotating rectangles.
 */
 template<typename T>
-class API Rect2DRotor
+class SDK Rect2DRotor
 {
     public:
 
@@ -64,7 +64,7 @@ class API Rect2DRotor
     /** Gets the bottom y value. */
     T GetBottom () const;
 
-    /** Rotates the original vector and returns the outter bounds. */
+    /** Rotates the original TArray and returns the outter bounds. */
     const Rect2D<T>& Rotate () const;
 
     /** Returns the outer bounds. */

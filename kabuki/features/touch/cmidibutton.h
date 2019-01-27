@@ -1,6 +1,6 @@
 /* Kabuki Toolkit @version 0.x
 @link    https://github.com/kabuki-starship/kabuki-toolkit.git
-@file    /kabuki/features/hmi/hmi_/button_midi.h
+@file    /kabuki/features/touch/touch_/button_midi.h
 @author  Cale McCollough <https://calemccollough.github.io>
 @license Copyright (C) 2014-19 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -13,7 +13,7 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <pch.h>
-#if SEAM >= SEAM_00_03_00_00__00
+#if SEAM >= KABUKI_FEATURES_TOUCH_1
 #ifndef HEADER_FOR_KT_HMI_MIDIBUTTON
 #define HEADER_FOR_KT_HMI_MIDIBUTTON
 
@@ -22,22 +22,22 @@ specific language governing permissions and limitations under the License. */
 
 namespace _ {
 
-class API MidiControl;
+class SDK MidiControl;
 
 /* A button that triggers a MIDIEvent. */
-class API MIDIButton : public MidiControl, public Button {
+class SDK MIDIButton : public MidiControl, public Button {
  public:
   /* Constructor. */
-  MIDIButton(string newLabel = "", int cc = 0, int channel = 0, int value = 0,
-             int min_value = 0, int max_value = 127, int word_size = 7,
-             int action = Button::Momentary, int newStepSize = 0,
+  MIDIButton(string newLabel = "", SI4 cc = 0, SI4 channel = 0, SI4 value = 0,
+             SI4 min_value = 0, SI4 max_value = 127, SI4 word_size = 7,
+             SI4 action = Button::Momentary, SI4 newStepSize = 0,
              double double_press_time = Button::DefaultDoublePressTime);
 
   /* Virtual destructor. */
   virtual ~MIDIButton() {}
 
-  /* Gets the max valu of a Parameter<int> word. */
-  int GetMaxWordValue() const override;
+  /* Gets the max valu of a Parameter<SI4> word. */
+  SI4 GetMaxWordValue() const override;
 
   /* Toggles the state of the Button if type is latching. */
   void Toggle() override;
@@ -45,10 +45,10 @@ class API MIDIButton : public MidiControl, public Button {
   /* Gets the label.
       sets the label to the new label.
       @return gets 0 upon success and 1 if the newLabel is too uint32_t.
-      @see    isValidLabel (char). */
-  const char* GetLabel() const override;
+      @see    isValidLabel (CH1). */
+  const CH1* GetLabel() const override;
 
-  int SetLabel(const char* newLabel) override;
+  SI4 SetLabel(const CH1* newLabel) override;
 
   /* Triggered when a mode button is pressed. */
   void Press() override;
@@ -66,7 +66,7 @@ class API MIDIButton : public MidiControl, public Button {
   void PrintRow() const override;
 
   /* Prints this object to a string. */
-  _::Utf& Print(_::Utf& print) const;
+  ::_::Utf& Print(_::Utf& print) const;
 
  private:
   MidiControl* control_;  //< This Button's MidiControl.
@@ -74,4 +74,4 @@ class API MIDIButton : public MidiControl, public Button {
 };  //< class MidiButton
 }  // namespace _
 #endif  //< HEADER_FOR_KT_HMI_MIDIBUTTON
-#endif  //< #if SEAM >= SEAM_00_03_00_00__00
+#endif  //< #if SEAM >= KABUKI_FEATURES_TOUCH_1

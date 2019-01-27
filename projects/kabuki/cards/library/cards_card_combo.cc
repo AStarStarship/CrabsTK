@@ -17,14 +17,14 @@
 
 namespace kabuki { namespace cards {
 
-CardCombo::CardCombo (const CardStack& cards, bool aces_high,
-                      int joker_pip_1, int joker_suit_1,
-                      int joker_pip_2, int joker_suit_2) {
+CardCombo::CardCombo (const CardStack& cards, BOL aces_high,
+                      SI4 joker_pip_1, SI4 joker_suit_1,
+                      SI4 joker_pip_2, SI4 joker_suit_2) {
     Set (aces_high, joker_pip_1, joker_suit_1, joker_pip_2, joker_suit_2);
 }
 
-void CardCombo::Set (bool aces_high, int joker_pip_1, int joker_suit_1,
-                     int joker_pip_2, int joker_suit_2) {
+void CardCombo::Set (BOL aces_high, SI4 joker_pip_1, SI4 joker_suit_1,
+                     SI4 joker_pip_2, SI4 joker_suit_2) {
     if (joker_pip_1 < 1)
         joker_pip_1 = 1;
     else if (joker_pip_1 > 13)
@@ -56,11 +56,11 @@ CardCombo::~CardCombo () {
     // Nothing to do here :-)
 }
 
-int CardCombo::GetJokerPip1 () {
+SI4 CardCombo::GetJokerPip1 () {
     return joker_pip_1_;
 }
 
-bool CardCombo::SetJokerPip1 (int value) {
+BOL CardCombo::SetJokerPip1 (SI4 value) {
     if (value < 0)
         return false;
     if (value > 13)
@@ -69,11 +69,11 @@ bool CardCombo::SetJokerPip1 (int value) {
     return true;
 }
 
-int CardCombo::GetJokerSuitValue1 () {
+SI4 CardCombo::GetJokerSuitValue1 () {
     return joker_suit_1_;
 }
 
-bool CardCombo::SetJokerSuitValue1 (int value) {
+BOL CardCombo::SetJokerSuitValue1 (SI4 value) {
     if (value < 0)
         return false;
     if (value > 13)
@@ -82,11 +82,11 @@ bool CardCombo::SetJokerSuitValue1 (int value) {
     return true;
 }
 
-int CardCombo::GetJokerPip2 () {
+SI4 CardCombo::GetJokerPip2 () {
     return joker_pip_2_;
 }
 
-bool CardCombo::SetJokerPip2 (int value) {
+BOL CardCombo::SetJokerPip2 (SI4 value) {
     if (value < 0)
         return false;
     if (value > 13)
@@ -95,11 +95,11 @@ bool CardCombo::SetJokerPip2 (int value) {
     return true;
 }
 
-int CardCombo::GetJokerSuitValue2 () {
+SI4 CardCombo::GetJokerSuitValue2 () {
     return joker_suit_2_;
 }
 
-bool CardCombo::SetJokerSuitValue2 (int value) {
+BOL CardCombo::SetJokerSuitValue2 (SI4 value) {
     if (value < 0)
         return false;
     if (value > 13)
@@ -108,11 +108,11 @@ bool CardCombo::SetJokerSuitValue2 (int value) {
     return true;
 }
 
-int CardCombo::AcesHigh () {
+SI4 CardCombo::AcesHigh () {
     return aces_high_;
 }
 
-void CardCombo::SetAcesHigh (int value) {
+void CardCombo::SetAcesHigh (SI4 value) {
     aces_high_ = value;
 }
 

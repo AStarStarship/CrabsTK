@@ -16,7 +16,7 @@
 
 namespace kabuki { namespace cards {
 
-BlackjackCardCombo::BlackjackCardCombo (const CardStack& cards, bool aces_high) :
+BlackjackCardCombo::BlackjackCardCombo (const CardStack& cards, BOL aces_high) :
     CardCombo (cards, aces_high) {
     Set (0, 1, 0, 1, aces_high);
 }
@@ -25,12 +25,12 @@ BlackjackCardCombo::~BlackjackCardCombo () {
     // Nothing to do here :-)
 }
 
-int BlackjackCardCombo::GetValue () {
-    int total = 0;
+SI4 BlackjackCardCombo::GetValue () {
+    SI4 total = 0;
     Card* card;
-    for (int i = 0; i < Length (); ++i) {
+    for (SI4 i = 0; i < Length (); ++i) {
         card = GetCard (i);
-        int pip = card->GetPip ();
+        SI4 pip = card->GetPip ();
 
         if (pip == Card::kAce) {
             total += AcesHigh ()?10:1;

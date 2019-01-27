@@ -30,7 +30,7 @@ class ShadingDemo: public hal.grfx3d.SoftwareEngine
     FLT[][] identityMatrix, zeroMatrix;
     SI4 viewingDistance, aspectRatio;
     SI4 step = 0, lineStep = 0;
-    bool trip = false;
+    BOL trip = false;
     Shape3d testModel;
     d3.Vector_d viewd3.Point_d, lightSource, lineOfSight;
     SI4 ambientLightLevel = 7;
@@ -74,7 +74,7 @@ class ShadingDemo: public hal.grfx3d.SoftwareEngine
     }
     
     void renderShapeSolid (Shape3d renderShape, Cell& C)
-    {  bool polygonIsQuad = false;
+    {  BOL polygonIsQuad = false;
         SI4 vertexA, vertexB, vertexC, vertexD;
         FLT z1, z2, z3, z4;
         d3.Point_d one, two, three, four;

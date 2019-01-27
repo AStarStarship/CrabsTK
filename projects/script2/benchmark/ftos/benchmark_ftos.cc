@@ -21,8 +21,8 @@ specific language governing permissions and limitations under the License. */
 
 namespace _ {
 
-int BenchmarkFtoS(const char* args, TestCase** test_functions,
-                  size_t test_count, const char* header, const char* filename) {
+SI4 BenchmarkFtoS(const CH1* args, TestCase** test_functions,
+                  size_t test_count, const CH1* header, const CH1* filename) {
   return 0;
 }
 

@@ -26,7 +26,7 @@ class KTH_APP_API ProcessTree
 {
     public:
     
-    static const int DefaultMaxWindows = 1024;
+    static const SI4 DefaultMaxWindows = 1024;
 
     /** Default constructor. **/
     ProcessTree ();
@@ -35,22 +35,22 @@ class KTH_APP_API ProcessTree
     ProcessTree (Window& this_window);
 
     /** Constructor initializes with an array of windows. */
-    ProcessTree (vector<Window> init_windows);
+    ProcessTree (TArray<Window> init_windows);
 
     /** Returns the UID of this Group. */
     uint32_t GetUID ();
 
     /** Gets and sets the maximum number of windows in this group */
-    int GetMaxWindows ();
+    SI4 GetMaxWindows ();
     
     /** Gets and sets the maximum number of windows in this group */
-    void SetMaxWindows (int value);
+    void SetMaxWindows (SI4 value);
 
     /** . */
-    int Select (int window_number);
+    SI4 Select (SI4 window_number);
 
     /** Returns the number of windows in this group. */
-    int GetNumWindows ();
+    SI4 GetNumWindows ();
 
     /** Adds a newWindow to the group. */
     void AddWindow (Window newWindow);
@@ -61,9 +61,9 @@ class KTH_APP_API ProcessTree
     private:
 
     uint32_t uid_;                  //< The UID of this Group.
-    int num_windows_,           //< The number of windows in this group.
+    SI4 num_windows_,           //< The number of windows in this group.
         max_windows_;           //< The maximum number of windows allowed in a group.
-    vector<Window> windows_;    //< The Window (s) in this group. 
+    TArray<Window> windows_;    //< The Window (s) in this group. 
 };
 
 }       //< namespace _

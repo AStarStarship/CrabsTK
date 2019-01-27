@@ -54,9 +54,9 @@
  * knowledge of the FLAC format, documented
  * <A HREF="../format.html">here</A>.
  *
- * \section c_api FLAC C API
+ * \section c_api FLAC C SDK
  *
- * The FLAC C API is the interface to libFLAC, a set of structures
+ * The FLAC C SDK is the interface to libFLAC, a set of structures
  * describing the components of FLAC streams, and functions for
  * encoding and decoding streams, as well as manipulating FLAC
  * metadata in files.  The public include files will be installed
@@ -85,15 +85,15 @@
  * However the metadata editing interfaces currently have limited
  * read-only support for Ogg FLAC files.
  *
- * \section cpp_api FLAC C++ API
+ * \section cpp_api FLAC C++ SDK
  *
- * The FLAC C++ API is a set of classes that encapsulate the
+ * The FLAC C++ SDK is a set of classes that encapsulate the
  * structures and functions in libFLAC.  They provide slightly more
  * functionality with respect to metadata but are otherwise
  * equivalent.  For the most part, they share the same usage as
- * their counterparts in libFLAC, and the FLAC C API documentation
+ * their counterparts in libFLAC, and the FLAC C SDK documentation
  * can be used as a supplement.  The public include files
- * for the C++ API will be installed in your include area (for
+ * for the C++ SDK will be installed in your include area (for
  * example /usr/include/FLAC++/...).
  *
  * libFLAC++ is also licensed under
@@ -101,7 +101,7 @@
  *
  * \section getting_started Getting Started
  *
- * A good starting point for learning the API is to browse through
+ * A good starting point for learning the SDK is to browse through
  * the <A HREF="modules.html">modules</A>.  Modules are logical
  * groupings of related functions or classes, which correspond roughly
  * to header files or sections of header files.  Each module includes a
@@ -165,7 +165,7 @@
  * <A HREF="http://www.gnu.org/software/libtool/manual/libtool.html#Libtool-versioning">libtool version numbers</A>,
  * e.g. in libFLAC there are \c FLAC_API_VERSION_CURRENT,
  * \c FLAC_API_VERSION_REVISION, and \c FLAC_API_VERSION_AGE.
- * These can be used to support multiple versions of an API during the
+ * These can be used to support multiple versions of an SDK during the
  * transition phase, e.g.
  *
  * \code
@@ -201,8 +201,8 @@
  * into FLAC__StreamDecoder, and FLAC__SeekableStreamEncoder and
  * FLAC__FileEncoder into FLAC__StreamEncoder.  Only the
  * FLAC__StreamDecoder and FLAC__StreamEncoder remain.  What this means
- * is there is now a single API that can be used to encode or decode
- * streams to/from native FLAC or Ogg FLAC and the single API can work
+ * is there is now a single SDK that can be used to encode or decode
+ * streams to/from native FLAC or Ogg FLAC and the single SDK can work
  * on both seekable and non-seekable streams.
  *
  * Instead of creating an encoder or decoder of a certain layer, now the
@@ -357,9 +357,9 @@
  * \c FLAC__FRAME_HEADER_BLOCKING_STRATEGY_LEN
  */
 
-/** \defgroup flac FLAC C API
+/** \defgroup flac FLAC C SDK
  *
- * The FLAC C API is the interface to libFLAC, a set of structures
+ * The FLAC C SDK is the interface to libFLAC, a set of structures
  * describing the components of FLAC streams, and functions for
  * encoding and decoding streams, as well as manipulating FLAC
  * metadata in files.

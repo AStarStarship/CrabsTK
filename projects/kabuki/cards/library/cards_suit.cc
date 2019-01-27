@@ -21,19 +21,19 @@ namespace kabuki { namespace cards {
 
 // These 4 string arrays allow us to print the names of suits in our text 
 // console app. The last 4 suit_ suitFormats are the Latin Suits.
-const char* Suit::kFrenchSuit[4] = { "Hearts", "Diamonds", "Clubs",
+const CH1* Suit::kFrenchSuit[4] = { "Hearts", "Diamonds", "Clubs",
                                      "Spades" };
-const char* Suit::kGermanSuit[4] = { "Hearts", "Bells", "Acorns",
+const CH1* Suit::kGermanSuit[4] = { "Hearts", "Bells", "Acorns",
                                      "Leaves" };
-const char* Suit::kSwissGermanSuit[4] = { "Roses", "Bells", "Acorns",
+const CH1* Suit::kSwissGermanSuit[4] = { "Roses", "Bells", "Acorns",
                                           "Shields" };
-const char* Suit::kLatinSuit[4] = { "Cups", "Coins", "Clubs",
+const CH1* Suit::kLatinSuit[4] = { "Cups", "Coins", "Clubs",
                                     "Swords" };
-const char* Suit::kFormatTexts[] = { "French", "German", "Swiss-German",
+const CH1* Suit::kFormatTexts[] = { "French", "German", "Swiss-German",
                                        "Piacentine", "Napoletane",
                                        "Spagnole", "Bergamasche" };
 
-Suit::Suit (int column, int denomination, Format format, Color color) {
+Suit::Suit (SI4 column, SI4 denomination, Format format, Color color) {
     if (column < 0) {
         column_ = 0;
     } else if (column > 3) {
@@ -53,7 +53,7 @@ Suit::Suit (const Suit& other):
     // Nothing to do here ({:-B)
 }
 
-void Suit::Set (int denomination, Format format, Color color) {
+void Suit::Set (SI4 denomination, Format format, Color color) {
     // There are no rules for denomination as far as I can think of.
     denomination_ = denomination;
     color_ = color;
@@ -61,23 +61,23 @@ void Suit::Set (int denomination, Format format, Color color) {
     SetColor (color);
 }
 
-int Suit::Compare (Suit* other) {
-    int denomination = denomination_;
+SI4 Suit::Compare (Suit* other) {
+    SI4 denomination = denomination_;
     if (other == nullptr) {
         return denomination;
     }
     return other->denomination_ - denomination;
 }
 
-bool Suit::Equals (Suit* other) {
+BOL Suit::Equals (Suit* other) {
     return !Compare (other);
 }
 
-int Suit::GetDenomination () {
+SI4 Suit::GetDenomination () {
     return denomination_;
 }
 
-void Suit::SetDenomination (int value) {
+void Suit::SetDenomination (SI4 value) {
     // The user might want to use a negative point value in a game.
     denomination_ = value;
 }
@@ -112,7 +112,7 @@ void Suit::SetColor (Color color) {
     }
 }
 
-const char* Suit::GetLabel () {
+const CH1* Suit::GetLabel () {
     return label_;
 }
 
@@ -136,7 +136,7 @@ void Suit::SetFormat (Format format) {
 }
 
 /*
-int Suit::LoadCardImage (const char* directory) {
+SI4 Suit::LoadCardImage (const CH1* directory) {
     // First, check to see if the directory is valid.
     File filePath = File (directory);
 

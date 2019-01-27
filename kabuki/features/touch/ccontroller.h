@@ -1,6 +1,6 @@
 /* Kabuki Toolkit @version 0.x
 @link    https://github.com/kabuki-starship/kabuki-toolkit.git
-@file    /kabuki/features/hmi/hmi_controller.h
+@file    /kabuki/features/touch/touch_controller.h
 @author  Cale McCollough <https://calemccollough.github.io>
 @license Copyright (C) 2014-19 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -13,7 +13,7 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <pch.h>
-#if SEAM >= SEAM_00_03_00_00__00
+#if SEAM >= KABUKI_FEATURES_TOUCH_1
 #ifndef HEADER_FOR_KT_HMI_CONTROL
 #define HEADER_FOR_KT_HMI_CONTROL
 
@@ -21,9 +21,9 @@ specific language governing permissions and limitations under the License. */
 
 namespace _ {
 
-/* A group of hmi::Parameter(s).
+/* A group of touch::Parameter(s).
  */
-class API Controller {
+class SDK Controller {
  public:
   enum {
     MaxTemplates =
@@ -43,8 +43,8 @@ class API Controller {
   };
 
   /* Contrustor. */
-  Controller(int initCommonChannel = 0, int initKeyboardChannel = 1,
-             int initDrumsChannel = 7);
+  Controller(SI4 initCommonChannel = 0, SI4 initKeyboardChannel = 1,
+             SI4 initDrumsChannel = 7);
 
   /* Copy constructor. */
   Controller(const Controller& o);
@@ -59,13 +59,13 @@ class API Controller {
   void ProcessMIDIQuaterNote();
 
   /* Gets the number of ticks per MIDI quarter note beat. */
-  int GetTicksPerBeat();
+  SI4 GetTicksPerBeat();
 
   /* Sets the ticksPerBeat to the newNumTicks. */
-  void SetTicksPerBeat(int newNumTicksPerBeat);
+  void SetTicksPerBeat(SI4 newNumTicksPerBeat);
 
   /* Gets the current tempo. */
-  int GetTempo();
+  SI4 GetTempo();
 
   /* Sets the tempo to the newTempo. */
   void SetTempo(double newTempo);
@@ -88,13 +88,13 @@ class API Controller {
   /* sets the double_press_time to the newTime in seconds.
       @return gets -1 if the newTime is to small, 1 if it is to
           big, and 0 upon success */
-  int SetDoublePressTime(double newTime);
+  SI4 SetDoublePressTime(double newTime);
 
   /* Prints this object to a string. */
-  _::Utf& Print(_::Utf& print) const;
+  ::_::Utf& Print(_::Utf& print) const;
 
  private:
-  int common_channel_,     //< Common MIDI Channel  (0)
+  SI4 common_channel_,     //< Common MIDI Channel  (0)
       keyboard_channel_,   //< Keyboard MIDI out channel
       drums_channel_,      //< Drums MIDI out channel
       double_press_time_;  //< "Double press", or "double click" time.
@@ -102,4 +102,4 @@ class API Controller {
 };  //< class Controller
 }  // namespace _
 #endif  //< HEADER_FOR_KT_HMI_CONTROL
-#endif  //< #if SEAM >= SEAM_00_03_00_00__00
+#endif  //< #if SEAM >= KABUKI_FEATURES_TOUCH_1

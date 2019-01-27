@@ -7,7 +7,7 @@
 #include "maximilian.h"
 
 maxiOsc myCounter,mySwitchableOsc;//
-int CurrentCount;//
+SI4 CurrentCount;//
 double myOscOutput,myCurrentVolume;//
 maxiEnv myEnvelope;
 

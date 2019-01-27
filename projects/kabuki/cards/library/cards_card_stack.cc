@@ -20,7 +20,7 @@ using namespace std;
 
 namespace kabuki { namespace cards {
 
-CardStack::CardStack (int size) :
+CardStack::CardStack (SI4 size) :
     cards_     () {
     cards_.reserve (size);
     // Nothing to do here. ({:-)
@@ -31,7 +31,7 @@ CardStack::CardStack (const CardStack& other) :
     // Nothing to do here. ({:-)
 }
 
-CardStack::CardStack (Deck& deck, int min_cards) :
+CardStack::CardStack (Deck& deck, SI4 min_cards) :
     cards_   () {
     cards_.reserve (deck.GetSize ());
     Shuffle (deck);
@@ -50,9 +50,9 @@ CardStack& CardStack::operator= (const CardStack& other) {
     return *this;
 }
 
-int CardStack::Compare (CardStack& other) {
-    int point_value = GetValue ();
-    int other_point_value = other.GetValue (); // THis is giving me weird errors.
+SI4 CardStack::Compare (CardStack& other) {
+    SI4 point_value = GetValue ();
+    SI4 other_point_value = other.GetValue (); // THis is giving me weird errors.
 
     if (point_value > other_point_value) {
         return 1;
@@ -63,9 +63,9 @@ int CardStack::Compare (CardStack& other) {
     return 0;
 }
 
-int CardStack::GetValue () {
-    int total = 0;
-    for (int i = 0; i < Length (); ++i) {
+SI4 CardStack::GetValue () {
+    SI4 total = 0;
+    for (SI4 i = 0; i < Length (); ++i) {
         Card* card = cards_[i];
         total += card->GetDenomination ();
     }
@@ -79,16 +79,16 @@ void CardStack::Shuffle () {
     cards_.clear (); //< Delete all of the cards_ in this CardStack.
 
     // Then for each Card in the CardStack, 
-    for (int i = 0; i < Length (); ++i) {
+    for (SI4 i = 0; i < Length (); ++i) {
         cards_.push_back (cards.TakeRandomCard ());
     }
 }
 
 void CardStack::Shuffle (Deck& deck) {
-    int num_cards = deck.GetSize ();
+    SI4 num_cards = deck.GetSize ();
     //cout << "\n| Shuffling deck with count " << num_cards;
     CardStack unshuffled_cards (num_cards);
-    for (int i = num_cards - 1; i >= 0; --i) {
+    for (SI4 i = num_cards - 1; i >= 0; --i) {
         Card* card = deck.GetCard (i);
         unshuffled_cards.Push (deck.GetCard (i));
     }
@@ -96,7 +96,7 @@ void CardStack::Shuffle (Deck& deck) {
     cards_.reserve (num_cards);
     Clear ();
     //cout << "\n|\n Taking random cards\n|";
-    for (int i = num_cards - 1; i >= 0; --i) {
+    for (SI4 i = num_cards - 1; i >= 0; --i) {
         Card* card = unshuffled_cards.TakeRandomCard ();
         //cout << "\n| " << i << ".) Pushing ";
         //card->Print (txt);
@@ -107,15 +107,15 @@ void CardStack::Shuffle (Deck& deck) {
     //cout << "\n|\n CardStack successfully shuffled! :-)\n|";
 }
 
-int CardStack::GetSize () const {
+SI4 CardStack::GetSize () const {
     return cards_.capacity ();
 }
 
-int CardStack::Length () const {
+SI4 CardStack::Length () const {
     return cards_.size ();
 }
 
-int CardStack::Push (Card* card) {
+SI4 CardStack::Push (Card* card) {
     if (card == nullptr) {
         return -1;
     }
@@ -130,13 +130,13 @@ Card* CardStack::Draw () {
     return card;
 }
 
-int CardStack::InsertCard (Card* card, int index) {
+SI4 CardStack::InsertCard (Card* card, SI4 index) {
     auto it = cards_.begin ();
     cards_.insert (it + index, card);
     return Length ();
 }
 
-int CardStack::Push (CardStack& new_cards) {
+SI4 CardStack::Push (CardStack& new_cards) {
     size_t new_count = Length () + new_cards.Length ();
     if (new_count > cards_.capacity ())
         return 1;
@@ -150,7 +150,7 @@ int CardStack::Push (CardStack& new_cards) {
     return Length ();
 }
 
-int CardStack::DrawCards (CardStack& cards, int num_cards_take) {
+SI4 CardStack::DrawCards (CardStack& cards, SI4 num_cards_take) {
     if (num_cards_take < 0) { //< Remember the @pre thing???
         return -1;
     }
@@ -162,23 +162,23 @@ int CardStack::DrawCards (CardStack& cards, int num_cards_take) {
     if (value > cards_.capacity ())
         return 2;
 
-    for (int i = 0; i < num_cards_take; ++i)
+    for (SI4 i = 0; i < num_cards_take; ++i)
         Push (cards.TakeNextCard ());
 
     return 0;
 }
 
-int CardStack::Count (Card* card) {
-    int count = 0;
-    for (int i = 0; i < Length (); ++i) {
+SI4 CardStack::Count (Card* card) {
+    SI4 count = 0;
+    for (SI4 i = 0; i < Length (); ++i) {
         count += cards_[i]->Equals (card)?1:0;
     }
     return count;
 }
 
-int CardStack::Contains (Card* card) {
-    int count = 0;
-    for (int i = 0; i < Length (); ++i) {
+SI4 CardStack::Contains (Card* card) {
+    SI4 count = 0;
+    for (SI4 i = 0; i < Length (); ++i) {
         if (cards_[i]->Equals (card)) {
             return true;
         }
@@ -186,9 +186,9 @@ int CardStack::Contains (Card* card) {
     return false;
 }
 
-bool CardStack::RemoveCard (Card* card) {
-    int count = 0;
-    for (int i = 0; i < Length (); ++i) {
+BOL CardStack::RemoveCard (Card* card) {
+    SI4 count = 0;
+    for (SI4 i = 0; i < Length (); ++i) {
         if (cards_[i]->Equals (card)) {
             auto it = cards_.begin ();
             cards_.erase (it + i);
@@ -198,7 +198,7 @@ bool CardStack::RemoveCard (Card* card) {
     return false;
 }
 
-int CardStack::SetCards (CardStack& stack, int num_cards) {
+SI4 CardStack::SetCards (CardStack& stack, SI4 num_cards) {
     if (num_cards < 0) {
         return -1;
     }
@@ -215,18 +215,18 @@ int CardStack::SetCards (CardStack& stack, int num_cards) {
         return Length ();
     }
 
-    for (int i = 0; i < num_cards - 1; ++i)
+    for (SI4 i = 0; i < num_cards - 1; ++i)
         cards_.push_back (stack.GetCard (i));
 
     cards_.push_back (stack.GetCard (num_cards - 1));
     return Length ();
 }
 
-int CardStack::TakeCards (CardStack& cards, int num_cards) {
+SI4 CardStack::TakeCards (CardStack& cards, SI4 num_cards) {
     if (num_cards < 1)
         return -1;
 
-    int count = cards.Length ();
+    SI4 count = cards.Length ();
     if (num_cards > count) {
         // Not enough cards_ on the stack.
         return 1;
@@ -236,15 +236,15 @@ int CardStack::TakeCards (CardStack& cards, int num_cards) {
         return 3;
     }
 
-    for (int i = 0; i < num_cards - 1; ++i) {
+    for (SI4 i = 0; i < num_cards - 1; ++i) {
         cards_.push_back (cards.TakeNextCard ());
     }
     cards_.push_back (cards.TakeNextCard ());
     return Length ();
 }
 
-Card* CardStack::GetCard (int index) {
-    int num_cards = Length ();
+Card* CardStack::GetCard (SI4 index) {
+    SI4 num_cards = Length ();
     if (num_cards == 0 || index >= num_cards) {
         return nullptr;
     }
@@ -252,8 +252,8 @@ Card* CardStack::GetCard (int index) {
     return card;
 }
 
-Card* CardStack::TakeCard (int index) {
-    int num_cards = Length ();
+Card* CardStack::TakeCard (SI4 index) {
+    SI4 num_cards = Length ();
 
     if (num_cards <= 0 || index >= num_cards) // Arrays start at 0, so if we used cards_[num_cards], it would be out of bounds.
         return nullptr;
@@ -267,7 +267,7 @@ Card* CardStack::TakeNextCard () {
     if (Length () == 0) // Then there are no cards_ in the cards_.
         return nullptr;
 
-    int index = Length ();
+    SI4 index = Length ();
     // Golden rule: If you use a variable in a function more than once, store a
     // local copy to get a performance increase.
     Card* next_card = cards_[index];
@@ -280,7 +280,7 @@ Card* CardStack::TakeRandomCard () {
         return nullptr;
 
     srand ((uint)time (nullptr));
-    int index = rand () % Length ();
+    SI4 index = rand () % Length ();
     Card* card = cards_[index];
     cards_.erase (cards_.begin () + index);
     //cout << "\n| Taking card:" << index << ' ';
@@ -288,14 +288,14 @@ Card* CardStack::TakeRandomCard () {
     return card;
 }
 
-bool CardStack::IsEmpty () {
+BOL CardStack::IsEmpty () {
     return Length () == 0;
 }
 
 _::Text& CardStack::Print (_::Text& txt) {
     PrintLine ('-', "\n>");
     cout << "\n| CardStack: Count:" << Length ();
-    for (int i = 0; i < Length (); ++i) {
+    for (SI4 i = 0; i < Length (); ++i) {
         cout << "\n| " << i << ".) ";
         Card* card = cards_[i];
         card->Print (txt);

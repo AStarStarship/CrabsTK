@@ -23,7 +23,7 @@ using namespace std;
 namespace kabuki { namespace cards {
 
 Dealer::Dealer (id::User* user, int64_t buy_in, int64_t ante, int64_t min_bet, 
-                int min_players, int max_players, int num_decks) :
+                SI4 min_players, SI4 max_players, SI4 num_decks) :
     round_number_  (0),
     pot_           (0),
     buy_in_        (buy_in),
@@ -47,16 +47,16 @@ Dealer::~Dealer () {
     // Nothing to do here :-)
 }
 
-int Dealer::GetRoundNumber () {
+SI4 Dealer::GetRoundNumber () {
     return round_number_;
 }
 
-int Dealer::GetPlayersCount () {
-    return (int)players_.size ();
+SI4 Dealer::GetPlayersCount () {
+    return (SI4)players_.size ();
 }
 
-int Dealer::RemovePlayer (const char* handle) {
-    for (int i = 0; i < (int)GetPlayersCount (); ++i) {
+SI4 Dealer::RemovePlayer (const CH1* handle) {
+    for (SI4 i = 0; i < (SI4)GetPlayersCount (); ++i) {
         if (players_[i]->GetUser()->GetStatus () == handle) {
             players_.erase (players_.begin () + i);
             return i;
@@ -65,12 +65,12 @@ int Dealer::RemovePlayer (const char* handle) {
     return -1;
 }
 
-int Dealer::RemovePlayer (int index) {
+SI4 Dealer::RemovePlayer (SI4 index) {
     // Note: Arrays in C++ always start at element 0 (ie.e players_[0])
     if (index < 0)
         return -1;
 
-    if (index >= (int)GetPlayersCount ())
+    if (index >= (SI4)GetPlayersCount ())
         return 1;
 
     players_.erase (players_.begin () + index);
@@ -78,31 +78,31 @@ int Dealer::RemovePlayer (int index) {
 }
 
 Player* Dealer::GetPlayer () {
-    int number = current_player_;
+    SI4 number = current_player_;
     if (number < 0) {
         return nullptr;
     }
-    if (number >= (int)GetPlayersCount ()) {
+    if (number >= (SI4)GetPlayersCount ()) {
         return nullptr;
     }
     return players_[number];
 }
 
-Player* Dealer::GetPlayer (int index) {
+Player* Dealer::GetPlayer (SI4 index) {
     if (index < 0) {
         return nullptr; 
     }
-    if (index > (int)GetPlayersCount ()) {
+    if (index > (SI4)GetPlayersCount ()) {
         return nullptr;
     }
     return players_[index];
 }
 
-int Dealer::GetCurrentPlayer () {
+SI4 Dealer::GetCurrentPlayer () {
     return current_player_;
 }
 
-bool Dealer::SetCurrentPlayer (int index) {
+BOL Dealer::SetCurrentPlayer (SI4 index) {
     return current_player_ = index;
 }
 
@@ -157,26 +157,26 @@ int64_t Dealer::GetMinBet () {
     return min_bet_;
 }
 
-const char* Dealer::SetMinBet (int64_t value) {
+const CH1* Dealer::SetMinBet (int64_t value) {
     if (value < 0)
         return "min_bet can't be negative";
     min_bet_ = value;
     return nullptr;
 }
 
-int Dealer::GetMinPlayers () {
+SI4 Dealer::GetMinPlayers () {
     return min_players_;
 }
 
-int Dealer::GetMaxPlayers () {
+SI4 Dealer::GetMaxPlayers () {
     return GetPlayersCount ();
 }
 
-bool Dealer::SetPlayerNumber (int value) {
+BOL Dealer::SetPlayerNumber (SI4 value) {
     if (value < 0) {
         return false;
     }
-    if (value >= (int)GetPlayersCount ()) {
+    if (value >= (SI4)GetPlayersCount ()) {
         return false;
     }
     current_player_ = value;
@@ -184,7 +184,7 @@ bool Dealer::SetPlayerNumber (int value) {
 }
 
 void Dealer::RestartGame () {
-    if ((int)GetPlayersCount () < min_players_) {
+    if ((SI4)GetPlayersCount () < min_players_) {
         std::cout << "\n| Not enough players!";
         return;
     }
@@ -194,13 +194,13 @@ void Dealer::RestartGame () {
     ante_         = buy_in_;
     pot_          = 0;
 
-    for (int i = 0; i < GetPlayersCount (); ++i) {
+    for (SI4 i = 0; i < GetPlayersCount (); ++i) {
         players_[i]->RestartGame ();
     }
 
     pot_ = (GetPlayersCount () + 1) * ante_;
 
-    for (int i = GetPlayersCount (); i > 0; --i) {
+    for (SI4 i = GetPlayersCount (); i > 0; --i) {
         players_[i]->GetUser()->AddValue (ante_);
     }
     GetUser ()->AddValue (ante_);
@@ -218,14 +218,14 @@ void Dealer::Redeal () {
 
 Text& Dealer::Print (Text& txt) {
     cout << "\n| Dealer:\n| Pot Total: " << pot_;
-    for (int i = 0; i < GetPlayersCount (); ++i) {
+    for (SI4 i = 0; i < GetPlayersCount (); ++i) {
         players_[i]->Print (txt);
     }
     txt;
 }
 
-const char* Dealer::Sudo (const char* text, const char* strand_end) {
-    const char* next_token;
+const CH1* Dealer::Sudo (const CH1* text, const CH1* strand_end) {
+    const CH1* next_token;
     if (!text) {
         return nullptr;
     }

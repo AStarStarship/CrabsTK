@@ -37,8 +37,8 @@ class TextOperation :public _::Text<1024>, public Operand {
         @param text     Beginning of the Text buffer. 
         @param strand_end End of the Text buffer.
         @return Returns nil upon success and an error string upon failure. */
-    virtual const char* Sudo (const char* text,
-                                    const char* strand_end) {
+    virtual const CH1* Sudo (const CH1* text,
+                                    const CH1* strand_end) {
         return nullptr
     }
 
@@ -74,7 +74,7 @@ class CardsClient: public Client {
     void Write (const std::string& message) {
         io_service_.post (
             [this, message] () {
-            bool write_in_progress = !text_out_queue_.empty ();
+            BOL write_in_progress = !text_out_queue_.empty ();
             text_out_queue_.push_back (message);
             if (!write_in_progress) {
                 WriteToSocket ();
@@ -152,13 +152,13 @@ class CardsClient: public Client {
     text_operation_queue text_out_queue_;
 };
 
-SI4 main (SI4 argc, char* argv[]) {
+SI4 main (SI4 argc, CH1* argv[]) {
 
     enum {
         kKeyboardBufferSize = 80,
     };
     
-    char input[kKeyboardBufferSize];
+    CH1 input[kKeyboardBufferSize];
 
     if (argc != 3) {
         std::cerr << "Usage: cards <host> <port>\n";

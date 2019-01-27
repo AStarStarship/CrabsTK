@@ -24,16 +24,16 @@ namespace kabuki { namespace cards {
     @param hand The hand.
     @param ace_value Use value of either 1 or 13.
     @return Returns the score. */
-KABUKI int BlackjackScore (Hand& hand, int ace_value);
+KABUKI SI4 BlackjackScore (Hand& hand, SI4 ace_value);
 
 /** Returns the min score of this hand where Aces are worth 1. */
-KABUKI int BlackjackMinScore (Hand& hand);
+KABUKI SI4 BlackjackMinScore (Hand& hand);
 
 /** Returns the max score of this hand where Aces are worth 11. */
-KABUKI int BlackjackMaxScore (Hand& hand);
+KABUKI SI4 BlackjackMaxScore (Hand& hand);
 
 /** Compares the two Blackjack hands. */
-KABUKI int BlackjackCompareHands (Hand& a, Hand& b);
+KABUKI SI4 BlackjackCompareHands (Hand& a, Hand& b);
 
 /** A player in a Blackjack game. */
 class BlackjackPlayer : public Player {
@@ -49,13 +49,13 @@ class BlackjackPlayer : public Player {
 
     /** Default Constructor. */
     BlackjackPlayer (id::User* user, CardStack& stock,
-                     bool is_dealer = false);
+                     BOL is_dealer = false);
 
     /** Destructor. */
     virtual ~BlackjackPlayer ();
 
     /** Sets the state of the player. */
-    const char* SetState (int state) override;
+    const CH1* SetState (SI4 state) override;
 
     /** Handles hit signal. */
     void Hit ();
@@ -67,14 +67,14 @@ class BlackjackPlayer : public Player {
     //Array<CardCombo> GetHandCombos ();
 
     /** Returns true if the player is holding. */
-    virtual bool IsHolding ();
+    virtual BOL IsHolding ();
 
     /** Function returns if this hand is 21. */
-    bool Is21 ();
+    BOL Is21 ();
 
     /** Function returns true if the hand is a bust.
         A hand is a bust if it is over 21 points. */
-    bool IsBust ();
+    BOL IsBust ();
 
     /** Pure virtual new game logic handler. */
     virtual void RestartGame ();
@@ -94,10 +94,10 @@ class BlackjackPlayer : public Player {
     /** Compares this hand to the other.
     @return Returns 0 if the hands are equal, > 1 if the other hand beats
     this hand and < 0 if the other hand wins.. */
-    virtual int Compare (Hand& hand);
+    virtual SI4 Compare (Hand& hand);
 
     /** Returns true if this hand wins compared to the other one. */
-    virtual bool Wins (Hand& hand);
+    virtual BOL Wins (Hand& hand);
 
     /** Prints the abridged player stats to the console. */
     virtual _::Text& PrintStats (_::Text& txt);
@@ -112,8 +112,8 @@ class BlackjackPlayer : public Player {
         @param text     Beginning of the Text buffer. 
         @param strand_end End of the Text buffer.
         @return Returns nil upon success and an error string upon failure. */
-    virtual const char* Sudo (const char* text,
-                                    const char* strand_end);
+    virtual const CH1* Sudo (const CH1* text,
+                                    const CH1* strand_end);
     protected:
 
     CardStack& stock_; //< Stock of cards to draw from.
