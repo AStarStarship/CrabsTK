@@ -75,7 +75,6 @@ All currently broken. Sorry. Please contribute as a developer. Thanks.
 
 | Module        | Description |
 |:-------------:|:------------|
-| anyled        | Early-stage universal PWM and addressable LED controller. |
 | av_studio     | Early-stage Audio-visual Studio app. |
 | cards         | Early-stage playing card game app. |
 | connections   | Early-stage Contact list, trading, and chat app. |

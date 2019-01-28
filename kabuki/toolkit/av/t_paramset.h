@@ -102,9 +102,9 @@ class SDK ParamSet {
   template<typename Printer>
   Printer& Print(Printer& o) const {
     o << "\nParamSet:" << "ControlCount: " << Count ()
-      << StringLine ('-')
+      << LineStrand ('-')
       << Parameter<T>::MacroHeader << '\n'
-      << StringLine ('-')
+      << LineStrand ('-')
       << "ParamCount():", ParamCount());
     for (SI4 i = 0; i < ParamCount(); ++i) {
       auto control = controls[i];
@@ -117,7 +117,7 @@ class SDK ParamSet {
         o << '\n';
       }
     }
-    return o << StringLine ('-');
+    return o << LineStrand ('-');
   }
 
  private:

@@ -15,12 +15,143 @@
     <Filter Include="kabuki\toolkit\gui">
       <UniqueIdentifier>{9f9ccb68-10fe-4794-959e-2db2532c86a6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="kabuki\features">
+      <UniqueIdentifier>{5c26cbbe-8f70-42e3-954d-e533f372ae6a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kabuki\features\graphics">
+      <UniqueIdentifier>{a4be12b6-ad20-4b02-851c-d3fcb641d5e4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <None Include="test_footer.inl">
+    <ClInclude Include="01_bar.h">
       <Filter>kabuki\toolkit\gui</Filter>
-    </None>
-    <None Include="test_release.inl">
+    </ClInclude>
+    <ClInclude Include="c_common.h">
+      <Filter>kabuki\toolkit\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="c_compat.h">
+      <Filter>kabuki\toolkit\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="c_entypo.h">
+      <Filter>kabuki\toolkit\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="c_python.h">
+      <Filter>kabuki\toolkit\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="global.h">
+      <Filter>kabuki\toolkit\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.h">
+      <Filter>kabuki\toolkit\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="t_button.h">
+      <Filter>kabuki\toolkit\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="t_checkbox.h">
+      <Filter>kabuki\toolkit\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="t_colorpicker.h">
+      <Filter>kabuki\toolkit\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="t_colorwheel.h">
+      <Filter>kabuki\toolkit\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="t_combobox.h">
+      <Filter>kabuki\toolkit\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="t_formhelper.h">
+      <Filter>kabuki\toolkit\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="t_glcanvas.h">
+      <Filter>kabuki\toolkit\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="t_glutil.h">
+      <Filter>kabuki\toolkit\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="t_graph.h">
+      <Filter>kabuki\toolkit\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="t_imagepanel.h">
+      <Filter>kabuki\toolkit\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="t_imageview.h">
+      <Filter>kabuki\toolkit\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="t_label.h">
+      <Filter>kabuki\toolkit\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="t_layout.h">
+      <Filter>kabuki\toolkit\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="t_messagedialog.h">
+      <Filter>kabuki\toolkit\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="t_object.h">
+      <Filter>kabuki\toolkit\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="t_opengl.h">
+      <Filter>kabuki\toolkit\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="t_popup.h">
+      <Filter>kabuki\toolkit\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="t_popupbutton.h">
+      <Filter>kabuki\toolkit\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="t_progressbar.h">
+      <Filter>kabuki\toolkit\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="t_screen.h">
+      <Filter>kabuki\toolkit\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="t_serializeropengl.h">
+      <Filter>kabuki\toolkit\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="t_serializersparse.h">
+      <Filter>kabuki\toolkit\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="t_slider.h">
+      <Filter>kabuki\toolkit\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="t_stackedwidget.h">
+      <Filter>kabuki\toolkit\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="t_tabheader.h">
+      <Filter>kabuki\toolkit\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="t_tabwidget.h">
+      <Filter>kabuki\toolkit\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="t_textbox.h">
+      <Filter>kabuki\toolkit\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="t_theme.h">
+      <Filter>kabuki\toolkit\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="t_toolbutton.h">
+      <Filter>kabuki\toolkit\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="t_vscrollpanel.h">
+      <Filter>kabuki\toolkit\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="t_widget.h">
+      <Filter>kabuki\toolkit\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="t_window.h">
+      <Filter>kabuki\toolkit\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="test_tree.h">
+      <Filter>kabuki\toolkit\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="00_foo.h">
+      <Filter>kabuki\toolkit\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="t_serializer.h">
+      <Filter>kabuki\toolkit\gui</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="darwin.mm">
       <Filter>kabuki\toolkit\gui</Filter>
     </None>
     <None Include="global_config.inl">
@@ -32,22 +163,26 @@
     <None Include="test_debug.inl">
       <Filter>kabuki\toolkit\gui</Filter>
     </None>
+    <None Include="test_footer.inl">
+      <Filter>kabuki\toolkit\gui</Filter>
+    </None>
+    <None Include="test_release.inl">
+      <Filter>kabuki\toolkit\gui</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="test_tree.h">
+    <ClCompile Include="gui_common.cc">
       <Filter>kabuki\toolkit\gui</Filter>
-    </ClInclude>
-    <ClInclude Include="00_foo.h">
+    </ClCompile>
+    <ClCompile Include="gui_glutil.cc">
       <Filter>kabuki\toolkit\gui</Filter>
-    </ClInclude>
-    <ClInclude Include="01_bar.h">
+    </ClCompile>
+    <ClCompile Include="gui_imageview.cc">
       <Filter>kabuki\toolkit\gui</Filter>
-    </ClInclude>
-    <ClInclude Include="pch.h">
+    </ClCompile>
+    <ClCompile Include="gui_screen.cc">
       <Filter>kabuki\toolkit\gui</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
+    </ClCompile>
     <ClCompile Include="pch.cc">
       <Filter>kabuki\toolkit\gui</Filter>
     </ClCompile>

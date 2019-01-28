@@ -190,14 +190,14 @@ class SDK ButtonMacro : public Parameter<SI4>, public Button {
   /* Prints a string of the row strings of the list. */
   template<typename Printer>
   Printer& PrintListString(Printer& o) const {
-    o << StringLine ('#', Parameter<SI4>::kMacroHeaderLength);
+    o << LineStrand ('#', Parameter<SI4>::kMacroHeaderLength);
 
     auto node = controls;
     while (node) {
       o << node->data->PrintStringRow (o) << '\n';
       node = node->next;
     }
-    return o << StringLine ('#', Parameter<SI4>::kMacroHeaderLength);
+    return o << LineStrand ('#', Parameter<SI4>::kMacroHeaderLength);
   }
 
   /* Prints the header for toStringRow (). */
@@ -219,11 +219,11 @@ class SDK ButtonMacro : public Parameter<SI4>, public Button {
   /* Prints this object to a terminal. */
   template<typename Printer>
   Printer& Print(Printer& o) const {
-    o << StringLine ('~', Parameter<SI4>::kMacroHeaderLength)
+    o << LineStrand ('~', Parameter<SI4>::kMacroHeaderLength)
       << "Macro Control:\n "
-      << StringLine ('~', Parameter<SI4>::kMacroHeaderLength)
+      << LineStrand ('~', Parameter<SI4>::kMacroHeaderLength)
       << Parameter<SI4>::MacroHeader << '\n'
-      << StringLine ('~', Parameter<SI4>::kMacroHeaderLength)
+      << LineStrand ('~', Parameter<SI4>::kMacroHeaderLength)
       << PrintStringRow (o);
     return o << PrintListString (o);
   }

@@ -19,6 +19,51 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="00_foo.h" />
+    <ClInclude Include="01_bar.h" />
+    <ClInclude Include="c_common.h" />
+    <ClInclude Include="c_compat.h" />
+    <ClInclude Include="c_entypo.h" />
+    <ClInclude Include="c_python.h" />
+    <ClInclude Include="global.h" />
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="test_tree.h" />
+    <ClInclude Include="t_button.h" />
+    <ClInclude Include="t_checkbox.h" />
+    <ClInclude Include="t_colorpicker.h" />
+    <ClInclude Include="t_colorwheel.h" />
+    <ClInclude Include="t_combobox.h" />
+    <ClInclude Include="t_formhelper.h" />
+    <ClInclude Include="t_glcanvas.h" />
+    <ClInclude Include="t_glutil.h" />
+    <ClInclude Include="t_graph.h" />
+    <ClInclude Include="t_imagepanel.h" />
+    <ClInclude Include="t_imageview.h" />
+    <ClInclude Include="t_label.h" />
+    <ClInclude Include="t_layout.h" />
+    <ClInclude Include="t_messagedialog.h" />
+    <ClInclude Include="t_object.h" />
+    <ClInclude Include="t_opengl.h" />
+    <ClInclude Include="t_popup.h" />
+    <ClInclude Include="t_popupbutton.h" />
+    <ClInclude Include="t_progressbar.h" />
+    <ClInclude Include="t_screen.h" />
+    <ClInclude Include="t_serializer.h" />
+    <ClInclude Include="t_serializeropengl.h" />
+    <ClInclude Include="t_serializersparse.h" />
+    <ClInclude Include="t_slider.h" />
+    <ClInclude Include="t_stackedwidget.h" />
+    <ClInclude Include="t_tabheader.h" />
+    <ClInclude Include="t_tabwidget.h" />
+    <ClInclude Include="t_textbox.h" />
+    <ClInclude Include="t_theme.h" />
+    <ClInclude Include="t_toolbutton.h" />
+    <ClInclude Include="t_vscrollpanel.h" />
+    <ClInclude Include="t_widget.h" />
+    <ClInclude Include="t_window.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="darwin.mm" />
     <None Include="global_config.inl" />
     <None Include="readme.md" />
     <None Include="test_debug.inl" />
@@ -26,12 +71,10 @@
     <None Include="test_release.inl" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="00_foo.h" />
-    <ClInclude Include="01_bar.h" />
-    <ClInclude Include="pch.h" />
-    <ClInclude Include="test_tree.h" />
-  </ItemGroup>
-  <ItemGroup>
+    <ClCompile Include="gui_common.cc" />
+    <ClCompile Include="gui_glutil.cc" />
+    <ClCompile Include="gui_imageview.cc" />
+    <ClCompile Include="gui_screen.cc" />
     <ClCompile Include="pch.cc" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
