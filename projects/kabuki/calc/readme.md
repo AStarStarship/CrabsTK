@@ -1,6 +1,6 @@
-# projects.kabuki.kabukinet
+# projects.kabuki.calc
 
-KabukiNet Differential and Ordinary Differential Equation neural network architecture.
+A graphing calculator app.
 
 # The License
 

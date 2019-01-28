@@ -65,15 +65,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "0_3_08_igeek.library", "pro
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "0_N_N.kabuki_vm", "projects\kabuki\kabuki_vm\kabuki.kabuki_vm.vcxproj", "{C717B998-3A6A-44BF-B871-291D49E0765F}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "0_3_08.kabukinet.benchmark", "projects\kabuki\kabukinet\benchmark\kabuki.kabukinet.benchmark.vcxproj", "{492B2B84-5D49-42CA-BD66-31283A49F44F}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "0_0_08.sloth.library", "projects\kabuki\sloth\library\kabuki.sloth.library.vcxproj", "{34BA62EE-7A6F-4327-A1BC-C0849712AD70}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "0_3_07.theater.app", "projects\kabuki\theater\app\kabuki.theater.app.vcxproj", "{8210929A-09C2-41B8-B08E-ADF1E300A2A1}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "0_1_00.typecraft.library", "projects\kabuki\typecraft\library\kabuki.typecraft.library.vcxproj", "{6CAF7B2E-F77D-4B46-A4DA-B681015E1D59}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "0_0_11.kabukinet.console", "projects\kabuki\kabukinet\console\kabuki.kabukinet.console.vcxproj", "{0FD8B2B6-0154-4EA0-A298-E4A50DB4B996}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "0_2_02.av_studio.console", "projects\kabuki\av_studio\console\kabuki.av_studio.console.vcxproj", "{C7D58A7C-DAAB-4864-92F0-F4D2632BAC36}"
 EndProject
@@ -96,6 +92,10 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "0_0_02.autopilot.console", "projects\kabuki\tek\autopilot\console\kabuki.tek.autopilot.console.vcxproj", "{8FDA8BB5-DD49-425D-AAF6-1214F112E483}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "kabuki.toolkit.av", "kabuki\toolkit\av\kabuki.toolkit.av.vcxproj", "{F32CD971-7315-4EED-BC24-5165B88E0C8E}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "0_3_08.calc.app", "projects\kabuki\calc\app\kabuki.calc.app.vcxproj", "{492B2B84-5D49-42CA-BD66-31283A49F44F}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "0_0_11.calc.console", "projects\kabuki\calc\console\kabuki.calc.console.vcxproj", "{0FD8B2B6-0154-4EA0-A298-E4A50DB4B996}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -322,13 +322,6 @@ Global
 		{C717B998-3A6A-44BF-B871-291D49E0765F}.Release|x64.Build.0 = Release|x64
 		{C717B998-3A6A-44BF-B871-291D49E0765F}.Release|x86.ActiveCfg = Release|Win32
 		{C717B998-3A6A-44BF-B871-291D49E0765F}.Release|x86.Build.0 = Release|Win32
-		{492B2B84-5D49-42CA-BD66-31283A49F44F}.Debug|x64.ActiveCfg = Debug|x64
-		{492B2B84-5D49-42CA-BD66-31283A49F44F}.Debug|x86.ActiveCfg = Debug|Win32
-		{492B2B84-5D49-42CA-BD66-31283A49F44F}.Debug|x86.Build.0 = Debug|Win32
-		{492B2B84-5D49-42CA-BD66-31283A49F44F}.Release|x64.ActiveCfg = Release|x64
-		{492B2B84-5D49-42CA-BD66-31283A49F44F}.Release|x64.Build.0 = Release|x64
-		{492B2B84-5D49-42CA-BD66-31283A49F44F}.Release|x86.ActiveCfg = Release|Win32
-		{492B2B84-5D49-42CA-BD66-31283A49F44F}.Release|x86.Build.0 = Release|Win32
 		{34BA62EE-7A6F-4327-A1BC-C0849712AD70}.Debug|x64.ActiveCfg = Debug|x64
 		{34BA62EE-7A6F-4327-A1BC-C0849712AD70}.Debug|x86.ActiveCfg = Debug|Win32
 		{34BA62EE-7A6F-4327-A1BC-C0849712AD70}.Debug|x86.Build.0 = Debug|Win32
@@ -350,13 +343,6 @@ Global
 		{6CAF7B2E-F77D-4B46-A4DA-B681015E1D59}.Release|x64.Build.0 = Release|x64
 		{6CAF7B2E-F77D-4B46-A4DA-B681015E1D59}.Release|x86.ActiveCfg = Release|Win32
 		{6CAF7B2E-F77D-4B46-A4DA-B681015E1D59}.Release|x86.Build.0 = Release|Win32
-		{0FD8B2B6-0154-4EA0-A298-E4A50DB4B996}.Debug|x64.ActiveCfg = Debug|x64
-		{0FD8B2B6-0154-4EA0-A298-E4A50DB4B996}.Debug|x86.ActiveCfg = Debug|Win32
-		{0FD8B2B6-0154-4EA0-A298-E4A50DB4B996}.Debug|x86.Build.0 = Debug|Win32
-		{0FD8B2B6-0154-4EA0-A298-E4A50DB4B996}.Release|x64.ActiveCfg = Release|x64
-		{0FD8B2B6-0154-4EA0-A298-E4A50DB4B996}.Release|x64.Build.0 = Release|x64
-		{0FD8B2B6-0154-4EA0-A298-E4A50DB4B996}.Release|x86.ActiveCfg = Release|Win32
-		{0FD8B2B6-0154-4EA0-A298-E4A50DB4B996}.Release|x86.Build.0 = Release|Win32
 		{C7D58A7C-DAAB-4864-92F0-F4D2632BAC36}.Debug|x64.ActiveCfg = Debug|x64
 		{C7D58A7C-DAAB-4864-92F0-F4D2632BAC36}.Debug|x86.ActiveCfg = Debug|Win32
 		{C7D58A7C-DAAB-4864-92F0-F4D2632BAC36}.Debug|x86.Build.0 = Debug|Win32
@@ -435,6 +421,22 @@ Global
 		{F32CD971-7315-4EED-BC24-5165B88E0C8E}.Release|x64.Build.0 = Release|x64
 		{F32CD971-7315-4EED-BC24-5165B88E0C8E}.Release|x86.ActiveCfg = Release|Win32
 		{F32CD971-7315-4EED-BC24-5165B88E0C8E}.Release|x86.Build.0 = Release|Win32
+		{492B2B84-5D49-42CA-BD66-31283A49F44F}.Debug|x64.ActiveCfg = Debug|x64
+		{492B2B84-5D49-42CA-BD66-31283A49F44F}.Debug|x64.Build.0 = Debug|x64
+		{492B2B84-5D49-42CA-BD66-31283A49F44F}.Debug|x86.ActiveCfg = Debug|Win32
+		{492B2B84-5D49-42CA-BD66-31283A49F44F}.Debug|x86.Build.0 = Debug|Win32
+		{492B2B84-5D49-42CA-BD66-31283A49F44F}.Release|x64.ActiveCfg = Release|x64
+		{492B2B84-5D49-42CA-BD66-31283A49F44F}.Release|x64.Build.0 = Release|x64
+		{492B2B84-5D49-42CA-BD66-31283A49F44F}.Release|x86.ActiveCfg = Release|Win32
+		{492B2B84-5D49-42CA-BD66-31283A49F44F}.Release|x86.Build.0 = Release|Win32
+		{0FD8B2B6-0154-4EA0-A298-E4A50DB4B996}.Debug|x64.ActiveCfg = Debug|x64
+		{0FD8B2B6-0154-4EA0-A298-E4A50DB4B996}.Debug|x64.Build.0 = Debug|x64
+		{0FD8B2B6-0154-4EA0-A298-E4A50DB4B996}.Debug|x86.ActiveCfg = Debug|Win32
+		{0FD8B2B6-0154-4EA0-A298-E4A50DB4B996}.Debug|x86.Build.0 = Debug|Win32
+		{0FD8B2B6-0154-4EA0-A298-E4A50DB4B996}.Release|x64.ActiveCfg = Release|x64
+		{0FD8B2B6-0154-4EA0-A298-E4A50DB4B996}.Release|x64.Build.0 = Release|x64
+		{0FD8B2B6-0154-4EA0-A298-E4A50DB4B996}.Release|x86.ActiveCfg = Release|Win32
+		{0FD8B2B6-0154-4EA0-A298-E4A50DB4B996}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

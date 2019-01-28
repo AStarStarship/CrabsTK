@@ -19,12 +19,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="00_foo.h" />
-    <ClInclude Include="01_bar.h" />
-    <ClInclude Include="pch.h" />
-    <ClInclude Include="test_tree.h" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="global_config.inl" />
     <None Include="readme.md" />
     <None Include="test_debug.inl" />
@@ -32,15 +26,22 @@
     <None Include="test_release.inl" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="00_foo.h" />
+    <ClInclude Include="01_bar.h" />
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="test_tree.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="01_benchmark_mnist.cc" />
     <ClCompile Include="pch.cc" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
-    <ProjectGuid>{0FD8B2B6-0154-4EA0-A298-E4A50DB4B996}</ProjectGuid>
+    <ProjectGuid>{492B2B84-5D49-42CA-BD66-31283A49F44F}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>kabukisdkdata</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
-    <ProjectName>0_0_11.kabukinet.console</ProjectName>
+    <ProjectName>0_3_08.calc.app</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
