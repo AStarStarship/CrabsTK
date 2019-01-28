@@ -267,26 +267,26 @@ class Task {
   template<typename Printer>
   Printer& Print (Printer& o) {
     o << "\nTask:";
-      << StringLine ()
+      << LineStrand ()
       << "| Task (" << weight_ << "): " << summary_
-      << StringLine ('-')
+      << LineStrand ('-')
       << "| Begins: "
       << TimeDate (o, time_begins_)
       << "       Ends: "
       << TimeDate (o, time_ends_)
-      << StringLine ('-')
+      << LineStrand ('-')
       << "| Details: " << details_
-      << StringLine ('-')
+      << LineStrand ('-')
       << "| Assessment: " << assessment_
       << " Result: " << (result_ == nullptr ? "N/A" : result_)
       << "\n| Started: "
       << TimeDate (o, time_started_)
       << "       Stopped: "
       << TimeDate (o, time_started_)
-      << StringLine ('-');
+      << LineStrand ('-');
       << "|  Grade: " << grade_
       << " Review: " << (review_ == nullptr ? "N/A" : review_)
-      << StringLine ('_');
+      << LineStrand ('_');
     return o;
   }
 

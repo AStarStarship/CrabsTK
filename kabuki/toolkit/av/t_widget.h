@@ -305,7 +305,7 @@ class SDK TWidget : public Operation {
   Printer& Print(Printer& o) const {
     const CH1* namesFormater = " -> ";
     o << "\nWidget: " << WidgetName <<  << " PageCount: " << page_count_ 
-      << "\n" << StringLine ('-');
+      << "\n" << LineStrand ('-');
     if (page_count_ == 0) {
       o << "No Pages\n";
       return o;

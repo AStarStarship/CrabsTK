@@ -135,7 +135,7 @@ class Schedule {
 
   template<typename Printer>
   Printer& Print (Printer& o) {
-    o << StringLine ('-')
+    o << LineStrand ('-')
       << "\nSchedule: " << key_ << " element_count: " << tasks_.GetCount ()
       << "\n";
     PrintBreak ("\n<", '-');

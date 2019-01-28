@@ -79,12 +79,12 @@ class SDK TControlMatrix {
   /* Prints this object to a string. */
   template<typename Printer>
   Printer& Print(Printer& o) const {
-    o << StringLine ('-', Parameter<SI4>::kMacroHeaderLength)
+    o << LineStrand ('-', Parameter<SI4>::kMacroHeaderLength)
       << "Control Grid: rows:" << row_count_
       << " columns:" << col_count_
-      << StringLine('-', Parameter<SI4>::kMacroHeaderLength);
+      << LineStrand('-', Parameter<SI4>::kMacroHeaderLength);
     PrintMacroHeader (o);
-    o << StringLine ('-', Parameter<SI4>::kMacroHeaderLength)
+    o << LineStrand ('-', Parameter<SI4>::kMacroHeaderLength)
       << "\n!!!!row_count_" << row_count_;
 
     for (SI4 i = 0; i < row_count_; ++i) {
@@ -92,7 +92,7 @@ class SDK TControlMatrix {
       rows[i].Print (o);
     }
 
-    return o << StringLine ('-', Parameter<SI4>::kMacroHeaderLength);
+    return o << LineStrand ('-', Parameter<SI4>::kMacroHeaderLength);
   }
 
  private:

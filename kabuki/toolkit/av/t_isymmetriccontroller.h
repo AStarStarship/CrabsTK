@@ -342,17 +342,17 @@ class IsymmetricController : public Controller {
   /* Prints this object to a Printer. */
   template<typename Printer>
   Printer& Print (Printer& o) {
-    o << StringLine ('-') <<
+    o << LineStrand ('-') <<
       "\nSymmetrical Control Surface:\n")
-      << StringLine ('-');
+      << LineStrand ('-');
     a->Print (o);
-    o << StringLine ('-');
+    o << LineStrand ('-');
     b->Print (o);
-    o << StringLine ('-');
+    o << LineStrand ('-');
     c->Print (o);
-    o << StringLine ('-'); 
+    o << LineStrand ('-'); 
     d->Print (o);
-    return o << StringLine ('-');
+    return o << LineStrand ('-');
   }
 
   /* Inter-process subroutines. */

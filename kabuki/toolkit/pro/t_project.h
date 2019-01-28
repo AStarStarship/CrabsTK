@@ -133,7 +133,7 @@ class Project : public Operand {
   /* Lists the keys in the given scope. */
   template<typename Printer>
   Printer& ListObjs(Printer& o) {
-    o << StringLine ();
+    o << LineStrand ();
       << "|\n"
       "| Objs in Scope:\n"
       "|\n"
@@ -148,7 +148,7 @@ class Project : public Operand {
     for (SI4 i = 0; i < schedules_->count; ++i)
       o << "| " << i << ".) "
       << schedules_[i]->Key () << '\n';
-    return o << StringLine ('_');
+    return o << LineStrand ('_');
   }
 
   /* Searches for a Schedule with the given key. */
@@ -383,7 +383,7 @@ class Project : public Operand {
   template<typename Printer>
   Printer& Print(Printer& o, SI4 indent_level = 0, CH1 bullet_type = '1',
            SI4 spaces_per_tab = 4) {
-    o << StringLine ()
+    o << LineStrand ()
       << "\nProject: " << key_
       << "\n| Projects: " << projects_->count << "|\n";
     for (SI4 i = 0; i < projects_->count; ++i) {
@@ -393,7 +393,7 @@ class Project : public Operand {
     for (SI4 i = 0; i < schedules_->count; ++i) {
       Ar4Get<Schedule*> (schedules_, i)->Print (o);
     }
-    return o << StringLine ('_');
+    return o << LineStrand ('_');
   }
 
   /* Script2 operations. */
