@@ -7,7 +7,7 @@
 
 namespace _ {
 
-std::map<std::string, int> color_counter;
+std::map<std::string, SIN> color_counter;
 
 struct TRGBA {
   uint8_t r, g, b, a;
@@ -19,13 +19,13 @@ struct TRGBA {
 
   TRGBA alpha(uint8_t alpha) const { return TRGBA(r, g, b, alpha); }
 
-  TRGBA gamma(float gamma) const {
+  TRGBA gamma(FLT gamma) const {
     return TRGBA(pow(r / 255.f, 1 / gamma) * 255,
                  pow(g / 255.f, 1 / gamma) * 255,
                  pow(b / 255.f, 1 / gamma) * 255, a);
   }
 
-  float hue() const {
+  FLT hue() const {
     auto min = std::min(std::min(r, g), b);
     auto max = std::max(std::max(r, g), b);
     if (min == max) {
@@ -33,11 +33,11 @@ struct TRGBA {
     }
     auto hue = 0.f;
     if (r == max) {
-      hue = (g - b) / (float)(max - min);
+      hue = (g - b) / (FLT)(max - min);
     } else if (g == max) {
-      hue = 2.f + (b - r) / (float)(max - min);
+      hue = 2.f + (b - r) / (FLT)(max - min);
     } else {
-      hue = 4.f + (r - g) / (float)(max - min);
+      hue = 4.f + (r - g) / (FLT)(max - min);
     }
     if (hue < 0) {
       hue += 6;
@@ -47,9 +47,9 @@ struct TRGBA {
 
   static TRGBA gray(uint8_t v) { return TRGBA(v, v, v); }
 
-  static TRGBA hue(float hue) {
+  static TRGBA hue(FLT hue) {
     TRGBA color;
-    auto i = (int)hue;
+    auto i = (SIN)hue;
     auto f = (hue - i) * 255;
     switch (i % 6) {
       case 0:
@@ -68,14 +68,14 @@ struct TRGBA {
     return TRGBA();
   }
 
-  static TRGBA cos(float hue) {
+  static TRGBA cos(FLT hue) {
     return TRGBA((std::cos(hue * 1.047f) + 1) * 127.9f,
                  (std::cos((hue - 2) * 1.047f) + 1) * 127.9f,
                  (std::cos((hue - 4) * 1.047f) + 1) * 127.9f);
   }
 
-  static TRGBA index(uint8_t index, uint8_t density = 16, float avoid = 2.f,
-                     float range = 2.f) {  // avoid greens by default
+  static TRGBA index(uint8_t index, uint8_t density = 16, FLT avoid = 2.f,
+                     FLT range = 2.f) {  // avoid greens by default
     if (avoid > 0) {
       auto step = density / (6 - range);
       auto offset = (avoid + range / 2) * step;

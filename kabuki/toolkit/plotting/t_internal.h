@@ -17,7 +17,7 @@
 
 namespace _ {
 
-static const int paleness = 32;
+static const SIN paleness = 32;
 
 static uint8_t channel2pale(uint8_t c) {
   return c * (255 - 2 * paleness) / 255 + paleness;
@@ -28,7 +28,7 @@ static cv::Scalar color2scalar(const TRGBA &color) {
                     channel2pale(color.r));
 }
 
-static float value2snap(float value) {
+static FLT value2snap(FLT value) {
   return std::max({pow(10, floor(log10(value))),
                    pow(10, floor(log10(value / 2))) * 2,
                    pow(10, floor(log10(value / 5))) * 5});
@@ -40,13 +40,13 @@ class Trans {
 
   Trans(cv::Mat &buffer) : original_(buffer), alpha_(0), interim_(nullptr) {}
 
-  Trans(cv::Mat &buffer, int alpha) : Trans(buffer) { setup(alpha); }
+  Trans(cv::Mat &buffer, SIN alpha) : Trans(buffer) { setup(alpha); }
 
   ~Trans() { flush(); }
 
   cv::Mat &get() const { return (interim_ != nullptr ? *interim_ : original_); }
 
-  void setup(int alpha) {
+  void setup(SIN alpha) {
     bool transparent = (alpha != 255);
     if (transparent) {
       interim_ = new cv::Mat();
@@ -65,7 +65,7 @@ class Trans {
     }
   }
 
-  cv::Mat &with(int alpha) {
+  cv::Mat &with(SIN alpha) {
     if (alpha != alpha_) {
       flush();
       setup(alpha);
@@ -76,7 +76,7 @@ class Trans {
   cv::Mat &with(const TRGBA &color) { return with(color.a); }
 
  protected:
-  int alpha_;
+  SIN alpha_;
   cv::Mat &original_;
   cv::Mat *interim_;
 };

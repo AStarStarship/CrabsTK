@@ -11,15 +11,15 @@
 namespace _ {
 
 struct Point2 {
-  float x, y;
+  FLT x, y;
   Point2() : Point2(0, 0) {}
-  Point2(float x, float y) : x(x), y(y) {}
+  Point2(FLT x, FLT y) : x(x), y(y) {}
 };
 
 struct Point3 {
-  float x, y, z;
+  FLT x, y, z;
   Point3() : Point3(0, 0, 0) {}
-  Point3(float x, float y, float z) : x(x), y(y), z(z) {}
+  Point3(FLT x, FLT y, FLT z) : x(x), y(y), z(z) {}
 };
 
 enum Type {
@@ -51,56 +51,56 @@ class Series {
   Series &color(TRGBA color);
   Series &dynamicTRGBA(bool dynamic_color);
   Series &legend(bool legend);
-  Series &add(const std::vector<std::pair<float, float>> &data);
-  Series &add(const std::vector<std::pair<float, Point2>> &data);
-  Series &add(const std::vector<std::pair<float, Point3>> &data);
-  Series &addValue(const std::vector<float> &values);
+  Series &add(const std::vector<std::pair<FLT, FLT>> &data);
+  Series &add(const std::vector<std::pair<FLT, Point2>> &data);
+  Series &add(const std::vector<std::pair<FLT, Point3>> &data);
+  Series &addValue(const std::vector<FLT> &values);
   Series &addValue(const std::vector<Point2> &values);
   Series &addValue(const std::vector<Point3> &values);
-  Series &add(float key, float value);
-  Series &add(float key, Point2 value);
-  Series &add(float key, Point3 value);
-  Series &addValue(float value);
-  Series &addValue(float value_a, float value_b);
-  Series &addValue(float value_a, float value_b, float value_c);
-  Series &set(const std::vector<std::pair<float, float>> &data);
-  Series &set(const std::vector<std::pair<float, Point2>> &data);
-  Series &set(const std::vector<std::pair<float, Point3>> &data);
-  Series &setValue(const std::vector<float> &values);
+  Series &add(FLT key, FLT value);
+  Series &add(FLT key, Point2 value);
+  Series &add(FLT key, Point3 value);
+  Series &addValue(FLT value);
+  Series &addValue(FLT value_a, FLT value_b);
+  Series &addValue(FLT value_a, FLT value_b, FLT value_c);
+  Series &set(const std::vector<std::pair<FLT, FLT>> &data);
+  Series &set(const std::vector<std::pair<FLT, Point2>> &data);
+  Series &set(const std::vector<std::pair<FLT, Point3>> &data);
+  Series &setValue(const std::vector<FLT> &values);
   Series &setValue(const std::vector<Point2> &values);
   Series &setValue(const std::vector<Point3> &values);
-  Series &set(float key, float value);
-  Series &set(float key, float value_a, float value_b);
-  Series &set(float key, float value_a, float value_b, float value_c);
-  Series &setValue(float value);
-  Series &setValue(float value_a, float value_b);
-  Series &setValue(float value_a, float value_b, float value_c);
+  Series &set(FLT key, FLT value);
+  Series &set(FLT key, FLT value_a, FLT value_b);
+  Series &set(FLT key, FLT value_a, FLT value_b, FLT value_c);
+  Series &setValue(FLT value);
+  Series &setValue(FLT value_a, FLT value_b);
+  Series &setValue(FLT value_a, FLT value_b, FLT value_c);
   Series &clear();
 
   const std::string &label() const;
   bool legend() const;
   TRGBA color() const;
-  void draw(void *buffer, float x_min, float x_max, float y_min, float y_max,
-            float x_axis, float xs, float xd, float ys, float yd, float y_axis,
-            int unit, float offset) const;
+  void draw(void *buffer, FLT x_min, FLT x_max, FLT y_min, FLT y_max,
+            FLT x_axis, FLT xs, FLT xd, FLT ys, FLT yd, FLT y_axis,
+            SIN unit, FLT offset) const;
   bool collides() const;
-  void dot(void *b, int x, int y, int r) const;
-  void bounds(float &x_min, float &x_max, float &y_min, float &y_max,
-              int &n_max, int &p_max) const;
+  void dot(void *b, SIN x, SIN y, SIN r) const;
+  void bounds(FLT &x_min, FLT &x_max, FLT &y_min, FLT &y_max,
+              SIN &n_max, SIN &p_max) const;
   void verifyParams() const;
 
  protected:
-  void ensureDimsDepth(int dims, int depth);
+  void ensureDimsDepth(SIN dims, SIN depth);
   bool flipAxis() const;
 
  protected:
-  std::vector<int> entries_;
-  std::vector<float> data_;
+  std::vector<SIN> entries_;
+  std::vector<FLT> data_;
   enum Type type_;
   TRGBA color_;
   std::string label_;
-  int dims_;
-  int depth_;
+  SIN dims_;
+  SIN depth_;
   bool legend_;
   bool dynamic_color_;
 };
@@ -123,9 +123,9 @@ class Figure {
   Figure &clear();
   Figure &origin(bool x, bool y);
   Figure &square(bool square);
-  Figure &border(int size);
-  Figure &alpha(int alpha);
-  Figure &gridSize(int size);
+  Figure &border(SIN size);
+  Figure &alpha(SIN alpha);
+  Figure &gridSize(SIN size);
   Figure &backgroundTRGBA(TRGBA color);
   Figure &axisTRGBA(TRGBA color);
   Figure &subaxisTRGBA(TRGBA color);
@@ -135,15 +135,15 @@ class Figure {
   TRGBA subaxisTRGBA();
   TRGBA textTRGBA();
 
-  void draw(void *b, float x_min, float x_max, float y_min, float y_max,
-            int n_max, int p_max) const;
+  void draw(void *b, FLT x_min, FLT x_max, FLT y_min, FLT y_max,
+            SIN n_max, SIN p_max) const;
   void show(bool flush = true) const;
   Series &series(const std::string &label);
 
  protected:
   View &view_;
   std::vector<Series> series_;
-  int border_size_;
+  SIN border_size_;
   TRGBA background_color_;
   TRGBA axis_color_;
   TRGBA sub_axis_color_;
@@ -151,8 +151,8 @@ class Figure {
   bool include_zero_x_;
   bool include_zero_y_;
   bool aspect_square_;
-  int grid_size_;
-  int grid_padding_;
+  SIN grid_size_;
+  SIN grid_padding_;
 };
 
 Figure &figure(const std::string &view);

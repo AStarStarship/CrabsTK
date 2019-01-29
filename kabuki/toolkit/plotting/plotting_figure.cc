@@ -44,7 +44,7 @@ void Series::verifyParams() const {
   }
 }
 
-void Series::ensureDimsDepth(int dims, int depth) {
+void Series::ensureDimsDepth(SIN dims, SIN depth) {
   if (dims_ != dims) {
     if (dims_ != 0) {
       std::cerr << "incorrect dims (input dimensions), was " << dims_ << " now "
@@ -89,7 +89,7 @@ Series &Series::legend(bool legend) {
   return *this;
 }
 
-Series &Series::add(const std::vector<std::pair<float, float>> &data) {
+Series &Series::add(const std::vector<std::pair<FLT, FLT>> &data) {
   ensureDimsDepth(1, 1);
   for (const auto &d : data) {
     entries_.push_back(data_.size());
@@ -99,7 +99,7 @@ Series &Series::add(const std::vector<std::pair<float, float>> &data) {
   return *this;
 }
 
-Series &Series::add(const std::vector<std::pair<float, Point2>> &data) {
+Series &Series::add(const std::vector<std::pair<FLT, Point2>> &data) {
   ensureDimsDepth(1, 2);
   for (const auto &d : data) {
     entries_.push_back(data_.size());
@@ -110,7 +110,7 @@ Series &Series::add(const std::vector<std::pair<float, Point2>> &data) {
   return *this;
 }
 
-Series &Series::add(const std::vector<std::pair<float, Point3>> &data) {
+Series &Series::add(const std::vector<std::pair<FLT, Point3>> &data) {
   ensureDimsDepth(1, 3);
   for (const auto &d : data) {
     entries_.push_back(data_.size());
@@ -122,8 +122,8 @@ Series &Series::add(const std::vector<std::pair<float, Point3>> &data) {
   return *this;
 }
 
-Series &Series::addValue(const std::vector<float> &values) {
-  std::vector<std::pair<float, float>> data(values.size());
+Series &Series::addValue(const std::vector<FLT> &values) {
+  std::vector<std::pair<FLT, FLT>> data(values.size());
   auto i = 0;
   for (auto &d : data) {
     d.first = i + entries_.size();
@@ -133,7 +133,7 @@ Series &Series::addValue(const std::vector<float> &values) {
 }
 
 Series &Series::addValue(const std::vector<Point2> &values) {
-  std::vector<std::pair<float, Point2>> data(values.size());
+  std::vector<std::pair<FLT, Point2>> data(values.size());
   auto i = 0;
   for (auto &d : data) {
     d.first = i + entries_.size();
@@ -143,7 +143,7 @@ Series &Series::addValue(const std::vector<Point2> &values) {
 }
 
 Series &Series::addValue(const std::vector<Point3> &values) {
-  std::vector<std::pair<float, Point3>> data(values.size());
+  std::vector<std::pair<FLT, Point3>> data(values.size());
   auto i = 0;
   for (auto &d : data) {
     d.first = i + entries_.size();
@@ -152,47 +152,47 @@ Series &Series::addValue(const std::vector<Point3> &values) {
   return add(data);
 }
 
-Series &Series::add(float key, float value) {
-  return add(std::vector<std::pair<float, float>>({{key, value}}));
+Series &Series::add(FLT key, FLT value) {
+  return add(std::vector<std::pair<FLT, FLT>>({{key, value}}));
 }
 
-Series &Series::add(float key, Point2 value) {
-  return add(std::vector<std::pair<float, Point2>>({{key, value}}));
+Series &Series::add(FLT key, Point2 value) {
+  return add(std::vector<std::pair<FLT, Point2>>({{key, value}}));
 }
 
-Series &Series::add(float key, Point3 value) {
-  return add(std::vector<std::pair<float, Point3>>({{key, value}}));
+Series &Series::add(FLT key, Point3 value) {
+  return add(std::vector<std::pair<FLT, Point3>>({{key, value}}));
 }
 
-Series &Series::addValue(float value) {
-  return addValue(std::vector<float>({value}));
+Series &Series::addValue(FLT value) {
+  return addValue(std::vector<FLT>({value}));
 }
 
-Series &Series::addValue(float value_a, float value_b) {
+Series &Series::addValue(FLT value_a, FLT value_b) {
   return addValue(std::vector<Point2>({{value_a, value_b}}));
 }
 
-Series &Series::addValue(float value_a, float value_b, float value_c) {
+Series &Series::addValue(FLT value_a, FLT value_b, FLT value_c) {
   return addValue(std::vector<Point3>({{value_a, value_b, value_c}}));
 }
 
-Series &Series::set(const std::vector<std::pair<float, float>> &data) {
+Series &Series::set(const std::vector<std::pair<FLT, FLT>> &data) {
   clear();
   return add(data);
 }
 
-Series &Series::set(const std::vector<std::pair<float, Point2>> &data) {
+Series &Series::set(const std::vector<std::pair<FLT, Point2>> &data) {
   clear();
   return add(data);
 }
 
-Series &Series::set(const std::vector<std::pair<float, Point3>> &data) {
+Series &Series::set(const std::vector<std::pair<FLT, Point3>> &data) {
   clear();
   return add(data);
 }
 
-Series &Series::setValue(const std::vector<float> &values) {
-  std::vector<std::pair<float, float>> data(values.size());
+Series &Series::setValue(const std::vector<FLT> &values) {
+  std::vector<std::pair<FLT, FLT>> data(values.size());
   auto i = 0;
   for (auto &d : data) {
     d.first = i;
@@ -202,7 +202,7 @@ Series &Series::setValue(const std::vector<float> &values) {
 }
 
 Series &Series::setValue(const std::vector<Point2> &values) {
-  std::vector<std::pair<float, Point2>> data(values.size());
+  std::vector<std::pair<FLT, Point2>> data(values.size());
   auto i = 0;
   for (auto &d : data) {
     d.first = i;
@@ -212,7 +212,7 @@ Series &Series::setValue(const std::vector<Point2> &values) {
 }
 
 Series &Series::setValue(const std::vector<Point3> &values) {
-  std::vector<std::pair<float, Point3>> data(values.size());
+  std::vector<std::pair<FLT, Point3>> data(values.size());
   auto i = 0;
   for (auto &d : data) {
     d.first = i;
@@ -221,29 +221,29 @@ Series &Series::setValue(const std::vector<Point3> &values) {
   return set(data);
 }
 
-Series &Series::set(float key, float value) {
-  return set(std::vector<std::pair<float, float>>({{key, value}}));
+Series &Series::set(FLT key, FLT value) {
+  return set(std::vector<std::pair<FLT, FLT>>({{key, value}}));
 }
 
-Series &Series::set(float key, float value_a, float value_b) {
+Series &Series::set(FLT key, FLT value_a, FLT value_b) {
   return set(
-      std::vector<std::pair<float, Point2>>({{key, {value_a, value_b}}}));
+      std::vector<std::pair<FLT, Point2>>({{key, {value_a, value_b}}}));
 }
 
-Series &Series::set(float key, float value_a, float value_b, float value_c) {
-  return set(std::vector<std::pair<float, Point3>>(
+Series &Series::set(FLT key, FLT value_a, FLT value_b, FLT value_c) {
+  return set(std::vector<std::pair<FLT, Point3>>(
       {{key, {value_a, value_b, value_c}}}));
 }
 
-Series &Series::setValue(float value) {
-  return setValue(std::vector<float>({value}));
+Series &Series::setValue(FLT value) {
+  return setValue(std::vector<FLT>({value}));
 }
 
-Series &Series::setValue(float value_a, float value_b) {
+Series &Series::setValue(FLT value_a, FLT value_b) {
   return setValue(std::vector<Point2>({{value_a, value_b}}));
 }
 
-Series &Series::setValue(float value_a, float value_b, float value_c) {
+Series &Series::setValue(FLT value_a, FLT value_b, FLT value_c) {
   return setValue(std::vector<Point3>({{value_a, value_b, value_c}}));
 }
 
@@ -261,8 +261,8 @@ bool Series::flipAxis() const {
   return type_ == Vertical || type_ == Vistogram;
 }
 
-void Series::bounds(float &x_min, float &x_max, float &y_min, float &y_max,
-                    int &n_max, int &p_max) const {
+void Series::bounds(FLT &x_min, FLT &x_max, FLT &y_min, FLT &y_max,
+                    SIN &n_max, SIN &p_max) const {
   for (const auto &e : entries_) {
     auto xe = e, xd = dims_, ye = e + dims_,
          yd = depth_ - (dynamic_color_ ? 1 : 0);
@@ -307,15 +307,15 @@ void Series::bounds(float &x_min, float &x_max, float &y_min, float &y_max,
   }
 }
 
-void Series::dot(void *b, int x, int y, int r) const {
+void Series::dot(void *b, SIN x, SIN y, SIN r) const {
   Trans trans(b);
   cv::circle(trans.with(color_), {x, y}, r, color2scalar(color_), -1,
              cv::LINE_AA);
 }
 
-void Series::draw(void *b, float x_min, float x_max, float y_min, float y_max,
-                  float xs, float xd, float ys, float yd, float x_axis,
-                  float y_axis, int unit, float offset) const {
+void Series::draw(void *b, FLT x_min, FLT x_max, FLT y_min, FLT y_max,
+                  FLT xs, FLT xd, FLT ys, FLT yd, FLT x_axis,
+                  FLT y_axis, SIN unit, FLT offset) const {
   if (dims_ == 0 || depth_ == 0) {
     return;
   }
@@ -329,19 +329,19 @@ void Series::draw(void *b, float x_min, float x_max, float y_min, float y_max,
     case RangeLine: {
       if (type_ == FillLine) {
         bool has_last = false;
-        float last_x, last_y;
+        FLT last_x, last_y;
         for (const auto &e : entries_) {
           auto x = data_[e], y = data_[e + dims_];
           if (dynamic_color_) {
             color = color2scalar(TRGBA::cos(data_[e + dims_ + 1]));
           }
-          cv::Point point((int)(x * xs + xd), (int)(y * ys + yd));
+          cv::Point point((SIN)(x * xs + xd), (SIN)(y * ys + yd));
           if (has_last) {
             cv::Point points[4] = {
                 point,
-                {point.x, (int)(y_axis * ys + yd)},
-                {(int)(last_x * xs + xd), (int)(y_axis * ys + yd)},
-                {(int)(last_x * xs + xd), (int)(last_y * ys + yd)},
+                {point.x, (SIN)(y_axis * ys + yd)},
+                {(SIN)(last_x * xs + xd), (SIN)(y_axis * ys + yd)},
+                {(SIN)(last_x * xs + xd), (SIN)(last_y * ys + yd)},
             };
             cv::fillConvexPoly(trans.with(color_.a / 2), points, 4, color,
                                cv::LINE_AA);
@@ -352,7 +352,7 @@ void Series::draw(void *b, float x_min, float x_max, float y_min, float y_max,
         }
       } else if (type_ == RangeLine) {
         bool has_last = false;
-        float last_x, last_y1, last_y2;
+        FLT last_x, last_y1, last_y2;
         for (const auto &e : entries_) {
           auto x = data_[e], y1 = data_[e + dims_ + 1],
                y2 = data_[e + dims_ + 2];
@@ -361,10 +361,10 @@ void Series::draw(void *b, float x_min, float x_max, float y_min, float y_max,
           }
           if (has_last) {
             cv::Point points[4] = {
-                {(int)(x * xs + xd), (int)(y1 * ys + yd)},
-                {(int)(x * xs + xd), (int)(y2 * ys + yd)},
-                {(int)(last_x * xs + xd), (int)(last_y2 * ys + yd)},
-                {(int)(last_x * xs + xd), (int)(last_y1 * ys + yd)},
+                {(SIN)(x * xs + xd), (SIN)(y1 * ys + yd)},
+                {(SIN)(x * xs + xd), (SIN)(y2 * ys + yd)},
+                {(SIN)(last_x * xs + xd), (SIN)(last_y2 * ys + yd)},
+                {(SIN)(last_x * xs + xd), (SIN)(last_y1 * ys + yd)},
             };
             cv::fillConvexPoly(trans.with(color_.a / 2), points, 4, color,
                                cv::LINE_AA);
@@ -375,18 +375,18 @@ void Series::draw(void *b, float x_min, float x_max, float y_min, float y_max,
         }
       }
       bool has_last = false;
-      float last_x, last_y;
+      FLT last_x, last_y;
       for (const auto &e : entries_) {
         auto x = data_[e], y = data_[e + dims_];
         if (dynamic_color_) {
           color = color2scalar(TRGBA::cos(data_[e + dims_ + 1]));
         }
-        cv::Point point((int)(x * xs + xd), (int)(y * ys + yd));
+        cv::Point point((SIN)(x * xs + xd), (SIN)(y * ys + yd));
         if (has_last) {
           if (type_ == DotLine || type_ == Line || type_ == FillLine ||
               type_ == RangeLine) {
             cv::line(trans.with(color_),
-                     {(int)(last_x * xs + xd), (int)(last_y * ys + yd)}, point,
+                     {(SIN)(last_x * xs + xd), (SIN)(last_y * ys + yd)}, point,
                      color, 1, cv::LINE_AA);
           }
         } else {
@@ -401,7 +401,7 @@ void Series::draw(void *b, float x_min, float x_max, float y_min, float y_max,
     case Vistogram:
     case Histogram: {
       auto u = 2 * unit;
-      auto o = (int)(2 * u * offset);
+      auto o = (SIN)(2 * u * offset);
       for (const auto &e : entries_) {
         auto x = data_[e], y = data_[e + dims_];
         if (dynamic_color_) {
@@ -409,13 +409,13 @@ void Series::draw(void *b, float x_min, float x_max, float y_min, float y_max,
         }
         if (type_ == Histogram) {
           cv::rectangle(trans.with(color_),
-                        {(int)(x * xs + xd) - u + o, (int)(y_axis * ys + yd)},
-                        {(int)(x * xs + xd) + u + o, (int)(y * ys + yd)}, color,
+                        {(SIN)(x * xs + xd) - u + o, (SIN)(y_axis * ys + yd)},
+                        {(SIN)(x * xs + xd) + u + o, (SIN)(y * ys + yd)}, color,
                         -1, cv::LINE_AA);
         } else if (type_ == Vistogram) {
           cv::rectangle(trans.with(color_),
-                        {(int)(x_axis * xs + xd), (int)(x * ys + yd) - u + o},
-                        {(int)(y * xs + xd), (int)(x * ys + yd) + u + o}, color,
+                        {(SIN)(x_axis * xs + xd), (SIN)(x * ys + yd) - u + o},
+                        {(SIN)(y * xs + xd), (SIN)(x * ys + yd) + u + o}, color,
                         -1, cv::LINE_AA);
         }
       }
@@ -430,13 +430,13 @@ void Series::draw(void *b, float x_min, float x_max, float y_min, float y_max,
         }
         if (type_ == Horizontal) {
           cv::line(trans.with(color_),
-                   {(int)(x_min * xs + xd), (int)(y * ys + yd)},
-                   {(int)(x_max * xs + xd), (int)(y * ys + yd)}, color, 1,
+                   {(SIN)(x_min * xs + xd), (SIN)(y * ys + yd)},
+                   {(SIN)(x_max * xs + xd), (SIN)(y * ys + yd)}, color, 1,
                    cv::LINE_AA);
         } else if (type_ == Vertical) {
           cv::line(trans.with(color_),
-                   {(int)(y * xs + xd), (int)(y_min * ys + yd)},
-                   {(int)(y * xs + xd), (int)(y_max * ys + yd)}, color, 1,
+                   {(SIN)(y * xs + xd), (SIN)(y_min * ys + yd)},
+                   {(SIN)(y * xs + xd), (SIN)(y_max * ys + yd)}, color, 1,
                    cv::LINE_AA);
         }
       }
@@ -449,8 +449,8 @@ void Series::draw(void *b, float x_min, float x_max, float y_min, float y_max,
         if (dynamic_color_) {
           color = color2scalar(TRGBA::cos(data_[e + dims_ + 2]));
         }
-        cv::Point point_a((int)(x * xs + xd), (int)(y_a * ys + yd));
-        cv::Point point_b((int)(x * xs + xd), (int)(y_b * ys + yd));
+        cv::Point point_a((SIN)(x * xs + xd), (SIN)(y_a * ys + yd));
+        cv::Point point_b((SIN)(x * xs + xd), (SIN)(y_b * ys + yd));
         if (has_last) {
           cv::Point points[4] = {point_a, point_b, last_b, last_a};
           cv::fillConvexPoly(trans.with(color_), points, 4, color, cv::LINE_AA);
@@ -466,7 +466,7 @@ void Series::draw(void *b, float x_min, float x_max, float y_min, float y_max,
         if (dynamic_color_) {
           color = color2scalar(TRGBA::cos(data_[e + dims_ + 2]));
         }
-        cv::Point point((int)(x * xs + xd), (int)(y * ys + yd));
+        cv::Point point((SIN)(x * xs + xd), (SIN)(y * ys + yd));
         cv::circle(trans.with(color_), point, r, color, -1, cv::LINE_AA);
       }
     } break;
@@ -488,12 +488,12 @@ Figure &Figure::square(bool square) {
   return *this;
 }
 
-Figure &Figure::border(int size) {
+Figure &Figure::border(SIN size) {
   border_size_ = size;
   return *this;
 }
 
-Figure &Figure::alpha(int alpha) {
+Figure &Figure::alpha(SIN alpha) {
   background_color_ = background_color_.alpha(alpha);
   axis_color_ = axis_color_.alpha(alpha);
   sub_axis_color_ = sub_axis_color_.alpha(alpha);
@@ -501,7 +501,7 @@ Figure &Figure::alpha(int alpha) {
   return *this;
 }
 
-Figure &Figure::gridSize(int size) {
+Figure &Figure::gridSize(SIN size) {
   grid_size_ = size;
   return *this;
 }
@@ -545,8 +545,8 @@ Series &Figure::series(const std::string &label) {
   return series_.back();
 }
 
-void Figure::draw(void *b, float x_min, float x_max, float y_min, float y_max,
-                  int n_max, int p_max) const {
+void Figure::draw(void *b, FLT x_min, FLT x_max, FLT y_min, FLT y_max,
+                  SIN n_max, SIN p_max) const {
   auto &buffer = *(cv::Mat *)b;
   Trans trans(b);
 
@@ -607,18 +607,18 @@ void Figure::draw(void *b, float x_min, float x_max, float y_min, float y_max,
 
   // safe unit for showing points
   auto unit =
-      std::max(1, ((int)std::min(buffer.cols, buffer.rows) - 2 * border_size_) /
+      std::max(1, ((SIN)std::min(buffer.cols, buffer.rows) - 2 * border_size_) /
                       n_max / 10);
 
   // draw sub axis
   for (auto x = ceil(x_min / x_grid) * x_grid; x <= x_max; x += x_grid) {
-    cv::line(trans.with(sub_axis_color_), {(int)(x * xs + xd), border_size_},
-             {(int)(x * xs + xd), buffer.rows - border_size_},
+    cv::line(trans.with(sub_axis_color_), {(SIN)(x * xs + xd), border_size_},
+             {(SIN)(x * xs + xd), buffer.rows - border_size_},
              color2scalar(sub_axis_color_), 1, cv::LINE_AA);
   }
   for (auto y = ceil(y_min / y_grid) * y_grid; y <= y_max; y += y_grid) {
-    cv::line(trans.with(sub_axis_color_), {border_size_, (int)(y * ys + yd)},
-             {buffer.cols - border_size_, (int)(y * ys + yd)},
+    cv::line(trans.with(sub_axis_color_), {border_size_, (SIN)(y * ys + yd)},
+             {buffer.cols - border_size_, (SIN)(y * ys + yd)},
              color2scalar(sub_axis_color_), 1, cv::LINE_AA);
   }
   if (std::abs(x_grid * xs) < 30) {
@@ -627,7 +627,7 @@ void Figure::draw(void *b, float x_min, float x_max, float y_min, float y_max,
   for (auto x = std::ceil(x_min / x_grid) * x_grid; x <= x_max; x += x_grid) {
     std::ostringstream out;
     out << std::setprecision(4) << (x == 0 ? 0 : x);
-    int baseline;
+    SIN baseline;
     cv::Size size =
         getTextSize(out.str(), cv::FONT_HERSHEY_SIMPLEX, 0.3f, 1.f, &baseline);
     cv::Point org(x * xs + xd - size.width / 2,
@@ -641,7 +641,7 @@ void Figure::draw(void *b, float x_min, float x_max, float y_min, float y_max,
   for (auto y = std::ceil(y_min / y_grid) * y_grid; y <= y_max; y += y_grid) {
     std::ostringstream out;
     out << std::setprecision(4) << (y == 0 ? 0 : y);
-    int baseline;
+    SIN baseline;
     cv::Size size =
         getTextSize(out.str(), cv::FONT_HERSHEY_SIMPLEX, 0.3f, 1.f, &baseline);
     cv::Point org(border_size_ - 5 - size.width, y * ys + yd + size.height / 2);
@@ -650,11 +650,11 @@ void Figure::draw(void *b, float x_min, float x_max, float y_min, float y_max,
   }
 
   // draw axis
-  cv::line(trans.with(text_color_), {border_size_, (int)(y_axis * ys + yd)},
-           {buffer.cols - border_size_, (int)(y_axis * ys + yd)},
+  cv::line(trans.with(text_color_), {border_size_, (SIN)(y_axis * ys + yd)},
+           {buffer.cols - border_size_, (SIN)(y_axis * ys + yd)},
            color2scalar(text_color_), 1, cv::LINE_AA);
-  cv::line(trans.with(axis_color_), {(int)(x_axis * xs + xd), border_size_},
-           {(int)(x_axis * xs + xd), buffer.rows - border_size_},
+  cv::line(trans.with(axis_color_), {(SIN)(x_axis * xs + xd), border_size_},
+           {(SIN)(x_axis * xs + xd), buffer.rows - border_size_},
            color2scalar(axis_color_), 1, cv::LINE_AA);
 
   // draw plot
@@ -664,13 +664,13 @@ void Figure::draw(void *b, float x_min, float x_max, float y_min, float y_max,
       index++;
     }
   }
-  std::max((int)series_.size() - 1, 1);
+  std::max((SIN)series_.size() - 1, 1);
   for (auto s = series_.rbegin(); s != series_.rend(); ++s) {
     if (s->collides()) {
       index--;
     }
     s->draw(&trans.with(s->color()), x_min, x_max, y_min, y_max, xs, xd, ys, yd,
-            x_axis, y_axis, unit, (float)index / series_.size());
+            x_axis, y_axis, unit, (FLT)index / series_.size());
   }
 
   // draw label names
@@ -680,7 +680,7 @@ void Figure::draw(void *b, float x_min, float x_max, float y_min, float y_max,
       continue;
     }
     auto name = s.label();
-    int baseline;
+    SIN baseline;
     cv::Size size =
         getTextSize(name, cv::FONT_HERSHEY_SIMPLEX, 0.4f, 1.f, &baseline);
     cv::Point org(buffer.cols - border_size_ - size.width - 17,

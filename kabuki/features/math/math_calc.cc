@@ -1,24 +1,28 @@
-/* Kabuki Toolkit
-    @file       ~/kt/math/Calc.cc
-    @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2017-2018 Cale McCollough <calemccollough@gmail.com>;
-             All right reserved (R). Licensed under the Apache License, Version 
-             2.0 (the "License"); you may not use this file except in 
-             compliance with the License. You may obtain a copy of the License 
-             [here](http://www.apache.org/licenses/LICENSE-2.0). Unless 
-             required by applicable law or agreed to in writing, software 
-             distributed under the License is distributed on an "AS IS" BASIS, 
-             WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or 
-             implied. See the License for the specific language governing 
-             permissions and limitations under the License.
-*/
+/* Kabuki Toolkit @version 0.x
+@link    https://github.com/kabuki-starship/kabuki-toolkit.git
+@file    /kabuki/features/math/math_calc.cc
+@author  Cale McCollough <calemccollough.github.io>
+@license Copyright (C) 2014-2019 Cale McCollough <calemccollough.github.io>;
+All right reserved (R). Licensed under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance with the License.
+You may obtain a copy of the License at www.apache.org/licenses/LICENSE-2.0.
+Unless required by applicable law or agreed to in writing, software distributed
+under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
+CONDITIONS OF ANY KIND, either express or implied. See the License for the
+specific language governing permissions and limitations under the License. */
 
+#pragma once
 #include <pch.h>
-#include "calc.h"
+#if SEAM >= KABUKI_FEATURES_MATH_1
+
+#include "c_calc.h"
+
+#include <cmath>
+#include <climits>
 
 namespace _ {
 
-float AbsValue (float a)
+FLT AbsValue (FLT a)
 {
     if (a < 0.0f) return a * -1.0f;
     return a;
@@ -40,7 +44,7 @@ long AbsValue (long a)
     return 0.0; // return System.Abs (a);
 }
 
-float Acos (float a)
+FLT Acos (FLT a)
 {
     return 0.0f; // return System.Acos (a);
 }
@@ -50,7 +54,7 @@ double Acos (double a)
     return 0.0; // return System.Acos (a);
 }
 
-float Asin (float a)
+FLT Asin (FLT a)
 {
     return 0.0f; // return System.Asin (a);
 }
@@ -60,7 +64,7 @@ double Asin (double a)
     return 0.0; // return System.Asin (a);
 }
 
-float Atan (float a)
+FLT Atan (FLT a)
 {
     return 0.0f; // return System.Atan (a);
 }
@@ -70,7 +74,7 @@ double Atan (double a)
     return 0.0; // return System.Atan (a);
 }
 
-float Atan2 (float y, float x)
+FLT Atan2 (FLT y, FLT x)
 {
     return 0.0f; // return System.Atan2 (y, x);
 }
@@ -80,7 +84,7 @@ double Atan2 (double y, double x)
     return 0.0; // return System.Atan2 (y, x);
 }
 
-float Ceiling (float a)
+FLT Ceiling (FLT a)
 {
     return 0.0f; // return System.ceil (a);
 }
@@ -90,17 +94,17 @@ double Ceiling (double a)
     return 0.0; // return System.ceil (a);
 }
 
-float CopySign (float magnitude, float sign)
+FLT CopySign (FLT Magnitude, FLT sign)
 {
-    return 0.0f; // return System.copySign (magnitude, sign);
+    return 0.0f; // return System.copySign (Magnitude, sign);
 }
 
-double CopySign (double magnitude, double sign)
+double CopySign (double Magnitude, double sign)
 {
-    return 0.0; // return System.copySign (magnitude, sign);
+    return 0.0; // return System.copySign (Magnitude, sign);
 }
 
-float Cos (float a)
+FLT Cos (FLT a)
 {
     return cos (a); // return System.cos (a);
 }
@@ -110,7 +114,7 @@ double Cos (double a)
     return 0.0; // return System.cos (a);
 }
 
-float Hcos (float x)
+FLT Hcos (FLT x)
 {
     return 0.0f; // return System.cosh (x);
 }
@@ -120,7 +124,7 @@ double Hcos (double x)
     return 0.0; // return System.cosh (x);
 }
 
-float eToTheX (float a)
+FLT eToTheX (FLT a)
 {
     return 0.0f; // return System.exp (a);
 }
@@ -130,7 +134,7 @@ double eToTheX (double a)
     return 0.0; // return System.exp (a);
 }
 
-float OneMinus_eToTheX (float x)
+FLT OneMinus_eToTheX (FLT x)
 {
     return 0.0f; // return System.expm1 (x);
 }
@@ -140,7 +144,7 @@ double OneMinus_eToTheX (double x)
     return 0.0; // return System.expm1 (x);
 }
 
-float Floor (float a)
+FLT Floor (FLT a)
 {
     return 0.0f; // return System.Floor (a);
 }
@@ -150,7 +154,7 @@ double Floor (double a)
     return 0.0; // return System.Floor (a);
 }
 
-SI4 Exponent (float f)
+SI4 Exponent (FLT f)
 {
     return 0; // return System.getExponent (f);
 }
@@ -160,7 +164,7 @@ SI4 Exponent (double d)
     return 0; // return System.getExponent (d);
 }
 
-float Hypot (float x, float y)
+FLT Hypot (FLT x, FLT y)
 {
     return 0.0f; // return System.hppypot (x, y);
 }
@@ -170,7 +174,7 @@ double Hypot (double x, double y)
     return 0.0; // return System.hppypot (x, y);
 }
 
-float IeeeRemainder (float f1, float f2)
+FLT IeeeRemainder (FLT f1, FLT f2)
 {
     return 0.0f; // return System.ieeeRemainder (f1, f2);
 }
@@ -180,7 +184,7 @@ double IeeeRemainder (double f1, double f2)
     return 0.0; // return System.ieeeRemainder (f1, f2);
 }
 
-float Ln (float a)
+FLT Ln (FLT a)
 {
     return 0.0f; // return System.log (a);
 }
@@ -190,7 +194,7 @@ double Ln (double a)
     return 0.0; // return System.log (a);
 }
 
-float Log (float a)
+FLT Log (FLT a)
 {
     return 0.0f; // return System.log10 (a);
 }
@@ -200,7 +204,7 @@ double Log (double a)
     return 0.0; // return System.log10 (a);
 }
 
-float LogXPlus1 (float x)
+FLT LogXPlus1 (FLT x)
 {
     return 0.0f; // return System.log1p (x);
 }
@@ -210,7 +214,7 @@ double LogXPlus1 (double x)
     return 0.0; // return System.log1p (x);
 }
 
-float Max (float a, float b)
+FLT Max (FLT a, FLT b)
 {
     return (a > b) ? a : b;
 }
@@ -230,7 +234,7 @@ long Max (long a, long b)
     return (a > b) ? a : b;
 }
 
-float Min (float a, float b)
+FLT Min (FLT a, FLT b)
 {
     return 0.0f; // return System.min (a, b);
 }
@@ -250,7 +254,7 @@ long Min (long a, long b)
     return 0.0; // return System.min (a, b);
 }
 
-float NextAfter (float start, float direction)
+FLT NextAfter (FLT start, FLT direction)
 {
     return 0.0f; // return System.nextAfter (start, direction);
 }
@@ -260,7 +264,7 @@ double NextAfter (double start, double direction)
     return 0.0; // return System.nextAfter (start, direction);
 }
 
-float NextUp (float f)
+FLT NextUp (FLT f)
 {
     return 0.0f; // return System.nextUp (f);
 }
@@ -270,7 +274,7 @@ double NextUp (double d)
     return 0.0; // return System.nextUp (d);
 }
 
-float Power (float a, float b)
+FLT Power (FLT a, FLT b)
 {
     return 0.0f; // return System.Pow (a, b);
 }
@@ -280,7 +284,7 @@ double Power (double a, double b)
     return 0.0; // return System.Pow (a, b);
 }
 
-float Random_f ()
+FLT Random_f ()
 {
     return 0.0f; // return System.Random ();
 }
@@ -290,7 +294,7 @@ double Random_d ()
     return 0.0; // return System.Random ();
 }
 
-float Round (float a)
+FLT Round (FLT a)
 {
     return 0.0f; // return System.Rint (a);
 }
@@ -300,7 +304,7 @@ double Round (double a)
     return 0.0; // return System.Rint (a);
 }
 
-SI4 RoundToInt (float a)
+SI4 RoundToInt (FLT a)
 {
     return 0; // return System.Round (a);
 }
@@ -310,7 +314,7 @@ long RoundToInt (double a)
     return 0; // return System.Round (a);
 }
 
-float ScaleB (float d, SI4 scaleFactor)
+FLT ScaleB (FLT d, SI4 scaleFactor)
 {
     return 0.0f; // return System.Scalb (d, scaleFactor);
 }
@@ -320,7 +324,7 @@ double ScaleB (double d, SI4 scaleFactor)
     return 0.0; // return System.Scalb (d, scaleFactor);
 }
 
-float FScaleFactor (float f, SI4 scaleFactor)
+FLT FScaleFactor (FLT f, SI4 scaleFactor)
 {
     return 0.0f; // return System.Scalb (f, scaleFactor);
 }
@@ -330,7 +334,7 @@ double FScaleFactor (double f, SI4 scaleFactor)
     return 0.0; // return System.Scalb (f, scaleFactor);
 }
 
-float SignOf (float f)
+FLT SignOf (FLT f)
 {
     return 0.0f; // return System.Signum (f);
 }
@@ -340,7 +344,7 @@ double SignOf (double d)
     return 0.0; // return System.Signum (d);
 }
 
-float Sin (float a)
+FLT Sin (FLT a)
 {
     return 0.0f; // return System.Sin (a);
 }
@@ -350,7 +354,7 @@ double Sin (double a)
     return 0.0; // return System.Sin (a);
 }
 
-float Hsin (float x)
+FLT Hsin (FLT x)
 {
     return 0.0f; // return System.Sinh (x);
 }
@@ -360,7 +364,7 @@ double Hsin (double x)
     return 0.0; // return System.Sinh (x);
 }
 
-float SquareRoot (float a)
+FLT SquareRoot (FLT a)
 {
     return 0.0f; // return System.Sqrt (a);
 }
@@ -370,7 +374,7 @@ double SquareRoot (double a)
     return 0.0; // return System.Sqrt (a);
 }
 
-float CubeRoot (float a)
+FLT CubeRoot (FLT a)
 {
     return 0.0f; // return System.cbrt (a);
 }
@@ -380,7 +384,7 @@ double CubeRoot (double a)
     return 0.0; // return System.cbrt (a);
 }
 
-float Tan (float a)
+FLT Tan (FLT a)
 {
     return 0.0f; // return System.tan (a);
 }
@@ -390,7 +394,7 @@ double Tan (double a)
     return 0.0; // return System.tan (a);
 }
 
-float Htan (float x)
+FLT Htan (FLT x)
 {
     return 0.0f; // return System.tanh (x);
 }
@@ -400,7 +404,7 @@ double Htan (double x)
     return 0.0; // return System.tanh (x);
 }
 
-float ToDegrees (float angrad)
+FLT ToDegrees (FLT angrad)
 {
     return 0.0f; // return System.toDegrees (angrad);
 }
@@ -410,7 +414,7 @@ double ToDegrees (double angrad)
     return 0.0; // return System.toDegrees (angrad);
 }
 
-float ToRadians (float angle)
+FLT ToRadians (FLT angle)
 {
     return (angle * 180.0f) / Pi_f;
 }
@@ -420,7 +424,7 @@ double ToRadians (double angle)
     return (angle * 180.0) / Pi_d;
 }
 
-float Ulp (float f)
+FLT Ulp (FLT f)
 {
     return 0.0f; // return System.ulp (f);
 }
@@ -430,9 +434,9 @@ double Ulp (double d)
     return 0.0; // return System.ulp (d);
 }
 
-float Factoral (float value)
+FLT Factoral (FLT value)
 {
-    float total;  //< The running total.
+    FLT total;  //< The running total.
 
     if (value < 0)
     {
@@ -522,7 +526,7 @@ long Factoral (long value)
     return total;
 }
 
-inline float GetMinFloat ()
+inline FLT GetMinFloat ()
 {
     return FLT_MIN;
 }
@@ -533,7 +537,7 @@ inline double GetMinDouble ()
 }
 
 
-inline float GetMaxFloat ()
+inline FLT GetMaxFloat ()
 {
     return FLT_MAX;
 }
@@ -628,18 +632,5 @@ SI4 GetNextPrime (SI4 value)
     return PrimeNumbers[index + 1]; // TEST ME!!!
 }
 
-Calc::Calc ()
-{
-    
-}
-const _::Op* Calc::Star (wchar_t index, _::Expr* expr)
-{
-
-}
-
-
-_::Printer& Calc::Print (Printer& printer)
-{
-}
-
 }       //< namespace _
+#endif

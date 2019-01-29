@@ -1,6 +1,6 @@
 /* Kabuki Toolkit @version 0.x
 @link    https://github.com/kabuki-starship/kabuki-toolkit.git
-@file    /kabuki/featuresmath/test_tree.h
+@file    /kabuki/features/math/test_tree.h
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-19 Cale McCollough <cale@astartup.net>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -20,7 +20,7 @@ specific language governing permissions and limitations under the License. */
 #include "01_bar.h"
 #endif
 
-namespace kabuki { namespace features { namespace math { 
+namespace kabuki { namespace features { namespace _ { 
 
 static const CH1* Test(CH1* seam_log, CH1* seam_end,
                         const CH1* args) {
@@ -30,6 +30,6 @@ static const CH1* Test(CH1* seam_log, CH1* seam_end,
 #endif
   >(seam_log, seam_end, args);
 }
-}  //< namespace math
+}  //< namespace _
 }  //< namespace features
 }  //< namespace kabuki

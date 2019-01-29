@@ -1,5 +1,5 @@
-#ifndef CVPLOT_WINDOW_H
-#define CVPLOT_WINDOW_H
+#ifndef KABUKI_TOOLKIT_PLOT_WINDOW
+#define KABUKI_TOOLKIT_PLOT_WINDOW
 
 #include "t_color.h"
 
@@ -15,27 +15,27 @@ namespace _ {
 class Window;
 
 Window *shared_window = nullptr;
-int shared_index = 0;
+SIN shared_index = 0;
 clock_t shared_time = clock();
 
 struct Rect {
-  int x, y, width, height;
-  Rect(int x, int y, int width, int height)
+  SIN x, y, width, height;
+  Rect(SIN x, SIN y, SIN width, SIN height)
       : x(x), y(y), width(width), height(height) {}
 };
 
 struct Size {
-  int width, height;
-  Size(int width, int height) : width(width), height(height) {}
+  SIN width, height;
+  Size(SIN width, SIN height) : width(width), height(height) {}
 };
 
 struct Offset {
-  int x, y;
-  Offset(int x, int y) : x(x), y(y) {}
+  SIN x, y;
+  Offset(SIN x, SIN y) : x(x), y(y) {}
 };
 
-typedef void (*MouseCallback)(int event, int x, int y, int flags, void *param);
-typedef void (*TrackbarCallback)(int pos, void *param);
+typedef void (*MouseCallback)(SIN event, SIN x, SIN y, SIN flags, void *param);
+typedef void (*TrackbarCallback)(SIN pos, void *param);
 
 class View {
  public:
@@ -81,7 +81,7 @@ class View {
     return *this;
   }
 
-  View &alpha(int alpha) {
+  View &alpha(SIN alpha) {
     background_color_ = background_color_.alpha (alpha);
     frame_color_ = frame_color_.alpha (alpha);
     text_color_ = text_color_.alpha (alpha);
@@ -113,7 +113,7 @@ class View {
     return *this;
   }
 
-  void onmouse(int event, int x, int y, int flags) {
+  void onmouse(SIN event, SIN x, SIN y, SIN flags) {
     if (mouse_callback_ != nullptr) {
       mouse_callback_ (event, x, y, flags, mouse_param_);
     }
@@ -148,7 +148,7 @@ class View {
     window_.dirty ();
   }
 
-  void drawImage(const void *image, int alpha = 255) {
+  void drawImage(const void *image, SIN alpha = 255) {
     auto &img = *(cv::Mat *)image;
     if (rect_.width == 0 && rect_.height == 0) {
       rect_.width = img.cols;
@@ -172,7 +172,7 @@ class View {
     auto face = cv::FONT_HERSHEY_SIMPLEX;
     auto scale = 0.4f;
     auto thickness = 1.f;
-    int baseline;
+    SIN baseline;
     cv::Size size = getTextSize (text, face, scale, thickness, &baseline);
     cv::Point org (rect_.x + offset.x, rect_.y + size.height + offset.y);
     Trans trans (window_.buffer ());
@@ -192,7 +192,7 @@ class View {
     cv::rectangle (trans.with (frame_color_), { rect_.x + 2, rect_.y + 2 },
       { rect_.x + rect_.width - 3, rect_.y + 16 },
       color2scalar (frame_color_), -1);
-    int baseline;
+    SIN baseline;
     cv::Size size =
       getTextSize (title.c_str (), cv::FONT_HERSHEY_PLAIN, 1.f, 1.f, &baseline);
     cv::putText (trans.with (text_color_), title.c_str (),
@@ -287,7 +287,7 @@ class Window {
     return *this;
   }
 
-  Window &fps(float fps) {
+  Window &fps(FLT fps) {
     fps_ = fps;
     return *this;
   }
@@ -369,7 +369,7 @@ class Window {
     }
   }
 
-  void onmouse(int event, int x, int y, int flags) {
+  void onmouse(SIN event, SIN x, SIN y, SIN flags) {
     for (auto &pair : views_) {
       auto &view = pair.second;
       if (view.has ({ x, y })) {
@@ -408,17 +408,19 @@ class Window {
   std::string name_;
   std::map<std::string, View> views_;
   bool dirty_;
-  float flush_time_;
-  float fps_;
+  FLT flush_time_;
+  FLT fps_;
   bool hidden_;
   bool show_cursor_;
   Offset cursor_;
 
-  private inline float runtime () {
-    return (float)(clock () - shared_time) / CLOCKS_PER_SEC;
+ private:
+    
+  inline FLT runtime () {
+    return (FLT)(clock () - shared_time) / CLOCKS_PER_SEC;
   }
 
-  private inline void mouse_callback (int event, int x, int y, int flags, 
+  inline void mouse_callback (SIN event, SIN x, SIN y, SIN flags, 
     void *window) {
     ((Window *)window)->onmouse (event, x, y, flags);
   }
@@ -426,17 +428,17 @@ class Window {
 
 class Util {
  public:
-  static void sleep(float seconds = 0) {
-    cv::waitKey (std::max (1, (int)(seconds * 1000)));
+  static void sleep(FLT seconds = 0) {
+    cv::waitKey (std::max (1, (SIN)(seconds * 1000)));
   }
 
-  static char key(float timeout = 0) {
-    return cv::waitKey (std::max (0, (int)(timeout * 1000)));
+  static char key(FLT timeout = 0) {
+    return cv::waitKey (std::max (0, (SIN)(timeout * 1000)));
   }
 
-  static std::string line(float timeout = 0) {
+  static std::string line(FLT timeout = 0) {
     std::stringstream stream;
-    auto ms = (timeout > 0 ? std::max (1, (int)(timeout * 1000)) : -1);
+    auto ms = (timeout > 0 ? std::max (1, (SIN)(timeout * 1000)) : -1);
     while (ms != 0) {
       auto key = cv::waitKey (1);
       if (key == -1) {
@@ -462,4 +464,4 @@ class Util {
 
 }  // namespace _
 
-#endif  // CVPLOT_WINDOW_H
+#endif  // KABUKI_TOOLKIT_PLOT_WINDOW

@@ -2,8 +2,8 @@
 
 namespace _ {
 
-int createTrackbar(const std::string &trackbarname, const std::string &winname,
-                   int *value, int count, TrackbarCallback onChange,
+SIN createTrackbar(const std::string &trackbarname, const std::string &winname,
+                   SIN *value, SIN count, TrackbarCallback onChange,
                    void *userdata) {
   // TODO
   return cv::createTrackbar(trackbarname, winname, value, count, onChange,
@@ -16,7 +16,7 @@ void destroyWindow(const std::string &view) {
   Window::current().view(view).hide();
 }
 
-int getMouseWheelDelta(int flags) {
+SIN getMouseWheelDelta(SIN flags) {
   // TODO
 #if CV_MAJOR_VERSION > 2
   return cv::getMouseWheelDelta(flags);
@@ -25,13 +25,13 @@ int getMouseWheelDelta(int flags) {
 #endif
 }
 
-int getTrackbarPos(const std::string &trackbarname,
+SIN getTrackbarPos(const std::string &trackbarname,
                    const std::string &winname) {
   // TODO
   return cv::getTrackbarPos(trackbarname, winname);
 }
 
-double getWindowProperty(const std::string &winname, int prop_id) {
+double getWindowProperty(const std::string &winname, SIN prop_id) {
   // TODO
   return cv::getWindowProperty(winname, prop_id);
 }
@@ -42,15 +42,15 @@ void imshow(const std::string &view, void *img) {
   Window::current().view(view).flush();
 }
 
-void moveWindow(const std::string &view, int x, int y) {
+void moveWindow(const std::string &view, SIN x, SIN y) {
   Window::current().view(view).offset({x, y});
 }
 
-void namedWindow(const std::string &view, int flags) {
+void namedWindow(const std::string &view, SIN flags) {
   Window::current().view(view);
 }
 
-void resizeWindow(const std::string &view, int width, int height) {
+void resizeWindow(const std::string &view, SIN width, SIN height) {
   Window::current().view(view).size({width, height});
 }
 
@@ -100,25 +100,25 @@ void setMouseCallback(const std::string &view, MouseCallback onMouse,
 }
 
 void setTrackbarMax(const std::string &trackbarname, const std::string &winname,
-                    int maxval) {
+                    SIN maxval) {
 #if CV_MAJOR_VERSION > 2
   cv::setTrackbarMax(trackbarname, winname, maxval);
 #endif
 }
 
 void setTrackbarMin(const std::string &trackbarname, const std::string &winname,
-                    int minval) {
+                    SIN minval) {
 #if CV_MAJOR_VERSION > 2
   cv::setTrackbarMin(trackbarname, winname, minval);
 #endif
 }
 
 void setTrackbarPos(const std::string &trackbarname, const std::string &winname,
-                    int pos) {
+                    SIN pos) {
   cv::setTrackbarPos(trackbarname, winname, pos);
 }
 
-void setWindowProperty(const std::string &winname, int prop_id,
+void setWindowProperty(const std::string &winname, SIN prop_id,
                        double prop_value) {
   cv::setWindowProperty(winname, prop_id, prop_value);
 }
@@ -127,12 +127,12 @@ void setWindowTitle(const std::string &view, const std::string &title) {
   Window::current().view(view).title(title);
 }
 
-int startWindowThread() {
+SIN startWindowThread() {
   return cv::startWindowThread();
 }
 
-int waitKey(int delay) { return Util::key(delay); }
+SIN waitKey(SIN delay) { return Util::key(delay); }
 
-int waitKeyEx(int delay) { return Util::key(delay); }
+SIN waitKeyEx(SIN delay) { return Util::key(delay); }
 
 }  // namespace _

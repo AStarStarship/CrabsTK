@@ -8,18 +8,18 @@
 
 namespace _ {
 
-int createTrackbar(const std::string &trackbarname, const std::string &winname,
-                   int *value, int count, TrackbarCallback onChange = 0,
+SIN createTrackbar(const std::string &trackbarname, const std::string &winname,
+                   SIN *value, SIN count, TrackbarCallback onChange = 0,
                    void *userdata = 0);
 void destroyAllWindows();
 void destroyWindow(const std::string &view);
-int getMouseWheelDelta(int flags);
-int getTrackbarPos(const std::string &trackbarname, const std::string &winname);
-double getWindowProperty(const std::string &winname, int prop_id);
+SIN getMouseWheelDelta(SIN flags);
+SIN getTrackbarPos(const std::string &trackbarname, const std::string &winname);
+double getWindowProperty(const std::string &winname, SIN prop_id);
 void imshow(const std::string &view, void *img);
-void moveWindow(const std::string &view, int x, int y);
-void namedWindow(const std::string &view, int flags = 0);
-void resizeWindow(const std::string &view, int width, int height);
+void moveWindow(const std::string &view, SIN x, SIN y);
+void namedWindow(const std::string &view, SIN flags = 0);
+void resizeWindow(const std::string &view, SIN width, SIN height);
 void resizeWindow(const std::string &view, const Size &size);
 Rect selectROI(const std::string &windowName, void *img,
                bool showCrosshair = true, bool fromCenter = false);
@@ -30,17 +30,17 @@ void selectROIs(const std::string &windowName, void *img,
 void setMouseCallback(const std::string &view, MouseCallback onMouse,
                       void *userdata = 0);
 void setTrackbarMax(const std::string &trackbarname, const std::string &winname,
-                    int maxval);
+                    SIN maxval);
 void setTrackbarMin(const std::string &trackbarname, const std::string &winname,
-                    int minval);
+                    SIN minval);
 void setTrackbarPos(const std::string &trackbarname, const std::string &winname,
-                    int pos);
-void setWindowProperty(const std::string &winname, int prop_id,
+                    SIN pos);
+void setWindowProperty(const std::string &winname, SIN prop_id,
                        double prop_value);
 void setWindowTitle(const std::string &view, const std::string &title);
-int startWindowThread();
-int waitKey(int delay = 0);
-int waitKeyEx(int delay = 0);
+SIN startWindowThread();
+SIN waitKey(SIN delay = 0);
+SIN waitKeyEx(SIN delay = 0);
 
 }  // namespace _
 

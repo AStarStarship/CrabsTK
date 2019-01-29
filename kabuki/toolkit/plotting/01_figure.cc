@@ -12,7 +12,7 @@ TEST(FigureTest, Init) {
 
 }  // namespace _
 
-int main(int argc, char **argv) {
+SIN main(SIN argc, char **argv) {
   ::testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();
 }
