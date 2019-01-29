@@ -19,6 +19,18 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="00_foo.h" />
+    <ClInclude Include="01_bar.h" />
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="test_tree.h" />
+    <ClInclude Include="t_color.h" />
+    <ClInclude Include="t_figure.h" />
+    <ClInclude Include="t_internal.h" />
+    <ClInclude Include="global.h" />
+    <ClInclude Include="c_plotgui.h" />
+    <ClInclude Include="t_window.h" />
+  </ItemGroup>
+  <ItemGroup>
     <None Include="global_config.inl" />
     <None Include="readme.md" />
     <None Include="test_debug.inl" />
@@ -26,13 +38,12 @@
     <None Include="test_release.inl" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="00_foo.h" />
-    <ClInclude Include="01_bar.h" />
-    <ClInclude Include="pch.h" />
-    <ClInclude Include="test_tree.h" />
-  </ItemGroup>
-  <ItemGroup>
+    <ClCompile Include="00_color.cc" />
+    <ClCompile Include="01_figure.cc" />
+    <ClCompile Include="02_window.cc" />
     <ClCompile Include="pch.cc" />
+    <ClCompile Include="plotting_figure.cc" />
+    <ClCompile Include="plotting_highgui.cc" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

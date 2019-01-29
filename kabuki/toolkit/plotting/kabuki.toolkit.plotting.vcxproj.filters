@@ -12,44 +12,77 @@
     <Filter Include="kabuki\toolkit">
       <UniqueIdentifier>{514fea74-b6e8-428d-8c26-be27ee77de19}</UniqueIdentifier>
     </Filter>
-    <Filter Include="kabuki\toolkit\plotting">
+    <Filter Include="kabuki\toolkit\plot">
       <UniqueIdentifier>{9f9ccb68-10fe-4794-959e-2db2532c86a6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <None Include="test_debug.inl">
-      <Filter>kabuki\toolkit\plotting</Filter>
-    </None>
-    <None Include="test_footer.inl">
-      <Filter>kabuki\toolkit\plotting</Filter>
-    </None>
-    <None Include="test_release.inl">
-      <Filter>kabuki\toolkit\plotting</Filter>
-    </None>
-    <None Include="global_config.inl">
-      <Filter>kabuki\toolkit\plotting</Filter>
-    </None>
-    <None Include="readme.md">
-      <Filter>kabuki\toolkit\plotting</Filter>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
+    <ClInclude Include="t_color.h">
+      <Filter>kabuki\toolkit\plot</Filter>
+    </ClInclude>
+    <ClInclude Include="t_figure.h">
+      <Filter>kabuki\toolkit\plot</Filter>
+    </ClInclude>
+    <ClInclude Include="t_internal.h">
+      <Filter>kabuki\toolkit\plot</Filter>
+    </ClInclude>
+    <ClInclude Include="t_window.h">
+      <Filter>kabuki\toolkit\plot</Filter>
+    </ClInclude>
     <ClInclude Include="test_tree.h">
-      <Filter>kabuki\toolkit\plotting</Filter>
+      <Filter>kabuki\toolkit\plot</Filter>
     </ClInclude>
     <ClInclude Include="00_foo.h">
-      <Filter>kabuki\toolkit\plotting</Filter>
+      <Filter>kabuki\toolkit\plot</Filter>
     </ClInclude>
     <ClInclude Include="01_bar.h">
-      <Filter>kabuki\toolkit\plotting</Filter>
+      <Filter>kabuki\toolkit\plot</Filter>
     </ClInclude>
     <ClInclude Include="pch.h">
-      <Filter>kabuki\toolkit\plotting</Filter>
+      <Filter>kabuki\toolkit\plot</Filter>
+    </ClInclude>
+    <ClInclude Include="global.h">
+      <Filter>kabuki\toolkit\plot</Filter>
+    </ClInclude>
+    <ClInclude Include="c_plotgui.h">
+      <Filter>kabuki\toolkit\plot</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <None Include="test_debug.inl">
+      <Filter>kabuki\toolkit\plot</Filter>
+    </None>
+    <None Include="test_footer.inl">
+      <Filter>kabuki\toolkit\plot</Filter>
+    </None>
+    <None Include="test_release.inl">
+      <Filter>kabuki\toolkit\plot</Filter>
+    </None>
+    <None Include="global_config.inl">
+      <Filter>kabuki\toolkit\plot</Filter>
+    </None>
+    <None Include="readme.md">
+      <Filter>kabuki\toolkit\plot</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="00_color.cc">
+      <Filter>kabuki\toolkit\plot</Filter>
+    </ClCompile>
+    <ClCompile Include="01_figure.cc">
+      <Filter>kabuki\toolkit\plot</Filter>
+    </ClCompile>
+    <ClCompile Include="02_window.cc">
+      <Filter>kabuki\toolkit\plot</Filter>
+    </ClCompile>
     <ClCompile Include="pch.cc">
-      <Filter>kabuki\toolkit\plotting</Filter>
+      <Filter>kabuki\toolkit\plot</Filter>
+    </ClCompile>
+    <ClCompile Include="plotting_figure.cc">
+      <Filter>kabuki\toolkit\plot</Filter>
+    </ClCompile>
+    <ClCompile Include="plotting_highgui.cc">
+      <Filter>kabuki\toolkit\plot</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

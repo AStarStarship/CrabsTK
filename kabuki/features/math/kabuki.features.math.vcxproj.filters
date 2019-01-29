@@ -17,70 +17,10 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="tmatrix.h">
-      <Filter>kabuki\features\math</Filter>
-    </ClInclude>
-    <ClInclude Include="toperatoradd.h">
-      <Filter>kabuki\features\math</Filter>
-    </ClInclude>
-    <ClInclude Include="toperatordivide.h">
-      <Filter>kabuki\features\math</Filter>
-    </ClInclude>
-    <ClInclude Include="toperatormultiply.h">
-      <Filter>kabuki\features\math</Filter>
-    </ClInclude>
-    <ClInclude Include="toperatorsubtract.h">
-      <Filter>kabuki\features\math</Filter>
-    </ClInclude>
-    <ClInclude Include="tpoint2d.h">
-      <Filter>kabuki\features\math</Filter>
-    </ClInclude>
-    <ClInclude Include="tpoint3d.h">
-      <Filter>kabuki\features\math</Filter>
-    </ClInclude>
-    <ClInclude Include="tpolar2d.h">
-      <Filter>kabuki\features\math</Filter>
-    </ClInclude>
-    <ClInclude Include="tpoly2d.h">
-      <Filter>kabuki\features\math</Filter>
-    </ClInclude>
-    <ClInclude Include="tpoly3d.h">
-      <Filter>kabuki\features\math</Filter>
-    </ClInclude>
-    <ClInclude Include="tquad2d.h">
-      <Filter>kabuki\features\math</Filter>
-    </ClInclude>
-    <ClInclude Include="trect2d.h">
-      <Filter>kabuki\features\math</Filter>
-    </ClInclude>
-    <ClInclude Include="trect2drotor.h">
-      <Filter>kabuki\features\math</Filter>
-    </ClInclude>
-    <ClInclude Include="tsoftmax.h">
-      <Filter>kabuki\features\math</Filter>
-    </ClInclude>
-    <ClInclude Include="ttransformaffine.h">
-      <Filter>kabuki\features\math</Filter>
-    </ClInclude>
-    <ClInclude Include="ttrigonometry.h">
-      <Filter>kabuki\features\math</Filter>
-    </ClInclude>
-    <ClInclude Include="tvect2d.h">
-      <Filter>kabuki\features\math</Filter>
-    </ClInclude>
-    <ClInclude Include="tvect3d.h">
-      <Filter>kabuki\features\math</Filter>
-    </ClInclude>
     <ClInclude Include="00_foo.h">
       <Filter>kabuki\features\math</Filter>
     </ClInclude>
     <ClInclude Include="01_bar.h">
-      <Filter>kabuki\features\math</Filter>
-    </ClInclude>
-    <ClInclude Include="cbcd.h">
-      <Filter>kabuki\features\math</Filter>
-    </ClInclude>
-    <ClInclude Include="ccalc.h">
       <Filter>kabuki\features\math</Filter>
     </ClInclude>
     <ClInclude Include="config.h">
@@ -89,33 +29,69 @@
     <ClInclude Include="pch.h">
       <Filter>kabuki\features\math</Filter>
     </ClInclude>
-    <ClInclude Include="tangle2d.h">
-      <Filter>kabuki\features\math</Filter>
-    </ClInclude>
-    <ClInclude Include="tbezier2d.h">
-      <Filter>kabuki\features\math</Filter>
-    </ClInclude>
-    <ClInclude Include="tbezierquad2d.h">
-      <Filter>kabuki\features\math</Filter>
-    </ClInclude>
-    <ClInclude Include="tequation.h">
-      <Filter>kabuki\features\math</Filter>
-    </ClInclude>
     <ClInclude Include="test_tree.h">
       <Filter>kabuki\features\math</Filter>
     </ClInclude>
-    <ClInclude Include="texceptioninvalidpath.h">
+    <ClInclude Include="t_vect3d.h">
+      <Filter>kabuki\features\math</Filter>
+    </ClInclude>
+    <ClInclude Include="t_vect2d.h">
+      <Filter>kabuki\features\math</Filter>
+    </ClInclude>
+    <ClInclude Include="t_transformaffine.h">
+      <Filter>kabuki\features\math</Filter>
+    </ClInclude>
+    <ClInclude Include="t_softmax.h">
+      <Filter>kabuki\features\math</Filter>
+    </ClInclude>
+    <ClInclude Include="t_rect2drotor.h">
+      <Filter>kabuki\features\math</Filter>
+    </ClInclude>
+    <ClInclude Include="t_rect2d.h">
+      <Filter>kabuki\features\math</Filter>
+    </ClInclude>
+    <ClInclude Include="t_quad2d.h">
+      <Filter>kabuki\features\math</Filter>
+    </ClInclude>
+    <ClInclude Include="t_poly3d.h">
+      <Filter>kabuki\features\math</Filter>
+    </ClInclude>
+    <ClInclude Include="t_poly2d.h">
+      <Filter>kabuki\features\math</Filter>
+    </ClInclude>
+    <ClInclude Include="t_polar2d.h">
+      <Filter>kabuki\features\math</Filter>
+    </ClInclude>
+    <ClInclude Include="t_point3d.h">
+      <Filter>kabuki\features\math</Filter>
+    </ClInclude>
+    <ClInclude Include="t_point2d.h">
+      <Filter>kabuki\features\math</Filter>
+    </ClInclude>
+    <ClInclude Include="t_exceptioninvalidpath.h">
+      <Filter>kabuki\features\math</Filter>
+    </ClInclude>
+    <ClInclude Include="t_equation.h">
+      <Filter>kabuki\features\math</Filter>
+    </ClInclude>
+    <ClInclude Include="t_bezier2d.h">
+      <Filter>kabuki\features\math</Filter>
+    </ClInclude>
+    <ClInclude Include="t_angle2d.h">
+      <Filter>kabuki\features\math</Filter>
+    </ClInclude>
+    <ClInclude Include="c_calc.h">
+      <Filter>kabuki\features\math</Filter>
+    </ClInclude>
+    <ClInclude Include="c_bcd.h">
+      <Filter>kabuki\features\math</Filter>
+    </ClInclude>
+    <ClInclude Include="t_bezier2dquad.h">
       <Filter>kabuki\features\math</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="trigonometry.inl">
-      <Filter>kabuki\features\math</Filter>
-    </None>
     <None Include="global_config.inl">
-      <Filter>kabuki\features\math</Filter>
-    </None>
-    <None Include="poly_2d.inl">
       <Filter>kabuki\features\math</Filter>
     </None>
     <None Include="readme.md">

@@ -21,43 +21,35 @@
   <ItemGroup>
     <ClInclude Include="00_foo.h" />
     <ClInclude Include="01_bar.h" />
-    <ClInclude Include="cbcd.h" />
-    <ClInclude Include="ccalc.h" />
+    <ClInclude Include="c_bcd.h" />
+    <ClInclude Include="c_calc.h" />
     <ClInclude Include="config.h" />
     <ClInclude Include="pch.h" />
-    <ClInclude Include="tangle2d.h" />
-    <ClInclude Include="tbezier2d.h" />
-    <ClInclude Include="tbezierquad2d.h" />
-    <ClInclude Include="tequation.h" />
+    <ClInclude Include="t_angle2d.h" />
+    <ClInclude Include="t_bezier2d.h" />
+    <ClInclude Include="t_bezier2dquad.h" />
+    <ClInclude Include="t_equation.h" />
     <ClInclude Include="test_tree.h" />
-    <ClInclude Include="texceptioninvalidpath.h" />
-    <ClInclude Include="tmatrix.h" />
-    <ClInclude Include="toperatoradd.h" />
-    <ClInclude Include="toperatordivide.h" />
-    <ClInclude Include="toperatormultiply.h" />
-    <ClInclude Include="toperatorsubtract.h" />
-    <ClInclude Include="tpoint2d.h" />
-    <ClInclude Include="tpoint3d.h" />
-    <ClInclude Include="tpolar2d.h" />
-    <ClInclude Include="tpoly2d.h" />
-    <ClInclude Include="tpoly3d.h" />
-    <ClInclude Include="tquad2d.h" />
-    <ClInclude Include="trect2d.h" />
-    <ClInclude Include="trect2drotor.h" />
-    <ClInclude Include="tsoftmax.h" />
-    <ClInclude Include="ttransformaffine.h" />
-    <ClInclude Include="ttrigonometry.h" />
-    <ClInclude Include="tvect2d.h" />
-    <ClInclude Include="tvect3d.h" />
+    <ClInclude Include="t_exceptioninvalidpath.h" />
+    <ClInclude Include="t_point2d.h" />
+    <ClInclude Include="t_point3d.h" />
+    <ClInclude Include="t_polar2d.h" />
+    <ClInclude Include="t_poly2d.h" />
+    <ClInclude Include="t_poly3d.h" />
+    <ClInclude Include="t_quad2d.h" />
+    <ClInclude Include="t_rect2d.h" />
+    <ClInclude Include="t_rect2drotor.h" />
+    <ClInclude Include="t_softmax.h" />
+    <ClInclude Include="t_transformaffine.h" />
+    <ClInclude Include="t_vect2d.h" />
+    <ClInclude Include="t_vect3d.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="global_config.inl" />
-    <None Include="poly_2d.inl" />
     <None Include="readme.md" />
     <None Include="test_debug.inl" />
     <None Include="test_footer.inl" />
     <None Include="test_release.inl" />
-    <None Include="trigonometry.inl" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="math_bcd.cc" />

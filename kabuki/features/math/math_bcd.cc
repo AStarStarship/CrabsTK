@@ -1,33 +1,31 @@
-/* Kabuki Toolkit
-    @file    ~/kt/math/BCD.cc
-    @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2017-2018 Cale McCollough <calemccollough@gmail.com>;
-             All right reserved (R). Licensed under the Apache License, Version 
-             2.0 (the "License"); you may not use this file except in 
-             compliance with the License. You may obtain a copy of the License 
-             [here](http://www.apache.org/licenses/LICENSE-2.0). Unless 
-             required by applicable law or agreed to in writing, software 
-             distributed under the License is distributed on an "AS IS" BASIS, 
-             WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or 
-             implied. See the License for the specific language governing 
-             permissions and limitations under the License.
-*/
+/* Kabuki Toolkit @version 0.x
+@link    https://github.com/kabuki-starship/kabuki-toolkit.git
+@file    /kabuki/features/math/math_bcd.cc
+@author  Cale McCollough <calemccollough.github.io>
+@license Copyright (C) 2014-2019 Cale McCollough <calemccollough.github.io>;
+All right reserved (R). Licensed under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance with the License.
+You may obtain a copy of the License at www.apache.org/licenses/LICENSE-2.0.
+Unless required by applicable law or agreed to in writing, software distributed
+under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
+CONDITIONS OF ANY KIND, either express or implied. See the License for the
+specific language governing permissions and limitations under the License. */
 
 #include <pch.h>
-#include "bcd.h"
+#if SEAM >= KABUKI_FEATURES_MATH_1
 
 namespace _ {
 
 /*
 BCD::BCD ()
 {
-    // Note: for 32-bit float return int64_t.
+    // Note: for 32-bit FLT return int64_t.
 
     CH1* floatingPointString = new CH1[maxDigitsDouble + 1];
     /// This solution  is for a 64-bit floating point number. Use 
-    maxDigitsFloat for a float.
+    maxDigitsFloat for a FLT.
 
-    if (significantDigits < 0)   //< Then use all of the float's digits.
+    if (significantDigits < 0)   //< Then use all of the FLT's digits.
     {
         significantDigits += 2;  //< ditch the '.' and '-'
         sprintf (floatingPointString , "%f", floatingPointNumber);
@@ -66,7 +64,7 @@ BCD::BCD ()
 } */
 
 
-BCD::BCD (float floatingPointNumber, SI4 numDecimalPlaces = -1)
+BCD::BCD (FLT floatingPointNumber, SI4 numDecimalPlaces = -1)
 {
 
 }
@@ -81,7 +79,7 @@ BCD::~BCD ()
     if (is_dynamic && ptr != nullptr) delete ptr;
 }
 
-float BCD::GetFloat ()
+FLT BCD::GetFloat ()
 {
     return 0.0f;
 }
@@ -91,7 +89,7 @@ double BCD::GetDouble ()
     return 0.0;
 }
 
-void BCD::SetValue (float Value)
+void BCD::SetValue (FLT Value)
 {
 
 }
@@ -131,7 +129,7 @@ void BCD::Plus (long Value)
 
 }
 
-void BCD::Plus (float Value)
+void BCD::Plus (FLT Value)
 {
 
 }
@@ -156,7 +154,7 @@ void BCD::Minus (long Value)
 
 }
 
-void BCD::Minus (float Value)
+void BCD::Minus (FLT Value)
 {
 
 }
@@ -181,7 +179,7 @@ void BCD::Times (long Value)
 
 }
 
-void BCD::Times (float Value)
+void BCD::Times (FLT Value)
 {
 
 }
@@ -206,7 +204,7 @@ void BCD::Divide (long Value)
 
 }
 
-void BCD::Divide (float Value)
+void BCD::Divide (FLT Value)
 {
 
 }
@@ -216,8 +214,9 @@ void BCD::Divide (double Value)
 
 }
 
-_::Printer& BCD::Print (_::Printer& printer)
+Printer& BCD::Print (Printer& printer)
 {
 }
 
 }       //< namespace _
+#endif
