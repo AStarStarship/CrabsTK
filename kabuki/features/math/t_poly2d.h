@@ -258,7 +258,7 @@ public:
   }
 
   BOL Contains (TRect2D<T> r) {
-    return Contains (r.x, r.y_, r.GetWidth (), r.GetHeight ());
+    return Contains (r.x, r.y_, r.Width (), r.Height ());
   }
 
   /* Returns true if this polygon intersects the given rectangle. */
@@ -285,7 +285,7 @@ public:
 
   /* Returns true if this polygon intersects the given rectangle. */
   BOL Intersects (TRect2D r) {
-    return Intersects (r.x, r.y_, r.GetWidth (), r.GetHeight ());
+    return Intersects (r.x, r.y_, r.Width (), r.Height ());
   }
 
   Poly2DPathIterator<T> GetPathIterator (Transform<T> a) {

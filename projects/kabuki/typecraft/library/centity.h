@@ -71,7 +71,7 @@ class Entity {
   SI4 SetArmor(SI4 value);
 
   /* Gets the Entity's height measured in half blocks. */
-  SI4 GetHeight();
+  SI4 Height();
 
   /* Sets the Entity's height in half blocks.
       @return Returns zero upon success and the input value if it is < 0 . */

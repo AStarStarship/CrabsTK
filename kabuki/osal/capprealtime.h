@@ -86,7 +86,7 @@ class RealTimeApp: public App
 	{
 		/*
 		Vect_i d = size ();
-		if ((offScreenImage == null) || (d.Width != offScreenSize.GetWidth ()) || (d.Height != offScreenSize.GetHeight()))
+		if ((offScreenImage == null) || (d.Width != offScreenSize.Width ()) || (d.Height != offScreenSize.Height()))
 		{
 			offScreenImage = CreateImage (d.Width, d.Height);
 			offScreenSize = d;

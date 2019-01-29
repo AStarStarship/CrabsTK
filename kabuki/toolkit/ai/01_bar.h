@@ -14,7 +14,7 @@ specific language governing permissions and limitations under the License. */
 #pragma once
 #include <pch.h>
 
-#if SEAM == KABUKI_FEATURES_AI_0
+#if SEAM == KABUKI_TOOLKIT_AI_0
 #include "test_debug.inl"
 #else
 #include "test_release.inl"
@@ -24,7 +24,7 @@ using namespace _;
 
 namespace kabuki { namespace features { namespace ai {
 inline const CH1* _1_Bar (CH1* seam_log, CH1* seam_end, const CH1* args) {
-#if SEAM >= KABUKI_FEATURES_AI_0
+#if SEAM >= KABUKI_TOOLKIT_AI_0
   TEST_BEGIN;
 
   PRINT_HEADING ("Testing Foo fun.");

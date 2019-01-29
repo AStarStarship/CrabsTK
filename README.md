@@ -48,7 +48,6 @@ All currently broken. Sorry. Please contribute as a developer. Thanks.
 
 | Module      | Description |
 |:-----------:|:------------|
-| ai          | Artificial Intelligence library. |
 | filecabinet | Long-term memory and filesystem library. |
 | math        | (Coming soon) Math library. |
 | graphics    | Graphics library. |
@@ -59,6 +58,7 @@ All currently broken. Sorry. Please contribute as a developer. Thanks.
 
 | Module   | Description |
 |:--------:|:------------|
+| ai       | Artificial Intelligence library. |
 | av       | Audio-visual library. |
 | adsp     | Audio Digital Signal Processing library. |
 | data     | Database library. |
@@ -77,10 +77,10 @@ All currently broken. Sorry. Please contribute as a developer. Thanks.
 |:-------------:|:------------|
 | av_studio     | Early-stage Audio-visual Studio app. |
 | cards         | Early-stage playing card game app. |
+| calc          | Early-stage graphing calculator. |
 | connections   | Early-stage Contact list, trading, and chat app. |
 | igeek         | Early-stage Interactive Genetic Evolutionary Environment for KabukiNet. |
 | kabuki_vm     | Early-stage Kabuki Virtual Machine (VM). |
-| kabukinet     | Early-stage KabukiNet Partial and Ordinary Differential Equation neural net (PODEN2) architecture. |
 | script2       | Oversight project for Script2. |
 | sloth         | Early-stage SDK automation utility for integrating and refactoring third-party libraries. |
 | typecraft     | Early-stage typing tutor based on the Minecraft world. |
@@ -128,14 +128,15 @@ All currently broken. Sorry. Please contribute as a developer. Thanks.
 	* 0_0_09 kabuki.toolkit.orm
 	* 0_2_10 kabuki.features.midi
 	* 0_0_11 kabuki.features.math
-	* 0_0_12 kabuki.features.ai
+	* 0_0_12 kabuki.toolkit.ai.core
 *     0_1    Somatosensory Cortex
 	* 0_1_00 kabuki.features.touch
 	* 0_1_01 kabuki.tek
 *     0_2    Auditory Cortex
 	* 0_2_01 kabuki.features.sound
 	* 0_2_02 kabuki.features.adsp
-	* 0_2_03 kabuki.toolkit.music
+	* 0_2_03 kabuki.toolkit.av
+	* 0_2_04 kabuki.toolkit.ai.audio
 *     0_3    Visual Cortex
 	* 0_3_00 kabuki.features.lights
 	* 0_3_01 kabuki.features.graphics
@@ -145,7 +146,7 @@ All currently broken. Sorry. Please contribute as a developer. Thanks.
 	* 0_3_05 kabuki.toolkit.plotting
 	* 0_3_06 kabuki.toolkit.gui
 	* 0_3_07 kabuki.toolkit.video
-	* 0_3_08 kabuki.features.ai
+	* 0_3_08 kabuki.toolkit.ai.video
 
 ## Vision and Mission Statement
 
