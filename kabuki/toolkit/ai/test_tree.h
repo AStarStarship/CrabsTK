@@ -16,7 +16,7 @@ specific language governing permissions and limitations under the License. */
 
 #include "00_foo.h"
 
-#if SEAM >= KABUKI_FEATURES_AI_1
+#if SEAM >= KABUKI_TOOLKIT_AI_1
 #include "01_bar.h"
 #endif
 
@@ -25,7 +25,7 @@ namespace kabuki { namespace features { namespace ai {
 static const CH1* Test(CH1* seam_log, CH1* seam_end,
                         const CH1* args) {
   return TTestTree<_0_Foo
-#if SEAM >= KABUKI_FEATURES_AI_1
+#if SEAM >= KABUKI_TOOLKIT_AI_1
                     , _1_Bar
 #endif
   >(seam_log, seam_end, args);

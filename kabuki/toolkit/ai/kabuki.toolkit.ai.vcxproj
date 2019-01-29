@@ -19,33 +19,26 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ai_dataset.cc" />
-    <ClCompile Include="ai_perceptron.cc" />
-    <ClCompile Include="ai_perceptrongraph.cc" />
-    <ClCompile Include="ai_perceptrongraph2d.cc" />
-    <ClCompile Include="ai_perceptronlayer.cc" />
-    <ClCompile Include="ai_synapse.cc" />
+    <ClCompile Include="ai_datasetsmnist.cc" />
     <ClCompile Include="main.cc" />
     <ClCompile Include="pch.cc" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="00_foo.h" />
     <ClInclude Include="01_bar.h" />
-    <ClInclude Include="assembly.h" />
-    <ClInclude Include="cagent.h" />
-    <ClInclude Include="casyncronous.h" />
-    <ClInclude Include="cdatasetimporter.h" />
-    <ClInclude Include="cgan.h" />
-    <ClInclude Include="ckernel.h" />
-    <ClInclude Include="cperceptron.h" />
-    <ClInclude Include="cperceptrongraph.h" />
-    <ClInclude Include="cperceptrongraph2d.h" />
-    <ClInclude Include="cperceptronlayer.h" />
-    <ClInclude Include="cperceptronmodel.h" />
-    <ClInclude Include="cpersenseron.h" />
-    <ClInclude Include="crdnn.h" />
-    <ClInclude Include="csynapse.h" />
-    <ClInclude Include="ctask.h" />
+    <ClInclude Include="t_agent.h" />
+    <ClInclude Include="c_datasetsmnist.h" />
+    <ClInclude Include="t_gan.h" />
+    <ClInclude Include="t_kernel.h" />
+    <ClInclude Include="t_perceptron.h" />
+    <ClInclude Include="t_perceptrongraph.h" />
+    <ClInclude Include="t_perceptrongraph2d.h" />
+    <ClInclude Include="t_perceptronlayer.h" />
+    <ClInclude Include="t_perceptronmodel.h" />
+    <ClInclude Include="t_persenseron.h" />
+    <ClInclude Include="t_rdnn.h" />
+    <ClInclude Include="t_synapse.h" />
+    <ClInclude Include="t_task.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="test_tree.h" />
   </ItemGroup>

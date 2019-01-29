@@ -57,7 +57,7 @@ public:
   }
 
   /* Gets the width. */
-  T GetWidth () const { return width; }
+  T Width () const { return width; }
 
   /* Sets the width. */
   void SetWidth (T value) {
@@ -66,7 +66,7 @@ public:
   }
 
   /* Gets and sets the height.  */
-  T GetHeight () const { return height; }
+  T Height () const { return height; }
 
   /* Sets the height. */
   void SetHeight (T value) {

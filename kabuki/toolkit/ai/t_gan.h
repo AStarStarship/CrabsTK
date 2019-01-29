@@ -1,6 +1,6 @@
 /* Kabuki Toolkit @version 0.x
 @link    https://github.com/kabuki-starship/kabuki-toolkit.git
-@file    /kabuki/features//ai/perceptron.h
+@file    /kabuki/toolkit/ai/ai/t_gan.h
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2018 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -11,37 +11,12 @@ under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
 CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License. */
 
-#pragma once
-#include <pch.h>
-
-#if MAJOR_SEAM >= 5 && MINOR_SEAM >= 1
-
-#include "perceptron.h"
-
 namespace _ {
 
-typedef float_t (*PerceptronSensor) ();
-
-#ifndef SENSORY_PERCEPTRON
-#define SENSORY_PERCEPTRON
-
-/* A Sensory Perceptron that takes in data from various types and outputs.
-    
-*/
-template<typename T>
-class Persenseron {
-    public:
-
-    /* Constructs a Persenseron from the given Perceptron. */
-    Persenseron (Perceptron* y);
-
-    void Update ();
-
-    private:
-
-    Perceptron* y_; //<
+/* Generative Adversarial Network. */
+class TGAN {
+public:
+    TGAN () {
+    }
 };
-
-}       //< namespace _
-#endif  //< #ifndef SENSORY_PERCEPTRON
-#endif  //< #if MAJOR_SEAM >= 5 && MINOR_SEAM >= 1
+}

@@ -42,13 +42,13 @@ public:
   T& GetY_ref ();
 
   /* Gets the width. */
-  T GetWidth () const;
+  T Width () const;
 
   /* Gets the width reference. */
   T& GetWidth_ref ();
 
   /* Gets the height. */
-  T GetHeight () const;
+  T Height () const;
 
   /* Gets the height reference. */
   T& GetHeight_ref ();

@@ -17,77 +17,17 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ai_perceptron.cc">
-      <Filter>kabuki\features\ai</Filter>
-    </ClCompile>
-    <ClCompile Include="ai_perceptrongraph.cc">
-      <Filter>kabuki\features\ai</Filter>
-    </ClCompile>
-    <ClCompile Include="ai_perceptrongraph2d.cc">
-      <Filter>kabuki\features\ai</Filter>
-    </ClCompile>
-    <ClCompile Include="ai_perceptronlayer.cc">
-      <Filter>kabuki\features\ai</Filter>
-    </ClCompile>
-    <ClCompile Include="ai_synapse.cc">
-      <Filter>kabuki\features\ai</Filter>
-    </ClCompile>
     <ClCompile Include="main.cc">
       <Filter>kabuki\features\ai</Filter>
     </ClCompile>
     <ClCompile Include="pch.cc">
       <Filter>kabuki\features\ai</Filter>
     </ClCompile>
-    <ClCompile Include="ai_dataset.cc">
+    <ClCompile Include="ai_datasetsmnist.cc">
       <Filter>kabuki\features\ai</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="assembly.h">
-      <Filter>kabuki\features\ai</Filter>
-    </ClInclude>
-    <ClInclude Include="cagent.h">
-      <Filter>kabuki\features\ai</Filter>
-    </ClInclude>
-    <ClInclude Include="casyncronous.h">
-      <Filter>kabuki\features\ai</Filter>
-    </ClInclude>
-    <ClInclude Include="cdatasetimporter.h">
-      <Filter>kabuki\features\ai</Filter>
-    </ClInclude>
-    <ClInclude Include="cgan.h">
-      <Filter>kabuki\features\ai</Filter>
-    </ClInclude>
-    <ClInclude Include="ckernel.h">
-      <Filter>kabuki\features\ai</Filter>
-    </ClInclude>
-    <ClInclude Include="cperceptron.h">
-      <Filter>kabuki\features\ai</Filter>
-    </ClInclude>
-    <ClInclude Include="cperceptrongraph.h">
-      <Filter>kabuki\features\ai</Filter>
-    </ClInclude>
-    <ClInclude Include="cperceptrongraph2d.h">
-      <Filter>kabuki\features\ai</Filter>
-    </ClInclude>
-    <ClInclude Include="cperceptronlayer.h">
-      <Filter>kabuki\features\ai</Filter>
-    </ClInclude>
-    <ClInclude Include="cperceptronmodel.h">
-      <Filter>kabuki\features\ai</Filter>
-    </ClInclude>
-    <ClInclude Include="cpersenseron.h">
-      <Filter>kabuki\features\ai</Filter>
-    </ClInclude>
-    <ClInclude Include="crdnn.h">
-      <Filter>kabuki\features\ai</Filter>
-    </ClInclude>
-    <ClInclude Include="csynapse.h">
-      <Filter>kabuki\features\ai</Filter>
-    </ClInclude>
-    <ClInclude Include="ctask.h">
-      <Filter>kabuki\features\ai</Filter>
-    </ClInclude>
     <ClInclude Include="pch.h">
       <Filter>kabuki\features\ai</Filter>
     </ClInclude>
@@ -98,6 +38,45 @@
       <Filter>kabuki\features\ai</Filter>
     </ClInclude>
     <ClInclude Include="01_bar.h">
+      <Filter>kabuki\features\ai</Filter>
+    </ClInclude>
+    <ClInclude Include="t_agent.h">
+      <Filter>kabuki\features\ai</Filter>
+    </ClInclude>
+    <ClInclude Include="t_gan.h">
+      <Filter>kabuki\features\ai</Filter>
+    </ClInclude>
+    <ClInclude Include="t_kernel.h">
+      <Filter>kabuki\features\ai</Filter>
+    </ClInclude>
+    <ClInclude Include="t_perceptron.h">
+      <Filter>kabuki\features\ai</Filter>
+    </ClInclude>
+    <ClInclude Include="t_perceptrongraph.h">
+      <Filter>kabuki\features\ai</Filter>
+    </ClInclude>
+    <ClInclude Include="t_perceptrongraph2d.h">
+      <Filter>kabuki\features\ai</Filter>
+    </ClInclude>
+    <ClInclude Include="t_perceptronlayer.h">
+      <Filter>kabuki\features\ai</Filter>
+    </ClInclude>
+    <ClInclude Include="t_perceptronmodel.h">
+      <Filter>kabuki\features\ai</Filter>
+    </ClInclude>
+    <ClInclude Include="t_persenseron.h">
+      <Filter>kabuki\features\ai</Filter>
+    </ClInclude>
+    <ClInclude Include="t_rdnn.h">
+      <Filter>kabuki\features\ai</Filter>
+    </ClInclude>
+    <ClInclude Include="t_task.h">
+      <Filter>kabuki\features\ai</Filter>
+    </ClInclude>
+    <ClInclude Include="t_synapse.h">
+      <Filter>kabuki\features\ai</Filter>
+    </ClInclude>
+    <ClInclude Include="c_datasetsmnist.h">
       <Filter>kabuki\features\ai</Filter>
     </ClInclude>
   </ItemGroup>

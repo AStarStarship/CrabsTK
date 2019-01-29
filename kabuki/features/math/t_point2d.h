@@ -26,8 +26,8 @@ template<typename T>
 class TPoint2D {
 public:
 
-  T x,    //< The X position.
-    y;    //< The Y position.
+  T x,    //< X position.
+    y;    //< Y position.
 
   /* Default constructor initializes with given TPoint2D. */
   TPoint2D (T x = 0, T y = 0) 

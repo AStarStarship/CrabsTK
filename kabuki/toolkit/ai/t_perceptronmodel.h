@@ -16,24 +16,25 @@
 
 #pragma once
 #include <pch.h>
-#if MAJOR_SEAM >= 5 && MINOR_SEAM >= 1
-#include "perceptron_graph.h"
+#if SEAM >= KABUKI_TOOLKIT_AI_1
+#include "tperceptrongraph.h"
 #ifndef KABUKI_TOOLKIT_AIML_PERCEPTRONMODEL
 
 
 namespace _ {
 
-/* A 2D grid of Perceptron(s) created from a PerceptronLayer. */
-class PerceptronModel : public PerceptronGraph {
+/* A 2D grid of TPerceptron(s) created from a PerceptronLayer. */
+template<typename Value>
+class PerceptronModel : public TPerceptronGraph<Value> {
     public:
 
-    PerceptronModel (size_t input_count, size_t output_count);
+    PerceptronModel (SI4 input_count, SI4 output_count);
 
     private:
 
-    TArray<float_t> y_;
+    TArray<Value> y_;
 };
 
 }       //< namespace _
 #endif  //< #ifndef KABUKI_TOOLKIT_AIML_PERCEPTRONGRAPH2D
-#endif  //< #if MAJOR_SEAM >= 5 && MINOR_SEAM >= 1
+#endif  //< #if SEAM >= KABUKI_TOOLKIT_AI_1

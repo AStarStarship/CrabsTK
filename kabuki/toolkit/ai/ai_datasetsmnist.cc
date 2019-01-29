@@ -1,5 +1,5 @@
 /* Kabuki Toolkit @version 0.x
-@file    /kabuki/f2sdk/ai/aiml_mnist_importer.h
+@file    /kabuki/toolkit/ai/aiml_mnist_importer.h
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-19 Cale McCollough <cale@astartup.net>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -13,8 +13,8 @@ specific language governing permissions and limitations under the License. */
 #pragma once
 #include <pch.h>
 
-#if SEAM >= SEAM_0_0_13__0
-#include "nmist_importer.h"
+#if SEAM >= KABUKI_TOOLKIT_AI_1
+#include "c_datasetsmnist.h"
 
 #include <fstream>
 #include <iostream>
@@ -22,7 +22,7 @@ using namespace std;
 
 namespace _ {
 
-void MnistImport() {
+void DataSetImportMnist() {
   // ifstream is used for reading files
   // We'll read from a file called Sample.dat
   ifstream file("train-labels.idx1-ubyte");
@@ -48,10 +48,10 @@ void MnistImport() {
     cout << " Height:" << labels.column_count;
 
     size_t n = labels.item_count * labels.row_count * labels.column_count;
-    uint8_t* pixels = new uint8_t[n];
+    UI1* pixels = new UI1[n];
     for (; n > 0; --n) file >> pixels[n];
   }
 }
 
 }  // namespace _
-#endif  //< #if SEAM >= SEAM_0_0_13__0
+#endif
