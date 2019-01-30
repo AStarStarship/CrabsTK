@@ -24,26 +24,6 @@ Kabuki Toolkit (KT) is a modern embedded-C++ toolkit for making intelligent conn
 * [Documents & FAQ](https://github.com/kabuki-starship/kabuki-toolkit.git/blob/master/docs/faq.md)
   - *Check out the `/docs/readme.md` for answers to Frequently asked questions and other promotional and learning materials.*
 
-## Quick Start Guide
-
-**1.** Clone the kabuki-toolkit and script2 repos into your workspace or project 3rd-party dependencies directory:
-
-> git clone https://github.com/kabuki-starship/kabuki-toolkit.git
-> cd kabuki-toolkit
-> git clone https://github.com/kabuki-starship/script2.git
-
-**2.** Open the `kabuki-toolkit.sln` Visual Studio Project.
-
-**3.** Start by looking in the `0_0_00.experiments` project. Open the `global_config.inl` and look at the typedef(s) and seam macros, then set the seam number in the `pch.h` file to one in the `global_config.inl`. Then look through the `test_debug.inl` and `test_release.inl`, the look through the seam tree tests in the files that start with `0_0_0` and the called functions.
-
-**4.** In order to save the stack debug data when an DASSERT occurs, set breakpoint in the file `script2_test.cc` at the return line for:
-
-```C++
-BOL TestWarn(const CH1* function, const CH1* file, SI4 line);
-```
-
-**5.** Check out the various seam tests starting at `0_0_00`, which is Script2.
-
 ## kabuki Modules
 
 All currently broken. Sorry. Please contribute as a developer. Thanks.
