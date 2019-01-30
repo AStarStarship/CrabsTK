@@ -29,7 +29,10 @@
     <ClInclude Include="01_bar.h">
       <Filter>kabuki\features\lights</Filter>
     </ClInclude>
-    <ClInclude Include="ccolor.h">
+    <ClInclude Include="c_color.h">
+      <Filter>kabuki\features\lights</Filter>
+    </ClInclude>
+    <ClInclude Include="t_color.h">
       <Filter>kabuki\features\lights</Filter>
     </ClInclude>
   </ItemGroup>

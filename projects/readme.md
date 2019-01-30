@@ -1,48 +1,18 @@
 # projects
 
-Projects in KT are organized with all of the library objects in a single namespace, the `::_::` namespace and projects in the `projects` namespace.
+KT projects are limited to use of C++ on the Universal Windows Platform (UWP) with Script2, Python, HTML5, and JavaScript.
 
-## Tentative Project Languages
-
-### Cards
-*Language/API:* **C++, C#, and Xamarin**
-
-I would ideally like to do something like the Pokemon Online TCG in a DLL and OpenGL window with a simple native app to log in and out and adjust settings. The programming style should be similar to Unity or similar graphics engine written in C++ with C# APIs.
-
-### Calc
-*Language/API:* **C++/UWP, Python/Flask, HTML5, JavaScript/React**
-
-A graphing calculator app with Python-based website.
-
-### Connect
-*Language/API:* **C++/UWP, HTML5, JavaScript**
-
-A chat, social network, and trading app.
-
-### AV Studio
-*Language/API:* **C++/UWP, Python**
-
-Audio-Visual Studio is a touchscreen music and lighting control center that can do some audio synthesis.
-
-### Typecraft
-*Language/API:* **C++/UWP, Java, Swift**
-
-This is a typing tutor where you mine blocks by doing typing lessons like keyboard rows and word accuracy. This is the app that we work directly with the native OS  UI widgets. Typecraft also gives us an opportunity to get into 3D graphics.
-
-### Sloth
-*Language/API:* **C++/UWP, Script2**
-
-Sloth is a seam tree refactoring utility for automating code refactoring and the creation and manipulation of seam tress. Sloth should allow us to transform third-party APIs into seam trees and unify the style guide into the ASCII C++ Style Guide.
-
-### IGEEK
-*Language/API:* **C++/UWP, Python, Julia, HTML5, JavaScript/React**
-
-IGEEK is now named the Interactive Genetic Evolutionary Environment for KabukiNet, which is our Fast-Convolutional Neural Net architecture. IGEEK is for doing interactive genetic algorithms and interactive neural nets. IGEEK will need to run in the browser with Julia and Jupyter Notebook servers and JavaScript for the Graphics.
-
-### Theater
-*Language/API:* **C++/UWP**
-
-A video player app and plugin.
+1. [projects.experiments](/experiments/readme.md) - **C++** - A project for quickly testing code.
+1. [projects.script2](/script2/readme.md) - **Embedded-C++** - Serial Chinese Room, Interprocess, and Telementry (SCRIPT) Script (Script2).
+1. [projects.kabuki.connect](/kabuki/connect/readme.md) - **C++/UWP, Script2, Python** - A chat, social network, and trading app.
+1. [projects.kabuki.calc](/kabuki/calc/readme.md) - **C++/UWP, Script2, Python/Flask, HTML5, JavaScript/React** - A graphing calculator app.
+1. [projects.kabuki.sloth](/kabuki/sloth/readme.md) - **C++/UWP, Script2** - A Script2 package manager and code, seam tree, and seam graph refactoring utility.
+1. [projects.kabuki.anyled](/kabuki/anyled/readme.md) - **C++/UWP/mbed** - Universal LED controller for PWM and addressable LEDs.
+1. [projects.kabuki.oregon_cooler](/kabuki/oregon_cooler/readme.md) - **C++/UWP/mbed** - Smart-home cooling and plant watering system.
+1. [kabuki.toolkit.player](/kabuki/player/readme.md) - **C++/UWP** - A video player app and plugin.
+1. [projects.kabuki.unicontroller](/kabuki/anyled/readme.md) - **C++/UWP/mbed** - Universal MIDI, DMX, OSC, and Script2 controller, interprocess host, and plugin system with DSP audio effects and synthesis.
+1. [projects.kabuki.autopilot](/kabuki/autopilot/readme.md) - **C++/UWP/mbed** - A drone autopilot.
+1. [projects.kabuki.igeek](/kabuki/igeek/readme.md) - **C++/UWP, Script2, Python, HTML5, JavaScript/React**- IGEEK is the Interactive Genetic Evolutionary Environment for KabukiNet.
 
 ## The License
 

@@ -1,5 +1,9 @@
 # project.kabuki.connect
 
+*Language/API:* **C++/UWP, Script2, Python**
+
+A chat, social network, and trading app. This app will also integrate into astartup.net similar to Facebook Messenger.
+
 An early-stage chat, email, and trading app.
 
 # The License

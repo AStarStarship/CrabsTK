@@ -1,6 +1,6 @@
 # projects.script
 
-Serial Chinese Room, Interprocess, and Telemetry (SCRIPT) Script (Script2).
+This folder contains the list of projects that are a part of building, testing, and promoting Serial Chinese Room, Interprocess, and Telemetry (SCRIPT) Script (Script2).
 
 # The License
 

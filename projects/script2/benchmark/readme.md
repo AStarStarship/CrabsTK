@@ -1,6 +1,6 @@
-# seams.0_0_0.script2_benchmark
+# projects.kabuki.script2_benchmark
 
-This is a project for quickly testing random bits of code.
+Benchmark of Serial Chinese Room, Interprocess, and Telemetry (SCRIPT) Script (Script2).
 
 # The License
 

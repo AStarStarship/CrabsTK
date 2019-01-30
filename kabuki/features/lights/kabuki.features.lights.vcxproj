@@ -21,9 +21,10 @@
   <ItemGroup>
     <ClInclude Include="00_foo.h" />
     <ClInclude Include="01_bar.h" />
-    <ClInclude Include="ccolor.h" />
+    <ClInclude Include="c_color.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="test_tree.h" />
+    <ClInclude Include="t_color.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="global_config.inl" />

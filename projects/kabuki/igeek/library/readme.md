@@ -1,4 +1,4 @@
-# seams.0_0_0.igeek
+# projects.kabuki.igeek.library
 
 This is a project for quickly testing random bits of code.
 

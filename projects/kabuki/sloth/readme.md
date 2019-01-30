@@ -1,6 +1,8 @@
 # projects.kabuki.sloth
 
-#Sloth source code integration and refactoring toolkit.
+*Language/API:* **C++/UWP, Script2**
+
+A Script2 package manager and code, seam tree, and seam graph refactoring utility.
 
 # The License
 

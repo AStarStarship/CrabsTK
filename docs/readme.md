@@ -1,41 +1,66 @@
 # Kabuki Toolkit Documentation
 
-Please see `~/docs/kabuki-toolkit.mdj` for [StarUML](http://staruml.io) for object models. Some of the docs are currently in .docx format. These documents need to be converted into Markdown format as soon as possible and more code samples added. There is a productivity programming multimap in here too which is undergoing some changes at the moment. We're focusing on making money through saving time.
-
-## Organization
-
-Documents are split between the Wiki and the ~/docs folder.  Documents that are specific to Toolkit Versions are placed in the ~/docs folder and documents that are independent of version go in the Wiki.
+Please **@see** `~/kabuki-toolkit.mdj` for [StarUML](http://staruml.io) for object models. Documents are split between the Wiki and the `~/docs/` folder and additional documents can be found in the [script2 repo](https://github.com/kabuki-starship/script2). 
 
 ## Docs
 
-* [Script Specification RFC](https://github.com/kabuki-starship/script) - Serial Chinese Room, Interprocess, and Telemetry (SCRIPT) Specification Release for Comment.
+* [Script Specification RFC](https://github.com/kabuki-starship/script2) - Serial Chinese Room, Interprocess, and Telemetry (SCRIPT) Specification Release for Comment and SCRIPT Script (Script2).
+* [ASCII C++ Style Guide](https://github.com/ascii_cpp_style_guide) - Serial Chinese Room, Interprocess, and Telemetry (SCRIPT) Specification Release for Comment.
 
-* [ASCII C++ Style Guide](https://github.com/kabuki-starship/script/docs/ascii_cpp_style_guide) - Serial Chinese Room, Interprocess, and Telemetry (SCRIPT) Specification Release for Comment.
+## Quick Start Guide
+
+**1.** Clone the kabuki-toolkit and script2 repos into your workspace or project 3rd-party dependencies directory:
+
+```
+git clone https://github.com/kabuki-starship/kabuki-toolkit.git
+cd kabuki-toolkit
+git clone https://github.com/kabuki-starship/script2.git
+```
+
+**2.** Open the `kabuki-toolkit.sln` Visual Studio Project.
+
+**3.** Start by looking in the `0_0_00.experiments` project. Open the `global_config.inl` and look at the typedef(s) and seam macros, then set the seam number in the `pch.h` file to one in the `global_config.inl`. Then look through the `test_debug.inl` and `test_release.inl`, the look through the seam tree tests in the files that start with numbers and see how the tests tree builds seams layer by layer.
+
+**4.** In order to save the stack debug data when an DASSERT occurs, set breakpoint in the file `script2_test.cc` at the return line for:
+
+```C++
+BOL TestWarn(const CH1* function, const CH1* file, SI4 line);
+```
 
 ## Frequently Asked Questions
 
 The Doxyfile is used to create the [Kabuki Starship API Docs](https://kabuki.github.io/api/). You may build these yourself for offline viewing. The UML diagrams can be found in the "Kabuki Toolkit Diagrams.mdj" file.
 
-# Frequently Asked Questions
-
 ---
+
 * Where should I start?
   * The best place to start is with the [Quickstart Guide](https://github.com/CaleMcCollough/kabuki-script/wiki/02-quickstart-guide).
+
 ---
+
 * How do I get started as a developer?
-   * The best way to get started as a developer is to go through and clean up the code. This SDK was created from a hodgepodge of various open-source commercial-friendly BSD-style licensed software. There is still a lot of mess to clean up from the integration process. Whatever questions you have other people will no doubt ask as well. Please add these questions to this FAQ and to relevant example projects and API docs.
+  * The best way to get started as a developer is to go through and clean up the code. This SDK was created from a hodgepodge of various open-source commercial-friendly BSD-style licensed software. There is still a lot of mess to clean up from the integration process. Whatever questions you have other people will no doubt ask as well. Please add these questions to this FAQ and to relevant example projects and API docs.
+
 ---
+
 * What is the documentation and documentation process?
   * This SDK uses [Doxygen](http://www.stack.nl/~dimitri/doxygen/). The project is currently setup using D:\Workpace. API docs get exported to the [Kabuki Theater website].
+
 ---
+
 * Why does the website look all messed up?
   * The [Kabuki Toolkit website](https://kabuki.github.io/) needs to get fixed ASAP. The CSS is messed up in full-screen mode, but works right in less than about 1024 pixel widths. It's something about the @media section in the CSS.
+
 ---
+
 * What is the style guide?
   * All of the Kabuki Toolkit projects use the [Google C++ Style Guide](https://google.github.io/styleguide/cppguide.html). The style guide helps developers to identify the purpose of the code based on it's formatting. Most of the code is not in this format, so we could really use some helps formatting the style. We need to export a Visual Studio C++ code format file and could use some help with that.
+
 ---
+
 * Is there any UML?
   * We're using [StarUML 2.x](http://staruml.io/). The models can be found in the file "~/Documents/Kabuki Starship.mdj". Most of the included modules were not documented correctly and will need to be back annotated. This is a back burner project and is only done when needed. Please feel free to help us write use cases and scenario.
+
 ---
 
 ## Development
@@ -53,8 +78,6 @@ The Doxyfile is used to create the [Kabuki Starship API Docs](https://kabuki.git
      \__\/        \  \::/      \__\::::/
                    \__\/           ~~~~  
 ```
-
-﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿# Development
 
 If you would like to contribute as a developer, way to follow along with development is by viewing the issue commits. Each commit should have a short issue description and #issue_number (@see git commit log). By clicking on the #issue_number it will take you to the issue where the work should be described with some level of detail.
 

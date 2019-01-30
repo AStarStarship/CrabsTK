@@ -26,37 +26,37 @@ Its not a problem till we've determined it is a problem. */
 class LEDRGB {
  public:
   /* Creates an LEDRGB in the off position. */
-  LEDRGB(color_t color, offset_t r, offset_t g, offset_t b);
+  LEDRGB(CRGBAUI4 color, offset_t r, offset_t g, offset_t b);
 
   /* Gets the color. */
-  color_t GetColor();
+  CRGBAUI4 GetColor();
 
   /* Sets the color to the new value. */
-  void SetColor(color_t rgba);
+  void SetColor(CRGBAUI4 rgba);
 
   /* Gets the red channel. */
   UI1 GetRed();
 
   /* Sets the red channel to the new value. */
-  void SetRed(color_t value);
+  void SetRed(CRGBAUI4 value);
 
   /* Gets the green channel. */
   UI1 GetGreen();
 
   /* Sets the green channel to the new value. */
-  void SetGreen(color_t value);
+  void SetGreen(CRGBAUI4 value);
 
   /* Gets the blue channel. */
   UI1 GetBlue();
 
   /* Sets the blue channel to the new value. */
-  void SetBlue(color_t value);
+  void SetBlue(CRGBAUI4 value);
 
   /* Gets the brightness channel. */
   UI1 GetBrightness();
 
   /* Sets the brightness channel to the new value. */
-  void SetBrightness(color_t value);
+  void SetBrightness(CRGBAUI4 value);
 
   /* Gets the red LED offset. */
   offset_t GetRedOffset();
@@ -68,7 +68,7 @@ class LEDRGB {
   offset_t GetBlueOffset();
 
  private:
-  color_t color_;     //< RGBA color where A is additive brightness.
+  CRGBAUI4 color_;     //< RGBA color where A is additive brightness.
   ch_t red_offset_,   //< Red LED bit offset.
       green_offset_,  //< Green LED bit offset.
       blue_offset_,   //< Blue LED bit offset.

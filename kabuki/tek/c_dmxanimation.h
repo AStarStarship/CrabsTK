@@ -50,7 +50,7 @@ class DmxAnimation {
     void SetChannelData  (UI2 Channel, UI1 value);
     
     /* Function sets an RGB color starting at the given channel. */
-    void SetRGBColor  (UI2 Channel, color_t value);
+    void SetRGBColor  (UI2 Channel, CRGBAUI4 value);
     
     /* Randomizes the currentVariant */
     void RandomizeVariant ();
@@ -59,10 +59,10 @@ class DmxAnimation {
     void SetChase  (UI1 chaseNumber);
     void RandomizeSceneVariant ();
     void SetColor  (UI2 channel, UI1 red, UI1 green, UI1 blue);
-    void SetColor  (UI2 channel, color_t color);
-    void SetAllColors  (color_t color);
-    color_t IncreaseBrightness  (color_t color, UI1 brightness_change);
-    color_t DecreaseBrightness  (color_t color, UI1 brightness_change);
+    void SetColor  (UI2 channel, CRGBAUI4 color);
+    void SetAllColors  (CRGBAUI4 color);
+    CRGBAUI4 IncreaseBrightness  (CRGBAUI4 color, UI1 brightness_change);
+    CRGBAUI4 DecreaseBrightness  (CRGBAUI4 color, UI1 brightness_change);
     
     protected:
 
