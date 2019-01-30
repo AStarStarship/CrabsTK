@@ -1,1 +1,0 @@
-These are third-party images I of open-source software. They are not Typecraft.

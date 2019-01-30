@@ -106,7 +106,6 @@
     <None Include="..\..\..\script2\global_debug.inl" />
     <None Include="..\..\..\script2\global_footer.inl" />
     <None Include="..\..\..\script2\global_release.inl" />
-    <None Include="..\..\..\script2\README.md" />
     <None Include="..\..\..\script2\test_debug.inl" />
     <None Include="..\..\..\script2\test_footer.inl" />
     <None Include="..\..\..\script2\test_release.inl" />

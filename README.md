@@ -22,7 +22,27 @@ Kabuki Toolkit (KT) is a modern embedded-C++ toolkit for making intelligent conn
   - *Serial Chinese Room, Interprocess, and Telemetry (SCRIPT) Script (Script2) is the foundation of KT so it's the best place to start learning.*
 * [Kabuki Starship Website](https://kabuki-starship.github.io/)
 * [Documents & FAQ](https://github.com/kabuki-starship/kabuki-toolkit.git/blob/master/docs/faq.md)
-  - *Check out the `/docs/readme.md` for answers to Frequently asked questions and .*
+  - *Check out the `/docs/readme.md` for answers to Frequently asked questions and other promotional and learning materials.*
+
+## Quick Start Guide
+
+**1.** Clone the kabuki-toolkit and script2 repos into your workspace or project 3rd-party dependencies directory:
+
+> git clone https://github.com/kabuki-starship/kabuki-toolkit.git
+> cd kabuki-toolkit
+> git clone https://github.com/kabuki-starship/script2.git
+
+**2.** Open the `kabuki-toolkit.sln` Visual Studio Project.
+
+**3.** Start by looking in the `0_0_00.experiments` project. Open the `global_config.inl` and look at the typedef(s) and seam macros, then set the seam number in the `pch.h` file to one in the `global_config.inl`. Then look through the `test_debug.inl` and `test_release.inl`, the look through the seam tree tests in the files that start with `0_0_0` and the called functions.
+
+**4.** In order to save the stack debug data when an DASSERT occurs, set breakpoint in the file `script2_test.cc` at the return line for:
+
+```C++
+BOL TestWarn(const CH1* function, const CH1* file, SI4 line);
+```
+
+**5.** Check out the various seam tests starting at `0_0_00`, which is Script2.
 
 ## kabuki Modules
 
@@ -64,35 +84,31 @@ All currently broken. Sorry. Please contribute as a developer. Thanks.
 | data     | Database library. |
 | drawing  | Vector drawing library. |
 | gui      | Graphical user interface. |
-| plotting | Plotting library. |
+| plot     | Plotting library. |
 | orm      | Object Relational Mapping library. |
 | pro      | Project library. |
 | uweb     | HTTP server and web microframework. |
 | video    | Video library. |
 | who      | Identification and authorization library. |
 
-## projects.kabuki
+## projects
 
-| Module        | Description |
-|:-------------:|:------------|
-| av_studio     | Early-stage Audio-visual Studio app. |
-| cards         | Early-stage playing card game app. |
-| calc          | Early-stage graphing calculator. |
-| connections   | Early-stage Contact list, trading, and chat app. |
-| igeek         | Early-stage Interactive Genetic Evolutionary Environment for KabukiNet. |
-| kabuki_vm     | Early-stage Kabuki Virtual Machine (VM). |
+| experiments   | A project for quickly testing code. |
 | script2       | Oversight project for Script2. |
-| sloth         | Early-stage SDK automation utility for integrating and refactoring third-party libraries. |
-| typecraft     | Early-stage typing tutor based on the Minecraft world. |
 
-## projects.kabuki.tek
+### projects.kabuki
 
 | Module        | Description |
 |:-------------:|:------------|
-| anyled        | Early-stage universal PWM and addressable LED controller. |
-| autopilot     | Early-stage drone autopilot. |
-| oregon_cooler | Early-state smart-home cooling system and automatic watering system. |
-| unicontroller | Early-stage universal Script2, MIDI, DMX, and OSC controller. |
+| connect       | Contact list, trading, and chat app. |
+| calc          | A graphing calculator app. |
+| sloth         | Script2 package manager and code, seam tree, and seam graph refactoring utility. |
+| anyled        | Universal LED controller for PWM and addressable LEDs. |
+| oregon_cooler | Smart-home cooling system and automatic watering system. |
+| player        | A video player app and plugin. |
+| unicontroller | Universal MIDI, DMX, OSC, and Script2 controller, interprocess host, and plugin system with DSP audio effects and synthesis. |
+| autopilot     | Drone autopilot. |
+| igeek         | Interactive Genetic Evolutionary Environment for KabukiNet. |
 
 ### 3rd Party APIs
 

@@ -1,6 +1,8 @@
 # projects.kabuki.calc
 
-A graphing calculator app.
+*Language/API:* **C++/UWP, Script2, Python/Flask, HTML5, JavaScript/React**
+
+A graphing calculator app that will be a mix of Desmos and Jupyter Notebooks.
 
 # The License
 

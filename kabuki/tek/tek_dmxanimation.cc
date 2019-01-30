@@ -48,7 +48,7 @@ void DmxAnimation::SetChase(UI1 chaseNumber) {}
 
 void DmxAnimation::RandomizeSceneVariant() {}
 
-void DmxAnimation::SetRGBColor(UI2 channel, color_t color) {
+void DmxAnimation::SetRGBColor(UI2 channel, CRGBAUI4 color) {
   const UI2 rGBChannelCutoff = 512 - 9;
   //< We need 9 bytes in our cue for this operation.
 
@@ -105,7 +105,7 @@ void DmxAnimation::SetRGBColor(UI2 channel, color_t color) {
 void DmxAnimation::SetColor(UI2 channel, UI1 Red, UI1 Green, UI1 Blue) {
   if (channel > 511 - 3) {
     // We need 3 channels for an RGB color.
-    printf("Error in SetColor  (UI2, color_t): channel out of range!\r\n");
+    printf("Error in SetColor  (UI2, CRGBAUI4): channel out of range!\r\n");
     return;
   }
 
@@ -114,10 +114,10 @@ void DmxAnimation::SetColor(UI2 channel, UI1 Red, UI1 Green, UI1 Blue) {
   data_[channel + 2] = Blue;
 }
 
-void DmxAnimation::SetColor(UI2 channel, color_t color) {
+void DmxAnimation::SetColor(UI2 channel, CRGBAUI4 color) {
   if (channel > 511 - 3) {
     // We need 3 channels for an RGB color.
-    printf("Error in SetColor  (UI2, color_t): channel out of range!\r\n");
+    printf("Error in SetColor  (UI2, CRGBAUI4): channel out of range!\r\n");
     return;
   }
 
@@ -127,11 +127,11 @@ void DmxAnimation::SetColor(UI2 channel, color_t color) {
 }
 
 /*
-void DmxAnimation::SetColor  (UI2 channel, color_t color)
+void DmxAnimation::SetColor  (UI2 channel, CRGBAUI4 color)
 {
     if  (channel > 511 - 3)             //< We need 3 channels for an RGB color.
     {
-        printf ("Error in SetColor  (UI2, color_t): channel out of range!\r\n");
+        printf ("Error in SetColor  (UI2, CRGBAUI4): channel out of range!\r\n");
         return;
     }
     FLT alphaValue =  (FLT) ((color & 0xFF000000) >> 24),
@@ -144,7 +144,7 @@ void DmxAnimation::SetColor  (UI2 channel, color_t color)
     data[channel + 2] =  (UI1)  (Blue  * alphaValue);    //< Blue
 }
 
-void DmxAnimation::SetAllColors  (color_t color)
+void DmxAnimation::SetAllColors  (CRGBAUI4 color)
 {
     for  (SI4 i = 0; i < numBasePairs; ++i)
     {
@@ -160,7 +160,7 @@ void DmxAnimation::SetAllColors  (color_t color)
 }
 */
 
-void DmxAnimation::SetAllColors(color_t color) {
+void DmxAnimation::SetAllColors(CRGBAUI4 color) {
   /*
   for  (SI4 i = 0; i < numChannels; ++i)
   {
@@ -176,7 +176,7 @@ void DmxAnimation::SetAllColors(color_t color) {
   */
 }
 
-color_t DmxAnimation::IncreaseBrightness(color_t color, UI1 brightness_change) {
+CRGBAUI4 DmxAnimation::IncreaseBrightness(CRGBAUI4 color, UI1 brightness_change) {
   UI4 brightness = (color & 0xFF000000) >> 24;
   //< Mask off MSB and shift into LSB.
   color = (color & 0x00FFFFFF);
@@ -188,7 +188,7 @@ color_t DmxAnimation::IncreaseBrightness(color_t color, UI1 brightness_change) {
   return color & brightness;
 }
 
-color_t DmxAnimation::DecreaseBrightness(color_t color, UI1 brightness_change) {
+CRGBAUI4 DmxAnimation::DecreaseBrightness(CRGBAUI4 color, UI1 brightness_change) {
   UI4 brightness = (color & 0xFF000000) >> 24;
   //< Mask off MSB and shift into LSB.
   color = (color & 0x00FFFFFF);
