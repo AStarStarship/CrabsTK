@@ -89,6 +89,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "0_1_01.unicontroller.server
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "0_3_06.unicontroller.widget", "projects\kabuki\unicontroller\widget\kabuki.unicontroller.widget.vcxproj", "{EC59AD98-A09A-44A7-B93A-11DDAE7680C3}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "0_3_08.lut.widget", "projects\kabuki\lut\widget\kabuki.lut.widget.vcxproj", "{43A738A7-8DB6-40AC-BEB5-603A5C238307}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -357,6 +359,14 @@ Global
 		{EC59AD98-A09A-44A7-B93A-11DDAE7680C3}.Release|x64.ActiveCfg = Release|x64
 		{EC59AD98-A09A-44A7-B93A-11DDAE7680C3}.Release|x86.ActiveCfg = Release|Win32
 		{EC59AD98-A09A-44A7-B93A-11DDAE7680C3}.Release|x86.Build.0 = Release|Win32
+		{43A738A7-8DB6-40AC-BEB5-603A5C238307}.Debug|x64.ActiveCfg = Debug|x64
+		{43A738A7-8DB6-40AC-BEB5-603A5C238307}.Debug|x64.Build.0 = Debug|x64
+		{43A738A7-8DB6-40AC-BEB5-603A5C238307}.Debug|x86.ActiveCfg = Debug|Win32
+		{43A738A7-8DB6-40AC-BEB5-603A5C238307}.Debug|x86.Build.0 = Debug|Win32
+		{43A738A7-8DB6-40AC-BEB5-603A5C238307}.Release|x64.ActiveCfg = Release|x64
+		{43A738A7-8DB6-40AC-BEB5-603A5C238307}.Release|x64.Build.0 = Release|x64
+		{43A738A7-8DB6-40AC-BEB5-603A5C238307}.Release|x86.ActiveCfg = Release|Win32
+		{43A738A7-8DB6-40AC-BEB5-603A5C238307}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

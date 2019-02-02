@@ -19,21 +19,21 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <None Include="global_config.inl" />
-    <None Include="readme.md" />
-    <None Include="test_debug.inl" />
-    <None Include="test_footer.inl" />
-    <None Include="test_release.inl" />
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="00_foo.h" />
     <ClInclude Include="01_bar.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="test_tree.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="01_benchmark_mnist.cc" />
+    <ClCompile Include="calc_main.cc" />
     <ClCompile Include="pch.cc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="global_config.inl" />
+    <None Include="readme.md" />
+    <None Include="test_debug.inl" />
+    <None Include="test_footer.inl" />
+    <None Include="test_release.inl" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

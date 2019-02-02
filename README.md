@@ -19,7 +19,7 @@ Kabuki Toolkit (KT) is a modern embedded-C++ toolkit for making intelligent conn
 
 ## Quick Links
 
-* [Script2 and the SCRIPT Spec](https://github.com/kabuki-starship/script2.md) - *Serial Chinese Room, Interprocess, and Telemetry (SCRIPT) Script (Script2) is the foundation of KT so it's the best place to start learning.*
+* [Script2 and the SCRIPT Specification](https://github.com/kabuki-starship/script2) - *Serial Chinese Room, Interprocess, and Telemetry (SCRIPT) Script (Script2) is the foundation of KT so it's the best place to start learning.*
 * [Documents & FAQ](https://github.com/kabuki-starship/kabuki-toolkit.git/blob/master/docs/faq.md) - *Check out the `/docs/readme.md` for answers to Frequently asked questions and other promotional and learning materials.*
 * [Kabuki Starship Website](https://kabuki-starship.github.io/)
 
@@ -113,46 +113,53 @@ Kabuki Toolkit (KT) is a modern embedded-C++ toolkit for making intelligent conn
 
 #### Kabuki VM Seams
 
-*     0_0    Frontal Cortex
-	* 0_0_00 script2
-	* 0_0_01 kabuki.hal
-	* 0_0_02 kabuki.drivers
-	* 0_0_03 kabuki.features.filecabinet
-	* 0_0_04 kabuki.toolkit.data
-	* 0_0_05 kabuki.toolkit.who
-	* 0_0_06 kabuki.toolkit.pro
-	* 0_0_07 kabuki.features.tls
-	* 0_0_08 kabuki.toolkit.uweb
-	* 0_0_09 kabuki.toolkit.orm
-	* 0_2_10 kabuki.features.midi
-	* 0_0_11 kabuki.features.math
-	* 0_0_12 kabuki.toolkit.ai.core
-*     0_1    Somatosensory Cortex
-	* 0_1_00 kabuki.features.touch
-	* 0_1_01 kabuki.tek
-*     0_2    Auditory Cortex
-	* 0_2_01 kabuki.features.sound
-	* 0_2_02 kabuki.features.adsp
-	* 0_2_03 kabuki.toolkit.av
-	* 0_2_04 kabuki.toolkit.ai.audio
-*     0_3    Visual Cortex
-	* 0_3_00 kabuki.features.lights
-	* 0_3_01 kabuki.features.graphics
-	* 0_3_02 kabuki.features.camera
-	* 0_3_03 kabuki.features.webcam
-	* 0_3_04 kabuki.features.drawing
-	* 0_3_05 kabuki.toolkit.plotting
-	* 0_3_06 kabuki.toolkit.gui
-	* 0_3_07 kabuki.toolkit.video
-	* 0_3_08 kabuki.toolkit.ai.video
+##### 0_0    Frontal Cortex
+
+* 0_0_00 script2
+* 0_0_01 kabuki.hal
+* 0_0_02 kabuki.drivers
+* 0_0_03 kabuki.features.filecabinet
+* 0_0_04 kabuki.toolkit.data
+* 0_0_05 kabuki.toolkit.who
+* 0_0_06 kabuki.toolkit.pro
+* 0_0_07 kabuki.features.tls
+* 0_0_08 kabuki.toolkit.uweb
+* 0_0_09 kabuki.toolkit.orm
+* 0_2_10 kabuki.features.midi
+* 0_0_11 kabuki.features.math
+* 0_0_12 kabuki.toolkit.ai.core
+
+##### 0_1    Somatosensory Cortex
+
+* 0_1_00 kabuki.features.touch
+* 0_1_01 kabuki.tek
+
+##### Auditory Cortex
+
+* 0_2_01 kabuki.features.sound
+* 0_2_02 kabuki.features.adsp
+* 0_2_03 kabuki.toolkit.av
+* 0_2_04 kabuki.toolkit.ai.audio
+
+##### Visual Cortex
+
+* 0_3_00 kabuki.features.lights
+* 0_3_01 kabuki.features.graphics
+* 0_3_02 kabuki.features.camera
+* 0_3_03 kabuki.features.webcam
+* 0_3_04 kabuki.features.drawing
+* 0_3_05 kabuki.toolkit.plotting
+* 0_3_06 kabuki.toolkit.gui
+* 0_3_07 kabuki.toolkit.video
+* 0_3_08 kabuki.toolkit.ai.video
 
 ## Vision and Mission Statement
 
 The Vision of KT is to provide a bloat-free DLL-friendly Embedded-C++11 Virtual Machine, Firmware-to-Software Development Kit (F2SDK), dynamic functional programming environment, Jupyter Notebooks, and a real-time smartphone operating system that is the quality of Google Fuchsia, JUCE, Java, and Julia but with a commercially-permissive license.
 
-The Mission is to target the minimum C++ version required to compile the third-party dependencies, convert as much code to Script2 as possible over time and mash it up with mbed for x86_64 and RISC-V to allow for maximized firmware and web server distribution, and to provide at least one demo application in each language that we bind too to assist in making cross-language bindings feel as native as possible.
+The Mission is to target the public inteface for the minimum C++ version required to compile the third-party dependencies, use modern-C++ drivers hidden behind the implementation files with boost for older compilers, convert as much code to Script2 as possible over time and mash it up with mbed for x86_64 and RISC-V to allow for maximized firmware and web server distribution, and to create a VM based on ANGLE with a combination of NanoGUI and cvPlot configured to use either Cairo, Skia, or other drawing library to allow for creation of cross-platform DLL plugin widgets with Cairo and high-performance apps with Skia or other native/embedded drawing libraries.
 
-# The License
+## The License
 
 Copyright 2014-19 (C) Cale Jamison McCollough <<cale@astartup.net>>. All rights reserved (R).
 

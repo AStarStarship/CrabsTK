@@ -14013,9 +14013,9 @@
 											"font": "Arial;13;1",
 											"left": 669,
 											"top": 310,
-											"width": 79,
+											"width": 79.447265625,
 											"height": 13,
-											"text": "tek"
+											"text": "unicontroller"
 										},
 										{
 											"_type": "LabelView",
@@ -14026,7 +14026,7 @@
 											"font": "Arial;13;0",
 											"left": 669,
 											"top": 325,
-											"width": 79,
+											"width": 79.447265625,
 											"height": 13,
 											"text": "(from kabuki)"
 										},
@@ -14047,7 +14047,7 @@
 									"font": "Arial;13;0",
 									"left": 664,
 									"top": 303,
-									"width": 89,
+									"width": 89.447265625,
 									"height": 40,
 									"stereotypeLabel": {
 										"$ref": "AAAAAAFkBNT8fawAzrc="
@@ -14070,7 +14070,7 @@
 							"containerChangeable": true,
 							"left": 664,
 							"top": 288,
-							"width": 89,
+							"width": 89.447265625,
 							"height": 425,
 							"showNamespace": true,
 							"nameCompartment": {
@@ -18875,7 +18875,7 @@
 					"_parent": {
 						"$ref": "AAAAAAFkAhjh8A2K30Y="
 					},
-					"name": "tek",
+					"name": "unicontroller",
 					"ownedElements": [
 						{
 							"_type": "UMLDependency",
