@@ -57,7 +57,7 @@ class IsymmetricController : public Controller {
     kNumControlsPerGroup = 4,
    // Number of controls per layer that can.
     kNumControlsPerLayer = 8,
-   // Default amount of time for a DBL click.
+   // Default amount of time for a FP8 click.
     kDefaultDoubleClickTime = 100,
    // Flag for ControlGroup is flipped.
     kFlippedControlGroup = 0,
@@ -180,7 +180,7 @@ class IsymmetricController : public Controller {
   /* Switches the mode on layer to the newMode. */
   void SwitchMode (ParamSet* layer, SI4 newMode) {}
 
-  /* Determines if the press was a single click or a DBL click. */
+  /* Determines if the press was a single click or a FP8 click. */
   void PressModeButton(ParamSet* layer, SI4 modeIndex) {
     // Nothing happens until you release the mode button.
     layer->PressModeButton ();
@@ -203,7 +203,7 @@ class IsymmetricController : public Controller {
     /*
     if  (mode == layer->mode->type ()) // same mode pressed
     {//
-        if ((time  (nullptr) - layer->LastModePress ()) <= _doubleClickTime) { // Then its a DBL-click and the swap sticks.
+        if ((time  (nullptr) - layer->LastModePress ()) <= _doubleClickTime) { // Then its a FP8-click and the swap sticks.
             layer->modeBttnPressed = false;
         }
         else { // Then hold down button
@@ -319,7 +319,7 @@ class IsymmetricController : public Controller {
   }
   
   /* Sets the tempo_ in beats-per-minute. */
-  void SetTempo (DBL tempo) {
+  void SetTempo (FP8 tempo) {
     if (tempo < 0 || tempo > tempo_max_) return;
     // uint32_t microsecondsPerSecond = 60000000/newTempo;
     tempo_ = tempo;
@@ -390,7 +390,7 @@ class IsymmetricController : public Controller {
   // input devices attached to the system.
   //     numMIDIOutDev;          //< Number of MIDI output devices attached to
   //     the system.
-  UI4 double_press_ticks_;        //< TArray of the DBL click time.
+  UI4 double_press_ticks_;        //< TArray of the FP8 click time.
 
   /* Switches the mode or current page on Layer A and Layer B.
   @contract state_swap_flip_ must be true */

@@ -46,11 +46,11 @@ class SDK Button {
     } Actions;
 
     enum {
-      // The min DBL click time period in seconds.
+      // The min FP8 click time period in seconds.
       DefaultMinDoublePressTime = 100, 
-      // The max DBL click time period in seconds.
+      // The max FP8 click time period in seconds.
       DefaultMaxDoublePressTime = 2000,
-      // The default DBL press time period in seconds.
+      // The default FP8 press time period in seconds.
       kDefaultDoublePressTicks = (DefaultMinDoublePressTime +
       DefaultMaxDoublePressTime) / 2,
     };
@@ -97,7 +97,7 @@ class SDK Button {
       Depress ();
     }
 
-    /* Triggered when a user "DBL clicks" a button. */
+    /* Triggered when a user "FP8 clicks" a button. */
     virtual void DoublePress() = 0;
 
     /* gets true if the button is in a pressed state. */
@@ -109,7 +109,7 @@ class SDK Button {
     /* gets the last time the button was pressed. */
     virtual SI4 GetLastTimePressed() const { return last_time_pressed_; }
 
-    /* Gets the DBL press time in microseconds. */
+    /* Gets the FP8 press time in microseconds. */
     virtual SI4 GetDoublePressTime() const = 0;
 
     /* Gets this buttons step_Size.

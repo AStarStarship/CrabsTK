@@ -167,9 +167,6 @@
     <ClInclude Include="..\..\..\script2\global.h">
       <Filter>script2</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\script2\global_config.h">
-      <Filter>script2</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\script2\pch.h">
       <Filter>script2</Filter>
     </ClInclude>
@@ -251,6 +248,12 @@
     <ClInclude Include="..\..\..\script2\c_event.h">
       <Filter>script2</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\script2\t_cout.h">
+      <Filter>script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\script2\c_cin.h">
+      <Filter>script2</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\script2\16_seam.s2">
@@ -275,6 +278,12 @@
       <Filter>script2</Filter>
     </None>
     <None Include="..\..\..\script2\test_release.inl">
+      <Filter>script2</Filter>
+    </None>
+    <None Include="..\..\..\script2\global_seams.inl">
+      <Filter>script2</Filter>
+    </None>
+    <None Include="..\..\..\script2\global.inl">
       <Filter>script2</Filter>
     </None>
   </ItemGroup>
@@ -353,9 +362,6 @@
     <ClCompile Include="..\..\..\script2\script2_socket.cc">
       <Filter>script2</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\script2\script2_strand.cc">
-      <Filter>script2</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\script2\script2_test.cc">
       <Filter>script2</Filter>
     </ClCompile>
@@ -366,6 +372,12 @@
       <Filter>script2</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\script2\test_runner.cc">
+      <Filter>script2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\script2\script2_utf.cc">
+      <Filter>script2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\script2\script2_cin.cc">
       <Filter>script2</Filter>
     </ClCompile>
   </ItemGroup>

@@ -22,7 +22,7 @@ specific language governing permissions and limitations under the License. */
 
 namespace _ {
 
-FLT AbsValue (FLT a)
+FP4 AbsValue (FP4 a)
 {
     if (a < 0.0f) return a * -1.0f;
     return a;
@@ -44,7 +44,7 @@ long AbsValue (long a)
     return 0.0; // return System.Abs (a);
 }
 
-FLT Acos (FLT a)
+FP4 Acos (FP4 a)
 {
     return 0.0f; // return System.Acos (a);
 }
@@ -54,7 +54,7 @@ double Acos (double a)
     return 0.0; // return System.Acos (a);
 }
 
-FLT Asin (FLT a)
+FP4 Asin (FP4 a)
 {
     return 0.0f; // return System.Asin (a);
 }
@@ -64,7 +64,7 @@ double Asin (double a)
     return 0.0; // return System.Asin (a);
 }
 
-FLT Atan (FLT a)
+FP4 Atan (FP4 a)
 {
     return 0.0f; // return System.Atan (a);
 }
@@ -74,7 +74,7 @@ double Atan (double a)
     return 0.0; // return System.Atan (a);
 }
 
-FLT Atan2 (FLT y, FLT x)
+FP4 Atan2 (FP4 y, FP4 x)
 {
     return 0.0f; // return System.Atan2 (y, x);
 }
@@ -84,7 +84,7 @@ double Atan2 (double y, double x)
     return 0.0; // return System.Atan2 (y, x);
 }
 
-FLT Ceiling (FLT a)
+FP4 Ceiling (FP4 a)
 {
     return 0.0f; // return System.ceil (a);
 }
@@ -94,7 +94,7 @@ double Ceiling (double a)
     return 0.0; // return System.ceil (a);
 }
 
-FLT CopySign (FLT Magnitude, FLT sign)
+FP4 CopySign (FP4 Magnitude, FP4 sign)
 {
     return 0.0f; // return System.copySign (Magnitude, sign);
 }
@@ -104,7 +104,7 @@ double CopySign (double Magnitude, double sign)
     return 0.0; // return System.copySign (Magnitude, sign);
 }
 
-FLT Cos (FLT a)
+FP4 Cos (FP4 a)
 {
     return cos (a); // return System.cos (a);
 }
@@ -114,7 +114,7 @@ double Cos (double a)
     return 0.0; // return System.cos (a);
 }
 
-FLT Hcos (FLT x)
+FP4 Hcos (FP4 x)
 {
     return 0.0f; // return System.cosh (x);
 }
@@ -124,7 +124,7 @@ double Hcos (double x)
     return 0.0; // return System.cosh (x);
 }
 
-FLT eToTheX (FLT a)
+FP4 eToTheX (FP4 a)
 {
     return 0.0f; // return System.exp (a);
 }
@@ -134,7 +134,7 @@ double eToTheX (double a)
     return 0.0; // return System.exp (a);
 }
 
-FLT OneMinus_eToTheX (FLT x)
+FP4 OneMinus_eToTheX (FP4 x)
 {
     return 0.0f; // return System.expm1 (x);
 }
@@ -144,7 +144,7 @@ double OneMinus_eToTheX (double x)
     return 0.0; // return System.expm1 (x);
 }
 
-FLT Floor (FLT a)
+FP4 Floor (FP4 a)
 {
     return 0.0f; // return System.Floor (a);
 }
@@ -154,7 +154,7 @@ double Floor (double a)
     return 0.0; // return System.Floor (a);
 }
 
-SI4 Exponent (FLT f)
+SI4 Exponent (FP4 f)
 {
     return 0; // return System.getExponent (f);
 }
@@ -164,7 +164,7 @@ SI4 Exponent (double d)
     return 0; // return System.getExponent (d);
 }
 
-FLT Hypot (FLT x, FLT y)
+FP4 Hypot (FP4 x, FP4 y)
 {
     return 0.0f; // return System.hppypot (x, y);
 }
@@ -174,7 +174,7 @@ double Hypot (double x, double y)
     return 0.0; // return System.hppypot (x, y);
 }
 
-FLT IeeeRemainder (FLT f1, FLT f2)
+FP4 IeeeRemainder (FP4 f1, FP4 f2)
 {
     return 0.0f; // return System.ieeeRemainder (f1, f2);
 }
@@ -184,7 +184,7 @@ double IeeeRemainder (double f1, double f2)
     return 0.0; // return System.ieeeRemainder (f1, f2);
 }
 
-FLT Ln (FLT a)
+FP4 Ln (FP4 a)
 {
     return 0.0f; // return System.log (a);
 }
@@ -194,7 +194,7 @@ double Ln (double a)
     return 0.0; // return System.log (a);
 }
 
-FLT Log (FLT a)
+FP4 Log (FP4 a)
 {
     return 0.0f; // return System.log10 (a);
 }
@@ -204,7 +204,7 @@ double Log (double a)
     return 0.0; // return System.log10 (a);
 }
 
-FLT LogXPlus1 (FLT x)
+FP4 LogXPlus1 (FP4 x)
 {
     return 0.0f; // return System.log1p (x);
 }
@@ -214,7 +214,7 @@ double LogXPlus1 (double x)
     return 0.0; // return System.log1p (x);
 }
 
-FLT Max (FLT a, FLT b)
+FP4 Max (FP4 a, FP4 b)
 {
     return (a > b) ? a : b;
 }
@@ -234,7 +234,7 @@ long Max (long a, long b)
     return (a > b) ? a : b;
 }
 
-FLT Min (FLT a, FLT b)
+FP4 Min (FP4 a, FP4 b)
 {
     return 0.0f; // return System.min (a, b);
 }
@@ -254,7 +254,7 @@ long Min (long a, long b)
     return 0.0; // return System.min (a, b);
 }
 
-FLT NextAfter (FLT start, FLT direction)
+FP4 NextAfter (FP4 start, FP4 direction)
 {
     return 0.0f; // return System.nextAfter (start, direction);
 }
@@ -264,7 +264,7 @@ double NextAfter (double start, double direction)
     return 0.0; // return System.nextAfter (start, direction);
 }
 
-FLT NextUp (FLT f)
+FP4 NextUp (FP4 f)
 {
     return 0.0f; // return System.nextUp (f);
 }
@@ -274,7 +274,7 @@ double NextUp (double d)
     return 0.0; // return System.nextUp (d);
 }
 
-FLT Power (FLT a, FLT b)
+FP4 Power (FP4 a, FP4 b)
 {
     return 0.0f; // return System.Pow (a, b);
 }
@@ -284,7 +284,7 @@ double Power (double a, double b)
     return 0.0; // return System.Pow (a, b);
 }
 
-FLT Random_f ()
+FP4 Random_f ()
 {
     return 0.0f; // return System.Random ();
 }
@@ -294,7 +294,7 @@ double Random_d ()
     return 0.0; // return System.Random ();
 }
 
-FLT Round (FLT a)
+FP4 Round (FP4 a)
 {
     return 0.0f; // return System.Rint (a);
 }
@@ -304,7 +304,7 @@ double Round (double a)
     return 0.0; // return System.Rint (a);
 }
 
-SI4 RoundToInt (FLT a)
+SI4 RoundToInt (FP4 a)
 {
     return 0; // return System.Round (a);
 }
@@ -314,7 +314,7 @@ long RoundToInt (double a)
     return 0; // return System.Round (a);
 }
 
-FLT ScaleB (FLT d, SI4 scaleFactor)
+FP4 ScaleB (FP4 d, SI4 scaleFactor)
 {
     return 0.0f; // return System.Scalb (d, scaleFactor);
 }
@@ -324,7 +324,7 @@ double ScaleB (double d, SI4 scaleFactor)
     return 0.0; // return System.Scalb (d, scaleFactor);
 }
 
-FLT FScaleFactor (FLT f, SI4 scaleFactor)
+FP4 FScaleFactor (FP4 f, SI4 scaleFactor)
 {
     return 0.0f; // return System.Scalb (f, scaleFactor);
 }
@@ -334,7 +334,7 @@ double FScaleFactor (double f, SI4 scaleFactor)
     return 0.0; // return System.Scalb (f, scaleFactor);
 }
 
-FLT SignOf (FLT f)
+FP4 SignOf (FP4 f)
 {
     return 0.0f; // return System.Signum (f);
 }
@@ -344,7 +344,7 @@ double SignOf (double d)
     return 0.0; // return System.Signum (d);
 }
 
-FLT Sin (FLT a)
+FP4 Sin (FP4 a)
 {
     return 0.0f; // return System.Sin (a);
 }
@@ -354,7 +354,7 @@ double Sin (double a)
     return 0.0; // return System.Sin (a);
 }
 
-FLT Hsin (FLT x)
+FP4 Hsin (FP4 x)
 {
     return 0.0f; // return System.Sinh (x);
 }
@@ -364,7 +364,7 @@ double Hsin (double x)
     return 0.0; // return System.Sinh (x);
 }
 
-FLT SquareRoot (FLT a)
+FP4 SquareRoot (FP4 a)
 {
     return 0.0f; // return System.Sqrt (a);
 }
@@ -374,7 +374,7 @@ double SquareRoot (double a)
     return 0.0; // return System.Sqrt (a);
 }
 
-FLT CubeRoot (FLT a)
+FP4 CubeRoot (FP4 a)
 {
     return 0.0f; // return System.cbrt (a);
 }
@@ -384,7 +384,7 @@ double CubeRoot (double a)
     return 0.0; // return System.cbrt (a);
 }
 
-FLT Tan (FLT a)
+FP4 Tan (FP4 a)
 {
     return 0.0f; // return System.tan (a);
 }
@@ -394,7 +394,7 @@ double Tan (double a)
     return 0.0; // return System.tan (a);
 }
 
-FLT Htan (FLT x)
+FP4 Htan (FP4 x)
 {
     return 0.0f; // return System.tanh (x);
 }
@@ -404,7 +404,7 @@ double Htan (double x)
     return 0.0; // return System.tanh (x);
 }
 
-FLT ToDegrees (FLT angrad)
+FP4 ToDegrees (FP4 angrad)
 {
     return 0.0f; // return System.toDegrees (angrad);
 }
@@ -414,7 +414,7 @@ double ToDegrees (double angrad)
     return 0.0; // return System.toDegrees (angrad);
 }
 
-FLT ToRadians (FLT angle)
+FP4 ToRadians (FP4 angle)
 {
     return (angle * 180.0f) / Pi_f;
 }
@@ -424,7 +424,7 @@ double ToRadians (double angle)
     return (angle * 180.0) / Pi_d;
 }
 
-FLT Ulp (FLT f)
+FP4 Ulp (FP4 f)
 {
     return 0.0f; // return System.ulp (f);
 }
@@ -434,9 +434,9 @@ double Ulp (double d)
     return 0.0; // return System.ulp (d);
 }
 
-FLT Factoral (FLT value)
+FP4 Factoral (FP4 value)
 {
-    FLT total;  //< The running total.
+    FP4 total;  //< The running total.
 
     if (value < 0)
     {
@@ -526,7 +526,7 @@ long Factoral (long value)
     return total;
 }
 
-inline FLT GetMinFloat ()
+inline FP4 GetMinFloat ()
 {
     return FLT_MIN;
 }
@@ -537,7 +537,7 @@ inline double GetMinDouble ()
 }
 
 
-inline FLT GetMaxFloat ()
+inline FP4 GetMaxFloat ()
 {
     return FLT_MAX;
 }

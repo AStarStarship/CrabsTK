@@ -89,7 +89,7 @@ Series &Series::legend(bool legend) {
   return *this;
 }
 
-Series &Series::add(const std::vector<std::pair<FLT, FLT>> &data) {
+Series &Series::add(const std::vector<std::pair<FP4, FP4>> &data) {
   ensureDimsDepth(1, 1);
   for (const auto &d : data) {
     entries_.push_back(data_.size());
@@ -99,7 +99,7 @@ Series &Series::add(const std::vector<std::pair<FLT, FLT>> &data) {
   return *this;
 }
 
-Series &Series::add(const std::vector<std::pair<FLT, Point2>> &data) {
+Series &Series::add(const std::vector<std::pair<FP4, Point2>> &data) {
   ensureDimsDepth(1, 2);
   for (const auto &d : data) {
     entries_.push_back(data_.size());
@@ -110,7 +110,7 @@ Series &Series::add(const std::vector<std::pair<FLT, Point2>> &data) {
   return *this;
 }
 
-Series &Series::add(const std::vector<std::pair<FLT, Point3>> &data) {
+Series &Series::add(const std::vector<std::pair<FP4, Point3>> &data) {
   ensureDimsDepth(1, 3);
   for (const auto &d : data) {
     entries_.push_back(data_.size());
@@ -122,8 +122,8 @@ Series &Series::add(const std::vector<std::pair<FLT, Point3>> &data) {
   return *this;
 }
 
-Series &Series::addValue(const std::vector<FLT> &values) {
-  std::vector<std::pair<FLT, FLT>> data(values.size());
+Series &Series::addValue(const std::vector<FP4> &values) {
+  std::vector<std::pair<FP4, FP4>> data(values.size());
   auto i = 0;
   for (auto &d : data) {
     d.first = i + entries_.size();
@@ -133,7 +133,7 @@ Series &Series::addValue(const std::vector<FLT> &values) {
 }
 
 Series &Series::addValue(const std::vector<Point2> &values) {
-  std::vector<std::pair<FLT, Point2>> data(values.size());
+  std::vector<std::pair<FP4, Point2>> data(values.size());
   auto i = 0;
   for (auto &d : data) {
     d.first = i + entries_.size();
@@ -143,7 +143,7 @@ Series &Series::addValue(const std::vector<Point2> &values) {
 }
 
 Series &Series::addValue(const std::vector<Point3> &values) {
-  std::vector<std::pair<FLT, Point3>> data(values.size());
+  std::vector<std::pair<FP4, Point3>> data(values.size());
   auto i = 0;
   for (auto &d : data) {
     d.first = i + entries_.size();
@@ -152,47 +152,47 @@ Series &Series::addValue(const std::vector<Point3> &values) {
   return add(data);
 }
 
-Series &Series::add(FLT key, FLT value) {
-  return add(std::vector<std::pair<FLT, FLT>>({{key, value}}));
+Series &Series::add(FP4 key, FP4 value) {
+  return add(std::vector<std::pair<FP4, FP4>>({{key, value}}));
 }
 
-Series &Series::add(FLT key, Point2 value) {
-  return add(std::vector<std::pair<FLT, Point2>>({{key, value}}));
+Series &Series::add(FP4 key, Point2 value) {
+  return add(std::vector<std::pair<FP4, Point2>>({{key, value}}));
 }
 
-Series &Series::add(FLT key, Point3 value) {
-  return add(std::vector<std::pair<FLT, Point3>>({{key, value}}));
+Series &Series::add(FP4 key, Point3 value) {
+  return add(std::vector<std::pair<FP4, Point3>>({{key, value}}));
 }
 
-Series &Series::addValue(FLT value) {
-  return addValue(std::vector<FLT>({value}));
+Series &Series::addValue(FP4 value) {
+  return addValue(std::vector<FP4>({value}));
 }
 
-Series &Series::addValue(FLT value_a, FLT value_b) {
+Series &Series::addValue(FP4 value_a, FP4 value_b) {
   return addValue(std::vector<Point2>({{value_a, value_b}}));
 }
 
-Series &Series::addValue(FLT value_a, FLT value_b, FLT value_c) {
+Series &Series::addValue(FP4 value_a, FP4 value_b, FP4 value_c) {
   return addValue(std::vector<Point3>({{value_a, value_b, value_c}}));
 }
 
-Series &Series::set(const std::vector<std::pair<FLT, FLT>> &data) {
+Series &Series::set(const std::vector<std::pair<FP4, FP4>> &data) {
   clear();
   return add(data);
 }
 
-Series &Series::set(const std::vector<std::pair<FLT, Point2>> &data) {
+Series &Series::set(const std::vector<std::pair<FP4, Point2>> &data) {
   clear();
   return add(data);
 }
 
-Series &Series::set(const std::vector<std::pair<FLT, Point3>> &data) {
+Series &Series::set(const std::vector<std::pair<FP4, Point3>> &data) {
   clear();
   return add(data);
 }
 
-Series &Series::setValue(const std::vector<FLT> &values) {
-  std::vector<std::pair<FLT, FLT>> data(values.size());
+Series &Series::setValue(const std::vector<FP4> &values) {
+  std::vector<std::pair<FP4, FP4>> data(values.size());
   auto i = 0;
   for (auto &d : data) {
     d.first = i;
@@ -202,7 +202,7 @@ Series &Series::setValue(const std::vector<FLT> &values) {
 }
 
 Series &Series::setValue(const std::vector<Point2> &values) {
-  std::vector<std::pair<FLT, Point2>> data(values.size());
+  std::vector<std::pair<FP4, Point2>> data(values.size());
   auto i = 0;
   for (auto &d : data) {
     d.first = i;
@@ -212,7 +212,7 @@ Series &Series::setValue(const std::vector<Point2> &values) {
 }
 
 Series &Series::setValue(const std::vector<Point3> &values) {
-  std::vector<std::pair<FLT, Point3>> data(values.size());
+  std::vector<std::pair<FP4, Point3>> data(values.size());
   auto i = 0;
   for (auto &d : data) {
     d.first = i;
@@ -221,29 +221,29 @@ Series &Series::setValue(const std::vector<Point3> &values) {
   return set(data);
 }
 
-Series &Series::set(FLT key, FLT value) {
-  return set(std::vector<std::pair<FLT, FLT>>({{key, value}}));
+Series &Series::set(FP4 key, FP4 value) {
+  return set(std::vector<std::pair<FP4, FP4>>({{key, value}}));
 }
 
-Series &Series::set(FLT key, FLT value_a, FLT value_b) {
+Series &Series::set(FP4 key, FP4 value_a, FP4 value_b) {
   return set(
-      std::vector<std::pair<FLT, Point2>>({{key, {value_a, value_b}}}));
+      std::vector<std::pair<FP4, Point2>>({{key, {value_a, value_b}}}));
 }
 
-Series &Series::set(FLT key, FLT value_a, FLT value_b, FLT value_c) {
-  return set(std::vector<std::pair<FLT, Point3>>(
+Series &Series::set(FP4 key, FP4 value_a, FP4 value_b, FP4 value_c) {
+  return set(std::vector<std::pair<FP4, Point3>>(
       {{key, {value_a, value_b, value_c}}}));
 }
 
-Series &Series::setValue(FLT value) {
-  return setValue(std::vector<FLT>({value}));
+Series &Series::setValue(FP4 value) {
+  return setValue(std::vector<FP4>({value}));
 }
 
-Series &Series::setValue(FLT value_a, FLT value_b) {
+Series &Series::setValue(FP4 value_a, FP4 value_b) {
   return setValue(std::vector<Point2>({{value_a, value_b}}));
 }
 
-Series &Series::setValue(FLT value_a, FLT value_b, FLT value_c) {
+Series &Series::setValue(FP4 value_a, FP4 value_b, FP4 value_c) {
   return setValue(std::vector<Point3>({{value_a, value_b, value_c}}));
 }
 
@@ -261,7 +261,7 @@ bool Series::flipAxis() const {
   return type_ == Vertical || type_ == Vistogram;
 }
 
-void Series::bounds(FLT &x_min, FLT &x_max, FLT &y_min, FLT &y_max,
+void Series::bounds(FP4 &x_min, FP4 &x_max, FP4 &y_min, FP4 &y_max,
                     SIN &n_max, SIN &p_max) const {
   for (const auto &e : entries_) {
     auto xe = e, xd = dims_, ye = e + dims_,
@@ -313,9 +313,9 @@ void Series::dot(void *b, SIN x, SIN y, SIN r) const {
              cv::LINE_AA);
 }
 
-void Series::draw(void *b, FLT x_min, FLT x_max, FLT y_min, FLT y_max,
-                  FLT xs, FLT xd, FLT ys, FLT yd, FLT x_axis,
-                  FLT y_axis, SIN unit, FLT offset) const {
+void Series::draw(void *b, FP4 x_min, FP4 x_max, FP4 y_min, FP4 y_max,
+                  FP4 xs, FP4 xd, FP4 ys, FP4 yd, FP4 x_axis,
+                  FP4 y_axis, SIN unit, FP4 offset) const {
   if (dims_ == 0 || depth_ == 0) {
     return;
   }
@@ -329,7 +329,7 @@ void Series::draw(void *b, FLT x_min, FLT x_max, FLT y_min, FLT y_max,
     case RangeLine: {
       if (type_ == FillLine) {
         bool has_last = false;
-        FLT last_x, last_y;
+        FP4 last_x, last_y;
         for (const auto &e : entries_) {
           auto x = data_[e], y = data_[e + dims_];
           if (dynamic_color_) {
@@ -352,7 +352,7 @@ void Series::draw(void *b, FLT x_min, FLT x_max, FLT y_min, FLT y_max,
         }
       } else if (type_ == RangeLine) {
         bool has_last = false;
-        FLT last_x, last_y1, last_y2;
+        FP4 last_x, last_y1, last_y2;
         for (const auto &e : entries_) {
           auto x = data_[e], y1 = data_[e + dims_ + 1],
                y2 = data_[e + dims_ + 2];
@@ -375,7 +375,7 @@ void Series::draw(void *b, FLT x_min, FLT x_max, FLT y_min, FLT y_max,
         }
       }
       bool has_last = false;
-      FLT last_x, last_y;
+      FP4 last_x, last_y;
       for (const auto &e : entries_) {
         auto x = data_[e], y = data_[e + dims_];
         if (dynamic_color_) {
@@ -545,7 +545,7 @@ Series &Figure::series(const std::string &label) {
   return series_.back();
 }
 
-void Figure::draw(void *b, FLT x_min, FLT x_max, FLT y_min, FLT y_max,
+void Figure::draw(void *b, FP4 x_min, FP4 x_max, FP4 y_min, FP4 y_max,
                   SIN n_max, SIN p_max) const {
   auto &buffer = *(cv::Mat *)b;
   Trans trans(b);
@@ -670,7 +670,7 @@ void Figure::draw(void *b, FLT x_min, FLT x_max, FLT y_min, FLT y_max,
       index--;
     }
     s->draw(&trans.with(s->color()), x_min, x_max, y_min, y_max, xs, xd, ys, yd,
-            x_axis, y_axis, unit, (FLT)index / series_.size());
+            x_axis, y_axis, unit, (FP4)index / series_.size());
   }
 
   // draw label names

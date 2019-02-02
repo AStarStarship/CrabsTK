@@ -29,6 +29,6 @@ class DNAVirus: public Virus
 {
   public:
     
-    DNAVirus (DBL initX, DBL initY);
+    DNAVirus (FP8 initX, FP8 initY);
 };
 }   //< CellEvolutionaryInterface

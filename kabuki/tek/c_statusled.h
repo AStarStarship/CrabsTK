@@ -65,14 +65,14 @@ statusLED.SetPattern  (exapmlePattern, 1.5f);
 template <SI4 On, SI4 Off>
 class StatusLED {
  public:
-  static const FLT DefaultFrequency = 0.5f,  //< Default frequency in hertz.
+  static const FP4 DefaultFrequency = 0.5f,  //< Default frequency in hertz.
       MinFrequency = 0.01f,                  //< Min frequency in hertz.
       MaxFrequency = 2.0f;                   //< Max frequency in hertz.
 
   typedef enum { Off = 0, Short = 63, Long = 127, On = 255 } Pulse;
 
   /* Simple constructor. */
-  StatusLED(PinName led_pin = LED_1, FLT frequency = DefaultFrequency)
+  StatusLED(PinName led_pin = LED_1, FP4 frequency = DefaultFrequency)
       : count(0),
         period(0),
         sequence(0),
@@ -143,7 +143,7 @@ class StatusLED {
   }
 
   /* Sets the blink frequent. */
-  void SetFrequency(FLT Value) {
+  void SetFrequency(FP4 Value) {
     frequency = Value;
     blinker.attach(this, &StatusLED::Blink, Value);
   }
@@ -178,7 +178,7 @@ class StatusLED {
  private:
   CH1 count,             //< Counter counts from 1-3.
       period;             //< The current period CH1.
-  FLT frequency;          //< The period length.
+  FP4 frequency;          //< The period length.
   const CH1** sequence;  //< Null-terminated string of pointers.
   const CH1 *pattern,    //< The current string in the sequence.
       *cursor;            //< The current CH1 in the current string.

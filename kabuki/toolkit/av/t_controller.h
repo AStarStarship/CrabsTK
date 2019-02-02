@@ -68,7 +68,7 @@ class SDK Controller {
   SI4 Tempo();
 
   /* Sets the tempo to the newTempo. */
-  void SetTempo(DBL newTempo);
+  void SetTempo(FP8 newTempo);
 
   /* Starts the MIDI engine. */
   void Start();
@@ -82,13 +82,13 @@ class SDK Controller {
   /* Processes a rewind button press. */
   void Backward();
 
-  /* Gets the DBL press time in seconds. */
-  DBL GetDoublePressTime();
+  /* Gets the FP8 press time in seconds. */
+  FP8 GetDoublePressTime();
 
   /* sets the double_press_ticks to the newTime in seconds.
       @return gets -1 if the newTime is to small, 1 if it is to
           big, and 0 upon success */
-  SI4 SetDoublePressTime(DBL newTime);
+  SI4 SetDoublePressTime(FP8 newTime);
 
   /* Prints this object to a string. */
   template<typename Printer> Printer& Print(Printer& o) const;
@@ -97,7 +97,7 @@ class SDK Controller {
   SI4 common_channel_,     //< Common MIDI Channel  (0)
       channel_keyboard_,   //< Keyboard MIDI out channel
       drums_channel_,      //< Drums MIDI out channel
-      double_press_ticks_;  //< "Double press", or "DBL click" time.
+      double_press_ticks_;  //< "Double press", or "FP8 click" time.
 
 };  //< class Controller
 }  // namespace _

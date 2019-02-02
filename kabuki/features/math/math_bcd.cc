@@ -19,13 +19,13 @@ namespace _ {
 /*
 BCD::BCD ()
 {
-    // Note: for 32-bit FLT return int64_t.
+    // Note: for 32-bit FP4 return int64_t.
 
     CH1* floatingPointString = new CH1[maxDigitsDouble + 1];
     /// This solution  is for a 64-bit floating point number. Use 
-    maxDigitsFloat for a FLT.
+    maxDigitsFloat for a FP4.
 
-    if (significantDigits < 0)   //< Then use all of the FLT's digits.
+    if (significantDigits < 0)   //< Then use all of the FP4's digits.
     {
         significantDigits += 2;  //< ditch the '.' and '-'
         sprintf (floatingPointString , "%f", floatingPointNumber);
@@ -64,7 +64,7 @@ BCD::BCD ()
 } */
 
 
-BCD::BCD (FLT floatingPointNumber, SI4 numDecimalPlaces = -1)
+BCD::BCD (FP4 floatingPointNumber, SI4 numDecimalPlaces = -1)
 {
 
 }
@@ -79,7 +79,7 @@ BCD::~BCD ()
     if (is_dynamic && ptr != nullptr) delete ptr;
 }
 
-FLT BCD::GetFloat ()
+FP4 BCD::GetFloat ()
 {
     return 0.0f;
 }
@@ -89,7 +89,7 @@ double BCD::GetDouble ()
     return 0.0;
 }
 
-void BCD::SetValue (FLT Value)
+void BCD::SetValue (FP4 Value)
 {
 
 }
@@ -129,7 +129,7 @@ void BCD::Plus (long Value)
 
 }
 
-void BCD::Plus (FLT Value)
+void BCD::Plus (FP4 Value)
 {
 
 }
@@ -154,7 +154,7 @@ void BCD::Minus (long Value)
 
 }
 
-void BCD::Minus (FLT Value)
+void BCD::Minus (FP4 Value)
 {
 
 }
@@ -179,7 +179,7 @@ void BCD::Times (long Value)
 
 }
 
-void BCD::Times (FLT Value)
+void BCD::Times (FP4 Value)
 {
 
 }
@@ -204,7 +204,7 @@ void BCD::Divide (long Value)
 
 }
 
-void BCD::Divide (FLT Value)
+void BCD::Divide (FP4 Value)
 {
 
 }

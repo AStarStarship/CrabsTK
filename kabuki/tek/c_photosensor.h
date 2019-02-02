@@ -25,7 +25,7 @@ class Photosensor {
   Photosensor(PinName pin);
 
   /* Reads the photosensor. */
-  FLT Read();
+  FP4 Read();
 
   const _::Operation* Star(char_t index, _::Expr* expr);
 

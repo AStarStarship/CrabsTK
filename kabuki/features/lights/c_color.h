@@ -113,12 +113,12 @@ UI1 ColorGetAlpha (CRGBAUI4 color);
 void ColorSetAlpha (CRGBAUI4 color, UI1 value);
 
 /* Converts this color to HSV. */
-void ColorToHSV (CRGBAUI4 color, FLT& fR, FLT& fG, FLT fB,
-                 FLT& fH, FLT& fS, FLT& fV);
+void ColorToHSV (CRGBAUI4 color, FP4& fR, FP4& fG, FP4 fB,
+                 FP4& fH, FP4& fS, FP4& fV);
 
 /* Sets this color to the HSV values. */
-void ColorSetHSV (CRGBAUI4 color, FLT& fR, FLT& fG, FLT& fB,
-                  FLT& fH, FLT& fS, FLT& fV);
+void ColorSetHSV (CRGBAUI4 color, FP4& fR, FP4& fG, FP4& fB,
+                  FP4& fH, FP4& fS, FP4& fV);
 
 } //< namespace _
 #endif

@@ -33,8 +33,8 @@ public:
   /* Constructor.
       @contract The length of XPoints and YPoints must equal NumPoints or curve will not be created correctly. */
   Bezier2D (T* initXPoints, T* initYPoints, SI4 initNumPoints) :
-    x_points ((FLT*)theXPoints),
-    y_points ((FLT*)theYPoints),
+    x_points ((FP4*)theXPoints),
+    y_points ((FP4*)theYPoints),
     count_ (theNumPoints) {
     DASSERT (theXPoints != nullptr);
     DASSERT (theYPoints != nullptr);
@@ -44,8 +44,8 @@ public:
   /* Constructor.
   @contract The length of XPoints and YPoints must equal NumPoints. */
   Bezier2D (const T* initXPoints, const T* initYPoints, SI4 initNumPoints)
-    : x_points ((FLT*)theXPoints),
-    y_points ((FLT*)theYPoints),
+    : x_points ((FP4*)theXPoints),
+    y_points ((FP4*)theYPoints),
     count_ (theNumPoints) {
     DASSERT (theXPoints != nullptr);
     DASSERT (theYPoints != nullptr);
@@ -54,8 +54,8 @@ public:
 
   /* Constructs a quadratic bezier curve with the given points. */
   Bezier2D (T x0, T y0, T x1, T y1, T x2, T y2, T x3, T y3) :
-    x_points (new FLT[3]),
-    y_points (new FLT[3]),
+    x_points (new FP4[3]),
+    y_points (new FP4[3]),
     count_ (3) {
     count_ = 4;
 
@@ -73,8 +73,8 @@ public:
   Bezier2D (const Bezier2D& o) {
     SI4 newNumPoints = o.count_;
     count_ = newNumPoints;
-    FLT* newXPoints = new FLT[newNumPoints],
-      *newYPoints = new FLT[newNumPoints];
+    FP4* newXPoints = new FP4[newNumPoints],
+      *newYPoints = new FP4[newNumPoints];
     x_points = newXPoints;
     y_points = newYPoints;
 
@@ -103,7 +103,7 @@ public:
 
   /* Gets a Point<T> along the path of the of curve at time t. */
   TPoint2D<T> GetPoint (T p) {
-    FLT x = 0,
+    FP4 x = 0,
       y = 0,
       factn = factoral (count_);
 
@@ -111,17 +111,17 @@ public:
 
     for (SI4 i = 0; i <= n; i++) {
       // Calculate binomial coefficient.
-      FLT b = factn / (factoral (i) * factoral (n - i));
+      FP4 b = factn / (factoral (i) * factoral (n - i));
 
       // Calculate powers
-      FLT k = power (1 - p, n - i) * power (p, i);
+      FP4 k = power (1 - p, n - i) * power (p, i);
 
       // Add weighted points to totals
       x += b * k * x_points[i];
       y += b * k * y_points[i];
     }
 
-    return TPoint3D<FLT> (x, y);
+    return TPoint3D<FP4> (x, y);
   }
 
   /* Prints this object to the terminal. */

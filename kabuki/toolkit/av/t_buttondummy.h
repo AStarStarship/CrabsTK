@@ -35,7 +35,7 @@ class SDK ButtonDummy : public Button {
   /* Action that gets performed when this button gets depressed. */
   virtual void Depress(ButtonEvent button_event) {}
 
-  /* Action that gets performed when this button gets DBL pressed. */
+  /* Action that gets performed when this button gets FP8 pressed. */
   virtual void DoublePress (ButtonEvent button_event) {}
 
   /* Script2 Operations. */

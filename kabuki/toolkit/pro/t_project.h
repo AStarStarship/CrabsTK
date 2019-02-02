@@ -267,7 +267,7 @@ class Project : public Operand {
     CH1* name = new CH1[MAX_STRING_LENGTH];
     file.getline (name, MAX_STRING_LENGTH, ',');
     SI4 quantity;
-    FLT price;
+    FP4 price;
     CH1 c;
     //file >> quantity >> c >> price >> c;
     file >> quantity;

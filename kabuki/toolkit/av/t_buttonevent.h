@@ -43,10 +43,10 @@ class EventButton : public Button {
     Trigger ();
   }
 
-  /* Action that gets performed when this button gets DBL pressed. */
+  /* Action that gets performed when this button gets FP8 pressed. */
   virtual void Depress (const ControlLayer &cl) {}
 
-  /* Action that gets performed when this button DBL pressed. */
+  /* Action that gets performed when this button FP8 pressed. */
   virtual void DoublePressed (const ControlLayer &cl) {}
 
   /* Event interface implementation. */

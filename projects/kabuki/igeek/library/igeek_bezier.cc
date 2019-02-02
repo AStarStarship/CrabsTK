@@ -18,7 +18,7 @@ specific language governing permissions and limitations under the License. */
 namespace kabuki {
 namespace igeek {
 
-BezierCurve::BezierCurve (DBL xPoints[], DBL yPoints[], SI4 nPoints)
+BezierCurve::BezierCurve (FP8 xPoints[], FP8 yPoints[], SI4 nPoints)
 {
   DASSERT (yPoints != null) : "Error creating BezierCurve. xPoings is null.";
   DASSERT (yPoints != null) : "Error creating BezierCurve. yPoints is null.";
@@ -32,8 +32,8 @@ BezierCurve::BezierCurve (DBL xPoints[], DBL yPoints[], SI4 nPoints)
   {
     numPoints = 4;
 
-    xpoints = new DBL[4];
-    ypoints = new DBL[4];
+    xpoints = new FP8[4];
+    ypoints = new FP8[4];
 
     xpoints[0] = 0;
     ypoints[0] = 0;
@@ -47,8 +47,8 @@ BezierCurve::BezierCurve (DBL xPoints[], DBL yPoints[], SI4 nPoints)
   else
   {
     numPoints = nPoints;
-    xpoints = new DBL[nPoints];
-    ypoints = new DBL[nPoints];
+    xpoints = new FP8[nPoints];
+    ypoints = new FP8[nPoints];
 
     for (SI4 i = 0; i < nPoints; i++)
     {
@@ -58,11 +58,11 @@ BezierCurve::BezierCurve (DBL xPoints[], DBL yPoints[], SI4 nPoints)
   }
 }
 
-BezierCurve::BezierCurve (DBL x0, DBL y0, DBL x1, DBL y1, DBL x2, DBL y2, DBL x3, DBL y3)
+BezierCurve::BezierCurve (FP8 x0, FP8 y0, FP8 x1, FP8 y1, FP8 x2, FP8 y2, FP8 x3, FP8 y3)
 {
   numPoints = 4;
-  xpoints = new DBL[4];
-  ypoints = new DBL[4];
+  xpoints = new FP8[4];
+  ypoints = new FP8[4];
 
   xpoints[0] = x0;
   ypoints[0] = y0;
@@ -82,8 +82,8 @@ BezierCurve::BezierCurve (BezierCurve initState)
   {
     numPoints = 4;
 
-    xpoints = new DBL[4];
-    ypoints = new DBL[4];
+    xpoints = new FP8[4];
+    ypoints = new FP8[4];
 
     xpoints[0] = 0;
     ypoints[0] = 0;
@@ -98,8 +98,8 @@ BezierCurve::BezierCurve (BezierCurve initState)
   {
     numPoints = initState.numPoints;
 
-    xpoints = new DBL[numPoints];
-    ypoints = new DBL[numPoints];
+    xpoints = new FP8[numPoints];
+    ypoints = new FP8[numPoints];
 
     for (SI4 i = 0; i < numPoints; i++)
     {
@@ -109,17 +109,17 @@ BezierCurve::BezierCurve (BezierCurve initState)
   }
 }
 
-Point2D BezierCurve::getPoint (DBL t)
+Point2D BezierCurve::getPoint (FP8 t)
 {
-  DBL x = 0,                           //< The x position to return.
+  FP8 x = 0,                           //< The x position to return.
     y = 0,                           //< The y position to return.
     factn = factoral (numPoints);    //< Local copy of n!.
 
-  SI4 n = numPoints;                      //< Local copy of numPoints as a DBL.
+  SI4 n = numPoints;                      //< Local copy of numPoints as a FP8.
 
   for (SI4 i = 0; i <= n; i++)
   {
-    DBL b = factn / (factoral (i) * factoral (n - i)), //< Calculate binomial coefficient
+    FP8 b = factn / (factoral (i) * factoral (n - i)), //< Calculate binomial coefficient
       k = Math.pow (1 - t, n - i) * Math.pow (t, i);   //< Calculate powers
 
 // Add weighted points to totals

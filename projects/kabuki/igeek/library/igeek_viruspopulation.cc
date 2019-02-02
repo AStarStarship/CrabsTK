@@ -26,15 +26,15 @@ VirusPopulation::VirusPopulation (Host thisHost)
 
   Dimension hostDimensions = host.getPreferredSize ();
 
-  DBL x,
+  FP8 x,
     y,
     hostWidth = hostDimensions.width,
     hostHeight = hostDimensions.height;
 
   for (SI4 i = 0; i < DefaultPopulationSize; i++)
   {
-    x = Math.random () * (DBL)hostWidth;
-    y = Math.random () * (DBL)hostHeight;
+    x = Math.random () * (FP8)hostWidth;
+    y = Math.random () * (FP8)hostHeight;
 
     viruses[i] = new Virus (x, y);
   }

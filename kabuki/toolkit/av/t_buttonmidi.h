@@ -31,7 +31,7 @@ class SDK TButtonMIDI : public ControlMidi, public Button {
   TButtonMIDI(string newLabel = "", SI4 cc = 0, SI4 channel = 0, SI4 value = 0,
              SI4 min_value = 0, SI4 max_value = 127, SI4 word_size = 7,
              SI4 action = Button::Momentary, SI4 newStepSize = 0,
-             DBL double_press_ticks = Button::kDefaultDoublePressTicks)
+             FP8 double_press_ticks = Button::kDefaultDoublePressTicks)
     : Button (new_action, step_size, double_press_ticks),
     ControlMidi (label, cc, channel, value, min_value, max_value, word_size,
       Parameter<SI4>::TButtonMIDI) {}

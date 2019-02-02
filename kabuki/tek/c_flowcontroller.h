@@ -19,10 +19,10 @@ specific language governing permissions and limitations under the License. */
 namespace _ {
 
 /* Converts gallows to milliliters. */
-UI4 ConvertGallonsToMilliiters(FLT value);
+UI4 ConvertGallonsToMilliiters(FP4 value);
 
 /* Converts milliliters to gallons. */
-FLT ConvertMilliitersToGallons(UI4 value);
+FP4 ConvertMilliitersToGallons(UI4 value);
 
 class FlowController {
  public:
@@ -45,7 +45,7 @@ class FlowController {
   /* Polls the pot and updates the target flow. */
   void UpdateTargetFlow();
 
-  /* Updates the FLT rate. */
+  /* Updates the FP4 rate. */
   void Update(SI4 index);
 
   /* Opens the solenoid valve. */

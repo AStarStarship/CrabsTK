@@ -29,8 +29,8 @@ class SDK BCD {
         maxDigitsDouble = 3 + DBL_MANT_DIG - DBL_MIN_EXP
     };
 
-    /* Constructs a BCD from a FLT. */
-    BCD (FLT floatingPointNumber, SI4 numDecimalPlaces = -1);
+    /* Constructs a BCD from a FP4. */
+    BCD (FP4 floatingPointNumber, SI4 numDecimalPlaces = -1);
 
     /* Constructs a BCD from a double. */
     BCD (double floatingPointNumber, SI4 numDecimalPlaces = -1);
@@ -38,14 +38,14 @@ class SDK BCD {
     /* Destructor destructs if dynamic memory is used. */
     ~BCD ();
 
-    /* Gets the BCD value as a FLT. */
-    FLT GetFloat ();
+    /* Gets the BCD value as a FP4. */
+    FP4 GetFloat ();
 
     /* Gets the BCD value as a double. */
     double GetDouble ();
 
     /* Sets the BCD value to the new Value. */
-    void SetValue (FLT value);
+    void SetValue (FP4 value);
 
     /* Sets the BCD value to the new Value. */
     void SetValue (double value);
@@ -69,7 +69,7 @@ class SDK BCD {
     void Plus (long value);
 
     /* Adds the given Value to this BCD. */
-    void Plus (FLT value);
+    void Plus (FP4 value);
 
     /* Adds the given Value to this BCD. */
     void Plus (double value);
@@ -84,7 +84,7 @@ class SDK BCD {
     void Minus (long value);
 
     /* Subtracts the given Value to this BCD. */
-    void Minus (FLT value);
+    void Minus (FP4 value);
 
     /* Subtracts the given Value to this BCD. */
     void Minus (double value);
@@ -99,7 +99,7 @@ class SDK BCD {
     void Times (long value);
 
     /* Multiples the given Value to this BCD. */
-    void Times (FLT value);
+    void Times (FP4 value);
 
     /* Multiples the given Value to this BCD. */
     void Times (double value);
@@ -114,7 +114,7 @@ class SDK BCD {
     void Divide (long value);
 
     /* Divides the given Value to this BCD. */
-    void Divide (FLT value);
+    void Divide (FP4 value);
 
     /* Divides the given Value to this BCD. */
     void Divide (double value);

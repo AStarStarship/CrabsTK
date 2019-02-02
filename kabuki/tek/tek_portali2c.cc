@@ -43,7 +43,7 @@ void I2cPortal::Pull() {
       i2c_.write (addr8bit, cmd, 1);
       i2c_.read (addr8bit, cmd, 2);
 
-      FLT tmp = (FLT ((cmd[0] << 8) | cmd[1]) / 256.0);
+      FP4 tmp = (FP4 ((cmd[0] << 8) | cmd[1]) / 256.0);
       printf ("\n| Temp = %.2f\n", tmp);
       */
 }

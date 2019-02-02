@@ -118,7 +118,7 @@ void pollInputsHandler () {
 }
 
 SI4 main () {
-  static const FLT updateInterval = 0.010f;
+  static const FP4 updateInterval = 0.010f;
   PrintLine (" ", '=');
   pollInputsTicker.attach (&pollInputsHandler, updateInterval);
   RedLED = GreenLED = BlueLED = 1;

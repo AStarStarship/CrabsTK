@@ -1,8 +1,8 @@
-# projects.kabuki.av_studio
+# projects.kabuki.lut
 
-*Language/API:* **C++/UWP, Script2, Python**
+*Language/API:* **C++/UWP**
 
-A touchscreen music and lighting control center with DSP audio effects and synthesis.
+A Look-up Table (LUT) plugin widget that displays ASCII, Unicode, and other commonly used LUTs.
 
 # The License
 

@@ -53,7 +53,7 @@ class SDK ButtonWidget : public ButtonMacro {
     Button::Press (event);
   }
 
-  /* Function that is called when this Button gets DBL pressed. */
+  /* Function that is called when this Button gets FP8 pressed. */
   void Depress (ButtonEvent event) {}
 
   /* Widget that gets loaded when this macro gets triggered. */

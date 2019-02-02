@@ -48,7 +48,7 @@ class TAngle2D
 };
 
 #if WORD_SIZE == 32
-using Angle = Angle<FLT>;
+using Angle = Angle<FP4>;
 #elif WORD_SIZE == 64
 using Angle = Angle<double>;
 #endif

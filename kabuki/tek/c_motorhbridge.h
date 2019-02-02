@@ -30,13 +30,13 @@ class HBridgeMotor {
   void Stop();
 
   /* Moves the motor forward(+) or backwards(-). */
-  void Move(FLT value);
+  void Move(FP4 value);
 
   /* Script operations. */
   const _::Operation* Star(char_t index, _::Expr* expr);
 
  private:
-  FLT pulse_width_;     //< The velocity.
+  FP4 pulse_width_;     //< The velocity.
   PwmOut pulse_;        //< PWM output pin
   DigitalOut forward_,  //< The forward motor pin.
       reverse_;         //< The reverse motor pin.

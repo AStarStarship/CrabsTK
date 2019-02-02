@@ -18,14 +18,14 @@ specific language governing permissions and limitations under the License. */
 
 namespace _ {
 
-/* Pi as FLT. */
-static const FLT  Pi_f = 3.14159265358979f;
+/* Pi as FP4. */
+static const FP4  Pi_f = 3.14159265358979f;
 
 /* Pi as double. */
 static const double Pi_d = 3.141592653589793238463;
 
-/* Gets the absolute Value of a FLT Value. */
-inline FLT AbsValue (FLT a);
+/* Gets the absolute Value of a FP4 Value. */
+inline FP4 AbsValue (FP4 a);
 
 /* Gets the absolute Value of the value. */
 inline double AbsValue (double a);
@@ -37,109 +37,109 @@ inline SI4 AbsValue (SI4 a);
 inline long AbsValue (long a);
 
 /* Gets the arc cosine of a Value; the returned angle is in the range 0.0 through pi. */
-inline FLT Acos (FLT a);
+inline FP4 Acos (FP4 a);
 
 /* Gets the arc cosine of a Value; the returned angle is in the range 0.0 through pi. */
 inline double Acos (double a);
     
 /* Gets the arc sine of a Value; the returned angle is in the range -pi/2 through pi/2. */
-inline FLT Asin (FLT a);
+inline FP4 Asin (FP4 a);
     
 /* Gets the arc sine of a Value; the returned angle is in the range -pi/2 through pi/2. */
 inline double Asin (double a);
 
 /* Gets the arc tangent of a Value; the returned angle is in the range -pi/2 through pi/2. */
-inline FLT Atan (FLT a);
+inline FP4 Atan (FP4 a);
 
 /* Gets the arc tangent of a Value; the returned angle is in the range -pi/2 through pi/2. */
 inline double Atan (double a);
     
 /* Gets the angle theta from the conversion of rectangular coordinates (x, y) to polar coordinates (r, theta). */
-inline FLT Atan2 (FLT y, FLT x);
+inline FP4 Atan2 (FP4 y, FP4 x);
     
 /* Gets the angle theta from the conversion of rectangular coordinates (x, y) to polar coordinates (r, theta). */
 inline double Atan2 (double y, double x);
     
 /* Gets the smallest (closest to negative infinity) double Value that is greater than or equal to the argument and is equal to a mathematical integer. */
-inline FLT Ceiling (FLT a);
+inline FP4 Ceiling (FP4 a);
     
 /* Gets the smallest (closest to negative infinity) double Value that is greater than or equal to the argument and is equal to a mathematical integer. */
 inline double Ceiling (double a);
     
 /* Gets the first floating-point argument with the sign of the second floating-point argument. */
-inline FLT CopySign (FLT Magnitude, FLT sign);
+inline FP4 CopySign (FP4 Magnitude, FP4 sign);
     
 /* Gets the first floating-point argument with the sign of the second floating-point argument. */
 inline double CopySign (double Magnitude, double sign);
     
 /* Gets the trigonometric cosine of an angle. */
-inline FLT Cos (FLT a);
+inline FP4 Cos (FP4 a);
     
 /* Gets the trigonometric cosine of an angle. */
 inline double Cos (double a);
     
 /* Gets the hyperbolic cosine of the value. */
-inline FLT Hcos (FLT x);
+inline FP4 Hcos (FP4 x);
 
 /* Gets the hyperbolic cosine of the value. */
 inline double Hcos (double x);
 
 /* Gets Euler's number e raised to the power of the value. */
-inline FLT eToTheX (FLT a);
+inline FP4 eToTheX (FP4 a);
 
 /* Gets Euler's number e raised to the power of the value. */
 inline double eToTheX (double a);
 
 /* Gets ex -1. */
-inline FLT OneMinus_eToTheX (FLT x);
+inline FP4 OneMinus_eToTheX (FP4 x);
 
 /* Gets ex -1. */
 inline double OneMinus_eToTheX (double x);
 
 /* Gets the largest (closest to positive infinity) double Value that is less than or equal to the argument and is equal to a mathematical integer. */
-inline FLT Floor (FLT a);
+inline FP4 Floor (FP4 a);
 
 /* Gets the largest (closest to positive infinity) double Value that is less than or equal to the argument and is equal to a mathematical integer. */
 inline double Floor (double a);
 
-/* Gets the unbiased exponent used in the representation of a FLT. */
-inline SI4 Exponent (FLT d);
+/* Gets the unbiased exponent used in the representation of a FP4. */
+inline SI4 Exponent (FP4 d);
 
 inline SI4 Exponent (double d);
 /* Gets the unbiased exponent used in the representation of a double. */
 
 /* Gets SquareROot (x2 +y2) without intermediate overflow or underflow. */
-inline FLT Hypot (FLT x, FLT y);
+inline FP4 Hypot (FP4 x, FP4 y);
 
 /* Gets SquareRoot (x2 +y2) without intermediate overflow or underflow. */
 inline double Hypot (double x, double y);
 
 /* Computes the remainder operation on two arguments as prescribed by the IEEE 754 standard. */
-inline FLT IeeeRemainder (FLT f1, FLT f2);
+inline FP4 IeeeRemainder (FP4 f1, FP4 f2);
 
 /* Computes the remainder operation on two arguments as prescribed by the IEEE 754 standard. */
 inline double IeeeRemainder (double f1, double f2);
 
 /* Gets the natural logarithm (base e) of the value. */
-inline FLT Ln (FLT a);
+inline FP4 Ln (FP4 a);
 
 /* Gets the natural logarithm (base e) of the value. */
 inline double Ln (double a);
 
 /* Gets the base 10 logarithm of the value. */
-inline FLT Log (FLT a);
+inline FP4 Log (FP4 a);
 
 /* Gets the base 10 logarithm of the value. */
 inline double Log (double a);
 
 /* Gets the natural logarithm of the sum of the argument and 1. */
-inline FLT LogXPlus1 (FLT x);
+inline FP4 LogXPlus1 (FP4 x);
 
 /* Gets the natural logarithm of the sum of the argument and 1. */
 inline double LogXPlus1 (double x);
 
-/* Gets the greater of two FLT Values. */
-inline FLT Max (FLT a, FLT b);
+/* Gets the greater of two FP4 Values. */
+inline FP4 Max (FP4 a, FP4 b);
 
 /* Gets the greater of two double Values. */
 inline double Max (double a, double b);
@@ -150,8 +150,8 @@ inline SI4 Max (SI4 a, SI4 b);
 /* Gets the greater of two long Values. */
 inline long Max (long a, long b);
 
-/* Gets the smaller of two FLT Values. */
-inline FLT Min (FLT a, FLT b);
+/* Gets the smaller of two FP4 Values. */
+inline FP4 Min (FP4 a, FP4 b);
 
 /* Gets the smaller of two double Values. */
 inline double Min (double a, double b);
@@ -163,118 +163,118 @@ inline SI4 Min (SI4 a, SI4 b);
 inline long Min (long a, long b);
 
 /* Gets the floating-point number adjacent to the first argument in the direction of the second argument. */
-inline FLT NextAfter (FLT start, FLT direction);
+inline FP4 NextAfter (FP4 start, FP4 direction);
 
 /* Gets the floating-point number adjacent to the first argument in the direction of the second argument. */
 inline double NextAfter (double start, double direction);
 
 /*  Gets the floating-point Value adjacent to f in the direction of positive infinity. */
-inline FLT NextUp (FLT f);
+inline FP4 NextUp (FP4 f);
 
 /* Gets the floating-point Value adjacent to d in the direction of positive infinity. */
 inline double NextUp (double d);
 
 /* Gets the Value of the first argument raised to the power of the second argument. */
-inline FLT Power (FLT a, FLT b);
+inline FP4 Power (FP4 a, FP4 b);
 
 /* Gets the Value of the first argument raised to the power of the second argument. */
 inline double Power (double a, double b);
 
 /* Gets the value with a positive sign, greater than or equal to 0.0 and less than 1.0. */
-inline FLT Random_f ();
+inline FP4 Random_f ();
 
 /* Gets the value with a positive sign, greater than or equal to 0.0 and less than 1.0. */
 inline double Random_d ();
 
-/* Gets the FLT Value that is closest in Value to the argument and is equal to a mathematical integer. */
-inline FLT Round (FLT a);
+/* Gets the FP4 Value that is closest in Value to the argument and is equal to a mathematical integer. */
+inline FP4 Round (FP4 a);
  
 /* Gets the double Value that is closest in Value to the argument and is equal to a mathematical integer. */
 inline double Round (double a);
 
 /* Gets the closest SI4 to the argument, with ties Rounding up. */
-inline SI4 RoundToInt (FLT a);
+inline SI4 RoundToInt (FP4 a);
 
 /* Gets the closest long to the argument, with ties Rounding up. */
 inline long RoundToInt (double a);
 
 /* Return d × 2scaleFactor Rounded as if performed by a single correctly Rounded floating-point multiply to a member of the double Value set. */
-inline FLT ScaleB (FLT d, SI4 scaleFactor);
+inline FP4 ScaleB (FP4 d, SI4 scaleFactor);
 
 /* Return d × 2scaleFactor Rounded as if performed by a single correctly Rounded floating-point multiply to a member of the double Value set. */
 inline double ScaleB (double d, SI4 scaleFactor);
 
 /* Return f × 2scaleFactor.
-    Rounded as if performed by a single correctly Rounded floating-point multiply to a member of the FLT Value set. */
-inline FLT FScaleFactor (FLT f, SI4 scaleFactor);
+    Rounded as if performed by a single correctly Rounded floating-point multiply to a member of the FP4 Value set. */
+inline FP4 FScaleFactor (FP4 f, SI4 scaleFactor);
 
 /* Return f × 2scaleFactor.
-    Rounded as if performed by a single correctly Rounded floating-point multiply to a member of the FLT Value set. */
+    Rounded as if performed by a single correctly Rounded floating-point multiply to a member of the FP4 Value set. */
 inline double FScaleFactor (double f, SI4 scaleFactor);
 
 /* Gets the signum function of the argument
     @return 0.0 if the argument is 0.0, 1.0 if the argument is greater than 0, -1.0 if the argument is less than zero. */
-inline FLT SignOf (FLT f);
+inline FP4 SignOf (FP4 f);
 
 /* Gets the signum function of the argument; zero if the argument is zero, 1.0 if the argument is greater than zero, -1.0 if the argument is less than zero. */
 inline double SignOf (double d);
     
 /* Gets the trigonometric sine of an angle. */
-inline FLT Sin (FLT a);
+inline FP4 Sin (FP4 a);
     
 /* Gets the trigonometric sine of an angle. */
 inline double Sin (double a);
     
 /* Gets the hyperbolic sine of the value. */
-inline FLT Hsin (FLT x);
+inline FP4 Hsin (FP4 x);
     
 /* Gets the hyperbolic sine of the value. */
 inline double Hsin (double x);
 
 /* Gets the correctly Rounded positive square root of the value. */
-inline FLT SquareRoot (FLT a);
+inline FP4 SquareRoot (FP4 a);
 
 /* Gets the correctly Rounded positive square root of the value. */
 inline double SquareRoot (double a);
     
 /* Gets the cube root of the value. */
-inline FLT CubeRoot (FLT a);
+inline FP4 CubeRoot (FP4 a);
 
 /* Gets the cube root of the value. */
 inline double CubeRoot (double a);
 
 /* Gets the trigonometric tangent of an angle. */
-inline FLT Tan (FLT a);
+inline FP4 Tan (FP4 a);
 
 /* Gets the trigonometric tangent of an angle. */
 inline double Tan (double a);
 
 /* Gets the hyperbolic tangent of the value. */
-inline FLT Htan (FLT x);
+inline FP4 Htan (FP4 x);
 
 /* Gets the hyperbolic tangent of the value. */
 inline double Htan (double x);
 
 /* Converts an angle measured in radians to an approximately equivalent angle measured in degrees. */
-inline FLT ToDegrees (FLT angrad);
+inline FP4 ToDegrees (FP4 angrad);
 
 /* Converts an angle measured in radians to an approximately equivalent angle measured in degrees. */
 inline double ToDegrees (double angrad);
 
 /* Converts an angle measured in degrees to an approximately equivalent angle measured in radians. */
-inline FLT ToRadians (FLT angle);
+inline FP4 ToRadians (FP4 angle);
 
 /* Converts an angle measured in degrees to an approximately equivalent angle measured in radians. */
 inline double ToRadians (double angle);
 
 /* Gets the size of an ulp of the argument. */
-inline FLT Ulp (FLT f);
+inline FP4 Ulp (FP4 f);
     
 /* Gets the size of an ulp of the argument. */
 inline double Ulp (double d);
 
 /* Method calculates the factorial of thisNumber */
-inline FLT Factoral (FLT thisNumber);
+inline FP4 Factoral (FP4 thisNumber);
 
 /* Method calculates the factorial of thisNumber */
 inline double Factoral (double thisNumber);
@@ -285,14 +285,14 @@ inline SI4 Factoral (SI4 thisNumber);
 /* Method calculates the factorial of thisNumber */
 inline long Factoral (long thisNumber);
 
-/* Gets the min FLT value. */
-inline FLT GetMinFloat ();
+/* Gets the min FP4 value. */
+inline FP4 GetMinFloat ();
 
 /* Gets the min double value. */
 inline double GetMinDouble ();
 
-/* Gets the max FLT value. */
-inline FLT GetMaxFloat ();
+/* Gets the max FP4 value. */
+inline FP4 GetMaxFloat ();
 
 /* Gets the max double value. */
 inline double GetMaxDouble ();

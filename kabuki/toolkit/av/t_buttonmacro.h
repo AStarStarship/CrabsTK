@@ -184,7 +184,7 @@ class SDK ButtonMacro : public Parameter<SI4>, public Button {
   /* Triggered when a mode button is depressed. */
   void Depress() override {}
 
-  /* Triggered when a user "DBL clicks" a button. */
+  /* Triggered when a user "FP8 clicks" a button. */
   void Depress() override {}
 
   /* Prints a string of the row strings of the list. */

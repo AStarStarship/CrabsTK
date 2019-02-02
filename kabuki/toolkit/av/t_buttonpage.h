@@ -48,7 +48,7 @@ class SDK PageButton : public Button {
   /* The action  (s) performed when this button gets pressed. */
   void Press(const ControlLayer& parentLayer) { Button::Press (); }
 
-  /* The action  (s) performed when this button gets DBL pressed. */
+  /* The action  (s) performed when this button gets FP8 pressed. */
   void Depress(const ControlLayer& parentLayer) {
     Button::DoublePress ();
   }
