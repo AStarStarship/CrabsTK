@@ -1,5 +1,6 @@
+# Kabuki Toolkit
 
-```
+```AsciiArt
   /\
  ( /   @ @    ()   _  __     _           _    _   _____           _ _    _ _   
   \\ __| |__  /   | |/ /__ _| |__  _   _| | _(_) |_   _|__   ___ | | | _(_) |_
@@ -18,33 +19,30 @@ Kabuki Toolkit (KT) is a modern embedded-C++ toolkit for making intelligent conn
 
 ## Quick Links
 
-* [Script2](https://github.com/kabuki-starship/script2.md)
-  - *Serial Chinese Room, Interprocess, and Telemetry (SCRIPT) Script (Script2) is the foundation of KT so it's the best place to start learning.*
+* [Script2 and the SCRIPT Spec](https://github.com/kabuki-starship/script2.md) - *Serial Chinese Room, Interprocess, and Telemetry (SCRIPT) Script (Script2) is the foundation of KT so it's the best place to start learning.*
+* [Documents & FAQ](https://github.com/kabuki-starship/kabuki-toolkit.git/blob/master/docs/faq.md) - *Check out the `/docs/readme.md` for answers to Frequently asked questions and other promotional and learning materials.*
 * [Kabuki Starship Website](https://kabuki-starship.github.io/)
-* [Documents & FAQ](https://github.com/kabuki-starship/kabuki-toolkit.git/blob/master/docs/faq.md)
-  - *Check out the `/docs/readme.md` for answers to Frequently asked questions and other promotional and learning materials.*
 
 ## kabuki Modules
 
-All currently broken. Sorry. Please contribute as a developer. Thanks.
-
 | Module    | Description |
 |:---------:|:------------|
-| toolkit   | Firmware-to-Software Development toolkit. |
+| toolkit   | Software Development toolkit. |
 | features  | System features. |
 | hal       | Hardware Abstraction Layer. |
 | osal      | Operating System Abstraction Layer. |
 | platform  | Hardware platform. |
 | tek       | Kabuki tek firmware. |
 
-## kabuki.drivers
+### kabuki.drivers
+
 | Module     | Description |
 |:----------:|:------------|
 | ethernet   | Basic TCP support. |
 | serial     | UART/Serial driver. |
 | ...        | Many more drivers coming soon. |
 
-## kabuki.features
+### kabuki.features
 
 | Module      | Description |
 |:-----------:|:------------|
@@ -53,8 +51,10 @@ All currently broken. Sorry. Please contribute as a developer. Thanks.
 | graphics    | Graphics library. |
 | midi        | Musical instrument digital interface. |
 | sound       | Sound library. |
+| tls         | Transport-layer Security. |
+| touch       | Human-Machine Interface input library. |
 
-## kabuki.toolkit Modules
+### kabuki.toolkit
 
 | Module   | Description |
 |:--------:|:------------|
@@ -73,6 +73,8 @@ All currently broken. Sorry. Please contribute as a developer. Thanks.
 
 ## projects
 
+| Module        | Description |
+|:-------------:|:------------|
 | experiments   | A project for quickly testing code. |
 | script2       | Oversight project for Script2. |
 

@@ -77,10 +77,10 @@ class UserList : public Operand {
   SI4 GetSize() { return users_.size (); }
 
   /* Gets the point_cost_ */
-  DBL GetValueCost() { return value_cost_; }
+  FP8 GetValueCost() { return value_cost_; }
 
   /* Attempts to set the point cost. */
-  BOL SetValueCost(DBL value) {
+  BOL SetValueCost(FP8 value) {
     if (value < 0.0) {
       return false;
     }
@@ -90,7 +90,7 @@ class UserList : public Operand {
 
   /* Attempts to buy the given points.
       @returns false if the balance_ is too low. */
-  BOL BuyValue(SI4 session, uint64_t num_coins, DBL value_cost) {
+  BOL BuyValue(SI4 session, uint64_t num_coins, FP8 value_cost) {
     TUser* user = GetUser (session);
     if (!user) {
       return false;
@@ -99,7 +99,7 @@ class UserList : public Operand {
   }
 
   /* Increase the balance_ by the given amount. */
-  BOL AddBalance(SI4 session, DBL amount) {
+  BOL AddBalance(SI4 session, FP8 amount) {
     TUser* user = GetUser (session);
     if (!user) {
       return false;
@@ -112,7 +112,7 @@ class UserList : public Operand {
 
   /* Adds a new User to the list with the given handle and password. */
   SI4 Add(const TStrand<>& handle, const TStrand<>& password = TPassword::kDefault,
-          DBL balance = TUser::kDefaultBalance,
+          FP8 balance = TUser::kDefaultBalance,
           int64_t value = TUser::kDefaultValue) {
     cout << "\n| Attempting to add @" << ((handle == nullptr) ? "null" : handle)
       << ":\"" << ((password == nullptr) ? "null" : password) << '\"';
@@ -330,7 +330,7 @@ class UserList : public Operand {
   
   /*const TStrand<>& Sudo(const TStrand<>& text, const TStrand<>& strand_end) {
     CH1 handle[Handle::kMaxLength + 1], password[Password::kMaxLength + 1];
-    DBL balance;
+    FP8 balance;
     int64_t value;
     const TStrand<>& next_token;
 
@@ -410,7 +410,7 @@ class UserList : public Operand {
 
  private:
   SI4 user_count;         //< Number of users logged in.
-  DBL value_cost_;        //< Cost per point.
+  FP8 value_cost_;        //< Cost per point.
   TAuthenticator* auth_;  //< Handle, & Password Authenticator.
   TArray<User*> users_;   //< User list.
   UidServer<> uids_;      //< Unique Session Key server

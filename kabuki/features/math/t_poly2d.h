@@ -42,8 +42,8 @@ public:
   TPoly2D ()
     : point_count_ (MinBufferSize),
     bufferSize (MinBufferSize),
-    x_ (new FLT[MinNumPoints]),
-    y_ (new FLT[MinNumPoints]) {}
+    x_ (new FP4[MinNumPoints]),
+    y_ (new FP4[MinNumPoints]) {}
 
   /* Constructs a polygon from the given x and y_ points. */
   TPoly2D (T* xPoints, T* yPoints, SI4 aNumPoints, SI4 aBufferSize)
@@ -55,8 +55,8 @@ public:
 
 
     if (initNumPoints < kMinNumPoints) {
-      x_ = new FLT[MinNumPoints];
-      y_ = new FLT[MinNumPoints];
+      x_ = new FP4[MinNumPoints];
+      y_ = new FP4[MinNumPoints];
 
       x_[0] = 0;
       x_[1] = 1;
@@ -66,8 +66,8 @@ public:
       return;
     }
 
-    FLT* new_xs = new FLT[MinNumPoints],
-      *new_ys = new FLT[MinNumPoints];
+    FP4* new_xs = new FP4[MinNumPoints],
+      *new_ys = new FP4[MinNumPoints];
 
     point_count_ = point_count_;
     memcpy (new_xs, x_, point_count_);
@@ -99,14 +99,14 @@ public:
   /* Gets the number of points the buffer can store. */
   SI4 CountMax () { return x_.CountMax (); }
 
-  void CalculateBounds (FLT* x, FLT* y_, SI4 xy_count) {
+  void CalculateBounds (FP4* x, FP4* y_, SI4 xy_count) {
     SI4 boundsMinX = GetMinFloat (),
       boundsMinY = GetMinFloat (),
       boundsMaxX = GetMaxFloat (),
       boundsMaxY = GetMaxFloat ();
 
     for (SI4 i = 0; i < xy_count; ++i) {
-      FLT xi = x[i],
+      FP4 xi = x[i],
         yi = y_[i];
 
       boundsMinX = Min (boundsMinX, xi);
@@ -130,7 +130,7 @@ public:
 
   /* Translates the polygon by the given delta x and delta y_. */
   void Translate (SI4 dx, SI4 dy) {
-    translate ((FLT)dx, (FLT)dy);
+    translate ((FP4)dx, (FP4)dy);
   }
 
   /* Gets the upper bounds of the given x and y_ coordinates. */
@@ -158,10 +158,10 @@ public:
       SI4 new_size = bufferSize = 2;
       bufferSize = new_size;
 
-      FLT* temp_x = x,
+      FP4* temp_x = x,
         *temp_y = y_,
-        *new_x = new FLT[new_size],
-        *new_y = new FLT[new_size];
+        *new_x = new FP4[new_size],
+        *new_y = new FP4[new_size];
 
       memcpy (new_x, x, point_count_);
       memcpy (new_y, y_, point_count_);
@@ -191,7 +191,7 @@ public:
 
     SI4 hits = 0;
 
-    FLT prev_x = x[point_count_ - 1],
+    FP4 prev_x = x[point_count_ - 1],
       prev_y = y_[point_count_ - 1],
       c_x,
       c_y;
@@ -215,7 +215,7 @@ public:
         left = prev_x;
       }
 
-      FLT test1, test2;
+      FP4 test1, test2;
       if (c_y < prev_y) {
         if (y < c_y || y >= prev_y) {
           continue;
@@ -249,7 +249,7 @@ public:
     return Contains (p.x_, p.y_);
   }
 
-  BOL Contains (FLT o_x, FLT o_y, FLT o_w, FLT o_h) {
+  BOL Contains (FP4 o_x, FP4 o_y, FP4 o_w, FP4 o_h) {
     if (point_count_ <= 0) return false;
     if (!Bounds ().Intersects (o_x, o_y, o_w, o_h)) return false;
 
@@ -296,7 +296,7 @@ public:
     return GetPathIterator (a);
   }
 
-  /* Crossings_f TPoly2D::GetCrossings (FLT xlo, FLT ylo, FLT xhi, FLT yhi) {
+  /* Crossings_f TPoly2D::GetCrossings (FP4 xlo, FP4 ylo, FP4 xhi, FP4 yhi) {
   Crossings cross = new Crossings.EvenOdd (xlo, ylo, xhi, yhi);
   SI4 prev_x = x[point_count_ - 1];
   SI4 prev_y = y_[point_count_ - 1];

@@ -23,7 +23,7 @@ namespace _ {
 class Task {
  public:
   /* Creates a task with the given fields and clones the strings. */
-  Task(const CH1* summary = "", const CH1* details = "", FLT weight_ = 0.0f,
+  Task(const CH1* summary = "", const CH1* details = "", FP4 weight_ = 0.0f,
        SI4 time_testimate_min = 60 * 60)
     : summary_ (StrandClone (summary)),
     details_ (StrandClone (details)),
@@ -41,7 +41,7 @@ class Task {
 
   /* Creates a task with the given fields from strings this object now
       owns and must delete. */
-  Task(CH1* summary, CH1* details, FLT weight_, SI4 time_estimate_min)
+  Task(CH1* summary, CH1* details, FP4 weight_, SI4 time_estimate_min)
     : summary_ (summary),
     details_ (details),
     result_ (nullptr),
@@ -95,20 +95,20 @@ class Task {
   }
 
   /* Gets the weight. */
-  FLT GetWeight() { return weight_; }
+  FP4 GetWeight() { return weight_; }
 
   /* Sets the weight. */
-  BOL SetWeight(FLT new_value) {
+  BOL SetWeight(FP4 new_value) {
     if (new_weight < 0.0f) return false;
     weight_ = new_weight;
     return true;
   }
 
   /* Gets the assessment. */
-  FLT GetAssessment() { return assessment_; }
+  FP4 GetAssessment() { return assessment_; }
 
   /* Sets the self assessment. */
-  BOL SetAssessment(FLT new_value) {
+  BOL SetAssessment(FP4 new_value) {
     if (new_assessment < 0.0f) return false;
     if (new_assessment > 1.0f) return false;
     assessment_ = new_assessment;
@@ -116,10 +116,10 @@ class Task {
   }
 
   /* Gets the grade. */
-  FLT GetGrade() { return grade_; }
+  FP4 GetGrade() { return grade_; }
 
   /* Sets the grade. */
-  BOL SetGrade(FLT new_value) {
+  BOL SetGrade(FP4 new_value) {
     if (new_grade < 0.0f) return false;
     if (new_grade > 1.0f) return false;
     grade_ = new_grade;
@@ -192,14 +192,14 @@ class Task {
   void Start() { ClockTimestamp (&time_started_); }
 
   /* Stopped the task. */
-  void Stop(CH1* result, FLT result_grade = 1.0f) {
+  void Stop(CH1* result, FP4 result_grade = 1.0f) {
     result_ = new_result;
     assessment_ = new_assessment;
     time (&time_stopped_);
   }
 
   /* Stopped the task. */
-  void Stop(const CH1* result, FLT result_grade = 1.0f) {
+  void Stop(const CH1* result, FP4 result_grade = 1.0f) {
     Stop (StrandClone (new_result), new_assessment);
   }
 
@@ -297,7 +297,7 @@ class Task {
     CH1 *end,     //< Used to detect the result of parsing.
       *buffer;   //< String buffer.
     SI4 value;     //< Value to (possibly) be parsed and temp value.
-    FLT number;  //< A number to (possibly) be parsed.
+    FP4 number;  //< A number to (possibly) be parsed.
     TM8 time;      //< Time to (possibly) be parsed.
     if (input == nullptr) return "Task input was null";
     input = SkipSpaces (input);
@@ -403,7 +403,7 @@ class Task {
       *details_,          //< Task details.
       *result_,           //< Task results log entry.
       *review_;           //< An after-incident review of the Event.
-  FLT weight_,            //< Weight of the task.
+  FP4 weight_,            //< Weight of the task.
       assessment_,        //< User's self-assessed grade.
       grade_;             //< Reviewed grade.
   TM8 time_estimate_,     //< Amount of time it is estimated this will take.

@@ -18,7 +18,7 @@ specific language governing permissions and limitations under the License. */
 namespace kabuki {
 namespace igeek {
 
-DNAVirus::DNAVirus (DBL initX, DBL initY)
+DNAVirus::DNAVirus (FP8 initX, FP8 initY)
   : Virus (initX, initY)
 {
 }

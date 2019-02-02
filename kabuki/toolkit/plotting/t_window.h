@@ -287,7 +287,7 @@ class Window {
     return *this;
   }
 
-  Window &fps(FLT fps) {
+  Window &fps(FP4 fps) {
     fps_ = fps;
     return *this;
   }
@@ -408,16 +408,16 @@ class Window {
   std::string name_;
   std::map<std::string, View> views_;
   bool dirty_;
-  FLT flush_time_;
-  FLT fps_;
+  FP4 flush_time_;
+  FP4 fps_;
   bool hidden_;
   bool show_cursor_;
   Offset cursor_;
 
  private:
     
-  inline FLT runtime () {
-    return (FLT)(clock () - shared_time) / CLOCKS_PER_SEC;
+  inline FP4 runtime () {
+    return (FP4)(clock () - shared_time) / CLOCKS_PER_SEC;
   }
 
   inline void mouse_callback (SIN event, SIN x, SIN y, SIN flags, 
@@ -428,15 +428,15 @@ class Window {
 
 class Util {
  public:
-  static void sleep(FLT seconds = 0) {
+  static void sleep(FP4 seconds = 0) {
     cv::waitKey (std::max (1, (SIN)(seconds * 1000)));
   }
 
-  static char key(FLT timeout = 0) {
+  static char key(FP4 timeout = 0) {
     return cv::waitKey (std::max (0, (SIN)(timeout * 1000)));
   }
 
-  static std::string line(FLT timeout = 0) {
+  static std::string line(FP4 timeout = 0) {
     std::stringstream stream;
     auto ms = (timeout > 0 ? std::max (1, (SIN)(timeout * 1000)) : -1);
     while (ms != 0) {

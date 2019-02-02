@@ -28,7 +28,7 @@ static cv::Scalar color2scalar(const TRGBA &color) {
                     channel2pale(color.r));
 }
 
-static FLT value2snap(FLT value) {
+static FP4 value2snap(FP4 value) {
   return std::max({pow(10, floor(log10(value))),
                    pow(10, floor(log10(value / 2))) * 2,
                    pow(10, floor(log10(value / 5))) * 5});

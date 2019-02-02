@@ -15,9 +15,9 @@ specific language governing permissions and limitations under the License. */
 
 namespace _ {
 
-UI4 ConvertGallonsToMilliiters(FLT Value) { return (UI4)(Value * 3785.41f); }
+UI4 ConvertGallonsToMilliiters(FP4 Value) { return (UI4)(Value * 3785.41f); }
 
-FLT ConvertMilliitersToGallons(UI4 Value) { return (3785.41f / (FLT)Value); }
+FP4 ConvertMilliitersToGallons(UI4 Value) { return (3785.41f / (FP4)Value); }
 
 FlowController::FlowController(PinName sensor_pin, PinName solenoid_pin,
                                PinName pot_pin, UI4 max_flow_ml)

@@ -33,21 +33,21 @@ class BezierCurve
     
     SI4 numPoints;
                
-    DBL* xpoints,    //< An array of the 
+    FP8* xpoints,    //< An array of the 
           * ypoints;
     
     /* Constructor initializes curve with the given points.
     @warning the length of xPoints and yPoints must equal nPoints or curve will not be created correctly.
     */ 
-    BezierCurve (DBL xPoints[], DBL yPoints[], SI4 nPoints);
+    BezierCurve (FP8 xPoints[], FP8 yPoints[], SI4 nPoints);
 
     /* Constructor initializes curve with the given points.
     */
-    BezierCurve (DBL x0, DBL y0, DBL x1, DBL y1, DBL x2, DBL y2, DBL x3, DBL y3)
+    BezierCurve (FP8 x0, FP8 y0, FP8 x1, FP8 y1, FP8 x2, FP8 y2, FP8 x3, FP8 y3)
     {
         numPoints = 4;
-        xpoints = new DBL[4];
-        ypoints = new DBL[4];
+        xpoints = new FP8[4];
+        ypoints = new FP8[4];
         
         xpoints[0] = x0;
         ypoints[0] = y0;
@@ -64,7 +64,7 @@ class BezierCurve
     BezierCurve (BezierCurve initState);
     
     / Returns a Point2D along the path of the of curve at time t.
-    Point2D getPoint (DBL t);
+    Point2D getPoint (FP8 t);
     
     static SI4 factoral (SI4 value);
     

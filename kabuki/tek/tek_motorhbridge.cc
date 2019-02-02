@@ -31,7 +31,7 @@ void HBridgeMotor::Stop() {
   pulse_width_ = 0.0f;
 }
 
-void HBridgeMotor::Move(FLT value) {
+void HBridgeMotor::Move(FP4 value) {
   forward_ = reverse_ = 0;  //< Turn off to GetPrevent any unwanted behavior.
   pulse_width_ = value;
   forward_ = value < 0.0f ? 1 : 0;
@@ -56,13 +56,13 @@ const Operation* HBridgeMotor::Star(char_t index, Expr* expr) {
     }
     case 'b': {
       static const Operation OpB = {
-          "Move", Params<1, FLT>(), Params<1>(),
+          "Move", Params<1, FP4>(), Params<1>(),
           "Sets the motor to move forward  (0.0 - 1.0) or backwards "
           "(-1.0 - 0.0) for x seconds.",
           0};
       if (!expr) return &OpB;
-      FLT input;
-      if (Args(expr, Params<1, FLT>(), Args(args, &input))) return expr->result;
+      FP4 input;
+      if (Args(expr, Params<1, FP4>(), Args(args, &input))) return expr->result;
       Move(input);
       return expr->result;
     }

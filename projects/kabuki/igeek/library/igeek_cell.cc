@@ -30,7 +30,7 @@ Cell::Cell (Host cellHost)
 
 Cell::Cell (SI4 x_pos, SI4 y_pos, SI4 width, SI4 height, 
             SI4 point_count, SI4 color, SI4 lifespan, 
-            DBL angle)
+            FP8 angle)
     : super (point_count, width, height, color, lifespan, angle) 
 {}
 
@@ -46,11 +46,11 @@ void Cell::Update () {
   // We only need to do any logic if the cell is infected. 
 }
 
-DBL Cell::X () {
+FP8 Cell::X () {
   return x;
 }
 
-DBL Cell::Y () {
+FP8 Cell::Y () {
   return y;
 }
 

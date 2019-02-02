@@ -69,7 +69,7 @@ class RGBStatusLED {
 
   /* Simple constructor. */
   RGBStatusLED(PinName red_pin, PinName green_pin, PinName blue_pin,
-               FLT blink_delay = 0.2f)
+               FP4 blink_delay = 0.2f)
       : frequency(aFrequency),
         red(red_pin),
         green(green_pin),
@@ -184,7 +184,7 @@ class RGBStatusLED {
   }
 
   /* Sets the blink frequency. */
-  void SetFrequency(FLT value) {
+  void SetFrequency(FP4 value) {
     frequency = value;
     blinker.attach(this, &RGBStatusLED::Blink, value);
   }
@@ -193,7 +193,7 @@ class RGBStatusLED {
   void HandleAssert() { FlashRedBlue() }
 
  private:
-  FLT frequency_;   //< The frequency of the blinking.
+  FP4 frequency_;   //< The frequency of the blinking.
   DigitalOut red_,  //< Red LED on the mbed board.
       green_,       //< Green LED on the mbed board.
       blue_;        //< Blue LED on the mbed board.

@@ -54,7 +54,7 @@ GeneticPolygonPanel::GeneticPolygon getGeneticPolygon ()
   return gPoly;
 }
 
-void GeneticPolygonPanel::respawn (SI4 numPoints, SI4 width, SI4 height, SI4 color, SI4 lifespan, DBL angle)
+void GeneticPolygonPanel::respawn (SI4 numPoints, SI4 width, SI4 height, SI4 color, SI4 lifespan, FP8 angle)
 {
   gPoly = new GeneticPolygon (numPoints, width, height, color, lifespan, angle);
 }

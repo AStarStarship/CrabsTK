@@ -18,7 +18,7 @@ specific language governing permissions and limitations under the License. */
 namespace kabuki {
 namespace igeek {
 
-Virus::Virus (DBL initX, DBL initY)
+Virus::Virus (FP8 initX, FP8 initY)
 {
   super ();
 
@@ -29,7 +29,7 @@ Virus::Virus (DBL initX, DBL initY)
 }
 
 Virus::Virus (SI4 point_count, SI4 width, SI4 height, SI4 color,
-  SI4 lifespan, DBL angle)
+  SI4 lifespan, FP8 angle)
   : GeneticPolygon (point_count, width, height, color, lifespan, angle)
 {
   x = y = 0;
@@ -72,21 +72,21 @@ void Virus::initialize ()
   //< These variables are currently unused
 }
 
-DBL Virus::velocityX ()
+FP8 Virus::velocityX ()
 {
   return x - lastX;
 }
 
-DBL Virus::velocityY ()
+FP8 Virus::velocityY ()
 {
   return y - lastY;
 }
 
-DBL Virus::centerX ()
+FP8 Virus::centerX ()
 {
   return x + Width () / 2;
 }
-DBL Virus::centerY ()
+FP8 Virus::centerY ()
 {
   return y + Height () / 2;
 }
@@ -107,8 +107,8 @@ void Virus::collideWith (Virus thatVirus)
 
   // This is defined as Cos(theta) = dotProduct(a, b)/(magnitude(a)*magnitude(b))
 
-  DBL m1 = (DBL)getNumPixels (),
-    m2 = (DBL)thatVirus.getNumPixels (),
+  FP8 m1 = (FP8)getNumPixels (),
+    m2 = (FP8)thatVirus.getNumPixels (),
     sumOfMasses = m1 + m2,
     m1_minus_m2 = m1 - m2,
     m2_minus_m1 = m2 - m1,
@@ -146,7 +146,7 @@ void Virus::updatePosition (SI4 hostWidth, SI4 hostHeight)
     lastPathX -= 1.0;
   }
 
-  DBL oneMinus_t = 1.0 - t,
+  FP8 oneMinus_t = 1.0 - t,
     oneMinus_t_Squared = Math.pow (oneMinus_t, 2.0),
     oneMinus_t_Cubed = Math.pow (oneMinus_t, 3.0),
     tSquared = Math.pow (t, 2.0),
@@ -201,7 +201,7 @@ void Virus::updateTrail ()
 
 BOL Virus::checkHostBoundsCollision (SI4 hostWidth, SI4 hostHeight)
 {
-  DBL dx = x - lastX,
+  FP8 dx = x - lastX,
     dy = y - lastY;
 
   BOL collisionDetected;
@@ -223,7 +223,7 @@ BOL Virus::checkHostBoundsCollision (SI4 hostWidth, SI4 hostHeight)
     // needs to be adjustest so that the two collision results in a smooth transition of angles.
     // We need to find out what is the initial angle for the first movement in the Bezier curve.
 
-    DBL t_plus_deltaT = t + deltaT,
+    FP8 t_plus_deltaT = t + deltaT,
       oneMinus_t = 1.0 - t_plus_deltaT,
       oneMinus_t_Squared = Math.pow (oneMinus_t, 2.0),
       oneMinus_t_Cubed = Math.pow (oneMinus_t, 3.0),
@@ -252,12 +252,12 @@ void Virus::deselect ()
 
 BOL Virus::containsPoint (SI4 thisX, SI4 thisY)
 {
-  return containsPoint ((DBL)thisX, (DBL)thisY);
+  return containsPoint ((FP8)thisX, (FP8)thisY);
 }
 
-BOL Virus::containsPoint (DBL thisX, DBL thisY)
+BOL Virus::containsPoint (FP8 thisX, FP8 thisY)
 {
-  DBL polyX = thisX - x,
+  FP8 polyX = thisX - x,
     polyY = thisY - y;
 
   if (thisX < x || thisX > rightEdge ()
@@ -294,11 +294,11 @@ BOL Virus::intersects (Virus thatVirus)
   return super.intersects (thatVirus, thatVirus.x - x, thatVirus.y - y);
 }
 
-DBL Virus::getX ()
+FP8 Virus::getX ()
 {
   return x;
 }
-DBL Virus::getY ()
+FP8 Virus::getY ()
 {
   return y;
 }

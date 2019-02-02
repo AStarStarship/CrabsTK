@@ -53,7 +53,7 @@ class SDK ModeButton : public Button {
 
   void Depress(ButtonEvent e) { Button::Depress (e); }
 
-  /* Function Called when this Button gets DBL pressed. */
+  /* Function Called when this Button gets FP8 pressed. */
   void Depress(ButtonEvent e) { Button::Depress (e); }
 
   /* Device loaded when this macro gets triggered. */

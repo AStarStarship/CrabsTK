@@ -32,7 +32,7 @@ class TPolar2D
         @param  thisAngle   The angle of the coordinate.
         @param  thisNumber  The Magnitude of the coordinate.
     */
-    TPolar2D (FLT angle, FLT radius) :
+    TPolar2D (FP4 angle, FP4 radius) :
         angle (angle),
         radius (radius) {
     }

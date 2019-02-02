@@ -19,7 +19,7 @@ Photosensor::Photosensor(PinName pin) : input_(pin) {
   /// Nothing to do here!
 }
 
-FLT Photosensor::Read() { return input_.read(); }
+FP4 Photosensor::Read() { return input_.read(); }
 
 const Operation* Photosensor::Star(char_t index, Expr* expr) {
   static const Operation This = {

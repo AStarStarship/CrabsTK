@@ -34,7 +34,7 @@ class Cell: public GeneticPolygon
         colorWeakness;                      /< The color this Cell is weak to.
                                             /*< Viruses that are of weak to a color will allow a cell to infect it that smaller. */
     
-    DBL x,                               /< The current x position.
+    FP8 x,                               /< The current x position.
         y;                                  /< The current y position.
     
     Host host;                              /< A pointer to the host.
@@ -44,15 +44,15 @@ class Cell: public GeneticPolygon
     Cell (Host cellHost);
     
     Cell (SI4 x_pos, SI4 y_pos, SI4 width, SI4 height, SI4 point_count, SI4 color, 
-        SI4 lifespan, DBL angle);
+        SI4 lifespan, FP8 angle);
     
     void highlight (Graphics g, Color circle_color);
     
     void update ();
     
-    DBL getX ();
+    FP8 getX ();
     
-    DBL getY ();
+    FP8 getY ();
     
     SI4 Left ();
     

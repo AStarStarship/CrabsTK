@@ -84,7 +84,7 @@ void BezierCurvePanel::drawCubic (Graphics g)
 {
     g.setColor (curveColor);
     
-    DBL centerY = y + height/2 - padding,
+    FP8 centerY = y + height/2 - padding,
            lastX = 0,
            lastY = 0,
            x0 = curve.xpoints[0],
@@ -98,9 +98,9 @@ void BezierCurvePanel::drawCubic (Graphics g)
            
     //Print (curve.toString () + "\n deltaT = " + deltaT + "\n\n");
     
-    for (DBL t = deltaT; t < 1.0; t += deltaT)
+    for (FP8 t = deltaT; t < 1.0; t += deltaT)
     {
-        DBL oneMinus_t = 1.0 - t,
+        FP8 oneMinus_t = 1.0 - t,
                oneMinus_t_Squared = Math.pow (oneMinus_t, 2.0),
                oneMinus_t_Cubed   = Math.pow (oneMinus_t, 3.0),
                tSquared = Math.pow (t, 2.0),

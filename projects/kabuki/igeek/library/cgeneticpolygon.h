@@ -27,7 +27,7 @@ class GeneticPolygon: public Polygon
 {
   public:
     
-    static const DBL maxRandomPoints     = 5.00,     /< And this was for what again?
+    static const FP8 maxRandomPoints     = 5.00,     /< And this was for what again?
                         defaultAngle        = 0.00,     /< The default angle of orientation.
                         matingPercent       = 0.10,     /< The percent of the population that mates durring each generation.
                         minorMutationVector = 0.50,     /< Note sure if I need this or what its for because I didn't document it right.
@@ -51,7 +51,7 @@ class GeneticPolygon: public Polygon
         width,                                          /< The width  of this GP in pixels.
         height;                                         /< The height of this GP in pixels.
     
-    DBL age,                                         /< This variable represents the age a GP in generations.
+    FP8 age,                                         /< This variable represents the age a GP in generations.
                                                         /*< Initially the age is set to the GP's life span, and is decremented. */
                    angle;                               /< The angle of this GP in radians.
     
@@ -71,7 +71,7 @@ class GeneticPolygon: public Polygon
     
     GeneticPolygon (SI4 point_count, SI4 color);
     
-    GeneticPolygon (SI4 point_count, SI4 width, SI4 height, SI4 color, SI4 lifespan, DBL angle);
+    GeneticPolygon (SI4 point_count, SI4 width, SI4 height, SI4 color, SI4 lifespan, FP8 angle);
     
     GeneticPolygon (GeneticPolygon thisMother, GeneticPolygon thisFather);
     
@@ -89,13 +89,13 @@ class GeneticPolygon: public Polygon
     
     SI4 mutateInt (SI4 thisValue, SI4 mutateDirection);
     
-    DBL mutateFloat (DBL thisValue, SI4 mutateDirection);
+    FP8 mutateFloat (FP8 thisValue, SI4 mutateDirection);
     
     SI4 breedInt (SI4 motherInt, SI4 fatherInt, SI4 matGrandInt, SI4 patGrandInt);
     
     BOL containsGeneticPolygon (GeneticPolygon that);
     
-    DBL breedFloat (DBL motherInt, DBL fatherInt, DBL matGrandInt, DBL patGrandInt);
+    FP8 breedFloat (FP8 motherInt, FP8 fatherInt, FP8 matGrandInt, FP8 patGrandInt);
     
     /*  @brief  Function that returns the BufferedImage for this this.
     
@@ -107,7 +107,7 @@ class GeneticPolygon: public Polygon
     
     SI4 Height ();
     
-    DBL getAngle ();
+    FP8 getAngle ();
     
     Color getColor ();
     
@@ -130,7 +130,7 @@ class GeneticPolygon: public Polygon
         
     BOL intersects (GeneticPolygon thatPolygon);
     
-    BOL intersects (Polygon thatPolygon, DBL offsetX, DBL offsetY);
+    BOL intersects (Polygon thatPolygon, FP8 offsetX, FP8 offsetY);
     
     BOL intersects (Polygon thatPolygon, SI4 offsetX, SI4 offsetY);
     
@@ -138,13 +138,13 @@ class GeneticPolygon: public Polygon
     
     void renderBitmap ();
     
-    static DBL crossOver (DBL dominant, DBL recessive);
+    static FP8 crossOver (FP8 dominant, FP8 recessive);
     
     void rotate ();
     
-    DBL boundBetween0and1 (DBL inputValue);
+    FP8 boundBetween0and1 (FP8 inputValue);
     
-    DBL randomizeDouble (DBL inputValue);
+    FP8 randomizeDouble (FP8 inputValue);
     
     SI4 randomizeInt (SI4 inputValue);
 }

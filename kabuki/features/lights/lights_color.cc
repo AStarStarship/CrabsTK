@@ -167,15 +167,15 @@ void ColorSetAlpha (CRGBAUI4 color, UI1 value) {
   rgba_value |= ((UI4)value) << 24;
 }
 
-void ColorToHSV (CRGBAUI4 color, FLT& fR, FLT& fG, FLT fB, FLT& fH,
-  FLT& fS, FLT& fV) {
+void ColorToHSV (CRGBAUI4 color, FP4& fR, FP4& fG, FP4 fB, FP4& fH,
+  FP4& fS, FP4& fV) {
   /*
-  FLT fCMax = fR > fG ? fR : fG;
+  FP4 fCMax = fR > fG ? fR : fG;
   fCMax = fCMax > fB ? fCMax : fB;
-  FLT fCMin = fR < fG ? fR : fG;
+  FP4 fCMin = fR < fG ? fR : fG;
   fCMin = fCMin < fB ? fCMin : fB;
 
-  FLT fDelta = fCMax - fCMin;
+  FP4 fDelta = fCMax - fCMin;
 
   if (fDelta > 0)
   {
@@ -217,13 +217,13 @@ void ColorToHSV (CRGBAUI4 color, FLT& fR, FLT& fG, FLT fB, FLT& fH,
   */
 }
 
-void ColorSetHSV (CRGBAUI4 color, FLT& fR, FLT& fG, FLT& fB, FLT& fH,
-  FLT& fS, FLT& fV) {
+void ColorSetHSV (CRGBAUI4 color, FP4& fR, FP4& fG, FP4& fB, FP4& fH,
+  FP4& fS, FP4& fV) {
   /*
-  FLT fC = fV * fS; // Chroma
-  FLT fHPrime = fmod (fH / 60.0, 6);
-  FLT fX = fC * (1 - fabs (fmod (fHPrime, 2) - 1));
-  FLT fM = fV - fC;
+  FP4 fC = fV * fS; // Chroma
+  FP4 fHPrime = fmod (fH / 60.0, 6);
+  FP4 fX = fC * (1 - fabs (fmod (fHPrime, 2) - 1));
+  FP4 fM = fV - fC;
 
   if (0 <= fHPrime && fHPrime < 1)
   {

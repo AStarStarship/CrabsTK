@@ -134,10 +134,10 @@ void DmxAnimation::SetColor  (UI2 channel, CRGBAUI4 color)
         printf ("Error in SetColor  (UI2, CRGBAUI4): channel out of range!\r\n");
         return;
     }
-    FLT alphaValue =  (FLT) ((color & 0xFF000000) >> 24),
-    Red     =  (FLT) ((color & 0xFF0000) >> 16),
-    Green   =  (FLT) ((color & 0xFF00) >> 8),
-    Blue    =  (FLT)  (color & 0xFF);
+    FP4 alphaValue =  (FP4) ((color & 0xFF000000) >> 24),
+    Red     =  (FP4) ((color & 0xFF0000) >> 16),
+    Green   =  (FP4) ((color & 0xFF00) >> 8),
+    Blue    =  (FP4)  (color & 0xFF);
 
     data[channel    ] =  (UI1)  (Red   * alphaValue);    //< Red
     data[channel + 1] =  (UI1)  (Green * alphaValue);    //< Green

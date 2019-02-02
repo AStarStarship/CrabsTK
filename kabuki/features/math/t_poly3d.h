@@ -41,7 +41,7 @@ class TPoly3D {
   }
 
   /* Returns the point at the given vertex. */
-  TPoint3D<FLT> Vertex (SI4 vertex_index) {
+  TPoint3D<FP4> Vertex (SI4 vertex_index) {
     return center_[vertex_index];
   }
 
@@ -50,7 +50,7 @@ class TPoly3D {
   }
 
   /* Gets the normal */
-  TPoint3D<FLT> Normal () {
+  TPoint3D<FP4> Normal () {
     return normal_;
   }
 
@@ -115,8 +115,8 @@ private:
     shade_;                //< Polygon shade.
   T  normal_mag_,          //< Magnitude of the normal vector.
     z_avg_;                //< Z-plane average.
-  TVect3D<FLT> normal_;    //< Normal vector.
-  TPoint3D<FLT>[] center_; //< Center of this.
+  TVect3D<FP4> normal_;    //< Normal vector.
+  TPoint3D<FP4>[] center_; //< Center of this.
   SI4* vertex_index_;      //< Vertex index.
 };
 

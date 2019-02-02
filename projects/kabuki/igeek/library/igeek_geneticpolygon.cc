@@ -73,7 +73,7 @@ GeneticPolygon::GeneticPolygon (SI4 point_count, SI4 color) {
 }
 
 GeneticPolygon::GeneticPolygon (SI4 point_count, SI4 width, SI4 height, SI4 color, 
-    SI4 lifespan, DBL angle) {
+    SI4 lifespan, FP8 angle) {
     mother = father = null;
     lifespan = lifespan;
     
@@ -236,13 +236,13 @@ void GeneticPolygon::setupPoints (SI4 numberOfPoints)
         numberOfPoints = 3;
     }
     
-    DBL deltaAngle = (2.0*Math.PI) / (DBL)numberOfPoints,
+    FP8 deltaAngle = (2.0*Math.PI) / (FP8)numberOfPoints,
            rotationAngle,
            cosAngle,
            sinAngle,
            stretchFactor,
-           doubleWidth  = (DBL) width,
-           doubleHeight = (DBL) height,
+           doubleWidth  = (FP8) width,
+           doubleHeight = (FP8) height,
            halfWidth = doubleWidth/2.0,
            halfHeight = doubleHeight/2.0,
            x,
@@ -313,7 +313,7 @@ Color GeneticPolygon::breedColor (Color motherColor, Color fatherColor, Color  m
 
 SI4 GeneticPolygon::mutateInt (SI4 thisValue, SI4 mutateDirection)
 {
-    DBL mutation,                //< The 
+    FP8 mutation,                //< The 
            TArray,                  // The TArray tells you if its getting bigger or smaller
            scalar=0;                // Tells you how much of a mutation there will be.
     
@@ -348,14 +348,14 @@ SI4 GeneticPolygon::mutateInt (SI4 thisValue, SI4 mutateDirection)
         }
     }
         
-    SI4 newValue = (SI4)((DBL) thisValue * (1.0 + TArray*scalar));
+    SI4 newValue = (SI4)((FP8) thisValue * (1.0 + TArray*scalar));
         
     return newValue;
 }
 
-DBL GeneticPolygon::mutateFloat (DBL thisValue, SI4 mutateDirection)
+FP8 GeneticPolygon::mutateFloat (FP8 thisValue, SI4 mutateDirection)
 {
-    DBL mutation,
+    FP8 mutation,
            TArray,      // The TArray tells you if its getting bigger or smaller
            scalar=0;    // Tells you how much of a mutation there will be.
     
@@ -389,7 +389,7 @@ DBL GeneticPolygon::mutateFloat (DBL thisValue, SI4 mutateDirection)
                 scalar = minorScalar;
         }
     }
-    return (DBL)((DBL)thisValue * (1.0 + TArray*scalar));
+    return (FP8)((FP8)thisValue * (1.0 + TArray*scalar));
 }
 
 SI4 GeneticPolygon::breedInt (SI4 motherInt, SI4 fatherInt, SI4 matGrandInt, SI4 patGrandInt)
@@ -459,7 +459,7 @@ BOL GeneticPolygon::containsGeneticPolygon (GeneticPolygon that)
     return true;
 }
 
-DBL GeneticPolygon::breedFloat (DBL motherInt, DBL fatherInt, DBL matGrandInt, DBL patGrandInt)
+FP8 GeneticPolygon::breedFloat (FP8 motherInt, FP8 fatherInt, FP8 matGrandInt, FP8 patGrandInt)
 {
     return 0.0f;
 }
@@ -483,7 +483,7 @@ SI4 GeneticPolygon::Height ()
     return height;
 }   
 
-DBL GeneticPolygon::getAngle ()
+FP8 GeneticPolygon::getAngle ()
 {
     return angle;
 }
@@ -551,7 +551,7 @@ BOL GeneticPolygon::intersects (GeneticPolygon thatPolygon)
     return intersects (thatPolygon, offsetX, offsetY);
 }
 
-BOL GeneticPolygon::intersects (Polygon thatPolygon, DBL offsetX, DBL offsetY)
+BOL GeneticPolygon::intersects (Polygon thatPolygon, FP8 offsetX, FP8 offsetY)
 {
     return intersects (thatPolygon, (SI4)offsetX, (SI4)offsetY);
 }
@@ -581,11 +581,11 @@ BOL GeneticPolygon::intersects (Polygon thatPolygon, SI4 offsetX, SI4 offsetY)
 
 void GeneticPolygon::equalizePoints ()
 {
-    DBL centerX = (DBL) width /2.0,
-           centerY = (DBL) height/2.0,
+    FP8 centerX = (FP8) width /2.0,
+           centerY = (FP8) height/2.0,
            deltaY = ypoints[1] - ypoints[0],
            deltaX = xpoints[1] - xpoints[0],
-           deltaAngle = (2*Math.PI) / (DBL)this.npoints,
+           deltaAngle = (2*Math.PI) / (FP8)this.npoints,
            initAngle = Math.atan (deltaY/deltaX),
            currentAngle,
            idealAngle,
@@ -599,8 +599,8 @@ void GeneticPolygon::equalizePoints ()
     {   
         // Step 1: find angle between the current and next point.
         
-        x = (DBL) xpoints[i];
-        y = (DBL) ypoints[i];
+        x = (FP8) xpoints[i];
+        y = (FP8) ypoints[i];
         
         deltaX = xpoints[i+1] - x;
         deltaY = ypoints[i+1] - y;
@@ -613,9 +613,9 @@ void GeneticPolygon::equalizePoints ()
         // Step 3: rotate the point closer to the 
         
         if (currentAngle < idealAngle)
-            rotationAngle = (DBL)angularMutation;
+            rotationAngle = (FP8)angularMutation;
         else if (currentAngle > idealAngle)
-            rotationAngle = (DBL)angularMutation*-1.0;
+            rotationAngle = (FP8)angularMutation*-1.0;
         else
             rotationAngle = 0.0;
         
@@ -660,7 +660,7 @@ void GeneticPolygon::renderBitmap ()
     //JOptionPane.showMessageDialog(null, new JLabel (new ImageIcon (bitmap)), "About", JOptionPane.PLAIN_MESSAGE, null);
 }
 
-DBL GeneticPolygon::crossOver (DBL dominant, DBL recessive)
+FP8 GeneticPolygon::crossOver (FP8 dominant, FP8 recessive)
 {
     /* Cross over scheme.
         In real anamals, there are dominant and recessive genes. The dominant gene is represented
@@ -670,14 +670,14 @@ DBL GeneticPolygon::crossOver (DBL dominant, DBL recessive)
      */
      
      if (dominant > 1.0f)
-        JOptionPane.showMessageDialog(null, "Error! Dominant DBL was greater than 1!!!");
+        JOptionPane.showMessageDialog(null, "Error! Dominant FP8 was greater than 1!!!");
      else if (dominant < 0.0f)
-        JOptionPane.showMessageDialog(null, "Error! Dominant DBL was less than 0!!!");
+        JOptionPane.showMessageDialog(null, "Error! Dominant FP8 was less than 0!!!");
      
      if (recessive > 1.0f)
-        JOptionPane.showMessageDialog(null, "Error! Recessive DBL was greater than 1!!!");
+        JOptionPane.showMessageDialog(null, "Error! Recessive FP8 was greater than 1!!!");
      else if (recessive < 0.0f)
-        JOptionPane.showMessageDialog(null, "Error! Recessive DBL was less than 0!!!");
+        JOptionPane.showMessageDialog(null, "Error! Recessive FP8 was less than 0!!!");
      
      
     String dominantString = Double.toString(dominant),
@@ -721,15 +721,15 @@ void GeneticPolygon::rotate ()
 {
     // function uses standard 2D rotation matrix.
     
-    DBL cosAngle = Math.cos ((DBL)angle),
-           sinAngle = Math.sin ((DBL)angle),
+    FP8 cosAngle = Math.cos ((FP8)angle),
+           sinAngle = Math.sin ((FP8)angle),
            x,
            y;
     
     for (SI4 i=0; i < this.npoints; i++)
     {
-        x = (DBL) xpoints[i];
-        y = (DBL) ypoints[i];
+        x = (FP8) xpoints[i];
+        y = (FP8) ypoints[i];
         
         xpoints[i] = (SI4) (x*cosAngle - y*sinAngle);
         ypoints[i] = (SI4) (x*sinAngle + y*cosAngle);
@@ -737,7 +737,7 @@ void GeneticPolygon::rotate ()
     rebound ();
 }
 
-DBL GeneticPolygon::boundBetween0and1 (DBL inputValue)
+FP8 GeneticPolygon::boundBetween0and1 (FP8 inputValue)
 {
     if (inputValue < 0)
         return 0;
@@ -748,9 +748,9 @@ DBL GeneticPolygon::boundBetween0and1 (DBL inputValue)
     return inputValue;
 }
 
-DBL GeneticPolygon::randomizeDouble (DBL inputValue)
+FP8 GeneticPolygon::randomizeDouble (FP8 inputValue)
 {
-    DBL scalar = 0.0,
+    FP8 scalar = 0.0,
            randomNumber = Math.random ();
     
     if (randomNumber < majorMutation)
@@ -760,7 +760,7 @@ DBL GeneticPolygon::randomizeDouble (DBL inputValue)
     else
         scalar = 1.0 + Math.random () * minorScalar;
     
-    DBL newValue = inputValue * scalar;
+    FP8 newValue = inputValue * scalar;
     
     return newValue;
 }
@@ -770,9 +770,9 @@ SI4 GeneticPolygon::randomizeInt (SI4 inputValue)
     if (inputValue < 0)
         inputValue = inputValue * -1; //< Chop off the negative values.
     
-    DBL scalar = 1.0 + (Math.random ()*2.0 - 1.0) * minorScalar;
+    FP8 scalar = 1.0 + (Math.random ()*2.0 - 1.0) * minorScalar;
     
-    SI4 newValue = (SI4)((DBL)inputValue*scalar);
+    SI4 newValue = (SI4)((FP8)inputValue*scalar);
     
     return newValue;
 }

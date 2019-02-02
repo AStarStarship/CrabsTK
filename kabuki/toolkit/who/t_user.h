@@ -32,13 +32,13 @@ class TUser {
     kMaxStatusLength = 63,             //< Default max display name length.
     kDefaultValue = 0,                 //< Default abstract user value.
   };
-  static const DBL kDefaultBalance;  //< Default account balance.
+  static const FP8 kDefaultBalance;  //< Default account balance.
 
   /* Creates a user with the given handle, password, and status. */
   TUser(TAuthenticator* authenticator, UID uid = 0,
        const TStrand<>& handle = THandle::kDefault,
        const TStrand<>& password = TPassword::kDefault,
-       DBL balance = kDefaultBalance, int64_t v-alue = kDefaultValue)
+       FP8 balance = kDefaultBalance, int64_t v-alue = kDefaultValue)
     : handle_ (authenticator, handle),
     status_ (StrandClone ("")),
     password_ (authenticator, password),
@@ -129,19 +129,19 @@ class TUser {
   }
 
   /* Gets the abstract balance. */
-  DBL GetBalance() { return balance_; }
+  FP8 GetBalance() { return balance_; }
 
   /* Sets the abstract balance. */
-  virtual const TStrand<>& SetBalance(DBL balance) {
+  virtual const TStrand<>& SetBalance(FP8 balance) {
     balance_ = balance;
     return nullptr;
   }
 
   /* Attempts to buy the given points.
       @returns false if the balance_ is too low. */
-  BOL BuyValue(int64_t num_coins, DBL point_cost) {
+  BOL BuyValue(int64_t num_coins, FP8 point_cost) {
     // Right now we're not checking how much money the player has.
-    DBL cost = point_cost * (DBL)num_coins;
+    FP8 cost = point_cost * (FP8)num_coins;
 
     if (cost > balance_) {
       cout << "\n| Can't buy coins because your ass is broke.";
@@ -153,8 +153,8 @@ class TUser {
   }
 
   /* Increase the balance_ by the given amount. */
-  BOL AddBalance(DBL amount) {
-    DBL balance = balance_;
+  BOL AddBalance(FP8 amount) {
+    FP8 balance = balance_;
     balance_ = balance + amount;
     return balance;
   }
@@ -220,7 +220,7 @@ class TUser {
       kMessageLength = 141,
     };
     const TStrand<>& token;
-    DBL balance;
+    FP8 balance;
     int64_t value;
     CH1 input[kMessageLength];
 
@@ -300,7 +300,7 @@ class TUser {
   UID uid_,             //< Index of user in the UserList.
       public_key_,        //< Fake session encryption key.
       response_;          //< Gets user abstract response code.
-  DBL balance_;           //< Abstract user account balance or money.
+  FP8 balance_;           //< Abstract user account balance or money.
   int64_t value_;         //< Abstract account value, points, or coins.
   Expr* slot_;            //< Portal to User's machine.
 

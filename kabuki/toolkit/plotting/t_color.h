@@ -19,13 +19,13 @@ struct TRGBA {
 
   TRGBA alpha(uint8_t alpha) const { return TRGBA(r, g, b, alpha); }
 
-  TRGBA gamma(FLT gamma) const {
+  TRGBA gamma(FP4 gamma) const {
     return TRGBA(pow(r / 255.f, 1 / gamma) * 255,
                  pow(g / 255.f, 1 / gamma) * 255,
                  pow(b / 255.f, 1 / gamma) * 255, a);
   }
 
-  FLT hue() const {
+  FP4 hue() const {
     auto min = std::min(std::min(r, g), b);
     auto max = std::max(std::max(r, g), b);
     if (min == max) {
@@ -33,11 +33,11 @@ struct TRGBA {
     }
     auto hue = 0.f;
     if (r == max) {
-      hue = (g - b) / (FLT)(max - min);
+      hue = (g - b) / (FP4)(max - min);
     } else if (g == max) {
-      hue = 2.f + (b - r) / (FLT)(max - min);
+      hue = 2.f + (b - r) / (FP4)(max - min);
     } else {
-      hue = 4.f + (r - g) / (FLT)(max - min);
+      hue = 4.f + (r - g) / (FP4)(max - min);
     }
     if (hue < 0) {
       hue += 6;
@@ -47,7 +47,7 @@ struct TRGBA {
 
   static TRGBA gray(uint8_t v) { return TRGBA(v, v, v); }
 
-  static TRGBA hue(FLT hue) {
+  static TRGBA hue(FP4 hue) {
     TRGBA color;
     auto i = (SIN)hue;
     auto f = (hue - i) * 255;
@@ -68,14 +68,14 @@ struct TRGBA {
     return TRGBA();
   }
 
-  static TRGBA cos(FLT hue) {
+  static TRGBA cos(FP4 hue) {
     return TRGBA((std::cos(hue * 1.047f) + 1) * 127.9f,
                  (std::cos((hue - 2) * 1.047f) + 1) * 127.9f,
                  (std::cos((hue - 4) * 1.047f) + 1) * 127.9f);
   }
 
-  static TRGBA index(uint8_t index, uint8_t density = 16, FLT avoid = 2.f,
-                     FLT range = 2.f) {  // avoid greens by default
+  static TRGBA index(uint8_t index, uint8_t density = 16, FP4 avoid = 2.f,
+                     FP4 range = 2.f) {  // avoid greens by default
     if (avoid > 0) {
       auto step = density / (6 - range);
       auto offset = (avoid + range / 2) * step;

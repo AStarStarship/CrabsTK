@@ -50,7 +50,7 @@ Movement of Viruses is define by Bezier curves. There are two distinct patterns 
                             
     static const long DefaultReproductionTime   = 10000;    /< The default time to reproduce.
     
-    static const DBL minSpeed                = 10.0,     /< The minimum speed in pixels/frame.
+    static const FP8 minSpeed                = 10.0,     /< The minimum speed in pixels/frame.
         maxSpeed             = 20.0,                        /< This is the maximum speed in pixels/frame.
         defaultPathLength    = 500,                         /< The default length the movement path in seconds
         defaultDeltaT        = 0.01,                        /< The default deltaT???
@@ -58,22 +58,22 @@ Movement of Viruses is define by Bezier curves. There are two distinct patterns 
                                                                 Note: Must be an even power of 10 */
         defaultTrailDeltaT   = 1/(2 * numTrailSegments);    /< 
     
-    Virus (DBL initX, DBL initY);
+    Virus (FP8 initX, FP8 initY);
     
     Virus (SI4 point_count, SI4 width, SI4 height, SI4 color, 
-                  SI4 lifespan, DBL angle);
+                  SI4 lifespan, FP8 angle);
     
     void initialize ();
     
-    DBL velocityX ();
+    FP8 velocityX ();
     /*< Returns the instantaneous velocity in the x axis of this object in relation to the prior frame. */
     
-    DBL velocityY ();
+    FP8 velocityY ();
     /*< Returns the instantaneous velocity in the y axis of this object in relation to the prior frame. */
     
-    DBL centerX ();
+    FP8 centerX ();
     
-    DBL centerY ();
+    FP8 centerY ();
     
     void collideWith (Virus thatVirus);
     
@@ -89,15 +89,15 @@ Movement of Viruses is define by Bezier curves. There are two distinct patterns 
 
     BOL containsPoint (SI4 thisX, SI4 thisY);
     
-    BOL containsPoint (DBL thisX, DBL thisY);
+    BOL containsPoint (FP8 thisX, FP8 thisY);
     
     BOL contains (Rectangle thisRectangle);
     
     BOL intersects (Virus thatVirus);
     
-    DBL getX ();
+    FP8 getX ();
     
-    DBL getY ();
+    FP8 getY ();
     
     SI4 Left ();
     
@@ -138,7 +138,7 @@ Movement of Viruses is define by Bezier curves. There are two distinct patterns 
         numTailSegments,
         currentIndex;
     
-    DBL x,                       /< The current x position.
+    FP8 x,                       /< The current x position.
         y,                       /< The current y position.
         lastX,                   /< The last x position.
                                     /*< Used to calculate collision angles. */

@@ -51,10 +51,10 @@
 #define CRABS_MEMORY_PROFILE 2
 
 // Max errors before locking up.
-#define CRABS_MAX_ERRORS 8
+#define SCRIPT2_MAX_ERRORS 8
 
 // Max number of parameters.
-#define CRABS_MAX_PARAMS 26
+#define SCRIPT2_MAX_PARAMS 26
 
 // The max CH1 length.
 #define CRABS_TEXT_SIZE_DEFAULT 2 * 1024
@@ -69,10 +69,10 @@
 #define CRABS_CHAR_WIDTH 8
 
 // Max number of walls in this Room
-#define CRABS_MAX_WALLS 1024
+#define SCRIPT2_MAX_WALLS 1024
 
 // The size of the default Text<> () buffer in bytes.
-#define CRABS_TEXT_LENGTH 2048
+#define SCRIPT2_TEXT_LENGTH 2048
 
 // Default init.
 #define CRABS_STRAND_INIT_BUFFER_SIZE 256
@@ -81,13 +81,13 @@
 #define NEW_LINE_HEADER "\n"
 
 // Max Script Op name length in chars.
-#define CRABS_OP_MAX_NAME_LENGTH 64
+#define SCRIPT2_OP_MAX_NAME_LENGTH 64
 
 // Max Script Op description length in chars.
-#define CRABS_OP_MAX_DECRABSION_LENGTH 1024
+#define SCRIPT2_OP_MAX_DECRABSION_LENGTH 1024
 
 // Max Script address length.
-#define CRABS_MAX_ADDRESS_LENGTH 26
+#define SCRIPT2_MAX_ADDRESS_LENGTH 26
 
 #define CRABS_MAX_KEY_LENGTH 64
 
@@ -97,10 +97,10 @@
 #define CRABS_NATIVE_STRING_WIDTH 8
 
 // Size or init size of the Rx/Keyboard buffer.
-#define CRABS_BUFFER_SIZE_RX 256
+#define SCRIPT2_BUFFER_SIZE_RX 256
 
 // Size or init size of the Tx/Console buffer.
-#define CRABS_BUFFER_SIZE_TX 1024
+#define SCRIPT2_BUFFER_SIZE_TX 1024
 
 // Sets any of the following macros to YES or NO.
 
