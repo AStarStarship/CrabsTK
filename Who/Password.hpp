@@ -1,16 +1,9 @@
-/* Kabuki Toolkit @version 0.x
-@link    https://github.com/KabukiStarship/KT.git
-@file    /Who/password.hpp
-@author  Cale McCollough <https://cookingwithcale.org>
-@license Copyright (C) 2014-20 Cale McCollough; all right reserved (R). 
-This Source Code Form is subject to the terms of the Mozilla Public License, 
-v. 2.0. If a copy of the MPL was not distributed with this file, You can 
-obtain one at https://mozilla.org/MPL/2.0/. */
+// Copyright AStarship <https://astarship.net>.
 #pragma once
-#ifndef KABUKI_TOOLKIT_WHO_PASSWORD
-#define KABUKI_TOOLKIT_WHO_PASSWORD
+#ifndef KABUKITOOLKIT_WHO_PASSWORD
+#define KABUKITOOLKIT_WHO_PASSWORD
 #include <_Config.h>
-#if SEAM >= KABUKI_TOOLKIT_WHO_CORE
+#if SEAM >= KABUKITOOLKIT_WHO_CORE
 #include "Authenticator.hpp"
 namespace _ {
 
@@ -88,6 +81,6 @@ class TPassword {
   ISC type_;              //< The validation type.
 };
 
-}       // namespace _
+}       //< namespace _
 #endif
 #endif

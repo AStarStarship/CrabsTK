@@ -1,16 +1,9 @@
-/* Kabuki Toolkit @version 0.x
-@link    https://github.com/KabukiStarship/KT.git
-@file    /Who/Registrar.hpp
-@author  Cale McCollough <https://cookingwithcale.org>
-@license Copyright (C) 2014-20 Cale McCollough; all right reserved (R). 
-This Source Code Form is subject to the terms of the Mozilla Public License, 
-v. 2.0. If a copy of the MPL was not distributed with this file, You can 
-obtain one at https://mozilla.org/MPL/2.0/. */
+// Copyright AStarship <https://astarship.net>.
 #pragma once
 #include <_Config.h>
-#if SEAM >= KABUKI_TOOLKIT_WHO_CORE
-#ifndef KABUKI_TOOLKIT_WHO_IDSERVER
-#define KABUKI_TOOLKIT_WHO_IDSERVER
+#if SEAM >= KABUKITOOLKIT_WHO_CORE
+#ifndef KABUKITOOLKIT_WHO_IDSERVER
+#define KABUKITOOLKIT_WHO_IDSERVER
 
 namespace _ {
 
@@ -67,6 +60,6 @@ class TRegistrar {
   IUD event_count_;        //< The global number of event created.
   TArray<TString<>&> ids_;  //< A the id keys.
 };                          //< Array class
-}       // namespace _
+}       //< namespace _
 #endif
 #endif

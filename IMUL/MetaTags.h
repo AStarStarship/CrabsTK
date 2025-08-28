@@ -1,5 +1,5 @@
-
-#include
+// Copyright AStarship <https://astarship.net>.
+#include 'Room.hpp'
 
 class Doxygen {
   Op Star(_::Expr expr, ISW index) {
@@ -100,7 +100,7 @@ class Doxygen {
     // mscfile
     // n
     // name
-    // namespace
+    //< namespace
     // nosubgrouping
     // note
     // overload

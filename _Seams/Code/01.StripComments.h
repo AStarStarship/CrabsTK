@@ -1,4 +1,4 @@
-/* Kabuki Toolkit @version 0.x
+/* Kabuki Toolkit
 @link    https://github.com/KabukiStarship/KT.git
 @file    /_Seams/Code/00.StripComments.h
 @author  Cale McCollough <https://cookingwithcale.org>
@@ -12,7 +12,7 @@ You can obtain one at <https://mozilla.org/MPL/2.0/>. */
 #if SEAM >= KABUKI_DOWNLOAD_API
 #include "../Code/CodeModule.h"
 using namespace _;
-#if SEAM == KABUKI_TOOLKIT_CODE_STRIPCOMMENTS
+#if SEAM == KABUKITOOLKIT_CODE_STRIPCOMMENTS
 #include "_Debug.inl"
 #else
 #include "_Release.inl"
@@ -21,7 +21,7 @@ using namespace _;
 namespace KT {
 namespace Code {
 inline const CHA* StripComments(const CHA* args) {
-#if SEAM >= KABUKI_TOOLKIT_CODE_STRIPCOMMENTS
+#if SEAM >= KABUKITOOLKIT_CODE_STRIPCOMMENTS
   TEST_BEGIN;
 
   StripComments("who", "UserList.hpp");
@@ -42,8 +42,8 @@ inline const CHA* StripComments(const CHA* args) {
 */
   return 0;
 }
-}  // namespace Code
-}  // namespace KT
+}  //< namespace Code
+}  //< namespace KT
 
 #include <_Config.h>
 #include "../Code/CommentStripper.inl"
@@ -51,7 +51,7 @@ using namespace _;
 #include <fstream>
 #include <iostream>
 #include <string>
-int main(const char **args, int arg_count) {
+ISN main(const CHA **args, ISN arg_count) {
 
   return 0;
 }

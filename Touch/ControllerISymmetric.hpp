@@ -1,16 +1,9 @@
-/* Kabuki Toolkit @version 0.x
-@link    https://github.com/KabukiStarship/KT.git
-@file    /Touch/ControllerISymmetric.hpp
-@author  Cale McCollough <https://cookingwithcale.org>
-@license Copyright (C) 2014-20 Cale McCollough; all right reserved (R). 
-This Source Code Form is subject to the terms of the Mozilla Public License, 
-v. 2.0. If a copy of the MPL was not distributed with this file, You can 
-obtain one at https://mozilla.org/MPL/2.0/. */
+// Copyright AStarship <https://astarship.net>.
 #pragma once
 #include <_Config.h>
-#if SEAM >= KABUKI_TOOLKIT_TOUCH_CORE
-#ifndef KABUKI_TOOLKIT_TOUCH_CONTROLLERISYMMETRIC
-#define KABUKI_TOOLKIT_TOUCH_CONTROLLERISYMMETRIC
+#if SEAM >= KABUKITOOLKIT_TOUCH_CORE
+#ifndef KABUKITOOLKIT_TOUCH_CONTROLLERISYMMETRIC
+#define KABUKITOOLKIT_TOUCH_CONTROLLERISYMMETRIC
 #include "Controller.hpp"
 //#include "ButtonColumn.hpp"
 #include "ControlMatrix.hpp"
@@ -391,6 +384,6 @@ class ControllerIsymmetric : public Controller {
     if (!state_swap_flip_) return;
   }
 };
-}  // namespace _
+}  //< namespace _
 #endif
 #endif

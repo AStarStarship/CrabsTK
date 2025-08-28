@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -19,14 +19,77 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Client.h" />
+    <ClInclude Include="..\Script2\Address.h" />
+    <ClInclude Include="..\Script2\Args.h" />
+    <ClInclude Include="..\Script2\Array.h" />
+    <ClInclude Include="..\Script2\Array.hpp" />
+    <ClInclude Include="..\Script2\Autoject.h" />
+    <ClInclude Include="..\Script2\BIn.h" />
+    <ClInclude Include="..\Script2\BIn.hpp" />
+    <ClInclude Include="..\Script2\Binary.hpp" />
+    <ClInclude Include="..\Script2\Book.hpp" />
+    <ClInclude Include="..\Script2\BOut.h" />
+    <ClInclude Include="..\Script2\BOut.hpp" />
+    <ClInclude Include="..\Script2\BSeq.h" />
+    <ClInclude Include="..\Script2\BSeq.hpp" />
+    <ClInclude Include="..\Script2\Buffer.h" />
+    <ClInclude Include="..\Script2\CIn.h" />
+    <ClInclude Include="..\Script2\Clock.h" />
+    <ClInclude Include="..\Script2\Clock.hpp" />
+    <ClInclude Include="..\Script2\COut.h" />
+    <ClInclude Include="..\Script2\Crabs.h" />
+    <ClInclude Include="..\Script2\Dic.hpp" />
+    <ClInclude Include="..\Script2\Door.hpp" />
+    <ClInclude Include="..\Script2\Error.h" />
+    <ClInclude Include="..\Script2\Event.h" />
+    <ClInclude Include="..\Script2\File.h" />
+    <ClInclude Include="..\Script2\File.hpp" />
+    <ClInclude Include="..\Script2\Floor.h" />
+    <ClInclude Include="..\Script2\Folder.h" />
+    <ClInclude Include="..\Script2\Hash.hpp" />
+    <ClInclude Include="..\Script2\Interrupts.h" />
+    <ClInclude Include="..\Script2\Iterator.h" />
+    <ClInclude Include="..\Script2\Language.h" />
+    <ClInclude Include="..\Script2\Library.hpp" />
+    <ClInclude Include="..\Script2\List.hpp" />
+    <ClInclude Include="..\Script2\Loom.hpp" />
+    <ClInclude Include="..\Script2\Map.hpp" />
+    <ClInclude Include="..\Script2\Matrix.hpp" />
+    <ClInclude Include="..\Script2\Mirror.h" />
+    <ClInclude Include="..\Script2\Op.h" />
+    <ClInclude Include="..\Script2\Op.hpp" />
+    <ClInclude Include="..\Script2\Operand.h" />
+    <ClInclude Include="..\Script2\Puff.h" />
+    <ClInclude Include="..\Script2\Puff.hpp" />
+    <ClInclude Include="..\Script2\RNG.h" />
+    <ClInclude Include="..\Script2\Room.h" />
+    <ClInclude Include="..\Script2\Room.hpp" />
+    <ClInclude Include="..\Script2\Set.hpp" />
+    <ClInclude Include="..\Script2\Slot.h" />
+    <ClInclude Include="..\Script2\Slot.hpp" />
+    <ClInclude Include="..\Script2\Stack.hpp" />
+    <ClInclude Include="..\Script2\String.hpp" />
+    <ClInclude Include="..\Script2\Stringf.h" />
+    <ClInclude Include="..\Script2\Stringf.hpp" />
+    <ClInclude Include="..\Script2\Table.hpp" />
+    <ClInclude Include="..\Script2\Test.h" />
+    <ClInclude Include="..\Script2\Test.hpp" />
+    <ClInclude Include="..\Script2\TypeValue.h" />
+    <ClInclude Include="..\Script2\TypeValue.hpp" />
+    <ClInclude Include="..\Script2\Uniprinter.hpp" />
+    <ClInclude Include="..\Script2\Varint.h" />
+    <ClInclude Include="..\Script2\Wall.h" />
+    <ClInclude Include="..\Script2\Wall.hpp" />
+    <ClInclude Include="..\Script2\_Config.h" />
+    <ClInclude Include="..\Script2\_Seams\TestWords.h" />
+    <ClInclude Include="..\Script2\_Seams\_Config.h" />
     <ClInclude Include="Code\CodeModule.h" />
     <ClInclude Include="Code\CommentStripper.h" />
     <ClInclude Include="Code\Include.h" />
     <ClInclude Include="Code\stb_c_lexer.h" />
     <ClInclude Include="Code\stb_leakcheck.h" />
-    <ClInclude Include="Document.h" />
     <ClInclude Include="Image\etc1_utils.h" />
+    <ClInclude Include="Image\Image.h" />
     <ClInclude Include="Image\image_DXT.h" />
     <ClInclude Include="Image\image_helper.h" />
     <ClInclude Include="Image\jo_jpeg.h" />
@@ -46,9 +109,7 @@
     <ClInclude Include="IMUL\Doxygen.h" />
     <ClInclude Include="IMUL\Parser.h" />
     <ClInclude Include="IMUL\UML.h" />
-    <ClInclude Include="Package.h" />
     <ClInclude Include="Pro\Git.hpp" />
-    <ClInclude Include="Pro\Global.h" />
     <ClInclude Include="Pro\Issue.hpp" />
     <ClInclude Include="Pro\Mission.hpp" />
     <ClInclude Include="Pro\Project.hpp" />
@@ -56,7 +117,6 @@
     <ClInclude Include="Pro\Task.hpp" />
     <ClInclude Include="Pro\Workspace.hpp" />
     <ClInclude Include="Pro\_Config.h" />
-    <ClInclude Include="Server.h" />
     <ClInclude Include="Touch\ADSR.hpp" />
     <ClInclude Include="Touch\Button.hpp" />
     <ClInclude Include="Touch\ButtonDMX.hpp" />
@@ -124,23 +184,79 @@
     <ClInclude Include="_Seams\_Config.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Client.inl" />
+    <None Include="..\Script2\Array.inl" />
+    <None Include="..\Script2\BIn.inl" />
+    <None Include="..\Script2\BOut.inl" />
+    <None Include="..\Script2\BSeq.inl" />
+    <None Include="..\Script2\CIn.inl" />
+    <None Include="..\Script2\Clock.inl" />
+    <None Include="..\Script2\COut.inl" />
+    <None Include="..\Script2\Crabs.inl" />
+    <None Include="..\Script2\Error.inl" />
+    <None Include="..\Script2\File.inl" />
+    <None Include="..\Script2\Floor.inl" />
+    <None Include="..\Script2\Folder.inl" />
+    <None Include="..\Script2\Interrupts.inl" />
+    <None Include="..\Script2\MorseCode.inl" />
+    <None Include="..\Script2\Op.inl" />
+    <None Include="..\Script2\Operand.inl" />
+    <None Include="..\Script2\Puff.inl" />
+    <None Include="..\Script2\ReadMe.md" />
+    <None Include="..\Script2\RNG.inl" />
+    <None Include="..\Script2\Room.inl" />
+    <None Include="..\Script2\Slot.inl" />
+    <None Include="..\Script2\Stringf.inl" />
+    <None Include="..\Script2\Tasks.json" />
+    <None Include="..\Script2\Test.inl" />
+    <None Include="..\Script2\TypeValue.inl" />
+    <None Include="..\Script2\_ConfigDefault.inl" />
+    <None Include="..\Script2\_ConfigFooter.inl" />
+    <None Include="..\Script2\_ConfigHeader.inl" />
+    <None Include="..\Script2\_Debug.inl" />
+    <None Include="..\Script2\_Package.inl" />
+    <None Include="..\Script2\_Release.inl" />
+    <None Include="..\Script2\_Seams\00.Core.inl" />
+    <None Include="..\Script2\_Seams\01.RNG.inl" />
+    <None Include="..\Script2\_Seams\02.ItoS.inl" />
+    <None Include="..\Script2\_Seams\03.FtoS.inl" />
+    <None Include="..\Script2\_Seams\04.SPrinter.inl" />
+    <None Include="..\Script2\_Seams\05.Clock.inl" />
+    <None Include="..\Script2\_Seams\06.Stack.inl" />
+    <None Include="..\Script2\_Seams\07.Matrix.inl" />
+    <None Include="..\Script2\_Seams\08.String.inl" />
+    <None Include="..\Script2\_Seams\09.Loom.inl" />
+    <None Include="..\Script2\_Seams\10.List.inl" />
+    <None Include="..\Script2\_Seams\11.Book.inl" />
+    <None Include="..\Script2\_Seams\12.Map.inl" />
+    <None Include="..\Script2\_Seams\13.Table.inl" />
+    <None Include="..\Script2\_Seams\14.Dic.inl" />
+    <None Include="..\Script2\_Seams\15.Crabs.inl" />
+    <None Include="..\Script2\_Seams\16.Door.inl" />
+    <None Include="..\Script2\_Seams\17.Room.inl" />
+    <None Include="..\Script2\_Seams\17.Seam.s2" />
+    <None Include="..\Script2\_Seams\18.File.inl" />
+    <None Include="..\Script2\_Seams\19.Release.inl" />
+    <None Include="..\Script2\_Seams\desktop.ini" />
+    <None Include="..\Script2\_Seams\ReadMe.md" />
+    <None Include="..\Script2\_Seams\_Seams.inl" />
+    <None Include="..\Script2\_Seams\_Tests.inl" />
+    <None Include="..\Script2\_Undef.inl" />
     <None Include="Code\CodeModule.inl" />
     <None Include="Code\CommentStripper.inl" />
     <None Include="Code\Include.inl" />
     <None Include="Code\stb_c_lexer.inl" />
     <None Include="Code\stb_leakcheck.inl" />
     <None Include="Code\_Seams.inl" />
-    <None Include="Document.inl" />
     <None Include="GUI\_Package.inl" />
     <None Include="Image\etc1_utils.inl" />
+    <None Include="Image\Image.inl" />
     <None Include="Image\image_DXT.inl" />
     <None Include="Image\image_helper.inl" />
+    <None Include="Image\ReadMe.md" />
     <None Include="Image\SOIL2.inl" />
     <None Include="Image\_Package.inl" />
     <None Include="IMUL\ReadMe.md" />
     <None Include="IMUL\_Seams.inl" />
-    <None Include="Package.inl" />
     <None Include="Pro\ReadMe.md" />
     <None Include="Pro\_Config.inl" />
     <None Include="Pro\_Debug.inl" />
@@ -149,7 +265,6 @@
     <None Include="Pro\_Seams.inl" />
     <None Include="Pro\_Undef.inl" />
     <None Include="ReadMe.md" />
-    <None Include="Server.inl" />
     <None Include="Touch\ReadMe.md" />
     <None Include="Touch\_Config.inl" />
     <None Include="Touch\_Debug.inl" />
@@ -181,9 +296,12 @@
     <None Include="_Seams\_Undef.inl" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Script2\_Seams\_Main.cpp" />
     <ClCompile Include="_Seams\_Main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="..\Script2\CMakeLists.txt" />
+    <Text Include="..\Script2\_Seams\CMakeLists.txt" />
     <Text Include="_Seams\CMakeFiles.txt" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
@@ -198,26 +316,26 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -260,7 +378,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(PrjectDir)./_seams;$(PrjectDir)./;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)./;($ProjectDir)./_Seams;$(ProjectDir)./../</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

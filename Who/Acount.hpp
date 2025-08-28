@@ -1,16 +1,9 @@
-/* Kabuki Toolkit @version 0.x
-@link    https://github.com/KabukiStarship/KT.git
-@file    /Who/Account.hpp
-@author  Cale McCollough <https://cookingwithcale.org>
-@license Copyright (C) 2014-20 Cale McCollough; all right reserved (R). 
-This Source Code Form is subject to the terms of the Mozilla Public License, 
-v. 2.0. If a copy of the MPL was not distributed with this file, You can 
-obtain one at https://mozilla.org/MPL/2.0/. */
+// Copyright AStarship <https://astarship.net>.
 #pragma once
-#ifndef KABUKI_TOOLKIT_ID_ACCOUNT
-#define KABUKI_TOOLKIT_ID_ACCOUNT
+#ifndef KABUKITOOLKIT_ID_ACCOUNT
+#define KABUKITOOLKIT_ID_ACCOUNT
 #include <_Config.h>
-#if SEAM >= KABUKI_TOOLKIT_WHO_CORE
+#if SEAM >= KABUKITOOLKIT_WHO_CORE
 #include "Handle.hpp"
 #include "Password.hpp"
 #include "Roster.hpp"
@@ -79,6 +72,6 @@ class TAccount {
   TRoster users_;       //< Account Roster describes User Roles.
 };
 
-}       // namespace _
+}       //< namespace _
 #endif
 #endif

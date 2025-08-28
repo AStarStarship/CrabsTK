@@ -1,16 +1,9 @@
-/* Kabuki Toolkit @version 0.x
-@link    https://github.com/KabukiStarship/KT.git
-@file    /Touch/widgetpage.hpp
-@author  Cale McCollough <https://cookingwithcale.org>
-@license Copyright (C) 2014-20 Cale McCollough; all right reserved (R). 
-This Source Code Form is subject to the terms of the Mozilla Public License, 
-v. 2.0. If a copy of the MPL was not distributed with this file, You can 
-obtain one at https://mozilla.org/MPL/2.0/. */
+// Copyright AStarship <https://astarship.net>.
 #pragma once
-#ifndef KABUKI_TOOLKIT_TOUCH_WIDGETPAGE
-#define KABUKI_TOOLKIT_TOUCH_WIDGETPAGE
+#ifndef KABUKITOOLKIT_TOUCH_WIDGETPAGE
+#define KABUKITOOLKIT_TOUCH_WIDGETPAGE
 #include <_Config.h>
-#if SEAM >= KABUKI_TOOLKIT_TOUCH_CORE
+#if SEAM >= KABUKITOOLKIT_TOUCH_CORE
 #include "Button.hpp"
 #include "Component.hpp"
 #include "ControlMatrix.hpp"
@@ -37,30 +30,30 @@ class LIB_MEMBER WidgetPage {
   /* Default constructor. */
   WidgetPage(const CHA* initName = "", ISC initNumControlPairs = 0)
     : pageLabel (TString<> (initName)),
-    numControlPairs (initNumControlPairs),
+    ControlPairCount (initNumControlPairs),
     mstrControlsEnabled (false) {
     uint32_t numControlGroupControlPairs;
 
     if (initNumControlPairs < minControlPairs)
-      numControlPairs = minControlPairs;
+      ControlPairCount = minControlPairs;
     else if (initNumControlPairs > maxControlPairs)
-      numControlPairs = maxControlPairs;
+      ControlPairCount = maxControlPairs;
     else
-      numControlPairs = initNumControlPairs;
+      ControlPairCount = initNumControlPairs;
 
     numControlGroupControlPairs =
       initNumControlPairs >> 1;  // The floor of initNumControlPairs/2
 
-    if (!(numControlPairs & 0x01)) {
-      knobsArray = new ControlMidi*[numControlPairs + 1];
-      bttnsArray = new Button*[numControlPairs + 1];
+    if (!(ControlPairCount & 0x01)) {
+      knobs_array_ = new ControlMidi*[ControlPairCount + 1];
+      bttns_array = new Button*[ControlPairCount + 1];
     }
 
     uint32_t i;
 
-    for (i = 0; i < numControlPairs; ++i) {
-      knobsArray[i] = new ControlMidi ((TString<> ("Knob ") += i));
-      bttnsArray[i] = new ButtonDummy ((TString<> ("Button ") += i));
+    for (i = 0; i < ControlPairCount; ++i) {
+      knobs_array_[i] = new ControlMidi ((TString<> ("Knob ") += i));
+      bttns_array[i] = new ButtonDummy ((TString<> ("Button ") += i));
     }
 
     cntrlGroup1 = new ControlGroup (LAYER_A, numControlGroupControlPairs);
@@ -78,8 +71,8 @@ class LIB_MEMBER WidgetPage {
 
   /* Destructor. */
   ~WidgetPage() {
-    delete[] knobsArray;
-    delete[] bttnsArray;
+    delete[] knobs_array_;
+    delete[] bttns_array;
 
     delete cntrlGroup1;
     delete cntrlGroup2;
@@ -90,18 +83,18 @@ class LIB_MEMBER WidgetPage {
   WidgetPage& operator= (const WidgetPage& other) {
     ISC i;
 
-    delete knobsArray;
-    delete bttnsArray;
+    delete knobs_array_;
+    delete bttns_array;
 
-    numControlPairs = page.numControlPairs;
+    ControlPairCount = page.ControlPairCount;
     mstrControlsEnabled = page.mstrControlsEnabled;
 
-    knobsArray = new ControlMidi*[numControlPairs];
-    bttnsArray = new Button*[numControlPairs];
+    knobs_array_ = new ControlMidi*[ControlPairCount];
+    bttns_array = new Button*[ControlPairCount];
 
-    for (i = 0; i < numControlPairs; ++i) {
-      knobsArray[i] = page.knobsArray[i];
-      bttnsArray[i] = page.bttnsArray[i];
+    for (i = 0; i < ControlPairCount; ++i) {
+      knobs_array_[i] = page.knobs_array_[i];
+      bttns_array[i] = page.bttns_array[i];
     }
 
     cntrlGroup1 = page.cntrlGroup1;
@@ -111,7 +104,7 @@ class LIB_MEMBER WidgetPage {
   }
 
   /* Gets the num_control_pairs_. */
-  ISC GetNumControlPairs () { return numControlPairs; }
+  ISC GetNumControlPairs () { return ControlPairCount; }
 
   /* Gets a pointer to the specified groupNumber.
       @return Gets nullptr if the groupNumber is invalid. */
@@ -121,9 +114,9 @@ class LIB_MEMBER WidgetPage {
       @return Gets nullptr if thisIndex is greater than the num_control_pairs.
    */
   ControlMidi* GetKnob(ISC index) {
-    if (index >= numControlPairs) return nullptr;
+    if (index >= ControlPairCount) return nullptr;
 
-    return knobsArray[index];
+    return knobs_array_[index];
   }
 
   /* Gets the button at the specified index.
@@ -131,7 +124,7 @@ class LIB_MEMBER WidgetPage {
   Button* GetButton(ISC index) {
     if (index >= num_control_pairs_) return nullptr;
 
-    return bttnsArray[index];
+    return bttns_array[index];
   }
 
   /* Gets the page_label_. */
@@ -149,13 +142,13 @@ class LIB_MEMBER WidgetPage {
       num_control_pairs_ != page.num_control_pairs_)
       return -1;
 
-    for (i = 0; i < numControlPairs; ++i) {
+    for (i = 0; i < ControlPairCount; ++i) {
       ISC comparisonValue;
 
-      comparisonValue = knobs_array_[i]->compare (*page.knobsArray[i]);
+      comparisonValue = knobs_array_[i]->compare (*page.knobs_array_[i]);
       if (!comparisonValue) return comparisonValue;
 
-      comparisonValue = bttnsArray[i]->compare (*page.bttnsArray[i]);
+      comparisonValue = bttns_array[i]->compare (*page.bttns_array[i]);
       if (!comparisonValue) return comparisonValue;
     }
     return 0;
@@ -185,17 +178,18 @@ class LIB_MEMBER WidgetPage {
       << STRLine ('~');
   }
 
- private:
-   TString<> label_;    
+  private:
+
+  TString<> label_;             //< 
   ISC num_control_pairs_;       //< Number of BoundedControl/Button pairs.
   BOL mstr_controls_enabled_;   //< Stores if knob 9 is page specific or is the
                                 // master controls.
   TArray<ControlMidi*> knobs_;  //< Knob controls.
   TArray<Button*> bttns_;       //< Button controls.
-  TArray<TControlMatrix*>
-      control_group_;           //< Array of pointers to TControlMatrix objects.
+  // Array of pointers to TControlMatrix objects.
+  TArray<TControlMatrix*> control_group_;
 };
 
-}  // namespace _
+}  //< namespace _
 #endif
 #endif

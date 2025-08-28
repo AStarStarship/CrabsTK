@@ -59,20 +59,11 @@
     <Filter Include="./\_Seams\Touch">
       <UniqueIdentifier>{022241e6-953d-4b7b-93a5-a96728bfe37c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="./\Mind">
+      <UniqueIdentifier>{7d4fa031-374f-4238-b227-c66684675159}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Client.h">
-      <Filter>./</Filter>
-    </ClInclude>
-    <ClInclude Include="Document.h">
-      <Filter>./</Filter>
-    </ClInclude>
-    <ClInclude Include="Package.h">
-      <Filter>./</Filter>
-    </ClInclude>
-    <ClInclude Include="Server.h">
-      <Filter>./</Filter>
-    </ClInclude>
     <ClInclude Include="Who\AddressEmail.hpp">
       <Filter>./\Who</Filter>
     </ClInclude>
@@ -262,9 +253,6 @@
     <ClInclude Include="Pro\Git.hpp">
       <Filter>./\Pro</Filter>
     </ClInclude>
-    <ClInclude Include="Pro\Global.h">
-      <Filter>./\Pro</Filter>
-    </ClInclude>
     <ClInclude Include="Pro\Issue.hpp">
       <Filter>./\Pro</Filter>
     </ClInclude>
@@ -295,11 +283,29 @@
     <ClInclude Include="IMUL\UML.h">
       <Filter>./\IMUL</Filter>
     </ClInclude>
-    <ClInclude Include="Image\image_DXT.h">
-      <Filter>./\Image</Filter>
+    <ClInclude Include="Code\CommentStripper.h">
+      <Filter>./\Code</Filter>
     </ClInclude>
-    <ClInclude Include="Image\image_helper.h">
-      <Filter>./\Image</Filter>
+    <ClInclude Include="Code\Include.h">
+      <Filter>./\Code</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\stb_c_lexer.h">
+      <Filter>./\Code</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\stb_leakcheck.h">
+      <Filter>./\Code</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\CodeModule.h">
+      <Filter>./\Code</Filter>
+    </ClInclude>
+    <ClInclude Include="_Seams\Code\01.StripComments.h">
+      <Filter>./\_Seams\Code</Filter>
+    </ClInclude>
+    <ClInclude Include="_Seams\Code\01.StripComments.SourceExampleWithoutComments.h">
+      <Filter>./\_Seams\Code</Filter>
+    </ClInclude>
+    <ClInclude Include="_Seams\_Config.h">
+      <Filter>./\_Seams</Filter>
     </ClInclude>
     <ClInclude Include="Image\jo_jpeg.h">
       <Filter>./\Image</Filter>
@@ -346,50 +352,209 @@
     <ClInclude Include="Image\etc1_utils.h">
       <Filter>./\Image</Filter>
     </ClInclude>
-    <ClInclude Include="Code\CommentStripper.h">
-      <Filter>./\Code</Filter>
+    <ClInclude Include="Image\Image.h">
+      <Filter>./\Image</Filter>
     </ClInclude>
-    <ClInclude Include="Code\Include.h">
-      <Filter>./\Code</Filter>
+    <ClInclude Include="Image\image_DXT.h">
+      <Filter>./\Image</Filter>
     </ClInclude>
-    <ClInclude Include="Code\stb_c_lexer.h">
-      <Filter>./\Code</Filter>
+    <ClInclude Include="Image\image_helper.h">
+      <Filter>./\Image</Filter>
     </ClInclude>
-    <ClInclude Include="Code\stb_leakcheck.h">
-      <Filter>./\Code</Filter>
+    <ClInclude Include="..\Script2\Args.h">
+      <Filter>Script2</Filter>
     </ClInclude>
-    <ClInclude Include="Code\CodeModule.h">
-      <Filter>./\Code</Filter>
+    <ClInclude Include="..\Script2\Array.h">
+      <Filter>Script2</Filter>
     </ClInclude>
-    <ClInclude Include="_Seams\Code\01.StripComments.h">
-      <Filter>./\_Seams\Code</Filter>
+    <ClInclude Include="..\Script2\Array.hpp">
+      <Filter>Script2</Filter>
     </ClInclude>
-    <ClInclude Include="_Seams\Code\01.StripComments.SourceExampleWithoutComments.h">
-      <Filter>./\_Seams\Code</Filter>
+    <ClInclude Include="..\Script2\Autoject.h">
+      <Filter>Script2</Filter>
     </ClInclude>
-    <ClInclude Include="_Seams\_Config.h">
-      <Filter>./\_Seams</Filter>
+    <ClInclude Include="..\Script2\BIn.h">
+      <Filter>Script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Script2\BIn.hpp">
+      <Filter>Script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Script2\Binary.hpp">
+      <Filter>Script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Script2\Book.hpp">
+      <Filter>Script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Script2\BOut.h">
+      <Filter>Script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Script2\BOut.hpp">
+      <Filter>Script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Script2\BSeq.h">
+      <Filter>Script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Script2\BSeq.hpp">
+      <Filter>Script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Script2\Buffer.h">
+      <Filter>Script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Script2\CIn.h">
+      <Filter>Script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Script2\Clock.h">
+      <Filter>Script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Script2\Clock.hpp">
+      <Filter>Script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Script2\COut.h">
+      <Filter>Script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Script2\Crabs.h">
+      <Filter>Script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Script2\Dic.hpp">
+      <Filter>Script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Script2\Door.hpp">
+      <Filter>Script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Script2\Error.h">
+      <Filter>Script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Script2\Event.h">
+      <Filter>Script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Script2\File.h">
+      <Filter>Script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Script2\File.hpp">
+      <Filter>Script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Script2\Floor.h">
+      <Filter>Script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Script2\Folder.h">
+      <Filter>Script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Script2\Hash.hpp">
+      <Filter>Script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Script2\Interrupts.h">
+      <Filter>Script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Script2\Iterator.h">
+      <Filter>Script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Script2\Language.h">
+      <Filter>Script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Script2\Library.hpp">
+      <Filter>Script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Script2\List.hpp">
+      <Filter>Script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Script2\Loom.hpp">
+      <Filter>Script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Script2\Map.hpp">
+      <Filter>Script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Script2\Matrix.hpp">
+      <Filter>Script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Script2\Mirror.h">
+      <Filter>Script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Script2\Op.h">
+      <Filter>Script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Script2\Op.hpp">
+      <Filter>Script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Script2\Operand.h">
+      <Filter>Script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Script2\Puff.h">
+      <Filter>Script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Script2\Puff.hpp">
+      <Filter>Script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Script2\RNG.h">
+      <Filter>Script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Script2\Room.h">
+      <Filter>Script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Script2\Room.hpp">
+      <Filter>Script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Script2\Set.hpp">
+      <Filter>Script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Script2\Slot.h">
+      <Filter>Script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Script2\Slot.hpp">
+      <Filter>Script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Script2\Stack.hpp">
+      <Filter>Script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Script2\String.hpp">
+      <Filter>Script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Script2\Stringf.h">
+      <Filter>Script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Script2\Stringf.hpp">
+      <Filter>Script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Script2\Table.hpp">
+      <Filter>Script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Script2\Test.h">
+      <Filter>Script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Script2\Test.hpp">
+      <Filter>Script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Script2\TypeValue.h">
+      <Filter>Script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Script2\TypeValue.hpp">
+      <Filter>Script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Script2\Uniprinter.hpp">
+      <Filter>Script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Script2\Varint.h">
+      <Filter>Script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Script2\Wall.h">
+      <Filter>Script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Script2\Wall.hpp">
+      <Filter>Script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Script2\_Config.h">
+      <Filter>Script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Script2\Address.h">
+      <Filter>Script2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Script2\_Seams\TestWords.h">
+      <Filter>Script2\_Seams</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Script2\_Seams\_Config.h">
+      <Filter>Script2\_Seams</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Client.inl">
-      <Filter>./</Filter>
-    </None>
-    <None Include="Document.inl">
-      <Filter>./</Filter>
-    </None>
-    <None Include="Package.inl">
-      <Filter>./</Filter>
-    </None>
-    <None Include="ReadMe.md">
-      <Filter>./</Filter>
-    </None>
-    <None Include="Server.inl">
-      <Filter>./</Filter>
-    </None>
-    <None Include="_Package.inl">
-      <Filter>./</Filter>
-    </None>
     <None Include="Who\ReadMe.md">
       <Filter>./\Who</Filter>
     </None>
@@ -459,21 +624,6 @@
     <None Include="IMUL\_Seams.inl">
       <Filter>./\IMUL</Filter>
     </None>
-    <None Include="Image\image_DXT.inl">
-      <Filter>./\Image</Filter>
-    </None>
-    <None Include="Image\image_helper.inl">
-      <Filter>./\Image</Filter>
-    </None>
-    <None Include="Image\SOIL2.inl">
-      <Filter>./\Image</Filter>
-    </None>
-    <None Include="Image\_Package.inl">
-      <Filter>./\Image</Filter>
-    </None>
-    <None Include="Image\etc1_utils.inl">
-      <Filter>./\Image</Filter>
-    </None>
     <None Include="GUI\_Package.inl">
       <Filter>./\GUI</Filter>
     </None>
@@ -537,15 +687,222 @@
     <None Include="_Seams\Release.inl">
       <Filter>./\_Seams</Filter>
     </None>
+    <None Include="_Package.inl">
+      <Filter>./</Filter>
+    </None>
+    <None Include="ReadMe.md">
+      <Filter>./</Filter>
+    </None>
+    <None Include="Image\image_helper.inl">
+      <Filter>./\Image</Filter>
+    </None>
+    <None Include="Image\ReadMe.md">
+      <Filter>./\Image</Filter>
+    </None>
+    <None Include="Image\SOIL2.inl">
+      <Filter>./\Image</Filter>
+    </None>
+    <None Include="Image\_Package.inl">
+      <Filter>./\Image</Filter>
+    </None>
+    <None Include="Image\etc1_utils.inl">
+      <Filter>./\Image</Filter>
+    </None>
+    <None Include="Image\Image.inl">
+      <Filter>./\Image</Filter>
+    </None>
+    <None Include="Image\image_DXT.inl">
+      <Filter>./\Image</Filter>
+    </None>
+    <None Include="..\Script2\Array.inl">
+      <Filter>Script2</Filter>
+    </None>
+    <None Include="..\Script2\BIn.inl">
+      <Filter>Script2</Filter>
+    </None>
+    <None Include="..\Script2\BOut.inl">
+      <Filter>Script2</Filter>
+    </None>
+    <None Include="..\Script2\BSeq.inl">
+      <Filter>Script2</Filter>
+    </None>
+    <None Include="..\Script2\CIn.inl">
+      <Filter>Script2</Filter>
+    </None>
+    <None Include="..\Script2\Clock.inl">
+      <Filter>Script2</Filter>
+    </None>
+    <None Include="..\Script2\COut.inl">
+      <Filter>Script2</Filter>
+    </None>
+    <None Include="..\Script2\Crabs.inl">
+      <Filter>Script2</Filter>
+    </None>
+    <None Include="..\Script2\Error.inl">
+      <Filter>Script2</Filter>
+    </None>
+    <None Include="..\Script2\File.inl">
+      <Filter>Script2</Filter>
+    </None>
+    <None Include="..\Script2\Floor.inl">
+      <Filter>Script2</Filter>
+    </None>
+    <None Include="..\Script2\Folder.inl">
+      <Filter>Script2</Filter>
+    </None>
+    <None Include="..\Script2\Interrupts.inl">
+      <Filter>Script2</Filter>
+    </None>
+    <None Include="..\Script2\MorseCode.inl">
+      <Filter>Script2</Filter>
+    </None>
+    <None Include="..\Script2\Op.inl">
+      <Filter>Script2</Filter>
+    </None>
+    <None Include="..\Script2\Operand.inl">
+      <Filter>Script2</Filter>
+    </None>
+    <None Include="..\Script2\Puff.inl">
+      <Filter>Script2</Filter>
+    </None>
+    <None Include="..\Script2\ReadMe.md">
+      <Filter>Script2</Filter>
+    </None>
+    <None Include="..\Script2\RNG.inl">
+      <Filter>Script2</Filter>
+    </None>
+    <None Include="..\Script2\Room.inl">
+      <Filter>Script2</Filter>
+    </None>
+    <None Include="..\Script2\Slot.inl">
+      <Filter>Script2</Filter>
+    </None>
+    <None Include="..\Script2\Stringf.inl">
+      <Filter>Script2</Filter>
+    </None>
+    <None Include="..\Script2\Tasks.json">
+      <Filter>Script2</Filter>
+    </None>
+    <None Include="..\Script2\Test.inl">
+      <Filter>Script2</Filter>
+    </None>
+    <None Include="..\Script2\TypeValue.inl">
+      <Filter>Script2</Filter>
+    </None>
+    <None Include="..\Script2\_ConfigDefault.inl">
+      <Filter>Script2</Filter>
+    </None>
+    <None Include="..\Script2\_ConfigFooter.inl">
+      <Filter>Script2</Filter>
+    </None>
+    <None Include="..\Script2\_ConfigHeader.inl">
+      <Filter>Script2</Filter>
+    </None>
+    <None Include="..\Script2\_Debug.inl">
+      <Filter>Script2</Filter>
+    </None>
+    <None Include="..\Script2\_Package.inl">
+      <Filter>Script2</Filter>
+    </None>
+    <None Include="..\Script2\_Release.inl">
+      <Filter>Script2</Filter>
+    </None>
+    <None Include="..\Script2\_Undef.inl">
+      <Filter>Script2</Filter>
+    </None>
+    <None Include="..\Script2\_Seams\_Seams.inl">
+      <Filter>Script2\_Seams</Filter>
+    </None>
+    <None Include="..\Script2\_Seams\_Tests.inl">
+      <Filter>Script2\_Seams</Filter>
+    </None>
+    <None Include="..\Script2\_Seams\00.Core.inl">
+      <Filter>Script2\_Seams</Filter>
+    </None>
+    <None Include="..\Script2\_Seams\01.RNG.inl">
+      <Filter>Script2\_Seams</Filter>
+    </None>
+    <None Include="..\Script2\_Seams\02.ItoS.inl">
+      <Filter>Script2\_Seams</Filter>
+    </None>
+    <None Include="..\Script2\_Seams\03.FtoS.inl">
+      <Filter>Script2\_Seams</Filter>
+    </None>
+    <None Include="..\Script2\_Seams\04.SPrinter.inl">
+      <Filter>Script2\_Seams</Filter>
+    </None>
+    <None Include="..\Script2\_Seams\05.Clock.inl">
+      <Filter>Script2\_Seams</Filter>
+    </None>
+    <None Include="..\Script2\_Seams\06.Stack.inl">
+      <Filter>Script2\_Seams</Filter>
+    </None>
+    <None Include="..\Script2\_Seams\07.Matrix.inl">
+      <Filter>Script2\_Seams</Filter>
+    </None>
+    <None Include="..\Script2\_Seams\08.String.inl">
+      <Filter>Script2\_Seams</Filter>
+    </None>
+    <None Include="..\Script2\_Seams\09.Loom.inl">
+      <Filter>Script2\_Seams</Filter>
+    </None>
+    <None Include="..\Script2\_Seams\10.List.inl">
+      <Filter>Script2\_Seams</Filter>
+    </None>
+    <None Include="..\Script2\_Seams\11.Book.inl">
+      <Filter>Script2\_Seams</Filter>
+    </None>
+    <None Include="..\Script2\_Seams\12.Map.inl">
+      <Filter>Script2\_Seams</Filter>
+    </None>
+    <None Include="..\Script2\_Seams\13.Table.inl">
+      <Filter>Script2\_Seams</Filter>
+    </None>
+    <None Include="..\Script2\_Seams\14.Dic.inl">
+      <Filter>Script2\_Seams</Filter>
+    </None>
+    <None Include="..\Script2\_Seams\15.Crabs.inl">
+      <Filter>Script2\_Seams</Filter>
+    </None>
+    <None Include="..\Script2\_Seams\16.Door.inl">
+      <Filter>Script2\_Seams</Filter>
+    </None>
+    <None Include="..\Script2\_Seams\17.Room.inl">
+      <Filter>Script2\_Seams</Filter>
+    </None>
+    <None Include="..\Script2\_Seams\17.Seam.s2">
+      <Filter>Script2\_Seams</Filter>
+    </None>
+    <None Include="..\Script2\_Seams\18.File.inl">
+      <Filter>Script2\_Seams</Filter>
+    </None>
+    <None Include="..\Script2\_Seams\19.Release.inl">
+      <Filter>Script2\_Seams</Filter>
+    </None>
+    <None Include="..\Script2\_Seams\desktop.ini">
+      <Filter>Script2\_Seams</Filter>
+    </None>
+    <None Include="..\Script2\_Seams\ReadMe.md">
+      <Filter>Script2\_Seams</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="_Seams\_Main.cpp">
       <Filter>./\_Seams</Filter>
     </ClCompile>
+    <ClCompile Include="..\Script2\_Seams\_Main.cpp">
+      <Filter>Script2\_Seams</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="_Seams\CMakeFiles.txt">
       <Filter>./\_Seams</Filter>
+    </Text>
+    <Text Include="..\Script2\CMakeLists.txt">
+      <Filter>Script2</Filter>
+    </Text>
+    <Text Include="..\Script2\_Seams\CMakeLists.txt">
+      <Filter>Script2\_Seams</Filter>
     </Text>
   </ItemGroup>
 </Project>

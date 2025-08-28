@@ -1,23 +1,16 @@
-/* Kabuki Toolkit @version 0.x
-@link    https://github.com/KabukiStarship/KabukiToolkit.git
-@file    /audio/SoundWave.h
-@author  Cale McCollough <https://cookingwithcale.org>
-@license Copyright (C) 2014-20 Cale McCollough; all right reserved (R).
-This Source Code Form is subject to the terms of the Mozilla Public License,
-v. 2.0. If a copy of the MPL was not distributed with this file, You can
-obtain one at https://mozilla.org/MPL/2.0/. */
+// Copyright AStarship <https://astarship.net>.
 #pragma once
-#ifndef KABUKI_TOOLKIT_AUDIO_SOUNDWAVE_TEMPLATES
-#define KABUKI_TOOLKIT_AUDIO_SOUNDWAVE_TEMPLATES
+#ifndef KABUKITOOLKIT_AUDIO_SOUNDWAVE_TEMPLATES
+#define KABUKITOOLKIT_AUDIO_SOUNDWAVE_TEMPLATES
 #include <_Config.h>
 #include "SoundWave.h"
 namespace _ {
 
-template <typename ISZ>
-void TSoundStore(const CHR* filename, const ISZ* sample_buffer,
+template <typename IS>
+void TSoundStore(const CHR* filename, const IS* sample_buffer,
                  ISN sample_count, ISN channels, ISN bit_depth = 16,
                  ISN sample_rate = 44100) {
-  ISN byte_count = (sample_count * channels) * sizeof(ISZ);
+  ISN byte_count = (sample_count * channels) * sizeof(IS);
 
   SoundWave aw;
   aw.riff_id[0] = 'R';
@@ -53,6 +46,6 @@ void TSoundStore(const CHR* filename, const ISZ* sample_buffer,
   fclose(f);
 }
 
-}  // namespace _
+}  //< namespace _
 
 #endif

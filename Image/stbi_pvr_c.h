@@ -164,7 +164,7 @@ int stbi__pvr_info_from_file(FILE *f, int *x, int *y, int *comp,
  Taken from:
  @File         PVRTDecompress.cpp
  @Title        PVRTDecompress
- @Copyright    Copyright (C)  Imagination Technologies Limited.
+ @Copyright    Copyright  Imagination Technologies Limited.
  @Platform     ANSI compatible
  @Description  PVRTC Texture Decompression.
 ******************************************************************************/

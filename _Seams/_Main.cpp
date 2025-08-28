@@ -1,4 +1,4 @@
-/* Kabuki Toolkit @version 0.x
+/* Kabuki Toolkit
 @link    https://github.com/KabukiStarship/KT.git
 @file    /_Seams/_Main.cpp
 @author  Cale McCollough <https://cookingwithcale.org>
@@ -6,11 +6,11 @@
 reserved (R). This Source Code Form is subject to the terms of the Mozilla
 Public License, v. 2.0. If a copy of the MPL was not distributed with this file,
 You can obtain one at <https://mozilla.org/MPL/2.0/>. */
-/* Script2 (TM) @version 0.x
+/* Script2 ™
 @link    https://github.com/KabukiStarship/Script2.git
 @file    /_Seams/_Main.cpp
 @author  Cale McCollough <https://cookingwithcale.org>
-@license Copyright (C) 2015-21 Kabuki Starship (TM) <kabukistarship.com>.
+@license Copyright 2015-21 Kabuki Starship ™ <kabukistarship.com>;
 This Source Code Form is subject to the terms of the Mozilla Public License,
 v. 2.0. If a copy of the MPL was not distributed with this file, You can obtain
 one at <https://mozilla.org/MPL/2.0/>. */

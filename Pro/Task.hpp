@@ -1,16 +1,9 @@
-/* Kabuki Toolkit @version 0.x
-@link    https://github.com/KabukiStarship/KT.git
-@file    /Pro/Task.hpp
-@author  Cale McCollough <https://cookingwithcale.org>
-@license Copyright (C) 2014-20 Cale McCollough; all right reserved (R). 
-This Source Code Form is subject to the terms of the Mozilla Public License, 
-v. 2.0. If a copy of the MPL was not distributed with this file, You can 
-obtain one at <https://mozilla.org/MPL/2.0/>. */
+// Copyright AStarship <https://astarship.net>.
 #pragma once
+#ifndef KABUKITOOLKIT_PRO_TASK
+#define KABUKITOOLKIT_PRO_TASK
 #include <_Config.h>
-#if SEAM >= KABUKI_TOOLKIT_PRO_CORE
-#ifndef KABUKI_TOOLKIT_PRO_TASK
-#define KABUKI_TOOLKIT_PRO_TASK
+#if SEAM >= KABUKITOOLKIT_PRO_CORE
 #include <Script2/String.hpp>
 namespace _ {
 
@@ -397,6 +390,6 @@ class Task {
       time_stopped_;   //< Time the user stopped the task.
   Task* collisions_;   //< Pointer to the collision node (if any).
 };
-}  // namespace _
+}  //< namespace _
 #endif
 #endif

@@ -1,16 +1,9 @@
-﻿/* Kabuki Toolkit @version 0.x
-@link    https://github.com/KabukiStarship/KT.git
-@file    /Who/address.hpp
-@author  Cale McCollough <https://cookingwithcale.org>
-@license Copyright (C) 2014-20 Cale McCollough; all right reserved (R). 
-This Source Code Form is subject to the terms of the Mozilla Public License, 
-v. 2.0. If a copy of the MPL was not distributed with this file, You can 
-obtain one at https://mozilla.org/MPL/2.0/. */
+﻿// Copyright AStarship <https://astarship.net>.
 #pragma once
 #include <_Config.h>
-#if SEAM >= KABUKI_TOOLKIT_WHO_CORE
-#ifndef KABUKI_TOOLKIT_WHO_ADDRESS
-#define KABUKI_TOOLKIT_WHO_ADDRESS
+#if SEAM >= KABUKITOOLKIT_WHO_CORE
+#ifndef KABUKITOOLKIT_WHO_ADDRESS
+#define KABUKITOOLKIT_WHO_ADDRESS
 namespace _ {
 
 typedef enum { HomeAddress = 0, WordAddress, OtherAddress } AddressType;
@@ -109,13 +102,13 @@ class TAddress {
     return labels;
   }
 
-  static inline const char* AddressTypeLabel (AddressType type) {
+  static inline const IUA* AddressTypeLabel (AddressType type) {
     if (type < 0 || type >= 3) return AddressTypeLabels ()[0];
     if (type < 0 || type > 2) return AddressTypeLabels ()[2];
     return AddressTypeLabels ()[type];
   }
 };
 
-}  // namespace _
+}  //< namespace _
 #endif
 #endif

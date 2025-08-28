@@ -1,16 +1,9 @@
-/* Kabuki Toolkit @version 0.x
-@link    https://github.com/KabukiStarship/KT.git
-@file    /Touch/Param.hpp
-@author  Cale McCollough <https://cookingwithcale.org>
-@license Copyright (C) 2014-20 Cale McCollough; all right reserved (R). 
-This Source Code Form is subject to the terms of the Mozilla Public License, 
-v. 2.0. If a copy of the MPL was not distributed with this file, You can 
-obtain one at https://mozilla.org/MPL/2.0/. */
+// Copyright AStarship <https://astarship.net>.
 #pragma once
+#ifndef KABUKITOOLKIT_TOUCH_PARAMETER
+#define KABUKITOOLKIT_TOUCH_PARAMETER
 #include <_Config.h>
-#if SEAM >= KABUKI_TOOLKIT_TOUCH_CORE
-#ifndef KABUKI_TOOLKIT_TOUCH_PARAMETER
-#define KABUKI_TOOLKIT_TOUCH_PARAMETER
+#if SEAM >= KABUKITOOLKIT_TOUCH_CORE
 #include "Component.hpp"
 namespace _ {
 
@@ -269,7 +262,6 @@ class LIB_MEMBER Parameter : public HMIComponent {
         << "\nLabels: { " << label_ << ", " << o.label () 
         << " }\nlabel ().Compare (o.label_) = "
         << label_.Compare (o.label_));
-    */
     return compare_value;
   }
 
@@ -295,7 +287,8 @@ class LIB_MEMBER Parameter : public HMIComponent {
       << "\n" << ToStringRow ();
   }
 
- private:
+  private:
+
   const IUB* channel_;  //< Output channel.
   IUB value,            //< Parameter value.
       init_value_,           //< Initial value.
@@ -311,6 +304,7 @@ class LIB_MEMBER Parameter : public HMIComponent {
 
 class ParameterPair {
  public:
+
   /* A pair of parameters to create a higher resolution parameter. */
   ParameterPair(IUB& msb, IUB& lsb) : msb(msb), lsb(lsb) {}
 
@@ -331,10 +325,11 @@ class ParameterPair {
     msb_ = (value_ & 0xff) << 8;
   }
 
- private:
+  private:
+
   IUA* msb, *lsb;
 };  //< ParameterPair
 
-}  // namespace _
+}  //< namespace _
 #endif
 #endif
