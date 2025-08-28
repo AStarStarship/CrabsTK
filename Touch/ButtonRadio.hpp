@@ -1,17 +1,9 @@
-/* Kabuki Toolkit @version 0.x
-@link    https://github.com/KabukiStarship/KT.git
-@file    /Touch/buttonradio.hpp
-@author  Cale McCollough <https://cookingwithcale.org>
-@license Copyright (C) 2014-20 Cale McCollough; all right reserved (R). 
-This Source Code Form is subject to the terms of the Mozilla Public License, 
-v. 2.0. If a copy of the MPL was not distributed with this file, You can 
-obtain one at https://mozilla.org/MPL/2.0/. */
-
+// Copyright AStarship <https://astarship.net>.
 #pragma once
 #include <_Config.h>
-#if SEAM >= KABUKI_TOOLKIT_TOUCH_CORE
-#ifndef KABUKI_TOOLKIT_TOUCH_RADIOBUTTON
-#define KABUKI_TOOLKIT_TOUCH_RADIOBUTTON
+#if SEAM >= KABUKITOOLKIT_TOUCH_CORE
+#ifndef KABUKITOOLKIT_TOUCH_RADIOBUTTON
+#define KABUKITOOLKIT_TOUCH_RADIOBUTTON
 #include "Component.hpp"
 namespace _ {
 
@@ -54,6 +46,6 @@ class ButtonRadio : public HMIComponent {
   ISC index_;         //< Current index of the radio button.
   ParamSet buttons_;  //< The radio buttons ParamSet.
 };
-}  // namespace _
+}  //< namespace _
 #endif
 #endif

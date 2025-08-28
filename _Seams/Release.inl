@@ -1,4 +1,4 @@
-/* Kabuki Toolkit @version 0.x
+/* Kabuki Toolkit
 @link    https://github.com/KabukiStarship/KT.git
 @file    /_Seams/release.h
 @author  Cale McCollough <https://cookingwithcale.org>
@@ -8,7 +8,7 @@ Public License, v. 2.0. If a copy of the MPL was not distributed with this file,
 You can obtain one at <https://mozilla.org/MPL/2.0/>. */
 #pragma once
 #include <_Config.h>
-#if SEAM == KABUKI_TOOLKIT_RELEASE
+#if SEAM == KABUKITOOLKIT_RELEASE
 #include "_Debug.inl"
 #else
 #include "_Release.inl"
@@ -16,10 +16,10 @@ You can obtain one at <https://mozilla.org/MPL/2.0/>. */
 using namespace _;
 namespace KT {
 inline const CHA* Release(const CHA* args) {
-#if SEAM >= KABUKI_TOOLKIT_RELEASE
+#if SEAM >= KABUKITOOLKIT_RELEASE
   TEST_BEGIN;
 
 #endif
   return 0;
 }
-}  // namespace KT
+}  //< namespace KT

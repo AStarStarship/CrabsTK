@@ -1,16 +1,9 @@
-/* Kabuki Toolkit @version 0.x
-@link    https://github.com/KabukiStarship/KT.git
-@file    /Touch/TagLibrary.hpp
-@author  Cale McCollough <https://cookingwithcale.org>
-@license Copyright (C) 2014-20 Cale McCollough; all right reserved (R). 
-This Source Code Form is subject to the terms of the Mozilla Public License, 
-v. 2.0. If a copy of the MPL was not distributed with this file, You can 
-obtain one at https://mozilla.org/MPL/2.0/. */
+// Copyright AStarship <https://astarship.net>.
 #pragma once
+#ifndef KABUKITOOLKIT_TOUCH_TAGLIBRARY
+#define KABUKITOOLKIT_TOUCH_TAGLIBRARY
 #include <_Config.h>
-#if SEAM >= KABUKI_TOOLKIT_TOUCH_CORE
-#ifndef KABUKI_TOOLKIT_TOUCH_TAGLIBRARY
-#define KABUKI_TOOLKIT_TOUCH_TAGLIBRARY
+#if SEAM >= KABUKITOOLKIT_TOUCH_CORE
 #include "Tag.hpp"
 namespace _ {
 
@@ -52,6 +45,6 @@ class TagLibrary {
  private:
   TArray<Tag*> tags_;  //< Collection of tag Strings.
 };
-}       // namespace _
+}       //< namespace _
 #endif
 #endif

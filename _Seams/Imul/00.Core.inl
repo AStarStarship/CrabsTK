@@ -1,4 +1,4 @@
-/* Kabuki Toolkit @version 0.x
+/* Kabuki Toolkit
 @link    https://github.com/KabukiStarship/KT.git
 @file    /_Seams/IMUL/00.Core.h
 @author  Cale McCollough <https://cookingwithcale.org>
@@ -8,7 +8,7 @@ Public License, v. 2.0. If a copy of the MPL was not distributed with this file,
 You can obtain one at <https://mozilla.org/MPL/2.0/>. */
 #pragma once
 #include <_Config.h>
-#if SEAM == HYPERTEXT_FOO
+#if SEAM == KT_IMUL
 #include <Script2/_Debug.inl>
 #else
 #include <Script2/_Release.inl>
@@ -17,11 +17,11 @@ using namespace _;
 namespace KT {
 namespace IMUL {
 inline const CHA* Core(CHA* seam_log, CHA* seam_end, const CHA* args) {
-#if SEAM >= KABUKI_TOOLKIT_PRO_CORE
+#if SEAM >= KT_IMUL
   A_TEST_BEGIN;
 
 #endif
   return 0;
 }
-}  // namespace IMUL
-}  // namespace KT
+}  //< namespace IMUL
+}  //< namespace KT

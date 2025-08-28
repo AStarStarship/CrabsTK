@@ -1,16 +1,9 @@
-/* Kabuki Toolkit @version 0.x
-@link    https://github.com/KabukiStarship/KT.git
-@file    /Touch/mixer.hpp
-@author  Cale McCollough <https://cookingwithcale.org>
-@license Copyright (C) 2014-20 Cale McCollough; all right reserved (R). 
-This Source Code Form is subject to the terms of the Mozilla Public License, 
-v. 2.0. If a copy of the MPL was not distributed with this file, You can 
-obtain one at https://mozilla.org/MPL/2.0/. */
+// Copyright AStarship <https://astarship.net>.
 #pragma once
-#ifndef KABUKI_TOOLKIT_TOUCH_MIXER
-#define KABUKI_TOOLKIT_TOUCH_MIXER
+#ifndef KABUKITOOLKIT_TOUCH_MIXER
+#define KABUKITOOLKIT_TOUCH_MIXER
 #include <_Config.h>
-#if SEAM >= KABUKI_TOOLKIT_TOUCH_CORE
+#if SEAM >= KABUKITOOLKIT_TOUCH_CORE
 namespace _ {
 
 class LIB_MEMBER MixerChannel;

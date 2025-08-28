@@ -1,4 +1,4 @@
-/* Kabuki Toolkit @version 0.x
+/* Kabuki Toolkit
 @link    https://github.com/KabukiStarship/KT.git
 @file    /_Seams/Database/00.Core.inl
 @author  Cale McCollough <https://cookingwithcale.org>
@@ -8,20 +8,20 @@ Public License, v. 2.0. If a copy of the MPL was not distributed with this file,
 You can obtain one at <https://mozilla.org/MPL/2.0/>. */
 #pragma once
 #include <_Config.h>
-#if SEAM == KABUKI_TOOLKIT_HYPERTEXT_CORE
+#if SEAM == KABUKITOOLKIT_FORMS_CORE
 #include <Script2/_Debug.inl>
 #else
 #include <Script2/_Release.inl>
 #endif
 using namespace _;
 namespace KT {
-namespace Database {
+namespace Data {
 inline const CHA* Core(CHA* seam_log, CHA* seam_end, const CHA* args) {
-#if SEAM >= KABUKI_TOOLKIT_PRO_0
+#if SEAM >= KABUKITOOLKIT_FORMS_CORE
   A_TEST_BEGIN;
 
 #endif
   return 0;
 }
-}  // namespace Database
-}  // namespace KT
+}  //< namespace Data
+}  //< namespace KT

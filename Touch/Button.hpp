@@ -1,14 +1,7 @@
-/* Kabuki Toolkit @version 0.x
-@link    https://github.com/KabukiStarship/KT.git
-@file    /Touch/Button.hpp
-@author  Cale McCollough <https://cookingwithcale.org>
-@license Copyright (C) 2014-20 Cale McCollough; all right reserved (R). 
-This Source Code Form is subject to the terms of the Mozilla Public License, 
-v. 2.0. If a copy of the MPL was not distributed with this file, You can 
-obtain one at https://mozilla.org/MPL/2.0/. */
+// Copyright AStarship <https://astarship.net>.
 #pragma once
 #include <_Config.h>
-#if SEAM >= KABUKI_TOOLKIT_AV_CORE
+#if SEAM >= KABUKITOOLKIT_AV_CORE
 #ifndef KT_HMI_BUTTON
 #define KT_HMI_BUTTON
 #include "Component.hpp"
@@ -30,8 +23,8 @@ class LIB_MEMBER Button {
     /* An enumerated list of the different types of actions ButtonControls can
         perform. */
     typedef enum Action {
-      Momentary = 0,    // Button only on when pressed.
-      Latching,         // Button toggles when pressed.
+      Momentary = 0,    // Button only on when pressed_.
+      Latching,         // Button toggles when pressed_.
       PresureSensitive  // Button triggers event initially followed by pressure
                         // data.
     } Actions;
@@ -50,7 +43,7 @@ class LIB_MEMBER Button {
     Button (Action buttonAction = Momentary, ISC stepSize = 0, 
             ISC double_press_ticks_ = kDefaultDoublePressTicks)
       : action (action),
-      pressed (false),
+      pressed_ (false),
       stepSize (stepSize),
       double_press_ticks_ (double_press_ticks_),
       last_time_pressed_ (0) {
@@ -61,7 +54,7 @@ class LIB_MEMBER Button {
     Button(const Button& o)
       : action (o.action),
       stepSize (o.stepSize),
-      pressed (o.pressed),
+      pressed_ (o.pressed_),
       double_press_ticks_ (o.double_press_ticks_),
       last_time_pressed_ (o.last_time_pressed_) {
       // Nothing to do here :-)
@@ -70,34 +63,34 @@ class LIB_MEMBER Button {
     /* Virtual destructor. */
     virtual ~Button () {}
 
-    /* Triggered when the button is pressed. */
+    /* Triggered when the button is pressed_. */
     virtual void Press() {
-      pressed = true;
+      pressed_ = true;
 
-      ISC currentTime = _System::GetTimestamp ();
+      ISC currentTime = ClockNow ();
       if (currentTime - last_time_pressed_ <= double_press_ticks_) {
-        doublePress ();
+        DoublePress ();
         return;
       }
-      press ();
+      Press ();
     }
 
     /* Triggered when button is depressed and needs a safe space. */
     virtual void Depress() {
-      pressed = false;
+      pressed_ = false;
       Depress ();
     }
 
     /* Triggered when a user "FPD clicks" a button. */
     virtual void DoublePress() = 0;
 
-    /* gets true if the button is in a pressed state. */
+    /* gets true if the button is in a pressed_ state. */
     virtual BOL IsPressed() const { return pressed_; }
 
-    /* Sets the button pressed state to the new state. */
+    /* Sets the button pressed_ state to the new state. */
     virtual void SetButtonState(BOL state) = 0;
 
-    /* gets the last time the button was pressed. */
+    /* gets the last time the button was pressed_. */
     virtual ISC GetLastTimePressed() const { return last_time_pressed_; }
 
     /* Gets the FPD press time in microseconds. */
@@ -105,7 +98,7 @@ class LIB_MEMBER Button {
 
     /* Gets this buttons step_Size.
         The step size is the increment that is added to the
-        Parameter<ISC>::value () every time the button is pressed. When
+        Parameter<ISC>::value () every time the button is pressed_. When
         the value goes over the Parameter<ISC>::max_value_ (), it is reset to
         the Parameter<ISC>::mixValue (). */
     virtual ISC GetStepSize () const { return stepSize; }
@@ -123,9 +116,9 @@ class LIB_MEMBER Button {
     /* Toggles the state of the button.  */
     virtual virtual void Tooggle () {
       if (pressed_)
-        pressed = false;
+        pressed_ = false;
       else
-        pressed = true;
+        pressed_ = true;
     }
 
     /* The type of action this button performs: Momentary or latching. */

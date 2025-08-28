@@ -1,7 +1,7 @@
 
 #include "stb_leakcheck.h"
 
-void *stb_leakcheck_malloc(size_t sz, const char *file, SIN line) {
+void *stb_leakcheck_malloc(size_t sz, const CHA* file, SIN line) {
   stb_leakcheck_malloc_info *mi =
       (stb_leakcheck_malloc_info *)malloc(sz + sizeof(*mi));
   if (mi == NULL) return mi;
@@ -31,7 +31,7 @@ void stb_leakcheck_free(void *ptr) {
   }
 }
 
-void *stb_leakcheck_realloc(void *ptr, size_t sz, const char *file, SIN line) {
+void *stb_leakcheck_realloc(void *ptr, size_t sz, const CHA* file, SIN line) {
   if (ptr == NULL) {
     return stb_leakcheck_malloc(sz, file, line);
   } else if (sz == 0) {
@@ -56,7 +56,7 @@ void *stb_leakcheck_realloc(void *ptr, size_t sz, const char *file, SIN line) {
   }
 }
 
-static void stblkck_internal_print(const char *reason,
+static void stblkck_internal_print(const CHA* reason,
                                    stb_leakcheck_malloc_info *mi) {
 #if defined(_MSC_VER) && _MSC_VER < 1900  // 1900=VS 2015
 // Compilers that use the old MS C runtime library don't have %zd

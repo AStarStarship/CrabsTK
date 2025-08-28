@@ -1,4 +1,4 @@
-/* Kabuki Toolkit @version 0.x
+/* Kabuki Toolkit
 @link    https://github.com/KabukiStarship/KT.git
 @file    /_Seams/Who/00.Core.inl
 @author  Cale McCollough <https://cookingwithcale.org>
@@ -8,7 +8,7 @@ Public License, v. 2.0. If a copy of the MPL was not distributed with this file,
 You can obtain one at <https://mozilla.org/MPL/2.0/>. */
 #pragma once
 #include <_Config.h>
-#if SEAM == KABUKI_TOOLKIT_WHO_CORE
+#if SEAM == KT_WHO
 #include "_Debug.inl"
 #else
 #include "_Release.inl"
@@ -18,11 +18,11 @@ namespace KT {
 namespace Who {
 
 inline const CHA* Core(const CHA* args) {
-#if SEAM >= KABUKI_TOOLKIT_WHO_CORE
+#if SEAM >= KT_WHO_CORE
   A_TEST_BEGIN;
 
 #endif
   return 0;
 }
-}  // namespace Who
-}  // namespace KT
+}  //< namespace Who
+}  //< namespace KT
