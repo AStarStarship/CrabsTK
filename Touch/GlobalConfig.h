@@ -1,9 +1,9 @@
 // Copyright AStarship <https://astarship.net>.
 #pragma once
 #include <_Config.h>
-#ifndef KABUKI_HMI_COFIG
-#define KABUKI_HMI_COFIG
+#ifndef CRABSTK_HMI_CONFIG
+#define CRABSTK_HMI_CONFIG
 
-#define SEAM_0_0_4_2__00 19  //< kabuki.features.touch
+#define SEAM_0_0_4_2__00 19  //< crabs.features.touch
 
-#endif  //< KABUKI_HMI_COFIG
+#endif  //< CRABSTK_HMI_CONFIG

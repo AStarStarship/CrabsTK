@@ -1,4 +1,4 @@
-This folder contains the unit tests for the KabukiToolkit Audio API.
+This folder contains the unit tests for the CrabsTK Audio API.
 
 ## License
 

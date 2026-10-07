@@ -1,6 +1,6 @@
 #
 
-This module contains the KabukiToolkit C+ Code API.
+This module contains the CrabsTK C+ Code API.
 
 ## License
 

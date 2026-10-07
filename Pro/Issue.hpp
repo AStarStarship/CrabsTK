@@ -1,7 +1,7 @@
 // Copyright AStarship <https://astarship.net>.
 #pragma once
-#ifndef KABUKI_PRO_ISSUE
-#define KABUKI_PRO_ISSUE
+#ifndef CRABSTK_PRO_ISSUE
+#define CRABSTK_PRO_ISSUE
 #include <_Config.h>
 #if SEAM >= CRABSTK_PRO_1
 #include "Schedule.hpp"

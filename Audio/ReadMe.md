@@ -1,4 +1,4 @@
-This module contains the KabukiToolkit Audio API.
+This module contains the CrabsTK Audio API.
 
 ## License
 

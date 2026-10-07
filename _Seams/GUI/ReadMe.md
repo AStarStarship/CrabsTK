@@ -1,4 +1,4 @@
-This folder contains the unit tests for the KabukiToolkit GUI API.
+This folder contains the unit tests for the CrabsTK GUI API.
 
 ## License
 

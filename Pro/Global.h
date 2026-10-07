@@ -1,6 +1,6 @@
 // Copyright AStarship <https://astarship.net>.
-#ifndef KABUKI_PRO_GLOBAL
-#define KABUKI_PRO_GLOBAL
+#ifndef CRABSTK_PRO_GLOBAL
+#define CRABSTK_PRO_GLOBAL
 
 #include "Project.h"
 

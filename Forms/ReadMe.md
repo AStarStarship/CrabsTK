@@ -1,6 +1,6 @@
 #
 
-This module contains the KabukiToolkit Forms API. Use this API for form validation.
+This module contains the CrabsTK Forms API. Use this API for form validation.
 
 ## License
 

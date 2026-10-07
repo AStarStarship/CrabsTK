@@ -1,4 +1,4 @@
-This folder contains the unit tests for the KabukiToolkit I am You Language (IMUL) interpreter.
+This folder contains the unit tests for the CrabsTK I am You Language (IMUL) interpreter.
 
 ## License
 
