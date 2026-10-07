@@ -3,8 +3,8 @@
 @file    /client.h
 @author  Sean Barrett <https://nothings.org> and
          Cale McCollough <https://cookingwithcale.org>
-@license Copyright 2014-20 Sean Barrett <nothings.org. and Kabuki Starship
-<kabukistarship.com; all right reserved (R). This Source Code Form is subject
+@license Copyright 2014-20 Sean Barrett <nothings.org. and AStarship
+<astarship.net; all right reserved (R). This Source Code Form is subject
 to the terms of the Mozilla Public License, v. 2.0. If a copy of the MPL was
 not distributed with this file, You can obtain one at
 https://mozilla.org/MPL/2.0/. */
