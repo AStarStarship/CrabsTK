@@ -1,0 +1,11 @@
+@2026-10-07;09:00 AStarStarship/CrabsTK#161
+world ^ Hello
+@10 #170
+@1 PM Time exactly on the hour.
+@1 pm Approximate time; do not invent minutes.
+@2026-10-07;13:05 #172 +session "Documentation"
+@20 -session Wrote the time rules.
+#173
+CrabsTK <=> ASCIICrabs
+"paper log" => "verified text"
+| @alice and x ^ y stay literal.

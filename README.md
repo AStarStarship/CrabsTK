@@ -1,17 +1,18 @@
 # Crabs Toolkit
 
 ```AsciiArt
-  /\
- ( /   @ @    ()   _  __     _           _    _   _____           _ _    _ _
-  \\ __| |__  /   | |/ /__ _| |__  _   _| | _(_) |_   _|__   ___ | | | _(_) |_
-   \/   "   \/    | ' // _` | '_ \| | | | |/ / |   | |/ _ \ / _ \| | |/ / | __|
-  /-|       |-\   | . \ (_| | |_) | |_| |   <| |   | | (_) | (_) | |   <| | |_
- / /-\     /-\ \  |_|\_\__,_|_.__/ \__,_|_|\_\_|   |_|\___/ \___/|_|_|\_\_|\__|
-  / /-`---'-\ \
-   /         \                    ♫♪.ılılıll|̲̅̅●̲̅̅|̲̅̅=̲̅̅|̲̅̅●̲̅̅|llılılı.♫♪
+ /\                 /$$$$$$                     /$$                
+( /   @ @    ()    /$$__  $$                   | $$                
+ \  __| |__  /    | $$  \__/  /$$$$$$  /$$$$$$ | $$$$$$$   /$$$$$$$
+  -/   "   \-     | $$       /$$__  $$|____  $$| $$__  $$ /$$_____/
+ /-|       |-\    | $$      | $$  \__/ /$$$$$$$| $$  \ $$|  $$$$$$ 
+/ /-\     /-\ \   | $$    $$| $$      /$$__  $$| $$  | $$ \____  $$
+ / /-`---'-\ \    |  $$$$$$/| $$     |  $$$$$$$| $$$$$$$/ /$$$$$$$/
+  /         \      \______/ |__/      \_______/|_______/ |_______/ 
+                              ♫♪.ılılıll|̲̅̅●̲̅̅|̲̅̅=̲̅̅|̲̅̅●̲̅̅|llılılı.♫♪
 ```
 
-Crabs Toolkit (CT) is a C++ compiler, Hybrid Embedded-C++ webapp API, and Script2 and IMUL (I am You Language) toolkit for making intelligent connected software and art. The best place to get started learning CT is to read the [KP Cookbook](https://github.com/AStarship/CrabsPressCookbook), an open-source book that teaches how to make intelligent connected software, websites, books, and art with Modern Embedded-C++, Script2, and I am You Language (IMUL).
+CrabsTK (Crabs Toolkit) is a C++ API, Hybrid Embedded-C++ webapp API, and Script2 and IMUL (I am You Language) toolkit for making intelligent connected software and art. The best place to get started learning CT is to read the [KP Cookbook](https://github.com/AStarship/CrabsPressCookbook), an open-source book that teaches how to make intelligent connected software, websites, books, and art with Modern Embedded-C++, Script2, and I am You Language (IMUL).
 
 [![GitHub version](https://badge.fury.io/gh/AStarship%2FCrabsTK.svg)](https://badge.fury.io/gh/AStarship%2FCrabsTK)
 
