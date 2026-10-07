@@ -8,7 +8,7 @@
 #include <string>
 #include <string_view>
 
-namespace KT::JSX {
+namespace CT::JSX {
 
 struct Attribute {
   std::string_view name;
@@ -104,5 +104,5 @@ inline std::string Fragment(std::initializer_list<std::string_view> children) {
   return output;
 }
 
-}  // namespace KT::JSX
+}  // namespace CT::JSX
 #endif

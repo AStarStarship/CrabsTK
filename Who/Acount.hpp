@@ -1,9 +1,9 @@
 // Copyright AStarship <https://astarship.net>.
 #pragma once
-#ifndef KABUKITOOLKIT_ID_ACCOUNT
-#define KABUKITOOLKIT_ID_ACCOUNT
+#ifndef CRABSTK_ID_ACCOUNT_DECL_DECL
+#define CRABSTK_ID_ACCOUNT_DECL_DECL
 #include <_Config.h>
-#if SEAM >= KABUKITOOLKIT_WHO_CORE
+#if SEAM >= CRABSTK_WHO_CORE
 #include "Handle.hpp"
 #include "Password.hpp"
 #include "Roster.hpp"

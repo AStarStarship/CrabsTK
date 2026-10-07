@@ -7,7 +7,7 @@
 #include <string>
 #include <string_view>
 
-namespace KT::OAuth {
+namespace CT::OAuth {
 
 /*
  * OAuth 2.0 authorization URL builder with RFC 7636 PKCE support.
@@ -68,5 +68,5 @@ inline bool VerifyPkce(const std::string& received_code,
   return received_code == expected_challenge;
 }
 
-}  // namespace KT::OAuth
+}  // namespace CT::OAuth
 #endif

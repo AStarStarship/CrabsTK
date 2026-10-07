@@ -1,9 +1,9 @@
 ﻿// Copyright AStarship <https://astarship.net>.
 #pragma once
 #include <_Config.h>
-#if SEAM >= KABUKITOOLKIT_WHO_CORE
-#ifndef KABUKITOOLKIT_WHO_ADDRESS
-#define KABUKITOOLKIT_WHO_ADDRESS
+#if SEAM >= CRABSTK_WHO_CORE
+#ifndef CRABSTK_WHO_ADDRESS_DECL_DECL
+#define CRABSTK_WHO_ADDRESS_DECL_DECL
 namespace _ {
 
 typedef enum { HomeAddress = 0, WordAddress, OtherAddress } AddressType;

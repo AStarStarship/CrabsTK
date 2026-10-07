@@ -1,9 +1,9 @@
 // Copyright AStarship <https://astarship.net>.
 #pragma once
 #include <_Config.h>
-#if SEAM >= KABUKITOOLKIT_TOUCH_CORE
-#ifndef KABUKITOOLKIT_TOUCH_BUTTONSWAP
-#define KABUKITOOLKIT_TOUCH_BUTTONSWAP
+#if SEAM >= CRABSTK_TOUCH_CORE
+#ifndef CRABSTK_TOUCH_BUTTONSWAP_DECL_DECL
+#define CRABSTK_TOUCH_BUTTONSWAP_DECL_DECL
 #include "Button.hpp"
 namespace {
 

@@ -1,9 +1,9 @@
 // Copyright AStarship <https://astarship.net>.
 #pragma once
-#ifndef KABUKITOOLKIT_WHO_USERLIST
-#define KABUKITOOLKIT_WHO_USERLIST
+#ifndef CRABSTK_WHO_USERLIST_DECL_DECL
+#define CRABSTK_WHO_USERLIST_DECL_DECL
 #include <_Config.h>
-#if SEAM >= KABUKITOOLKIT_WHO_CORE
+#if SEAM >= CRABSTK_WHO_CORE
 #include "User.hpp"
 namespace _ {
 

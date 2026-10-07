@@ -1,9 +1,9 @@
 // Copyright AStarship <https://astarship.net>.
 #pragma once
-#ifndef KABUKITOOLKIT_WHO_NAME
-#define KABUKITOOLKIT_WHO_NAME
+#ifndef CRABSTK_WHO_NAME_DECL_DECL
+#define CRABSTK_WHO_NAME_DECL_DECL
 #include <_Config.h>
-#if SEAM >= KABUKITOOLKIT_WHO_NAME
+#if SEAM >= CRABSTK_WHO_NAME
 namespace _ {
 /* A name of an entity. */
 class TName {

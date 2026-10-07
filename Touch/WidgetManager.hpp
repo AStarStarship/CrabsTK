@@ -1,9 +1,9 @@
 // Copyright AStarship <https://astarship.net>.
 #pragma once
-#ifndef KABUKITOOLKIT_TOUCH_WIDGETPAGE
-#define KABUKITOOLKIT_TOUCH_WIDGETPAGE
+#ifndef CRABSTK_TOUCH_WIDGETPAGE_DECL_DECL
+#define CRABSTK_TOUCH_WIDGETPAGE_DECL_DECL
 #include <_Config.h>
-#if SEAM >= KABUKITOOLKIT_TOUCH_CORE
+#if SEAM >= CRABSTK_TOUCH_CORE
 #include "widget.hpp";
 class LIB_MEMBER ControlsPage;
 class LIB_MEMBER Controller;

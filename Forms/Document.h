@@ -1,16 +1,16 @@
 // Copyright AStarship <https://astarship.net>.
 #pragma once
 #include <_Config.h>
-#ifndef KABUKITOOLKIT_DOCUMENT
-#define KABUKITOOLKIT_DOCUMENT
+#ifndef CRABSTK_DOCUMENT_DECL
+#define CRABSTK_DOCUMENT_DECL
 namespace _ {
 class Document {
  public:
   Document();
 
-  SIN Run(SIN arg_count, CHA** args);
+  ISN Run(ISN arg_count, CHA** args);
 
-  template<ypename Printer>
+  template<typename Printer>
   Printer& PrintTo(Printer& p) {
     return p << "Document";
   }

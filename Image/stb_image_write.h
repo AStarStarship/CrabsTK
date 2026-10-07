@@ -110,7 +110,9 @@ CREDITS:
       Thatcher Ulrich
       github:poppolopoppo
       Patrick Boettcher
-      
+      
+
+
 LICENSE
 
   See end of file for license information.
@@ -233,8 +235,8 @@ static void stbi__stdio_write(void *context, void *data, int size) {
 static int stbi__start_write_file(stbi__write_context *s,
                                   const char *filename) {
   FILE *f;
-  errno_t err = fopen_s(&f, filename, "wb");
-  if (!err) return 0;
+  f = fopen(filename, "wb");
+  if (!f) return 0;
   stbi__start_write_callbacks(s, stbi__stdio_write, (void *)f);
   return f != NULL;
 }
@@ -1097,8 +1099,8 @@ STBIWDEF int stbi_write_png(char const *filename, int x, int y, int comp,
                                              stride_bytes, x, y, comp, &len);
   if (png == NULL) return 0;
   FILE *f;
-  errno_t err = fopen_s(&f, filename, "wb");
-  if (!err) {
+  f = fopen(filename, "wb");
+  if (!f) {
     STBIW_FREE(png);
     return 0;
   }

@@ -10,7 +10,7 @@
 #include <cstring>
 #include <type_traits>
 
-namespace KT {
+namespace CT {
 
 struct UndoRecord {
   using Function = void (*)(void*, std::uintptr_t, std::uintptr_t) noexcept;
@@ -73,5 +73,5 @@ class UndoStack {
   ContiguousStack<UndoRecord, StackTotal> records_;
 };
 
-}  // namespace KT
+}  // namespace CT
 #endif

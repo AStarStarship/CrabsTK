@@ -1,9 +1,9 @@
 // Copyright AStarship <https://astarship.net>.
 #pragma once
-#ifndef KABUKITOOLKIT_PRO_WORKSPACE
-#define KABUKITOOLKIT_PRO_WORKSPACE
+#ifndef CRABSTK_PRO_WORKSPACE_DECL_DECL
+#define CRABSTK_PRO_WORKSPACE_DECL_DECL
 #include <_Config.h>
-#if SEAM >= KABUKITOOLKIT_PRO_WORKSPACE
+#if SEAM >= CRABSTK_PRO_WORKSPACE
 #include "Project.hpp"
 namespace _ {
 

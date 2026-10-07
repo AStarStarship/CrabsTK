@@ -8,7 +8,7 @@
 #include <string>
 #include <string_view>
 
-namespace KT::ORM {
+namespace CT::ORM {
 
 enum class Dialect {
   PostgreSQL,
@@ -163,5 +163,5 @@ inline std::string SelectAll(const Schema& schema) {
   return sql;
 }
 
-}  // namespace KT::ORM
+}  // namespace CT::ORM
 #endif

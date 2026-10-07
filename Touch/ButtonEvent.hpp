@@ -1,9 +1,9 @@
 // Copyright AStarship <https://astarship.net>.
 #pragma once
 #include <_Config.h>
-#if SEAM >= KABUKITOOLKIT_TOUCH_CORE
-#ifndef KABUKITOOLKIT_TOUCH_EVENTBUTTON
-#define KABUKITOOLKIT_TOUCH_EVENTBUTTON
+#if SEAM >= CRABSTK_TOUCH_CORE
+#ifndef CRABSTK_TOUCH_EVENTBUTTON_DECL_DECL
+#define CRABSTK_TOUCH_EVENTBUTTON_DECL_DECL
 #include "Button.hpp"
 #include "ControlLayer.hpp"
 #include "Event.h"

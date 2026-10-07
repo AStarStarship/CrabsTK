@@ -7,7 +7,7 @@
 
 #include <SDL3/SDL.h>
 
-namespace KT {
+namespace CT {
 
 /* A pixel in the framebuffer: 8-bit RGBA. */
 struct Pixel {
@@ -187,5 +187,5 @@ class Display {
   Framebuffer framebuffer_;
 };
 
-}  // namespace KT
+}  // namespace CT
 #endif

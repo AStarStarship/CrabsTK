@@ -1,9 +1,9 @@
 // Copyright AStarship <https://astarship.net>.
 #pragma once
 #include <_Config.h>
-#if SEAM >= KABUKITOOLKIT_TOUCH_CORE
-#ifndef KABUKITOOLKIT_TOUCH_DUMMYBUTTON
-#define KABUKITOOLKIT_TOUCH_DUMMYBUTTON
+#if SEAM >= CRABSTK_TOUCH_CORE
+#ifndef CRABSTK_TOUCH_DUMMYBUTTON_DECL_DECL
+#define CRABSTK_TOUCH_DUMMYBUTTON_DECL_DECL
 #include "Button.hpp"
 #include "ButtonEvent.hpp"
 namespace _ {
@@ -24,11 +24,11 @@ class LIB_MEMBER ButtonDummy : public Button {
   /* Action that gets performed when this button gets FPD pressed. */
   virtual void DoublePress (ButtonEvent button_event) {}
 
-  /* Script2 Operations. */
+  /* ASCIICrabs Operations. */
   virtual const Op* Op (CHW index, Expr* expr) {
     static const Op cThis = { "ButtonDummy", 
       OpFirst ('@'), OpLast ('@'),
-      "KT.av" };
+      "CT.av" };
 
     switch (index) {
     case '?':

@@ -1,10 +1,10 @@
 // Copyright AStarship <https://astarship.net>.
 #pragma once
-#ifndef KABUKITOOLKIT_PRO_TASK
-#define KABUKITOOLKIT_PRO_TASK
+#ifndef CRABSTK_PRO_TASK_DECL_DECL
+#define CRABSTK_PRO_TASK_DECL_DECL
 #include <_Config.h>
-#if SEAM >= KABUKITOOLKIT_PRO_CORE
-#include <Script2/String.hpp>
+#if SEAM >= CRABSTK_PRO_CORE
+#include <ASCIICrabs/String.hpp>
 namespace _ {
 
 /* An abstract task in a set of Task(AString). */

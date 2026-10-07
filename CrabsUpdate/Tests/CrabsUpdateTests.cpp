@@ -8,7 +8,7 @@
 #include <cstdint>
 #include <cstring>
 
-using namespace KT;
+using namespace CT;
 
 namespace {
 

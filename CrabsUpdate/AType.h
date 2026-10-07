@@ -5,7 +5,7 @@
 
 #include <cstdint>
 
-namespace KT {
+namespace CT {
 
 using TypeWord = std::uint16_t;
 using TypePayload = std::uint16_t;
@@ -93,5 +93,5 @@ constexpr TypeWord ControlType(Control control) {
   return TypePack(TypePayload(control), TypeMod::Unsigned);
 }
 
-}  // namespace KT
+}  // namespace CT
 #endif

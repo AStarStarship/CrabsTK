@@ -1,7 +1,7 @@
 // Copyright AStarship <https://astarship.net>.
 #pragma once
 #include <_Config.h>
-#if SEAM >= KABUKITOOLKIT_AV_CORE
+#if SEAM >= CRABSTK_AV_CORE
 #ifndef KT_HMI_BUTTON
 #define KT_HMI_BUTTON
 #include "Component.hpp"

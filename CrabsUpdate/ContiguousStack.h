@@ -10,7 +10,7 @@
 #include <type_traits>
 #include <utility>
 
-namespace KT {
+namespace CT {
 
 /*
 A contiguous POD stack that begins in object-local memory and grows to one heap
@@ -135,5 +135,5 @@ class ContiguousStack {
   std::size_t count_ = 0;
 };
 
-}  // namespace KT
+}  // namespace CT
 #endif

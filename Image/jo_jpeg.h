@@ -368,8 +368,8 @@ int jo_write_jpg(const char *filename, const void *data, int width, int height,
   }
 
   FILE *f;
-  errno_t err = fopen_s(&f, filename, "rb");
-  if (!err) return 0;
+  f = fopen(filename, "rb");
+  if (!f) return 0;
 
   quality = quality ? quality : 90;
   quality = quality < 1 ? 1 : quality > 100 ? 100 : quality;

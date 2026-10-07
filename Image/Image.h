@@ -1,7 +1,7 @@
 // Copyright AStarship <https://astarship.net>.
 //#define STB_IMAGE_IMPLEMENTATION
 //#include "stb_image.h"
-#include "../../Script2/Operand.h"
+#include "../../ASCIICrabs/Operand.h"
 
 namespace _ {
 
@@ -21,7 +21,7 @@ class Image : public Operand {
   ISN Height();
 
   /* Scrip2 operations. */
-  virtual const Op* Star(CHN index, Crabs* crabs);
+  virtual const Op* Star(CHC index, Crabs* crabs);
 
   private:
 

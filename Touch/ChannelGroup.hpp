@@ -1,9 +1,9 @@
 // Copyright AStarship <https://astarship.net>.
 #pragma once
-#ifndef KABUKITOOLKIT_TOUCH_CHANNELGROUP
-#define KABUKITOOLKIT_TOUCH_CHANNELGROUP
+#ifndef CRABSTK_TOUCH_CHANNELGROUP_DECL_DECL
+#define CRABSTK_TOUCH_CHANNELGROUP_DECL_DECL
 #include <_Config.h>
-#if SEAM >= KABUKITOOLKIT_TOUCH_CORE
+#if SEAM >= CRABSTK_TOUCH_CORE
 namespace _ {
 
 /* A group of */

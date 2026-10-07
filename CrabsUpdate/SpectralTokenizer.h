@@ -33,7 +33,7 @@ project containers.
 #include "ASCIITypes.h"
 #include "AType.h"
 
-namespace KT {
+namespace CT {
 
 // ---------------------------------------------------------------------------
 // Constants
@@ -667,6 +667,6 @@ class MuseTransformer {
   Vec3 intermediate_[256];
 };
 
-}  // namespace KT
+}  // namespace CT
 
 #endif  // CRABS_TOOLKIT_UPDATE_SPECTRAL_TOKENIZER_H

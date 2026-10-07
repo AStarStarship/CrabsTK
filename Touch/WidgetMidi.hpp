@@ -1,9 +1,9 @@
 // Copyright AStarship <https://astarship.net>.
 #pragma once
-#ifndef KABUKITOOLKIT_TOUCH_MIDIWIDGET
-#define KABUKITOOLKIT_TOUCH_MIDIWIDGET
+#ifndef CRABSTK_TOUCH_MIDIWIDGET_DECL_DECL
+#define CRABSTK_TOUCH_MIDIWIDGET_DECL_DECL
 #include <_Config.h>
-#if SEAM >= KABUKITOOLKIT_TOUCH_CORE
+#if SEAM >= CRABSTK_TOUCH_CORE
 #include "Widget.hpp"
 namespace _ {
 

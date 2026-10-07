@@ -9,7 +9,7 @@ This module contains the reference implementation for I am You Language (IMUL) a
 
 ### Status
 
-Currently, there is no code and I've just been writing IMUL on paper, which is **REALLY** useful because I know exactly what issues every part of my notes on Script2 and KT are about.
+Currently, there is no code and I've just been writing IMUL on paper, which is **REALLY** useful because I know exactly what issues every part of my notes on Script2 and CT are about.
 
 ### Milestones
 

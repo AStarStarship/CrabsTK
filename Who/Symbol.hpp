@@ -1,9 +1,9 @@
 // Copyright AStarship <https://astarship.net>.
 #pragma once
-#ifndef KABUKITOOLKIT_WHO_GRAMMAR
-#define KABUKITOOLKIT_WHO_GRAMMAR
+#ifndef CRABSTK_WHO_GRAMMAR_DECL_DECL
+#define CRABSTK_WHO_GRAMMAR_DECL_DECL
 #include <_Config.h>
-#if SEAM >= KABUKITOOLKIT_WHO_CORE
+#if SEAM >= CRABSTK_WHO_CORE
 namespace _ {
 
 /* Used for settings rules to text grammar.

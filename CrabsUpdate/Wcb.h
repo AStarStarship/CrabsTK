@@ -14,7 +14,7 @@
 #include <immintrin.h>
 #endif
 
-namespace KT {
+namespace CT {
 
 /*
  * Write-Combining Buffer Cache (WCB)
@@ -213,6 +213,6 @@ class Wcb {
   IUC count_ = 0;
 };
 
-}  // namespace KT
+}  // namespace CT
 
 #endif

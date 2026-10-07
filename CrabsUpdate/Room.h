@@ -7,7 +7,7 @@
 #include "AType.h"
 #include "ContiguousStack.h"
 
-namespace KT {
+namespace CT {
 
 /*
 A Chinese Room.
@@ -287,5 +287,5 @@ class Room {
   IUC references_ = 0;
 };
 
-}  // namespace KT
+}  // namespace CT
 #endif

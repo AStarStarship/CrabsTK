@@ -2,7 +2,7 @@
 #pragma once
 #ifndef KT_FORMS_VALIDATOR
 #define KT_FORMS_VALIDATOR
-namespace KT {
+namespace CT {
 class Validatable : public Operand {
 
   virtual BOL IsValid () = 0;

@@ -3,7 +3,7 @@
 #ifndef KABUKI_PRO_PROJECT
 #define KABUKI_PRO_PROJECT
 #include <_Config.h>
-#if SEAM >= KABUKITOOLKIT_PRO_CORE
+#if SEAM >= CRABSTK_PRO_CORE
 #include "Schedule.hpp"
 #include "Task.hpp"
 namespace _ {
@@ -28,7 +28,7 @@ class Mission : public Issue {
     return o << "\nIssue #" << id_;
   }
 
-  /* Script2 operations. */
+  /* ASCIICrabs operations. */
   virtual const Op* Star (CHN index, Expr* expr) {
     return nullptr;
   }
