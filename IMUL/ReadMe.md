@@ -2,10 +2,21 @@
 
 This module contains the reference implementation for I am You Language (IMUL) and the IMUL Specification.
 
-* [IMUL Specification](./spec/readme.md) - The official specification for I am You Language (IMUL).
+* [IMUL Specification](./_Spec/README.md) - The 0.1 language and compiler contract.
+* [Implementation plan](./ImplementationPlan.md) - Local low-level compiler work and acceptance cases.
 * [AStartup Cookbook](https://github.com/AStarCale/AStartupCookbook) - The official documentation for IMUL.
 
-## Roadmap
+## Current compiler scope
+
+The 0.1 spec defines an offline, source-preserving compiler for timestamps,
+repo/ticket selection, word corrections, recurring sessions, and maps. It also
+defines a safe data boundary for local note-scanning and agent adapters. The
+compiler implementation is assigned separately; it is not delivered by this
+spec update. See the implementation plan and conformance cases above.
+
+## Historical roadmap
+
+The older milestones below are preserved as history, not 0.1 requirements.
 
 ### Status
 

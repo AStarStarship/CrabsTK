@@ -51,4 +51,7 @@
 // Code API
 #define CRABSTK_CODE_CODEMODULE      48
 #define CRABSTK_CODE_COMMENTSTRIPPER 49
-#define SEAM_N                          49
+// IMUL API
+#define CRABSTK_IMUL_CORE            50
+#define CRABSTK_IMUL_RELEASE         51
+#define SEAM_N                          51
