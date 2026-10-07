@@ -6,6 +6,95 @@
 
 namespace _ {
 
+/* Event payload kinds (payload of each compiled line). */
+enum {
+  IMUL_EVENT_NONE = 0,
+  IMUL_EVENT_NOTE = 1,       //< Ordinary or corrected note.
+  IMUL_EVENT_LITERAL = 2,    //< `|` literal payload or fenced line.
+  IMUL_EVENT_SESSION_START = 3,
+  IMUL_EVENT_SESSION_END = 4,
+  IMUL_EVENT_MAPPING = 5,
+};
+
+/* Target resolution labels. */
+enum {
+  IMUL_RES_NULL = 0,         //< No target on the line / null context.
+  IMUL_RES_SYNTAX_ONLY = 1,  //< Qualified target, no manifest.
+  IMUL_RES_WORKSPACE = 2,    //< Resolved against a manifest binding.
+};
+
+/* Mapping directions. */
+enum {
+  IMUL_MAP_ONE_WAY = 1,
+  IMUL_MAP_TWO_WAY = 2,
+};
+
+/* Mapping operand kinds. */
+enum {
+  IMUL_NODE_IDENTIFIER = 1,
+  IMUL_NODE_LITERAL = 2,
+};
+
+/* Diagnostic codes (Compiler.md). */
+enum {
+  IMUL_DIAG_NONE = 0,
+  IMUL_DIAG_TIME_INVALID,
+  IMUL_DIAG_TIME_ANCHOR_MISSING,
+  IMUL_DIAG_TIME_SUFFIX_INVALID,
+  IMUL_DIAG_TIME_OVERFLOW,
+  IMUL_DIAG_WORKSPACE_REQUIRED,
+  IMUL_DIAG_REPOSITORY_UNKNOWN,
+  IMUL_DIAG_REPOSITORY_AMBIGUOUS,
+  IMUL_DIAG_ISSUE_INVALID,
+  IMUL_DIAG_ISSUE_REPOSITORY_MISSING,
+  IMUL_DIAG_REORDER_INVALID,
+  IMUL_DIAG_MAPPING_INVALID,
+  IMUL_DIAG_SESSION_INVALID,
+  IMUL_DIAG_SESSION_UNCLOSED,
+  IMUL_DIAG_SESSION_TARGET_CHANGED,
+  IMUL_DIAG_FENCE_UNCLOSED,
+  IMUL_DIAG_ENCODING_INVALID,
+  IMUL_DIAG_LIMIT_EXCEEDED,
+};
+
+/* A word-correction pair inside a note (original span + display operands). */
+struct TImulCorrection {
+  TImulSpan span;         //< The original correction span (both operands).
+  IUD has_left;
+  const CHA* left;
+  ISN left_len;
+  IUD has_right;
+  const CHA* right;
+  ISN right_len;
+};
+
+/* A mapping operand (kind, original text, comparison key). */
+struct TImulMapNode {
+  IUD kind;             //< IMUL_NODE_IDENTIFIER or IMUL_NODE_LITERAL.
+  IUD has_text;
+  const CHA* text;      //< Original operand text.
+  ISN text_len;
+  IUD has_key;
+  const CHA* key;       //< Identifier comparison key (identifiers only).
+  ISN key_len;
+};
+
+/* One mapping record (source-backed edge). */
+struct TImulMapping {
+  TImulSpan span;
+  IUD direction;        //< IMUL_MAP_ONE_WAY or IMUL_MAP_TWO_WAY.
+  TImulMapNode left,
+              right;
+};
+
+/* A diagnostic with code, severity, span, and message. */
+struct TImulDiagnostic {
+  IUD code;
+  IUD severity;         //< 1 = error, 2 = warning.
+  TImulSpan span;
+  const CHA* message;   //< Explanatory; tests assert code/span, not wording.
+};
+
 /* Bounded byte span into the ORIGINAL IMUL source (half-open).
 @code
   byte_start .. byte_end - 1
@@ -35,18 +124,25 @@ struct TImulTimestamp {
 
 /* One compiled IMUL line: its committed context snapshot plus the payload. */
 struct TImulEvent {
-  IUD kind;  //< TImulEventKind code.
+  IUD kind;  //< IMUL_EVENT_* code.
   TImulSpan span;
   IUD has_repo;          //< 1 when repository points into the source.
-  const CHA* repository; //< Canonical "owner/repo" (caller/manifest owned).
+  const CHA* repository; //< Canonical "owner/repo" (source/manifest owned).
   IUD has_issue;         //< 1 when issue is set.
   IUD issue;             //< 1..2147483647.
   IUD has_timestamp;     //< 1 when timestamp is set.
   TImulTimestamp timestamp;
-  IUD resolution;        //< TImulResolution code, 0 when no target.
-  IUD has_display;       //< 1 when display_text points into the source.
+  IUD resolution;        //< IMUL_RES_* code.
+  IUD has_display;       //< 1 when display_text is set.
   const CHA* display_text;
   ISN display_len;
+  // Note payloads:
+  IUD has_corrections;
+  const TImulCorrection* corrections;
+  ISN correction_count;
+  // Mapping payloads:
+  IUD has_mapping;
+  TImulMapping mapping;
 };
 
 /* A closed session row (start/stop pairs committed in source order). */
@@ -79,9 +175,14 @@ struct TImulResult {
   IUD status;            //< 0 valid, 1 has errors, 2 limit exceeded.
   ISN event_count,
       session_count,
+      mapping_count,
       error_count,
       warning_count;
-  TImulCase cases[64];   //< Index by conformance case number (0 = unused).
+  const TImulEvent* events;          //< Caller-owned array.
+  const TImulSession* sessions;      //< Caller-owned array.
+  const TImulMapping* mappings;      //< Caller-owned array (all edges).
+  const TImulDiagnostic* diagnostics;//< Caller-owned array.
+  const TImulCorrection* corrections;//< Caller-owned array (note payloads).
 };
 
 /* Limits (inclusive byte/count caps). */
