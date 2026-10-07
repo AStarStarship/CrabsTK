@@ -3,12 +3,25 @@
 #include <_Config.h>
 #ifndef CRABSTK_CODE_CODEMODULE_DECL
 #define CRABSTK_CODE_CODEMODULE_DECL
-namespace _ {
-class CodeModule {
-  const CHA *header_, *repo_address_, *output_path_;
 
-  public:
+namespace CT {
+namespace Code {
+
+/* A code module wraps a Git repository and its local checkout. */
+class CodeModule {
+ public:
   CodeModule();
+
+  const CHA* Header() const { return header_; }
+  const CHA* RepoAddress() const { return repo_address_; }
+  const CHA* OutputPath() const { return output_path_; }
+
+ private:
+  const CHA* header_ = 0;
+  const CHA* repo_address_ = 0;
+  const CHA* output_path_ = 0;
 };
-}  //< namespace _
+
+}  //< namespace Code
+}  //< namespace CT
 #endif

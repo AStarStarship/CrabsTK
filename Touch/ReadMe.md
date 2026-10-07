@@ -1,6 +1,6 @@
-# kabuki.features.touch
+# crabs.features.touch
 
-This module contains the Kabuki Touch SDK for interfacing with common tactile controls.
+This module contains the Crabs Touch SDK for interfacing with common tactile controls.
 
 ## License
 

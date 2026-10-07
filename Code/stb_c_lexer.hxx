@@ -1,5 +1,5 @@
 /* CrabsTK
-@link    https://github.com/KabukiStarship/CT.git
+@link    https://github.com/AStarship/CT.git
 @file    /client.h
 @author  Sean Barrett <https://nothings.org> and
          Cale McCollough <https://cookingwithcale.org>

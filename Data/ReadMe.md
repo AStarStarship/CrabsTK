@@ -1,4 +1,4 @@
-This folder contains the KabukiToolkit Database API that is the backend for KabukiDB.
+This folder contains the CrabsTK Database API that is the backend for CrabsDB.
 
 ## License
 

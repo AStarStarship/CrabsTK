@@ -1,4 +1,4 @@
-This module contains the KabukiToolkit GUI API.
+This module contains the CrabsTK GUI API.
 
 ## License
 

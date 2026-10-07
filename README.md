@@ -1,4 +1,4 @@
-# Kabuki Toolkit
+# Crabs Toolkit
 
 ```AsciiArt
   /\
@@ -11,13 +11,13 @@
    /         \                    ♫♪.ılılıll|̲̅̅●̲̅̅|̲̅̅=̲̅̅|̲̅̅●̲̅̅|llılılı.♫♪
 ```
 
-Kabuki Toolkit (CT) is a C++ compiler, Hybrid Embedded-C++ webapp API, and Script2 and IMUL (I am You Language) toolkit for making intelligent connected software and art. The best place to get started learning CT is to read the [KP Cookbook](https://github.com/KabukiStarship/KabukiPressCookbook), an open-source book that teaches how to make intelligent connected software, websites, books, and art with Modern Embedded-C++, Script2, and I am You Language (IMUL).
+Crabs Toolkit (CT) is a C++ compiler, Hybrid Embedded-C++ webapp API, and Script2 and IMUL (I am You Language) toolkit for making intelligent connected software and art. The best place to get started learning CT is to read the [KP Cookbook](https://github.com/AStarship/CrabsPressCookbook), an open-source book that teaches how to make intelligent connected software, websites, books, and art with Modern Embedded-C++, Script2, and I am You Language (IMUL).
 
-[![GitHub version](https://badge.fury.io/gh/KabukiStarship%2FKabukiToolkit.svg)](https://badge.fury.io/gh/KabukiStarship%2FKabukiToolkit)
+[![GitHub version](https://badge.fury.io/gh/AStarship%2FCrabsTK.svg)](https://badge.fury.io/gh/AStarship%2FCrabsTK)
 
 ## Mission and Vision
 
-The mission of Kabuki Toolkit is to make it easier and faster to create high-performance products in Embedded-C++, Script2, and IMUL. Our vision is too eliminate wasted time, resources, and money with computer software throughout product life cycles.
+The mission of Crabs Toolkit is to make it easier and faster to create high-performance products in Embedded-C++, Script2, and IMUL. Our vision is too eliminate wasted time, resources, and money with computer software throughout product life cycles.
 
 ## License
 

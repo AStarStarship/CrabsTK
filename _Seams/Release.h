@@ -1,5 +1,5 @@
 /* CrabsTK
-@link    https://github.com/KabukiStarship/CT.git
+@link    https://github.com/AStarship/CT.git
 @file    /_Seams/release.h
 @author  Cale McCollough <https://cookingwithcale.org>
 @license Copyright 2019-20 (C) AStarship <astarship.net>; all rights 
