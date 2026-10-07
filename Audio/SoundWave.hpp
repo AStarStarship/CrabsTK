@@ -1,7 +1,7 @@
 // Copyright AStarship <https://astarship.net>.
 #pragma once
-#ifndef KABUKITOOLKIT_AUDIO_SOUNDWAVE_TEMPLATES
-#define KABUKITOOLKIT_AUDIO_SOUNDWAVE_TEMPLATES
+#ifndef CRABSTK_AUDIO_SOUNDWAVE_TEMPLATES_DECL_DECL
+#define CRABSTK_AUDIO_SOUNDWAVE_TEMPLATES_DECL_DECL
 #include <_Config.h>
 #include "SoundWave.h"
 namespace _ {

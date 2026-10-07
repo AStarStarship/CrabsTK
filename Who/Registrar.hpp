@@ -1,9 +1,9 @@
 // Copyright AStarship <https://astarship.net>.
 #pragma once
 #include <_Config.h>
-#if SEAM >= KABUKITOOLKIT_WHO_CORE
-#ifndef KABUKITOOLKIT_WHO_IDSERVER
-#define KABUKITOOLKIT_WHO_IDSERVER
+#if SEAM >= CRABSTK_WHO_CORE
+#ifndef CRABSTK_WHO_IDSERVER_DECL_DECL
+#define CRABSTK_WHO_IDSERVER_DECL_DECL
 
 namespace _ {
 

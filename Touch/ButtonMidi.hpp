@@ -1,9 +1,9 @@
 // Copyright AStarship <https://astarship.net>.
 #pragma once
 #include <_Config.h>
-#if SEAM >= KABUKITOOLKIT_TOUCH_CORE
-#ifndef KABUKITOOLKIT_TOUCH_MIDIBUTTON
-#define KABUKITOOLKIT_TOUCH_MIDIBUTTON
+#if SEAM >= CRABSTK_TOUCH_CORE
+#ifndef CRABSTK_TOUCH_MIDIBUTTON_DECL_DECL
+#define CRABSTK_TOUCH_MIDIBUTTON_DECL_DECL
 #include "Button.hpp"
 #include "ControlMidi.hpp"
 namespace _ {

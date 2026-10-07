@@ -1,9 +1,9 @@
 // Copyright AStarship <https://astarship.net>.
 #pragma once
-#ifndef KABUKITOOLKIT_AV_ADSR
-#define KABUKITOOLKIT_AV_ADSR
+#ifndef CRABSTK_AV_ADSR_DECL_DECL
+#define CRABSTK_AV_ADSR_DECL_DECL
 #include <_Config.h>
-#if SEAM >= KABUKITOOLKIT_AV_CORE
+#if SEAM >= CRABSTK_AV_CORE
 namespace _ {
 
 /* A ADSR filter. */

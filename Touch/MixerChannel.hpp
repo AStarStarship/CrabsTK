@@ -1,9 +1,9 @@
 // Copyright AStarship <https://astarship.net>.
 #pragma once
-#ifndef KABUKITOOLKIT_TOUCH_MIXERCHANNEL
-#define KABUKITOOLKIT_TOUCH_MIXERCHANNEL
+#ifndef CRABSTK_TOUCH_MIXERCHANNEL_DECL_DECL
+#define CRABSTK_TOUCH_MIXERCHANNEL_DECL_DECL
 #include <_Config.h>
-#if SEAM >= KABUKITOOLKIT_TOUCH_CORE
+#if SEAM >= CRABSTK_TOUCH_CORE
 namespace _ {
 
 /* A mixer channel Operation. */

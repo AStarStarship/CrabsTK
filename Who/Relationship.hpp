@@ -1,9 +1,9 @@
 // Copyright AStarship <https://astarship.net>.
 #pragma once
-#ifndef KABUKITOOLKIT_WHO_RELATIONSHIP
-#define KABUKITOOLKIT_WHO_RELATIONSHIP
+#ifndef CRABSTK_WHO_RELATIONSHIP_DECL_DECL
+#define CRABSTK_WHO_RELATIONSHIP_DECL_DECL
 #include <_Config.h>
-#if SEAM >= KABUKITOOLKIT_WHO_CORE
+#if SEAM >= CRABSTK_WHO_CORE
 #include "Entity.hpp"
 namespace _ {
 

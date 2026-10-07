@@ -42,8 +42,8 @@ static int stbi__dds_test(stbi__context *s) {
 int stbi__dds_test_filename(char const *filename) {
   int r;
   FILE *f;
-  errno_t err = fopen_s(&f, filename, "rb");
-  if (!err) return 0;
+  f = fopen(filename, "rb");
+  if (!f) return 0;
   r = stbi__dds_test_file(f);
   if (f) fclose(f);
   return r;
@@ -294,8 +294,8 @@ int stbi__dds_info_from_path(char const *filename, int *x, int *y, int *comp,
                              int *iscompressed) {
   int res;
   FILE *f;
-  errno_t err = fopen_s(&f, filename, "rb");
-  if (!err) return 0;
+  f = fopen(filename, "rb");
+  if (!f) return 0;
   res = stbi__dds_info_from_file(f, x, y, comp, iscompressed);
   if (f) fclose(f);
   return res;
@@ -519,8 +519,8 @@ void *stbi__dds_load_from_path(const char *filename, int *x, int *y, int *comp,
                                int req_comp) {
   void *data;
   FILE *f;
-  errno_t err = fopen_s(&f, filename, "rb");
-  if (!err) return 0;
+  f = fopen(filename, "rb");
+  if (!f) return 0;
   data = stbi__dds_load_from_file(f, x, y, comp, req_comp);
   if (f) fclose(f);
   return data;

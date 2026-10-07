@@ -1,9 +1,9 @@
 // Copyright AStarship <https://astarship.net>.
 #pragma once
-#ifndef KABUKITOOLKIT_AV_EVENT
-#define KABUKITOOLKIT_AV_EVENT
+#ifndef CRABSTK_AV_EVENT_DECL
+#define CRABSTK_AV_EVENT_DECL
 #include <_Config.h>
-#if SEAM >= KABUKITOOLKIT_AV_1
+#if SEAM >= CRABSTK_AV_1
 namespace _ {
 
 /* A event with an ASCII TSS (Time Subsecond) timestamp. */

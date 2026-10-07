@@ -1,9 +1,9 @@
 // Copyright AStarship <https://astarship.net>.
 #pragma once
-#ifndef KABUKITOOLKIT_WHO_PRIVILAGE
-#define KABUKITOOLKIT_WHO_PRIVILAGE
+#ifndef CRABSTK_WHO_PRIVILAGE_DECL_DECL
+#define CRABSTK_WHO_PRIVILAGE_DECL_DECL
 #include <_Config.h>
-#if SEAM >= KABUKITOOLKIT_WHO_CORE
+#if SEAM >= CRABSTK_WHO_CORE
 
 namespace _ {
 

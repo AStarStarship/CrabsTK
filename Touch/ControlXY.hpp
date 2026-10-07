@@ -1,9 +1,9 @@
 // Copyright AStarship <https://astarship.net>.
 #pragma once
-#ifndef KABUKITOOLKIT_TOUCH_XYCONTROL
-#define KABUKITOOLKIT_TOUCH_XYCONTROL
+#ifndef CRABSTK_TOUCH_XYCONTROL_DECL_DECL
+#define CRABSTK_TOUCH_XYCONTROL_DECL_DECL
 #include <_Config.h>
-#if SEAM >= KABUKITOOLKIT_TOUCH_CORE
+#if SEAM >= CRABSTK_TOUCH_CORE
 namespace _ {
 
 class LIB_MEMBER XyTouchpad : public Component {

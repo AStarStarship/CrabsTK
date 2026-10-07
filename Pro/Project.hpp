@@ -3,7 +3,7 @@
 #ifndef KABUKI_PRO_PROJECT
 #define KABUKI_PRO_PROJECT
 #include <_Config.h>
-#if SEAM >= KABUKITOOLKIT_PRO
+#if SEAM >= CRABSTK_PRO
 #include "Schedule.hpp"
 #include "Task.hpp"
 namespace _ {
@@ -292,7 +292,7 @@ class Project : public Operand {
 
   /* Gets the help CHA. */
   static const CHA* GetAppHelpString() {
-    return "\n| KT.pro.Project Help:\n"
+    return "\n| CT.pro.Project Help:\n"
       "| There are three primary classes for use:\n"
       "|\n"
       "| Task     - A general purpose todo task.\n"
@@ -383,7 +383,7 @@ class Project : public Operand {
     return o << LineString ('_');
   }
 
-  /* Script2 operations. */
+  /* ASCIICrabs operations. */
   virtual const Op* Star (CHN index, Expr* expr) {
     return nullptr;
   }

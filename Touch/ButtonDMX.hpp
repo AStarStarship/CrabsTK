@@ -2,9 +2,9 @@
 
 #pragma once
 #include <_Config.h>
-#if SEAM >= KABUKITOOLKIT_AV_CORE
-#ifndef KABUKITOOLKIT_AV_DMXBUTTON
-#define KABUKITOOLKIT_AV_DMXBUTTON
+#if SEAM >= CRABSTK_AV_CORE
+#ifndef CRABSTK_AV_DMXBUTTON_DECL_DECL
+#define CRABSTK_AV_DMXBUTTON_DECL_DECL
 #include "Button.hpp"
 #include "ControlDMX.hpp"
 namespace _ {

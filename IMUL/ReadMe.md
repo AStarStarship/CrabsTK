@@ -9,7 +9,7 @@ This module contains the reference implementation for I am You Language (IMUL) a
 
 ### Status
 
-Currently, there is no code and I've just been writing IMUL on paper, which is **REALLY** useful because I know exactly what issues every part of my notes on Script2 and KT are about.
+Currently, there is no code and I've just been writing IMUL on paper, which is **REALLY** useful because I know exactly what issues every part of my notes on Script2 and CT are about.
 
 ### Milestones
 
@@ -36,6 +36,6 @@ Currently, there is no code and I've just been writing IMUL on paper, which is *
 
 ## License
 
-Copyright © [Kabuki Starship](https://kabukistarship.com); all rights reserved.
+Copyright © [AStarship](https://astarship.net); all rights reserved.
 
 This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. If a copy of the MPL was not distributed with this file, You can obtain one at <https://mozilla.org/MPL/2.0/>.

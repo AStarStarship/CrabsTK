@@ -1,9 +1,9 @@
 // Copyright AStarship <https://astarship.net>.
 #pragma once
-#ifndef KABUKITOOLKIT_WHO_UIDSERVER
-#define KABUKITOOLKIT_WHO_UIDSERVER
+#ifndef CRABSTK_WHO_UIDSERVER_DECL_DECL
+#define CRABSTK_WHO_UIDSERVER_DECL_DECL
 #include <_Config.h>
-#if SEAM >= KABUKITOOLKIT_WHO_CORE
+#if SEAM >= CRABSTK_WHO_CORE
 namespace _ {
 
 /* A uid server that can save and load the uid from a file.

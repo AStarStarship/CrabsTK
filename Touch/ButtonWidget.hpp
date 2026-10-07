@@ -1,9 +1,9 @@
 // Copyright AStarship <https://astarship.net>.
 #pragma once
 #include <_Config.h>
-#if SEAM >= KABUKITOOLKIT_TOUCH_CORE
-#ifndef KABUKITOOLKIT_TOUCH_DEVICEBUTTON
-#define KABUKITOOLKIT_TOUCH_DEVICEBUTTON
+#if SEAM >= CRABSTK_TOUCH_CORE
+#ifndef CRABSTK_TOUCH_DEVICEBUTTON_DECL_DECL
+#define CRABSTK_TOUCH_DEVICEBUTTON_DECL_DECL
 #include "Button.hpp"
 namespace _ {
 
@@ -62,7 +62,7 @@ class LIB_MEMBER ButtonWidget : public ButtonMacro {
     return true;
   }
 
-  /* Script2 operations. */
+  /* ASCIICrabs operations. */
   const Op* Star (CHW index, Expr *expr) {
     static const Op this_member = {
         "ButtonDevice", MemberCount (0),

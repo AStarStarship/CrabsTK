@@ -1,9 +1,9 @@
 // Copyright AStarship <https://astarship.net>.
 #pragma once
-#ifndef KABUKITOOLKIT_PRO_SCHEDULE
-#define KABUKITOOLKIT_PRO_SCHEDULE
+#ifndef CRABSTK_PRO_SCHEDULE_DECL_DECL
+#define CRABSTK_PRO_SCHEDULE_DECL_DECL
 #include <_Config.h>
-#if SEAM >= KABUKITOOLKIT_PRO_CORE
+#if SEAM >= CRABSTK_PRO_CORE
 #include "Task.hpp"
 namespace _ {
 

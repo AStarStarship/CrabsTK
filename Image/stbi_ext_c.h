@@ -48,8 +48,8 @@ int stbi_test_from_file(FILE *f) {
 
 int stbi_test(char const *filename) {
   FILE *f;
-  errno_t err = fopen_s(&f, filename, "rb");
-  if (!err) return STBI_unknown;
+  f = fopen(filename, "rb");
+  if (!f) return STBI_unknown;
   int result = stbi_test_from_file(f);
   if (f) fclose(f);
   return result;

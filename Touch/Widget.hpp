@@ -1,9 +1,9 @@
 // Copyright AStarship <https://astarship.net>.
 #pragma once
-#ifndef KABUKITOOLKIT_TOUCH_WIDGET
-#define KABUKITOOLKIT_TOUCH_WIDGET
+#ifndef CRABSTK_TOUCH_WIDGET_DECL_DECL
+#define CRABSTK_TOUCH_WIDGET_DECL_DECL
 #include <_Config.h>
-#if SEAM >= KABUKITOOLKIT_TOUCH_CORE
+#if SEAM >= CRABSTK_TOUCH_CORE
 #include "ControlMatrix.hpp"
 #include "Component.hpp"
 #include "ControlMidi.hpp"
@@ -305,7 +305,7 @@ class LIB_MEMBER TWidget : public Operation {
     return o;
   }
 
-  /* Script2 operations. */
+  /* ASCIICrabs operations. */
   virtual const Op* Star (CHW index, Expr* io);
 
  private:

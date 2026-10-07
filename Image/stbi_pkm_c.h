@@ -42,8 +42,8 @@ static int stbi__pkm_test(stbi__context *s) {
 int stbi__pkm_test_filename(char const *filename) {
   int r;
   FILE *f;
-  errno_t err = fopen_s(&f, filename, "rb");
-  if (!err) return 0;
+  f = fopen(filename, "rb");
+  if (!f) return 0;
   r = stbi__pkm_test_file(f);
   if (f) fclose(f);
   return r;
@@ -112,8 +112,8 @@ int stbi__pkm_info_from_callbacks(stbi_io_callbacks const *clbk, void *user,
 int stbi__pkm_info_from_path(char const *filename, int *x, int *y, int *comp) {
   int res;
   FILE *f;
-  errno_t err = fopen_s(&f, filename, "rb");
-  if (!err) return 0;
+  f = fopen(filename, "rb");
+  if (!f) return 0;
   res = stbi__pkm_info_from_file(f, x, y, comp);
   if (f) fclose(f);
   return res;
@@ -201,8 +201,8 @@ void *stbi__pkm_load_from_path(char const *filename, int *x, int *y, int *comp,
                                int req_comp) {
   void *data;
   FILE *f;
-  errno_t err = fopen_s(&f, filename, "rb");
-  if (!err) return 0;
+  f = fopen(filename, "rb");
+  if (!f) return 0;
   data = stbi__pkm_load_from_file(f, x, y, comp, req_comp);
   if (f) fclose(f);
   return data;
