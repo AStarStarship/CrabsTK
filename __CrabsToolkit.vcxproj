@@ -308,9 +308,9 @@
     <VCProjectVersion>16.0</VCProjectVersion>
     <ProjectGuid>{F634AA2B-5701-4DBC-A60E-FFAFB220504B}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>kabukitoolkit</RootNamespace>
+    <RootNamespace>crabstoolkit</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
-    <ProjectName>KabukiToolkit</ProjectName>
+    <ProjectName>CrabsToolkit</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
