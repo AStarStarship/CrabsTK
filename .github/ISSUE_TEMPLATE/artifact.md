@@ -5,20 +5,10 @@ title: 'Artifact'
 labels: ''
 assignees: 'AStarCale'
 ---
-# Artifact
-
 ## Description
 
 The artifact that is left over from a change is...
 
 ## Files Affected
 
-1. `*.*
-
-## A
-
-
-
-## License
-
-Copyright [AStarship](https://astarship.net); all rights reserved.
+1. `?`

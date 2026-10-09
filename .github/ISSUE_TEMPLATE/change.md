@@ -5,10 +5,10 @@ title: 'Change'
 labels: ''
 assignees: 'AStarCale'
 ---
-# Feature
+## Problem
 
+The problem that is so great it requires a Change with Change Control Management is...
 
+## Solution
 
-## License
-
-Copyright [AStarship](https://astarship.net); all rights reserved.
+The solution is...
