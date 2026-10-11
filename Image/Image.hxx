@@ -1,15 +1,17 @@
 // Copyright AStarship <https://astarship.net>.
-//#define STB_IMAGE_IMPLEMENTATION
-//#include "stb_image.h"
 #include "Image.h"
+
 namespace _ {
 
-Image::Image() {
+Image::Image()
+    : image_{nullptr, 0, 0, 0} {}
+
+Image::Image(const CHA* uri)
+    : image_{nullptr, 0, 0, 0} {
+  (void)uri;  //< TODO: load from file when the in-house decoder lands.
 }
 
-const Op* Image::Star (CHC index, Crabs* crabs) {
+Image::Image(ISN width, ISN height)
+    : image_{nullptr, width, height, 4} {}
 
-  return nullptr;
-}
-
-} //< namespace _
+}  //< namespace _
