@@ -51,7 +51,16 @@
 // Code API
 #define CRABSTK_CODE_CODEMODULE      48
 #define CRABSTK_CODE_COMMENTSTRIPPER 49
+#define CRABSTK_CODE_CORE            48  //< Alias: gate the entire Code module.
 // IMUL API
 #define CRABSTK_IMUL_CORE            50
 #define CRABSTK_IMUL_RELEASE         51
-#define SEAM_N                          51
+// Pro API
+#define CRABSTK_PRO_CORE             41  //< Alias: gate the entire Pro module.
+// Touch API
+#define CRABSTK_TOUCH_CORE           54  //< Gate the entire Touch module.
+// GUI API
+#define CRABSTK_GUI_CORE             55  //< Gate the entire GUI module.
+// Release: build and run the full test tree.
+#define CRABSTK_RELEASE              56
+#define SEAM_N                       56

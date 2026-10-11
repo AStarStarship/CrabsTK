@@ -14,7 +14,7 @@ class LIB_MEMBER Workspace {
   Workspace() {}
 
   /* Clones the other object. */
-  Project(const Project& p);
+  Workspace(const Workspace& other);
 
   /* Destructor. */
   virtual ~Workspace();

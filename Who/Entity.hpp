@@ -16,7 +16,7 @@ class TEntity {
   TEntity() {}
 
   /* Gets the entity first name. */
-  const TString<>& GetFirstName() { return first_name_; }
+  const TString<>& GetFirstName() { return *first_name_; }
 
   /* Attempts to set the name to the one given AString. */
   void SetFirstName(const TString<>& AString) {
@@ -25,15 +25,13 @@ class TEntity {
   }
 
   /* Gets the entity last name. */
-  const TString<>& GetLastName() { return last_name_; }
+  const TString<>& GetLastName() { return *last_name_; }
 
   /* Attempts to set the last name to the given AString. */
   void SetLastName(const TString<>& AString) {
     delete last_name_;
     last_name_ = StringClone (AString);
   }
-
-  TString<>
 
   /* Returns true if this entity contains the search query. */
   BOL Query(const TString<>& query) {
@@ -69,7 +67,7 @@ class TEntity {
   /* Prints this object to a expression. */
   template<typename Printer>
   Printer& Print (Printer& o) {
-    out << "Entity: ";
+    o << "Entity: ";
   }
 
  private:

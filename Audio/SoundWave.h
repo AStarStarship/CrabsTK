@@ -9,6 +9,7 @@ struct SoundWave {
   IUA riff_id[4];    //< 'RIFF' chunk.
   IUC ruff_size;     //< filesize - 8.
   IUA wave_type[4];  //< 'WAVE' filetype.
+  IUA fmt_id[4];     //< 'fmt ' chunk ID.
   IUC fmt_size;      //< Format chunk size.
   IUB fmt_code;      //< 1 = PCM.
   IUB channels;      //< 1 = mono, 2 = stereo.

@@ -17,13 +17,13 @@ class TAddress {
 
   /* Creates an address with the given parameters. */
   TAddress(const TString<>& street, const TString<>& aCity, const TString<>& aState,
-          const TString<>& aZip, const TString<>& aCcountry, AddressType aType)
+          const TString<>& aZip, const TString<>& aCountry, AddressType aType)
     : street_ (StringClone (street)),
-      city_ (StringClone (city)),
-      state_ (StringClone (state)),
-      zip_ (StringClone (zip)),
-      country_ (StringClone (country)),
-      type_ (type) {}
+      city_ (StringClone (aCity)),
+      state_ (StringClone (aState)),
+      zip_ (StringClone (aZip)),
+      country_ (StringClone (aCountry)),
+      type_ (aType) {}
 
   /* Gets the street address. */
   const TString<>& GetStreet() { return street_; }
@@ -55,7 +55,7 @@ class TAddress {
   
 
   /* Gets the zip code. */
-  const TString<>& GetZip();
+  const TString<>& GetZip() { return *zip_; }
 
   /* Sets the zip code. */
   void SetZip(const TString<>& AString) {
@@ -83,7 +83,7 @@ class TAddress {
   /* Prints this object to a Expr. */
   template<typename Printer>
   Printer& Print (Printer& o) {
-    out << "Address:"
+    o << "Address:"
       << "\n Street         : " << street_ << "\n City           : " << city_
       << "\n State/Province : " << state_ << "\n Zip/Postal Code: " << zip_
       << "\n Country        : " << country_ << "\n";

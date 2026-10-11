@@ -1,14 +1,10 @@
 // Copyright AStarship <https://astarship.net>.
 #include <_Config.h>
-#include <ASCIICrabs/String.hpp>
 #include "CommentStripper.h"
 
 #include <cstdio>
-#include <string>
 
-using namespace _;
-namespace CT {
-namespace Code {
+namespace _ {
 
 /* Strips C++ comments from a source file and writes the result to stdout.
 Tabs are expanded to `tab_space_count` spaces.
@@ -17,11 +13,10 @@ ISN StripComments(const CHA* directory, const CHA* filename,
                   ISN tab_space_count) {
   if (IsError(directory) || IsError(filename)) return -1;
 
-  std::string path(directory);
-  path += "/";
-  path += filename;
+  CHA path[4096];
+  snprintf_s(path, sizeof(path), "%s/%s", directory, filename);
 
-  FILE* file_in = fopen(path.c_str(), "r");
+  FILE* file_in = fopen(path, "r");
   if (file_in == 0) return -1;
 
   enum State { cScanningCode = 0, cScanningCommentLine, cScanningCommentBlock };
@@ -87,5 +82,4 @@ ISN StripComments(const CHA* directory) {
   return 0;
 }
 
-}  //< namespace Code
-}  //< namespace CT
+}  //< namespace _

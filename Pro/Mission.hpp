@@ -1,7 +1,7 @@
 // Copyright AStarship <https://astarship.net>.
 #pragma once
-#ifndef CRABSTK_PRO_PROJECT
-#define CRABSTK_PRO_PROJECT
+#ifndef CRABSTK_PRO_MISSION
+#define CRABSTK_PRO_MISSION
 #include <_Config.h>
 #if SEAM >= CRABSTK_PRO_CORE
 #include "Schedule.hpp"
@@ -17,7 +17,7 @@ class Mission : public Issue {
     : key_ (key), readme_ (readme), task_ (nullptr) {}
 
   /* Destructor. */
-  ~Issue() {}
+  ~Mission() {}
   
   /* Gets the Issue Id number. */
   ISW Id () { return id_; }

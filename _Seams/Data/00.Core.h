@@ -8,7 +8,7 @@ Public License, v. 2.0. If a copy of the MPL was not distributed with this file,
 You can obtain one at <https://mozilla.org/MPL/2.0/>. */
 #pragma once
 #include <_Config.h>
-#if SEAM == CRABSTK_DATA_CORE
+#if SEAM == CRABSTK_DATA_RECORD
 #include <ASCIICrabs/_Debug.h>
 #else
 #include <ASCIICrabs/_Release.h>
@@ -17,7 +17,7 @@ using namespace _;
 namespace CT {
 namespace Database {
 inline const CHA* Core(const CHA* args) {
-#if SEAM >= CRABSTK_PRO_0
+#if SEAM >= CRABSTK_DATA_RECORD
   A_TEST_BEGIN;
 
 #endif

@@ -1,6 +1,6 @@
 #
 
-This module contains the CrabsTK C+ Code API.
+This module contains the CrabsTK C++ Code API and STB code, which is temporary.
 
 ## License
 

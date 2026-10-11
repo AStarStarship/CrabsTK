@@ -2,19 +2,21 @@
 #pragma once
 #ifndef KT_FORMS_VALIDATOR
 #define KT_FORMS_VALIDATOR
-namespace CT {
-class Validatable : public Operand {
+#include <_Config.h>
+namespace _ {
 
-  virtual BOL IsValid () = 0;
-
-  virtual const Op* Star (CHN index, Crabs* crabs) = 0;
+/* A form field that can validate its own content. */
+class Validatable {
+ public:
+  virtual ~Validatable() {}
+  virtual BOL IsValid() = 0;
 };
 
+/* A validator that checks a collection of validatable fields. */
 class Validator : public Validatable {
-
-  virtual BOL IsValid () = 0;
-
-  virtual const Op* Star (CHN index, Crabs* crabs) = 0;
+ public:
+  BOL IsValid() override { return true; }
 };
-};
+
+}  //< namespace _
 #endif

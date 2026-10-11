@@ -1,7 +1,7 @@
 // Copyright AStarship <https://astarship.net>.
 #pragma once
-#ifndef CRABSTK_WHO_GRAMMAR_DECL_DECL
-#define CRABSTK_WHO_GRAMMAR_DECL_DECL
+#ifndef CRABSTK_WHO_SYMBOL_DECL_DECL
+#define CRABSTK_WHO_SYMBOL_DECL_DECL
 #include <_Config.h>
 #if SEAM >= CRABSTK_WHO_CORE
 namespace _ {
@@ -29,7 +29,9 @@ class TSymbol {
   /* Copy Constructor. */
   TSymbol (const TSymbol& initState)
     : num_illegal_char_ranges_ (initState.num_illegal_char_ranges_),
-      num_mandatory_char_ranges_ = initState.num_mandatory_char_ranges_) {
+      num_mandatory_char_ranges_ (initState.num_mandatory_char_ranges_),
+      min_length_ (initState.min_length_),
+      max_length_ (initState.max_length_) {
     /*
     ISC i;
     if (num_illegal_char_ranges_) {
@@ -55,9 +57,9 @@ class TSymbol {
     */
   }
 
-  const TString<>& GetDefaultPassword () { "password"; }
+  const CHA* GetDefaultPassword() { return "password"; }
 
-  const TString<>& GetDefaultPasswordFormat () { return "^[a-zA-Z0-9]*$"; }
+  const CHA* GetDefaultPasswordFormat() { return "^[a-zA-Z0-9]*$"; }
 
   /* Clones the given object. */
   void Clone(const Word* grammar);
@@ -85,17 +87,19 @@ class TSymbol {
 
   /* Sets the min length of a valid symbol. */
   BOL SetMinLength(ISC value) {
-    if (value < min_length_) return false;
-    max_length_ = value;
+    if (value < 0) return false;
+    min_length_ = value;
     return true;
   }
 
   /* Gets the max length. */
   ISC GetMaxLength() { return max_length_; }
 
-  /* Gets the max length. */
-  BOL SetMaxLength (ISC value) {
-
+  /* Sets the max length of a valid symbol. */
+  BOL SetMaxLength(ISC value) {
+    if (value < 0) return false;
+    max_length_ = value;
+    return true;
   }
 
   void SetFormat (const TString<>& format) {
@@ -141,9 +145,10 @@ class TSymbol {
 
   /* Prints this object to a expression. */
   template<typename Printer>
-  Printer& Print (Printer& o) {
+  Printer& Print(Printer& o) {
     o << "\nSymbol rules:" << " MinLength:" << min_length_ << " MaxLength:"
       << max_length_;
+    return o;
   }
 
  private:

@@ -122,19 +122,19 @@ class Project : public Operand {
   Printer& ListObjs(Printer& o) {
     o << LineString ();
       << "|\n"
-      "| Objs in Scope:\n"
-      "|\n"
-      "| Projects: "
+      << "| Objs in Scope:\n"
+      << "|\n"
+      << "| Projects: "
       << projects_->count << kLF;
     for (ISC i = 0; i < projects_->count; ++i)
       o << "| " << i << ".) "
       << StackGet<Project*> (projects_, i)->Key () << kLF;
     o << "|\n"
-      "| Schedules: "
+      << "Schedules: "
       << schedules_->count << kLF;
     for (ISC i = 0; i < schedules_->count; ++i)
       o << "| " << i << ".) "
-      << schedules_[i]->Key () << kLF;
+      << StackGet<Schedule*> (schedules_, i)->Key () << kLF;
     return o << LineString ('_');
   }
 
@@ -161,7 +161,9 @@ class Project : public Operand {
   @param key The key of the Schedule to search for.
   @return Returns null if calendar does not contain the given key. */
   Schedule* GetSchedule(const CHA* key) {
-    return schedules_[ScheduleIndex (key)];
+    ISC index = ScheduleIndex(key);
+    if (index < 0) return nullptr;
+    return schedules_[index];
   }
 
   /* Attempts to remove the Schedule at the given index. */

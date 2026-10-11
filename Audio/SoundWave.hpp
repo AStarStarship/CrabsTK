@@ -30,19 +30,20 @@ void TSoundStore(const CHR* filename, const IS* sample_buffer,
   aw.fmt_code = 1;
   aw.channels = (IUB)channels;
   aw.sample_rate = (IUC)sample_rate;
-  aw.bits = bit_depth;
-  wav_align = (aw.channels * aw.bits) >> 3;  // >> 3 means /8
-  aw.align = wav_align;
-  aw.avg_bps = sample_rate * wav_align;
-  aw.wav_id[0] = 'd';
-  aw.wav_id[1] = 'a';
-  aw.wav_id[2] = 't';
-  aw.wav_id[3] = 'a';
-  aw.wave_size = byte_count;
+  aw.bits = (IUB)bit_depth;
+  IUB align = (IUB)((aw.channels * aw.bits) >> 3);  // /8
+  aw.align = align;
+  aw.avg_bs = (IUC)sample_rate * align;
+  aw.wave_id[0] = 'd';
+  aw.wave_id[1] = 'a';
+  aw.wave_id[2] = 't';
+  aw.wave_id[3] = 'a';
+  aw.wave_size = (IUC)byte_count;
 
   FILE* f = fopen(filename, "wb");
+  if (!f) return;
   fwrite(&aw, 1, sizeof(aw), f);
-  fwrite(sample_buffer, 2 * channels, sample_total, f);
+  fwrite(sample_buffer, (size_t)sizeof(IS), (size_t)byte_count / sizeof(IS), f);
   fclose(f);
 }
 

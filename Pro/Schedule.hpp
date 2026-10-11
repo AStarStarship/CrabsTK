@@ -55,7 +55,7 @@ class Schedule {
 
   /* Sets the name to the new name. */
   void SetKey (const CHA* new_name) {
-    return StealKey (StringClone (new_name));
+    StealKey (StringClone (new_name));
   }
 
   /* Gets the readme. */
@@ -64,7 +64,7 @@ class Schedule {
   /* Sets the name to the new name.
   @param new_readme A CHA this object now owns the memory.  */
   void SetReadMe(const CHA* new_readme) {
-    return StealReadMe (StringClone (new_readme));
+    StealReadMe (StringClone (new_readme));
   }
 
   /* Gets the default schedule color of the child-tasks. */

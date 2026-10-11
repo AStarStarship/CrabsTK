@@ -1,0 +1,36 @@
+# Copyright AStarship <https://astarship.net>.
+#
+# seams.yaml -- single source of truth for the seam system.
+#
+# Edit this file, then run:
+#   python3 SyncSeams.py
+#
+# SyncSeams.py regenerates the SEAM macros in _Seams/_Seams.h,
+# the default SEAM in _Seams/_Config.h, and the TTestTree<> in _Main.cpp.
+#
+# Fields:
+#   project:     Project name (macro prefix, uppercased).
+#   mode:        "crabstk" or "asciicrabs".
+#   release:     Name of the seam that runs in release mode (SEAM_N).
+#   project_dir: Where the generated files go (defaults to this file's dir).
+#   seams:       Ordered list. Each gets a sequential number starting at 1.
+#     name:      Macro suffix + C++ test function name.
+#     file:      Seam test file (ASCIICrabs mode only; CrabsTK uses 00.Core.h).
+#     module:    (CrabsTK) Namespace under CT::. Groups seams into modules.
+#     label:     Heading printed by the test.
+#
+# To add a seam: append an entry. Never renumber existing seams.
+
+project: PROJECT
+mode: crabstk
+release: PROJECT_RELEASE
+project_dir: .
+
+seams:
+  - name: PROJECT_CORE
+    module: PROJECT
+    label: "Testing core..."
+
+  - name: PROJECT_RELEASE
+    module: PROJECT
+    label: "Release"

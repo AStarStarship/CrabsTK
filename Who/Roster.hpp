@@ -1,7 +1,7 @@
 // Copyright AStarship <https://astarship.net>.
 #pragma once
-#ifndef CRABSTK_WHO_USERLIST_DECL_DECL
-#define CRABSTK_WHO_USERLIST_DECL_DECL
+#ifndef CRABSTK_WHO_ROSTER_DECL_DECL
+#define CRABSTK_WHO_ROSTER_DECL_DECL
 #include <_Config.h>
 #if SEAM >= CRABSTK_WHO_CORE
 #include "User.hpp"

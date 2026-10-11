@@ -1,6 +1,8 @@
 // Copyright AStarship <https://astarship.net>.
-#include "CodeModule.hxx"
-#include "CommentStripper.hxx"
-#include "Include.hxx"
-#include "stb_c_lexer.hxx"
-#include "stb_leakcheck.hxx"
+/* CrabsTK Code Module — single-TU rollup.
+In-house C++ tooling: lexer, stripper, fitter.
+No stb, no std::, no external dependencies.
+Token taxonomy derived from Clang (BSD, see LICENSE.Clang). */
+#include "Lexer.hxx"
+#include "Stripper.hxx"
+#include "Fitter.hxx"

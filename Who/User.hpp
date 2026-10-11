@@ -25,7 +25,7 @@ class TUser {
   TUser(TAuthenticator* authenticator, IUD uid = 0,
        const TString<>& handle = THandle::kDefault,
        const TString<>& password = TPassword::kDefault,
-       FPD balance = kDefaultBalance, int64_t v-alue = kDefaultValue)
+       FPD balance = kDefaultBalance, IUD value = kDefaultValue)
     : handle_ (authenticator, handle),
     status_ (StringClone ("")),
     password_ (authenticator, password),
@@ -72,13 +72,11 @@ class TUser {
   /* Gets the handle's key. */
   const TString<>& GetStatus() { return status_; }
 
-  /* Gets the handle's key. */
-  virtual const TString<>& SetStatus(const TString<>& name) {
-    if (name == nullptr) {
-      return "name can't be nil.";
-    }
+  /* Sets the status. Returns true on success. */
+  virtual BOL SetStatus(const TString<>& name) {
+    if (name == nullptr) return false;
     status_ = StringClone (name);
-    return nullptr;
+    return true;
   }
 
   /* Gets a reference to the handle_. */

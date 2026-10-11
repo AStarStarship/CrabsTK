@@ -1,55 +1,43 @@
 // Copyright AStarship <https://astarship.net>.
-#define SCRIPT2_CORE                        1
-#define SCRIPT2_RNG                         2
-#define SCRIPT2_ITOS                        3
-#define SCRIPT2_FTOS                        4
-#define SCRIPT2_SPRINTER                    5
-#define SCRIPT2_CLOCK                       6
-#define SCRIPT2_STACK                       7
-#define SCRIPT2_MATRIX                      8
-#define SCRIPT2_STRING                      9
-#define SCRIPT2_LOOM                        10
-#define SCRIPT2_LIST                        11
-#define SCRIPT2_BOOK                        12
-#define SCRIPT2_MAP                         13
-#define SCRIPT2_TABLE                       14
-#define SCRIPT2_DIC                         15
-#define SCRIPT2_CRABS                       16
-#define SCRIPT2_DOOR                        17
-#define SCRIPT2_FILECABINET                 18
-// CrabsTK Seams                  
-// Who API                               
-#define CRABSTK_WHO_ACCOUNT          19 
-#define CRABSTK_WHO_ADDRESS          20
-#define CRABSTK_WHO_ADDRESSEMAIL     21
-#define CRABSTK_WHO_AUTHENTICATOR    22
-#define CRABSTK_WHO_ENTITY           23
-#define CRABSTK_WHO_ENTITYGROUP      24
-#define CRABSTK_WHO_ENTITYLIST       25
-#define CRABSTK_WHO_HANDLE           26
-#define CRABSTK_WHO_NAME             27
-#define CRABSTK_WHO_ORGANIZATION     28
-#define CRABSTK_WHO_PASSWORD         29
-#define CRABSTK_WHO_PERSON           30
-#define CRABSTK_WHO_PRIVILEGE        31
-#define CRABSTK_WHO_PROFILE          32
-#define CRABSTK_WHO_REGISTRAR        33
-#define CRABSTK_WHO_RELATIONSHIP     34
-#define CRABSTK_WHO_ROLE             35
-#define CRABSTK_WHO_ROSTER           36
-#define CRABSTK_WHO_SYMBOL           37
-#define CRABSTK_WHO_UIDASSIGNER      38
-#define CRABSTK_WHO_USER             39
-#define CRABSTK_WHO_USERLIST         40
-// Pro API                               
-#define CRABSTK_PRO_GIT              41
-#define CRABSTK_PRO_ISSUE            42
-#define CRABSTK_PRO_MISSION          43
-#define CRABSTK_PRO_PROJECT          44
-#define CRABSTK_PRO_SCHEDULE         45
-#define CRABSTK_PRO_TASK             46
-#define CRABSTK_PRO_WORKSPACE        47
-// Code API
-#define CRABSTK_CODE_CODEMODULE      48
-#define CRABSTK_CODE_COMMENTSTRIPPER 49
-#define SEAM_N 50                           
+#pragma once
+#ifndef CRABSTK_WHO_SEAMS_H
+#define CRABSTK_WHO_SEAMS_H
+// CrabsTK Who API seams.
+//
+// The Who core (TSession, TRoster, TUIDAssigner, TMessage, ...) compiles in
+// the range CRABSTK_WHO_CORE .. CRABSTK_WHO_RELEASE. The old CRABSTK_WHO_*
+// names map onto the same range for legacy headers; they all resolve to
+// CRABSTK_WHO_CORE, which gates the entire core at once (the legacy
+// per-file seam numbers were never meaningful: every legacy header gates
+// on CRABSTK_WHO_CORE anyway).
+#ifndef CRABSTK_WHO_CORE
+#define CRABSTK_WHO_CORE 19
+#endif
+#ifndef CRABSTK_WHO_RELEASE
+#define CRABSTK_WHO_RELEASE CRABSTK_WHO_CORE
+#endif
+// Legacy names.
+#define CRABSTK_WHO_0 CRABSTK_WHO_CORE
+#define CRABSTK_WHO_ACCOUNT CRABSTK_WHO_CORE
+#define CRABSTK_WHO_ADDRESS CRABSTK_WHO_CORE
+#define CRABSTK_WHO_ADDRESSEMAIL CRABSTK_WHO_CORE
+#define CRABSTK_WHO_AUTHENTICATOR CRABSTK_WHO_CORE
+#define CRABSTK_WHO_ENTITY CRABSTK_WHO_CORE
+#define CRABSTK_WHO_ENTITYGROUP CRABSTK_WHO_CORE
+#define CRABSTK_WHO_ENTITYLIST CRABSTK_WHO_CORE
+#define CRABSTK_WHO_HANDLE CRABSTK_WHO_CORE
+#define CRABSTK_WHO_NAME CRABSTK_WHO_CORE
+#define CRABSTK_WHO_ORGANIZATION CRABSTK_WHO_CORE
+#define CRABSTK_WHO_PASSWORD CRABSTK_WHO_CORE
+#define CRABSTK_WHO_PERSON CRABSTK_WHO_CORE
+#define CRABSTK_WHO_PRIVILEGE CRABSTK_WHO_CORE
+#define CRABSTK_WHO_PROFILE CRABSTK_WHO_CORE
+#define CRABSTK_WHO_REGISTRAR CRABSTK_WHO_CORE
+#define CRABSTK_WHO_RELATIONSHIP CRABSTK_WHO_CORE
+#define CRABSTK_WHO_ROLE CRABSTK_WHO_CORE
+#define CRABSTK_WHO_ROSTER CRABSTK_WHO_CORE
+#define CRABSTK_WHO_SYMBOL CRABSTK_WHO_CORE
+#define CRABSTK_WHO_UIDASSIGNER CRABSTK_WHO_CORE
+#define CRABSTK_WHO_USER CRABSTK_WHO_CORE
+#define CRABSTK_WHO_USERLIST CRABSTK_WHO_CORE
+#endif

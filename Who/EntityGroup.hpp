@@ -32,9 +32,9 @@ class TEntityGroup {
   virtual ISC Search(const TString<>& AString) { return 0; }
 
   template<typename Printer>
-  Printer& Print (Printer& o) { 
-    out << "Group: " << name_ << " ";
-    return out;
+  Printer& Print (Printer& o) {
+    o << "Group: " << name_ << " ";
+    return o;
   }
 
  private:

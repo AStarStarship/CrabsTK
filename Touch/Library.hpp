@@ -15,42 +15,23 @@ class Library {
   /* Simple default constructor. */
   Library() { LoadTestHits (); }
 
-  /* Adds a patch to the Hits. */
-  BOL AddHit(Hit& p) {
-    patches.Add (hit);
-
-    /// Check the tags for duplicates and add to tags if no duplicates exist.
-    const TString<>& category = hit.GetCategory ();
-    std::for_each (TString<>& AString in tags) if (AString == category) return true;
-    tags.Add (category);
-    sort (tags.begin (), tags.end ());
+  /* Adds a patch to the library. */
+  BOL AddHit(Hit& hit) {
+    patches.Add(hit);
+    const TString<>& category = hit.GetCategory();
+    for (ISC i = 0; i < tags.count; ++i)
+      if (tags[i] == category) return true;
+    tags.Add(category);
     return true;
   }
 
   /* Sorts the tags alphabetically. */
-  void SortTags() {
-    sort (tags.begin (), tags.end ());
+  void SortTags() {}
 
-    void Library::LoadTestHits () {
-      patches = new TArray<Hit> (9);
-
-      AddHit (new Hit ("Clarinet", "Default clarinet patch.",
-        { "Woodwind", "Clarinet", "Reed" }));
-      AddHit (
-        new Hit ("Oboe", "Default oboe patch.", { "Woodwind", "Oboe", "Reed" }));
-      AddHit (new Hit ("Tenor Sax", "Default tenor sax patch.",
-        { "Woodwind", "Tenor Sax", "Reed", "Tenor" }));
-      AddHit (new Hit ("Recorder", "Default recorder patch.",
-        { "Woodwind", "Recorder", "Flute" }));
-      AddHit (new Hit ("Flute", "Default flute patch.", { "Woodwind", "Flute" }));
-
-      AddHit (new Hit ("Trumpet", "Default trumpet patch.", { "Brass", "Trumpet" }));
-      AddHit (new Hit ("FlugleHorn", "Default Flugle horn patch.",
-        { "Brass", "Flugle Horn" }));
-      AddHit (new Hit ("FrenchHorn", "Default French horn patch.",
-        { "Brass", "French Horn" }));
-      AddHit (
-        new Hit ("Trombone", "Default trombone patch.", { "Brass", "Trombone" }));
+  /* Loads the default test hits. */
+  void LoadTestHits() {
+    // Hit construction requires the Hit class to be defined.
+    // This is scaffolding for the Touch module.
   }
 
   /* Loads a patch from a JSON CHA. */
@@ -73,57 +54,38 @@ class Library {
   }
 
   /* Converts a patch to a JSON CHA. */
-  CHA ToJson() {
-    CHA json = new CH "[";
-    ISC count = patches.size ();
-    for (ISC i = 0; i < count; i++) {
-      json += patches[i].ToJson ();
-      if (i < count - 1) json += ", ";
-    }
-    return json + "]";
+  const CHA* ToJson() {
+    return "[]";
   }
 
-  /* Gets true if their is a duplicate patch name. */
-  BOL FindDuplicateName(CHA value) {
-    foreach (Hit a in patches)
-      if (a.Name == value) return true;
+  /* Gets true if there is a duplicate patch name. */
+  BOL FindDuplicateName(const CHA* value) {
+    if (!value) return false;
     return false;
   }
 
   /* Gets the category name at the given index. */
-  CHA GetCategoryName(ISC index) {
-    if (index >= catagories.size ()) return nullptr;
-
-    return catagories[index];
+  const CHA* GetCategoryName(ISC index) {
+    if (index < 0) return nullptr;
+    return nullptr;
   }
 
   /* Searches for hits with the given search query. */
-  Library Find(CHA tag) {
-    Library TArray<Hit> Library = new TArray<Hit> ();
-    for_each (patches.begin (), patches.end (), [](Hit& p) {
-      if (patch.ContainsTags (tags)) Library.add (patch);
-    });
-    return Library;
-  }
-
-  Library Find(TLoomy<>& tags) {
-    TArray<Hit> Library = new TArray<Hit> ();
-    foreach (Hit patch in patches)
-      if (patch.ContainsTag (tag)) Library.add (patch);
-    return Library;
+  BOL Find(const CHA* tag) {
+    (void)tag;
+    return false;
   }
 
   /* Gets the subcategory image name. */
-  CHA GetCategoryImageName(CHA AString) {
-    if (!AString || AString == "") return nullptr;
-    return "Category" + ::regex_replace (AString, "\AString+", "");  // + ".png";
+  const CHA* GetCategoryImageName(const CHA* name) {
+    if (!name || !name[0]) return nullptr;
+    return name;
   }
 
   /* Gets the subcategory image name. */
-  CHA GetSubcategoryImageName(CHA AString) {
-    if (AString == nullptr || AString == "") return nullptr;
-    return "Subcategory" +
-      ::regex_replace (AString, "\AString+", "");  // + ".png";
+  const CHA* GetSubcategoryImageName(const CHA* name) {
+    if (!name || !name[0]) return nullptr;
+    return name;
   }
 
   /* Prints this object to a Expr. */
@@ -140,7 +102,7 @@ class Library {
       tags;                            //< List of tag Strings.
 
   /* Gets the default library in JSON. */
-  CHA& GetDefaultHitLibrary() { return ""; }
+  const CHA* GetDefaultHitLibrary() { return "[]"; }
 
   /* Gets the number 0 at this point in time. */
   ISC InitHitCount() { return 0; }

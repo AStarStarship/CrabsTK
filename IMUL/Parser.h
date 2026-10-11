@@ -57,6 +57,18 @@ enum {
   IMUL_DIAG_LIMIT_EXCEEDED,
 };
 
+/* Bounded byte span into the ORIGINAL IMUL source (half-open).
+@code
+  byte_start .. byte_end - 1
+@endcode
+line/column are 1-based; column counts bytes from the line start. */
+struct TImulSpan {
+  ISN byte_start,
+      byte_end,
+      line,
+      column;
+};
+
 /* A word-correction pair inside a note (original span + display operands). */
 struct TImulCorrection {
   TImulSpan span;         //< The original correction span (both operands).
@@ -93,18 +105,6 @@ struct TImulDiagnostic {
   IUD severity;         //< 1 = error, 2 = warning.
   TImulSpan span;
   const CHA* message;   //< Explanatory; tests assert code/span, not wording.
-};
-
-/* Bounded byte span into the ORIGINAL IMUL source (half-open).
-@code
-  byte_start .. byte_end - 1
-@endcode
-line/column are 1-based; column counts bytes from the line start. */
-struct TImulSpan {
-  ISN byte_start,
-      byte_end,
-      line,
-      column;
 };
 
 /* A resolved IMUL timestamp. Civil fields are the clock as written/advanced;
@@ -170,14 +170,16 @@ struct TImulCase {
   IUD checked; //< 1 when the case was actually evaluated.
 };
 
-/* Compile result: status, committed records, and case outcomes. */
+/* Compile result: status, committed records, and case outcomes.
+The caller owns all storage the result arrays point at. */
 struct TImulResult {
   IUD status;            //< 0 valid, 1 has errors, 2 limit exceeded.
   ISN event_count,
       session_count,
       mapping_count,
       error_count,
-      warning_count;
+      warning_count,
+      correction_count;
   const TImulEvent* events;          //< Caller-owned array.
   const TImulSession* sessions;      //< Caller-owned array.
   const TImulMapping* mappings;      //< Caller-owned array (all edges).
@@ -185,19 +187,52 @@ struct TImulResult {
   const TImulCorrection* corrections;//< Caller-owned array (note payloads).
 };
 
-/* Limits (inclusive byte/count caps). */
+/* Limits (inclusive byte/count caps).
+Null selects the CLI defaults: 1 MiB source, 64 KiB per line, 16,384
+events, 1,024 manifest bindings. Session and diagnostic capacity is
+bounded by the caller-owned arrays below. */
 struct TImulLimits {
-  IUD source_max,     //< Max source bytes (default 1 MiB).
-      line_max,       //< Max line bytes (default 64 KiB).
-      event_max,      //< Max events (default 16384).
-      binding_max;    //< Max manifest bindings (default 1024).
+  IUD source_max,     //< Max source bytes.
+      line_max,       //< Max line bytes (including line ending).
+      event_max,      //< Max events.
+      binding_max;    //< Max manifest bindings.
 };
 
-/* Compiles verified IMUL text into the caller-owned records of result.
+/* Workspace manifest: read-only set of `repo owner/repo [as alias]` lines. */
+struct TImulWorkspace {
+  const CHA* text;    //< Original manifest bytes (null = no manifest).
+  IUD text_len;
+  ISN binding_count;  //< Filled by ImulParseWorkspace.
+};
+
+/* Caller-owned compile storage. All array pointers may be null only when
+the matching capacity is zero. ImulCompile fills result's arrays with
+pointers into this storage. */
+struct TImulStorage {
+  TImulEvent* events;
+  ISN event_capacity;
+  TImulSession* sessions;
+  ISN session_capacity;
+  TImulMapping* mappings;
+  ISN mapping_capacity;
+  TImulDiagnostic* diagnostics;
+  ISN diagnostic_capacity;
+  TImulCorrection* corrections;
+  ISN correction_capacity;
+};
+
+/* Parses a workspace manifest into its bindings (bounded by limits).
+@return 0 valid, 1 invalid manifest. */
+ISN ImulParseWorkspace(TImulWorkspace* workspace, TImulLimits* limits,
+                       TImulStorage* storage, TImulResult* result);
+
+/* Compiles verified IMUL text into the caller-owned records of storage.
 The source bytes are preserved untouched; records point into them.
+Each document starts with empty clock/target/session state.
 @return 0 success, 1 invalid document (diagnostics recorded),
         2 limit/encoding failure. No allocation, no host clock, no I/O. */
-ISN ImulCompile(const CHA* source, IUD source_len, TImulLimits* limits,
+ISN ImulCompile(const CHA* source, IUD source_len, TImulWorkspace* workspace,
+                TImulLimits* limits, TImulStorage* storage,
                 TImulResult* result);
 
 }  //< namespace _

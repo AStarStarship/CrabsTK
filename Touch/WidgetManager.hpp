@@ -1,7 +1,7 @@
 // Copyright AStarship <https://astarship.net>.
 #pragma once
-#ifndef CRABSTK_TOUCH_WIDGETPAGE_DECL_DECL
-#define CRABSTK_TOUCH_WIDGETPAGE_DECL_DECL
+#ifndef CRABSTK_TOUCH_WIDGETMANAGER_DECL_DECL
+#define CRABSTK_TOUCH_WIDGETMANAGER_DECL_DECL
 #include <_Config.h>
 #if SEAM >= CRABSTK_TOUCH_CORE
 #include "widget.hpp";

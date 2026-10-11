@@ -9,9 +9,9 @@ You can obtain one at <https://mozilla.org/MPL/2.0/>. */
 #pragma once
 #include <_Config.h>
 #if SEAM == CRABSTK_PRO_CORE
-#include "_Debug.h"
+#include <ASCIICrabs/_Debug.h>
 #else
-#include "_Release.h"
+#include <ASCIICrabs/_Release.h>
 #endif
 using namespace _;
 namespace CT {

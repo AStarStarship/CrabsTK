@@ -61,12 +61,12 @@ class TPassword {
   }
 
   /* Returns true if this password equals the given one. */
-  BOL Equals (const TString<>& AString) {
+  BOL Equals (const TString<>& key) {
     return StringEquals (key_, key);
   }
 
   /* Returns true if this password equals the given one. */
-  BOL Equals(const TPassword& p) {
+  BOL Equals(const TPassword& other) {
     return StringEquals (key_, other.key_);
   }
 

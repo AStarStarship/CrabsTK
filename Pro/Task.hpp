@@ -12,7 +12,7 @@ class Task {
  public:
   /* Creates a task with the given fields and clones the Strings. */
   Task(const CHA* summary = "", const CHA* details = "", FPC weight_ = 0.0f,
-       ISC time_testimate_min = 60 * 60)
+       ISC time_estimate_min = 60 * 60)
       : summary_(TSTRClone<CHA>(summary)),
         details_(StringClone(details)),
         result_(nullptr),
@@ -84,7 +84,7 @@ class Task {
   FPC GetWeight() { return weight_; }
 
   /* Sets the weight. */
-  BOL SetWeight(FPC new_value) {
+  BOL SetWeight(FPC new_weight) {
     if (new_weight < 0.0f) return false;
     weight_ = new_weight;
     return true;
@@ -94,7 +94,7 @@ class Task {
   FPC GetAssessment() { return assessment_; }
 
   /* Sets the self assessment. */
-  BOL SetAssessment(FPC new_value) {
+  BOL SetAssessment(FPC new_assessment) {
     if (new_assessment < 0.0f) return false;
     if (new_assessment > 1.0f) return false;
     assessment_ = new_assessment;
@@ -105,7 +105,7 @@ class Task {
   FPC GetGrade() { return grade_; }
 
   /* Sets the grade. */
-  BOL SetGrade(FPC new_value) {
+  BOL SetGrade(FPC new_grade) {
     if (new_grade < 0.0f) return false;
     if (new_grade > 1.0f) return false;
     grade_ = new_grade;
@@ -157,7 +157,7 @@ class Task {
   failure. */
   const CHA* SetTimeStarted(TM8 time) {
     if (time < time_stopped_) return "Start time must be before stop time";
-    time_stopped_ = time;
+    time_started_ = time;
     return 0;
   }
 
@@ -180,14 +180,14 @@ class Task {
 
   /* Stopped the task. */
   void Stop(CHA* result, FPC result_grade = 1.0f) {
-    result_ = new_result;
-    assessment_ = new_assessment;
+    result_ = result;
+    assessment_ = result_grade;
     time(&time_stopped_);
   }
 
   /* Stopped the task. */
   void Stop(const CHA* result, FPC result_grade = 1.0f) {
-    Stop(StringClone(new_result), new_assessment);
+    Stop(StringClone(result), result_grade);
   }
 
   /* Returns true if the task is complete.
