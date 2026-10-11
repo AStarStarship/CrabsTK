@@ -12,7 +12,11 @@
                               ♫♪.ılılıll|̲̅̅●̲̅̅|̲̅̅=̲̅̅|̲̅̅●̲̅̅|llılılı.♫♪
 ```
 
+<<<<<<< HEAD
 CrabsTK (Crabs Toolkit) is a C++ API, Hybrid Embedded-C++ webapp API, and IMUL (I am You Language) toolkit for making intelligent connected software and art. The best place to get started learning CT is to read the [KP Cookbook](https://github.com/AStarship/CrabsPressCookbook), an open-source book that teaches how to make intelligent connected software, websites, books, and art with Modern Embedded-C++ and I am You Language (IMUL).
+=======
+CrabsTK (Crabs Toolkit) is a C++ API, Hybrid Embedded-C++ webapp API, and Script2 and IMUL (I am You Language) toolkit for making intelligent connected software and art. The best place to get started learning CT is to read the [KP Cookbook](https://github.com/AStarship/CrabsPressCookbook), an open-source book that teaches how to make intelligent connected software, websites, books, and art with Modern Embedded-C++, Script2, and I am You Language (IMUL).
+>>>>>>> origin/master
 
 [![GitHub version](https://badge.fury.io/gh/AStarship%2FCrabsTK.svg)](https://badge.fury.io/gh/AStarship%2FCrabsTK)
 
