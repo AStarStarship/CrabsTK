@@ -1,0 +1,10 @@
+﻿// Copyright AStarship <https://astarship.net>.
+#pragma once
+#ifndef CRABSTK_CONFIG
+#define CRABSTK_CONFIG 1
+
+#include "../../ASCIICrabs/_ConfigHeader.h"
+
+#include "../../ASCIICrabs/_ConfigDefault.h"
+#include "../../ASCIICrabs/_ConfigFooter.h"
+#endif

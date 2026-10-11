@@ -1,0 +1,39 @@
+// Copyright AStarship <https://astarship.net>.
+#pragma once
+#ifndef CRABSTK_PRO_WORKSPACE_DECL_DECL
+#define CRABSTK_PRO_WORKSPACE_DECL_DECL
+#include <_Config.h>
+#if SEAM >= CRABSTK_PRO_WORKSPACE
+#include "Project.hpp"
+namespace _ {
+
+/* A workspace folder and settings. */
+class LIB_MEMBER Workspace {
+ public:
+  /* Constructor. */
+  Workspace() {}
+
+  /* Clones the other object. */
+  Workspace(const Workspace& other);
+
+  /* Destructor. */
+  virtual ~Workspace();
+
+  /* Adds the given controller to the workspace. */
+  void Add(const Project& p);
+
+  /* Gets the number of widgets in the project. */
+  ISC GetNumWidgets();
+
+  template <typename Printer>
+  Printer& Print(Printer& o) {
+    o << "\nWorkspace:";
+  }
+
+ private:
+  _::TArray<TProject> projects_;  //< Workspace Projects.
+};
+
+}  //< namespace _
+#endif
+#endif
