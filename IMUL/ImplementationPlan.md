@@ -88,7 +88,7 @@ handoff; missing/failing cases mean the mission is not complete.
   `KT_IMUL` guards. Add a real `CRABSTK_IMUL` seam and remove these IMUL-local
   stale guards; do not launch another repo-wide branding migration.
 - Root `_Package.hxx` currently has no IMUL implementation rollup.
-- `_Seams/_Config.h` unconditionally selects `SCRIPT2_STACK`. A bare
+- `_Seams/_Config.h` unconditionally selects `CRABS_STACK`. A bare
   `-DSEAM=...` is not sufficient: that header replaces the command-line value.
   Add a narrow opt-in configuration/test entrypoint that actually executes
   IMUL tests, preserving normal builds. Confirm with deliberate failing tests.

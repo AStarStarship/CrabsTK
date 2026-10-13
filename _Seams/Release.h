@@ -17,7 +17,7 @@ using namespace _;
 namespace CT {
 inline const CHA* Release(const CHA* args) {
 #if SEAM >= CRABSTK_RELEASE
-  TEST_BEGIN;
+  A_TEST_BEGIN;
 
 #endif
   return 0;

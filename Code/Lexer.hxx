@@ -1,5 +1,6 @@
 // Copyright AStarship <https://astarship.net>.
 #include <_Config.h>
+#include <cstring>  // memcmp (2026-10-12: was missing)
 #include "Lexer.h"
 
 namespace _ {
@@ -145,7 +146,7 @@ const CHA* CodeTokenSpelling(IUB kind) {
   if (kind >= CodePunctFirst && kind <= CodePunctLast) {
     return CodePunctSpelling[kind - CodePunctFirst];
   }
-  return nilp;
+  return NILP;
 }
 
 /* Token names for diagnostics. */

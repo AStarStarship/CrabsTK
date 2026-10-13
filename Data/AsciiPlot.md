@@ -38,5 +38,3 @@ _Seams/Data/ entrypoint is opt-in and keeps shared root/IMUL files untouched.
 Tests and demos use deterministic, explicitly synthetic seam inputs; they are
 not training results. Redirect the demo's stdout to a file to verify console
 and file output are identical.
-
-Copyright AStarship <https://astarship.net>.
