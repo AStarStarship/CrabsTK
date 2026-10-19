@@ -5,7 +5,7 @@
 
 #include "../../../../AStarStarship/ASCIICrabs/_ConfigHeader.h"
 
-#include <_Seams.h>
+#include "_Seams.h"
 
 
 #endif  // _CONFIG_HEADER_H

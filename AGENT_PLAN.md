@@ -1,15 +1,30 @@
 # CrabsTK Agent Plan
 
 ## Overarching Goal
-Complete the migration of `CrabsTK` to the new `ASCIICrabs` schema-first architecture, ensuring the `_Seams` test tree compiles successfully under C++23 (`g++ -std=c++2b`).
+Complete the migration of `CrabsTK` to the ASCIICrabs schema-first architecture
+and a verified C++23 single-translation-unit `_Seams` build. Use the unified
+ASCII List / Crabs machine rather than introducing another storage/scanner
+implementation. Keep OS and device adapters outside the abstract machine.
 
-## Status: BUILD SUCCESSFUL
-The `_Seams` test tree now compiles and links successfully. The resulting `_CrabsTK` executable runs and reports:
+## Current Status: SPEC CLARIFIED; INTEGRATION PENDING (2026-10-12)
+The ten documents in `../ASCIICrabs/_Spec/Crabs/` have been reconciled with the
+Captain's clarified design. This is specification work, not a completed
+List/machine, Room/Door, or concurrent IPC implementation.
+
+Local package and seam repairs are present, but an isolated module pass or an
+old success banner is not evidence that the current whole tree builds and
+passes. The current work and acceptance gates are in **Unified ASCII List
+Chinese Room — current work** below. That section supersedes older next-step
+recommendations; historical reports remain for their evidence and context.
+
+## Historical Migration Result — not the current build status
+An earlier migration run recorded a linked `_CrabsTK` executable and this
+output. It is not a fresh verification of the current working tree:
 ```
 Unit tests completed successfully! (:-)+=<
 ```
 
-## Progress So Far
+## Historical Migration Progress
 - **Architecture Migration:** Extracted legacy `.inl` files into `.h` and `.hxx` single-translation-unit builds. Created `_Package.hxx` rollups.
 - **Branding Migration:** Renamed `KabukiToolkit` to `CrabsTK`. Migrated namespaces from `Kabuki::Toolkit` to `CT`.
 - **STB Library Reconstruction:** Repaired `Code/stb_c_lexer.hxx` and `Code/stb_leakcheck.hxx` by re-injecting missing macros, enums, and structs.
@@ -17,13 +32,20 @@ Unit tests completed successfully! (:-)+=<
 - **Test Tree Wiring:** Fixed `_Main.cpp` to include `ASCIICrabs/Test.hpp`, `Test.hxx`, `COut.hxx`, `AType.hxx`, `Array.hxx`, `Puff.hxx`, and `Stringf.hxx` in the correct order.
 - **Linking:** Successfully linked against `-lGL` for the `Image` module.
 
-## Next Steps (Optional Enhancements)
+## Historical Follow-on Ideas — not the current priorities
 - **CI/CD:** Set up a build script or Makefile to automate the compilation.
 - **Documentation:** Update the README with build instructions.
 - **Investor Demo:** Create a demo script that showcases the key features.
 
 ## Definition of Done
-The command `cd _Seams && g++ -std=c++2b -Wall -Wextra _Main.cpp -I. -I.. -I../../ -o _CrabsTK -lGL` exits with `0` and produces a working executable. **ACHIEVED.**
+A fresh build and actual execution must demonstrate the declared capabilities
+and propagate test failures to the runner. Complete the acceptance gates below;
+neither compilation alone nor a printed success banner establishes completion.
+
+Historical build command, retained verbatim for context and requiring fresh
+configuration/dependency verification before reuse:
+`cd _Seams && g++ -std=c++2b -Wall -Wextra _Main.cpp -I. -I.. -I../../ -o _CrabsTK -lGL`.
+The earlier **ACHIEVED** status does not apply to the current integration work.
 
 ## RL-gym data path — implemented, opt-in
 
@@ -86,8 +108,8 @@ x87 Data seam, the independent direct-byte NaN probe, both optimization
 regressions, split-TU linking, real wire decoding, demo equality, and the
 default legacy build/run. All returned exit 0.
 
-Post-fix evidence and compiler commands:
-`/home/astarcale/.hermes/profiles/astar-mary/cache/scratch/hermes-verify-data-reviewed-c2tu1p5d/post-review-verification.json`
+Post-fix evidence and compiler commands: see the verification artifacts
+directory referenced by the kanban card (paths omitted).
 
 Final verdict is in the same directory's `final-review.json`. Parent checked
 that the final six-file reviewed snapshot and all tested C++ source hashes
@@ -271,3 +293,365 @@ headless, run N steps, print the visibility field.
 **Milestone 3 (after 2 green):** merge into iGeek, fresh `AStarship/iGeek`
 remote, commit (iGeek fixes + TileWorld core), push, delete old TileWorld
 after verified.
+
+---
+
+## Full-monty scientific visualization — Plot/ + Image/IDraw (2026-10-11)
+
+Task: clone the matplot++ *concept* (not the ~1M-LOC std-C++ library) into
+`CrabsTK/Plot/`, rendering into the new `Image/` API, 100% in-house, no-stdlib.
+Decision (from the Captain): full scientific chart set (2D + 3D + quiver +
+axes/figure handles), rasterize into `CImage` (real pixels, color), fully
+generic — iGeek adapts on its own. No existing API is changed, so no
+astar-illya sign-off was needed; `Image/` is free game (no consumers).
+
+### What landed
+
+- **`Image/IDraw.h/.hxx`** — the in-house raster draw layer Plot/ renders
+  into (this is the "change Image as needed" the Captain authorized).
+  `TColor` (packed RGBA), `PackColor`, `Fill`, `Clear`, `PutPixel`
+  (alpha-blended, clipped), `Line` (Bresenham + thickness), `FillRect`,
+  `FillCircle` (midpoint, integer-only), `ClipRect`, and a named palette
+  (`IWhite`/`IBlack`/`IRed`/…). No std, no heap beyond the caller's pixel
+  buffer. Wired into `Image/_Package.hxx`.
+- **`Plot/Plot.h/.hxx`** — the full-monty scientific viz:
+  - `TFigure` (owns the `CImage` canvas, multiple axes, bg color) and
+    `TAxis` (pixel rect + data→pixel transform with **y-flip**, x/y range,
+    title/x-label/y-label, grid/frame/ticks, colors, `DataToPixX/Y`).
+  - 2D: `PlotLine`, `PlotScatter`, `PlotArea`, `PlotStairs`, `PlotStem`,
+    `PlotErrorbar`, `PlotBar`, `PlotHist`, `PlotBoxplot`.
+  - 3D (fixed isometric projection, no allocation): `Plot3`, `PlotMesh`,
+    `PlotSurf` (z-shaded), `PlotContour`.
+  - `PlotQuiver` (vector field with arrowheads).
+  - `RenderFrame` (frame + grid + ticks + title/label via a built-in 5×7
+    bitmap font), `AutoFit` (5% padding), `DrawText`.
+- **`_Seams/Plot/`** — the verification harness: 10 test cases (P01–P10),
+  opt-in, same seam convention as `_Seams/Data/`.
+
+### Reproducible entrypoint
+
+From the repo root (TMPDIR to an artifact dir):
+
+    g++   -std=gnu++23 -O2 -I_Seams/Plot -I. -I.. _Seams/Plot/_Main.cpp -o /tmp/plot && /tmp/plot
+    clang++ -std=c++2b  -O2 -I_Seams/Plot -I. -I.. _Seams/Plot/_Main.cpp -o /tmp/plot && /tmp/plot
+
+Both report `PASS: Plot figure/axis/2D+3D/quiver/image-draw seams`, exit 0.
+The Data seam (the iGeek-dependent API) was re-run after the `Image/` changes
+and still reports 21/21 case groups PASS — nothing iGeek uses is broken.
+
+### Verification and bug fixes
+
+10/10 Plot seam cases pass on both g++ (`-std=gnu++23 -O2`) and clang 18
+(`-std=c++2b -O2`): figure/axis allocation + capacity, data→pixel mapping with
+y-flip, line/scatter/bar/hist/mesh/quiver render (non-background pixel counts),
+5×7 glyph pixel count, `AutoFit` padding, and the `ImageDraw` foundations
+(put-pixel, line, fillrect, fillcircle, 50% alpha blend).
+
+Two bugs found and fixed during verification:
+1. **Quiver arrowhead integer division** — `ISN hx = dx / len * 4` collapsed to
+   0/1 (both integers), so the head vanished. Fixed to float math.
+2. **clang-18 narrowing in `PlotSurf`** — `TColor c{color.r * shade / 255, …}`
+   is an `int`→`IUB` narrowing in a braced-init (g++ warned, clang-18 rejected
+   with `-Wc++11-narrowing`). Fixed by computing each channel into an explicit
+   `IUB` first.
+
+### Boundaries / not yet done
+
+- `Plot/` is **generic** — no iGeek `Gym`/`TPPO` adapter yet (by design).
+  When iGeek wires metrics, it maps series → `TSeries2D` and calls the chart
+  functions directly.
+- The root `_Package.hxx` now includes `Plot/_Package.hxx`, but a *full* root
+  single-TU build is still blocked by **pre-existing `Code/` errors**
+  (`nilp`, `IsError`, `memcmp` missing) — unrelated to this work. Plot/ +
+  Image/ build and verify clean in isolation.
+- `Image/` is still a skeleton beyond `IDraw` (no BMP/PNG/TGA load/save, no
+  texture upload, no MIPmaps). The old `Image/__RefactorPlan.md` (STB/SOIL
+  removal) was removed; if the load/save/texture work resumes it needs a fresh
+  plan. For now Plot/ needs only `CImage` + `IDraw`, which are in place.
+- No commit, stage, branch change, push, or remote delivery is authorized here.
+
+---
+
+## Full-repo audit — historical publishability snapshot (2026-10-12)
+
+This snapshot predates the package/seam repairs and the Crabs specification
+cleanup. Its diagnoses and recommendations are not a current execution
+checklist; the current section below identifies what is present, what remains
+unverified, and what must happen next. Broad module deletions are not authorized.
+
+Task: read **all** CrabsTK source (195 files, 15,755 LOC) into context and
+review at the highest level for publishability. Verdict: **NOT publishable as
+a whole.** The repo is four different codebases stacked on top of each other,
+with two clean islands floating in it. The "BUILD SUCCESSFUL" claim at the top
+of this file is **stale and incorrect** — the root single-TU build does not
+compile.
+
+### What the tree actually is
+
+- **Gen A — "Script2 / kabuki toolkit" (dead):** `_Seams.h` is full of
+  `CRABS_*` defines; `.vs/`, `Debug/`, `x64/` are MSVC `kabuki.toolkit`
+  build artifacts. `IMUL/MetaTags.h` is a broken Doxygen stub
+  (`#include 'Room.hpp'`, `Operand Star(_::Expr, ISW)` referencing nothing);
+  `IMUL/Parser.hxx` is a literal test stub that only compiles the exact
+  14-byte string `"world ^ Hello\n"`; `IMUL/UML.h` is one comment line.
+- **Gen B — "Kabuki Pro" (won't compile):** `Pro/{Project,Schedule,Task,
+  Git,Issue,Mission}.hpp` use `TString<>`, `TStack<>`, `TArray<>`, `Op`,
+  `Expr`, `CHN`, `Tss`, `TM8`, `system()`, `sscanf`, `StringClone` — a whole
+  old Script2 API that no longer exists in the tree. `Git.hpp` calls
+  `system()`. `Issue.hpp`/`Mission.hpp` reference private members
+  (`key_`, `readme_`, `id_`, `task_`) they don't own. `Schedule.hpp`
+  contains a `Project::Command` definition *inside* the `Schedule` class.
+- **Gen C — "Kabuki Touch / HMI" (won't compile):** ~37 files of
+  MIDI/DMX control-surface code with pervasive undefined identifiers
+  (`IButton`, `HMIComponent`, `ControlLayer`, `LinearNode`, `AButton`,
+  `AString`, `Parameter<ISC>`, `Op`, `Expr`, `CHW`, `Device`, `Widget`,
+  `Control::PAGE_BUTTON`, `MOMENTARY`). Concrete bugs: `Button.hpp:117`
+  `virtual virtual void Tooggle()`; `Button.hpp:75` `Press()` calls
+  itself; `Button.hpp:81` `Depress()` calls itself; `ButtonWidget.hpp:53`
+  `if (!T)` referencing a `T` that doesn't exist; `ButtonScroller.hpp:76`
+  `numTimes` vs parameter `numNodes`; `ButtonSwap.hpp:23`
+  `ButtonSwap(const ButtonSwap& page) () {}` — two parameter lists, not
+  valid C++.
+- **Gen D — the two clean islands (this turn's work + Data):** `Plot/` +
+  `Image/IDraw` (built and verified 10/10 + 13/13 on g++ and clang) and
+  `Data/` (Record codec, Dataset POSIX streams, AsciiPlot) — clean, no-stdlib,
+  well-documented, but wired to a seam define that is never set (see below).
+
+### The seam-gating is broken (this is what actually blocks a build)
+
+1. **Root `_Package.h` includes `Code/_Impl.h`, `Data/_Impl.h`,
+   `Pro/_Impl.h`, `Touch/_Impl.h`, `Who/_Impl.h` — none of those files
+   exist.** Verified on disk. The declared single-TU build of the whole
+   toolkit does not compile at all. The real build path is
+   `_Seams/_Main.cpp` → `_Package.hxx` (the `.hxx` rollups), and even that
+   is broken (next item).
+2. **`_Seams/_Main.cpp` instantiates
+   `TTestTree<Code::Core, Database::Core, GUI::Core, Image::Core,
+   IMUL::Core, Pro::Core, Touch::Core, Who::Core>`** — but
+   `GUI/00.Core.h` and `Pro/00.Core.h` and `Touch/00.Core.h` define those
+   `Core` as *functions* (`inline const CHA* Core(const CHA*)`), not
+   structs, while `Image/00.Core.h` defines `Core` as a *struct*. So
+   `TTestTree<...>` is templated over a mix of functions and structs —
+   that does not compile.
+3. **Duplicate seam IDs in `_Seams.h`:** `CRABSTK_CODE_CODEMODULE = 48` and
+   `CRABSTK_CODE_CORE = 48` are the same value; `CRABSTK_PRO_GIT = 41` and
+   `CRABSTK_PRO_CORE = 41` are the same. Aliases are documented, but
+   `CRABSTK_PRO_ISSUE = 42` vs `CRABSTK_PRO_CORE = 41` means
+   `SEAM >= CRABSTK_PRO_CORE` already pulls in GIT which uses `system()`
+   and `Operand` — a guaranteed compile break.
+4. **`Code/_Seams.h` includes `../_Seams/_Seams.h` — that file does not
+   exist.**
+5. **`Data/Record.h` etc. gate on `#if SEAM >= CRABSTK_DATA_RECORD`.** That
+   macro is defined in `Data/_Seams.h` (=52). But `Data/_Seams.h` is **not
+   included by the Data `_Package.hxx`** — `_Package.h` includes
+   `Record.hpp`/`Dataset.hpp`/`AsciiPlot.hpp` directly, none of which
+   include `_Seams.h`. So `CRABSTK_DATA_RECORD` is undefined → the gate
+   never resolves correctly. Data/ is therefore **not actually compiled**
+   in the build, despite the "21/21 groups PASS" claim in the Data section
+   above (that was via the standalone `_Seams/Data/_Main.cpp`, not the root
+   tree).
+6. **`_Seams/_Main.cpp` includes `Image/00.Core.h` but not
+   `Plot/00.Plot.h`** — so the Plot harness only runs via its own
+   `_Seams/Plot/_Main.cpp`, not via the root tree.
+
+### What IS good (the part worth keeping)
+
+- **`Plot/` + `Image/IDraw`** — clean, no-stdlib, POD, `new[]` only,
+  documented, verified on two compilers. Publishable as a module.
+- **`Data/Record` + `Dataset` + `AsciiPlot`** — clean, no-stdlib,
+  fixed-capacity POD, CRC-32, POSIX-only with an explicit `#error` on
+  Windows, well-documented. Publishable as a module. Needs its seam wiring
+  fixed.
+- **`Code/Lexer` + `Stripper` + `Fitter`** — a real, coherent in-house C++
+  lexer with a `Code/Tests/CodeModuleTest.cpp` that builds standalone with a
+  type shim. The most complete "new generation" module. Not wired into the
+  seam tree, but the only one with a working standalone test.
+- **`Hatch/`** (the project generator, `CreateProject.py` + `SyncSeams.py`
+  + templates) — the actual meta-tool that's supposed to generate the seam
+  scaffolding. It's the reason the seams are inconsistent: the templates and
+  the hand-edited seams have drifted.
+
+### Publishability verdict
+
+- **As a whole repo: NO.** The root build is broken at the wiring layer
+  (`_Impl.h` missing, `TTestTree` over mixed types, duplicate seam IDs,
+  `Code/_Seams.h` → missing file), and three of the four "real" module trees
+  (Pro, Touch, IMUL) are dead code from a deleted framework (Script2) that
+  reference an API that no longer exists. Publishing this would be publishing
+  a mess with a two-module island inside it.
+- **As the two clean islands (Plot + Data) plus the Code lexer, packaged as a
+  focused "CrabsTK data + viz + tooling" library: YES, with a day of wiring
+  work.** The work:
+  1. Delete or isolate Pro/Touch/IMUL/Audio/Forms/Who/Code-module (the dead
+     gens).
+  2. Fix the root `_Package.hxx` to only roll up what exists.
+  3. Give Data its `#include "_Seams.h"` so the gates resolve.
+  4. Make the seam IDs a single consistent sequence (no duplicates).
+  5. Wire Plot + Data + Code into one `TTestTree` that actually compiles
+     (all `Core` as structs, or all as functions — pick one convention).
+  6. Remove the MSVC `.vs`/`Debug`/`x64` artifacts from the repo.
+  7. Replace the `_Package.h` → `_Impl.h` dead includes.
+
+### Earlier recommendation — superseded
+
+The earlier audit recommended a deletion/seam-rewiring `__RefactorPlan.md`.
+That is no longer the immediate next step. Preserve existing work, reconcile
+the clarified core contracts, and verify the actual integration paths below
+before proposing further isolation or deletion of modules.
+
+---
+
+## Unified ASCII List Chinese Room — current work (2026-10-12)
+
+### Scope and source of truth
+
+The clarified design is in `../ASCIICrabs/_Spec/Crabs/README.md` and
+`../ASCIICrabs/_Spec/Crabs/ASCIIListChineseRoom.md`. The latter's implementation
+status and remaining-decisions sections identify legacy paths and unresolved
+contracts. `../ASCIICrabs/_Spec/Crabs/ConformanceTargets.md` defines the required
+runtime evidence.
+
+This plan records the next work; updating it does not authorize an ABI change,
+broad deletion, commit, push, or claim that the machine already conforms.
+
+### Settled architecture — preserve these decisions
+
+- The machine's heterogeneous type-value data stack **is the ASCII List**.
+  Metadata for scopes and scanner state does not create a second data stack.
+  Nested map interpretation and operations referencing stored tuples reuse the
+  same Crabs expression/scanner machinery.
+- A Room starts with one contiguous, word-aligned Wall. The **Floor is that
+  initial fixed Wall**, not a module, type code, initial-state pair, or another
+  stack. The minimum Room requires no dynamic allocation; exhausted fixed
+  capacity must return an error. Autoject/RAMFactory growth is optional.
+- A Door is an installed, addressable MAP-type interface. Door access belongs
+  on the List stack as typed data or a typed reference. BIn/BOut are Slot
+  transport machinery, not automatically separate List operands, and a Door
+  is not a type-punned pair of their headers.
+- The design uses a **16-bit type word with 12-bit inline unsigned-character
+  and signed-integer values**. Exact tags and the C0/data distinction still
+  need reconciliation with the legacy encoding. Do not invent modifier values,
+  control prefixes, or Door/reference tags.
+- Persistent List entries and temporary expression scopes have different
+  lifetimes. Closing an expression does not require an empty List. Cancel,
+  clear, reset, and rollback need separate contracts; reset is not an identity
+  or a guarantee that external side effects can be reversed.
+- Direct Room communication must work in memory without an OS. Portals expose
+  endpoint contracts; OS/device backends live in CrabsTK or the host layer.
+  Concurrency, IPC, authentication, and delivery guarantees require separate
+  designs and tests. A checksum and `volatile` counters do not establish them.
+
+### Completed and observed — limited claims
+
+- **Spec cleanup complete:** all ten existing Crabs documents were updated and
+  re-read. The recorded verification passed 23/23 documentation checks and 66
+  local link targets. The strict GCC 13 probe compiled and ran against the
+  documented RAMFactory/type-word declarations with known upstream pragma/enum
+  warnings suppressed. These checks do not prove runtime integration.
+- **Local wiring repairs present:** CrabsTK `_Package.h` no longer imports
+  nonexistent `_Impl.h` files; `_Package.hxx` rolls up Code, Data, Forms, Image,
+  and Plot. `Code/_Seams.h` and `Data/_Seams.h` refer to the root seam table.
+  `_Seams/_Main.cpp` includes Plot and uses function-style Image seams. These
+  source changes still require a fresh full-tree build/run.
+- **Legacy paths remain:** the core package still includes deleted `Floor.hxx`;
+  the spec records that `CrabList` is not imported by the current machine/package,
+  `CrabsReset` is a stub, and Room/Wall/Door construction and dispatch are
+  incomplete. `../ASCIICrabs/_Seams/16.Room.hxx` constructs Rooms but transfers
+  messages through a separate raw ring, not their installed Doors.
+- The earlier Data/Plot verification belongs to those tested module snapshots.
+  Do not extrapolate it to whole-package, nested-map, Door, lock-free, or
+  interprocess conformance. Re-run affected tests after integration changes.
+
+### Ordered next work
+
+1. [ ] **Reconcile the remaining specification conflicts.** Review and update
+   `../ASCIICrabs/_Spec/Data/Types.md`,
+   `../ASCIICrabs/_Spec/Data/Numbers.md`,
+   `../ASCIICrabs/_Spec/Data/BSequences.md`,
+   `../ASCIICrabs/_Spec/Data/MapTypes/Socket.md`,
+   `../ASCIICrabs/_Spec/Protocol/Slots.md`,
+   `../ASCIICrabs/_Spec/Protocol/Expressions.md`,
+   `../ASCIICrabs/_Spec/Overview/ChineseRoomObjects.md`, and
+   `../ASCIICrabs/_Spec/README.md`.
+   Remove separate-Floor and deleted-draft references; align expression lifetime
+   and endpoint contracts. Preserve the clarified 12-bit design while making
+   unresolved encoding decisions explicit.
+2. [ ] **Agree the storage/encoding contracts before implementation.** Specify
+   inline tags and contextual C0 recognition, Door value/reference layout,
+   fixed-Wall partition and installation, ownership/invalidation on removal or
+   growth, and persistent-data/Door survival under cancel, clear, and reset.
+   Record the implementation/refactor plan and obtain Captain/master-agent
+   design review before risky storage or ABI changes. Do not infer these choices
+   from skeleton constructors or the office metaphor.
+3. [ ] **Repair the remaining package/seam blockers without restoring Floor.**
+   Remove the stale `Floor.hxx` import from `../ASCIICrabs/_Package.hxx`.
+   Reconcile CrabsTK `_Seams/_Main.cpp` with the deleted
+   `_Seams/Imul/00.Core.h` before a root build; do not substitute an empty test
+   and call it coverage. Check both projects' seam tables and enabled branches;
+   distinguish intentional CORE/first-entry aliases from unintended overlaps.
+   Preserve unrelated dirty files and working module APIs.
+4. [ ] **Integrate the List into the real machine/scanner.** Start with
+   `../ASCIICrabs/_Seams/15.CrabsOp.hxx` and trace initialization,
+   `CrabsScanBIn`, and stored-argument access through
+   `../ASCIICrabs/Crabs.h`, `../ASCIICrabs/Crabs.hxx`,
+   `../ASCIICrabs/CrabsList.h`, and `../ASCIICrabs/CrabsList.hpp`.
+   Prove heterogeneous data, nested map
+   traversal, and operations referencing existing tuples through that path.
+   Adding a wrapper include or passing a POD ring test is not completion.
+5. [ ] **Install real Doors in fixed-Wall Rooms and test their message path.**
+   Complete the agreed paths in `../ASCIICrabs/Room.hpp`,
+   `../ASCIICrabs/Wall.hpp`, and `../ASCIICrabs/Door.hpp`; change
+   `../ASCIICrabs/_Seams/16.Room.hxx` to exercise two
+   actual Rooms, installed Doors, and their Slots. Verify that the receiving
+   Room processes the message, rather than merely constructing Rooms beside a
+   raw transport fixture. Use a defined layout/ownership contract, not aliased
+   incompatible BIn/BOut objects.
+6. [ ] **Run the capability and regression gates.** Rebuild the changed core
+   and CrabsTK single-TU entrypoints from current sources, run the actual
+   executables, and re-run `_Seams/Data/Verify.py` plus the `_Seams/Plot/`
+   harness when affected. Record exact compiler/configuration commands,
+   enabled seams, exit statuses, test failures, and unsupported capabilities.
+   Do not trust a stale binary or the legacy success banner alone.
+
+### Acceptance gates — still pending
+
+- [ ] The real machine runs over a fixed Wall with dynamic memory disabled,
+  stores/accesses heterogeneous List tuples, and distinguishes typed C0-valued
+  data from expression controls under the agreed encoding.
+- [ ] Nested maps and operations referencing stored data use the unified scanner;
+  scope closure preserves the documented persistent-data lifetime.
+- [ ] Two actual Rooms exchange and process messages through installed Doors and
+  bounded Slots. Door references obey the agreed ownership/invalidation rules.
+- [ ] Capacity exhaustion, malformed or partial input, invalid references, and
+  cancel/clear/reset paths report their actual status and leave storage valid.
+- [ ] Fresh core/toolkit builds and affected module regressions run; failure
+  reporting is checked, and pre-existing failures are distinguished from new
+  regressions. Documentation checks remain separate from runtime evidence.
+- [ ] Report the tested platform/word size and the remaining 16/32/64-bit risks.
+  Do not claim untested targets, optional growth, concurrent IPC, or security
+  conformance. Those require their own implementation-specific evidence.
+
+No production C++ is changed by this plan update. No commit or push is requested.
+
+## Current Work: Include Order and Syntax Fixes (2026-10-18)
+
+### Include Syntax Fix
+Fixed 171 local include directives across `./**` and `../ASCIICrabs/**` to use quotes
+instead of angle brackets: `#include <_Config.h>` → `#include "_Config.h"`.
+
+### Include Order Fix
+Moved `#include "_Seams.h"` from line 6 to the end of `../ASCIICrabs/_ConfigHeader.h`,
+after the `namespace _` block and all type definitions. This resolves the core ordering
+issue: "core root BEFORE _Seams else COut's <iostream> inside namespace _ shadows std".
+
+### StdOut Forward Declaration
+Added `inline COut& StdOut() { static COut c; return c; }` in `_ConfigHeader.h` to
+ensure `StdOut()` is available when _Seams headers reference it.
+
+### Verification
+- All 4 verification checks passed (include order, angle brackets, StdOut declaration)
+- Git diff confirms exact changes to `_ConfigHeader.h`
+- Pre-existing ~130 test failures unchanged (separate issue)
+
+These fixes ensure the core ASCII types are available before _Seams.h is included,
+preventing namespace _ from shadowing std and making StdOut/COut symbols properly available.

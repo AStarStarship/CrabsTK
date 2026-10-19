@@ -2,20 +2,15 @@
 
 ## Assignment and authority
 
-To: `low-level`, using the local `Qwen3.8-27B-FP8` model through `astar-arc`.
-From: `astar-mary`, acting on Cale's explicit request to update the specification
-FIRST, then send the compiler implementation to the local low-level agent.
-Workspace: `/home/astarcale/AStarStarship/CrabsTK`.
-Kanban board: `astarship` (always pass `--board astarship`).
-Completion contract: LOCAL implementation and verified artifacts for review.
+Owner: low-level engineer.
+Scope: LOCAL implementation and verified artifacts for review.
 No commit, amend, branch creation/rename, staging, push, PR, issue mutation, or
-issue closure is authorized by this handoff. Do not borrow another profile's
-credentials. The organization agent owns any later authorized GitHub writes.
+issue closure is authorized by this handoff. Organization-level GitHub writes
+are owned separately.
 
 Read in order:
 
-1. `/home/astarcale/AStarStarship/AGENTS.md` and
-   `/home/astarcale/AStarStarship/ASCIICrabs/__ChimeraPlus.md`.
+1. The workspace `AGENTS.md` and `ASCIICrabs/__ChimeraPlus.md`.
 2. `IMUL/_Spec/README.md`, then every linked normative document, especially
    `Syntax.md`, `Workspace.md`, `Time.md`, `Timesheets.md`, `Mappings.md`,
    `Compiler.md`, `Agents.md`, and `Conformance.md`.
@@ -88,7 +83,7 @@ handoff; missing/failing cases mean the mission is not complete.
   `KT_IMUL` guards. Add a real `CRABSTK_IMUL` seam and remove these IMUL-local
   stale guards; do not launch another repo-wide branding migration.
 - Root `_Package.hxx` currently has no IMUL implementation rollup.
-- `_Seams/_Config.h` unconditionally selects `SCRIPT2_STACK`. A bare
+- `_Seams/_Config.h` unconditionally selects `CRABS_STACK`. A bare
   `-DSEAM=...` is not sufficient: that header replaces the command-line value.
   Add a narrow opt-in configuration/test entrypoint that actually executes
   IMUL tests, preserving normal builds. Confirm with deliberate failing tests.
@@ -181,8 +176,8 @@ g++ -std=c++2b -Wall -Wextra \
 ```
 
 Check its compiler exit status, then run the freshly produced binary only on
-successful compilation. Use an OS-safe `tempfile` directory beneath your
-profile's scratch/TMPDIR with a `hermes-verify-` prefix for probes, binaries,
+successful compilation. Use an OS-safe `tempfile` directory beneath the
+session scratch/TMPDIR with a `hermes-verify-` prefix for probes, binaries,
 and logs. No `/tmp` output and no generated executables in the checkout.
 Record the actual focused IMUL compile/run command you make work; no canonical
 IMUL test command exists yet. Ad-hoc verification is not a full suite/CI claim.

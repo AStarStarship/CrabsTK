@@ -2,7 +2,7 @@
 #pragma once
 #ifndef CRABSTK_AV_ADSR_DECL_DECL
 #define CRABSTK_AV_ADSR_DECL_DECL
-#include <_Config.h>
+#include "_Config.h"
 #if SEAM >= CRABSTK_AV_CORE
 namespace _ {
 

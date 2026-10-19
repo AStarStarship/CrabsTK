@@ -2,7 +2,7 @@
 #pragma once
 #ifndef CRABSTK_WHO_RELATIONSHIP_DECL_DECL
 #define CRABSTK_WHO_RELATIONSHIP_DECL_DECL
-#include <_Config.h>
+#include "_Config.h"
 #if SEAM >= CRABSTK_WHO_CORE
 #include "Entity.hpp"
 namespace _ {

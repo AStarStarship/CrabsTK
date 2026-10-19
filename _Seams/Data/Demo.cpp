@@ -1,5 +1,5 @@
 // Copyright AStarship <https://astarship.net>.
-#include <_Config.h>
+#include "_Config.h"
 #include <errno.h>
 #include <unistd.h>
 #include "../../Data/_Package.hxx"

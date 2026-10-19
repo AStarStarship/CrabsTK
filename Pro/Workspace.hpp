@@ -2,7 +2,7 @@
 #pragma once
 #ifndef CRABSTK_PRO_WORKSPACE_DECL_DECL
 #define CRABSTK_PRO_WORKSPACE_DECL_DECL
-#include <_Config.h>
+#include "_Config.h"
 #if SEAM >= CRABSTK_PRO_WORKSPACE
 #include "Project.hpp"
 namespace _ {

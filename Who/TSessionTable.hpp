@@ -2,7 +2,7 @@
 #pragma once
 #ifndef CRABSTK_WHO_SESSIONTABLE_HPP
 #define CRABSTK_WHO_SESSIONTABLE_HPP
-#include <_Config.h>
+#include "_Config.h"
 #if SEAM >= CRABSTK_WHO_CORE
 #include "TSession.hpp"
 #include <ASCIICrabs/Array.hpp>

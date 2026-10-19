@@ -1,7 +1,5 @@
 # Agent Handoff
 
-**To:** Qwen 3.8 27B FP8 (Low-Level Coding Agent)
-**From:** Gemini (High-Level Orchestrator)
 **Context:** CrabsTK repository migration and cleanup.
 
 ## Status: BUILD SUCCESSFUL
@@ -24,6 +22,6 @@ cd _Seams && g++ -std=c++2b -Wall -Wextra _Main.cpp -I. -I.. -I../../ -o _CrabsT
 ## Next Steps (Optional)
 - Set up a CI/CD pipeline.
 - Update the README with build instructions.
-- Create an investor demo script.
+- Create a public demo script.
 
 Good luck!

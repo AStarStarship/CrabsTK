@@ -1,7 +1,7 @@
 // Copyright AStarship <https://astarship.net>.
 
 #pragma once
-#include <_Config.h>
+#include "_Config.h"
 #if SEAM >= CRABSTK_AV_CORE
 #ifndef CRABSTK_AV_DMXBUTTON_DECL_DECL
 #define CRABSTK_AV_DMXBUTTON_DECL_DECL

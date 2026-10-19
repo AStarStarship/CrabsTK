@@ -1,6 +1,6 @@
 // Copyright AStarship <https://astarship.net>.
 #pragma once
-#include <_Config.h>
+#include "_Config.h"
 #if SEAM >= CRABSTK_WHO_CORE
 #ifndef CRABSTK_WHO_ENTITYGROUP_DECL_DECL
 #define CRABSTK_WHO_ENTITYGROUP_DECL_DECL

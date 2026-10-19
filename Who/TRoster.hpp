@@ -2,7 +2,7 @@
 #pragma once
 #ifndef CRABSTK_WHO_ROSTER_HPP
 #define CRABSTK_WHO_ROSTER_HPP
-#include <_Config.h>
+#include "_Config.h"
 #if SEAM >= CRABSTK_WHO_CORE
 #include "TSessionTable.hpp"
 #include "TRoom.hpp"

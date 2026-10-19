@@ -1,6 +1,6 @@
 // Copyright AStarship <https://astarship.net>.
 #pragma once
-#include <_Config.h>
+#include "_Config.h"
 #ifndef CRABSTK_CODE_FITTER_H
 #define CRABSTK_CODE_FITTER_H
 

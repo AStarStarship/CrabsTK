@@ -1,5 +1,5 @@
 // Copyright AStarship <https://astarship.net>.
-#include <_Config.h>
+#include "_Config.h"
 #include <ASCIICrabs/Test.h>
 #include "IMUL/Parser.h"
 using namespace _;

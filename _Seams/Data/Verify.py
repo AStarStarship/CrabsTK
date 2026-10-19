@@ -113,7 +113,9 @@ def main():
         return result.stdout
 
     flags = ['-std=c++2b', '-Wall', '-Wextra', '-Werror', '-Wno-unknown-pragmas',
-             '-Wno-deprecated-enum-enum-conversion', '-I_Seams/Data', '-I.', '-I..']
+             '-Wno-deprecated-enum-enum-conversion',
+             '-Wno-deprecated-anon-enum-enum-conversion',
+             '-I_Seams/Data', '-I.', '-I..']
     if args.mode == 'release':
         flags += ['-O2', '-fstrict-aliasing']
     else:

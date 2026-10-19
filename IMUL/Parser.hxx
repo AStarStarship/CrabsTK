@@ -1,7 +1,7 @@
 // Copyright AStarship <https://astarship.net>.
 /* ImulParseWorkspace: parses `repo owner/repo [as alias]` manifest lines.
 Phase 1: accepts a null workspace; manifest validation lands with the W cases. */
-#include <_Config.h>
+#include "_Config.h"
 #include <ASCIICrabs/Test.h>
 #include "IMUL/Parser.h"
 using namespace _;

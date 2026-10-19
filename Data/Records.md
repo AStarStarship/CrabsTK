@@ -129,5 +129,3 @@ Verification predicates explicitly raise on failure and stay active under
 Python -O/-OO/PYTHONOPTIMIZE. R07 covers direct-byte signaling-NaN round trips
 in observations, rewards, values and logp; GCC x86's -O0 -mfpmath=387 is the
 regression backend used to expose and confirm the representation-transfer fix.
-
-Copyright AStarship <https://astarship.net>.
