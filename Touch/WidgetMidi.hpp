@@ -2,7 +2,7 @@
 #pragma once
 #ifndef CRABSTK_TOUCH_MIDIWIDGET_DECL_DECL
 #define CRABSTK_TOUCH_MIDIWIDGET_DECL_DECL
-#include <_Config.h>
+#include "_Config.h"
 #if SEAM >= CRABSTK_TOUCH_CORE
 #include "Widget.hpp"
 namespace _ {

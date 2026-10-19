@@ -1,6 +1,6 @@
 // Copyright AStarship <https://astarship.net>.
 #pragma once
-#include <_Config.h>
+#include "_Config.h"
 
 #if __has_include("../../Plot/Plot.h") && \
     __has_include("../../Plot/Plot.hxx")

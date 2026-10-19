@@ -7,7 +7,7 @@
 // same call signatures fall back to reference BLAS (libblas) so the code still
 // compiles and is correct, just slower.
 //
-// The MUSEWorld TMatrix type is row-major (data_[r*cols + c]). BLAS (MKL/
+// The TMatrix type (ASCIICrabs/iGeek) is row-major (data_[r*cols + c]). BLAS (MKL/
 // openBLAS) is column-major. Each op below maps the row-major product to the
 // correct dgemm call via the identity:
 //     row-major C = A * B   <=>   dgemm on (B, A) with B/A swapped and
@@ -24,7 +24,7 @@ namespace _ {
 namespace Math {
 
 // One-time BLAS thread setup. On a many-core box (this one has 40) MKL's
-// default threading is CATASTROPHIC for the small matrices MUSE uses: a
+// default threading is CATASTROPHIC for small matrices: a
 // 128x64x128 dgemm measured 4235us threaded vs 119us single-thread (36x
 // SLOWER) because the spawn/sync overhead dwarfs the work. Single-thread MKL
 // still hits 17-77 GFLOP/s (the real AVX2 speedup).
@@ -58,7 +58,7 @@ inline void GemmRR(double alpha, const double* A, int lda, int m, int k,
 }
 
 // C(m,n) = A^T(m,k) * B(k,n)   where A is stored row-major as (k x m) [i.e. A^T]
-// (matches MUSEWorld MatMulT: A[k,m] row-major, compute A^T * B -> C[m,n])
+// (matches TMatrix MatMulT: A[k,m] row-major, compute A^T * B -> C[m,n])
 inline void GemmTNR(double alpha, const double* A, int lda, int k, int m,
                     const double* B, int ldb, int n, double beta, double* C,
                     int ldc) {

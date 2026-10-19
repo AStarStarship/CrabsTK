@@ -2,7 +2,7 @@
 #pragma once
 #ifndef CRABSTK_DATA_RECORD_DECL
 #define CRABSTK_DATA_RECORD_DECL
-#include <_Config.h>
+#include "_Config.h"
 #include "_Seams.h"
 #if SEAM >= CRABSTK_DATA_RECORD
 namespace _ {

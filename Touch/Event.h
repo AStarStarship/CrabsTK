@@ -2,7 +2,7 @@
 #pragma once
 #ifndef CRABSTK_AV_EVENT_DECL
 #define CRABSTK_AV_EVENT_DECL
-#include <_Config.h>
+#include "_Config.h"
 #if SEAM >= CRABSTK_AV_1
 namespace _ {
 

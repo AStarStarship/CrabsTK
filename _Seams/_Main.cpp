@@ -19,7 +19,7 @@ matching TestCase (const CHA* (*)(const CHA*)). Removed Pro/Touch (dead
 Script2 code). Added Plot (was missing). Image/00.Core.h was a struct, now
 a function. */
 
-#include <_Config.h>
+#include "_Config.h"
 #include <ASCIICrabs/COut.h>
 #include <ASCIICrabs/COut.hxx>
 #include <ASCIICrabs/AType.hxx>

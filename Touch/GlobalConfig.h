@@ -1,6 +1,6 @@
 // Copyright AStarship <https://astarship.net>.
 #pragma once
-#include <_Config.h>
+#include "_Config.h"
 #ifndef CRABSTK_HMI_CONFIG
 #define CRABSTK_HMI_CONFIG
 

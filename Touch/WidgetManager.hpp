@@ -2,7 +2,7 @@
 #pragma once
 #ifndef CRABSTK_TOUCH_WIDGETMANAGER_DECL_DECL
 #define CRABSTK_TOUCH_WIDGETMANAGER_DECL_DECL
-#include <_Config.h>
+#include "_Config.h"
 #if SEAM >= CRABSTK_TOUCH_CORE
 #include "widget.hpp";
 class LIB_MEMBER ControlsPage;

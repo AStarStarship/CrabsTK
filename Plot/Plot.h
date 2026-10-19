@@ -2,7 +2,7 @@
 #pragma once
 #ifndef CRABSTK_PLOT_PLOT_DECL
 #define CRABSTK_PLOT_PLOT_DECL
-#include <_Config.h>
+#include "_Config.h"
 #include "../Image/Image.h"
 #include "../Image/IDraw.h"
 

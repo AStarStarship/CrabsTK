@@ -2,7 +2,7 @@
 #pragma once
 #ifndef CRABSTK_PRO_ISSUE
 #define CRABSTK_PRO_ISSUE
-#include <_Config.h>
+#include "_Config.h"
 #if SEAM >= CRABSTK_PRO_1
 #include "Schedule.hpp"
 #include "Task.hpp"

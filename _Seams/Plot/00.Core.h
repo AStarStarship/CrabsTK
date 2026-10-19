@@ -7,7 +7,7 @@
 #pragma once
 #ifndef CRABSTK_PLOT_SEAM
 #define CRABSTK_PLOT_SEAM
-#include <_Config.h>
+#include "_Config.h"
 #if SEAM == CRABSTK_PLOT_CORE
 #include <ASCIICrabs/_Debug.h>
 #else

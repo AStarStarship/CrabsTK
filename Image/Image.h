@@ -2,7 +2,7 @@
 #pragma once
 #ifndef CRABSTK_IMAGE_IMAGE_DECL
 #define CRABSTK_IMAGE_IMAGE_DECL
-#include <_Config.h>
+#include "_Config.h"
 
 namespace _ {
 

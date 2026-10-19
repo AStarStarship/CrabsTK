@@ -84,6 +84,10 @@
 // GUI API
 #define CRABSTK_GUI_CORE             59
 
+// Env API
+#define CRABSTK_ENV_CORE             61
+#define CRABSTK_ENV_VAR              61
+
 // Release: build and run the full test tree.
-#define CRABSTK_RELEASE              60
-#define SEAM_N                       60
+#define CRABSTK_RELEASE              62
+#define SEAM_N                       62

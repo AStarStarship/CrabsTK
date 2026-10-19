@@ -2,7 +2,7 @@
 #pragma once
 #ifndef CRABSTK_AUDIO_SOUNDWAVE_DECL_DECL
 #define CRABSTK_AUDIO_SOUNDWAVE_DECL_DECL
-#include <_Config.h>
+#include "_Config.h"
 namespace _ {
 
 struct SoundWave {

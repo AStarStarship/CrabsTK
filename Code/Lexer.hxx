@@ -1,5 +1,5 @@
 // Copyright AStarship <https://astarship.net>.
-#include <_Config.h>
+#include "_Config.h"
 #include <cstring>  // memcmp (2026-10-12: was missing)
 #include "Lexer.h"
 
