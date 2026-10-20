@@ -99,7 +99,7 @@ class Library {
   uint64_t num_uids;                   //< Total number of UIDs.
   _::ADic<const TString<>&, Hit> patches;  //< List of patches.
   TArray<CHA> catagories,        //< The list of categories.
-      tags;                            //< List of tag Strings.
+      tags_;                            //< List of tag Strings.
 
   /* Gets the default library in JSON. */
   const CHA* GetDefaultHitLibrary() { return "[]"; }

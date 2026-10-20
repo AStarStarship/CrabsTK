@@ -112,7 +112,7 @@ struct TRoster {
   @note This is the hot path: Find + validate + RingWrite + Room broadcast.
         All steps are allocation-free. */
   ISN SendMessage(const CHA* handle, const CHA* text,
-                  IUA type = TMessage::kChat, IUB length = (IUB)-1) {
+                  IUA type = TMessage::Chat, IUB length = (IUB)-1) {
     TSession* session = sessions_.Find(handle, length);
     if (!session) return -1;
     if (!session->CanSend()) return -1;
@@ -148,7 +148,7 @@ struct TRoster {
   @pre Event thread only. */
   ISN SendSystem(IUC room, const CHA* text) {
     if ((++ts_cache_tick_ & 1023) == 0) ts_cache_ = ClockTS();
-    TMessage msg(0, ts_cache_, TMessage::kSystem, room, text, (IUB)-1);
+    TMessage msg(0, ts_cache_, TMessage::System, room, text, (IUB)-1);
     outbound_.WriteShort(&msg);
     ISN fanout = 0;
     if (room != 0) {
@@ -167,7 +167,7 @@ struct TRoster {
   BOL Mute(const CHA* handle, IUB length = (IUB)-1) {
     TSession* session = sessions_.Find(handle, length);
     if (!session) return false;
-    session->StateSet(TSession::kMuted);
+    session->StateSet(TSession::Muted);
     return true;
   }
 
@@ -176,7 +176,7 @@ struct TRoster {
   BOL Unmute(const CHA* handle, IUB length = (IUB)-1) {
     TSession* session = sessions_.Find(handle, length);
     if (!session) return false;
-    session->StateSet(TSession::kOnline);
+    session->StateSet(TSession::Online);
     return true;
   }
 
@@ -185,7 +185,7 @@ struct TRoster {
   BOL Ban(const CHA* handle, IUB length = (IUB)-1) {
     TSession* session = sessions_.Find(handle, length);
     if (!session) return false;
-    session->StateSet(TSession::kBanned);
+    session->StateSet(TSession::Banned);
     return true;
   }
 

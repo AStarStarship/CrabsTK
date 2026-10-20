@@ -290,7 +290,7 @@ class LIB_MEMBER Parameter : public HMIComponent {
   private:
 
   const IUB* channel_;  //< Output channel.
-  IUB value,            //< Parameter value.
+  IUB value_;  //< Parameter value.
       init_value_,           //< Initial value.
       min_value_,            //< Min value.
       max_value_;            //< Max value.
@@ -327,7 +327,7 @@ class ParameterPair {
 
   private:
 
-  IUA* msb, *lsb;
+  IUA* msb_, *lsb_;
 };  //< ParameterPair
 
 }  //< namespace _

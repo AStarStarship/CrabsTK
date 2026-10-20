@@ -1,13 +1,13 @@
 // Copyright AStarship <https://astarship.net>.
 // Self-test for CrabsTK/Math/Blas.h: verify each row-major product op against a
-// naive FP64 reference. Build:
-//   g++ -std=c++23 -O2 -I<CrabsTK>/Math blas_test.cpp -lmkl_rt
+// naive FP64 reference. See CMakeLists.txt and README.md for scalar/MKL builds.
 // Exit 0 = all ops match reference to < 1e-9.
 #include "Blas.h"
 #include <cstdio>
 #include <cstdlib>
 #include <cmath>
 #include <vector>
+#include <algorithm>
 
 using namespace _;
 using namespace _::Math;

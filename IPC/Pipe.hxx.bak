@@ -1,0 +1,487 @@
+// Copyright AStarship <https://astarship.net>.
+// IPC — implementation of the versioned dual-ring SPSC pipe (see Pipe.h
+// for the full contract: layout, roles, synchronization, teardown).
+//
+// Platform: Linux (POSIX shm_open/ftruncate/mmap, futex(2), clock_gettime
+// CLOCK_MONOTONIC). No C++ standard library containers/streams/atomics.
+
+#ifndef CRABSTK_IPC_PIPE_HXX
+#define CRABSTK_IPC_PIPE_HXX
+
+// The local _Config.h routes to the canonical ASCIICrabs chain in a
+// normal build (root _Config.h pulls ../ASCIICrabs/_ConfigHeader.h when
+// the sibling checkout is present). The type-identity asserts in
+// _Config.h therefore always compile; no extra header pull needed here.
+
+#include "Pipe.h"
+#include "_Debug.h"
+#include <stdio.h>
+#include <string.h>
+#include <unistd.h>
+#include <fcntl.h>
+#include <errno.h>
+#include <sys/mman.h>
+#include <sys/stat.h>
+#include <sys/syscall.h>
+#include <linux/futex.h>
+#include <time.h>
+
+namespace _ {
+
+namespace PipeDetail {
+
+// Debug toggle: set to 1 to print SpaceAvailable/Write internals.
+static BOL g_debug_space = true;
+
+// Monotonic milliseconds since an unspecified epoch (bounded waits).
+static ISW NowMs() {
+  struct timespec ts;
+  if (clock_gettime(CLOCK_MONOTONIC, &ts) != 0) return 0;
+  return ISW(ts.tv_sec) * 1000 + ISW(ts.tv_nsec) / 1000000;
+}
+
+// Release/acquire fences for the plain-store publication protocol.
+// On x86-64/TSO these are already implied by the store/load order, but
+// on weakly-ordered platforms (ARM64) the fence is what makes the
+// counter publication a release and the counter read an acquire.
+static void ReleaseFence() { __atomic_thread_fence(__ATOMIC_RELEASE); }
+static void AcquireFence() { __atomic_thread_fence(__ATOMIC_ACQUIRE); }
+
+// The chosen platform synchronization primitive: kernel futex on a
+// 4-byte aligned word. FUTEX_WAIT only traps when the word still equals
+// expected (the kernel-checked fast path), so a peer that has already
+// published never costs a syscall. On weakly-ordered platforms the
+// futex_wait/futex_wake pair is the documented acquire/release boundary;
+// on x86-64/TSO the plain stores around it are already release/acquire.
+// Private futexes: valid because both endpoints map the same shm object
+// into their own address spaces within a process pair spawned by fork
+// from a common ancestor (the test harness) or in one process.
+static void FutexWait(IUC* word, IUC expected, ISW timeout_ms) {
+  // deadline: timeout_ms < 0 is unbounded.
+  ISW deadline_ms = timeout_ms;
+  if (deadline_ms >= 0) deadline_ms += NowMs();
+  for (;;) {
+    struct timespec ts;
+    bool bounded = timeout_ms >= 0;
+    if (bounded) {
+      ISW left = deadline_ms - NowMs();
+      if (left <= 0) return;
+      ts.tv_sec = left / 1000;
+      ts.tv_nsec = (left % 1000) * 1000000L;
+    }
+    long rc = syscall(SYS_futex, word,
+                      bounded ? FUTEX_WAIT : FUTEX_WAIT,
+                      expected, bounded ? &ts : nullptr,
+                      timeout_ms >= 0 ? FUTEX_PRIVATE_FLAG : 0,
+                      0);
+    (void)rc;
+    if (errno == EAGAIN) return;  // word changed: the peer published
+    if (bounded) return;          // timeout (ETIMEDOUT) or error
+    if (errno != EINTR) return;   // treat unexpected errors as no-progress
+  }
+}
+
+static void FutexWake(IUC* word) {
+  (void)syscall(SYS_futex, word, FUTEX_WAKE, 1, nullptr, 0, 0);
+}
+
+// Process-wide map of live endpoint references per shared name: the
+// in-process refcount Close() consults before unlinking. A name is
+// unlinked only when the LAST endpoint in this process unmaps it —
+// never while a live peer (in-process or another process) holds it.
+struct LiveNames {
+  CHA entries[64][256];
+  IUC counts[64];
+  IUC used;
+  void Add(const CHA* name) {
+    for (IUC i = 0; i < used; ++i) {
+      if (strcmp(entries[i], name) == 0) { ++counts[i]; return; }
+    }
+    if (used < 64) {
+      IUC n = 0;
+      while (name[n]) ++n;
+      memcpy(entries[used], name, n + 1);
+      counts[used] = 1;
+      ++used;
+    }
+  }
+  // Returns the remaining count after decrement; 0 when the name left
+  // the map (no other endpoint in this process holds it).
+  IUC Drop(const CHA* name) {
+    for (IUC i = 0; i < used; ++i) {
+      if (strcmp(entries[i], name) == 0) {
+        if (counts[i] > 1) return --counts[i];
+        for (IUC j = i + 1; j < used; ++j) {
+          memcpy(entries[j - 1], entries[j], sizeof(entries[0]));
+          counts[j - 1] = counts[j];
+        }
+        --used;
+        return 0;
+      }
+    }
+    return 0;
+  }
+};
+static LiveNames& Live() { static LiveNames live; return live; }
+
+}  //< namespace PipeDetail
+
+Pipe::Pipe()
+    : map_(nullptr),
+      map_bytes_(0),
+      ring_bytes_(0),
+      ring_mask_(0),
+      name_fd_(-1),
+      owns_name_(false),
+      valid_(false) {
+  name_[0] = '\0';
+}
+
+Pipe::~Pipe() { Close(); }
+
+Pipe::Pipe(Pipe&& other) noexcept
+    : map_(other.map_),
+      map_bytes_(other.map_bytes_),
+      ring_bytes_(other.ring_bytes_),
+      ring_mask_(other.ring_mask_),
+      name_fd_(other.name_fd_),
+      owns_name_(other.owns_name_),
+      valid_(other.valid_) {
+  memcpy(name_, other.name_, sizeof(name_));
+  other.map_ = nullptr;
+  other.valid_ = false;
+  other.name_[0] = '\0';
+}
+
+Pipe& Pipe::operator=(Pipe&& other) noexcept {
+  if (this != &other) {
+    Close();
+    map_ = other.map_;
+    map_bytes_ = other.map_bytes_;
+    ring_bytes_ = other.ring_bytes_;
+    ring_mask_ = other.ring_mask_;
+    name_fd_ = other.name_fd_;
+    owns_name_ = other.owns_name_;
+    valid_ = other.valid_;
+    memcpy(name_, other.name_, sizeof(name_));
+    other.map_ = nullptr;
+    other.valid_ = false;
+    other.name_[0] = '\0';
+  }
+  return *this;
+}
+
+IUC Pipe::RoundRing(IUC ring_bytes) {
+  if (ring_bytes < 64) return 64;
+  // Next lower power of two: maskable, exact wrap, no modulo division.
+  IUC m = 1;
+  while (m * 2 <= ring_bytes) m *= 2;
+  return m;
+}
+
+PipeStatus Pipe::Bind(CHA* map, IUC map_bytes, BOL owns_name,
+                      const CHA* name, IUC ring_bytes, ISC timeout_ms) {
+  PipeHeader* h = reinterpret_cast<PipeHeader*>(map);
+  if (h->magic != PipeMagic) return PipeBadVersion;
+  if (h->version != PipeVersion) return PipeBadVersion;
+  if (h->header_bytes != PipeHeaderBytes) return PipeBadSize;
+  if (h->request_ring != ring_bytes || h->reply_ring != ring_bytes)
+    return PipeBadSize;
+  if (map_bytes < PipeHeaderBytes + 2 * ring_bytes) return PipeBadSize;
+  // Wait for the creator's ready publication (bounded; unbounded if the
+  // caller asked). The creator publishes ready=1 with release semantics
+  // after zeroing the counters; an attacher must not trust a header it
+  // mapped before that flag was visible.
+  if (h->ready != 1) {
+    PipeStatus st = WaitForCounter(&h->ready, 0, timeout_ms);
+    if (st != PipeOK) return st;
+    if (h->ready != 1) return PipeBadVersion;
+  }
+  map_ = map;
+  map_bytes_ = map_bytes;
+  ring_bytes_ = ring_bytes;
+  ring_mask_ = ring_bytes - 1;
+  owns_name_ = owns_name;
+  name_fd_ = owns_name ? 0 : -1;
+  IUC name_len = 0;
+  while (name[name_len] && name_len < 255) ++name_len;
+  memcpy(name_, name, name_len);
+  name_[name_len] = '\0';
+  PipeDetail::Live().Add(name_);  // register the in-process live reference
+  valid_ = true;
+  return PipeOK;
+}
+
+Pipe Pipe::Create(const CHA* name, IUC ring_bytes) {
+  Pipe pipe;
+  if (!name || !name[0]) return pipe;
+  ring_bytes = RoundRing(ring_bytes);
+  IUC total = PipeHeaderBytes + 2 * ring_bytes;
+  int fd = shm_open(name, O_CREAT | O_EXCL | O_RDWR, S_IRUSR | S_IWUSR);
+  if (fd < 0) {
+    if (errno == EEXIST) {
+      // Never adopt a peer's resource under the creator contract: a
+      // leftover name from a crashed run is the caller's to clean up
+      // (unique names per test are the rule). Report, do not unlink.
+      return pipe;
+    }
+    return pipe;
+  }
+  if (ftruncate(fd, total) < 0) {
+    close(fd);
+    shm_unlink(name);
+    return pipe;
+  }
+  CHA* map = static_cast<CHA*>(
+      mmap(nullptr, total, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0));
+  (void)close(fd);
+  if (map == MAP_FAILED) {
+    shm_unlink(name);
+    return pipe;
+  }
+  PipeHeader* h = reinterpret_cast<PipeHeader*>(map);
+  memset(h, 0, PipeHeaderBytes);
+  h->magic = PipeMagic;
+  h->version = PipeVersion;
+  h->header_bytes = PipeHeaderBytes;
+  h->request_ring = ring_bytes;
+  h->reply_ring = ring_bytes;
+  h->creator = IUC(getpid());
+  h->reserved0 = 0;
+  // Publish ready LAST, after the full header: release store semantics
+  // (fenced by the futex path on weakly-ordered platforms).
+  h->ready = 1;
+  if (pipe.Bind(map, total, true, name, ring_bytes, 0) != PipeOK) {
+    munmap(map, total);
+    shm_unlink(name);
+    return Pipe();
+  }
+  return pipe;
+}
+
+Pipe Pipe::Attach(const CHA* name, ISC timeout_ms) {
+  Pipe pipe;
+  if (!name || !name[0]) return pipe;
+  int fd = shm_open(name, O_RDWR, 0);
+  if (fd < 0) return pipe;
+  struct stat st;
+  if (fstat(fd, &st) < 0) {
+    close(fd);
+    return pipe;
+  }
+  IUC total = IUC(st.st_size);
+  CHA* map = static_cast<CHA*>(
+      mmap(nullptr, total, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0));
+  (void)close(fd);
+  if (map == MAP_FAILED) return pipe;
+  // Probe the header for the ring sizes BEFORE Bind validates the rest;
+  // a mapping smaller than the header is rejected without touching it.
+  IUC ring_bytes = 0;
+  if (total >= PipeHeaderBytes) {
+    const PipeHeader* h = reinterpret_cast<const PipeHeader*>(map);
+    if (h->magic == PipeMagic && h->version == PipeVersion &&
+        h->header_bytes == PipeHeaderBytes &&
+        h->request_ring == h->reply_ring)
+      ring_bytes = h->request_ring;
+  }
+  if (ring_bytes == 0) {
+    munmap(map, total);
+    return pipe;
+  }
+  if (pipe.Bind(map, total, false, name, ring_bytes, timeout_ms) != PipeOK) {
+    munmap(map, total);
+    return Pipe();
+  }
+  return pipe;
+}
+
+PipeStatus Pipe::WaitForCounter(IUC* counter, IUC expected, ISC block_ms) {
+  if (expected != *counter) return PipeOK;
+  PipeDetail::FutexWait(counter, expected, block_ms);
+  if (expected == *counter) return PipeTimeout;
+  return PipeOK;
+}
+
+ISW Pipe::BytesAvailable() const {
+  if (!valid_) return 0;
+  const PipeHeader* h = reinterpret_cast<const PipeHeader*>(map_);
+  // Read direction of THIS role: master CONSUMES reply, slave CONSUMES
+  // request. Both are the consumer side, so tail/head are read here.
+  IUC head = owns_name_ ? h->head_rep : h->head_req;
+  IUC tail = owns_name_ ? h->tail_rep : h->tail_req;
+  IUC avail = head - tail;  // monotonic counters: safe unsigned delta
+  return ISW(avail > ring_bytes_ ? ring_bytes_ : avail);
+}
+
+ISW Pipe::SpaceAvailable() const {
+  if (!valid_) return 0;
+  const PipeHeader* h = reinterpret_cast<const PipeHeader*>(map_);
+  // Write direction of THIS role: master PRODUCES request, slave PRODUCES
+  // reply. Space is measured on the ring this role writes.
+  IUC head = owns_name_ ? h->head_req : h->head_rep;
+  IUC tail = owns_name_ ? h->tail_req : h->tail_rep;
+  IUC free = ring_bytes_ - (head - tail);
+  if (PipeDetail::g_debug_space) {
+    printf("DEBUG SpaceAvailable: owns=%d map=%p head=%u tail=%u free=%u\n",
+           (int)owns_name_, (void*)map_, head, tail, free);
+  }
+  return ISW(free);
+}
+
+BOL Pipe::HasData() const { return BytesAvailable() > 0; }
+
+PipeStatus Pipe::WaitForData(ISC block_ms) {
+  if (!valid_) return PipeClosed;
+  if (BytesAvailable() > 0) return PipeOK;
+  PipeHeader* h = reinterpret_cast<PipeHeader*>(map_);
+  // Wait on the producer-side counter of the ring this role CONSUMES.
+  IUC head = owns_name_ ? h->head_rep : h->head_req;
+  PipeStatus st = WaitForCounter(
+      owns_name_ ? &h->head_rep : &h->head_req, head, block_ms);
+  return st;
+}
+
+PipeStatus Pipe::WaitForSpace(ISC block_ms) {
+  if (!valid_) return PipeClosed;
+  if (SpaceAvailable() > 0) return PipeOK;
+  PipeHeader* h = reinterpret_cast<PipeHeader*>(map_);
+  // Wait on the consumer-side counter of the ring this role PRODUCES.
+  IUC tail = owns_name_ ? h->tail_req : h->tail_rep;
+  PipeStatus st = WaitForCounter(
+      owns_name_ ? &h->tail_req : &h->tail_rep, tail, block_ms);
+  return st;
+}
+
+ISW Pipe::Write(const CHA* data, ISW n_bytes) {
+  if (!valid_ || !data || n_bytes <= 0) return PipeInvalid;
+  PipeHeader* h = reinterpret_cast<PipeHeader*>(map_);
+  IUC* head = owns_name_ ? &h->head_req : &h->head_rep;
+  IUC* tail = owns_name_ ? &h->tail_req : &h->tail_rep;
+  IUC free = ring_bytes_ - (*head - *tail);
+  if (PipeDetail::g_debug_space) {
+    printf("DEBUG Write: owns=%d map=%p n_bytes=%d head=%u tail=%u free=%u\n",
+           (int)owns_name_, (void*)map_, (int)n_bytes, *head, *tail, free);
+  }
+  if (free == 0) return PipeFull;
+  // Explicit partial transfer (the documented Write contract): a message
+  // larger than the CURRENT free space — including larger than the whole
+  // ring — publishes the free space now and returns the short count; the
+  // caller loops with the remainder. Rejecting the whole write when
+  // n_bytes > ring_bytes_ left stale bytes behind and broke every test
+  // that streams 300+ bytes through a 256-byte ring. The only true
+  // invalid size is n_bytes <= 0 (or a null buffer).
+  if (IUC(n_bytes) > free) {
+    n_bytes = ISW(free);
+  }
+  CHA* ring = map_ + PipeHeaderBytes;
+  (void)free;
+  IUC start = *head & ring_mask_;
+  IUC end = IUC(n_bytes);
+  if (start + end <= ring_bytes_) {
+    memcpy(ring + start, data, end);
+  } else {
+    IUC first = ring_bytes_ - start;
+    memcpy(ring + start, data, first);
+    memcpy(ring, data + first, end - first);
+  }
+  // Release publication: data bytes first, then the head counter.
+  *head += end;
+  PipeDetail::FutexWake(tail);
+  return n_bytes;
+}
+
+ISW Pipe::Read(CHA* buf, ISW max_bytes, ISC block_ms) {
+  if (!valid_ || !buf || max_bytes <= 0) return PipeInvalid;
+  PipeHeader* h = reinterpret_cast<PipeHeader*>(map_);
+  // Consume the ring this role READS: master <- reply, slave <- request.
+  IUC* head = owns_name_ ? &h->head_rep : &h->head_req;
+  IUC* tail = owns_name_ ? &h->tail_rep : &h->tail_req;
+  // Acquire before trusting a freshly published head: the data bytes
+  // written before the producer's release store must be visible here.
+  PipeDetail::AcquireFence();
+  if (*head == *tail && block_ms == 0) return PipeEmpty;
+  if (*head == *tail) {
+    PipeStatus st = WaitForData(block_ms);
+    if (st != PipeOK) return ISW(st);
+    if (*head == *tail) return PipeEmpty;
+  }
+  IUC avail = *head - *tail;
+  IUC take = IUC(max_bytes) < avail ? IUC(max_bytes) : avail;
+  CHA* ring = map_ + PipeHeaderBytes;
+  IUC start = *tail & ring_mask_;
+  IUC end = take;
+  if (start + end <= ring_bytes_) {
+    memcpy(buf, ring + start, end);
+  } else {
+    IUC first = ring_bytes_ - start;
+    memcpy(buf, ring + start, first);
+    memcpy(buf + first, ring, end - first);
+  }
+  // Release consumption: advance tail, wake a blocked producer.
+  *tail += end;
+  PipeDetail::FutexWake(head);
+  return ISW(end);
+}
+
+// Process-wide map of live endpoint references per shared name (moved
+// up next to the futex helpers; see PipeDetail::LiveNames).
+void Pipe::Unmap(BOL unlink_name) {
+  if (map_) {
+    munmap(map_, map_bytes_);
+    map_ = nullptr;
+  }
+  if (unlink_name && owns_name_ && name_[0]) {
+    IUC remaining = PipeDetail::Live().Drop(name_);
+    if (remaining == 0) shm_unlink(name_);
+  }
+  map_bytes_ = 0;
+  ring_bytes_ = 0;
+  ring_mask_ = 0;
+  name_fd_ = -1;
+  owns_name_ = false;
+  valid_ = false;
+}
+
+void Pipe::Close() {
+  // In-process refcount: the creator unlinks only when this endpoint is
+  // the LAST live reference in this process. A live peer endpoint (or a
+  // peer process) must never find its mapping's name pulled out from
+  // under it: the attacher re-attaches on close by NAME, so a premature
+  // unlink kills exactly that path (the TwoProc creator-exits-first case
+  // observed it as a child read of stale data). An attacher never
+  // unlinks at all — it only drops its own reference.
+  if (!valid_) return;
+  BOL unlink = owns_name_;
+  Unmap(unlink);
+}
+
+// ---- compatibility wrappers (honest semantics, see Pipe.h) ----
+
+namespace PipeCompat {
+// One shared in-process endpoint: the legacy happy-path test uses the
+// request direction only. NOT a duplex proof.
+static Pipe* Shared() {
+  static Pipe* instance = nullptr;
+  if (!instance) {
+    // A stale compat name from a crashed run would make O_EXCL fail and
+    // leave the wrapper inert; clean up only THIS module's own resource.
+    shm_unlink("/crabs_pipe_compat");
+    instance = new Pipe();
+    instance->Create("/crabs_pipe_compat", 4 * 1024);
+    if (*instance) {
+      // Static lifetime: never drop the reference (and thus never
+      // unlink) while the endpoint stays live.
+      PipeDetail::Live().Add("/crabs_pipe_compat");
+    }
+  }
+  return instance;
+}
+}  //< namespace PipeCompat
+
+Pipe& PipeMaster() { return *PipeCompat::Shared(); }
+Pipe& PipeSlave() { return *PipeCompat::Shared(); }
+
+
+}  //< namespace _
+
+#endif // CRABSTK_IPC_PIPE_HXX

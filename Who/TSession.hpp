@@ -37,28 +37,28 @@ struct TSession {
   };
   /* Session state codes (mutable, written by event thread). */
   enum State {
-    kFree = 0,      //< Tombstone: slot vacated, hash empty.
-    kConnecting,    //< Handshake in progress (socket accepted, no handle).
-    kOnline,        //< Connected, handle set, may send and receive.
-    kMuted,         //< Connected, send path blocked by moderation.
-    kBanned,        //< Connected, read-only; kicked on next event tick.
-    kDraining,      //< Graceful shutdown requested.
+    Free = 0,      //< Tombstone: slot vacated, hash empty.
+    Connecting,    //< Handshake in progress (socket accepted, no handle).
+    Online,        //< Connected, handle set, may send and receive.
+    Muted,         //< Connected, send path blocked by moderation.
+    Banned,        //< Connected, read-only; kicked on next event tick.
+    Draining,      //< Graceful shutdown requested.
   };
   /* Role codes (immutable-ish, set at auth or by moderator). */
   enum Role {
-    kViewer = 0,    //< Read-only chat (default).
-    kModerator,     //< May mute/ban viewers.
-    kBroadcaster,   //< The stream owner.
-    kAdmin,         //< Full server control.
+    Viewer = 0,    //< Read-only chat (default).
+    Moderator,     //< May mute/ban viewers.
+    Broadcaster,   //< The stream owner.
+    Admin,         //< Full server control.
   };
 
-  /* Zeroes a session into the kFree state. */
+  /* Zeroes a session into the Free state. */
   TSession()
       : uid_(0),
         handle_(0),
-        state_(kFree),
+        state_(Free),
         color_(0),
-        role_(kViewer),
+        role_(Viewer),
         room_(0),
         sent_(0),
         last_ts_(0) {
@@ -99,15 +99,15 @@ struct TSession {
   }
 
   /* True if this session slot is vacant (a tombstone). */
-  BOL Free() const { return state_ == kFree; }
+  BOL Free() const { return state_ == Free; }
 
   /* True if this session is connected (any post-handshake state). */
   BOL Connected() const {
-    return state_ >= kConnecting && state_ <= kDraining;
+    return state_ >= Connecting && state_ <= Draining;
   }
 
   /* True if this session may send messages. */
-  BOL CanSend() const { return state_ == kOnline || state_ == kBanned; }
+  BOL CanSend() const { return state_ == Online || state_ == Banned; }
 
   /* Gets the unique session id. */
   IUD UID() const { return uid_; }
@@ -198,7 +198,7 @@ struct TSession {
 
   /* Marks the session free (tombstone), wiping the handle bytes. */
   void FreeSet() {
-    state_ = kFree;
+    state_ = Free;
     uid_ = 0;
     handle_ = 0;
     sent_.store(0, ::std::memory_order_relaxed);

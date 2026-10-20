@@ -17,7 +17,7 @@ class ControlMaster {
   inline template<typename Printer> Printer& Print(Printer& o) const;
 
  private:
-  Parameter<ISC>*a, *b, *c, *d;
+  Parameter<ISC>* a_, *b_, *c_, *d_;
 };
 
 }  //< namespace _

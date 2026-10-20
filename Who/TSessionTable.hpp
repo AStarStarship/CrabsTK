@@ -95,10 +95,10 @@ struct ASessionTable {
   @param handle UTF-8 handle string.
   @param length Byte length of handle (pass -1 to compute).
   @return Pointer to the TSession, or NILP if not found.
-  @note kFree slots are tombstones, not terminators: a key inserted after a
+  @note Free slots are tombstones, not terminators: a key inserted after a
         tombstone in its probe chain must still be findable. We stop only
         after a full circuit (the table is kept < 70% full, so this is bounded
-        and there is always a kFree slot to end the circuit). */
+        and there is always a Free slot to end the circuit). */
   TSession* Find(const CHA* handle, IUB length = (IUB)-1) const {
     if (!handle) return NILP;
     if (length == (IUB)-1) {
@@ -154,7 +154,7 @@ struct ASessionTable {
     for (IUC i = 0; i < total_; ++i) {
       TSession* session = &Slots()[probe];
       IUA state = session->StateGet();
-      if (state == TSession::kFree) {
+      if (state == TSession::Free) {
         if (free_probe == (IUC)-1) free_probe = probe;
         /* Keep probing in case of a duplicate after a tombstone. */
       } else if (session->handle_ == hash &&
@@ -169,7 +169,7 @@ struct ASessionTable {
     session->uid_ = uid;
     session->slot_ = free_probe;
     session->room_ = room;
-    session->state_ = TSession::kConnecting;
+    session->state_ = TSession::Connecting;
     session->HandleSet(handle, length);
     session->SentIncrement(0);
     ++count_;

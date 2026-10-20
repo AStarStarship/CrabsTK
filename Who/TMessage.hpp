@@ -34,17 +34,17 @@ struct TMessage {
   };
   /* Message type codes. */
   enum Type {
-    kChat = 0,      //< Normal user chat message.
-    kSystem,        //< Server-generated (join, leave, ban).
-    kModeration,    //< Moderator action (mute, unban, notice).
-    kWhisper,       //< Private message (one-to-one).
-    kCommand,       //< Client command (emote, gift, raid, etc.).
-    kBroadcast,     //< Broadcaster message (pinned/sub).
+    Chat = 0,      //< Normal user chat message.
+    System,        //< Server-generated (join, leave, ban).
+    Moderation,    //< Moderator action (mute, unban, notice).
+    Whisper,       //< Private message (one-to-one).
+    Command,       //< Client command (emote, gift, raid, etc.).
+    Broadcast,     //< Broadcaster message (pinned/sub).
   };
 
   /* Zeroes the message into an empty state. */
   TMessage()
-      : uid_(0), ts_(0), type_(kChat), room_(0), pad_(0), text_length_(0) {
+      : uid_(0), ts_(0), type_(Chat), room_(0), pad_(0), text_length_(0) {
     text_[0] = '\0';
   }
 

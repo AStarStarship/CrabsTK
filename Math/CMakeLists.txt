@@ -1,0 +1,90 @@
+# Copyright AStarship <https://astarship.net>.
+cmake_minimum_required(VERSION 3.18)
+project(CrabsTKMath LANGUAGES CXX)
+
+option(CRABSTK_MATH_ENABLE_MKL "Require and exercise Intel MKL (LP64/sequential)" OFF)
+option(CRABSTK_MATH_ENABLE_CUDA "Require CUDA toolkit/cuBLAS for device buffers" OFF)
+set(CRABSTK_MATH_CUDA_TEST_DEVICES "0" CACHE STRING "CUDA test device ordinals (semicolon-separated)")
+option(CRABSTK_MATH_SANITIZE "Address/undefined-behavior sanitizers" OFF)
+
+add_library(CrabsTKMathScalar INTERFACE)
+add_library(CrabsTK::MathScalar ALIAS CrabsTKMathScalar)
+target_compile_features(CrabsTKMathScalar INTERFACE cxx_std_23)
+target_include_directories(CrabsTKMathScalar INTERFACE
+  "${CMAKE_CURRENT_SOURCE_DIR}"
+  "${CMAKE_CURRENT_SOURCE_DIR}/../../ASCIICrabs/_Seams")
+
+if(CRABSTK_MATH_ENABLE_MKL)
+  # Never let MKL's defaults pick ILP64 or create a nested CPU thread pool.
+  # Use distinct LP64/sequential libraries, not an environment-switched mkl_rt.
+  set(MKL_INTERFACE lp64)
+  set(MKL_THREADING sequential)
+  set(MKL_LINK dynamic)
+  find_package(MKL CONFIG REQUIRED)
+  add_library(CrabsTKMathMkl INTERFACE)
+  add_library(CrabsTK::MathMkl ALIAS CrabsTKMathMkl)
+  target_link_libraries(CrabsTKMathMkl INTERFACE CrabsTKMathScalar MKL::MKL)
+  target_compile_definitions(CrabsTKMathMkl INTERFACE CRABSTK_MATH_MKL=1)
+endif()
+
+if(CRABSTK_MATH_ENABLE_CUDA)
+  find_package(CUDAToolkit REQUIRED)
+  add_library(CrabsTKMathCuda INTERFACE)
+  add_library(CrabsTK::MathCuda ALIAS CrabsTKMathCuda)
+  target_link_libraries(CrabsTKMathCuda INTERFACE
+    CrabsTKMathScalar CUDA::cublas CUDA::cudart)
+endif()
+
+include(CTest)
+if(BUILD_TESTING)
+  function(math_test target source backend)
+    add_executable(${target} ${source})
+    target_link_libraries(${target} PRIVATE ${backend})
+    set_target_properties(${target} PROPERTIES CXX_EXTENSIONS OFF)
+    if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
+      target_compile_options(${target} PRIVATE -Wall -Wextra -Werror=vla
+        -Wno-unknown-pragmas -Wno-deprecated-enum-enum-conversion)
+      if(CRABSTK_MATH_SANITIZE)
+        target_compile_options(${target} PRIVATE -O1 -g
+          -fsanitize=address,undefined -fno-sanitize-recover=all
+          -fno-omit-frame-pointer)
+        target_link_options(${target} PRIVATE -fsanitize=address,undefined)
+      endif()
+    endif()
+    add_test(NAME ${target} COMMAND ${target} ${ARGN})
+    set_tests_properties(${target} PROPERTIES TIMEOUT 30)
+  endfunction()
+
+  math_test(BlasScalarTests BlasTests.cpp CrabsTKMathScalar)
+  math_test(BlasMacroZeroTests BlasTests.cpp CrabsTKMathScalar)
+  target_compile_definitions(BlasMacroZeroTests PRIVATE CBLAS_H_AVAILABLE=0)
+  math_test(BlasLegacyScalarTests blas_test.cpp CrabsTKMathScalar)
+  if(CRABSTK_MATH_ENABLE_MKL)
+    math_test(BlasMklTests BlasTests.cpp CrabsTKMathMkl)
+    math_test(BlasLegacyMklTests blas_test.cpp CrabsTKMathMkl)
+    # Exercise the legacy CBLAS switch against a REAL CBLAS provider, not a mock.
+    math_test(BlasCblasCompatTests BlasTests.cpp CrabsTKMathScalar)
+    target_link_libraries(BlasCblasCompatTests PRIVATE MKL::MKL)
+    target_compile_definitions(BlasCblasCompatTests PRIVATE
+      CBLAS_H_AVAILABLE=1 CRABSTK_MATH_CBLAS_HEADER="mkl_cblas.h")
+  endif()
+  if(CRABSTK_MATH_ENABLE_CUDA)
+    set(cuda_devices ${CRABSTK_MATH_CUDA_TEST_DEVICES})
+    list(REMOVE_DUPLICATES cuda_devices)
+    if(NOT cuda_devices)
+      message(FATAL_ERROR "Specify at least one CUDA test device ordinal")
+    endif()
+    foreach(device IN LISTS cuda_devices)
+      if(NOT device MATCHES "^[0-9]+$")
+        message(FATAL_ERROR "Invalid CUDA test device ordinal: ${device}")
+      endif()
+    endforeach()
+    list(POP_FRONT cuda_devices first_device)
+    math_test(CudaBlasTests CudaBlasTests.cpp CrabsTKMathCuda ${first_device})
+    set_tests_properties(CudaBlasTests PROPERTIES TIMEOUT 120)
+    foreach(device IN LISTS cuda_devices)
+      add_test(NAME CudaBlasDevice${device}Tests COMMAND CudaBlasTests ${device})
+      set_tests_properties(CudaBlasDevice${device}Tests PROPERTIES TIMEOUT 120)
+    endforeach()
+  endif()
+endif()

@@ -1,28 +1,35 @@
-// Copyright AStarship <https://astarship.net>.
-// Plot module seam entry — function pointer (matches TestCase typedef).
-// (2026-10-12: created — Plot was missing from the root _Seams/_Main.cpp
-// TTestTree. The standalone _Seams/Plot/_Main.cpp still works for detailed
-// Plot tests; this is the root-tree entry. Matches the CT::<Module>::Core
-// pattern used by every other seam.)
+/* CRABSTK
+@file    /_Seams/Plot/00.Core.h
+@author  Cale McCollough <https://cookingwithcale.org>
+@license Copyright 2019-20 (C) AStarship <astarship.net>; all rights
+reserved (R). This Source Code Form is subject to the terms of the Mozilla
+Public License, v. 2.0. If a copy of the MPL was not distributed with this file,
+You can obtain one at <https://mozilla.org/MPL/2.0/>. */
 #pragma once
-#ifndef CRABSTK_PLOT_SEAM
-#define CRABSTK_PLOT_SEAM
-#include "_Config.h"
+#include <_Config.h>
 #if SEAM == CRABSTK_PLOT_CORE
 #include <ASCIICrabs/_Debug.h>
-#else
+#elif SEAM > CRABSTK_PLOT_CORE
 #include <ASCIICrabs/_Release.h>
 #endif
+#include <ASCIICrabs/Test.h>
+
 using namespace _;
 namespace CT {
 namespace Plot {
-inline const CHA* Core(const CHA* args) {
+namespace Test {
+
+inline const CHA* PlotCore(const CHA* args) {
 #if SEAM >= CRABSTK_PLOT_CORE
   A_TEST_BEGIN;
-  // Plot seam test body (10/10 verified in standalone _Seams/Plot/_Main.cpp).
+  D_COUT(Headingf("Testing Plot core..."));
+
+  // Your test code here.
+
 #endif
   return 0;
 }
+
+}  //< namespace Test
 }  //< namespace Plot
 }  //< namespace CT
-#endif

@@ -41,7 +41,7 @@ specializing in:
 
 ## Current Workspace
 
-- **Root:** /home/astar/AStarStarship/CrabsTK
+- **Root:** ~/AStarStarship/CrabsTK
 - **Branch:** Issue189 → origin/master (ahead 2, behind 0)
 - **Status:** 7 modified, 2 untracked
 - **Recent relevant work:** Include syntax and order fixes in _ConfigHeader.h (2026-10-18)

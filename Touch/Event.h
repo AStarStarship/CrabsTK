@@ -26,7 +26,7 @@ class Event {
   virtual Printer& Print(Printer& o) const = 0;
 
  private:
-  timestamp_t timestamp;  //< Event timestamp in microseconds.
+  timestamp_t timestamp_;  //< Event timestamp in microseconds.
 };
 
 }  //< namespace _

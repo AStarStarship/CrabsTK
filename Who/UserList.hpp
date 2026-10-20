@@ -19,18 +19,18 @@ deleted. */
 class UserList : public Operand {
  public:
   enum {
-    kDefaultMaxUsers = 1024,
-    kPasswordValidation = 0,
-    kHandleValidation = 1,
-    kMinPasswordLength = 8,
-    kMaxPasswordLength = 63,
-    kMinHandleLength = 2,
-    kMaxHandleLength = 63,
+    DefaultMaxUsers = 1024,
+    PasswordValidation = 0,
+    HandleValidation = 1,
+    MinPasswordLength = 8,
+    MaxPasswordLength = 63,
+    MinHandleLength = 2,
+    MaxHandleLength = 63,
   };
 
   /* Creates an empty list. */
   UserList(TAuthenticator* authenticator = new TAuthenticatorDefault(),
-           ISC max_users = kDefaultMaxUsers)
+           ISC max_users = DefaultMaxUsers)
     : user_count (0),
     value_cost_ (0.0),
     auth_ (authenticator),
@@ -97,9 +97,9 @@ class UserList : public Operand {
   TAuthenticator* GetAuthenticator() { return auth_; }
 
   /* Adds a new User to the list with the given handle and password. */
-  ISC Add(const TString<>& handle, const TString<>& password = TPassword::kDefault,
-          FPD balance = TUser::kDefaultBalance,
-          int64_t value = TUser::kDefaultValue) {
+  ISC Add(const TString<>& handle, const TString<>& password = TPassword::DefaultPassword,
+          FPD balance = TUser::DefaultBalance,
+          int64_t value = TUser::DefaultValue) {
     cout << "\n| Attempting to add @" << ((handle == nullptr) ? "null" : handle)
       << ":\"" << ((password == nullptr) ? "null" : password) << '\"';
     if (handle == nullptr) {
@@ -114,7 +114,7 @@ class UserList : public Operand {
       return -1;
     }
     if (password == nullptr) {
-      password = StringClone (TPassword::kDefault);
+      password = StringClone (TPassword::DefaultPassword);
     }
     if (auth_->PasswordInvalid (password)) {
       cout << "\n| Invalid password!";
@@ -315,7 +315,7 @@ class UserList : public Operand {
   }
   
   /*const TString<>& Sudo(const TString<>& text, const TString<>& String_end) {
-    CHA handle[Handle::kMaxLength + 1], password[Password::kMaxLength + 1];
+    CHA handle[Handle::MaxLength + 1], password[Password::MaxLength + 1];
     FPD balance;
     int64_t value;
     const TString<>& next_token;
@@ -344,12 +344,12 @@ class UserList : public Operand {
     }
     if (next_token = TokenEquals(text, String_end, "add")) {
       next_token =
-          TokenRead(text, String_end, handle, handle + Handle::kMaxLength + 1);
+          TokenRead(text, String_end, handle, handle + Handle::MaxLength + 1);
       if (!next_token) {
         return nullptr;
       }
       next_token = TokenRead(text, String_end, password,
-                             password + Password::kMaxLength + 1);
+                             password + Password::MaxLength + 1);
       if (!next_token) {
         return nullptr;
       }
@@ -362,9 +362,9 @@ class UserList : public Operand {
       return next_token;
     }
     if (next_token = TokenEquals(text, String_end, "remove")) {
-      CHA handle[Handle::kMaxLength + 1];
+      CHA handle[Handle::MaxLength + 1];
       while (
-          !TokenRead(text, String_end, handle, handle + Handle::kMaxLength + 1)) {
+          !TokenRead(text, String_end, handle, handle + Handle::MaxLength + 1)) {
         Remove(handle);
       }
     }

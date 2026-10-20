@@ -107,7 +107,7 @@ class LIB_MEMBER ParamSet {
   }
 
  private:
-  TArray<Parameter<T>> params;  //< An array of Parameter<T> pointers.
+  TArray<Parameter<T>> params_;  //< An array of Parameter<T> pointers.
 
   inline ISC BoundRange (ISC value, ISC min, ISC max) {
     if (value < min) return min;
