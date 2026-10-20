@@ -17,7 +17,7 @@ class TPrivilege {
 
   /* Default constructor. */
    TPrivilege (ISC num_privileges = 1)
-     : privilage_count_ (kPrivilageLevelCheck) {
+     : privilage_count_ (PrivilageLevelCheck) {
 
   }
 

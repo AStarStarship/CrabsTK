@@ -183,11 +183,25 @@ def CreateProject(project_name, output_dir, mode):
         with open(path, "w") as fh:
           fh.write(new_content)
 
-  # Write seams.yaml (overwriting the template copy).
+  # Write seams.yaml (overwriting the template copy) — standard name for the seam system.
   seams_yaml = BuildSeamsYaml(project_name, mode)
   yaml_path = os.path.join(output_dir, "seams.yaml")
   with open(yaml_path, "w") as fh:
     fh.write(seams_yaml)
+
+  # Also write __Seams.yaml — double-underscore prefix ensures it appears at the
+  # top of alphabetically sorted file listings, keeping it separated from source
+  # code files and making it the "visible" single source of truth.
+  __seams_yaml_content = seams_yaml.replace("seams.yaml", "__Seams.yaml")
+  # Ensure the __Seams.yaml header starts with "// __Seams" comment.
+  # Replace the original header line if needed.
+  lines = __seams_yaml_content.split("\n", 1)
+  if lines[0].startswith("// seams.yaml"):
+    lines[0] = "// __Seams.yaml -- single source of truth for the seam system."
+  __seams_yaml_content = "\n".join(lines)
+  __yaml_path = os.path.join(output_dir, "__Seams.yaml")
+  with open(__yaml_path, "w") as fh:
+    fh.write(__seams_yaml_content)
 
   # Copy SyncSeams.py to the project (so the user can run it locally).
   sync_src = os.path.join(SCRIPT_DIR, "SyncSeams.py")

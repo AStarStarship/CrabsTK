@@ -15,17 +15,17 @@ can use. i.e. the guest account. */
 class TUser {
  public:
   enum {
-    kDefaultMinDislpayNameLength = 2,  //< Default max display name length.
-    kMaxStatusLength = 63,             //< Default max display name length.
-    kDefaultValue = 0,                 //< Default abstract user value.
+    DefaultMinDisplayLength = 2,  //< Default max display name length.
+    MaxStatusLength = 63,             //< Default max display name length.
+    DefaultValue = 0,                 //< Default abstract user value.
   };
-  static const FPD kDefaultBalance;  //< Default account balance.
+  static const FPD DefaultBalance;  //< Default account balance.
 
   /* Creates a user with the given handle, password, and status. */
   TUser(TAuthenticator* authenticator, IUD uid = 0,
-       const TString<>& handle = THandle::kDefault,
-       const TString<>& password = TPassword::kDefault,
-       FPD balance = kDefaultBalance, IUD value = kDefaultValue)
+       const TString<>& handle = THandle::DefaultPassword,
+       const TString<>& password = TPassword::DefaultPassword,
+       FPD balance = DefaultBalance, IUD value = DefaultValue)
     : handle_ (authenticator, handle),
     status_ (StringClone ("")),
     password_ (authenticator, password),
@@ -202,12 +202,12 @@ class TUser {
   /* @todo Convert to Operation.
   const TString<>& Sudo(const TString<>& text, const TString<>& String_end) {
     enum {
-      kMessageLength = 141,
+      MessageLength = 141,
     };
     const TString<>& token;
     FPD balance;
     int64_t value;
-    CHA input[kMessageLength];
+    CHA input[MessageLength];
 
     text = TextSkipSpaces(text, String_end);
     if (!text) {
@@ -226,13 +226,13 @@ class TUser {
       }
       value_ += value;
     } else if (TokenCompare(text, String_end, "SetStatus")) {
-      token = TextRead(text, String_end, input, input + kMessageLength);
+      token = TextRead(text, String_end, input, input + MessageLength);
       if (!token) {
         return nullptr;
       }
       SetStatus(input);
     } else if (TokenCompare(text, String_end, "SetHandle")) {
-      token = TextRead(text, String_end, input, input + kMessageLength);
+      token = TextRead(text, String_end, input, input + MessageLength);
       if (!token) {
         return nullptr;
       }
@@ -254,7 +254,7 @@ class TUser {
       return text;
     }
 
-    token = TextRead(text, String_end, input, input + kMessageLength);
+    token = TextRead(text, String_end, input, input + MessageLength);
     if (!token) {
       return nullptr;
     }

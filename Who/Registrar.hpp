@@ -27,7 +27,7 @@ class TRegistrar {
 
   /* Registers an unique key the server and clones the name CHA. */
   ISC RegisterKey(const TString<>& key) {
-    if (StringLength (key) > kMaxKeyLength) return -1;
+    if (StringLength (key) > MaxKeyLength) return -1;
     return ids_.Push (StringClone (key));
   }
 

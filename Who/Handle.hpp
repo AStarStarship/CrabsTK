@@ -12,27 +12,27 @@ namespace _ {
 class THandle {
  public:
   enum {
-    kValidation = 1,        //< Validation type.
-    kDefaultMinLength = 3,  //< Min length of a Handle range.
-    kMaxLength = 255        //< Max length of a Handle range.
+    Validation = 1,        //< Validation type.
+    DefaultMinLength = 3,  //< Min length of a Handle range.
+    MaxLength = 255        //< Max length of a Handle range.
   };
 
   static const CHA* Default ();
 
   /* Constructor creates a standard CHA. */
   THandle(TAuthenticator* authenticator, const TString<>& key,
-         ISC min_length = kDefaultMinLength, ISC max_length = kMaxLength)
-    : auth_ (authenticator), type_ (kValidation) {
+         ISC min_length = DefaultMinLength, ISC max_length = MaxLength)
+    : auth_ (authenticator), type_ (Validation) {
     if (min_length >= max_length) {
       ISC temp = min_length;
       min_length = max_length;
       max_length = temp;
     }
     key = key;
-    if (min_length < kDefaultMinLength)
-      min_length = kDefaultMinLength;
-    else if (min_length > kMaxLength)
-      min_length = kDefaultMinLength;
+    if (min_length < DefaultMinLength)
+      min_length = DefaultMinLength;
+    else if (min_length > MaxLength)
+      min_length = DefaultMinLength;
     key_ = StringClone (key);
   }
 
@@ -42,7 +42,7 @@ class THandle {
   /* Gets true if this password is value. */
   BOL SetKey(const TString<>& key) {
     size_t length = StringLength (key);
-    if (length < kDefaultMinLength || length > kMaxLength) return false;
+    if (length < DefaultMinLength || length > MaxLength) return false;
 
     if (!IsValid (key)) return false;
     delete key_;
@@ -53,7 +53,7 @@ class THandle {
   /* Returns true if the handle is valid. */
   BOL IsValid(const TString<>& key) {
     size_t length = StringLength (key);
-    if (length < kDefaultMinLength || length > kMaxLength) return false;
+    if (length < DefaultMinLength || length > MaxLength) return false;
     return true;
   }
 

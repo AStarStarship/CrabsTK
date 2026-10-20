@@ -1,15 +1,103 @@
 // Copyright AStarship <https://astarship.net>.
-//
 // Standalone test for the CrabsTK Code module (Lexer, Stripper, Fitter).
-// Builds with a minimal type shim so it runs without the full ASCIICrabs
-// config chain.
+// Builds with a minimal type shim matching ASCIICrabs _ConfigHeader.h widths.
+// So it runs without the full ASCIICrabs config chain.
 //
 // Build with:
 //   g++ -std=c++23 -Wall -Wextra -Wpedantic -Werror
 //       -ICode/Tests Code/Tests/CodeModuleTest.cpp -o /tmp/code_tests
-
+//
 #include <cstdio>
 #include <cstring>
+
+/* Minimal type shim (matches ASCIICrabs _ConfigHeader.h). */
+#include <cstdint>
+#include <cstddef>
+
+#ifndef CRABSTK_CODE_TESTS_CONFIG_H
+#define CRABSTK_CODE_TESTS_CONFIG_H
+
+// ============================================================
+// Type definitions — match ASCIICrabs canonical widths
+// ============================================================
+
+// CHA: Character type (1 byte, signed char)
+typedef char CHA;
+
+// ISA: 1-byte signed integer
+typedef signed char ISA;
+
+// IUA: 1-byte unsigned integer
+typedef unsigned char IUA;
+
+// ISB: 2-byte signed integer
+typedef short ISB;
+
+// IUB: 2-byte unsigned integer
+typedef unsigned short IUB;
+
+// ISC: 4-byte signed integer
+typedef int ISC;
+
+// IUC: 4-byte unsigned integer (uint32_t)
+// Matches ASCIICrabs: typedef uint32_t IUC; in _ConfigHeader.h
+typedef uint32_t IUC;
+
+// ISD: 8-byte signed integer (int64_t)
+// Matches ASCIICrabs: typedef int64_t ISD; in _ConfigHeader.h
+typedef int64_t ISD;
+
+// IUD: 8-byte unsigned integer (uint64_t)
+// Matches ASCIICrabs: typedef uint64_t IUD; in _ConfigHeader.h
+typedef uint64_t IUD;
+
+// ISN: Index/size type (4-byte int)
+// Matches ASCIICrabs: typedef int ISN; in _ConfigHeader.h
+typedef int ISN;
+
+// IUN: Unsigned index type
+typedef unsigned int IUN;
+
+// ISW: Word-sized int / pointer-sized integer
+// Matches ASCIICrabs: typedef intptr_t ISW; in _ConfigHeader.h
+// Old: typedef long ISW; — may mismatch on some platforms
+// FIX: Use intptr_t for guaranteed pointer-sized width
+typedef intptr_t ISW;
+
+// IUW: Unsigned pointer-sized integer
+// Matches ASCIICrabs: typedef uintptr_t IUW; in _ConfigHeader.h
+typedef uintptr_t IUW;
+
+// FPC: 4-byte floating-point (float)
+// Matches ASCIICrabs: typedef float FPC; in _ConfigHeader.h
+typedef float FPC;
+
+// FPD: 8-byte floating-point (double)
+// Matches ASCIICrabs: typedef double FPD; in _ConfigHeader.h
+typedef double FPD;
+
+// BOL: Boolean type (1 byte)
+// Matches ASCIICrabs: typedef bool BOL; in _ConfigHeader.h
+typedef bool BOL;
+
+// ============================================================
+// Compile-time width verification static_assert
+// ============================================================
+
+// BOL must be 1 byte
+static_assert(sizeof(BOL) == 1, "Code Tests BOL must be 1 byte width — matches ASCIICrabs bool");
+
+// ISW must be pointer-sized
+static_assert(sizeof(ISW) == sizeof(void*), "Code Tests ISW must be pointer-sized — matches ASCIICrabs intptr_t");
+
+// IUC must be 32-bit
+static_assert(sizeof(IUC) == 4, "Code Tests IUC must be 32-bit width — matches ASCIICrabs uint32_t");
+
+// ============================================================
+// End of file
+// ============================================================
+
+#endif // CRABSTK_CODE_TESTS_CONFIG_H
 
 /* Minimal type shim (matches ASCIICrabs _ConfigHeader.h). */
 typedef char CHA;
@@ -18,17 +106,6 @@ typedef unsigned char IUA;
 typedef short ISB;
 typedef unsigned short IUB;
 typedef int ISC;
-typedef unsigned int IUC;
-typedef long long ISD;
-typedef unsigned long long IUD;
-typedef int ISN;           //< Native signed (matches ASCIICrabs).
-typedef unsigned int IUN;  //< Native unsigned.
-typedef long ISW;
-typedef unsigned long IUW;
-typedef float FPC;
-typedef double FPD;
-typedef bool BOL;
-
 inline BOL IsError(const void* p) { return p == nullptr; }
 #define nilp nullptr
 
@@ -290,13 +367,12 @@ void TestFitStdDetection() {
   ISN n = LexAll(src, tokens, &lex);
 
   CHA out_buf[256];
-  TFitting findings[16];
+  TFinding findings[16];
   TFittingResult result;
   TFitterOptions opts = {};
   opts.indent_width = 2;
   opts.max_line_length = 100;
   opts.enforce_seam_gate = false;
-  opts.enforce_header_guard = false;
   opts.project_name = "CRABSTK";
 
   ISN rc = CodeFit(tokens, n, src, out_buf, 256,
@@ -317,13 +393,12 @@ void TestFitClean() {
   ISN n = LexAll(src, tokens, &lex);
 
   CHA out_buf[256];
-  TFitting findings[16];
+  TFinding findings[16];
   TFittingResult result;
   TFitterOptions opts = {};
   opts.indent_width = 2;
   opts.max_line_length = 100;
   opts.enforce_seam_gate = false;
-  opts.enforce_header_guard = false;
   opts.project_name = "CRABSTK";
 
   ISN rc = CodeFit(tokens, n, src, out_buf, 256,
@@ -372,13 +447,12 @@ void TestPipeline() {
   CHECK("stripped fewer tokens", stripped_count < n);
 
   CHA out_buf[1024];
-  TFitting findings[32];
+  TFinding findings[32];
   TFittingResult result;
   TFitterOptions opts = {};
   opts.indent_width = 2;
   opts.max_line_length = 100;
   opts.enforce_seam_gate = false;
-  opts.enforce_header_guard = false;
   opts.project_name = "CRABSTK";
 
   ISN rc = CodeFit(stripped, stripped_count, src, out_buf, 1024,
