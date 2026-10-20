@@ -147,7 +147,4 @@ UBSan checks host code. See CudaBlas.md for commands and the host-ASan limitatio
 No full CrabsTK/iGeek suite, Windows portability or acceleration speedup is
 claimed by these focused numerical tests.
 
-The MUSEWorld consumer currently uses COLUMN-major TMatrix storage and calls
-cblas_dgemm directly. Do not pass those buffers to these row-major wrappers
-without an explicit conversion/layout-aware integration. That sibling source
-has not been modified by this slice.
+
