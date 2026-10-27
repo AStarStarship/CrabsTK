@@ -1,0 +1,22 @@
+# __Seams.yaml — Pro module seams (8). DORMANT in the root tree: the Pro
+# code does not compile yet (deleted Script2 API); the module keeps its
+# numbers and scaffold but is excluded from the rollup (dormant: true in
+# the root __Seams.yaml) until the API returns.
+# Re-generate: python3 Hatch/SyncSeams.py __Seams.yaml
+seams:
+  - name: CRABSTK_PRO_CORE
+    label: "Testing Pro core..."
+  - name: CRABSTK_PRO_GIT
+    label: "Testing Pro git..."
+  - name: CRABSTK_PRO_ISSUE
+    label: "Testing Pro issue..."
+  - name: CRABSTK_PRO_MISSION
+    label: "Testing Pro mission..."
+  - name: CRABSTK_PRO_PROJECT
+    label: "Testing Pro project..."
+  - name: CRABSTK_PRO_SCHEDULE
+    label: "Testing Pro schedule..."
+  - name: CRABSTK_PRO_TASK
+    label: "Testing Pro task..."
+  - name: CRABSTK_PRO_WORKSPACE
+    label: "Testing Pro workspace..."

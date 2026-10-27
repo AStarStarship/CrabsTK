@@ -1,6 +1,5 @@
 // Copyright AStarship <https://astarship.net>.
 #include "Plot.h"
-#include <math.h>
 
 namespace _ {
 namespace Plot {
@@ -607,7 +606,7 @@ PlotStatus PlotQuiver(TFigure& fig, TAxis& ax, const FPD* x, const FPD* y,
     ImageDraw::Line(cv, x0, y0, x1, y1, color, 1);
     // Arrow head: two short lines from the tip.
     FPD dx = (FPD)(x1 - x0), dy = (FPD)(y1 - y0);
-    FPD len = (FPD)sqrt(dx * dx + dy * dy);
+    FPD len = (FPD)FpdSqrt(dx * dx + dy * dy);
     if (len < 1.0f) len = 1.0f;
     FPD hx = dx / len * 4.0f, hy = dy / len * 4.0f;
     ImageDraw::Line(cv, x1, y1, (ISN)(x1 - hx - hy), (ISN)(y1 - hy + hx),

@@ -6,6 +6,11 @@ Phase 1: accepts a null workspace; manifest validation lands with the W cases. *
 #include "IMUL/Parser.h"
 using namespace _;
 
+// Definitions live in the project's namespace _ (Parser.h declares them
+// there); the rollup TU sees both the declarations and these definitions
+// in one scope, so ImulCompile resolves unambiguously.
+namespace _ {
+
 inline ISN ImulParseWorkspace(TImulWorkspace* workspace, TImulLimits* limits,
                               TImulStorage* storage, TImulResult* result) {
   (void)workspace;
@@ -51,7 +56,12 @@ inline ISN ImulCompile(const CHA* source, IUD source_len,
   }
   // Display projection buffer: corrected display text is reconstructed here.
   // Display text is a projection; the original source is never modified.
-  CHA display[256] = {};
+  // The buffer must be caller-owned: event->display_text outlives this
+  // call, so a local stack array would dangle the moment we return.
+  if (!storage->display_text) {
+    return 2;
+  }
+  CHA* display = storage->display_text;
   const CHA* left = source + 0;
   const ISN left_len = 5;
   const CHA* right = source + 8;
@@ -96,3 +106,4 @@ inline ISN ImulCompile(const CHA* source, IUD source_len,
   result->correction_count = 1;
   return 0;
 }
+}  //< namespace _

@@ -128,7 +128,7 @@ class LIB_MEMBER WidgetPage {
   }
 
   /* Gets the page_label_. */
-  const TString<>& Label() { return label_; }
+  const const CHR* Label() { return label_; }
 
   /* Sets the label_ to the label. */
   void SetLabel (const CHA* label) { return label_.Set (label); }
@@ -167,7 +167,7 @@ class LIB_MEMBER WidgetPage {
   BOL HasButtons () { return buttons_.Count () != 0; }
 
   /* Gets type AString. */
-  TString<>& GetType() { return typeText; }
+  const CHR* GetType() { return typeText; }
 
   /* Prints this object to a terminal. */
   template<typename Printer>

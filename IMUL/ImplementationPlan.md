@@ -14,8 +14,8 @@ Read in order:
 2. `IMUL/_Spec/README.md`, then every linked normative document, especially
    `Syntax.md`, `Workspace.md`, `Time.md`, `Timesheets.md`, `Mappings.md`,
    `Compiler.md`, `Agents.md`, and `Conformance.md`.
-3. This plan; the existing `IMUL/` stubs; `_Seams/Imul/00.Core.h`,
-   `_Seams/_Config.h`, `_Seams/_Main.cpp`, root `_Seams.h`, `_Package.hxx`;
+3. This plan; the existing `IMUL/` stubs; `_Seams/Imul/00.Core.hxx`,
+   `_Seams/_Config.h`, `_Seams/_Main.hxx`, root `_Seams.h`, `_Package.hxx`;
    actual Crabs APIs/types you intend to use. Read ASCIICrabs/AGENTS.md before
    editing upstream (upstream edits should not be necessary for this mission).
 
@@ -79,7 +79,7 @@ handoff; missing/failing cases mean the mission is not complete.
   quoted include and empty switch. Do not include or turn it into a new mission.
 - `IMUL/_Seams.h` currently includes a nonexistent `../_Seams/_Seams.h`.
   Root `_Seams.h` exists; repair only IMUL's integration path as needed.
-- `_Seams/Imul/00.Core.h` contains no IMUL assertions and uses undefined
+- `_Seams/Imul/00.Core.hxx` contains no IMUL assertions and uses undefined
   `KT_IMUL` guards. Add a real `CRABSTK_IMUL` seam and remove these IMUL-local
   stale guards; do not launch another repo-wide branding migration.
 - Root `_Package.hxx` currently has no IMUL implementation rollup.
@@ -122,7 +122,7 @@ The names below are PROPOSED new files, not pre-existing APIs:
   framework or one-file-per-token design.
 - Add `IMUL/_Package.hxx` and its root implementation-rollup inclusion.
 - Add numbered `_Seams/Imul/` test headers, wired through its existing Core.
-- Add a standalone single-TU CLI, proposed `_Tools/IMUL.cpp`, with an isolated
+- Add a standalone single-TU CLI, proposed `_Tools/IMUL.hxx`, with an isolated
   config entrypoint if needed. Its executable implements Compiler.md's `imul`
   CLI contract, independent of Image/OpenGL or a live model server.
 - Use `IMUL/_Spec/Examples/*.imul` as fixtures. Do not replace source fixtures
@@ -169,10 +169,12 @@ Never suppress a failure by weakening assertions or disabling the IMUL seam.
 The known legacy command runs from `_Seams/`:
 
 ```sh
-g++ -std=c++2b -Wall -Wextra \
+g++ -x c++ -std=c++2b -Wall -Wextra \
   -Wno-missing-field-initializers -Wno-unused-parameter \
   -Wno-deprecated-enum-enum-conversion \
-  _Main.cpp -I. -I.. -I../../ -o "$TMPDIR/imul-legacy-check" -lGL
+  _Main.hxx -I. -I.. -I../../ -o "$TMPDIR/imul-legacy-check" -lGL
+# (-x c++ is required on GCC 14: a bare .hxx source is classified as a
+# header and the driver saves a precompiled header instead of an executable.)
 ```
 
 Check its compiler exit status, then run the freshly produced binary only on

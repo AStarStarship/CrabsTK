@@ -34,7 +34,7 @@ class LIB_MEMBER MixerPage {
   ~MixerPage() {}
 
   /* Gets the name_. */
-  TString<>& Name () { return name_; }
+  const CHR* Name () { return name_; }
 
   /* Gets the startingIndex of this MixerPage. */
   ISC GetStartIndex () { return index_start_; }

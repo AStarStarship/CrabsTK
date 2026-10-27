@@ -130,15 +130,15 @@ machine-specific timing or speedup claims are part of this API.
 
 ## Verification scope
 
-`BlasTests.cpp` covers rectangular/tight/padded/offset matrices, every transpose
+`BlasTests.hxx` covers rectangular/tight/padded/offset matrices, every transpose
 combination, alpha/beta including beta=0 over NaNs, empty dimensions, scale-only
 calls with nil inputs, input aliasing, output canaries, helpers and type identity.
-The original `blas_test.cpp` is also built and run; its old tracked binaries are
+The original `blas_test.hxx` is also built and run; its old tracked binaries are
 not updated. Release and ASan/UBSan tests run the same source against scalar,
 macro-zero, MKL and the legacy CBLAS selection. Sanitizers instrument this code
 and the harness, not Intel's prebuilt library internals.
 
-`CudaBlasTests.cpp` uses preallocated device buffers, a caller-owned non-default
+`CudaBlasTests.hxx` uses preallocated device buffers, a caller-owned non-default
 stream, explicit upload/download/completion and an independent CPU reference.
 It exercises both physical GPUs when requested, including actual uninitialized
 device output with beta=0, malformed shape/span/pointer-mode rejection and

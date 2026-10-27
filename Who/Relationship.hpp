@@ -17,7 +17,7 @@ class TRelationship {
    Printer& Print (Printer& o) {
 
  private:
-  const TString<>& type_;
+  const const CHR* type_;
   Entity *a, *b;
 };
 }       //< namespace _

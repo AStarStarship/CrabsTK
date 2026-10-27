@@ -1,0 +1,5 @@
+# __Seams.yaml — Hatch module (no seams yet). Hatch is the scaffolding
+# toolchain (SyncSeams.py, CreateProject.py, templates); its own tests, if
+# any, land here.
+# Add seams here and re-run: python3 Hatch/SyncSeams.py __Seams.yaml
+seams:

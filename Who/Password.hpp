@@ -5,15 +5,15 @@
 #include "_Config.h"
 #if SEAM >= CRABSTK_WHO_CORE
 #include "Authenticator.hpp"
-+#include <ASCIICrabs/Random.hxx>
-+// Cryptographic salt generation uses the OS CSPRNG (getentropy / /dev/urandom),
-+// not rand() — the ASCIICrabs Random API provides IUCRandom().
-+#if defined(__linux__) || defined(__APPLE__) || defined(__unix__)
-+#include <unistd.h>
-+#if defined(__linux__)
-+#include <sys/random.h>
-+#endif
-+#endif
+#include <ASCIICrabs/Random.hxx>
+// Cryptographic salt generation uses the OS CSPRNG (getentropy / /dev/urandom),
+// not rand() — the ASCIICrabs Random API provides IUCRandom().
+#if defined(__linux__) || defined(__APPLE__) || defined(__unix__)
+#include <unistd.h>
+#if defined(__linux__)
+#include <sys/random.h>
+#endif
+#endif
 namespace _ {
 
 /* Salted password KDF (PBKDF2-SHA256 style).

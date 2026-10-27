@@ -8,7 +8,7 @@
 // and proves identity with static_asserts, not width checks alone.
 //
 // The old duplicate typedefs are retained ONLY behind CRABSTK_IPC_LEGACY
-// for the historical pipe_test.cpp reproduction binary. New code must not
+// for the historical pipe_test.hxx reproduction binary. New code must not
 // define that macro.
 
 #pragma once
@@ -18,7 +18,7 @@
 #ifdef CRABSTK_IPC_LEGACY
 // Legacy standalone reproduction build (see IPC/_Seams/02.LegacyRed.h).
 // Self-contained: it must compile the NEW Pipe.h/Pipe.hxx against the OLD
-// type spellings so the historical pipe_test.cpp RED binary still builds
+// type spellings so the historical pipe_test.hxx RED binary still builds
 // and still demonstrates the legacy fault.
 #include <cstdint>
 #include <cstddef>

@@ -8,7 +8,7 @@ C++ programs.
 
 - `EnvVar.h` — declarations (TEnvVar, TEnvTable, TEnvLoad, TEnvGet, TEnvGetI, TEnvExport).
 - `EnvVar.hxx` — implementations.
-- `Tests/EnvTest.cpp` — standalone unit tests (build with the command in the file header).
+- `Tests/EnvTest.hxx` — standalone unit tests (build with the command in the file header).
 - `Tests/_Config.h` — minimal type shim for standalone test builds.
 
 ## Seam

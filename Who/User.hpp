@@ -23,8 +23,8 @@ class TUser {
 
   /* Creates a user with the given handle, password, and status. */
   TUser(TAuthenticator* authenticator, IUD uid = 0,
-       const TString<>& handle = THandle::DefaultPassword,
-       const TString<>& password = TPassword::DefaultPassword,
+       const const CHR* handle = THandle::DefaultPassword,
+       const const CHR* password = TPassword::DefaultPassword,
        FPD balance = DefaultBalance, IUD value = DefaultValue)
     : handle_ (authenticator, handle),
     status_ (StringClone ("")),
@@ -70,10 +70,10 @@ class TUser {
   virtual ~TUser() {}
 
   /* Gets the handle's key. */
-  const TString<>& GetStatus() { return status_; }
+  const const CHR* GetStatus() { return status_; }
 
   /* Sets the status. Returns true on success. */
-  virtual BOL SetStatus(const TString<>& name) {
+  virtual BOL SetStatus(const const CHR* name) {
     if (name == nullptr) return false;
     status_ = StringClone (name);
     return true;
@@ -83,7 +83,7 @@ class TUser {
   THandle& GetHandle() { return handle_; }
 
   /* Gets a reference to the handle_.GetKey (). */
-  const TString<>& GetHandleKey() { return handle_.GetKey (); }
+  const const CHR* GetHandleKey() { return handle_.GetKey (); }
 
   /* Gets a reference to the password. */
   TPassword& GetPassword() { return password_; }
@@ -95,7 +95,7 @@ class TUser {
   int32_t GetSession() { return session_; }
 
   /* Sets the session uid. */
-  virtual const TString<>& SetSession(int32_t session) {
+  virtual const const CHR* SetSession(int32_t session) {
     if (session == 0) return "Invalid session key";
     session_ = session;
     return nullptr;
@@ -108,7 +108,7 @@ class TUser {
   IUD GetResponse();
 
   /* Sets the abstract response code. */
-  virtual const TString<>& SetResponse(IUD response) {
+  virtual const const CHR* SetResponse(IUD response) {
     response_ = response;
     return nullptr;
   }
@@ -117,7 +117,7 @@ class TUser {
   FPD GetBalance() { return balance_; }
 
   /* Sets the abstract balance. */
-  virtual const TString<>& SetBalance(FPD balance) {
+  virtual const const CHR* SetBalance(FPD balance) {
     balance_ = balance;
     return nullptr;
   }
@@ -155,7 +155,7 @@ class TUser {
   }
 
   /* Sets the abstract value. */
-  virtual const TString<>& SetValue(int64_t value) {
+  virtual const const CHR* SetValue(int64_t value) {
     value_ = value;
     return nullptr;
   }
@@ -200,11 +200,11 @@ class TUser {
   }
 
   /* @todo Convert to Operation.
-  const TString<>& Sudo(const TString<>& text, const TString<>& String_end) {
+  const const CHR* Sudo(const const CHR* text, const const CHR* String_end) {
     enum {
       MessageLength = 141,
     };
-    const TString<>& token;
+    const const CHR* token;
     FPD balance;
     int64_t value;
     CHA input[MessageLength];
@@ -278,7 +278,7 @@ class TUser {
 
  private:
   THandle handle_;        //< User's handle (i.e. key).
-  TString<>& status_;     //< User's status
+  const CHR* status_;     //< User's status
   TPassword password_;    //< User's password.
   TAuthenticator* auth_;  //< Handle and Password authenticator.
   int32_t session_;       //< Session index.

@@ -1,0 +1,5 @@
+# __Seams.yaml — Forms module (no seams yet).
+# Add seams here and re-run: python3 Hatch/SyncSeams.py __Seams.yaml
+# (the module stays listed in the root __Seams.yaml; an empty module
+# generates no 00.Core.hxx and no rollup include)
+seams:

@@ -78,7 +78,7 @@ def BuildSeamsYaml(project, mode):
 #   python3 SyncSeams.py
 #
 # SyncSeams.py regenerates the SEAM macros in _Seams/_Seams.h,
-# the default SEAM in _Seams/_Config.h, and the TTestTree<> in _Main.cpp.
+# the default SEAM in _Seams/_Config.h, and the TTestTree<> in _Main.hxx.
 #
 # To add a seam: append an entry to the list below.
 # Never renumber existing seams.
@@ -106,7 +106,7 @@ seams:
 #   python3 SyncSeams.py
 #
 # SyncSeams.py regenerates the SEAM macros in _Seams/_Seams.h,
-# the default SEAM in _Seams/_Config.h, and the TTestTree<> in _Main.cpp.
+# the default SEAM in _Seams/_Config.h, and the TTestTree<> in _Main.hxx.
 #
 # To add a seam: append an entry to the list below.
 # Never renumber existing seams.
@@ -162,7 +162,12 @@ def CreateProject(project_name, output_dir, mode):
     ("namespace ProjectTest {", f"namespace {project_cap}Test {{"),
     # CMakeLists: project (PROJECT)
     ("project (PROJECT)", f"project ({project_upper})"),
-    ("add_executable(PROJECT _Main.cpp)", f"add_executable({project_upper} _Main.cpp)"),
+    # CMake: target name PROJECT -> project_upper on the generated wrapper.
+    # (Braces are doubled in the f-string so the CMake ${VAR} stays literal.)
+    ("add_executable(PROJECT \"${CMAKE_BINARY_DIR}"
+     "/generated/_Main.cpp\")",
+     f"add_executable({project_upper} \"${{CMAKE_BINARY_DIR}}"
+     f"/generated/_Main.cpp\")"),
     # Generic: whole-word PROJECT -> NAME
   ]
 
@@ -237,7 +242,7 @@ def CreateProject(project_name, output_dir, mode):
   if mode == "crabstk":
     print(f"  1. Add your module source files next to _Package.hxx.")
     print(f"  2. Edit _Package.hxx to include your module headers.")
-    print(f"  3. Edit _Seams/<Module>/00.Core.h to add your test code.")
+    print(f"  3. Edit _Seams/<Module>/00.Core.hxx to add your test code.")
     print(f"  4. Add more seams in seams.yaml, then run: python3 SyncSeams.py")
     print(f"  5. Build: cd {os.path.join(output_dir, '_Seams')} && cmake . && make")
   else:

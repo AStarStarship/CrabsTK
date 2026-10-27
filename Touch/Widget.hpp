@@ -127,10 +127,10 @@ class LIB_MEMBER TWidget : public Operation {
   }
 
   /* Gets this TWidget's name. */
-  TString<>& Name() { return name_; }
+  const CHR* Name() { return name_; }
 
   /* Renames this TWidget to the given AString. */
-  const CHA* SetName(const TString<>& new_name) {
+  const CHA* SetName(const const CHR* new_name) {
     return name_.Set (new_name);
   }
 
@@ -264,7 +264,7 @@ class LIB_MEMBER TWidget : public Operation {
   }
 
   /* Gets the filename of this TWidget. */
-  const TString<>& GetFilename () { return filename_; }
+  const const CHR* GetFilename () { return filename_; }
 
   /* Prints the page_labels_ to the given Printer. */
   template<typename Printer>

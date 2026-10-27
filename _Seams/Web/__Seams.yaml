@@ -1,0 +1,4 @@
+# __Seams.yaml — Web module (no seams yet). Web is the REST boundary
+# (see AGENT_PLAN.md); its seams land here when the API surface exists.
+# Add seams here and re-run: python3 Hatch/SyncSeams.py __Seams.yaml
+seams:

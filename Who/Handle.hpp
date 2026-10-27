@@ -20,7 +20,7 @@ class THandle {
   static const CHA* Default ();
 
   /* Constructor creates a standard CHA. */
-  THandle(TAuthenticator* authenticator, const TString<>& key,
+  THandle(TAuthenticator* authenticator, const const CHR* key,
          ISC min_length = DefaultMinLength, ISC max_length = MaxLength)
     : auth_ (authenticator), type_ (Validation) {
     if (min_length >= max_length) {
@@ -37,10 +37,10 @@ class THandle {
   }
 
   /* Gets a reference to the handle AString. */
-  const TString<>& GetKey() { return key_; }
+  const const CHR* GetKey() { return key_; }
 
   /* Gets true if this password is value. */
-  BOL SetKey(const TString<>& key) {
+  BOL SetKey(const const CHR* key) {
     size_t length = StringLength (key);
     if (length < DefaultMinLength || length > MaxLength) return false;
 
@@ -51,7 +51,7 @@ class THandle {
   }
 
   /* Returns true if the handle is valid. */
-  BOL IsValid(const TString<>& key) {
+  BOL IsValid(const const CHR* key) {
     size_t length = StringLength (key);
     if (length < DefaultMinLength || length > MaxLength) return false;
     return true;
@@ -61,13 +61,13 @@ class THandle {
   BOL Equals(const THandle& h) { return StringEquals (key_, h.key_); }
 
   /* Returns true if this Handle is identical to the given Handle. */
-  BOL Equals(const TString<>& handle) { return StringEquals (key_, handle); }
+  BOL Equals(const const CHR* handle) { return StringEquals (key_, handle); }
 
   /* Prints this object to the log. */
   template<typename Printer> Printer& Print (Printer& o) { return txt << "\nHandle: " << key_; }
 
  private:
-  TString<>& key_;        //< Unique AString key.
+  const CHR* key_;        //< Unique AString key.
   TAuthenticator* auth_;  //< Handle authenticator.
   ISC type_;              //< The validation type.
 

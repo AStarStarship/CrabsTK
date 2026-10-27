@@ -18,7 +18,7 @@ class TPerson : public TEntity {
   Printer& Print (Printer& o) { o << "Person: "; }
 
  private:
-  TString<>& lastName_;  //< The last name of the entity.
+  const CHR* lastName_;  //< The last name of the entity.
 };
 }       //< namespace _
 #endif

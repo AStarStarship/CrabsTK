@@ -1,0 +1,5 @@
+# __Seams.yaml — Touch module seams (1).
+# Re-generate: python3 Hatch/SyncSeams.py __Seams.yaml
+seams:
+  - name: CRABSTK_TOUCH_CORE
+    label: "Testing Touch core..."

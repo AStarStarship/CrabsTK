@@ -16,8 +16,8 @@ class TAddress {
   }
 
   /* Creates an address with the given parameters. */
-  TAddress(const TString<>& street, const TString<>& aCity, const TString<>& aState,
-          const TString<>& aZip, const TString<>& aCountry, AddressType aType)
+  TAddress(const const CHR* street, const const CHR* aCity, const const CHR* aState,
+          const const CHR* aZip, const const CHR* aCountry, AddressType aType)
     : street_ (StringClone (street)),
       city_ (StringClone (aCity)),
       state_ (StringClone (aState)),
@@ -26,48 +26,48 @@ class TAddress {
       type_ (aType) {}
 
   /* Gets the street address. */
-  const TString<>& GetStreet() { return street_; }
+  const const CHR* GetStreet() { return street_; }
 
   /* Sets the street address. */
-  void SetStreet(const TString<>& AString) {
+  void SetStreet(const const CHR* AString) {
     delete street_;
     street_ = StringClone (AString);
   }
 
   /* Gets the city. */
-  const TString<>& GetCity() { return city_; }
+  const const CHR* GetCity() { return city_; }
 
   /* Sets the city. */
-  void SetCity(const TString<>& AString) {
+  void SetCity(const const CHR* AString) {
     delete city_;
     city_ = StringClone (AString);
   }
 
   /* Gets the State. */
-  const TString<>& GetState() { return state_; }
+  const const CHR* GetState() { return state_; }
   
 
   /* Sets the state. */
-  void SetState(const TString<>& AString) {
+  void SetState(const const CHR* AString) {
     delete state_;
     state_ = StringClone (AString);
   }
   
 
   /* Gets the zip code. */
-  const TString<>& GetZip() { return *zip_; }
+  const const CHR* GetZip() { return *zip_; }
 
   /* Sets the zip code. */
-  void SetZip(const TString<>& AString) {
+  void SetZip(const const CHR* AString) {
     delete zip_;
     zip_ = StringClone (AString);
   }
 
   /* Gets the country. */
-  const TString<>& GetCountry() { return country_; }
+  const const CHR* GetCountry() { return country_; }
 
   /* Sets the country. */
-  void SetCountry(const TString<>& AString) {
+  void SetCountry(const const CHR* AString) {
     delete country_;
     country_ = StringClone (AString);
   }

@@ -18,7 +18,7 @@ class Library {
   /* Adds a patch to the library. */
   BOL AddHit(Hit& hit) {
     patches.Add(hit);
-    const TString<>& category = hit.GetCategory();
+    const const CHR* category = hit.GetCategory();
     for (ISC i = 0; i < tags.count; ++i)
       if (tags[i] == category) return true;
     tags.Add(category);
@@ -97,7 +97,7 @@ class Library {
 
  private:
   uint64_t num_uids;                   //< Total number of UIDs.
-  _::ADic<const TString<>&, Hit> patches;  //< List of patches.
+  _::ADic<const const CHR*, Hit> patches;  //< List of patches.
   TArray<CHA> catagories,        //< The list of categories.
       tags_;                            //< List of tag Strings.
 

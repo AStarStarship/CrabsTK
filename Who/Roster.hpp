@@ -26,7 +26,7 @@ class TRoster {
   ISC GetCount();
 
   /* Returns true if this list contains the given user query result. */
-  BOL Contains(const TString<>& username) {
+  BOL Contains(const const CHR* username) {
     for (ISC index = 0; index < users_.GetCount (); index++) {
       if (users_[index]->Equals (username)) return true;
     }
@@ -44,7 +44,7 @@ class TRoster {
   /* Attempts to find a user with the given query.
   @return Returns a nullptr if this list does not contain the search query.
   */
-  TUser* Find(const TString<>& query) {
+  TUser* Find(const const CHR* query) {
     size_t length = StringLength (username);
     if (length == 0) {
       return nullptr;  // static website guest account

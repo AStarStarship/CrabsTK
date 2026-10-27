@@ -219,6 +219,8 @@ struct TImulStorage {
   ISN diagnostic_capacity;
   TImulCorrection* corrections;
   ISN correction_capacity;
+  CHA* display_text;        //< projection buffer for corrected display text.
+  ISN display_capacity;
 };
 
 /* Parses a workspace manifest into its bindings (bounded by limits).

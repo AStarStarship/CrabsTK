@@ -51,7 +51,7 @@ class Schedule {
   ~Schedule () {}
 
   /* Gets the name. */
-  const TString<>& Key() { return key_; }
+  const const CHR* Key() { return key_; }
 
   /* Sets the name to the new name. */
   void SetKey (const CHA* new_name) {

@@ -1,0 +1,6 @@
+# __Seams.yaml — Plot module seams (1). The standalone Plot tree
+# (_Seams/Plot/_Main.hxx) stays as an opt-in build.
+# Re-generate: python3 Hatch/SyncSeams.py __Seams.yaml
+seams:
+  - name: CRABSTK_PLOT_CORE
+    label: "Testing Plot core..."

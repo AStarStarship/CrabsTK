@@ -2,7 +2,7 @@
 // IPC — bounded, versioned, process-shared SPSC ring pairs over POSIX shm.
 //
 // 2026-10-20 rewrite of the 2026-10-16 prototype. The prototype faults
-// (documented in AGENT_PLAN.md P0, reproduced in _Seams/02.LegacyRed.cpp):
+// (documented in AGENT_PLAN.md P0, reproduced in _Seams/02.LegacyRed.hxx):
 //   - Master()/Slave() returned the same object: no full duplex.
 //   - Two ISW counters (16 bytes on a pointer-sized host) with data hardcoded
 //     at offset 8: the payload overlapped the read counter.
