@@ -22,7 +22,7 @@ Date: 2026-10-27 · Status: EXECUTED (verified 2026-10-27: ad-hoc suite 17/17, r
    `_Seams/_Main.hxx` carries `COut.h/AType.hxx/Array.hxx/Puff.hxx/Test.hpp/
    Test.hxx/Stringf.hxx` includes the generator never emits. The generator
    cannot be re-run without destroying those edits — so nobody re-runs it.
-6. **`00.Core.hxx` is fully generated** ("Your test code here" placeholders):
+6. **`01.Core.hxx` is fully generated** ("Your test code here" placeholders):
    any re-sync overwrites hand-written test bodies. This is the tedium trap —
    the reason the yaml got slopped out by hand instead of through the tool.
 7. **Three independent seam trees** (`_Seams/Data/`, `_Seams/Plot/`,
@@ -36,7 +36,7 @@ Date: 2026-10-27 · Status: EXECUTED (verified 2026-10-27: ad-hoc suite 17/17, r
 ```
 CrabsTK/__Seams.yaml                  # ROOT: module list only (order + folder:)
 _Seams/<Module>/__Seams.yaml          # module's own seam list (today's seams: schema)
-_Seams/<Module>/00.Core.hxx           # module test entry: generated skeleton + user bodies
+_Seams/<Module>/01.Core.hxx           # module test entry: generated skeleton + user bodies
 <Module>/                             # module code, default layout; folder: overrides
 ```
 
@@ -71,7 +71,7 @@ Rules:
   pointing at the module's seam directory. Covers sibling
   (`../ASCIICrabs`), parent-sibling-child (`../../Shared/Seams`), child
   (`Sub/Seams`). When set, the generator (a) reads `<folder>/__Seams.yaml`,
-  (b) writes `<folder>/00.Core.hxx`, and (c) emits the folder's include dir
+  (b) writes `<folder>/01.Core.hxx`, and (c) emits the folder's include dir
   into the generated `_Config.h` include-path comment block (and CMake
   `include_directories` when present) so the build knows where the code is.
 - **`release_module:`** — the final "sown" module, always placed last,
@@ -106,7 +106,7 @@ seams append at the end of their module list — gaps allowed, reuse never).
    the folder-derived include-path block), `_Seams/_Main.hxx` (per-module
    includes + full TTestTree list — including the COut/AType/Array/Puff/Test
    includes the real entry needs, moved from hand-edit into the generator).
-4. **Merge-safe `00.Core.hxx`**: skeleton lines (gating includes, namespace,
+4. **Merge-safe `01.Core.hxx`**: skeleton lines (gating includes, namespace,
    function signatures, `return NILP;`) are regenerated; user code between
    `// SYNC-KEEP-BEGIN` / `// SYNC-KEEP-END` inside each test function is
    preserved byte-for-byte. First run seeds markers around any existing
@@ -119,7 +119,7 @@ seams append at the end of their module list — gaps allowed, reuse never).
 ## 3. Migration steps
 
 1. Extend `SyncSeams.py` (schema detection, module load, folder resolution,
-   merge-safe 00.Core.hxx, include-path emission). Backward compatible.
+   merge-safe 01.Core.hxx, include-path emission). Backward compatible.
 2. Author per-module `__Seams.yaml` files: Who (21 seams from current root
    yaml), Code (5), Data (3), Plot (1), Touch (1), GUI (1, from "Gui"), Env
    (2), IMUL (2, from "Imul"), Release (1+), IPC (Ring/LegacyRed/TwoProc from
@@ -129,7 +129,7 @@ seams append at the end of their module list — gaps allowed, reuse never).
 3. Rewrite root `__Seams.yaml`: 15 modules + Release; order =
    working-first pins + alphabetical remainder (pins pending §4).
 4. Folder cleanup: merge `_Seams/Gui/` → `_Seams/GUI/` and `_Seams/Imul/` →
-   `_Seams/IMUL/` (content-merge the 00.Core.hxx, delete the dup case dir);
+   `_Seams/IMUL/` (content-merge the 01.Core.hxx, delete the dup case dir);
    delete `desktop.ini`, `CMakeFiles.txt`; decide Pro/Crab fate (§4).
 5. Re-run sync; absorb the hand-edited `_Main.hxx` includes into the
    generator template; delete the hand edits.
@@ -143,7 +143,7 @@ seams append at the end of their module list — gaps allowed, reuse never).
 1. **Pro**: 8 seams in the root yaml, but Pro is excluded from the rollup
    (won't compile). Drop it from the seam table (dead weight) or keep it
    pinned LAST, dormant, until Script2 returns?
-2. **Crab**: `_Seams/Crab/00.Core.hxx` exists and `_Main.hxx` includes it,
+2. **Crab**: `_Seams/Crab/01.Core.hxx` exists and `_Main.hxx` includes it,
    but the root yaml has no Crab seams and there is no `Crab/` code dir.
    Keep as a module (where's its code? `folder:` ?) or delete?
 3. **Working-first pins**: proposed order head: Data, IPC, Math, Who
@@ -161,7 +161,7 @@ seams append at the end of their module list — gaps allowed, reuse never).
 - Not a renumbering policy change for future seams (append-only, names
   stable, reuse never).
 - Not a change to the ASCIICrabs flat yaml (it stays legacy-flat mode).
-- Not touching the frozen `00.Core.hxx` Doxygen/MPL headers or the
+- Not touching the frozen `01.Core.hxx` Doxygen/MPL headers or the
   independent Data build's internal layout.
 - Not fixing the pre-existing breakages listed in the 2026-10-27 session
   report (root-app FPC collision, 05.Clock, BSeq/Slot, truncated

@@ -15,7 +15,7 @@
 #   project_dir: Where the generated files go (defaults to this file's dir).
 #   seams:       Ordered list. Each gets a sequential number starting at 1.
 #     name:      Macro suffix + C++ test function name.
-#     file:      Seam test file (ASCIICrabs mode only; CrabsTK uses 00.Core.h).
+#     file:      Seam test file (ASCIICrabs mode only; CrabsTK uses 01.Core.h).
 #     module:    (CrabsTK) Namespace under CT::. Groups seams into modules.
 #     label:     Heading printed by the test.
 #

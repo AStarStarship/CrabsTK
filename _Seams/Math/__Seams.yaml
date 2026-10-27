@@ -1,0 +1,14 @@
+# __Seams.yaml — Math module seams (folder: Math/_Seams).
+# The real tests (Math/BlasTests.hxx, CudaBlasTests.hxx, BlasTest.hxx) are
+# standalone apps with their own main(); they are NOT yet integrated into
+# the rollup, so the seam bodies are placeholders until that work lands.
+# Re-generate: python3 Hatch/SyncSeams.py __Seams.yaml
+seams:
+  - name: CRABSTK_MATH_BLAS
+    label: "Testing Math blas..."
+  - name: CRABSTK_MATH_CUDABLAS
+    depends: [CRABSTK_MATH_BLAS]
+    label: "Testing Math cuda blas..."
+  - name: CRABSTK_MATH_BLASTEST
+    depends: [CRABSTK_MATH_BLAS]
+    label: "Testing Math blas test..."

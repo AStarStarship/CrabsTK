@@ -164,7 +164,7 @@ def main():
     sources = sorted(p for directory in [ROOT / 'Data', ROOT / '_Seams' / 'Data']
                      for p in directory.glob('*')
                      if p.suffix in ['.h', '.hpp', '.hxx', '.cpp'] and
-                     p.name != '00.Core.hxx')
+                     p.name != '01.Core.hxx')
     allowed_headers = {'_Config.h', 'errno.h', 'fcntl.h', 'unistd.h', 'float.h'}
     hashes = {}
     case_ids = set()
