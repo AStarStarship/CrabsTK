@@ -97,7 +97,7 @@ class UserList : public Operand {
   TAuthenticator* GetAuthenticator() { return auth_; }
 
   /* Adds a new User to the list with the given handle and password. */
-  ISC Add(const TString<>& handle, const TString<>& password = TPassword::DefaultPassword,
+  ISC Add(const const CHR* handle, const const CHR* password = TPassword::DefaultPassword,
           FPD balance = TUser::DefaultBalance,
           int64_t value = TUser::DefaultValue) {
     cout << "\n| Attempting to add @" << ((handle == nullptr) ? "null" : handle)
@@ -174,7 +174,7 @@ class UserList : public Operand {
   }
 
   /* Finds an entity in the list by the given search CHA. */
-  ISC Find(const TString<>& AString) {
+  ISC Find(const const CHR* AString) {
     if (handle == nullptr) {
       return -1;
     }
@@ -205,7 +205,7 @@ class UserList : public Operand {
   @param handle   The handle of the user to delete.
   @param password The password of the user to delete.
   @return Returns the new users_ count or <0 upon failure. */
-  ISC Remove(const TString<>& handle, const TString<>& password) {
+  ISC Remove(const const CHR* handle, const const CHR* password) {
     ISC session = Find (handle);
     if (session < 0) {
       return -1;
@@ -233,12 +233,12 @@ class UserList : public Operand {
   }
 
   /* Attempts to login to the given session and returns a session key. */
-  virtual IUD LogIn(const TString<>& handle, const TString<>& password) {
+  virtual IUD LogIn(const const CHR* handle, const const CHR* password) {
     return LogIn (Find (handle), password);
   }
 
   /* Attempts to login to the given session and returns a session key. */
-  virtual IUD LogIn(ISC session, const TString<>& password) {
+  virtual IUD LogIn(ISC session, const const CHR* password) {
     cout << "\n| Attempting to log in as " << index << "\"" << password << "\"";
     User* user = GetUser (index);
     if (!user) {
@@ -287,7 +287,7 @@ class UserList : public Operand {
   /* Attempts to remove the given session.
   @param  handle The handle of the User to remove.
   @return Returns negative upon failure and the user count upon success. */
-  virtual ISC Remove(const TString<>& handle) {
+  virtual ISC Remove(const const CHR* handle) {
     ISC session = Find (handle);
     if (session < 0) {
       return session;
@@ -314,11 +314,11 @@ class UserList : public Operand {
     return txt;
   }
   
-  /*const TString<>& Sudo(const TString<>& text, const TString<>& String_end) {
+  /*const const CHR* Sudo(const const CHR* text, const const CHR* String_end) {
     CHA handle[Handle::MaxLength + 1], password[Password::MaxLength + 1];
     FPD balance;
     int64_t value;
-    const TString<>& next_token;
+    const const CHR* next_token;
 
     if (!text) {
       return nullptr;

@@ -11,36 +11,42 @@ namespace _ {
 class TEntityGroup {
  public:
   /* A group of entities such as people or businesses. */
-  TEntityGroup(const TString<>& name)
-    : name_ (StringClone (name == nullptr ? "" : name)) {}
+  TEntityGroup(const CHR* name)
+    : name_(""),
+      privileges_(""),
+      entities_(nullptr) {
+    if (name) SetName(name);
+  }
 
   /* Gets the name of the entity group. */
-  const TString<>& GetName() { return name_; }
+  const CHR* GetName() const { return name_; }
 
   /* Sets the name of the entity group. */
-  void SetName(const TString<>& AString) {
-    name_ = StringClone (AString);
+  void SetName(const CHR* AString) {
+    if (!AString) AString = "";
+    const IUB NameMax = 63;
+    IUB i = 0;
+    while (i < NameMax && AString[i]) name_[i] = AString[i++];
+    name_[i] = '\0';
   }
 
   /* Applies privileges to the entity group. */
-  void ApplyPrivilege(const TString<>& privileges) {
+  void ApplyPrivilege(const CHR* privileges) {
     // for (ISC i = 0; i < base.getNumAccounts (); i++)
     //    accounts[i].Role ().ApplyPrivileges (new_privileges);
+    (void)privileges;
   }
 
   /* Returns true if this list of entities contains the given CHA. */
-  virtual ISC Search(const TString<>& AString) { return 0; }
-
-  template<typename Printer>
-  Printer& Print (Printer& o) {
-    o << "Group: " << name_ << " ";
-    return o;
+  virtual ISC Search(const CHR* AString) {
+    (void)AString;
+    return 0;
   }
 
  private:
-  TString<> name_,             //< The name of the entity group.
-       privileges_;            //< A AString of privileges the group has.
-  TArray<TEntity*>* entities_; //< A TArray if Entity pointers.
+  CHA name_[64];            //< The name of the entity group.
+  CHA privileges_[64];      //< A string of privileges the group has.
+  TEntity** entities_;      //< Array of Entity pointers.
 };
 
 }  //< namespace _

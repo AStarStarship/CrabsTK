@@ -21,12 +21,12 @@ class TRegistrar {
   ~TRegistrar() {}
 
   /* Registers an unique key with the server without cloning the name. */
-  ISC RegisterKey(TString<>& key) {
+  ISC RegisterKey(const CHR* key) {
     return RegisterKey (StringClone (key));
   }
 
   /* Registers an unique key the server and clones the name CHA. */
-  ISC RegisterKey(const TString<>& key) {
+  ISC RegisterKey(const const CHR* key) {
     if (StringLength (key) > MaxKeyLength) return -1;
     return ids_.Push (StringClone (key));
   }
@@ -34,7 +34,7 @@ class TRegistrar {
   /* Searches for the given key.
   @return Returns a pointer to a key CHA upon success and null
   if the key does not exist. */
-  ISC Find(const TString<>& key) {
+  ISC Find(const const CHR* key) {
     // @todo Replace me with hash table!
     for (ISC i = 0; i < ids_.GetCount (); ++i)
       if (!strcmp (key, ids_.Element (i))) return i;
@@ -58,7 +58,7 @@ class TRegistrar {
 
  private:
   IUD event_count_;        //< The global number of event created.
-  TArray<TString<>&> ids_;  //< A the id keys.
+  TArray<const CHR*> ids_;  //< A the id keys.
 };                          //< Array class
 }       //< namespace _
 #endif

@@ -16,7 +16,7 @@ class TUIDAssigner {
 
   /* Constructs object by setting next_id_ to init_uid and copying the
       filename AString. */
-  TUIDAssigner(T init_uid = 1, const TString<>& filename = "uid")
+  TUIDAssigner(T init_uid = 1, const const CHR* filename = "uid")
       : uid_count_((init_uid == cInvalidUid) ? cInvalidUid + 1 : init_uid),
         filename_(StringClone(filename)) {
     //                           +---E  +----<||
@@ -33,14 +33,14 @@ class TUIDAssigner {
     return uid_count_++;
   }
 
-  const TString<>& Save() {
+  const const CHR* Save() {
     ofstream file;
     file.open(filename);
     file << uid_;
     file.close();
   }
 
-  const TString<>& Load() {
+  const const CHR* Load() {
     ifstream file(fileanme);
     if (file.is_open()) {
       file << while (getline(file, line)) { cout << line << kLF; }
@@ -54,7 +54,7 @@ class TUIDAssigner {
 
  private:
   T uid_count_;                //< Next unique id.
-  const TString<>& filename_;  //< Filename to write uid too.
+  const const CHR* filename_;  //< Filename to write uid too.
 };                             //< class UidServer
 }  //< namespace _
 #endif

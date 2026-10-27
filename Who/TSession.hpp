@@ -98,8 +98,11 @@ struct TSession {
     return *this;
   }
 
-  /* True if this session slot is vacant (a tombstone). */
-  BOL Free() const { return state_ == Free; }
+  /* True if this session slot is vacant (a tombstone).
+  Named IsFree (not Free): Free is already the State-enum value for the
+  tombstone, and a member function named Free would conflict with it
+  (-Wchanges-meaning / "conflicts with a previous declaration"). */
+  BOL IsFree() const { return state_ == Free; }
 
   /* True if this session is connected (any post-handshake state). */
   BOL Connected() const {

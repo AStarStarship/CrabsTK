@@ -1,0 +1,13 @@
+# __Seams.yaml — Code module seams (5).
+# Re-generate: python3 Hatch/SyncSeams.py __Seams.yaml
+seams:
+  - name: CRABSTK_CODE_CORE
+    label: "Testing Code core..."
+  - name: CRABSTK_CODE_CODEMODULE
+    label: "Testing Code code module..."
+  - name: CRABSTK_CODE_COMMENTSTRIPPER
+    label: "Testing Code comment stripper..."
+  - name: CRABSTK_CODE_LEXER
+    label: "Testing Code lexer..."
+  - name: CRABSTK_CODE_FITTER
+    label: "Testing Code fitter..."

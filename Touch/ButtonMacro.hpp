@@ -21,7 +21,7 @@ class LIB_MEMBER ButtonMacro : public Parameter<ISC>, public Button {
  public:
   /* Default constructor creates a ButtonMacro with no controls.
       A ButtonMacro without any controls triggers system functions only.*/
-  ButtonMacro(const TString<>& name = "")
+  ButtonMacro(const const CHR* name = "")
     : Parameter<ISC> (Parameter<ISC>::ButtonMacro, label, 0, 0, 0, 0, 0),
     control_count_ (0),
     controls (nullptr) {
@@ -145,11 +145,11 @@ class LIB_MEMBER ButtonMacro : public Parameter<ISC>, public Button {
   ISC GetMaxWordValue() const override;
 
   /* Gets the label. */
-  TString<>& Label() const override { return label; }
+  const CHR* Label() const override { return label; }
 
   /* Sets the label to the new label.
   @return Nil upon success or an error AString upon failure. */
-  const CHA* SetLabel(const TString<>& new_label) override {
+  const CHA* SetLabel(const const CHR* new_label) override {
     return label_.Set (new_label);
   }
 

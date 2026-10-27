@@ -113,7 +113,7 @@ The script:
 ## Managing Seams with YAML
 
 The `seams.yaml` file is the **single source of truth** for the seam system.
-Never edit `_Seams.h`, `_Config.h`, or `_Main.cpp` by hand — they are
+Never edit `_Seams.h`, `_Config.h`, or `_Main.hxx` by hand — they are
 auto-generated.
 
 ### To add a seam:
@@ -136,7 +136,7 @@ auto-generated.
 
 2. Run `python3 SyncSeams.py` from the project root.
 
-3. Rebuild. The new seam appears in `_Seams.h`, `_Config.h`, `_Main.cpp`,
+3. Rebuild. The new seam appears in `_Seams.h`, `_Config.h`, `_Main.hxx`,
    and the module's `00.Core.h` with full debug/release gating.
 
 ### Seam YAML fields:

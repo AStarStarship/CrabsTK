@@ -91,7 +91,7 @@ struct TRoster {
   @pre Event thread only. */
   BOL DisconnectSlot(IUC slot) {
     TSession* session = &sessions_.Slots()[slot];
-    if (session->Free()) return false;
+    if (session->IsFree()) return false;
     IUC room = session->Room();
     if (room != 0) {
       TRoom* room_ptr = rooms_.Find(room);

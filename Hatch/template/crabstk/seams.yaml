@@ -6,7 +6,7 @@
 #   python3 SyncSeams.py
 #
 # SyncSeams.py regenerates the SEAM macros in _Seams/_Seams.h,
-# the default SEAM in _Seams/_Config.h, and the TTestTree<> in _Main.cpp.
+# the default SEAM in _Seams/_Config.h, and the TTestTree<> in _Main.hxx.
 #
 # Fields:
 #   project:     Project name (macro prefix, uppercased).

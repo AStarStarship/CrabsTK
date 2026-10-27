@@ -65,7 +65,7 @@ class Project : public Operand {
   ~Project() {}
 
   /* Gets the key. */
-  const TString<>& Key() { return key_; }
+  const const CHR* Key() { return key_; }
 
   /* Sets the key. */
   void StealKey(CHA* new_key);
@@ -74,7 +74,7 @@ class Project : public Operand {
   void SetKey (const CHA* new_key) { key_.Set (new_key); }
 
   /* Gets the readme. */
-  const TString<>& GetReadMe() { return readme_; }
+  const const CHR* GetReadMe() { return readme_; }
 
   /* Sets the readme to a clone of the new_readme and deletes the old one.. */
   void SetReadme (const CHA* new_readme) {

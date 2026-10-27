@@ -14,10 +14,10 @@ namespace _ {
 class TAccount {
  public:
   /* Constructs an Account with the given CHA. */
-  TAccount(const TString<>& username) : name_ (username) {}
+  TAccount(const const CHR* username) : name_ (username) {}
 
   /* Constructs an account from the given CHA and password. */
-  TAccount(const TString<>& username, const TString<>& password) 
+  TAccount(const const CHR* username, const const CHR* password) 
       : name_ (username), password_ (password) {
     // role = new Role ();
   }
@@ -41,16 +41,16 @@ class TAccount {
   }
 
   /* Gets a reference to the name.  */
-  const TString<>& Name() { return name_.GetKey (); }
+  const const CHR* Name() { return name_.GetKey (); }
 
   /* Sets the name to the CHA. */
-  BOL SetName(const TString<>& AString) { return name_.SetKey (AString); }
+  BOL SetName(const const CHR* AString) { return name_.SetKey (AString); }
 
   /* Returns true if this account requires a password. */
   BOL RequiresPassword() { return password_.Equals (""); }
 
   /* Sets the password to the new CHA. */
-  void SetPassword(const TString<>& AString) { password_.SetKey (AString); }
+  void SetPassword(const const CHR* AString) { password_.SetKey (AString); }
 
   /* Gets a reverence to the user list. */
   TRoster& Users() { return users_; }

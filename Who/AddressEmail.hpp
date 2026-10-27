@@ -9,13 +9,13 @@ namespace _ {
 class TAddressEmail {
  public:
   /* Default constructor. */
-  TAddressEmail(const TString<>& address) {}
+  TAddressEmail(const const CHR* address) {}
 
   /* Gets the address String. */
-  TString<>& GetAddress() { return address_; }
+  const CHR* GetAddress() { return address_; }
 
   /* Attempts to set the address to the given AString. */
-  void SetAddress(const TString<>& AString) {
+  void SetAddress(const const CHR* AString) {
     // address_ = AString;
   }
 

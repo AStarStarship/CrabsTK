@@ -23,7 +23,7 @@ class TagLibrary {
     /*
     if (StringCompare (tag, ""))
         return nullptr;
-    for_each (tags.begin (), tags.end (), [] (TString<>& AString) {
+    for_each (tags.begin (), tags.end (), [] (const CHR* AString) {
         if (AString.compare (Tag) == 0) return AString;
     });
     */

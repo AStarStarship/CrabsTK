@@ -1,0 +1,16 @@
+# __Seams.yaml — IMUL module seams (2).
+# The preamble pulls the single-TU Parser rollup + the Tracer conformance
+# case into the module entry; ImulCore runs T01S01 (S01: `world ^ Hello`).
+# Re-generate: python3 Hatch/SyncSeams.py __Seams.yaml
+preamble:
+  - '// Single-TU implementation: the Parser rollup owns its own namespace _'
+  - '// (Parser.h opens it), so it must NOT be wrapped in a namespace here.'
+  - '#include "../../IMUL/Parser.hxx"'
+  - ''
+  - '#include "01.Tracer.hxx"'
+seams:
+  - name: CRABSTK_IMUL_CORE
+    label: "Testing IMUL core..."
+  - name: CRABSTK_IMUL_RELEASE
+    depends: [CRABSTK_IMUL_CORE]
+    label: "Testing IMUL release..."

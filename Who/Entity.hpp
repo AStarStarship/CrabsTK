@@ -16,25 +16,25 @@ class TEntity {
   TEntity() {}
 
   /* Gets the entity first name. */
-  const TString<>& GetFirstName() { return *first_name_; }
+  const const CHR* GetFirstName() { return *first_name_; }
 
   /* Attempts to set the name to the one given AString. */
-  void SetFirstName(const TString<>& AString) {
+  void SetFirstName(const const CHR* AString) {
     delete first_name_;
     first_name_ = StringClone (AString);
   }
 
   /* Gets the entity last name. */
-  const TString<>& GetLastName() { return *last_name_; }
+  const const CHR* GetLastName() { return *last_name_; }
 
   /* Attempts to set the last name to the given AString. */
-  void SetLastName(const TString<>& AString) {
+  void SetLastName(const const CHR* AString) {
     delete last_name_;
     last_name_ = StringClone (AString);
   }
 
   /* Returns true if this entity contains the search query. */
-  BOL Query(const TString<>& query) {
+  BOL Query(const const CHR* query) {
     /*
     for_each (tags.begin (), tags.end (), [](CHA& AString(
     {

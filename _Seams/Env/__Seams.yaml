@@ -1,0 +1,8 @@
+# __Seams.yaml — Env module seams (2).
+# Re-generate: python3 Hatch/SyncSeams.py __Seams.yaml
+seams:
+  - name: CRABSTK_ENV_CORE
+    label: "Testing Env core..."
+  - name: CRABSTK_ENV_VAR
+    depends: [CRABSTK_ENV_CORE]
+    label: "Testing Env var..."

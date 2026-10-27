@@ -1,0 +1,14 @@
+# __Seams.yaml — Data module seams.
+# Record -> Dataset -> AsciiPlot (topological order). The standalone Data
+# tree (_Seams/Data/_Main.hxx + Verify.py) stays as an opt-in build; this
+# file drives the module's presence in the root rollup.
+# Re-generate: python3 Hatch/SyncSeams.py __Seams.yaml
+seams:
+  - name: CRABSTK_DATA_RECORD
+    label: "Testing Data record..."
+  - name: CRABSTK_DATA_DATASET
+    depends: [CRABSTK_DATA_RECORD]
+    label: "Testing Data dataset..."
+  - name: CRABSTK_DATA_ASCIIPLOT
+    depends: [CRABSTK_DATA_DATASET]
+    label: "Testing Data ASCII plot..."

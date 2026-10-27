@@ -15,7 +15,7 @@ class LIB_MEMBER ControlMidi : public Parameter<ISC> {
   };
 
   /* Constructor. */
-  ControlMidi(const TString<>& label = "", ISC cc = 0, ISC channel = 0,
+  ControlMidi(const const CHR* label = "", ISC cc = 0, ISC channel = 0,
               ISC init_value = 0, ISC newMinValue = 0, ISC min_value = 127,
               ISC word_size = 7, ISC type = Parameter<ISC>::ControlMidi)
     : Parameter<ISC> (type, label, channel, init_value, min_value, max_value,

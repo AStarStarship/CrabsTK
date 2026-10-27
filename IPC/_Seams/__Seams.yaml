@@ -1,0 +1,23 @@
+# __Seams.yaml — IPC module seams (folder: IPC/_Seams, sibling of the code).
+# The real tests live in the 01/02/03 .hxx files below (namespace
+# _::IpcTests) and are pulled into the rollup via the preamble includes;
+# each seam function calls its _::IpcTests entry. LegacyRed is GREEN in a
+# normal build (Legacy() returns null); the RED fault evidence is built
+# separately with -DCRABSTK_IPC_LEGACY (standalone tree stays opt-in).
+# Re-generate: python3 Hatch/SyncSeams.py __Seams.yaml
+preamble:
+  - '#include "01.Ring.hxx"'
+  - '#include "02.LegacyRed.hxx"'
+  - '#include "03.TwoProc.hxx"'
+seams:
+  - name: CRABSTK_IPC_CORE
+    label: "Testing IPC core..."
+  - name: CRABSTK_IPC_RING
+    depends: [CRABSTK_IPC_CORE]
+    label: "Testing IPC ring..."
+  - name: CRABSTK_IPC_LEGACYRED
+    depends: [CRABSTK_IPC_RING]
+    label: "Testing IPC legacy red (GREEN in normal builds)..."
+  - name: CRABSTK_IPC_TWOPROC
+    depends: [CRABSTK_IPC_RING]
+    label: "Testing IPC two-process..."

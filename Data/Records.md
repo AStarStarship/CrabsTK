@@ -106,16 +106,16 @@ one translation unit for codec helpers. Include Data/Dataset.hpp and import
 Data/Dataset.hxx once for the POSIX file adapter. Use an existing Crabs config
 and SEAM >= CRABSTK_DATA_RECORD; Data/_Seams.h supplies the opt-in level.
 Data/_Package.h rolls up declarations/templates; Data/_Package.hxx rolls up
-implementations. The independent _Seams/Data/_Main.cpp entrypoint avoids
+implementations. The independent _Seams/Data/_Main.hxx entrypoint avoids
 racing the active IMUL worker over shared root build/test files. It does not
 claim that the default
 legacy seam executes these new tests.
 
 Run the Data seam from the repository root (output paths belong in TMPDIR):
 
-    g++ -std=c++2b -Wall -Wextra -Werror -Wno-unknown-pragmas \
+    g++ -x c++ -std=c++2b -Wall -Wextra -Werror -Wno-unknown-pragmas \
       -Wno-deprecated-enum-enum-conversion \
-      -I_Seams/Data -I. -I.. _Seams/Data/_Main.cpp -o "$TMPDIR/data-seams"
+      -I_Seams/Data -I. -I.. _Seams/Data/_Main.hxx -o "$TMPDIR/data-seams"
     "$TMPDIR/data-seams" "$TMPDIR/data-seams.crabs"
 
 The first regression is a canonical wire/field round trip. Add each later

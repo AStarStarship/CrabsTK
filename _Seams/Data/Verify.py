@@ -124,25 +124,27 @@ def main():
             flags += ['-fsanitize=undefined,float-cast-overflow']
         else:
             flags += ['-fsanitize=address']
-    prefix = [compiler] + flags
+    # -x c++: GCC 14 classifies .hxx sources as headers and would save a
+    # precompiled header (gpch) instead of an executable; force the language.
+    prefix = [compiler, '-x', 'c++'] + flags
     version = invoke('compiler version', [compiler, '--version']).splitlines()[0]
     seams, demo, consumer, fuzz = [output / name for name in
                                    ['data-seams', 'data-demo', 'data-consumer',
                                     'data-fuzz']]
-    invoke('build seams', prefix + ['_Seams/Data/_Main.cpp', '-o', str(seams)])
+    invoke('build seams', prefix + ['_Seams/Data/_Main.hxx', '-o', str(seams)])
     seam_stdout = invoke('run seams', [str(seams), str(fixture)])
     require('PASS: Data record/dataset/plot seams' in seam_stdout,
             'Missing Data seam PASS marker')
     decoded = decode_fixture(fixture)
-    invoke('build split-TU consumer', prefix + ['_Seams/Data/Consumer.cpp',
-           '_Seams/Data/Implementation.cpp', '-o', str(consumer)])
+    invoke('build split-TU consumer', prefix + ['_Seams/Data/Consumer.hxx',
+           '_Seams/Data/Implementation.hxx', '-o', str(consumer)])
     invoke('run split-TU consumer', [str(consumer)])
-    invoke('build mutation/property corpus', prefix + ['_Seams/Data/Fuzz.cpp',
+    invoke('build mutation/property corpus', prefix + ['_Seams/Data/Fuzz.hxx',
                                                       '-o', str(fuzz)])
     fuzz_stdout = invoke('run mutation/property corpus', [str(fuzz)])
     require('PASS: 10000 mutated decoder inputs + 10000 plot pushes' in fuzz_stdout,
             'Missing mutation/property corpus PASS marker')
-    invoke('build demo', prefix + ['_Seams/Data/Demo.cpp', '-o', str(demo)])
+    invoke('build demo', prefix + ['_Seams/Data/Demo.hxx', '-o', str(demo)])
     demo_stdout = invoke('run demo stdout', [str(demo)])
     require(demo_stdout.startswith('Synthetic seam inputs - NOT training results.\n'),
             'Missing synthetic-input demo disclaimer')
@@ -162,7 +164,7 @@ def main():
     sources = sorted(p for directory in [ROOT / 'Data', ROOT / '_Seams' / 'Data']
                      for p in directory.glob('*')
                      if p.suffix in ['.h', '.hpp', '.hxx', '.cpp'] and
-                     p.name != '00.Core.h')
+                     p.name != '00.Core.hxx')
     allowed_headers = {'_Config.h', 'errno.h', 'fcntl.h', 'unistd.h', 'float.h'}
     hashes = {}
     case_ids = set()

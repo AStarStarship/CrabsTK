@@ -1,0 +1,49 @@
+# __Seams.yaml — Who module seams (23).
+# Re-generate: python3 Hatch/SyncSeams.py __Seams.yaml
+seams:
+  - name: CRABSTK_WHO_CORE
+    label: "Testing Who core..."
+  - name: CRABSTK_WHO_ACCOUNT
+    label: "Testing Who account..."
+  - name: CRABSTK_WHO_ADDRESS
+    label: "Testing Who address..."
+  - name: CRABSTK_WHO_ADDRESSEMAIL
+    label: "Testing Who address email..."
+  - name: CRABSTK_WHO_AUTHENTICATOR
+    label: "Testing Who authenticator..."
+  - name: CRABSTK_WHO_ENTITY
+    label: "Testing Who entity..."
+  - name: CRABSTK_WHO_ENTITYGROUP
+    label: "Testing Who entity group..."
+  - name: CRABSTK_WHO_ENTITYLIST
+    label: "Testing Who entity list..."
+  - name: CRABSTK_WHO_HANDLE
+    label: "Testing Who handle..."
+  - name: CRABSTK_WHO_NAME
+    label: "Testing Who name..."
+  - name: CRABSTK_WHO_ORGANIZATION
+    label: "Testing Who organization..."
+  - name: CRABSTK_WHO_PASSWORD
+    label: "Testing Who password..."
+  - name: CRABSTK_WHO_PERSON
+    label: "Testing Who person..."
+  - name: CRABSTK_WHO_PRIVILEGE
+    label: "Testing Who privilege..."
+  - name: CRABSTK_WHO_PROFILE
+    label: "Testing Who profile..."
+  - name: CRABSTK_WHO_REGISTRAR
+    label: "Testing Who registrar..."
+  - name: CRABSTK_WHO_RELATIONSHIP
+    label: "Testing Who relationship..."
+  - name: CRABSTK_WHO_ROLE
+    label: "Testing Who role..."
+  - name: CRABSTK_WHO_ROSTER
+    label: "Testing Who roster..."
+  - name: CRABSTK_WHO_SYMBOL
+    label: "Testing Who symbol..."
+  - name: CRABSTK_WHO_UIDASSIGNER
+    label: "Testing Who UID assigner..."
+  - name: CRABSTK_WHO_USER
+    label: "Testing Who user..."
+  - name: CRABSTK_WHO_USERLIST
+    label: "Testing Who user list..."

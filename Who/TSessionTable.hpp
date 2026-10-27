@@ -126,7 +126,7 @@ struct ASessionTable {
     if (uid == 0) return NILP;
     for (IUC i = 0; i < total_; ++i) {
       const TSession* session = &Slots()[i];
-      if (!session->Free() && session->uid_ == uid)
+      if (!session->IsFree() && session->uid_ == uid)
         return const_cast<TSession*>(session);
     }
     return NILP;
@@ -183,7 +183,7 @@ struct ASessionTable {
   BOL Remove(IUC slot) {
     if (slot >= total_) return false;
     TSession* session = &Slots()[slot];
-    if (session->Free()) return false;
+    if (session->IsFree()) return false;
     session->FreeSet();
     --count_;
     return true;
@@ -224,11 +224,11 @@ struct ASessionTable {
     IUC new_count = 0;
     for (IUC i = 0; i < total_; ++i) {
       TSession* session = &Slots()[i];
-      if (session->Free()) continue;
+      if (session->IsFree()) continue;
       IUC hash = session->handle_;
       IUC probe = hash & new_mask;
       for (IUC j = 0; j < new_total; ++j) {
-        if (new_slots[probe].Free()) break;
+        if (new_slots[probe].IsFree()) break;
         probe = (probe + 1) & new_mask;
       }
       new_slots[probe] = *session;
@@ -249,7 +249,7 @@ struct ASessionTable {
   IUC ForEach(Fn&& fn) const {
     IUC visited = 0;
     for (IUC i = 0; i < total_; ++i) {
-      if (!Slots()[i].Free()) {
+      if (!Slots()[i].IsFree()) {
         fn(i, &const_cast<TSession&>(Slots()[i]));
         ++visited;
       }
