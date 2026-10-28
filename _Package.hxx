@@ -13,13 +13,23 @@
 // self-contained with #ifndef-guarded defaults), and Binary.hpp's
 // IsError/IsErrorSocket predicates (used by the Code/Env/IMUL .hxx files).
 // All three headers are pragma-once, so this is safe in any chain.
+
 #include <ASCIICrabs/_ConfigDefault.h>
 #include <ASCIICrabs/_ConfigFooter.h>
 #include <ASCIICrabs/Binary.hpp>
 
+#include "Audio/_Package.hxx"
 #include "Code/_Package.hxx"
 #include "Data/_Package.hxx"
-#include "Forms/_Package.hxx"
-#include "Image/_Package.hxx"
-#include "Plot/_Package.hxx"
 #include "Env/_Package.hxx"
+#include "Forms/_Package.hxx"
+#include "GUI/_Package.hxx"
+#include "Image/_Package.hxx"
+#include "IMUL/_Package.hxx"
+#include "IPC/_Package.hxx"
+#include "Math/_Package.hxx"
+#include "Plot/_Package.hxx"
+#include "Pro/_Package.hxx"
+#include "Touch/_Package.hxx"
+#include "Web/_Package.hxx"
+#include "Who/_Package.hxx"

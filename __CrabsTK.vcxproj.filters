@@ -645,28 +645,28 @@
     <None Include="Code\_Seams.inl">
       <Filter>./\Code</Filter>
     </None>
-    <None Include="_Seams\Code\00.Core.inl">
+    <None Include="_Seams\Code\01.Core.inl">
       <Filter>./\_Seams\Code</Filter>
     </None>
-    <None Include="_Seams\Pro\00.Core.inl">
+    <None Include="_Seams\Pro\01.Core.inl">
       <Filter>./\_Seams\Pro</Filter>
     </None>
-    <None Include="_Seams\Who\00.Core.inl">
+    <None Include="_Seams\Who\01.Core.inl">
       <Filter>./\_Seams\Who</Filter>
     </None>
-    <None Include="_Seams\Touch\00.Core.inl">
+    <None Include="_Seams\Touch\01.Core.inl">
       <Filter>./\_Seams\Touch</Filter>
     </None>
-    <None Include="_Seams\Imul\00.Core.inl">
+    <None Include="_Seams\Imul\01.Core.inl">
       <Filter>./\_Seams\IMUL</Filter>
     </None>
-    <None Include="_Seams\Image\00.Core.inl">
+    <None Include="_Seams\Image\01.Core.inl">
       <Filter>./\_Seams\Image</Filter>
     </None>
-    <None Include="_Seams\GUI\00.Core.inl">
+    <None Include="_Seams\GUI\01.Core.inl">
       <Filter>./\_Seams\GUI</Filter>
     </None>
-    <None Include="_Seams\Database\00.Core.inl">
+    <None Include="_Seams\Database\01.Core.inl">
       <Filter>./\_Seams\Database</Filter>
     </None>
     <None Include="_Seams\_Debug.inl">
@@ -816,7 +816,7 @@
     <None Include="..\Script2\_Seams\_Tests.inl">
       <Filter>Script2\_Seams</Filter>
     </None>
-    <None Include="..\Script2\_Seams\00.Core.inl">
+    <None Include="..\Script2\_Seams\01.Core.inl">
       <Filter>Script2\_Seams</Filter>
     </None>
     <None Include="..\Script2\_Seams\01.RNG.inl">

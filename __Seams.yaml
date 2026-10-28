@@ -28,10 +28,10 @@ modules:
   - name: Data
     label: "Data module"
   - name: IPC
-    folder: IPC/_Seams
+    folder: _Seams/IPC
     label: "IPC module (code + seams in IPC/)"
   - name: Math
-    folder: Math/_Seams
+    folder: _Seams/Math
     label: "Math module (code in Math/)"
   - name: Who
     label: "Who module"

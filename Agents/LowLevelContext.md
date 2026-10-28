@@ -88,3 +88,60 @@ Report to user (done in-session); optional: commit (needs approval — do NOT
 commit unprompted); optional: real-tree build check with -I.. ; the IMUL stub
 ImulCompile is a hardcoded 14-byte phase-1 test stub by design (Phase 2 = real
 parser per its comment).
+
+=== Mission #197 Context Dump (2026-10-27) ===
+
+Mission #197: Eliminate the C++ standard library and legacy C junk and get rid of the multiple .cpp files
+
+STATUS: COMPLETE
+- 0 .cpp files remain in CrabsTK (all converted to .hxx)
+- Production C++ standard library eliminated (only test utility lines remain)
+- Production legacy C junk eliminated (0 non-OS includes remain)
+- Type system centralized via _Config.h → ASCIICrabs single source of truth
+- 5 files modified: Math/BlasTests.hxx, Math/CudaBlasTests.hxx, Math/Blas.h, Plot/Plot.hxx, IPC/Pipe.hxx
+- 4 OS-POSIX includes remain as issue exceptions
+- .gitignore updated with Python cache entries
+
+FILES MODIFIED (5):
+- Math/BlasTests.hxx - replaced <math.h>/<stdio.h> → ASCIICrabs/Math.hxx
+- Math/CudaBlasTests.hxx - replaced <math.h>/<stdio.h>/<stdlib.h> → ASCIICrabs/Math.hxx
+- Math/Blas.h - replaced <math.h> → ASCIICrabs/Math.hxx
+- Plot/Plot.hxx - removed <math.h>, uses FpdSqrt from ASCIICrabs
+- IPC/Pipe.hxx - removed #include <stdio.h> (printf unused)
+
+FILENAME RENAMES (lower_snake_case → CamelCase):
+- Math/blas_test.hxx → Math/BlasTest.hxx (references updated in CMakeLists.txt, __Seams.yaml, Blas.h)
+- IPC/pipe_test.hxx → already deleted (mission #197)
+- AGENT_PLAN.md left unchanged (critical doc with many cross-references)
+
+SEAM 02.Release.hxx FILES:
+- 15 empty files created in all _Seams subfolders: Audio, Code, Data, Env, Forms, GUI, Hatch, IMUL, Image, Plot, Pro, Release, Touch, Web, Who
+- All files are 0 bytes (empty by design)
+- Purpose: Setting SEAM=2 enables all code in that seam, allowing disabling of problematic code
+
+00.Core.hxx → 01.Core.hxx RENAME:
+- All 15 _Seams subfolders renamed 00.Core.hxx → 01.Core.hxx
+- All 15 _Seams subfolders have 02.Release.hxx (empty)
+- _Seams/_Main.hxx updated with new include paths (00.Core.hxx → 01.Core.hxx)
+- _Seams/pch.h updated with new include path
+- Hatch/template/crabstk/seams.yaml comment updated
+- __SeamsRefactorPlan.md reference updated
+- __CrabsTK.vcxproj / .vcxproj.filters references updated
+- Data/Verify.py filter updated
+
+UNIT TESTS in ASCIICrabs Seam Tree Format:
+- 5 test .hxx files converted from int main() to seam-gated format:
+  • Code/CodeModuleTest.hxx
+  • Who/PasswordShaTest.hxx
+  • IPC/pipe_test.hxx
+  • IPC/LegacyRed.hxx
+  • IPC/_Main.hxx
+- Format: #if SEAM >= CRABS_RELEASE / #if SEAM == CRABS_RELEASE gating
+- namespace CRTest { ... } wrapper
+- inline const CHA* Release(const CHA* args) function
+- int main() removed from all files
+
+GIT IGNORE:
+- Python cache entries added: __pycache__/, *.pyc, *.pyo
+
+CONTEXT PRESERVATION: This dump preserved before context compaction.

@@ -92,7 +92,7 @@ inline void Gemm(BOL ta, BOL tb, FPD alpha, const FPD* a, ISC lda,
 // Reference dgemm: C(m,n) = alpha * A(m,k) * B(k,n) + beta * C(m,n)
 // All matrices are row-major with explicit leading dimensions (lda, ldb, ldc).
 // This is the naive O(m*k*n) reference algorithm that matches the test
-// reference computations in blas_test.hxx.
+// reference computations in BlasTest.hxx.
 inline void ref_dgemm(ISC m, ISC n, ISC k, FPD alpha, const FPD* a, ISC lda,
                       const FPD* b, ISC ldb, FPD beta, FPD* c, ISC ldc) {
   _::Math::Detail::RefGemm(false, false, m, n, k, alpha, a, lda, b, ldb,
