@@ -14,6 +14,10 @@
 // IsError/IsErrorSocket predicates (used by the Code/Env/IMUL .hxx files).
 // All three headers are pragma-once, so this is safe in any chain.
 
+#include <ASCIICrabs/_ConfigDefault.h>
+#include <ASCIICrabs/_ConfigFooter.h>
+#include <ASCIICrabs/Binary.hpp>
+
 #include "Audio/_Package.hxx"
 #include "Code/_Package.hxx"
 #include "Data/_Package.hxx"

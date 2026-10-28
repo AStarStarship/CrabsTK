@@ -1,4 +1,4 @@
-# __Seams.yaml — IPC module seams (folder: IPC/_Seams, sibling of the code).
+# __Seams.yaml — IPC module seams (folder: _Seams/IPC).
 # The real tests live in the 01/02/03 .hxx files below (namespace
 # _::IpcTests) and are pulled into the rollup via the preamble includes;
 # each seam function calls its _::IpcTests entry. LegacyRed is GREEN in a

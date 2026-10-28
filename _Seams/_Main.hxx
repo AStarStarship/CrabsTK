@@ -12,10 +12,10 @@
 #include <ASCIICrabs/Test.hpp>
 #include <ASCIICrabs/Test.hxx>
 #include <ASCIICrabs/Stringf.hxx>
-#include "ASCIICrabs/01.Core.hxx"
+#include "ASCIICrabs/00.Core.hxx"
 #include "Data/01.Core.hxx"
-#include "../IPC/_Seams/01.Core.hxx"
-#include "../Math/_Seams/01.Core.hxx"
+#include "IPC/01.Core.hxx"
+#include "Math/01.Core.hxx"
 #include "Who/01.Core.hxx"
 #include "Code/01.Core.hxx"
 #include "Env/01.Core.hxx"

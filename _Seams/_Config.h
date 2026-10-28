@@ -82,8 +82,8 @@
 /* Module folders (build metadata; paths relative to the project root):
   ASCIICrabs -> _Seams/ASCIICrabs
   Data       -> _Seams/Data
-  IPC        -> IPC/_Seams
-  Math       -> Math/_Seams
+  IPC        -> _Seams/IPC
+  Math       -> _Seams/Math
   Who        -> _Seams/Who
   Audio      -> _Seams/Audio
   Code       -> _Seams/Code

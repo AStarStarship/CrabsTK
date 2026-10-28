@@ -1,4 +1,4 @@
-# __Seams.yaml — Math module seams (folder: Math/_Seams).
+# __Seams.yaml — Math module seams (folder: _Seams/Math).
 # The real tests (Math/BlasTests.hxx, CudaBlasTests.hxx, BlasTest.hxx) are
 # standalone apps with their own main(); they are NOT yet integrated into
 # the rollup, so the seam bodies are placeholders until that work lands.
