@@ -1,11 +1,11 @@
 // Copyright AStarship <https://astarship.net>.
 #pragma once
-#ifndef CRABSTK_DATA_ASCIIPLOT_DECL
-#define CRABSTK_DATA_ASCIIPLOT_DECL
-#include "_Config.h"
-#include "_Seams.h"
-#if SEAM >= CRABSTK_DATA_ASCIIPLOT
-namespace _ {
+#ifndef CRABSTK_DATA_ASCIIPLOTH
+#define CRABSTK_DATA_ASCIIPLOTH
+#include <_Config.h>
+#if _Seam >= _CrabsTKDataASCIIPlot
+namespace CTK {
+namespace Data {
 
 enum PlotStatus : ISC {
   PlotOK = 0,
@@ -50,6 +50,7 @@ template<IUC W, IUC H>
 PlotStatus TAsciiPlotRender(const TAsciiPlot<W, H>& plot, CHA* output,
                             IUC capacity, IUC* written);
 
-}  //< namespace _
+}  //< namespace Data
+}  //< namespace CTK
 #endif
 #endif

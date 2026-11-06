@@ -1,7 +1,8 @@
 // Copyright AStarship <https://astarship.net>.
 #include "Image.h"
 
-namespace _ {
+namespace CTK {
+namespace Image {
 
 Image::Image()
     : image_{nullptr, 0, 0, 0} {}
@@ -14,4 +15,5 @@ Image::Image(const CHA* uri)
 Image::Image(ISN width, ISN height)
     : image_{nullptr, width, height, 4} {}
 
-}  //< namespace _
+}  //< namespace Image
+}  //< namespace CTK

@@ -1,12 +1,13 @@
 // Copyright AStarship <https://astarship.net>.
 #pragma once
-#include "_Config.h"
-#if SEAM >= CRABSTK_TOUCH_CORE
-#ifndef CRABSTK_TOUCH_BUTTONSCROLLER_DECL_DECL
-#define CRABSTK_TOUCH_BUTTONSCROLLER_DECL_DECL
+#include <_Config.h>
+#if _Seam >= _CrabsTKTouchCore
+#ifndef _CrabsTKTouchButtonScrollerHPP
+#define _CrabsTKTouchButtonScrollerHPP
 #include "Button.hpp"
 #include "Component.hpp"
-namespace _ {
+namespace CTK {
+namespace Touch {
 
 /* A scrollable array Button (s). */
 class LIB_MEMBER ButtonScroller : public HMIComponent {
@@ -159,6 +160,7 @@ class LIB_MEMBER ButtonScroller : public HMIComponent {
   TArray<IButton*> buttons_;  //< Array of buttons.
 };
 
-}  //< namespace _
-#endif
-#endif
+}  // namespace Touch
+}  // namespace CTK
+#endif  //< _Seam >= _CrabsTKTouchCore
+#endif  //< _CrabsTKTouchButtonScrollerHPP

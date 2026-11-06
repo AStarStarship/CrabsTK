@@ -104,8 +104,8 @@ by version 1.
 Include Data/Record.hpp for the POD/templates and Data/Record.hxx once in
 one translation unit for codec helpers. Include Data/Dataset.hpp and import
 Data/Dataset.hxx once for the POSIX file adapter. Use an existing Crabs config
-and SEAM >= CRABSTK_DATA_RECORD; Data/_Seams.h supplies the opt-in level.
-Data/_Package.h rolls up declarations/templates; Data/_Package.hxx rolls up
+and SEAM >= _CrabsTKDataRecord; Data/_Seams.h supplies the opt-in level.
+Data/_Package.h rolls up declarations/templates; Data/_Seams.hxx rolls up
 implementations. The independent _Seams/Data/_Main.hxx entrypoint avoids
 racing the active IMUL worker over shared root build/test files. It does not
 claim that the default

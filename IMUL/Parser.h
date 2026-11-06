@@ -1,10 +1,10 @@
 // Copyright AStarship <https://astarship.net>.
 #pragma once
-#include "_Config.h"
-#ifndef CRABSTK_IMUL_PARSER_H
-#define CRABSTK_IMUL_PARSER_H
-
-namespace _ {
+#include <_Config.h>
+#ifndef _CrabsTKIMULParserH
+#define _CrabsTKIMULParserH
+namespace CTK {
+namespace IMUL {
 
 /* Event payload kinds (payload of each compiled line). */
 enum {
@@ -237,5 +237,6 @@ ISN ImulCompile(const CHA* source, IUD source_len, TImulWorkspace* workspace,
                 TImulLimits* limits, TImulStorage* storage,
                 TImulResult* result);
 
-}  //< namespace _
+}  //< namespace IMUL
+}  //< namespace CTK
 #endif

@@ -1,9 +1,9 @@
 // Copyright AStarship <https://astarship.net>.
 #pragma once
-#include "_Config.h"
-#if SEAM >= CRABSTK_TOUCH_CORE
-#ifndef CRABSTK_TOUCH_CONTROLLERISYMMETRIC_DECL_DECL
-#define CRABSTK_TOUCH_CONTROLLERISYMMETRIC_DECL_DECL
+#include <_Config.h>
+#if _Seam >= _CrabsTKTouchCore
+#ifndef _CrabsTKTouchControllerISymmetricHPP
+#define _CrabsTKTouchControllerISymmetricHPP
 #include "Controller.hpp"
 //#include "ButtonColumn.hpp"
 #include "ControlMatrix.hpp"
@@ -11,7 +11,8 @@
 #include "Device.hpp"
 #include "ButtonMacro.hpp"
 #include "ParamSet.hpp"
-namespace _ {
+namespace CTK {
+namespace Touch {
 
 /* An Interactive Symmetrical Controller Human Machine Interface.
 An Interactive Symmetrical (Isymmetric) Control Surface has a variable
@@ -384,6 +385,8 @@ class ControllerIsymmetric : public Controller {
     if (!state_swap_flip_) return;
   }
 };
-}  //< namespace _
-#endif
-#endif
+
+}  // namespace Touch
+}  // namespace CTK
+#endif  //< _Seam >= _CrabsTKTouchCore
+#endif  //< _CrabsTKTouchControllerISymmetricHPP

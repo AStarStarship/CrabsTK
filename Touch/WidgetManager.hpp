@@ -1,14 +1,14 @@
 // Copyright AStarship <https://astarship.net>.
 #pragma once
-#ifndef CRABSTK_TOUCH_WIDGETMANAGER_DECL_DECL
-#define CRABSTK_TOUCH_WIDGETMANAGER_DECL_DECL
-#include "_Config.h"
-#if SEAM >= CRABSTK_TOUCH_CORE
-#include "widget.hpp";
+#ifndef _CrabsTKTouchWidgetManagerHPP
+#define _CrabsTKTouchWidgetManagerHPP
+#include "Widget.hpp"
+#if _Seam >= _CrabsTKTouchCore
+namespace CTK {
+namespace Touch {
+
 class LIB_MEMBER ControlsPage;
 class LIB_MEMBER Controller;
-
-namespace _ {
 
 /*  The WidgetManager is an editor for templates
 The Template editor has one Template at a time loaded along with one page
@@ -98,6 +98,7 @@ class LIB_MEMBER WidgetManager {
   TWidget* template_;                //< Current template being edited.
   WidgetPage* page_;                //< Current page being edited.
 };
-}  //< namespace _
-#endif
-#endif
+}  // namespace Touch
+}  // namespace CTK
+#endif  //< _Seam >= _CrabsTKTouchCore
+#endif  //< _CrabsTKTouchWidgetManagerHPP

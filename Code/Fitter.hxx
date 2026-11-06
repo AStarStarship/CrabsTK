@@ -1,9 +1,9 @@
 // Copyright AStarship <https://astarship.net>.
-#include "_Config.h"
+#include <_Config.h>
 #include "Fitter.h"
 #include "Lexer.h"
-
-namespace _ {
+namespace CTK {
+namespace Code {
 
 /* Default options. */
 static const TFitterOptions FitDefaults = {
@@ -200,4 +200,5 @@ ISN CodeFit(const TCodeToken* tokens, ISN token_count,
   return 0;
 }
 
-}  //< namespace _
+}  //< namespace Code
+}  //< namespace CTK

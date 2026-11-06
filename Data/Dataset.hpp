@@ -4,8 +4,9 @@
 #define CRABSTK_DATA_DATASET_HPP
 #include "Dataset.h"
 #include "Record.hpp"
-#if SEAM >= CRABSTK_DATA_RECORD
-namespace _ {
+#if _Seam >= _CrabsTKDataRecord
+namespace CTK {
+namespace Data {
 
 template<IUC C, IUC O, IUC A, IUC S>
 RecordStatus TWriterAppend(TWriter& writer, const TRecord<C, O, A, S>& record,
@@ -30,6 +31,7 @@ RecordStatus TReaderRead(TReader& reader, TRecord<C, O, A, S>& record,
   return status;
 }
 
-}  //< namespace _
-#endif
-#endif
+}  //< namespace Data
+}  //< namespace CTK
+#endif  //< _Seam >= _CrabsTKDataRecord
+#endif  //< CRABSTK_DATA_DATASET_HPP

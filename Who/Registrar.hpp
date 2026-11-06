@@ -1,11 +1,12 @@
 // Copyright AStarship <https://astarship.net>.
 #pragma once
-#include "_Config.h"
-#if SEAM >= CRABSTK_WHO_CORE
-#ifndef CRABSTK_WHO_IDSERVER_DECL_DECL
-#define CRABSTK_WHO_IDSERVER_DECL_DECL
+#ifndef _CrabsTKWhoRegistrarHPP
+#define _CrabsTKWhoRegistrarHPP
+#include <_Config.h>
+#if _Seam >= _CrabsTKWhoCore
 
-namespace _ {
+namespace CTK {
+namespace Who {
 
 /* Manages user keys and assigns unique ids to events. */
 class TRegistrar {
@@ -26,7 +27,7 @@ class TRegistrar {
   }
 
   /* Registers an unique key the server and clones the name CHA. */
-  ISC RegisterKey(const const CHR* key) {
+  ISC RegisterKey(const CHR* key) {
     if (StringLength (key) > MaxKeyLength) return -1;
     return ids_.Push (StringClone (key));
   }
@@ -34,7 +35,7 @@ class TRegistrar {
   /* Searches for the given key.
   @return Returns a pointer to a key CHA upon success and null
   if the key does not exist. */
-  ISC Find(const const CHR* key) {
+  ISC Find(const CHR* key) {
     // @todo Replace me with hash table!
     for (ISC i = 0; i < ids_.GetCount (); ++i)
       if (!strcmp (key, ids_.Element (i))) return i;
@@ -48,7 +49,8 @@ class TRegistrar {
   ISC RegisterEvent();
 
   /* Prints this object to the console. */
-   Printer& Print (Printer& o) {
+  template<typename Printer>
+  Printer   Printer& Print Print (Printer& o) {
      o << "\nId Server:"
        << "\n  EventCount: " << event_count_
        << "\n  Registered Handles: \n";
@@ -60,6 +62,7 @@ class TRegistrar {
   IUD event_count_;        //< The global number of event created.
   TArray<const CHR*> ids_;  //< A the id keys.
 };                          //< Array class
-}       //< namespace _
-#endif
-#endif
+}  // namespace Who
+}  // namespace CTK
+#endif  //< _Seam >= _CrabsTKWhoCore
+#endif  //< _CrabsTKWhoRegistrarHPP

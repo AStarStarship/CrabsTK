@@ -8,4 +8,4 @@
 #include "_Seams.h"
 
 
-#endif  // _CONFIG_HEADER_H
+#endif  //< _CONFIG_HEADER_H

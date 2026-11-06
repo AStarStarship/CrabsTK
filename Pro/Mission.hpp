@@ -1,12 +1,13 @@
 // Copyright AStarship <https://astarship.net>.
 #pragma once
-#ifndef CRABSTK_PRO_MISSION
-#define CRABSTK_PRO_MISSION
-#include "_Config.h"
-#if SEAM >= CRABSTK_PRO_CORE
+#ifndef _CrabsTKProMission
+#define _CrabsTKProMission
+#include <_Config.h>
+#if _Seam >= _CrabsTKProCore
 #include "Schedule.hpp"
 #include "Task.hpp"
-namespace _ {
+namespace CTK {
+namespace Pro {
 
 /* . */
 class Mission : public Issue {
@@ -37,6 +38,7 @@ class Mission : public Issue {
   ISW id_;   //< The unique identification number.
 };
 
-}  //< namespace _
-#endif
-#endif
+}  // namespace Pro
+}  // namespace CTK
+#endif  //< _Seam >= _CrabsTKProCore
+#endif  //< _CrabsTKProMission

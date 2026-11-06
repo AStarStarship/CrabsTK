@@ -1,11 +1,12 @@
 // Copyright AStarship <https://astarship.net>.
 #pragma once
-#include "_Config.h"
-#if SEAM >= CRABSTK_TOUCH_CORE
-#ifndef CRABSTK_TOUCH_CONTROL_DECL_DECL
-#define CRABSTK_TOUCH_CONTROL_DECL_DECL
+#include <_Config.h>
+#if _Seam >= _CrabsTKTouchCore
+#ifndef _CrabsTKTouchControlHPP
+#define _CrabsTKTouchControlHPP
 #include "Component.hpp"
-namespace _ {
+namespace CTK {
+namespace Touch {
 
 /* A group of touch::Parameter(s).
  */
@@ -86,6 +87,8 @@ class LIB_MEMBER Controller {
       double_press_ticks_;  //< "Double press", or "FPD click" time.
 
 };
-}  //< namespace _
-#endif
-#endif
+
+}  // namespace Touch
+}  // namespace CTK
+#endif  //< _Seam >= _CrabsTKTouchCore
+#endif  //< _CrabsTKTouchControlHPP

@@ -1,10 +1,10 @@
 // Copyright AStarship <https://astarship.net>.
 #pragma once
-#include "_Config.h"
-#ifndef CRABSTK_CODE_CODEMODULE_DECL
-#define CRABSTK_CODE_CODEMODULE_DECL
+#include <_Config.h>
+#ifndef _CrabsTKCodeCodeModuleH
+#define _CrabsTKCodeCodeModuleH
 
-namespace CT {
+namespace CTK {
 namespace Code {
 
 /* A code module wraps a Git repository and its local checkout. */
@@ -23,5 +23,5 @@ class CodeModule {
 };
 
 }  //< namespace Code
-}  //< namespace CT
+}  //< namespace CTK
 #endif

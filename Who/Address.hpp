@@ -1,11 +1,11 @@
 ﻿// Copyright AStarship <https://astarship.net>.
 #pragma once
-#include "_Config.h"
-#if SEAM >= CRABSTK_WHO_CORE
-#ifndef CRABSTK_WHO_ADDRESS_DECL_DECL
-#define CRABSTK_WHO_ADDRESS_DECL_DECL
-namespace _ {
-
+#include <_Config.h>
+#if _Seam >= _CrabsTKWhoCore
+#ifndef _CrabsTKWhoAddressHH
+#define _CrabsTKWhoAddressHH
+namespace CTK {
+namespace Who {
 typedef enum { HomeAddress = 0, WordAddress, OtherAddress } AddressType;
 
 /* A physical address. */
@@ -16,8 +16,8 @@ class TAddress {
   }
 
   /* Creates an address with the given parameters. */
-  TAddress(const const CHR* street, const const CHR* aCity, const const CHR* aState,
-          const const CHR* aZip, const const CHR* aCountry, AddressType aType)
+  TAddress(const CHR* street, const CHR* aCity, const CHR* aState,
+          const CHR* aZip, const CHR* aCountry, AddressType aType)
     : street_ (StringClone (street)),
       city_ (StringClone (aCity)),
       state_ (StringClone (aState)),
@@ -26,48 +26,48 @@ class TAddress {
       type_ (aType) {}
 
   /* Gets the street address. */
-  const const CHR* GetStreet() { return street_; }
+  const CHR* GetStreet() { return street_; }
 
   /* Sets the street address. */
-  void SetStreet(const const CHR* AString) {
+  void SetStreet(const CHR* AString) {
     delete street_;
     street_ = StringClone (AString);
   }
 
   /* Gets the city. */
-  const const CHR* GetCity() { return city_; }
+  const CHR* GetCity() { return city_; }
 
   /* Sets the city. */
-  void SetCity(const const CHR* AString) {
+  void SetCity(const CHR* AString) {
     delete city_;
     city_ = StringClone (AString);
   }
 
   /* Gets the State. */
-  const const CHR* GetState() { return state_; }
+  const CHR* GetState() { return state_; }
   
 
   /* Sets the state. */
-  void SetState(const const CHR* AString) {
+  void SetState(const CHR* AString) {
     delete state_;
     state_ = StringClone (AString);
   }
   
 
   /* Gets the zip code. */
-  const const CHR* GetZip() { return *zip_; }
+  const CHR* GetZip() { return *zip_; }
 
   /* Sets the zip code. */
-  void SetZip(const const CHR* AString) {
+  void SetZip(const CHR* AString) {
     delete zip_;
     zip_ = StringClone (AString);
   }
 
   /* Gets the country. */
-  const const CHR* GetCountry() { return country_; }
+  const CHR* GetCountry() { return country_; }
 
   /* Sets the country. */
-  void SetCountry(const const CHR* AString) {
+  void SetCountry(const CHR* AString) {
     delete country_;
     country_ = StringClone (AString);
   }
@@ -109,6 +109,7 @@ class TAddress {
   }
 };
 
-}  //< namespace _
-#endif
-#endif
+}  // namespace Who
+}  // namespace CTK
+#endif  //< _Seam >= _CrabsTKWhoCore
+#endif  //< _CrabsTKWhoAddressHPP

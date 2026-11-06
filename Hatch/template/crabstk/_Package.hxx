@@ -1,6 +1,6 @@
 // Copyright AStarship <https://astarship.net>.
 /* CrabsTK
-@file    _Package.hxx
+@file    _Seams.hxx
 @author  Cale McCollough <https://cookingwithcale.org>
 @license Copyright 2019-20 (C) AStarship <astarship.net>; all rights
 reserved (R). This Source Code Form is subject to the terms of the Mozilla

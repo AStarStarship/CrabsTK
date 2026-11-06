@@ -1,11 +1,12 @@
 // Copyright AStarship <https://astarship.net>.
 #pragma once
-#ifndef CRABSTK_TOUCH_SET_DECL_DECL
-#define CRABSTK_TOUCH_SET_DECL_DECL
-#include "_Config.h"
-#if SEAM >= CRABSTK_TOUCH_CORE
+#ifndef _CrabsTKTouchSetHPP
+#define _CrabsTKTouchSetHPP
+#include <_Config.h>
+#if _Seam >= _CrabsTKTouchCore
 #include "../Pro/project.hpp"
-namespace _ {
+namespace CTK {
+namespace Touch {
 
 /* A collection of shared objects, . */
 class LIB_MEMBER Set {
@@ -36,6 +37,7 @@ class LIB_MEMBER Set {
   IUD uid_;                       //< IUD of this set.
   AArray<Workspace> workspaces_;  //< Array of Project(s).
 };
-}  //< namespace _
-#endif
-#endif
+}  // namespace Touch
+}  // namespace CTK
+#endif  //< _Seam >= _CrabsTKTouchCore
+#endif  //< _CrabsTKTouchSetHPP

@@ -1,8 +1,10 @@
 // Copyright AStarship <https://astarship.net>.
 #pragma once
-#include "_Config.h"
 #ifndef CRABSTK_CODE_STRIPPER_H
 #define CRABSTK_CODE_STRIPPER_H
+#include <_Config.h>
+namespace CTK {
+namespace Code {
 
 /* CrabsTK Code Stripper — comment stripper on the token stream.
 Works on the output of the Lexer (Code/Lexer.h). Strips // and
@@ -12,8 +14,6 @@ identical non-comment tokens.
 
 No allocation, no std::, no stb. The output token array is
 caller-owned. */
-
-namespace _ {
 
 /* Strip comments from a token array.
 tokens:       Input token array (from CodeLexer).
@@ -32,5 +32,6 @@ ISN CodeStripComments(const TCodeToken* tokens, ISN token_count,
 Useful for sizing the output buffer before calling CodeStripComments. */
 ISN CodeCountNonComments(const TCodeToken* tokens, ISN token_count);
 
-}  //< namespace _
+}  //< namespace Code
+}  //< namespace CTK
 #endif

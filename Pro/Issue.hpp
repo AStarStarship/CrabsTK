@@ -1,12 +1,13 @@
 // Copyright AStarship <https://astarship.net>.
 #pragma once
-#ifndef CRABSTK_PRO_ISSUE
-#define CRABSTK_PRO_ISSUE
-#include "_Config.h"
-#if SEAM >= CRABSTK_PRO_1
+#ifndef _CrabsTKProIssue
+#define _CrabsTKProIssue
+#include <_Config.h>
+#if _Seam >= CRABSTK_PRO_1
 #include "Schedule.hpp"
 #include "Task.hpp"
-namespace _ {
+namespace CTK {
+namespace Pro {
 
 /* And 'issue ticket'. */
 class Issue : public Operand {
@@ -39,6 +40,7 @@ class Issue : public Operand {
   ISW id_;  //< The unique identification number.
 };
 
-}  // namespace _
-#endif
-#endif
+}  // namespace Pro
+}  // namespace CTK
+#endif  //< _Seam >= CRABSTK_PRO_1
+#endif  //< _CrabsTKProIssue

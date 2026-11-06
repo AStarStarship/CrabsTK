@@ -1,7 +1,7 @@
 // Copyright AStarship <https://astarship.net>.
-#ifndef CRABSTK_PRO_GLOBAL
-#define CRABSTK_PRO_GLOBAL
+#ifndef _CrabsTKGlobalH
+#define _CrabsTKGlobalH
 
 #include "Project.h"
 
-#endif
+#endif  //< _CrabsTKGlobalH

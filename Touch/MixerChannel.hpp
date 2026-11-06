@@ -1,10 +1,11 @@
 // Copyright AStarship <https://astarship.net>.
 #pragma once
-#ifndef CRABSTK_TOUCH_MIXERCHANNEL_DECL_DECL
-#define CRABSTK_TOUCH_MIXERCHANNEL_DECL_DECL
-#include "_Config.h"
-#if SEAM >= CRABSTK_TOUCH_CORE
-namespace _ {
+#ifndef _CrabsTKTouchMixerChannelHPP
+#define _CrabsTKTouchMixerChannelHPP
+#include <_Config.h>
+#if _Seam >= _CrabsTKTouchCore
+namespace CTK {
+namespace Touch {
 
 /* A mixer channel Operation. */
 class LIB_MEMBER MixerChannel : public Op {
@@ -74,6 +75,8 @@ class LIB_MEMBER MixerChannel : public Op {
   ISC* aux_send_;           //< Array of aux send levels.
 
 };  //< class MixerChannel
-}  //< namespace _
-#endif
-#endif
+
+}  // namespace Touch
+}  // namespace CTK
+#endif  //< _Seam >= _CrabsTKTouchCore
+#endif  //< _CrabsTKTouchMixerChannelHPP

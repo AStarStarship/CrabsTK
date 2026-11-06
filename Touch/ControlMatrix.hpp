@@ -1,11 +1,12 @@
 // Copyright AStarship <https://astarship.net>.
 #pragma once
-#include "_Config.h"
-#if SEAM >= CRABSTK_TOUCH_CORE
-#ifndef CRABSTK_TOUCH_CONTROLMATRIX_DECL_DECL
-#define CRABSTK_TOUCH_CONTROLMATRIX_DECL_DECL
+#include <_Config.h>
+#if _Seam >= _CrabsTKTouchCore
+#ifndef _CrabsTKTouchControlMatrixHPP
+#define _CrabsTKTouchControlMatrixHPP
 #include "ParamSet.hpp"
-namespace _ {
+namespace CTK {
+namespace Touch {
 
 /* A grid of Controls.
 Each Parameter<ISC> Layer on the Symmetry Live can either have 8 pots or
@@ -87,6 +88,8 @@ class LIB_MEMBER TControlMatrix {
       col_count_;       //< Number of columns.
   ParamSet* rows_;      //< Rows of control array columns.
 };
-}  //< namespace _
-#endif
-#endif
+
+}  // namespace Touch
+}  // namespace CTK
+#endif  //< _Seam >= _CrabsTKTouchCore
+#endif  //< _CrabsTKTouchControlMatrixHPP

@@ -32,7 +32,7 @@ of learning or qualia: that interpretation belongs to actual recorded data.
 
 Include AsciiPlot.hpp for POD/template declarations/definitions and import
 AsciiPlot.hxx once in the translation unit for the finite-value helper.
-Data/_Package.hxx provides the module implementation rollup. The independent
+Data/_Seams.hxx provides the module implementation rollup. The independent
 _Seams/Data/ entrypoint is opt-in and keeps shared root/IMUL files untouched.
 
 Tests and demos use deterministic, explicitly synthetic seam inputs; they are

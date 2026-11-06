@@ -1,6 +1,7 @@
 // Copyright AStarship <https://astarship.net>.
-#include 'Room.hpp'
-
+#include "Room.hpp"
+namespace CTK {
+namespace IMUL {
 class Doxygen {
   Op Star(_::Expr expr, ISW index) {
     switch ()
@@ -187,3 +188,5 @@ class Doxygen {
     //---
   }
 };
+}  //< namespace IMUL
+}  //< namespace CTK

@@ -1,11 +1,12 @@
 // Copyright AStarship <https://astarship.net>.
 #pragma once
-#ifndef CRABSTK_WHO_PROFILE_DECL_DECL
-#define CRABSTK_WHO_PROFILE_DECL_DECL
-#include "_Config.h"
-#if SEAM >= CRABSTK_WHO_CORE
+#ifndef _CrabsTKWhoProfileHPP
+#define _CrabsTKWhoProfileHPP
+#include <_Config.h>
+#if _Seam >= _CrabsTKWhoCore
 #include "Entity.hpp"
-namespace _ {
+namespace CTK {
+namespace Who {
 
 /* An online profile of a person. */
 class TProfile {
@@ -14,10 +15,13 @@ class TProfile {
   TProfile();
 
   /* Prints this object to the console. */
-  Printer& Print(Printer& print);
+  template<typename Printer>
+  Printer  Printer& Print Print(Printer& print);
 
  private:
 };
-}       //< namespace _
-#endif
-#endif
+
+}  // namespace Who
+}  // namespace CTK
+#endif  //< _Seam >= _CrabsTKWhoCore
+#endif  //< _CrabsTKWhoProfileHPP

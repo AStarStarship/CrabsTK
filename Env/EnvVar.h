@@ -1,11 +1,11 @@
 // Copyright AStarship <https://astarship.net>.
 #pragma once
-#ifndef CRABSTK_ENV_VAR_DECL
-#define CRABSTK_ENV_VAR_DECL
-#include "_Config.h"
-#include "_Seams.h"
-#if SEAM >= CRABSTK_ENV_VAR
-namespace _ {
+#ifndef CRABSTK_ENV_VARH
+#define CRABSTK_ENV_VARH
+#include <_Config.h>
+#if _Seam >= CRABSTK_ENV_VAR
+namespace CTK {
+namespace Env {
 
 enum EnvStatus : ISC {
   EnvOK = 0,
@@ -44,7 +44,7 @@ EnvStatus TEnvLoad(const CHA* uri, TEnvTable<Capacity>* table);
 template<IUC Capacity>
 ISN TEnvFind(const TEnvTable<Capacity>& table, const CHA* key);
 
-/* Return the value for key, or NILP if absent. */
+/* Return the value for key, or _NilP if absent. */
 template<IUC Capacity>
 const CHA* TEnvGet(const TEnvTable<Capacity>& table, const CHA* key);
 
@@ -61,6 +61,7 @@ integration point.
 template<IUC Capacity>
 ISN TEnvExport(const TEnvTable<Capacity>& table);
 
-}  //< namespace _
+}  //< namespace Env
+}  //< namespace CTK
 #endif
 #endif

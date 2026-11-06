@@ -1,10 +1,11 @@
 // Copyright AStarship <https://astarship.net>.
 #pragma once
-#ifndef CRABSTK_WHO_UIDSERVER_DECL_DECL
-#define CRABSTK_WHO_UIDSERVER_DECL_DECL
-#include "_Config.h"
-#if SEAM >= CRABSTK_WHO_CORE
-namespace _ {
+#ifndef _CrabsTKWhoUIDAssignerHPP
+#define _CrabsTKWhoUIDAssignerHPP
+#include <_Config.h>
+#if _Seam >= _CrabsTKWhoCore
+namespace CTK {
+namespace Who {
 
 /* A uid server that can save and load the uid from a file.
 Unique ids are indexed using only positive integers. 0 is hence used to
@@ -16,7 +17,7 @@ class TUIDAssigner {
 
   /* Constructs object by setting next_id_ to init_uid and copying the
       filename AString. */
-  TUIDAssigner(T init_uid = 1, const const CHR* filename = "uid")
+  TUIDAssigner(T init_uid = 1, const CHR* filename = "uid")
       : uid_count_((init_uid == cInvalidUid) ? cInvalidUid + 1 : init_uid),
         filename_(StringClone(filename)) {
     //                           +---E  +----<||
@@ -33,14 +34,14 @@ class TUIDAssigner {
     return uid_count_++;
   }
 
-  const const CHR* Save() {
+  const CHR* Save() {
     ofstream file;
     file.open(filename);
     file << uid_;
     file.close();
   }
 
-  const const CHR* Load() {
+  const CHR* Load() {
     ifstream file(fileanme);
     if (file.is_open()) {
       file << while (getline(file, line)) { cout << line << kLF; }
@@ -54,8 +55,10 @@ class TUIDAssigner {
 
  private:
   T uid_count_;                //< Next unique id.
-  const const CHR* filename_;  //< Filename to write uid too.
-};                             //< class UidServer
-}  //< namespace _
-#endif
-#endif
+  const CHR* filename_;  //< Filename to write uid too.
+};
+
+}  // namespace Who
+}  // namespace CTK
+#endif  //< _Seam >= _CrabsTKWhoCore
+#endif  //< _CrabsTKWhoUIDAssignerHPP

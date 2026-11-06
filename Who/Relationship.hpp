@@ -1,11 +1,12 @@
 // Copyright AStarship <https://astarship.net>.
 #pragma once
-#ifndef CRABSTK_WHO_RELATIONSHIP_DECL_DECL
-#define CRABSTK_WHO_RELATIONSHIP_DECL_DECL
-#include "_Config.h"
-#if SEAM >= CRABSTK_WHO_CORE
+#ifndef _CrabsTKWhoRelationshipHPP
+#define _CrabsTKWhoRelationshipHPP
+#include <_Config.h>
+#if _Seam >= _CrabsTKWhoCore
 #include "Entity.hpp"
-namespace _ {
+namespace CTK {
+namespace Who {
 
 /* A relationship node between . */
 class TRelationship {
@@ -14,12 +15,15 @@ class TRelationship {
   TRelationship();
 
   /* Prints this object to a expression. */
-   Printer& Print (Printer& o) {
+  template<typename Printer>
+  Printer& Print (Printer& o) {
 
  private:
-  const const CHR* type_;
+  const CHR* type_;
   Entity *a, *b;
 };
-}       //< namespace _
-#endif
-#endif
+
+}  // namespace Who
+}  // namespace CTK
+#endif  //< _Seam >= _CrabsTKWhoCore
+#endif  //< _CrabsTKWhoRelationshipHPP

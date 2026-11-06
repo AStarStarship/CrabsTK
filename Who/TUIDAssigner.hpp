@@ -1,15 +1,13 @@
 // Copyright AStarship <https://astarship.net>.
 #pragma once
-#ifndef CRABSTK_WHO_UIDASSIGNER_HPP
-#define CRABSTK_WHO_UIDASSIGNER_HPP
-#include "_Config.h"
-#if SEAM >= CRABSTK_WHO_CORE
+#ifndef _CrabsTKWhoUIDAssignerHPP
+#define _CrabsTKWhoUIDAssignerHPP
+#include <_Config.h>
+#if _Seam >= _CrabsTKWhoCore
 #include <ASCIICrabs/Array.hpp>
-#include <cstring>
-#include <cstdlib>
 #include <atomic>
-#include <cstdio>
-namespace _ {
+namespace CTK {
+namespace Who {
 
 /* A lock-free monotonically increasing UID assigner.
 Uses a single atomic counter (fetch_add) so multiple threads can allocate
@@ -77,6 +75,7 @@ struct TUIDAssigner {
   ::std::atomic<IUD> next_uid_;  //< Next uid to allocate.
 };                               //< struct TUIDAssigner
 
-}  //< namespace _
-#endif
-#endif
+}  // namespace Who
+}  // namespace CTK
+#endif  //< _Seam >= _CrabsTKWhoCore
+#endif  //< _CrabsTKWhoUIDAssignerHPP

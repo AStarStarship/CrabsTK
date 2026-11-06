@@ -10,7 +10,7 @@ The opt-in no-C++-stdlib data path is now implemented:
 - [ASCII plot contract](AsciiPlot.md): TAsciiPlot keeps a bounded scalar window
   and emits connected console charts without GUI/OpenGL dependencies.
 
-Use .h declarations, .hpp template definitions, and import _Package.hxx once
+Use .h declarations, .hpp template definitions, and import _Seams.hxx once
 in the application's translation unit. The independent Data seam avoids
 changing the shared root build selection while IMUL work is active. These
 primitives are not yet hooked into iGeek's Gym/TPPO producers.

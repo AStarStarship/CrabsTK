@@ -1,35 +1,33 @@
-#pragma once
-#ifndef CRABSTK_MATH_BLAS
-#define CRABSTK_MATH_BLAS
-
 // Copyright AStarship <https://astarship.net>.
-// Host FP64 row-major BLAS. Backend selection is explicit, never header-only
-// autodetection: installed headers do not guarantee a linked library.
-// Default: scalar. CRABSTK_MATH_MKL=1: MKL LP64. CBLAS_H_AVAILABLE=1: CBLAS.
-// See README.md for buffer, size, alias and threading contracts.
-#include "../../ASCIICrabs/_Config.h"
+#pragma once
+#ifndef _CrabsTKMathBlas
+#define _CrabsTKMathBlas
 #include "../../ASCIICrabs/Math.hxx"
-
-#ifndef CRABSTK_MATH_MKL
-#define CRABSTK_MATH_MKL 0
+#ifndef _CrabsTKMathMKL
+#define _CrabsTKMathMKL 0
 #endif
 #ifndef CBLAS_H_AVAILABLE
 #define CBLAS_H_AVAILABLE 0
 #endif
-
-#if CRABSTK_MATH_MKL
+#if _CrabsTKMathMKL
 #include <mkl.h>
 static_assert(sizeof(MKL_INT) == sizeof(ISC), "Math requires MKL LP64, not ILP64");
 #elif CBLAS_H_AVAILABLE
-#ifndef CRABSTK_MATH_CBLAS_HEADER
-#define CRABSTK_MATH_CBLAS_HEADER <cblas.h>
+#ifndef _CrabsTKMathCBlasHeader
+#define _CrabsTKMathCBlasHeader <cblas.h>
 #endif
-#include CRABSTK_MATH_CBLAS_HEADER
+#include _CrabsTKMathCBlasHeader
 #endif
-
-namespace _ {
+namespace CTK {
 namespace Math {
-namespace Detail {
+
+// Host FP64 row-major BLAS. Backend selection is explicit, never header-only
+// autodetection: installed headers do not guarantee a linked library.
+// Default: scalar. _CrabsTKMathMKL=1: MKL LP64. CBLAS_H_AVAILABLE=1: CBLAS.
+// See README.md for buffer, size, alias and threading contracts.
+// (No #include of ASCIICrabs/_Config.h here: it would reset _Seam to
+// _CrabsRelease for downstream world TUs that need a higher seam. The ASCIICrabs
+// types come from Math.hxx -> Math.h -> the world's _Config.h, already pulled.)
 
 // Zero beta must not read old (possibly uninitialized or NaN) output.
 inline FPD Accumulate(FPD value, FPD beta, const FPD* old) {
@@ -72,7 +70,7 @@ inline void Gemm(BOL ta, BOL tb, FPD alpha, const FPD* a, ISC lda,
     Scale(c, m, n, ldc, beta);
     return;
   }
-#if CRABSTK_MATH_MKL || CBLAS_H_AVAILABLE
+#if _CrabsTKMathMKL || CBLAS_H_AVAILABLE
   cblas_dgemm(CblasRowMajor, ta ? CblasTrans : CblasNoTrans,
               tb ? CblasTrans : CblasNoTrans, m, n, k, alpha,
               a, lda, b, ldb, beta, c, ldc);
@@ -80,10 +78,6 @@ inline void Gemm(BOL ta, BOL tb, FPD alpha, const FPD* a, ISC lda,
   RefGemm(ta, tb, m, n, k, alpha, a, lda, b, ldb, beta, c, ldc);
 #endif
 }
-
-}  // namespace Detail
-}  // namespace Math
-}  // namespace _
 
 // ============================================================
 // Reference BLAS — software fallback when no external BLAS is linked.
@@ -95,7 +89,7 @@ inline void Gemm(BOL ta, BOL tb, FPD alpha, const FPD* a, ISC lda,
 // reference computations in BlasTest.hxx.
 inline void ref_dgemm(ISC m, ISC n, ISC k, FPD alpha, const FPD* a, ISC lda,
                       const FPD* b, ISC ldb, FPD beta, FPD* c, ISC ldc) {
-  _::Math::Detail::RefGemm(false, false, m, n, k, alpha, a, lda, b, ldb,
+  _::Math::RefGemm(false, false, m, n, k, alpha, a, lda, b, ldb,
                           beta, c, ldc);
 }
 
@@ -104,16 +98,9 @@ inline void ref_dgemm(ISC m, ISC n, ISC k, FPD alpha, const FPD* a, ISC lda,
 // x is length n, y is length m.
 inline void ref_dgemv(ISC m, ISC n, FPD alpha, const FPD* a, ISC lda,
                       const FPD* x, FPD beta, FPD* y) {
-  _::Math::Detail::RefGemm(false, false, m, 1, n, alpha, a, lda, x, 1,
+  _::Math::RefGemm(false, false, m, 1, n, alpha, a, lda, x, 1,
                           beta, y, 1);
 }
-
-// ============================================================
-// BLAS function definitions — all inside _::Math namespace.
-// ============================================================
-
-namespace _ {
-namespace Math {
 
 // Compatibility hook: never mutate process-wide thread policy implicitly.
 // Use MKL_NUM_THREADS/MKL_DYNAMIC before startup, or an explicit MKL local
@@ -127,26 +114,26 @@ inline void BlasInit() {}
 // C(m,n) = A(m,k) * B(k,n)      [all row-major, tight or strided]
 inline void GemmRR(FPD alpha, const FPD* a, ISC lda, ISC m, ISC k,
                    const FPD* b, ISC ldb, ISC n, FPD beta, FPD* c, ISC ldc) {
-  Detail::Gemm(false, false, alpha, a, lda, m, k, b, ldb, n, beta, c, ldc);
+  Gemm(false, false, alpha, a, lda, m, k, b, ldb, n, beta, c, ldc);
 }
 
 // C(m,n) = A^T(m,k) * B(k,n)   where A is stored row-major as (k x m) [i.e. A^T]
 // (matches TMatrix MatMulT: A[k,m] row-major, compute A^T * B -> C[m,n])
 inline void GemmTNR(FPD alpha, const FPD* a, ISC lda, ISC k, ISC m,
                     const FPD* b, ISC ldb, ISC n, FPD beta, FPD* c, ISC ldc) {
-  Detail::Gemm(true, false, alpha, a, lda, m, k, b, ldb, n, beta, c, ldc);
+  Gemm(true, false, alpha, a, lda, m, k, b, ldb, n, beta, c, ldc);
 }
 
 // C(m,n) = A(m,k) * B^T(n,k)   where B stored row-major (n x k) [MatMulTB]
 inline void GemmRNT(FPD alpha, const FPD* a, ISC lda, ISC m, ISC k,
                     const FPD* b, ISC ldb, ISC n, FPD beta, FPD* c, ISC ldc) {
-  Detail::Gemm(false, true, alpha, a, lda, m, k, b, ldb, n, beta, c, ldc);
+  Gemm(false, true, alpha, a, lda, m, k, b, ldb, n, beta, c, ldc);
 }
 
 // C(m,n) = A^T(m,k) * B^T(n,k)  [MatMulTT: A(k,m) row-major, B(n,k) row-major]
 inline void GemmTTT(FPD alpha, const FPD* a, ISC lda, ISC k, ISC m,
                     const FPD* b, ISC ldb, ISC n, FPD beta, FPD* c, ISC ldc) {
-  Detail::Gemm(true, true, alpha, a, lda, m, k, b, ldb, n, beta, c, ldc);
+  Gemm(true, true, alpha, a, lda, m, k, b, ldb, n, beta, c, ldc);
 }
 
 // y(m) = alpha * A(m,n) * x(n) + beta * y(m). x/y must not overlap.
@@ -155,10 +142,10 @@ inline void GemvR(FPD alpha, const FPD* a, ISC lda, ISC m, ISC n,
   if (m == 0) return;
   // Like GEMM, an empty contraction scales output; no input reads.
   if (alpha == 0 || n == 0) {
-    Detail::Scale(y, m, 1, 1, beta);
+    Scale(y, m, 1, 1, beta);
     return;
   }
-#if CRABSTK_MATH_MKL || CBLAS_H_AVAILABLE
+#if _CrabsTKMathMKL || CBLAS_H_AVAILABLE
   cblas_dgemv(CblasRowMajor, CblasNoTrans, m, n, alpha, a, lda, x, 1, beta, y, 1);
 #else
   ref_dgemv(m, n, alpha, a, lda, x, beta, y);
@@ -178,14 +165,14 @@ inline void ZeroMatrix(FPD* data, ISC count) {
 inline FPD MaxErr(const FPD* a, const FPD* b, ISC count) {
   FPD e = 0;
   for (ISC i = 0; i < count; ++i) {
-    const FPD err = fabs(a[i] - b[i]);
-    if (!isfinite(err)) return INFINITY;
+    const FPD err = FPDAbsolute(a[i] - b[i]);
+    if (!FPDIsFinite(err)) return FPD(err) / FPD(err);
     if (err > e) e = err;
   }
   return e;
 }
 
 }  // namespace Math
-}  // namespace _
+}  // namespace CTK
 
-#endif  // CRABSTK_MATH_BLAS
+#endif  //< _CrabsTKMathBlas

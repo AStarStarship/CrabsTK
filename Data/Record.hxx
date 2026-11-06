@@ -3,9 +3,9 @@
 #ifndef CRABSTK_DATA_RECORD_HXX
 #define CRABSTK_DATA_RECORD_HXX
 #include "Record.h"
-#if SEAM >= CRABSTK_DATA_RECORD
-namespace _ {
-namespace RecordDetail {
+#if _Seam >= _CrabsTKDataRecord
+namespace CTK {
+namespace Data {
 
 static_assert(sizeof(IUA) == 1 && sizeof(IUC) == 4 && sizeof(ISC) == 4 &&
               sizeof(IUD) == 8 && sizeof(FPC) == 4);
@@ -50,8 +50,6 @@ IUC Checksum(const IUA* data, IUC bytes) {
   }
   return crc ^ 0xffffffffU;
 }
-
-}  //< namespace RecordDetail
 
 RecordStatus TRecordBytes(const TRecordHeader& header, IUC* bytes) {
   if (!bytes) return RecordInvalid;
@@ -125,6 +123,7 @@ RecordStatus TRecordInspect(const IUA* input, IUC bytes, TRecordHeader* header,
   return RecordOK;
 }
 
-}  //< namespace _
-#endif
-#endif
+}  //< namespace Data
+}  //< namespace CTK
+#endif  //< _Seam >= _CrabsTKDataRecord
+#endif  //< _CrabsTKDataRecordH

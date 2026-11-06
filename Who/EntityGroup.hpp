@@ -1,11 +1,12 @@
 // Copyright AStarship <https://astarship.net>.
 #pragma once
-#include "_Config.h"
-#if SEAM >= CRABSTK_WHO_CORE
-#ifndef CRABSTK_WHO_ENTITYGROUP_DECL_DECL
-#define CRABSTK_WHO_ENTITYGROUP_DECL_DECL
+#include <_Config.h>
+#if _Seam >= _CrabsTKWhoCore
+#ifndef _CrabsTKWhoEntityGroupHPP
+#define _CrabsTKWhoEntityGroupHPP
 #include "Entity.hpp"
-namespace _ {
+namespace CTK {
+namespace Who {
 
 /* A group of entities. */
 class TEntityGroup {
@@ -49,6 +50,7 @@ class TEntityGroup {
   TEntity** entities_;      //< Array of Entity pointers.
 };
 
-}  //< namespace _
-#endif
-#endif
+}  // namespace Who
+}  // namespace CTK
+#endif  //< _Seam >= _CrabsTKWhoCore
+#endif  //< _CrabsTKWhoEntityGroupHPP

@@ -8,7 +8,7 @@
 // Borrowed device buffers and handle; asynchronous on the caller's stream.
 // No implicit transfers, allocation, synchronization or handle-policy changes.
 // See CudaBlas.md for ownership, validation and completion/error contracts.
-namespace _ {
+namespace CTK {
 namespace Math {
 namespace Cuda {
 namespace Detail {
@@ -106,5 +106,5 @@ inline cublasStatus_t GemvR(cublasHandle_t handle, FPD alpha, const FPD* a,
 
 }  // namespace Cuda
 }  // namespace Math
-}  // namespace _
+}  // namespace CTK
 #endif

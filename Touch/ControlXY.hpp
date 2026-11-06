@@ -1,10 +1,11 @@
 // Copyright AStarship <https://astarship.net>.
 #pragma once
-#ifndef CRABSTK_TOUCH_XYCONTROL_DECL_DECL
-#define CRABSTK_TOUCH_XYCONTROL_DECL_DECL
-#include "_Config.h"
-#if SEAM >= CRABSTK_TOUCH_CORE
-namespace _ {
+#ifndef _CrabsTKTouchXyControlHPP
+#define _CrabsTKTouchXyControlHPP
+#include <_Config.h>
+#if _Seam >= _CrabsTKTouchCore
+namespace CTK {
+namespace Touch {
 
 class LIB_MEMBER XyTouchpad : public Component {
  public:
@@ -111,6 +112,8 @@ class LIB_MEMBER XyTouchpad : public Component {
       top_bounds_,     //< Lower y bounds.
       bottom_bounds_;  //< Upper y bounds.
 };
-}  //< namespace _
-#endif
-#endif
+
+}  // namespace Touch
+}  // namespace CTK
+#endif  //< _Seam >= _CrabsTKTouchCore
+#endif  //< _CrabsTKTouchXyControlHPP

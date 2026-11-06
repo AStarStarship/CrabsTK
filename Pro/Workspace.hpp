@@ -1,11 +1,12 @@
 // Copyright AStarship <https://astarship.net>.
 #pragma once
-#ifndef CRABSTK_PRO_WORKSPACE_DECL_DECL
-#define CRABSTK_PRO_WORKSPACE_DECL_DECL
-#include "_Config.h"
-#if SEAM >= CRABSTK_PRO_WORKSPACE
+#ifndef _CrabsTKProWorkspaceHH
+#define _CrabsTKProWorkspaceHH
+#include <_Config.h>
+#if _Seam >= _CrabsTKProWorkspace
 #include "Project.hpp"
-namespace _ {
+namespace CTK {
+namespace Pro {
 
 /* A workspace folder and settings. */
 class LIB_MEMBER Workspace {
@@ -34,6 +35,7 @@ class LIB_MEMBER Workspace {
   _::TArray<TProject> projects_;  //< Workspace Projects.
 };
 
-}  //< namespace _
-#endif
-#endif
+}  // namespace Pro
+}  // namespace CTK
+#endif  //< _Seam >= _CrabsTKProWorkspace
+#endif  //< _CrabsTKProWorkspaceHH

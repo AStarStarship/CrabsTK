@@ -7,7 +7,7 @@ This project belongs to the **AStarship** organization; its Kanban board slug is
 This directory contains the boilerplate files and tools for bootstrapping a new
 project. It supports two project modes:
 
-- **CrabsTK** — module-based, `CT` namespace, MPL headers, angle-bracket includes.
+- **CrabsTK** — module-based, `CTK` namespace, MPL headers, angle-bracket includes.
 - **ASCIICrabs** — flat `_Seams/`, `ProjectTest` namespace, relative ASCIICrabs includes.
 
 ## What's Here
@@ -19,15 +19,15 @@ Hatch/
   template/
     crabstk/           CrabsTK template files (static boilerplate).
       CMakeLists.txt   CMake build with ASCIICRABS_DIR cache variable.
-      _Package.hxx     Single-TU rollup (user adds module includes).
+      _Seams.hxx     Single-TU rollup (user adds module includes).
       seams.yaml       Template seam config (replaced by CreateProject.py).
     asciicrabs/        ASCII Crabs template files (static boilerplate).
       _Config.h        Root config: includes Header, Footer.
       _ConfigFooter.h  Includes ASCIICrabs/_ConfigFooter.h (relative path).
       _ConfigHeader.h  Includes ASCIICrabs/_ConfigHeader.h (relative path).
-      _Debug.h         Debug macros (D_COUT, D_PAUSE, A_TEST_BEGIN, etc.).
+      _Debug.h         Debug macros (D_COUT, D_PAUSE, _ATestBegin, etc.).
       _Release.h       Release macros (everything compiled out).
-      _Package.hxx     Includes ASCIICrabs/_Package.hxx (relative path).
+      _Seams.hxx     Includes ASCIICrabs/_Seams.hxx (relative path).
       _Test.h          Includes ASCIICrabs/Test.h (relative path).
       _Undef.h         Undefines the YOUR_MOM marker macro.
       pch.h            Precompiled header (MSVC only; can be ignored).
@@ -86,9 +86,9 @@ The script:
 
 ### After Creation (CrabsTK)
 
-1. **Add your module source files** next to `_Package.hxx`.
-2. **Edit `_Package.hxx`** to include your module headers.
-3. **Edit `_Seams/<Module>/00.Core.h`** to add your test code.
+1. **Add your module source files** next to `_Seams.hxx`.
+2. **Edit `_Seams.hxx`** to include your module headers.
+3. **Edit `_Seams/<Module>/01.Core.h`** to add your test code.
 4. **Build and run:**
    ```bash
    cd <output_dir>/_Seams
@@ -99,9 +99,9 @@ The script:
 ### After Creation (ASCIICrabs)
 
 1. **Fix ASCIICrabs include paths** in `_ConfigFooter.h`, `_ConfigHeader.h`,
-   `_Package.hxx`, and `_Test.h`. They use relative paths (`../../../../`).
+   `_Seams.hxx`, and `_Test.h`. They use relative paths (`../../../../`).
    Adjust the depth to match your actual directory layout.
-2. **Add your source files** next to `_Package.hxx`.
+2. **Add your source files** next to `_Seams.hxx`.
 3. **Edit `_Seams/01.Core.hxx`** to add your test code.
 4. **Build and run:**
    ```bash
@@ -137,7 +137,7 @@ auto-generated.
 2. Run `python3 SyncSeams.py` from the project root.
 
 3. Rebuild. The new seam appears in `_Seams.h`, `_Config.h`, `_Main.hxx`,
-   and the module's `00.Core.h` with full debug/release gating.
+   and the module's `01.Core.h` with full debug/release gating.
 
 ### Seam YAML fields:
 
@@ -148,7 +148,7 @@ auto-generated.
 | `release` | Name of the seam that runs in release mode (`SEAM_N`). |
 | `project_dir` | Where generated files go (defaults to the YAML file's directory). |
 | `name` | Macro suffix + C++ test function name. |
-| `module` | (CrabsTK) Namespace under `CT::`. Groups seams into modules. |
+| `module` | (CrabsTK) Namespace under `CTK::`. Groups seams into modules. |
 | `file` | (ASCIICrabs) Seam test filename in `_Seams/`. |
 | `label` | Heading printed by the test. |
 
@@ -213,7 +213,7 @@ style guide (`~/AStarStarship/ASCIICrabs/__ChimeraPlus.md`).
 | Local variables | lower_snake_case (always) | `bytes_data`, `read_cursor` |
 | Macros / #define | UPPER_SNAKE_CASE | `CRABS_RUN_TESTS`, `CPU_X64` |
 | Private/protected members | trailing underscore | `aobj_`, `array_` |
-| Namespaces | `namespace _ { ... }` | single shared underscore namespace |
+| Namespaces | `namespace CTK { ... }` | single shared underscore namespace |
 | DB names / tables / columns | lower_snake_case (mutable) | `user_sessions`, `order_items` |
 | Client-facing API / headers | CamelCase (immutable contract) | `OrderService`, `PaymentGateway` |
 | Filenames (client contract) | CamelCase | `OrderService.h` |
@@ -236,7 +236,7 @@ style guide (`~/AStarStarship/ASCIICrabs/__ChimeraPlus.md`).
 - 2-space indent
 - Opening brace same line (functions/control), next line (structs/classes)
 - `D_ASSERT()`, `D_COUT()`, `D_RETURNT(type, val)` for debug/assert/return
-- `NILP` = nullptr
+- `_NilP` = nullptr
 - `alignas(ACPUCacheLineSize)` for hot structs
 - Doxygen `/** @param @return @pre @link @see @code */` comments
 
@@ -245,7 +245,22 @@ style guide (`~/AStarStarship/ASCIICrabs/__ChimeraPlus.md`).
 private/protected get a trailing `_`; types are short CAPS width-codes
 (CHA/ISC/IUD/BOL); structs are CamelCase with T(POD)/A(utoject) prefix;
 functions are CamelCase with T/A kind prefixes and _NC/C markers; locals are
-snake_case; everything lives in `namespace _`; every file starts with AStarship
+snake_case; everything lives in `namespace CTK`; every file starts with AStarship
 copyright, `#pragma once`, a `CRABS_*` guard, and `#if SEAM >= CRABS_*`
 gating.** The name tells you the kind, width, access level, and mutability —
 before you read the body.
+
+## Git Protocol
+
+- **Do NOT undelete files from git.** A deleted or renamed file was done so on
+  purpose — it wasn't supposed to be there, it got merged into another file, or
+  it wasn't named correctly. Fix the current files in place; do not try to
+  rescue or restore stale files from git history (no `git checkout -- <path>`,
+  `git restore <path>`, `git show <ref>:<path>` written back to disk, or
+  `git revert` to bring a deleted path back).
+- **Only `master-agent` and the Captain may modify git.** No other agent or
+  profile may run git write operations on a tracked repo — no `git commit`,
+  `git add`, `git push`, `git reset`, `git rebase`, `git merge`, `git rm`,
+  branch creation, force-push, or PR changes. Read-only inspection
+  (`git status`, `git log`, `git diff`, `git show`, `git ls-files`) is allowed
+  for anyone.

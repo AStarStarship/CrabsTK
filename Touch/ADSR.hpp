@@ -1,10 +1,11 @@
 // Copyright AStarship <https://astarship.net>.
 #pragma once
-#ifndef CRABSTK_AV_ADSR_DECL_DECL
-#define CRABSTK_AV_ADSR_DECL_DECL
-#include "_Config.h"
-#if SEAM >= CRABSTK_AV_CORE
-namespace _ {
+#ifndef _CrabsTKTouchADSRH
+#define _CrabsTKTouchADSRH
+#include <_Config.h>
+#if _Seam >= _CrabsTKTouchCore
+namespace CTK {
+namespace Touch {
 
 /* A ADSR filter. */
 class LIB_MEMBER ADSR : public Op {
@@ -16,6 +17,7 @@ class LIB_MEMBER ADSR : public Op {
   virtual const Op* Star(CHW index, Expr* expr);
 };
 
-}  //< namespace _
-#endif
-#endif
+}  // namespace Touch
+}  // namespace CTK
+#endif  //< _Seam >= _CrabsTKTouchCore
+#endif  //< _CrabsTKTouchADSRH

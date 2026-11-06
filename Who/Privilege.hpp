@@ -1,11 +1,11 @@
 // Copyright AStarship <https://astarship.net>.
 #pragma once
-#ifndef CRABSTK_WHO_PRIVILAGE_DECL_DECL
-#define CRABSTK_WHO_PRIVILAGE_DECL_DECL
-#include "_Config.h"
-#if SEAM >= CRABSTK_WHO_CORE
-
-namespace _ {
+#ifndef _CrabsTKWhoPrivilegeHPP
+#define _CrabsTKWhoPrivilegeHPP
+#include <_Config.h>
+#if _Seam >= _CrabsTKWhoCore
+namespace CTK {
+namespace Who {
 
 /* An account privilege level. */
 class TPrivilege {
@@ -45,6 +45,8 @@ class TPrivilege {
   ISC privilage_count_,   //< The number of privileges.
       privileges_level_;  //< The privilege level.
 };
-}       //< namespace _
-#endif
-#endif
+
+}  // namespace Who
+}  // namespace CTK
+#endif  //< _Seam >= _CrabsTKWhoCore
+#endif  //< _CrabsTKWhoPrivilegeHPP

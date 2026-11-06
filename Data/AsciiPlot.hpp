@@ -3,8 +3,9 @@
 #ifndef CRABSTK_DATA_ASCIIPLOT_HPP
 #define CRABSTK_DATA_ASCIIPLOT_HPP
 #include "AsciiPlot.h"
-#if SEAM >= CRABSTK_DATA_ASCIIPLOT
-namespace _ {
+#if _Seam >= _CrabsTKDataASCIIPlot
+namespace CTK {
+namespace Data {
 
 template<IUC W, IUC H>
 void TAsciiPlotClear(TAsciiPlot<W, H>& plot) {
@@ -99,6 +100,7 @@ PlotStatus TAsciiPlotRender(const TAsciiPlot<W, H>& plot, CHA* output,
   return PlotOK;
 }
 
-}  //< namespace _
-#endif
-#endif
+}  //< namespace Data
+}  //< namespace CTK
+#endif  //< _Seam >= _CrabsTKDataASCIIPlot
+#endif  //< CRABSTK_DATA_ASCIIPLOTH 

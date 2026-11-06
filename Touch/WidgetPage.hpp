@@ -1,15 +1,16 @@
 // Copyright AStarship <https://astarship.net>.
 #pragma once
-#ifndef CRABSTK_TOUCH_WIDGETPAGE_DECL_DECL
-#define CRABSTK_TOUCH_WIDGETPAGE_DECL_DECL
-#include "_Config.h"
-#if SEAM >= CRABSTK_TOUCH_CORE
+#ifndef _CrabsTKTouchWidgetPageHPP
+#define _CrabsTKTouchWidgetPageHPP
+#include <_Config.h>
+#if _Seam >= _CrabsTKTouchCore
 #include "Button.hpp"
 #include "Component.hpp"
 #include "ControlMatrix.hpp"
 #include "ControlMidi.hpp"
 #include "WidgetPage.hpp"
-namespace _ {
+namespace CTK {
+namespace Touch {
 
 class ControlMidi;
 class Button;
@@ -128,7 +129,7 @@ class LIB_MEMBER WidgetPage {
   }
 
   /* Gets the page_label_. */
-  const const CHR* Label() { return label_; }
+  const CHR* Label() { return label_; }
 
   /* Sets the label_ to the label. */
   void SetLabel (const CHA* label) { return label_.Set (label); }
@@ -190,6 +191,7 @@ class LIB_MEMBER WidgetPage {
   TArray<TControlMatrix*> control_group_;
 };
 
-}  //< namespace _
-#endif
-#endif
+}  // namespace Touch
+}  // namespace CTK
+#endif  //< _Seam >= _CrabsTKTouchCore
+#endif  //< _CrabsTKTouchWidgetPageHPP

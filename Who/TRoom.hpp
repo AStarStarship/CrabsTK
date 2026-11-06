@@ -1,23 +1,23 @@
 // Copyright AStarship <https://astarship.net>.
 #pragma once
-#ifndef CRABSTK_WHO_ROOM_HPP
-#define CRABSTK_WHO_ROOM_HPP
-#include "_Config.h"
-#if SEAM >= CRABSTK_WHO_CORE
+#ifndef _CrabsTKWhoRoomHPP
+#define _CrabsTKWhoRoomHPP
+#include <_Config.h>
+#if _Seam >= _CrabsTKWhoCore
 #include "Global.h"
 #include "TMessage.hpp"
 #include "TSession.hpp"
 #include <ASCIICrabs/Autoject.hxx>  // RAMFactory / ObjectFactoryHeap
 #include <ASCIICrabs/Binary.hpp>    // IsError
 #include <ASCIICrabs/Array.hxx>     // ArrayFill / ArrayCopy definitions
-#include <cstring>
-namespace _ {
+namespace CTK {
+namespace Who {
 
 /* Allocates a zero-initialized, word-aligned buffer of @c bytes via the
 given RAMFactory (heap: ObjectFactoryHeap). Returns the origin, or an error
 pointer (IUW < AErrorTotal) on failure. Mirrors AujAlloc in BigInt.hxx. */
 static inline IUW* RoomAlloc(RAMFactory ram, ISW bytes) {
-  return ram(NILP, bytes);
+  return ram(_NilP, bytes);
 }
 /* Frees a buffer previously allocated by RoomAlloc (heap factory deletes). */
 static inline void RoomFree(RAMFactory ram, IUW* origin) {
@@ -53,7 +53,7 @@ struct TRoom {
         ram_(ObjectFactoryHeap),
         ring_(256) {
     name_[0] = '\0';
-    members_ = TPtr<IUC>(RoomAlloc(ram_, ISW(MemberDefault) * sizeof(IUC)));
+    members_ = TRef<IUC>(RoomAlloc(ram_, ISW(MemberDefault) * sizeof(IUC)));
     if (!IsError(members_)) {
       // Zero the member slots (calloc-equivalent via ArrayFill).
       ArrayFill(members_, ISW(MemberDefault) * sizeof(IUC));
@@ -63,7 +63,7 @@ struct TRoom {
   /* Destroys the room, freeing the member list through the RAMFactory.
   (The ring frees itself.) */
   ~TRoom() {
-    if (!IsError(members_)) RoomFree(ram_, TPtr<IUW>(members_));
+    if (!IsError(members_)) RoomFree(ram_, TRef<IUW>(members_));
   }
 
   /* Disables copy (the room owns a RAMFactory-managed heap block). */
@@ -98,13 +98,13 @@ struct TRoom {
       IUC new_cap = member_capacity_ * 2;
       IUW* new_block = RoomAlloc(ram_, ISW(new_cap) * sizeof(IUC));
       if (IsError(new_block)) return false;
-      IUC* new_members = TPtr<IUC>(new_block);
+      IUC* new_members = TRef<IUC>(new_block);
       // Copy existing members, zero the new tail.
       ArrayCopy(new_members, ISW(member_count_) * sizeof(IUC), members_,
                 ISW(member_count_) * sizeof(IUC));
       ArrayFill(new_members + member_count_,
                 ISW(new_cap - member_count_) * sizeof(IUC));
-      RoomFree(ram_, TPtr<IUW>(members_));
+      RoomFree(ram_, TRef<IUW>(members_));
       members_ = new_members;
       member_capacity_ = new_cap;
     }
@@ -177,7 +177,7 @@ struct ARoomTable {
       // Zero the slot region so inactive slots are safe to test.
       ArrayFill(blocks_, ISW(total_) * sizeof(TRoom));
     }
-    active_ = TPtr<BOL>(RoomAlloc(ram_, ISW(total_) * sizeof(BOL)));
+    active_ = TRef<BOL>(RoomAlloc(ram_, ISW(total_) * sizeof(BOL)));
     if (!IsError(active_)) ArrayFill(active_, ISW(total_) * sizeof(BOL));
   }
 
@@ -190,7 +190,7 @@ struct ARoomTable {
       }
     }
     RoomFree(ram_, blocks_);
-    RoomFree(ram_, TPtr<IUW>(active_));
+    RoomFree(ram_, TRef<IUW>(active_));
   }
 
   /* Disables copy (owns RAMFactory blocks). */
@@ -199,14 +199,14 @@ struct ARoomTable {
 
   /* Gets the TRoom-element base of the slot block (blocks_ reinterpreted).
   Pointer arithmetic on this advances by sizeof(TRoom), not sizeof(IUW). */
-  TRoom* Rooms() const { return TPtr<TRoom>(blocks_); }
+  TRoom* Rooms() const { return TRef<TRoom>(blocks_); }
 
   /* Gets the total room capacity. */
   IUC Total() const { return total_; }
 
-  /* Gets a pointer to the room at the given index, or NILP if inactive. */
+  /* Gets a pointer to the room at the given index, or _NilP if inactive. */
   TRoom* Get(IUC room) const {
-    if (room >= total_ || IsError(blocks_) || !active_[room]) return NILP;
+    if (room >= total_ || IsError(blocks_) || !active_[room]) return _NilP;
     return Rooms() + room;
   }
 
@@ -217,9 +217,9 @@ struct ARoomTable {
   @param room   Room index (0 = global).
   @param name   Optional name (default: "room_<index>", "global" for 0).
   @pre Event thread only.
-  @return Pointer to the TRoom, or NILP if the table is full. */
-  TRoom* GetOrCreate(IUC room, const CHA* name = NILP) {
-    if (room >= total_ || IsError(blocks_)) return NILP;
+  @return Pointer to the TRoom, or _NilP if the table is full. */
+  TRoom* GetOrCreate(IUC room, const CHA* name = _NilP) {
+    if (room >= total_ || IsError(blocks_)) return _NilP;
     if (active_[room]) return Get(room);
     ::new (Rooms() + room) TRoom(room);
     TRoom* tr_room = Rooms() + room;
@@ -273,6 +273,7 @@ struct ARoomTable {
   IUC total_;           //< Room capacity.
 };                        //< struct ARoomTable
 
-}  //< namespace _
-#endif
-#endif
+}  // namespace Who
+}  // namespace CTK
+#endif  //< _Seam >= _CrabsTKWhoCore
+#endif  //< _CrabsTKWhoRoomHPP

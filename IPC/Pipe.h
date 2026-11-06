@@ -1,4 +1,11 @@
 // Copyright AStarship <https://astarship.net>.
+#pragma once
+#ifndef _CrabsTKPipeH
+#define _CrabsTKPipeH
+#include <_Config.h>
+namespace CTK {
+namespace IPC {
+
 // IPC — bounded, versioned, process-shared SPSC ring pairs over POSIX shm.
 //
 // 2026-10-20 rewrite of the 2026-10-16 prototype. The prototype faults
@@ -73,14 +80,6 @@
 // Hot-path rules (inherited from the iGeek handoff): Read/Write/Poll do no
 // allocation, no file I/O beyond the futex fast path, and no blocking
 // beyond the caller's requested timeout.
-
-#pragma once
-#ifndef CRABSTK_IPC_PIPE_H
-#define CRABSTK_IPC_PIPE_H
-
-#include "_Config.h"
-
-namespace _ {
 
 // Status codes; PipeOK is zero. Negative values are failures.
 enum PipeStatus : ISC {
@@ -211,6 +210,6 @@ private:
 Pipe& PipeMaster();
 Pipe& PipeSlave();
 
-}  //< namespace _
-
-#endif // CRABSTK_IPC_PIPE_H
+}  //< namespace IPC
+}  //< namespace CTK
+#endif  //< _CrabsTKPipeH

@@ -1,9 +1,8 @@
 // Copyright AStarship <https://astarship.net>.
 #pragma once
-#ifndef CRABSTK_PLOT_TEST_CONFIG
-#define CRABSTK_PLOT_TEST_CONFIG
-#include "../../../ASCIICrabs/_ConfigHeader.h"
-#ifndef SEAM
-#define SEAM CRABSTK_PLOT
-#endif
-#endif
+#ifndef CRABSTK_PLOT_SEAMS_CONFIG
+#define CRABSTK_PLOT_SEAMS_CONFIG
+#include <ASCIICrabs/_Config.h>
+#undef _Seam
+#define _Seam _SeamN
+#endif  // CRABSTK_PLOT_SEAMS_CONFIG

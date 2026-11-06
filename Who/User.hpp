@@ -1,13 +1,14 @@
 // Copyright AStarship <https://astarship.net>.
 #pragma once
-#ifndef CRABSTK_WHO_USER_DECL_DECL
-#define CRABSTK_WHO_USER_DECL_DECL
-#include "_Config.h"
-#if SEAM >= CRABSTK_WHO_CORE
+#ifndef _CrabsTKWhoUserHPP
+#define _CrabsTKWhoUserHPP
+#include <_Config.h>
+#if _Seam >= _CrabsTKWhoCore
 #include "Authenticator.hpp"
 #include "Handle.hpp"
 #include "Password.hpp"
-namespace _ {
+namespace CTK {
+namespace Who {
 
 /* A user account on a computer.
 A user does not necessarily have an account. Some accounts are and any user
@@ -23,8 +24,8 @@ class TUser {
 
   /* Creates a user with the given handle, password, and status. */
   TUser(TAuthenticator* authenticator, IUD uid = 0,
-       const const CHR* handle = THandle::DefaultPassword,
-       const const CHR* password = TPassword::DefaultPassword,
+       const CHR* handle = THandle::DefaultPassword,
+       const CHR* password = TPassword::DefaultPassword,
        FPD balance = DefaultBalance, IUD value = DefaultValue)
     : handle_ (authenticator, handle),
     status_ (StringClone ("")),
@@ -70,10 +71,10 @@ class TUser {
   virtual ~TUser() {}
 
   /* Gets the handle's key. */
-  const const CHR* GetStatus() { return status_; }
+  const CHR* GetStatus() { return status_; }
 
   /* Sets the status. Returns true on success. */
-  virtual BOL SetStatus(const const CHR* name) {
+  virtual BOL SetStatus(const CHR* name) {
     if (name == nullptr) return false;
     status_ = StringClone (name);
     return true;
@@ -83,7 +84,7 @@ class TUser {
   THandle& GetHandle() { return handle_; }
 
   /* Gets a reference to the handle_.GetKey (). */
-  const const CHR* GetHandleKey() { return handle_.GetKey (); }
+  const CHR* GetHandleKey() { return handle_.GetKey (); }
 
   /* Gets a reference to the password. */
   TPassword& GetPassword() { return password_; }
@@ -95,7 +96,7 @@ class TUser {
   int32_t GetSession() { return session_; }
 
   /* Sets the session uid. */
-  virtual const const CHR* SetSession(int32_t session) {
+  virtual const CHR* SetSession(int32_t session) {
     if (session == 0) return "Invalid session key";
     session_ = session;
     return nullptr;
@@ -108,7 +109,7 @@ class TUser {
   IUD GetResponse();
 
   /* Sets the abstract response code. */
-  virtual const const CHR* SetResponse(IUD response) {
+  virtual const CHR* SetResponse(IUD response) {
     response_ = response;
     return nullptr;
   }
@@ -117,7 +118,7 @@ class TUser {
   FPD GetBalance() { return balance_; }
 
   /* Sets the abstract balance. */
-  virtual const const CHR* SetBalance(FPD balance) {
+  virtual const CHR* SetBalance(FPD balance) {
     balance_ = balance;
     return nullptr;
   }
@@ -155,7 +156,7 @@ class TUser {
   }
 
   /* Sets the abstract value. */
-  virtual const const CHR* SetValue(int64_t value) {
+  virtual const CHR* SetValue(int64_t value) {
     value_ = value;
     return nullptr;
   }
@@ -200,11 +201,11 @@ class TUser {
   }
 
   /* @todo Convert to Operation.
-  const const CHR* Sudo(const const CHR* text, const const CHR* String_end) {
+  const CHR* Sudo(const CHR* text, const CHR* String_end) {
     enum {
       MessageLength = 141,
     };
-    const const CHR* token;
+    const CHR* token;
     FPD balance;
     int64_t value;
     CHA input[MessageLength];
@@ -290,6 +291,8 @@ class TUser {
   Expr* slot_;            //< Portal to User's machine.
 
 };
-}       //< namespace _
-#endif
-#endif
+
+}  // namespace Who
+}  // namespace CTK
+#endif  //< _Seam >= _CrabsTKWhoCore
+#endif  //< _CrabsTKWhoUserHPP

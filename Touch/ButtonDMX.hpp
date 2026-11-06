@@ -1,13 +1,14 @@
 // Copyright AStarship <https://astarship.net>.
 
 #pragma once
-#include "_Config.h"
-#if SEAM >= CRABSTK_AV_CORE
-#ifndef CRABSTK_AV_DMXBUTTON_DECL_DECL
-#define CRABSTK_AV_DMXBUTTON_DECL_DECL
+#include <_Config.h>
+#if _Seam >= _CrabsTKTouchCore
+#ifndef _CrabsTKTouchDMXButtonH
+#define _CrabsTKTouchDMXButtonH
 #include "Button.hpp"
 #include "ControlDMX.hpp"
-namespace _ {
+namespace CTK {
+namespace Touch {
 
 class LIB_MEMBER DMXButton : public Parameter<ISC>, public Button {
  public:
@@ -31,6 +32,7 @@ class LIB_MEMBER DMXButton : public Parameter<ISC>, public Button {
 
  private:
 };
-}  //< namespace _
-#endif
-#endif
+}  // namespace Touch
+}  // namespace CTK
+#endif  //< _Seam >= _CrabsTKTouchCore
+#endif  //< _CrabsTKTouchDMXButtonH

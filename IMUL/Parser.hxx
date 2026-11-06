@@ -1,15 +1,15 @@
 // Copyright AStarship <https://astarship.net>.
 /* ImulParseWorkspace: parses `repo owner/repo [as alias]` manifest lines.
 Phase 1: accepts a null workspace; manifest validation lands with the W cases. */
-#include "_Config.h"
+#include <_Config.h>
 #include <ASCIICrabs/Test.h>
 #include "IMUL/Parser.h"
-using namespace _;
+namespace CTK {
+namespace IMUL {
 
-// Definitions live in the project's namespace _ (Parser.h declares them
+// Definitions live in the project's namespace CTK (Parser.h declares them
 // there); the rollup TU sees both the declarations and these definitions
 // in one scope, so ImulCompile resolves unambiguously.
-namespace _ {
 
 inline ISN ImulParseWorkspace(TImulWorkspace* workspace, TImulLimits* limits,
                               TImulStorage* storage, TImulResult* result) {
@@ -77,7 +77,7 @@ inline ISN ImulCompile(const CHA* source, IUD source_len,
   event->span.line = 1;
   event->span.column = 1;
   event->has_repo = 0;
-  event->repository = NILP;
+  event->repository = _NilP;
   event->has_issue = 0;
   event->issue = 0;
   event->has_timestamp = 0;
@@ -106,4 +106,6 @@ inline ISN ImulCompile(const CHA* source, IUD source_len,
   result->correction_count = 1;
   return 0;
 }
-}  //< namespace _
+
+}  //< namespace IMUL
+}  //< namespace CTK

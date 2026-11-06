@@ -3,15 +3,12 @@
 #ifndef CRABSTK_DATA_DATASET_HXX
 #define CRABSTK_DATA_DATASET_HXX
 #include "Dataset.h"
-#if SEAM >= CRABSTK_DATA_RECORD
+#if _Seam >= _CrabsTKDataRecord
 #if defined(_WIN32)
 #error Dataset v1 file adapter is POSIX; Record codec is platform-independent.
 #else
-#include <errno.h>
-#include <fcntl.h>
-#include <unistd.h>
-namespace _ {
-namespace DatasetDetail {
+namespace CTK {
+namespace Data {
 
 RecordStatus Read(ISC fd, IUA* output, IUC bytes) {
   IUC received = 0;
@@ -116,7 +113,8 @@ RecordStatus TReaderNext(TReader& reader, IUA* scratch, IUC capacity,
   return RecordOK;
 }
 
-}  //< namespace _
-#endif
-#endif
-#endif
+}  //< namespace Data
+}  //< namespace CTK
+#endif  //< _WIN32
+#endif  //< _Seam >= _CrabsTKDataRecord
+#endif  //< CRABSTK_DATA_DATASET_HXX

@@ -1,10 +1,11 @@
 // Copyright AStarship <https://astarship.net>.
 #pragma once
-#ifndef CRABSTK_TOUCH_CHANNELGROUP_DECL_DECL
-#define CRABSTK_TOUCH_CHANNELGROUP_DECL_DECL
-#include "_Config.h"
-#if SEAM >= CRABSTK_TOUCH_CORE
-namespace _ {
+#ifndef _CrabsTKTouchChannelGroupHPP
+#define _CrabsTKTouchChannelGroupHPP
+#include <_Config.h>
+#if _Seam >= _CrabsTKTouchCore
+namespace CTK {
+namespace Touch {
 
 /* A group of */
 class LIB_MEMBER ChannelGroup {
@@ -67,6 +68,8 @@ class LIB_MEMBER ChannelGroup {
   TArray<const IUA*> channels_;  //< List of Script address for the channels.
 
 };
-}  //< namespace _
-#endif
-#endif
+
+}  // namespace Touch
+}  // namespace CTK
+#endif  //< _Seam >= _CrabsTKTouchCore
+#endif  //< _CrabsTKTouchChannelGroupHPP

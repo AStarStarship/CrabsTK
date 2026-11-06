@@ -1,9 +1,8 @@
 // Copyright AStarship <https://astarship.net>.
-#include "_Config.h"
-#include <cstring>  // memcmp (2026-10-12: was missing)
+#include <_Config.h>
 #include "Lexer.h"
-
-namespace _ {
+namespace CTK {
+namespace Code {
 
 /* Keyword table: C + C++11 + C++20 keywords. Sorted alphabetically
 for binary search. Derived from Clang TokenKinds.def (BSD license).
@@ -146,7 +145,7 @@ const CHA* CodeTokenSpelling(IUB kind) {
   if (kind >= CodePunctFirst && kind <= CodePunctLast) {
     return CodePunctSpelling[kind - CodePunctFirst];
   }
-  return NILP;
+  return _NilP;
 }
 
 /* Token names for diagnostics. */
@@ -707,4 +706,5 @@ IUB CodeLexerNext(TCodeLexer* lexer) {
   return CODE_TOK_IDENT;
 }
 
-}  //< namespace _
+}  //< namespace Code
+}  //< namespace CTK

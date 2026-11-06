@@ -1,8 +1,8 @@
 // Copyright AStarship <https://astarship.net>.
 #pragma once
-#include "_Config.h"
-#ifndef CRABSTK_CODE_FITTER_H
-#define CRABSTK_CODE_FITTER_H
+#include <_Config.h>
+#ifndef _CrabsTKCodeFitter_H
+#define _CrabsTKCodeFitter_H
 
 /* CrabsTK Code Fitter — the "Prettier for agents."
 Takes a token stream (from Lexer) and re-emits it in canonical
@@ -16,14 +16,15 @@ Chimera+ rules enforced:
   - One blank line between top-level functions
   - #include ordering: _Config.h, then ASCIICrabs, then local
   - Header guard: #pragma once + #ifndef CRABSTK_NAME_H
-  - Seam gating: #if SEAM >= CRABS_NAME
+  - Seam gating: #if _Seam >= CRABS_NAME
   - Chimera+ naming: flags snake_case where CamelCase is required
   - No std:: types (hard error)
 
 No allocation, no std::, no stb. Output is written to a caller-owned
 byte buffer. */
 
-namespace _ {
+namespace CTK {
+namespace Code {
 
 /* Fitter diagnostics. Each finding has a severity, a code, a span,
 and a message. The Fitter collects these into a caller-owned array. */
@@ -40,7 +41,7 @@ enum EFitCode : IUB {
   FIT_CODE_BRACE,           //< Brace placement violation.
   FIT_CODE_INCLUDE_ORDER,   //< #include not in canonical order.
   FIT_CODE_HEADER_GUARD,    //< Missing or wrong header guard.
-  FIT_CODE_SEAM_GATE,       //< Missing #if SEAM >= gate.
+  FIT_CODE_SEAM_GATE,       //< Missing #if _Seam >= gate.
   FIT_CODE_NAMING,          //< Chimera+ naming violation.
   FIT_CODE_BLANK_LINE,      //< Missing/extra blank line.
   FIT_CODE_TAB,             //< Tab instead of spaces.
@@ -58,7 +59,7 @@ struct TFitting {
 struct TFitterOptions {
   ISN indent_width;       //< Spaces per indent level. Default 2.
   ISN max_line_length;    //< Soft limit. Default 100. 0 = unlimited.
-  BOL enforce_seam_gate;  //< Require #if SEAM >= in .h files. Default true.
+  BOL enforce_seam_gate;  //< Require #if _Seam >= in .h files. Default true.
   BOL enforce_header_guard; //< Require #pragma once. Default true.
   const CHA* project_name;  //< For guard prefix (e.g. "CRABSTK"). Default "CRABSTK".
 };
@@ -96,5 +97,6 @@ ISN CodeFit(const TCodeToken* tokens, ISN token_count,
 Used internally; exposed for the LSP. */
 ISN CodeIndentLevel(const TCodeToken* tokens, ISN token_count, ISN index);
 
-}  //< namespace _
+}  //< namespace Code
+}  //< namespace CTK
 #endif

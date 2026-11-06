@@ -1,11 +1,12 @@
 // Copyright AStarship <https://astarship.net>.
 #pragma once
-#ifndef CRABSTK_TOUCH_MIDIWIDGET_DECL_DECL
-#define CRABSTK_TOUCH_MIDIWIDGET_DECL_DECL
-#include "_Config.h"
-#if SEAM >= CRABSTK_TOUCH_CORE
+#ifndef _CrabsTKTouchWidgetMidiHPP
+#define _CrabsTKTouchWidgetMidiHPP
+#include <_Config.h>
+#if _Seam >= _CrabsTKTouchCore
 #include "Widget.hpp"
-namespace _ {
+namespace CTK {
+namespace Touch {
 
 class WidgetMidi : public TWidget {
  public:
@@ -65,7 +66,8 @@ private:
     drums_channel_;
   IUC double_press_ticks_;
 };
-}  //< namespace _
+}  // namespace Touch
+}  // namespace CTK
 
-#endif
-#endif
+#endif  //< _Seam >= _CrabsTKTouchCore
+#endif  //< _CrabsTKTouchWidgetMidiHPP

@@ -1,8 +1,7 @@
 // Copyright AStarship <https://astarship.net>.
 #include "IDraw.h"
-
-namespace _ {
-namespace ImageDraw {
+namespace CTK {
+namespace Image {
 
 IUN PackColor(const TColor& c) {
   return (IUN)c.a | ((IUN)c.b << 8) | ((IUN)c.g << 16) | ((IUN)c.r << 24);
@@ -131,5 +130,5 @@ BOL ClipRect(CImage& img, TRect* r) {
   return true;
 }
 
-}  // namespace ImageDraw
-}  // namespace _
+}  // namespace Image
+}  // namespace CTK

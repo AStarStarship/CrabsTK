@@ -1,10 +1,11 @@
 // Copyright AStarship <https://astarship.net>.
 #pragma once
-#ifndef CRABSTK_TOUCH_TAG_DECL_DECL
-#define CRABSTK_TOUCH_TAG_DECL_DECL
-#include "_Config.h"
-#if SEAM >= CRABSTK_TOUCH_CORE
-namespace _ {
+#ifndef _CrabsTKTouchTagHPP
+#define _CrabsTKTouchTagHPP
+#include <_Config.h>
+#if _Seam >= _CrabsTKTouchCore
+namespace CTK {
+namespace Touch {
 
 class Tag {
  public:
@@ -20,6 +21,7 @@ class Tag {
   /* Sets the ID name. */
   virtual CHA SetName(const CHA* name) = 0;
 };
-}       //< namespace _
-#endif
-#endif
+}  // namespace Touch
+}  // namespace CTK
+#endif  //< _Seam >= _CrabsTKTouchCore
+#endif  //< _CrabsTKTouchTagHPP

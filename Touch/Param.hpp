@@ -1,11 +1,12 @@
 // Copyright AStarship <https://astarship.net>.
 #pragma once
-#ifndef CRABSTK_TOUCH_PARAMETER_DECL_DECL
-#define CRABSTK_TOUCH_PARAMETER_DECL_DECL
-#include "_Config.h"
-#if SEAM >= CRABSTK_TOUCH_CORE
+#ifndef _CrabsTKTouchParameterHPP
+#define _CrabsTKTouchParameterHPP
+#include <_Config.h>
+#if _Seam >= _CrabsTKTouchCore
 #include "Component.hpp"
-namespace _ {
+namespace CTK {
+namespace Touch {
 
 /* A parameter with upper and lower bounds. */
 class LIB_MEMBER Parameter : public HMIComponent {
@@ -330,6 +331,7 @@ class ParameterPair {
   IUA* msb_, *lsb_;
 };  //< ParameterPair
 
-}  //< namespace _
-#endif
-#endif
+}  // namespace Touch
+}  // namespace CTK
+#endif  //< _Seam >= _CrabsTKTouchCore
+#endif  //< _CrabsTKTouchParameterHPP

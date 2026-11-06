@@ -14,8 +14,8 @@ Read in order:
 2. `IMUL/_Spec/README.md`, then every linked normative document, especially
    `Syntax.md`, `Workspace.md`, `Time.md`, `Timesheets.md`, `Mappings.md`,
    `Compiler.md`, `Agents.md`, and `Conformance.md`.
-3. This plan; the existing `IMUL/` stubs; `_Seams/Imul/00.Core.hxx`,
-   `_Seams/_Config.h`, `_Seams/_Main.hxx`, root `_Seams.h`, `_Package.hxx`;
+3. This plan; the existing `IMUL/` stubs; `_Seams/Imul/01.Core.hxx`,
+   `_Seams/_Config.h`, `_Seams/_Main.hxx`, root `_Seams.h`, `_Seams.hxx`;
    actual Crabs APIs/types you intend to use. Read ASCIICrabs/AGENTS.md before
    editing upstream (upstream edits should not be necessary for this mission).
 
@@ -79,10 +79,10 @@ handoff; missing/failing cases mean the mission is not complete.
   quoted include and empty switch. Do not include or turn it into a new mission.
 - `IMUL/_Seams.h` currently includes a nonexistent `../_Seams/_Seams.h`.
   Root `_Seams.h` exists; repair only IMUL's integration path as needed.
-- `_Seams/Imul/00.Core.hxx` contains no IMUL assertions and uses undefined
+- `_Seams/Imul/01.Core.hxx` contains no IMUL assertions and uses undefined
   `KT_IMUL` guards. Add a real `CRABSTK_IMUL` seam and remove these IMUL-local
   stale guards; do not launch another repo-wide branding migration.
-- Root `_Package.hxx` currently has no IMUL implementation rollup.
+- Root `_Seams.hxx` currently has no IMUL implementation rollup.
 - `_Seams/_Config.h` unconditionally selects `CRABS_STACK`. A bare
   `-DSEAM=...` is not sufficient: that header replaces the command-line value.
   Add a narrow opt-in configuration/test entrypoint that actually executes
@@ -109,7 +109,7 @@ bounded storage; return status codes for errors and exhaustion.
 `.h` is declarations; `.hpp` is templates only when needed; `.hxx` is single-TU
 implementation. NO `.inl` and NO implementation `.hxx` includes from public
 headers. New module APIs use a scoped IMUL namespace under the parent-required
-`namespace _`; preserve the existing `CT::IMUL::Core` seam entrypoint as a thin
+`namespace CTK`; preserve the existing `CTK::IMUL::Core` seam entrypoint as a thin
 compatibility test bridge rather than migrating unrelated namespaces. Macro
 names for this project are `CRABSTK_*`, never `KABUKI_*` or new `KT_*`.
 Keep 2-space indentation, short functions, and source-backed data over cleverness.
@@ -120,7 +120,7 @@ The names below are PROPOSED new files, not pre-existing APIs:
 - Start with bounded records/status/context/source spans there. Split helpers
   into `Time.h/.hxx` or `Workspace.h/.hxx` only if genuinely needed; avoid a
   framework or one-file-per-token design.
-- Add `IMUL/_Package.hxx` and its root implementation-rollup inclusion.
+- Add `IMUL/_Seams.hxx` and its root implementation-rollup inclusion.
 - Add numbered `_Seams/Imul/` test headers, wired through its existing Core.
 - Add a standalone single-TU CLI, proposed `_Tools/IMUL.hxx`, with an isolated
   config entrypoint if needed. Its executable implements Compiler.md's `imul`

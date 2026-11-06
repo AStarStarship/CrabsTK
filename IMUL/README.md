@@ -20,7 +20,7 @@ The older milestones below are preserved as history, not 0.1 requirements.
 
 ### Status
 
-Currently, there is no code and I've just been writing IMUL on paper, which is **REALLY** useful because I know exactly what issues every part of my notes on Crabs and CT are about.
+Currently, there is no code and I've just been writing IMUL on paper, which is **REALLY** useful because I know exactly what issues every part of my notes on Crabs and CTK are about.
 
 ### Milestones
 
