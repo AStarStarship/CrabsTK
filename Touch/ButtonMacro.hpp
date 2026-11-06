@@ -1,9 +1,9 @@
 // Copyright AStarship <https://astarship.net>.
 #pragma once
-#include "_Config.h"
-#if SEAM >= CRABSTK_TOUCH_CORE
-#ifndef CRABSTK_TOUCH_BUTTONMACRO_DECL_DECL
-#define CRABSTK_TOUCH_BUTTONMACRO_DECL_DECL
+#include <_Config.h>
+#if _Seam >= _CrabsTKTouchCore
+#ifndef _CrabsTKTouchButtonMacroH
+#define _CrabsTKTouchButtonMacroH
 
 #include "Button.hpp"
 #include "ButtonMidi.hpp"
@@ -11,7 +11,8 @@
 #include "ButtonDMX.hpp"
 #include "ControlDMX.hpp"
 #include "Param.hpp"
-namespace _ {
+namespace CTK {
+namespace Touch {
 
 /* Parameter<ISC> and Button that can trigger multiple events.
     Controls are stored as pointers in a linear linked list to optimize for
@@ -21,7 +22,7 @@ class LIB_MEMBER ButtonMacro : public Parameter<ISC>, public Button {
  public:
   /* Default constructor creates a ButtonMacro with no controls.
       A ButtonMacro without any controls triggers system functions only.*/
-  ButtonMacro(const const CHR* name = "")
+  ButtonMacro(const CHR* name = "")
     : Parameter<ISC> (Parameter<ISC>::ButtonMacro, label, 0, 0, 0, 0, 0),
     control_count_ (0),
     controls (nullptr) {
@@ -149,7 +150,7 @@ class LIB_MEMBER ButtonMacro : public Parameter<ISC>, public Button {
 
   /* Sets the label to the new label.
   @return Nil upon success or an error AString upon failure. */
-  const CHA* SetLabel(const const CHR* new_label) override {
+  const CHA* SetLabel(const CHR* new_label) override {
     return label_.Set (new_label);
   }
 
@@ -237,6 +238,7 @@ class LIB_MEMBER ButtonMacro : public Parameter<ISC>, public Button {
   }
 };
 
-}  //< namespace _
-#endif
-#endif
+}  // namespace Touch
+}  // namespace CTK
+#endif  //< _Seam >= _CrabsTKTouchCore
+#endif  //< _CrabsTKTouchButtonMacroH

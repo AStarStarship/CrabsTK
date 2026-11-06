@@ -1,10 +1,11 @@
 // Copyright AStarship <https://astarship.net>.
 #pragma once
-#ifndef CRABSTK_TOUCH_HMICOMPONENT_DECL_DECL
-#define CRABSTK_TOUCH_HMICOMPONENT_DECL_DECL
-#include "_Config.h"
-#if SEAM >= CRABSTK_TOUCH_CORE
-namespace _ {
+#ifndef _CrabsTKTouchHMIComponentHPP
+#define _CrabsTKTouchHMIComponentHPP
+#include <_Config.h>
+#if _Seam >= _CrabsTKTouchCore
+namespace CTK {
+namespace Touch {
 
 typedef enum {
   HMITypeMIDI = 0,
@@ -107,6 +108,7 @@ class LIB_MEMBER HMIComponent {
       type_;           //< Type of HMI component.
   const CHA* label_;  //< This object's text label.
 };                     //< class HMIComponent
-}  //< namespace _
-#endif 
-#endif
+}  // namespace Touch
+}  // namespace CTK
+#endif  //< _Seam >= _CrabsTKTouchCore
+#endif  //< _CrabsTKTouchHMIComponentHPP

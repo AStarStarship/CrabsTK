@@ -4,7 +4,7 @@
 #define CRABSTK_WHO_GLOBAL_H
 /* Global Who configuration values. Override before including _Config.h or
 @link _Seams.h to tune the Who API for your deployment. */
-#include "_Config.h"
+#include <_Config.h>
 /* Default max sessions the ASessionTable preallocates. */
 #ifndef CRABSTK_WHO_SESSION_TOTAL_DEFAULT
 #define CRABSTK_WHO_SESSION_TOTAL_DEFAULT 1024

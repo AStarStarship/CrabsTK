@@ -1,16 +1,16 @@
 // Copyright AStarship <https://astarship.net>.
 #pragma once
-#include "_Config.h"
-#ifndef CRABSTK_CODE_LEXER_H
-#define CRABSTK_CODE_LEXER_H
+#include <_Config.h>
+#ifndef _CrabsTKCodeLexer_H
+#define _CrabsTKCodeLexer_H
+namespace CTK {
+namespace Code {
 
 /* CrabsTK Code Lexer — in-house C++ lexer on the no-stdlib type system.
 Token taxonomy is derived from Clang's TokenKinds.def (BSD license,
 see LICENSE.Clang). This is the first stage of the Chimera+ tooling
 pipeline: bytes in, token stream out. No allocation, no std::, no stb.
 The Stripper, Fitter, and (later) LSP consume the token stream. */
-
-namespace _ {
 
 /* Token kinds. Values are stable — once assigned, never renumbered.
 The Fitter and LSP depend on these values. New kinds are appended
@@ -157,5 +157,6 @@ const CHA* CodeTokenSpelling(IUB kind);
 Returns a static string, never null. */
 const CHA* CodeTokenName(IUB kind);
 
-}  //< namespace _
+}  //< namespace Code
+}  //< namespace CTK
 #endif

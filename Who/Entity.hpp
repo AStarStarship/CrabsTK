@@ -1,11 +1,12 @@
 // Copyright AStarship <https://astarship.net>.
 #pragma once
-#include "_Config.h"
-#if SEAM >= CRABSTK_WHO_CORE
-#ifndef CRABSTK_WHO_ENTITY_DECL_DECL
-#define CRABSTK_WHO_ENTITY_DECL_DECL
+#include <_Config.h>
+#if _Seam >= _CrabsTKWhoCore
+#ifndef _CrabsTKWhoEntityHPP
+#define _CrabsTKWhoEntityHPP
 #include "Profile.hpp"
-namespace _ {
+namespace CTK {
+namespace Who {
 
 /* A entity with contact information.
 @todo Attach an image URL.
@@ -16,25 +17,25 @@ class TEntity {
   TEntity() {}
 
   /* Gets the entity first name. */
-  const const CHR* GetFirstName() { return *first_name_; }
+  const CHR* GetFirstName() { return *first_name_; }
 
   /* Attempts to set the name to the one given AString. */
-  void SetFirstName(const const CHR* AString) {
+  void SetFirstName(const CHR* AString) {
     delete first_name_;
     first_name_ = StringClone (AString);
   }
 
   /* Gets the entity last name. */
-  const const CHR* GetLastName() { return *last_name_; }
+  const CHR* GetLastName() { return *last_name_; }
 
   /* Attempts to set the last name to the given AString. */
-  void SetLastName(const const CHR* AString) {
+  void SetLastName(const CHR* AString) {
     delete last_name_;
     last_name_ = StringClone (AString);
   }
 
   /* Returns true if this entity contains the search query. */
-  BOL Query(const const CHR* query) {
+  BOL Query(const CHR* query) {
     /*
     for_each (tags.begin (), tags.end (), [](CHA& AString(
     {
@@ -83,6 +84,7 @@ class TEntity {
       notes_;             //< An array of notes about the entity.
 };
 
-}       //< namespace _
-#endif
-#endif
+}  // namespace Who
+}  // namespace CTK
+#endif  //< _Seam >= _CrabsTKWhoCore
+#endif  //< _CrabsTKWhoEntityHPP

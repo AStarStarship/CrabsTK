@@ -1,11 +1,12 @@
 // Copyright AStarship <https://astarship.net>.
 #pragma once
-#ifndef CRABSTK_TOUCH_TAGLIBRARY_DECL_DECL
-#define CRABSTK_TOUCH_TAGLIBRARY_DECL_DECL
-#include "_Config.h"
-#if SEAM >= CRABSTK_TOUCH_CORE
+#ifndef _CrabsTKTouchTagLibraryHPP
+#define _CrabsTKTouchTagLibraryHPP
+#include <_Config.h>
+#if _Seam >= _CrabsTKTouchCore
 #include "Tag.hpp"
-namespace _ {
+namespace CTK {
+namespace Touch {
 
 /* A container of Strings sorted alphabetically.
 This object owns the memory for the Strings. Each time a patch is added,
@@ -45,6 +46,7 @@ class TagLibrary {
  private:
   TArray<Tag*> tags_;  //< Collection of tag Strings.
 };
-}       //< namespace _
-#endif
-#endif
+}  // namespace Touch
+}  // namespace CTK
+#endif  //< _Seam >= _CrabsTKTouchCore
+#endif  //< _CrabsTKTouchTagLibraryHPP

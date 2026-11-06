@@ -1,13 +1,13 @@
 // Copyright AStarship <https://astarship.net>.
 #pragma once
-#ifndef CRABSTK_WHO_SESSIONTABLE_HPP
-#define CRABSTK_WHO_SESSIONTABLE_HPP
-#include "_Config.h"
-#if SEAM >= CRABSTK_WHO_CORE
+#ifndef _CrabsTKWhoSessionTableHPP
+#define _CrabsTKWhoSessionTableHPP
+#include <_Config.h>
+#if _Seam >= _CrabsTKWhoCore
 #include "TSession.hpp"
 #include <ASCIICrabs/Array.hpp>
-#include <cstdlib>
-namespace _ {
+namespace CTK {
+namespace Who {
 
 /* A lock-free (single-writer) open-addressing hash table of TSession.
 This is the hot path of an ultra-high volume chat server:
@@ -53,7 +53,7 @@ struct ASessionTable {
         mask_(src.mask_),
         count_(src.count_),
         origin_(src.origin_) {
-    src.origin_ = NILP;
+    src.origin_ = _NilP;
     src.total_ = 0;
     src.mask_ = 0;
     src.count_ = 0;
@@ -94,17 +94,17 @@ struct ASessionTable {
   /* Finds the session with the given handle.
   @param handle UTF-8 handle string.
   @param length Byte length of handle (pass -1 to compute).
-  @return Pointer to the TSession, or NILP if not found.
+  @return Pointer to the TSession, or _NilP if not found.
   @note Free slots are tombstones, not terminators: a key inserted after a
         tombstone in its probe chain must still be findable. We stop only
         after a full circuit (the table is kept < 70% full, so this is bounded
         and there is always a Free slot to end the circuit). */
   TSession* Find(const CHA* handle, IUB length = (IUB)-1) const {
-    if (!handle) return NILP;
+    if (!handle) return _NilP;
     if (length == (IUB)-1) {
       length = 0;
       while (length < TSession::HandleMax && handle[length]) ++length;
-      if (length == 0) return NILP;
+      if (length == 0) return _NilP;
     }
     IUC hash = FNV1a(handle, length);
     IUC probe = hash & mask_;
@@ -117,19 +117,19 @@ struct ASessionTable {
       }
       probe = (probe + 1) & mask_;
     }
-    return NILP;  // full circuit: not present.
+    return _NilP;  // full circuit: not present.
   }
 
   /* Finds the session by uid (linear scan; use Find(handle) on the hot path).
-  @return Pointer to the TSession, or NILP if not found. */
+  @return Pointer to the TSession, or _NilP if not found. */
   TSession* FindUID(IUD uid) const {
-    if (uid == 0) return NILP;
+    if (uid == 0) return _NilP;
     for (IUC i = 0; i < total_; ++i) {
       const TSession* session = &Slots()[i];
       if (!session->IsFree() && session->uid_ == uid)
         return const_cast<TSession*>(session);
     }
-    return NILP;
+    return _NilP;
   }
 
   /* Inserts a new session with the given handle.
@@ -138,15 +138,15 @@ struct ASessionTable {
   @param length Byte length (pass -1 to compute).
   @param uid    The unique session id (from TUIDAssigner).
   @param room   The room (channel) index.
-  @return Pointer to the new TSession, or NILP if the handle already exists
+  @return Pointer to the new TSession, or _NilP if the handle already exists
           or the table is full. */
   TSession* Insert(const CHA* handle, IUB length, IUD uid, IUC room = 0) {
-    if (!handle) return NILP;
+    if (!handle) return _NilP;
     if (length == (IUB)-1) {
       length = 0;
       while (length < TSession::HandleMax && handle[length]) ++length;
     }
-    if (length == 0 || length >= TSession::HandleMax) return NILP;
+    if (length == 0 || length >= TSession::HandleMax) return _NilP;
     /* Reject duplicates: find first. */
     IUC hash = FNV1a(handle, length);
     IUC probe = hash & mask_;
@@ -160,11 +160,11 @@ struct ASessionTable {
       } else if (session->handle_ == hash &&
                  session->HandleLength() == length &&
                  ::memcmp(session->name_, handle, length) == 0) {
-        return NILP;  // duplicate handle.
+        return _NilP;  // duplicate handle.
       }
       probe = (probe + 1) & mask_;
     }
-    if (free_probe == (IUC)-1) return NILP;  // table full: caller must Grow.
+    if (free_probe == (IUC)-1) return _NilP;  // table full: caller must Grow.
     TSession* session = &Slots()[free_probe];
     session->uid_ = uid;
     session->slot_ = free_probe;
@@ -282,6 +282,7 @@ struct ASessionTable {
   IUC count_;         //< Occupied slot count.
 };                     //< struct ASessionTable
 
-}  //< namespace _
-#endif
-#endif
+}  // namespace Who
+}  // namespace CTK
+#endif  //< _Seam >= _CrabsTKWhoCore
+#endif  //< _CrabsTKWhoSessionTableHPP

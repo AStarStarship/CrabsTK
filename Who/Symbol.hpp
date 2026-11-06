@@ -1,10 +1,11 @@
 // Copyright AStarship <https://astarship.net>.
 #pragma once
-#ifndef CRABSTK_WHO_SYMBOL_DECL_DECL
-#define CRABSTK_WHO_SYMBOL_DECL_DECL
-#include "_Config.h"
-#if SEAM >= CRABSTK_WHO_CORE
-namespace _ {
+#ifndef _CrabsTKWhoSymbolHPP
+#define _CrabsTKWhoSymbolHPP
+#include <_Config.h>
+#if _Seam >= _CrabsTKWhoCore
+namespace CTK {
+namespace Who {
 
 /* Used for settings rules to text grammar.
 Useful for rules for passwords. */
@@ -65,7 +66,7 @@ class TSymbol {
   void Clone(const Word* grammar);
 
   /* Verifies the given AString to see if it has proper grammar. */
-  BOL IsValid(const const CHR* AString) {
+  BOL IsValid(const CHR* AString) {
     /*
     ISC StringLength = StringLength (thisString);
 
@@ -102,7 +103,7 @@ class TSymbol {
     return true;
   }
 
-  void SetFormat (const const CHR* format) {
+  void SetFormat (const CHR* format) {
     /*if (!format == nullptr) return;
     if (!format_ == nullptr) return;
     delete format_;
@@ -116,7 +117,7 @@ class TSymbol {
   @pre thisChar  must be > 0.
   @param thisChar The illegal CHA to add.
   */
-  BOL MakeIllegal(CHA thisChar, const const CHR* descString) {
+  BOL MakeIllegal(CHA thisChar, const CHR* descString) {
     // if (!isprint (thisChar))
     //   return false;
     return true;
@@ -127,7 +128,7 @@ class TSymbol {
   @param startIndex The starting ASCII CHA index.
   @param stopIndex  The stopping ASCII CHA index. */
   BOL MakeIllegal(ISC startIndex, ISC stopIndex, 
-                   const const CHR* descString) {
+                   const CHR* descString) {
     return true;
   }
 
@@ -139,7 +140,7 @@ class TSymbol {
   @param stop_index  The stopping ASCII CHA index.
   @param num_instances  The number of times the symbol range must occur. */
   BOL MakeMandatory(ISC startIndex, ISC stopIndex, ISC numInstances,
-                     const const CHR* descString) {
+                     const CHR* descString) {
     return true;
   }
 
@@ -164,7 +165,7 @@ class TSymbol {
     Range<char_t> mustStartWithChars; //< A 2 column table of ints that
     represents the range (AString) of chars that the symbol must start with.
                                  
-    const const CHR* illegal_chars_desc,     
+    const CHR* illegal_chars_desc,     
     //< An array of Strings that describes what illegal CHA (AString) are.                               
     mandatory_chars_desc,   //< An array of
     Strings that describes what the mandatory CHA (AString) are.
@@ -173,6 +174,7 @@ class TSymbol {
     */
 };
 
-}       //< namespace _
-#endif
-#endif
+}  // namespace Who
+}  // namespace CTK
+#endif  //< _Seam >= _CrabsTKWhoCore
+#endif  //< _CrabsTKWhoSymbolHPP

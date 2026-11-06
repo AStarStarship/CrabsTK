@@ -1,11 +1,12 @@
 // Copyright AStarship <https://astarship.net>.
 #pragma once
-#ifndef CRABSTK_TOUCH_LIBRARY_DECL_DECL
-#define CRABSTK_TOUCH_LIBRARY_DECL_DECL
-#include "_Config.h"
-#if SEAM >= CRABSTK_TOUCH_CORE
+#ifndef _CrabsTKTouchLibraryHPP
+#define _CrabsTKTouchLibraryHPP
+#include <_Config.h>
+#if _Seam >= _CrabsTKTouchCore
 #include "Tag.hpp"
-namespace _ {
+namespace CTK {
+namespace Touch {
 
 /* The main library of Hits.
 This class owns the memory for the patches.
@@ -18,7 +19,7 @@ class Library {
   /* Adds a patch to the library. */
   BOL AddHit(Hit& hit) {
     patches.Add(hit);
-    const const CHR* category = hit.GetCategory();
+    const CHR* category = hit.GetCategory();
     for (ISC i = 0; i < tags.count; ++i)
       if (tags[i] == category) return true;
     tags.Add(category);
@@ -97,7 +98,7 @@ class Library {
 
  private:
   uint64_t num_uids;                   //< Total number of UIDs.
-  _::ADic<const const CHR*, Hit> patches;  //< List of patches.
+  _::ADic<const CHR*, Hit> patches;  //< List of patches.
   TArray<CHA> catagories,        //< The list of categories.
       tags_;                            //< List of tag Strings.
 
@@ -108,6 +109,7 @@ class Library {
   ISC InitHitCount() { return 0; }
 };
 
-}       //< namespace _
-#endif
-#endif
+}  // namespace Touch
+}  // namespace CTK
+#endif  //< _Seam >= _CrabsTKTouchCore
+#endif  //< _CrabsTKTouchLibraryHPP

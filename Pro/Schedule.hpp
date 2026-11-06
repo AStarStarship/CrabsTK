@@ -1,11 +1,12 @@
 // Copyright AStarship <https://astarship.net>.
 #pragma once
-#ifndef CRABSTK_PRO_SCHEDULE_DECL_DECL
-#define CRABSTK_PRO_SCHEDULE_DECL_DECL
-#include "_Config.h"
-#if SEAM >= CRABSTK_PRO_CORE
+#ifndef _CrabsTKProScheduleHH
+#define _CrabsTKProScheduleHH
+#include <_Config.h>
+#if _Seam >= _CrabsTKProCore
 #include "Task.hpp"
-namespace _ {
+namespace CTK {
+namespace Pro {
 
 /* A group of Task(AString) in temporal order that may repeat.
 A Schedule contains a collection of Task objects. It has a starting date,
@@ -51,7 +52,7 @@ class Schedule {
   ~Schedule () {}
 
   /* Gets the name. */
-  const const CHR* Key() { return key_; }
+  const CHR* Key() { return key_; }
 
   /* Sets the name to the new name. */
   void SetKey (const CHA* new_name) {
@@ -358,6 +359,8 @@ class Schedule {
       num_repeats_;      //< Number of times the Schedule repeats.
   TArray<Task*> tasks_;  //< Array of Task pointers.
 };
-}       //< namespace _
-#endif
-#endif
+
+}  // namespace Pro
+}  // namespace CTK
+#endif  //< _Seam >= _CrabsTKProCore
+#endif  //< _CrabsTKProScheduleHH

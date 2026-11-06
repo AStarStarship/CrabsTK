@@ -49,16 +49,16 @@ specializing in:
 ## Recent Fixes (2026-10-18)
 
 ### Include Syntax Fix
-- 171 local includes changed from `#include <_Config.h>` to `#include "_Config.h"`
+- 171 local includes changed from `#include <_Config.h>` to `#include <_Config.h>`
 - Verified: 0 remaining angle bracket local includes in both directories
 
 ### Include Order Fix
-- Moved `#include "_Seams.h"` from line 6 → end of `_ConfigHeader.h` (after `namespace _`)
-- Fixes: core types defined before _Seams.h prevents namespace _ from shadowing std
+- Moved `#include "_Seams.h"` from line 6 → end of `_ConfigHeader.h` (after `namespace CTK`)
+- Fixes: core types defined before _Seams.h prevents namespace CTK from shadowing std
 
-### StdOut Declaration
-- Added `inline COut& StdOut() { static COut c; return c; }` in `_ConfigHeader.h`
-- Ensures StdOut available when _Seams headers use it
+### RefOut Declaration
+- Added `inline COut& RefOut() { static COut c; return c; }` in `_ConfigHeader.h`
+- Ensures RefOut available when _Seams headers use it
 
 ### Verification Status
 - All verification checks passed
@@ -78,3 +78,18 @@ specializing in:
 - Values and identifiers preserved exactly as given — never "repair" malformed tokens
 - When unsure, ask for clarification rather than guess
 - "Done" means every named acceptance criterion verified — not a plausible subset
+
+## Git Protocol
+
+- **Do NOT undelete files from git.** A deleted or renamed file was done so on
+  purpose — it wasn't supposed to be there, it got merged into another file, or
+  it wasn't named correctly. Fix the current files in place; do not try to
+  rescue or restore stale files from git history (no `git checkout -- <path>`,
+  `git restore <path>`, `git show <ref>:<path>` written back to disk, or
+  `git revert` to bring a deleted path back).
+- **Only `master-agent` and the Captain may modify git.** No other agent or
+  profile may run git write operations on a tracked repo — no `git commit`,
+  `git add`, `git push`, `git reset`, `git rebase`, `git merge`, `git rm`,
+  branch creation, force-push, or PR changes. Read-only inspection
+  (`git status`, `git log`, `git diff`, `git show`, `git ls-files`) is allowed
+  for anyone.

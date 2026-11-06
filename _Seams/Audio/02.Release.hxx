@@ -1,20 +1,17 @@
 // Copyright AStarship <https://astarship.net>.
-#if SEAM >= CRABSTK_AUDIO_RELEASE
-#if SEAM == CRABSTK_AUDIO_RELEASE
+#pragma once
+#include "../_Config.h"
+namespace CTKAudioTest {
+
+inline const CHA* Release(const CHA* args) {
+#if _Seam == _CrabsTKAudioRelease
+  // The release seam runs the complete tree of every lower seam.
 #include "../_Debug.h"
 #else
 #include "../_Release.h"
 #endif
-#endif
-namespace CRTest {
-
-inline const CHA* Release(const CHA* args) {
-#if SEAM == CRABSTK_AUDIO_RELEASE
-  // The release seam is the final sown test pass: it runs the complete
-  // tree of every lower seam's checks in one pass.
-  return CrabsTests(args);
-#endif
-  return NILP;
+  return _NilP;
 }
 
-}  //< namespace CRTest
+}  //< namespace CTKAudioTest
+_NilP

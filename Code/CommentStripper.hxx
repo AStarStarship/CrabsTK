@@ -1,10 +1,8 @@
 // Copyright AStarship <https://astarship.net>.
-#include "_Config.h"
+#include <_Config.h>
 #include "CommentStripper.h"
-
-#include <cstdio>
-
-namespace _ {
+namespace CTK {
+namespace Code {
 
 /* Strips C++ comments from a source file and writes the result to stdout.
 Tabs are expanded to `tab_space_count` spaces.
@@ -82,4 +80,5 @@ ISN StripComments(const CHA* directory) {
   return 0;
 }
 
-}  //< namespace _
+}  //< namespace Code
+}  //< namespace CTK

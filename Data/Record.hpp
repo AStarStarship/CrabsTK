@@ -3,8 +3,9 @@
 #ifndef CRABSTK_DATA_RECORD_HPP
 #define CRABSTK_DATA_RECORD_HPP
 #include "Record.h"
-#if SEAM >= CRABSTK_DATA_RECORD
-namespace _ {
+#if _Seam >= _CrabsTKDataRecord
+namespace CTK {
+namespace Data {
 
 template<IUC C, IUC O, IUC A, IUC S>
 RecordStatus TRecordEncode(const TRecord<C, O, A, S>& source, IUA* output,
@@ -128,6 +129,7 @@ RecordStatus TRecordDecode(const IUA* input, IUC bytes,
   return RecordOK;
 }
 
-}  //< namespace _
-#endif
-#endif
+}  //< namespace Data
+}  //< namespace CTK
+#endif  //< _Seam >= _CrabsTKDataRecord
+#endif  //< _CrabsTKDataRecordH

@@ -1,20 +1,21 @@
 // Copyright AStarship <https://astarship.net>.
-#if SEAM >= CRABSTK_IMAGE_RELEASE
-#if SEAM == CRABSTK_IMAGE_RELEASE
+#pragma once
+#ifndef _CrabsTKImageRelease
+#define _CrabsTKImageRelease
+#include "../_Config.h"
+namespace CTKImageTest {
+using namespace ::_;
+using namespace ::CTK;
+
+inline const CHA* Release(const CHA* args) {
+#if _Seam == _CrabsTKImageRelease
+  // The release seam runs the complete tree of every lower seam.
 #include "../_Debug.h"
 #else
 #include "../_Release.h"
 #endif
-#endif
-namespace CRTest {
-
-inline const CHA* Release(const CHA* args) {
-#if SEAM == CRABSTK_IMAGE_RELEASE
-  // The release seam is the final sown test pass: it runs the complete
-  // tree of every lower seam's checks in one pass.
-  return CrabsTests(args);
-#endif
-  return NILP;
+  return _NilP;
 }
 
-}  //< namespace CRTest
+}  //< namespace CTKImageTest
+#endif  //< _CrabsTKImageRelease

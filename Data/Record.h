@@ -1,11 +1,11 @@
 // Copyright AStarship <https://astarship.net>.
 #pragma once
-#ifndef CRABSTK_DATA_RECORD_DECL
-#define CRABSTK_DATA_RECORD_DECL
-#include "_Config.h"
-#include "_Seams.h"
-#if SEAM >= CRABSTK_DATA_RECORD
-namespace _ {
+#ifndef _CrabsTKDataRecordH
+#define _CrabsTKDataRecordH
+#include <_Config.h>
+#if _Seam >= _CrabsTKDataRecord
+namespace CTK {
+namespace Data {
 
 enum RecordStatus : ISC {
   RecordOK = 0,
@@ -94,6 +94,7 @@ FPC Float(IUC bits);
 IUC Checksum(const IUA* data, IUC bytes);
 }  //< namespace RecordDetail
 
-}  //< namespace _
-#endif
-#endif
+}  //< namespace Data
+}  //< namespace CTK
+#endif  //< _Seam >= _CrabsTKDataRecord
+#endif  //< _CrabsTKDataRecordH

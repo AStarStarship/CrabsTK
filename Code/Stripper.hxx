@@ -1,8 +1,8 @@
 // Copyright AStarship <https://astarship.net>.
-#include "_Config.h"
+#include <_Config.h>
 #include "Stripper.h"
-
-namespace _ {
+namespace CTK {
+namespace Code {
 
 ISN CodeCountNonComments(const TCodeToken* tokens, ISN token_count) {
   if (IsError(tokens) || token_count <= 0) return 0;
@@ -68,4 +68,5 @@ ISN CodeStripComments(const TCodeToken* tokens, ISN token_count,
   return 0;
 }
 
-}  //< namespace _
+}  //< namespace Code
+}  //< namespace CTK

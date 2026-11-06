@@ -1,11 +1,12 @@
 // Copyright AStarship <https://astarship.net>.
 #pragma once
-#include "_Config.h"
-#if SEAM >= CRABSTK_TOUCH_CORE
-#ifndef CRABSTK_TOUCH_DMXCONTROL_DECL_DECL
-#define CRABSTK_TOUCH_DMXCONTROL_DECL_DECL
+#include <_Config.h>
+#if _Seam >= _CrabsTKTouchCore
+#ifndef _CrabsTKTouchDMXControlHPP
+#define _CrabsTKTouchDMXControlHPP
 #include "Param.hpp"
-namespace _ {
+namespace CTK {
+namespace Touch {
 
 /* A DMX Control.
  */
@@ -37,6 +38,7 @@ class LIB_MEMBER ControlDMX : public Parameter<ISC> {
   Printer& Print(Printer& o) const;
 
 };  //< class ControlDMX
-}  //< namespace _
-#endif
-#endif
+}  // namespace Touch
+}  // namespace CTK
+#endif  //< _Seam >= _CrabsTKTouchCore
+#endif  //< _CrabsTKTouchDMXControlHPP

@@ -1,11 +1,12 @@
 // Copyright AStarship <https://astarship.net>.
 #pragma once
-#ifndef CRABSTK_TOUCH_MIDICONTROL_DECL_DECL
-#define CRABSTK_TOUCH_MIDICONTROL_DECL_DECL
-#include "_Config.h"
-#if SEAM >= CRABSTK_TOUCH_CORE
+#ifndef _CrabsTKTouchMidiControlHPP
+#define _CrabsTKTouchMidiControlHPP
+#include <_Config.h>
+#if _Seam >= _CrabsTKTouchCore
 #include "Param.hpp"
-namespace _ {
+namespace CTK {
+namespace Touch {
 
 /* A controller for MIDI signals. */
 class LIB_MEMBER ControlMidi : public Parameter<ISC> {
@@ -15,7 +16,7 @@ class LIB_MEMBER ControlMidi : public Parameter<ISC> {
   };
 
   /* Constructor. */
-  ControlMidi(const const CHR* label = "", ISC cc = 0, ISC channel = 0,
+  ControlMidi(const CHR* label = "", ISC cc = 0, ISC channel = 0,
               ISC init_value = 0, ISC newMinValue = 0, ISC min_value = 127,
               ISC word_size = 7, ISC type = Parameter<ISC>::ControlMidi)
     : Parameter<ISC> (type, label, channel, init_value, min_value, max_value,
@@ -86,9 +87,10 @@ class LIB_MEMBER ControlMidi : public Parameter<ISC> {
   }
 
  private:
-  ISB cc_;  //< Control change (CC) parameter.
+  ISC cc_;  //< Control change (CC) parameter.
 };
 
-}  //< namespace _
-#endif
-#endif
+}  // namespace Touch
+}  // namespace CTK
+#endif  //< _Seam >= _CrabsTKTouchCore
+#endif  //< _CrabsTKTouchMidiControlHPP

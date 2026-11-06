@@ -15,4 +15,4 @@
 #endif
 #endif
 
-#endif // _IPC_DEBUG_H
+#endif  //< _IPC_DEBUG_H

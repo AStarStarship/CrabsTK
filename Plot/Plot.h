@@ -1,12 +1,11 @@
 // Copyright AStarship <https://astarship.net>.
 #pragma once
-#ifndef CRABSTK_PLOT_PLOT_DECL
-#define CRABSTK_PLOT_PLOT_DECL
-#include "_Config.h"
+#ifndef _CrabsTKPlotPlotH
+#define _CrabsTKPlotPlotH
+#include <_Config.h>
 #include "../Image/Image.h"
 #include "../Image/IDraw.h"
-
-namespace _ {
+namespace CTK {
 namespace Plot {
 
 using ImageDraw::TColor;
@@ -197,5 +196,5 @@ ISN DrawText(TFigure& fig, TAxis& ax, const CHA* text, ISN px, ISN py,
 void AutoFit(TAxis& ax, const TSeries2D& s);
 
 }  // namespace Plot
-}  // namespace _
-#endif
+}  // namespace CTK
+#endif  //< _CrabsTKPlotPlotH

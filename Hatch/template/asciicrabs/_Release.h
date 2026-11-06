@@ -5,6 +5,6 @@
 //
 #define YOUR_MOM
 
-#if SEAM <= 0
+#if _Seam <= 0
 #define CRABS_FAIL D_FAIL
 #endif

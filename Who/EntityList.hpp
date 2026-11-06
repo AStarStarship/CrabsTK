@@ -1,11 +1,12 @@
 // Copyright AStarship <https://astarship.net>.
 #pragma once
-#include "_Config.h"
-#if SEAM >= CRABSTK_WHO_CORE
-#ifndef CRABSTK_WHO_ENTITYLIST_DECL_DECL
-#define CRABSTK_WHO_ENTITYLIST_DECL_DECL
+#include <_Config.h>
+#if _Seam >= _CrabsTKWhoCore
+#ifndef _CrabsTKWhoEntityListHPP
+#define _CrabsTKWhoEntityListHPP
 #include "Entity.hpp"
-namespace _ {
+namespace CTK {
+namespace Who {
 
 /* A List of entities.
 This is essentially a contact list. */
@@ -55,6 +56,7 @@ class TEntityList {
   TArray<TEntity*> entities_;  //< The list of entities.
 };
 
-}       //< namespace _
-#endif
-#endif
+}  // namespace Who
+}  // namespace CTK
+#endif  //< _Seam >= _CrabsTKWhoCore
+#endif  //< _CrabsTKWhoEntityListHPP

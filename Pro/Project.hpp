@@ -1,12 +1,13 @@
 // Copyright AStarship <https://astarship.net>.
 #pragma once
-#ifndef CRABSTK_PRO_PROJECT
-#define CRABSTK_PRO_PROJECT
-#include "_Config.h"
-#if SEAM >= CRABSTK_PRO
+#ifndef _CrabsTKProProject
+#define _CrabsTKProProject
+#include <_Config.h>
+#if _Seam >= _CrabsTKProCore
 #include "Schedule.hpp"
 #include "Task.hpp"
-namespace _ {
+namespace CTK {
+namespace Pro {
 
 /* A tree-like Project in the system that can be scheduled.
 An Project can be a person or virtual entity. An Project is identified by
@@ -65,7 +66,7 @@ class Project : public Operand {
   ~Project() {}
 
   /* Gets the key. */
-  const const CHR* Key() { return key_; }
+  const CHR* Key() { return key_; }
 
   /* Sets the key. */
   void StealKey(CHA* new_key);
@@ -74,7 +75,7 @@ class Project : public Operand {
   void SetKey (const CHA* new_key) { key_.Set (new_key); }
 
   /* Gets the readme. */
-  const const CHR* GetReadMe() { return readme_; }
+  const CHR* GetReadMe() { return readme_; }
 
   /* Sets the readme to a clone of the new_readme and deletes the old one.. */
   void SetReadme (const CHA* new_readme) {
@@ -294,7 +295,7 @@ class Project : public Operand {
 
   /* Gets the help CHA. */
   static const CHA* GetAppHelpString() {
-    return "\n| CT.pro.Project Help:\n"
+    return "\n| CTK.pro.Project Help:\n"
       "| There are three primary classes for use:\n"
       "|\n"
       "| Task     - A general purpose todo task.\n"
@@ -398,6 +399,7 @@ class Project : public Operand {
   TStack<Schedule> projects_; //< Child projects.
 };
 
-}  //< namespace _
-#endif
-#endif
+}  // namespace Pro
+}  // namespace CTK
+#endif  //< _Seam >= _CrabsTKProCore
+#endif  //< _CrabsTKProProject

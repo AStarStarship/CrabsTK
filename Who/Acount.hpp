@@ -1,23 +1,25 @@
 // Copyright AStarship <https://astarship.net>.
 #pragma once
-#ifndef CRABSTK_ID_ACCOUNT_DECL_DECL
-#define CRABSTK_ID_ACCOUNT_DECL_DECL
-#include "_Config.h"
-#if SEAM >= CRABSTK_WHO_CORE
+#ifndef _CrabsTKWhoAccountHPP
+#define _CrabsTKWhoAccountHPP
+#include <_Config.h>
+#if _Seam >= _CrabsTKWhoCore
 #include "Handle.hpp"
 #include "Password.hpp"
 #include "Roster.hpp"
 #include "User.hpp"
-namespace _ {
+namespace CTK {
+namespace Who {
+
 /* An account with a username and password.
 */
 class TAccount {
  public:
   /* Constructs an Account with the given CHA. */
-  TAccount(const const CHR* username) : name_ (username) {}
+  TAccount(const CHR* username) : name_ (username) {}
 
   /* Constructs an account from the given CHA and password. */
-  TAccount(const const CHR* username, const const CHR* password) 
+  TAccount(const CHR* username, const CHR* password) 
       : name_ (username), password_ (password) {
     // role = new Role ();
   }
@@ -41,16 +43,16 @@ class TAccount {
   }
 
   /* Gets a reference to the name.  */
-  const const CHR* Name() { return name_.GetKey (); }
+  const CHR* Name() { return name_.GetKey (); }
 
   /* Sets the name to the CHA. */
-  BOL SetName(const const CHR* AString) { return name_.SetKey (AString); }
+  BOL SetName(const CHR* AString) { return name_.SetKey (AString); }
 
   /* Returns true if this account requires a password. */
   BOL RequiresPassword() { return password_.Equals (""); }
 
   /* Sets the password to the new CHA. */
-  void SetPassword(const const CHR* AString) { password_.SetKey (AString); }
+  void SetPassword(const CHR* AString) { password_.SetKey (AString); }
 
   /* Gets a reverence to the user list. */
   TRoster& Users() { return users_; }
@@ -72,6 +74,7 @@ class TAccount {
   TRoster users_;       //< Account Roster describes User Roles.
 };
 
-}       //< namespace _
-#endif
-#endif
+}  // namespace Who
+}  // namespace CTK
+#endif  //< _Seam >= _CrabsTKWhoCore
+#endif  //< _CrabsTKWhoAccountHPP

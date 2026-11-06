@@ -13,7 +13,7 @@ C++ programs.
 
 ## Seam
 
-`CRABSTK_ENV_CORE` / `CRABSTK_ENV_VAR` = 61 in `_Seams.h`.
+`_CrabsTKEnvCore` / `CRABSTK_ENV_VAR` = 61 in `_Seams.h`.
 
 ## API
 

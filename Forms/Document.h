@@ -1,9 +1,11 @@
 // Copyright AStarship <https://astarship.net>.
 #pragma once
-#include "_Config.h"
-#ifndef CRABSTK_DOCUMENT_DECL
-#define CRABSTK_DOCUMENT_DECL
-namespace _ {
+#include <_Config.h>
+#ifndef CRABSTK_DOCUMENTH
+#define CRABSTK_DOCUMENTH
+namespace CTK {
+namespace Forms {
+
 class Document {
  public:
   Document();
@@ -15,5 +17,7 @@ class Document {
     return p << "Document";
   }
 };
-}  //< namespace _
+
+}  //< namespace Forms
+}  //< namespace CTK
 #endif

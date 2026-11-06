@@ -1,20 +1,15 @@
 // Copyright AStarship <https://astarship.net>.
 #pragma once
-#ifndef CRABSTK_WHO_PASSWORD_DECL_DECL
-#define CRABSTK_WHO_PASSWORD_DECL_DECL
-#include "_Config.h"
-#if SEAM >= CRABSTK_WHO_CORE
+#ifndef _CrabsTKWhoPasswordHPP
+#define _CrabsTKWhoPasswordHPP
+#include <_Config.h>
+#if _Seam >= _CrabsTKWhoCore
 #include "Authenticator.hpp"
 #include <ASCIICrabs/Random.hxx>
 // Cryptographic salt generation uses the OS CSPRNG (getentropy / /dev/urandom),
 // not rand() — the ASCIICrabs Random API provides IUCRandom().
-#if defined(__linux__) || defined(__APPLE__) || defined(__unix__)
-#include <unistd.h>
-#if defined(__linux__)
-#include <sys/random.h>
-#endif
-#endif
-namespace _ {
+namespace CTK {
+namespace Who {
 
 /* Salted password KDF (PBKDF2-SHA256 style).
 The salt is a 16-byte random value generated at SetKey time via the
@@ -41,7 +36,7 @@ enum {
 /* Returns the length of the given nil-terminated CHA string. */
 inline ISN TPasswordLen(const CHA* text) {
   ISN length = 0;
-  if (text == NILP) return 0;
+  if (text == _NilP) return 0;
   while (text[length] != '\0') ++length;
   return length;
 }
@@ -243,7 +238,7 @@ inline void TPasswordSerialize(const IUA* salt, const IUA* key, CHA* out) {
 salt and key.
 @return true if the string parses, false on malformed input. */
 inline BOL TPasswordParse(const CHA* stored, IUA* salt, IUA* key) {
-  if (stored == NILP) return false;
+  if (stored == _NilP) return false;
   if (stored[0] != 'P' || stored[1] != 'B' || stored[2] != 'K' ||
       stored[3] != '2' || stored[4] != '$') {
     return false;
@@ -320,9 +315,9 @@ class TPassword {
    * failure. A fresh random salt is generated and the key is derived via
    * PBKDF2-SHA256. */
   BOL SetKey(const CHA* password) {
-    if (password == NILP) return false;
+    if (password == _NilP) return false;
     if (TPasswordLen(password) > MaxLength) return false;
-    if (auth_ != NILP && auth_->PasswordInvalid (password) != NILP) {
+    if (auth_ != _NilP && auth_->PasswordInvalid (password) != _NilP) {
       return false;
     }
     IUA salt[PasswordSaltBytes];
@@ -336,7 +331,7 @@ class TPassword {
 
   /* Gets true if the given password is valid (length check only). */
   static BOL IsValid(const CHA* password) {
-    if (password == NILP) return false;
+    if (password == _NilP) return false;
     return TPasswordLen(password) <= MaxLength;
   }
 
@@ -345,7 +340,7 @@ class TPassword {
    * compared in constant time. Legacy plaintext keys use a constant-time
    * memcmp for backward compatibility. */
   BOL Equals (const CHA* key) {
-    if (key == NILP) return false;
+    if (key == _NilP) return false;
     if (!salted_) {
       return TPasswordConstantTimeEquals(
           (const IUA*)stored_, (const IUA*)key,
@@ -388,6 +383,7 @@ class TPassword {
 /* Definition of the default password (empty string). */
 const CHA TPassword::DefaultPassword[] = "";
 
-}       //< namespace _
-#endif
-#endif
+}  // namespace Who
+}  // namespace CTK
+#endif  //< _Seam >= _CrabsTKWhoCore
+#endif  //< _CrabsTKWhoPasswordHPP

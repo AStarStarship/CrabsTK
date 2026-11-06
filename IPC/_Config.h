@@ -65,7 +65,7 @@ static_assert(sizeof(BOL) == 1 && sizeof(IUC) == 4 && sizeof(IUD) == 8 &&
               sizeof(ISW) == sizeof(void*),
               "IPC canonical widths must match ASCIICrabs");
 
-#endif // CRABSTK_IPC_LEGACY
+#endif  //< CRABSTK_IPC_LEGACY
 
 // Boolean-like constants kept for the legacy test harness.
 #ifndef YES_0
@@ -75,4 +75,4 @@ static_assert(sizeof(BOL) == 1 && sizeof(IUC) == 4 && sizeof(IUD) == 8 &&
 #define NO_0 1
 #endif
 
-#endif // CRABSTK_IPC_CONFIG_H
+#endif  //< CRABSTK_IPC_CONFIG_H

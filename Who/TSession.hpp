@@ -1,13 +1,14 @@
 // Copyright AStarship <https://astarship.net>.
 #pragma once
-#ifndef CRABSTK_WHO_SESSION_HPP
-#define CRABSTK_WHO_SESSION_HPP
-#include "_Config.h"
-#if SEAM >= CRABSTK_WHO_CORE
+#ifndef _CrabsTKWhoSessionHPP
+#define _CrabsTKWhoSessionHPP
+#include <_Config.h>
+#if _Seam >= _CrabsTKWhoCore
 #include "Global.h"
 #include <cstring>
 #include <atomic>
-namespace _ {
+namespace CTK {
+namespace Who {
 
 /* A single chat session.
 A session is the identity of one connected client. It is the lightest unit
@@ -221,8 +222,7 @@ struct TSession {
   CHA name_[HandleMax + 1];   //< UTF-8 handle, NUL-terminated.
 };                          //< struct TSession
 
-
-
-}  //< namespace _
-#endif
-#endif
+}  // namespace Who
+}  // namespace CTK
+#endif  //< _Seam >= _CrabsTKWhoCore
+#endif  //< _CrabsTKWhoSessionHPP

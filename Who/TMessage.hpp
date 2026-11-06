@@ -1,15 +1,15 @@
 // Copyright AStarship <https://astarship.net>.
 #pragma once
-#ifndef CRABSTK_WHO_MESSAGE_HPP
-#define CRABSTK_WHO_MESSAGE_HPP
-#include "_Config.h"
-#if SEAM >= CRABSTK_WHO_CORE
+#ifndef _CrabsTKWhoMessageHPP
+#define _CrabsTKWhoMessageHPP
+#include <_Config.h>
+#if _Seam >= _CrabsTKWhoCore
 #include "Global.h"
 #include "TSession.hpp"
 #include <cstring>
-#include <cstdlib>
 #include <atomic>
-namespace _ {
+namespace CTK {
+namespace Who {
 
 /* A single chat message.
 A TMessage is a POD that can be copied into a ring buffer or sent over the
@@ -111,11 +111,11 @@ struct AMessageRing {
     capacity_ = capacity < 16 ? 16 : 1;
     while (capacity_ < capacity) capacity_ <<= 1;
     mask_ = capacity_ - 1;
-    origin_ = (TMessage*)::calloc((size_t)capacity_ * sizeof(TMessage), 1);
+    origin_ = new TMessage[(size_t)capacity_]; ArrayFill(origin_, capacity_ * sizeof(TMessage));
   }
 
   ~AMessageRing() {
-    if (origin_) ::free(origin_);
+    if (origin_) { delete[] origin_; origin_ = _NilP; }
   }
 
   AMessageRing(const AMessageRing&) = delete;
@@ -223,6 +223,7 @@ struct AMessageRing {
   ::std::atomic<IUC> read_cursor_;   //< Next read position (monotonic).
 };                             //< struct AMessageRing
 
-}  //< namespace _
-#endif
-#endif
+}  // namespace Who
+}  // namespace CTK
+#endif  //< _Seam >= _CrabsTKWhoCore
+#endif  //< _CrabsTKWhoMessageHPP

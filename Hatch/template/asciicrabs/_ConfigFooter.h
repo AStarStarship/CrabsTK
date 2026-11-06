@@ -4,5 +4,5 @@
 #define _CONFIG_FOOTER_H
 #include "../../../../AStarStarship/ASCIICrabs/_ConfigFooter.h"
 
-#endif  // _CONFIG_FOOTER_H
+#endif  //< _CONFIG_FOOTER_H
 

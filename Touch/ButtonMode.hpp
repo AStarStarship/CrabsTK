@@ -1,11 +1,12 @@
 // Copyright AStarship <https://astarship.net>.
 #pragma once
-#include "_Config.h"
-#if SEAM >= CRABSTK_TOUCH_CORE
-#ifndef CRABSTK_TOUCH_MODEBUTTON_DECL_DECL
-#define CRABSTK_TOUCH_MODEBUTTON_DECL_DECL
+#include <_Config.h>
+#if _Seam >= _CrabsTKTouchCore
+#ifndef _CrabsTKTouchButtonModeHPP
+#define _CrabsTKTouchButtonModeHPP
 #include "Button.hpp"
-namespace _ {
+namespace CTK {
+namespace Touch {
 
 class LIB_MEMBER ButtonMacro;
 class LIB_MEMBER MacroEvent;
@@ -65,6 +66,8 @@ class LIB_MEMBER ModeButton : public Button {
   Widget* widget_;      //< Widget to load when pressed.
   WidgetPage* page_;  //< Last saved page for switching macros.
 };
-}  //< namespace _
-#endif
-#endif
+
+}  // namespace Touch
+}  // namespace CTK
+#endif  //< _Seam >= _CrabsTKTouchCore
+#endif  //< _CrabsTKTouchButtonModeHPP

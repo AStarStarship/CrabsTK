@@ -1,7 +1,0 @@
-# __Seams.yaml — ASCIICrabs module (CrabsTK root tree).
-# Single seam: the ASCIICrabs core-types pass. The full ASCIICrabs seam
-# table lives in the sibling package (ASCIICrabs/__Seams.yaml, legacy-flat).
-# Re-generate: python3 Hatch/SyncSeams.py __Seams.yaml
-seams:
-  - name: CRABS_CORE
-    label: "Testing ASCIICrabs core types..."

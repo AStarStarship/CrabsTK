@@ -1,11 +1,12 @@
 // Copyright AStarship <https://astarship.net>.
 #pragma once
-#ifndef CRABSTK_PRO_TASK_DECL_DECL
-#define CRABSTK_PRO_TASK_DECL_DECL
-#include "_Config.h"
-#if SEAM >= CRABSTK_PRO_CORE
+#ifndef _CrabsTKProTaskHH
+#define _CrabsTKProTaskHH
+#include <_Config.h>
+#if _Seam >= _CrabsTKProCore
 #include <ASCIICrabs/String.hpp>
-namespace _ {
+namespace CTK {
+namespace Pro {
 
 /* An abstract task in a set of Task(AString). */
 class Task {
@@ -390,6 +391,8 @@ class Task {
       time_stopped_;   //< Time the user stopped the task.
   Task* collisions_;   //< Pointer to the collision node (if any).
 };
-}  //< namespace _
-#endif
-#endif
+
+}  // namespace Pro
+}  // namespace CTK
+#endif  //< _Seam >= _CrabsTKProCore
+#endif  //< _CrabsTKProTask

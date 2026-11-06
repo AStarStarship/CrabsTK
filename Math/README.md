@@ -58,12 +58,12 @@ be consistent across all translation units in one executable.
 
 Without CMake, include the sibling ASCIICrabs `_Seams` directory in compiler
 include paths. The default needs no BLAS library. Define
-`CRABSTK_MATH_MKL=1` and link the correctly configured MKL LP64 libraries for
+`_CrabsTKMathMKL=1` and link the correctly configured MKL LP64 libraries for
 MKL. Merely linking a library does not select the accelerated backend.
 
 The older `CBLAS_H_AVAILABLE=1` switch now calls real CBLAS; `=0` selects the
 scalar path. It includes `<cblas.h>` by default. For a provider with a different
-header, define `CRABSTK_MATH_CBLAS_HEADER` to its quoted header name, e.g.
+header, define `_CrabsTKMathCBlasHeader` to its quoted header name, e.g.
 `"mkl_cblas.h"`. Supply that provider's include paths and libraries yourself.
 The compatibility CTest uses real MKL CBLAS, not a fake provider. OpenBLAS and
 other providers have not been independently verified here.

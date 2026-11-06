@@ -1,11 +1,12 @@
 // Copyright AStarship <https://astarship.net>.
 #pragma once
-#ifndef CRABSTK_TOUCH_PARAMETERSET_DECL_DECL
-#define CRABSTK_TOUCH_PARAMETERSET_DECL_DECL
-#include "_Config.h"
-#if SEAM >= CRABSTK_TOUCH_CORE
+#ifndef _CrabsTKTouchParamSetHPP
+#define _CrabsTKTouchParamSetHPP
+#include <_Config.h>
+#if _Seam >= _CrabsTKTouchCore
 #include "Param.hpp"
-namespace _ {
+namespace CTK {
+namespace Touch {
 
 /* A set of Parameter<T> that can be addressed by index.
  */
@@ -117,6 +118,7 @@ class LIB_MEMBER ParamSet {
 };
 
 
-}  //< namespace _
-#endif
-#endif
+}  // namespace Touch
+}  // namespace CTK
+#endif  //< _Seam >= _CrabsTKTouchCore
+#endif  //< _CrabsTKTouchParamSetHPP

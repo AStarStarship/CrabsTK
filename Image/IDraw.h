@@ -1,15 +1,14 @@
 // Copyright AStarship <https://astarship.net>.
 #pragma once
-#ifndef CRABSTK_IMAGE_IDRAW_DECL
-#define CRABSTK_IMAGE_IDRAW_DECL
+#ifndef CRABSTK_IMAGE_IDRAWH
+#define CRABSTK_IMAGE_IDRAWH
 #include "Image.h"
-
-namespace _ {
+namespace CTK {
+namespace Image {
 
 /* Raster draw primitives that render into a CImage buffer. Grouped in the
    ImageDraw namespace (not "Image" — that name is taken by the Image class
    in Image.h). All ops are alpha-blended and clip out-of-bounds writes. */
-namespace ImageDraw {
 
 /* A packed RGBA color. */
 struct TColor {
@@ -68,6 +67,6 @@ struct TRect {
 /* Clip a rectangle against the image bounds. Returns false if empty. */
 BOL ClipRect(CImage& img, TRect* r);
 
-}  // namespace ImageDraw
-}  // namespace _
+}  // namespace Image
+}  // namespace CTK
 #endif

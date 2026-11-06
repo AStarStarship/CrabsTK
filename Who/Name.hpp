@@ -1,10 +1,10 @@
 // Copyright AStarship <https://astarship.net>.
 #pragma once
-#ifndef CRABSTK_WHO_NAME_DECL_DECL
-#define CRABSTK_WHO_NAME_DECL_DECL
-#include "_Config.h"
-#if SEAM >= CRABSTK_WHO_NAME
-namespace _ {
+#ifndef _CrabsTKWhoNameHPP
+#define _CrabsTKWhoNameHPP
+#include <_Config.h>
+#if _Seam >= _CrabsTKWhoCore
+namespace CTK {
 /* A name of an entity. */
 class TName {
  public:
@@ -12,7 +12,8 @@ class TName {
   TName() {}
 
   /* Writes this object to the given text. */
-  Printer& Print (Printer& o) {
+  template<typename Printer>
+  Printer  Printer& Print Print (Printer& o) {
     o << "\nName:";
   };
 
@@ -20,6 +21,7 @@ private:
   THandle name_;
 };
 
-} //< namespace _
-#endif
-#endif
+}  // namespace Who
+}  // namespace CTK
+#endif  //< _Seam >= _CrabsTKWhoCore
+#endif  //< _CrabsTKWhoNameHPP

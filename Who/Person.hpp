@@ -1,11 +1,12 @@
 // Copyright AStarship <https://astarship.net>.
 #pragma once
-#ifndef CRABSTK_WHO_PERSON_DECL_DECL
-#define CRABSTK_WHO_PERSON_DECL_DECL
-#include "_Config.h"
-#if SEAM >= CRABSTK_WHO_CORE
+#ifndef _CrabsTKWhoPersonHPP
+#define _CrabsTKWhoPersonHPP
+#include <_Config.h>
+#if _Seam >= _CrabsTKWhoCore
 #include "Entity.hpp"
-namespace _ {
+namespace CTK {
+namespace Who {
 
 /* Class that represents a person/human.
 @todo Load a person from social media account using Facebook and OAuth APIs. */
@@ -15,11 +16,13 @@ class TPerson : public TEntity {
   TPerson();
 
   /* Prints this object to a expression. */
-  Printer& Print (Printer& o) { o << "Person: "; }
+  template<typename Printer>
+  Printer  Printer& Print Print (Printer& o) { o << "Person: "; }
 
  private:
   const CHR* lastName_;  //< The last name of the entity.
 };
-}       //< namespace _
-#endif
-#endif
+}  // namespace Who
+}  // namespace CTK
+#endif  //< _Seam >= _CrabsTKWhoCore
+#endif  //< _CrabsTKWhoPersonHPP

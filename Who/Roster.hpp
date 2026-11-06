@@ -1,11 +1,12 @@
 // Copyright AStarship <https://astarship.net>.
 #pragma once
-#ifndef CRABSTK_WHO_ROSTER_DECL_DECL
-#define CRABSTK_WHO_ROSTER_DECL_DECL
-#include "_Config.h"
-#if SEAM >= CRABSTK_WHO_CORE
+#ifndef _CrabsTKWhoRosterHPP
+#define _CrabsTKWhoRosterHPP
+#include <_Config.h>
+#if _Seam >= _CrabsTKWhoCore
 #include "User.hpp"
-namespace _ {
+namespace CTK {
+namespace Who {
 
 /* A list of registered users. */
 class TRoster {
@@ -26,7 +27,7 @@ class TRoster {
   ISC GetCount();
 
   /* Returns true if this list contains the given user query result. */
-  BOL Contains(const const CHR* username) {
+  BOL Contains(const CHR* username) {
     for (ISC index = 0; index < users_.GetCount (); index++) {
       if (users_[index]->Equals (username)) return true;
     }
@@ -44,7 +45,7 @@ class TRoster {
   /* Attempts to find a user with the given query.
   @return Returns a nullptr if this list does not contain the search query.
   */
-  TUser* Find(const const CHR* query) {
+  TUser* Find(const CHR* query) {
     size_t length = StringLength (username);
     if (length == 0) {
       return nullptr;  // static website guest account
@@ -78,6 +79,8 @@ class TRoster {
  private:
   TArray<TUser*> users_;
 };
-}       //< namespace _
-#endif
-#endif
+
+}  // namespace Who
+}  // namespace CTK
+#endif  //< _Seam >= _CrabsTKWhoCore
+#endif  //< _CrabsTKWhoRosterHPP

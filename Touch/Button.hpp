@@ -1,12 +1,13 @@
 // Copyright AStarship <https://astarship.net>.
 #pragma once
-#include "_Config.h"
-#if SEAM >= CRABSTK_AV_CORE
-#ifndef KT_HMI_BUTTON
-#define KT_HMI_BUTTON
+#include <_Config.h>
+#if _Seam >= _CrabsTKTouchCore
+#ifndef _CrabsTKTouchButtonH
+#define _CrabsTKTouchButtonH
 #include "Component.hpp"
 #include "Param.hpp"
-namespace _ {
+namespace CTK {
+namespace Touch {
 
 /* A hardware or GUI button.
 Buttons need to be able to control both MIDI/DMX devices, and system control
@@ -148,6 +149,7 @@ class LIB_MEMBER Button {
     ISC type_;
 };
 
-}  //< namespace _
-#endif
-#endif
+}  // namespace Touch
+}  // namespace CTK
+#endif  //< _Seam >= _CrabsTKTouchCore
+#endif  //< _CrabsTKTouchButtonH

@@ -1,11 +1,12 @@
 // Copyright AStarship <https://astarship.net>.
 #pragma once
-#include "_Config.h"
-#if SEAM >= CRABSTK_WHO_CORE
-#ifndef CRABSTK_WHO_HANDLE_DECL_DECL
-#define CRABSTK_WHO_HANDLE_DECL_DECL
+#include <_Config.h>
+#if _Seam >= _CrabsTKWhoCore
+#ifndef _CrabsTKWhoHandleHPP
+#define _CrabsTKWhoHandleHPP
 #include "Authenticator.hpp"
-namespace _ {
+namespace CTK {
+namespace Who {
 
 /* A handle like a CHA or IUD.
 */
@@ -20,7 +21,7 @@ class THandle {
   static const CHA* Default ();
 
   /* Constructor creates a standard CHA. */
-  THandle(TAuthenticator* authenticator, const const CHR* key,
+  THandle(TAuthenticator* authenticator, const CHR* key,
          ISC min_length = DefaultMinLength, ISC max_length = MaxLength)
     : auth_ (authenticator), type_ (Validation) {
     if (min_length >= max_length) {
@@ -37,10 +38,10 @@ class THandle {
   }
 
   /* Gets a reference to the handle AString. */
-  const const CHR* GetKey() { return key_; }
+  const CHR* GetKey() { return key_; }
 
   /* Gets true if this password is value. */
-  BOL SetKey(const const CHR* key) {
+  BOL SetKey(const CHR* key) {
     size_t length = StringLength (key);
     if (length < DefaultMinLength || length > MaxLength) return false;
 
@@ -51,7 +52,7 @@ class THandle {
   }
 
   /* Returns true if the handle is valid. */
-  BOL IsValid(const const CHR* key) {
+  BOL IsValid(const CHR* key) {
     size_t length = StringLength (key);
     if (length < DefaultMinLength || length > MaxLength) return false;
     return true;
@@ -61,7 +62,7 @@ class THandle {
   BOL Equals(const THandle& h) { return StringEquals (key_, h.key_); }
 
   /* Returns true if this Handle is identical to the given Handle. */
-  BOL Equals(const const CHR* handle) { return StringEquals (key_, handle); }
+  BOL Equals(const CHR* handle) { return StringEquals (key_, handle); }
 
   /* Prints this object to the log. */
   template<typename Printer> Printer& Print (Printer& o) { return txt << "\nHandle: " << key_; }
@@ -73,6 +74,7 @@ class THandle {
 
 };  //< class Handle
 
-}   //< namespace _
-#endif
-#endif
+}  // namespace Who
+}  // namespace CTK
+#endif  //< _Seam >= _CrabsTKWhoCore
+#endif  //< _CrabsTKWhoHandleHPP

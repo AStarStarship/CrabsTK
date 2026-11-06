@@ -1,10 +1,11 @@
 // Copyright AStarship <https://astarship.net>.
 #pragma once
-#ifndef CRABSTK_TOUCH_MIXERPAGE_DECL_DECL
-#define CRABSTK_TOUCH_MIXERPAGE_DECL_DECL
-#include "_Config.h"
-#if SEAM >= CRABSTK_TOUCH_CORE
-namespace _ {
+#ifndef _CrabsTKTouchMixerPageHPP
+#define _CrabsTKTouchMixerPageHPP
+#include <_Config.h>
+#if _Seam >= _CrabsTKTouchCore
+namespace CTK {
+namespace Touch {
 
 class LIB_MEMBER Mixer;
 class LIB_MEMBER MixerChannel;
@@ -73,6 +74,7 @@ class LIB_MEMBER MixerPage {
   TArray<MixerChannel*> channels_;  //< The Mixer channels.
 
 };
-}  //< namespace _
-#endif
-#endif
+}  // namespace Touch
+}  // namespace CTK
+#endif  //< _Seam >= _CrabsTKTouchCore
+#endif  //< _CrabsTKTouchMixerPageHPP

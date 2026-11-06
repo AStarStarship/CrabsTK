@@ -1,10 +1,9 @@
 // Copyright AStarship <https://astarship.net>.
 #include "Plot.h"
-
-namespace _ {
+namespace CTK {
 namespace Plot {
 
-/* ============================ TAxis ============================ */
+// TAxis
 TAxis::TAxis() = default;
 
 void TAxis::SetRect(ISN x0, ISN y0, ISN x1, ISN y1) {
@@ -50,7 +49,7 @@ void AutoFit(TAxis& ax, const TSeries2D& s) {
   ax.SetYRange(ylo - ypad, yhi + ypad);
 }
 
-/* ============================ TFigure ============================ */
+// TFigure
 TFigure::TFigure(ISN width, ISN height, TColor bg)
     : Width_(width), Height_(height),
       canvas_{nullptr, width, height, 4} {
@@ -73,7 +72,7 @@ ISN TFigure::AddAxis(FPD fx0, FPD fy0, FPD fx1, FPD fy1) {
   return axis_count_++;
 }
 
-/* ===================== 5x7 bitmap mini-font ===================== */
+// 5x7 bitmap mini-font
 /* Glyphs: A-Z, 0-9, space, '-', '.', '+', '/', ':', '(', ')', 'a'.
    Each glyph is 5 columns x 7 rows, stored as 7 bytes (one per row, low
    5 bits). This is a fixed table — no heap, no std. */
@@ -203,7 +202,7 @@ ISN DrawText(TFigure& fig, TAxis& ax, const CHA* text, ISN px, ISN py,
   return written;
 }
 
-/* ============================ RenderFrame ============================ */
+// RenderFrame
 static void DrawTicks(TFigure& fig, TAxis& ax) {
   CImage& cv = fig.Canvas();
   TColor frame_c = ax.FrameColor();
@@ -269,7 +268,7 @@ void RenderFrame(TFigure& fig) {
   }
 }
 
-/* ============================ 2D charts ============================ */
+// 2D charts
 static const TSeries2D* CheckSeries(const TSeries2D& s) {
   if (s.x == nullptr || s.y == nullptr || s.count <= 0) return nullptr;
   return &s;
@@ -435,7 +434,8 @@ PlotStatus PlotBoxplot(TFigure& fig, TAxis& ax, const TSeries2D& groups) {
   return PlotStatus::OK;
 }
 
-/* ============================ 3D charts ============================ */
+// 3D charts
+
 /* A fixed isometric-ish projection: rotate around vertical axis by 45deg,
    then tilt. Pure math, no allocation. */
 static void Project3(TAxis& ax, FPD x, FPD y, FPD z,
@@ -591,7 +591,8 @@ PlotStatus PlotContour(TFigure& fig, TAxis& ax, const FPD* grid, ISN nx,
   return PlotStatus::OK;
 }
 
-/* ============================ Quiver ============================ */
+// Quiver
+
 PlotStatus PlotQuiver(TFigure& fig, TAxis& ax, const FPD* x, const FPD* y,
                       const FPD* u, const FPD* v, ISN count, FPD scale,
                       TColor color) {
@@ -605,8 +606,8 @@ PlotStatus PlotQuiver(TFigure& fig, TAxis& ax, const FPD* x, const FPD* y,
     ISN y1 = ax.DataToPixY(y[i] + v[i] * scale);
     ImageDraw::Line(cv, x0, y0, x1, y1, color, 1);
     // Arrow head: two short lines from the tip.
-    FPD dx = (FPD)(x1 - x0), dy = (FPD)(y1 - y0);
-    FPD len = (FPD)FpdSqrt(dx * dx + dy * dy);
+    FPD dx = FPD(x1 - x0), dy = (FPD)(y1 - y0);
+    FPD len = FPD(FPDSquareRoot(dx * dx + dy * dy));
     if (len < 1.0f) len = 1.0f;
     FPD hx = dx / len * 4.0f, hy = dy / len * 4.0f;
     ImageDraw::Line(cv, x1, y1, (ISN)(x1 - hx - hy), (ISN)(y1 - hy + hx),
@@ -618,4 +619,4 @@ PlotStatus PlotQuiver(TFigure& fig, TAxis& ax, const FPD* x, const FPD* y,
 }
 
 }  // namespace Plot
-}  // namespace _
+}  // namespace CTK

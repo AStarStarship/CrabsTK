@@ -1,12 +1,13 @@
 // Copyright AStarship <https://astarship.net>.
 #pragma once
-#include "_Config.h"
-#if SEAM >= CRABSTK_TOUCH_CORE
-#ifndef CRABSTK_TOUCH_DUMMYBUTTON_DECL_DECL
-#define CRABSTK_TOUCH_DUMMYBUTTON_DECL_DECL
+#include <_Config.h>
+#if _Seam >= _CrabsTKTouchCore
+#ifndef _CrabsTKTouchDummyButtonH
+#define _CrabsTKTouchDummyButtonH
 #include "Button.hpp"
 #include "ButtonEvent.hpp"
-namespace _ {
+namespace CTK {
+namespace Touch {
 
 /* Dummy Button does nothing. */
 class LIB_MEMBER ButtonDummy : public Button {
@@ -28,7 +29,7 @@ class LIB_MEMBER ButtonDummy : public Button {
   virtual const Op* Op (CHW index, Expr* expr) {
     static const Op cThis = { "ButtonDummy", 
       OpFirst ('@'), OpLast ('@'),
-      "CT.av" };
+      "CTK.av" };
 
     switch (index) {
     case '?':
@@ -38,6 +39,7 @@ class LIB_MEMBER ButtonDummy : public Button {
     return nullptr;
   }
 };
-}  //< namespace _
-#endif
-#endif
+}  // namespace Touch
+}  // namespace CTK
+#endif  //< _Seam >= _CrabsTKTouchCore
+#endif  //< _CrabsTKTouchDummyButtonH

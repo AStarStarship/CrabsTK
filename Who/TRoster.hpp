@@ -1,16 +1,17 @@
 // Copyright AStarship <https://astarship.net>.
 #pragma once
-#ifndef CRABSTK_WHO_ROSTER_HPP
-#define CRABSTK_WHO_ROSTER_HPP
-#include "_Config.h"
-#if SEAM >= CRABSTK_WHO_CORE
+#ifndef _CrabsTKWhoRosterHPP
+#define _CrabsTKWhoRosterHPP
+#include <_Config.h>
+#if _Seam >= _CrabsTKWhoCore
 #include "TSessionTable.hpp"
 #include "TRoom.hpp"
 #include "TMessage.hpp"
 #include "TUIDAssigner.hpp"
 #include <ctime>
 #include <atomic>
-namespace _ {
+namespace CTK {
+namespace Who {
 
 /* The TRoster is the top-level Who API for a chat server.
 It owns:
@@ -45,7 +46,7 @@ struct TRoster {
   @param handle UTF-8 handle string.
   @param length Byte length (pass -1 to compute).
   @param room   Room (channel) index (0 = default).
-  @return Pointer to the new TSession, or NILP on failure.
+  @return Pointer to the new TSession, or _NilP on failure.
   @pre Event thread only. */
   TSession* Connect(const CHA* handle, IUB length = (IUB)-1,
                     IUC room = 0) {
@@ -55,7 +56,7 @@ struct TRoster {
     }
     IUD uid = uids_.Next();
     TSession* session = sessions_.Insert(handle, length, uid, room);
-    if (!session) return NILP;
+    if (!session) return _NilP;
     /* Add to the room. */
     if (room != 0) {
       TRoom* room_ptr = rooms_.Get(room);
@@ -261,6 +262,7 @@ struct TRoster {
   IUD ts_cache_tick_;         //< Message counter for the ts batch refresh.
 };                            //< struct TRoster
 
-}  //< namespace _
-#endif
-#endif
+}  // namespace Who
+}  // namespace CTK
+#endif  //< _Seam >= _CrabsTKWhoCore
+#endif  //< _CrabsTKWhoRosterHPP

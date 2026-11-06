@@ -1,11 +1,12 @@
 // Copyright AStarship <https://astarship.net>.
 #pragma once
-#include "_Config.h"
-#if SEAM >= CRABSTK_TOUCH_CORE
-#ifndef CRABSTK_TOUCH_BUTTONSWAP_DECL_DECL
-#define CRABSTK_TOUCH_BUTTONSWAP_DECL_DECL
+#include <_Config.h>
+#if _Seam >= _CrabsTKTouchCore
+#ifndef _CrabsTKTouchButtonSwapHPP
+#define _CrabsTKTouchButtonSwapHPP
 #include "Button.hpp"
-namespace {
+namespace CTK {
+namespace Touch {
 
 /* A Button that cycles a Control's functionality through various different
 modes.
@@ -51,6 +52,7 @@ class LIB_MEMBER ButtonSwap : public Button {
   TArray<Button*> control_modes_;  //< Array of control mode buttons.
 };
 
-}  //< namespace Touch
-#endif
-#endif
+}  // namespace Touch
+}  // namespace CTK
+#endif  //< _Seam >= _CrabsTKTouchCore
+#endif  //< _CrabsTKTouchButtonSwapHPP

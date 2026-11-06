@@ -1,28 +1,22 @@
 // Copyright AStarship <https://astarship.net>.
-// Image module seam entry — function pointer (matches TestCase typedef).
-// (2026-10-12: was a struct in namespace _::Image, which collided with the
-// real Image *class* in _::Image (Image/Image.h). The seam Core function now
-// lives in CT::Image, consistent with every other module seam (Code,
-// Database, GUI, IMUL, Plot, Who).)
 #pragma once
-#ifndef CRABSTK_IMAGE_SEAM
-#define CRABSTK_IMAGE_SEAM
-#include "_Config.h"
-#if SEAM == CRABSTK_IMAGE_CORE
+#ifndef _CrabsTKImageCore
+#define _CrabsTKImageCore
+#include "../_Config.h"
+#if _Seam == _CrabsTKImageCore
 #include <ASCIICrabs/_Debug.h>
 #else
 #include <ASCIICrabs/_Release.h>
 #endif
-using namespace _;
-namespace CT {
-namespace Image {
+namespace CTKImageTest {
+using namespace ::_;
+using namespace ::CTK;
+
 inline const CHA* Core(const CHA* args) {
-#if SEAM >= CRABSTK_IMAGE_CORE
-  A_TEST_BEGIN;
-  // Image load/save/texture is still a skeleton; no tests yet.
+#if _Seam >= _CrabsTKImageCore
+  _ATestBegin;
 #endif
-  return 0;
+  return _NilP;
 }
-}  //< namespace Image
-}  //< namespace CT
-#endif
+}  //< namespace CTKImageTest
+#endif  //< _CrabsTKImageCore

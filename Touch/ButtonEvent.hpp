@@ -1,13 +1,14 @@
 // Copyright AStarship <https://astarship.net>.
 #pragma once
-#include "_Config.h"
-#if SEAM >= CRABSTK_TOUCH_CORE
-#ifndef CRABSTK_TOUCH_EVENTBUTTON_DECL_DECL
-#define CRABSTK_TOUCH_EVENTBUTTON_DECL_DECL
+#include <_Config.h>
+#if _Seam >= _CrabsTKTouchCore
+#ifndef _CrabsTKTouchEventButtonH
+#define _CrabsTKTouchEventButtonH
 #include "Button.hpp"
 #include "ControlLayer.hpp"
 #include "Event.h"
-namespace _ {
+namespace CTK {
+namespace Touch {
 
 /* A button that triggers an Event.
 A button Event is triggered on the press function. */
@@ -37,6 +38,7 @@ class EventButton : public Button {
   // Event interface implementation.
   virtual void Trigger () {}
 };
-}  //< namespace _
-#endif
-#endif
+}  // namespace Touch
+}  // namespace CTK
+#endif  //< _Seam >= _CrabsTKTouchCore
+#endif  //< _CrabsTKTouchEventButtonH

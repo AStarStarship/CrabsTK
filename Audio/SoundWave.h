@@ -1,9 +1,9 @@
 // Copyright AStarship <https://astarship.net>.
 #pragma once
-#ifndef CRABSTK_AUDIO_SOUNDWAVE_DECL_DECL
-#define CRABSTK_AUDIO_SOUNDWAVE_DECL_DECL
-#include "_Config.h"
-namespace _ {
+#ifndef _CrabsTKAudioSoundWaveH
+#define _CrabsTKAudioSoundWaveH
+#include <_Config.h>
+namespace CTK {
 
 struct SoundWave {
   IUA riff_id[4];    //< 'RIFF' chunk.
@@ -21,5 +21,5 @@ struct SoundWave {
   IUC wave_size;     //< Size of sample data.
 };
 
-}  //< namespace _
-#endif
+}  //< namespace CTK
+#endif  //< _CrabsTKAudioSoundWaveH

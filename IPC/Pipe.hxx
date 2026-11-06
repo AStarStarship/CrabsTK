@@ -1,22 +1,11 @@
 // Copyright AStarship <https://astarship.net>.
-// IPC — implementation of the versioned dual-ring SPSC pipe (see Pipe.h
-// for the full contract: layout, roles, synchronization, teardown).
-//
-// Platform: Linux (POSIX shm_open/ftruncate/mmap, futex(2), clock_gettime
-// CLOCK_MONOTONIC). No C++ standard library containers/streams/atomics.
-
-#ifndef CRABSTK_IPC_PIPE_HXX
-#define CRABSTK_IPC_PIPE_HXX
-
-// The local _Config.h routes to the canonical ASCIICrabs chain in a
-// normal build (root _Config.h pulls ../ASCIICrabs/_ConfigHeader.h when
-// the sibling checkout is present). The type-identity asserts in
-// _Config.h therefore always compile; no extra header pull needed here.
-
+#pragma once
+#ifndef _CrabsTKPipeHXX
+#define _CrabsTKPipeHXX
+// @todo Convert to ASCIICrabs #includes
 #include "Pipe.h"
 #include "_Debug.h"
 #include <string.h>
-#include <unistd.h>
 #include <fcntl.h>
 #include <errno.h>
 #include <sys/mman.h>
@@ -24,10 +13,20 @@
 #include <sys/syscall.h>
 #include <linux/futex.h>
 #include <time.h>
-
-namespace _ {
-
+namespace CTK {
 namespace PipeDetail {
+
+// IPC — implementation of the versioned dual-ring SPSC pipe (see Pipe.h
+// for the full contract: layout, roles, synchronization, teardown).
+//
+// Platform: Linux (POSIX shm_open/ftruncate/mmap, futex(2), clock_gettime
+// CLOCK_MONOTONIC). No C++ standard library containers/streams/atomics.
+
+
+// The local _Config.h routes to the canonical ASCIICrabs chain in a
+// normal build (root _Config.h pulls ../ASCIICrabs/_ConfigHeader.h when
+// the sibling checkout is present). The type-identity asserts in
+// _Config.h therefore always compile; no extra header pull needed here.
 
 // Monotonic milliseconds since an unspecified epoch (bounded waits).
 static ISW NowMs() {
@@ -472,7 +471,6 @@ static Pipe* Shared() {
 Pipe& PipeMaster() { return *PipeCompat::Shared(); }
 Pipe& PipeSlave() { return *PipeCompat::Shared(); }
 
-
-}  //< namespace _
-
-#endif // CRABSTK_IPC_PIPE_HXX
+}  //< namespace IPC
+}  //< namespace CTK
+#endif  //< _CrabsTKPipeHXX

@@ -1,11 +1,12 @@
 // Copyright AStarship <https://astarship.net>.
 #pragma once
-#include "_Config.h"
-#if SEAM >= CRABSTK_TOUCH_CORE
-#ifndef CRABSTK_TOUCH_RADIOBUTTON_DECL_DECL
-#define CRABSTK_TOUCH_RADIOBUTTON_DECL_DECL
+#include <_Config.h>
+#if _Seam >= _CrabsTKTouchCore
+#ifndef _CrabsTKTouchRadioButtonHPP
+#define _CrabsTKTouchRadioButtonHPP
 #include "Component.hpp"
-namespace _ {
+namespace CTK {
+namespace Touch {
 
 /* An abstract radio button. */
 class ButtonRadio : public HMIComponent {
@@ -46,6 +47,8 @@ class ButtonRadio : public HMIComponent {
   ISC index_;         //< Current index of the radio button.
   ParamSet buttons_;  //< The radio buttons ParamSet.
 };
-}  //< namespace _
-#endif
-#endif
+
+}  // namespace Touch
+}  // namespace CTK
+#endif  //< _Seam >= _CrabsTKTouchCore
+#endif  //< _CrabsTKTouchRadioButtonHPP

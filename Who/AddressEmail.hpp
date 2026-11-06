@@ -1,21 +1,23 @@
 ﻿// Copyright AStarship <https://astarship.net>.
 #pragma once
-#include "_Config.h"
-#if SEAM >= CRABSTK_WHO_CORE
-#ifndef CRABSTK_WHO_EMAILADDRESS_DECL_DECL
-#define CRABSTK_WHO_EMAILADDRESS_DECL_DECL
-namespace _ {
+#include <_Config.h>
+#if _Seam >= _CrabsTKWhoCore
+#ifndef _CrabsTKWhoAddressEMailHPP
+#define _CrabsTKWhoAddressEMailHPP
+namespace CTK {
+namespace Who {
+
 /* An email address. */
 class TAddressEmail {
  public:
   /* Default constructor. */
-  TAddressEmail(const const CHR* address) {}
+  TAddressEmail(const CHR* address) {}
 
   /* Gets the address String. */
   const CHR* GetAddress() { return address_; }
 
   /* Attempts to set the address to the given AString. */
-  void SetAddress(const const CHR* AString) {
+  void SetAddress(const CHR* AString) {
     // address_ = AString;
   }
 
@@ -28,6 +30,7 @@ class TAddressEmail {
  private:
   TString<> address_;  //< The email address.
 };
-}       //< namespace _
-#endif
-#endif
+}  // namespace Who
+}  // namespace CTK
+#endif  //< _Seam >= _CrabsTKWhoCore
+#endif  //< _CrabsTKWhoAddressEMailHPP

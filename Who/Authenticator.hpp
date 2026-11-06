@@ -1,10 +1,11 @@
 // Copyright AStarship <https://astarship.net>.
 #pragma once
-#include "_Config.h"
-#if SEAM >= CRABSTK_WHO_CORE
-#ifndef CRABSTK_WHO_AUTHENTICATOR_DECL_DECL
-#define CRABSTK_WHO_AUTHENTICATOR_DECL_DECL
-namespace _ {
+#include <_Config.h>
+#if _Seam >= _CrabsTKWhoCore
+#ifndef _CrabsTKWhoAuthenticatorHH
+#define _CrabsTKWhoAuthenticatorHH
+namespace CTK {
+namespace Who {
 
 /* Interface for a class that can validate a CHA* string for correctness.
 This interface is useful for making rules for things like Handle(s) and
@@ -21,6 +22,7 @@ struct TAuthenticator {
   virtual const CHA* PasswordInvalid(const CHA* password) = 0;
 };
 
-}       //< namespace _
-#endif
-#endif
+}  // namespace Who
+}  // namespace CTK
+#endif  //< _Seam >= _CrabsTKWhoCore
+#endif  //< _CrabsTKWhoAuthenticatorHH

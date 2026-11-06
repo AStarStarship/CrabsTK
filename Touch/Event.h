@@ -1,10 +1,11 @@
 // Copyright AStarship <https://astarship.net>.
 #pragma once
-#ifndef CRABSTK_AV_EVENT_DECL
-#define CRABSTK_AV_EVENT_DECL
-#include "_Config.h"
-#if SEAM >= CRABSTK_AV_1
-namespace _ {
+#ifndef _CrabsTKTouchEventHPP
+#define _CrabsTKTouchEventHPP
+#include <_Config.h>
+#if _Seam >= _CrabsTKTouchCore
+namespace CTK {
+namespace Touch {
 
 /* A event with an ASCII TSS (Time Subsecond) timestamp. */
 class Event {
@@ -29,6 +30,7 @@ class Event {
   timestamp_t timestamp_;  //< Event timestamp in microseconds.
 };
 
-}  //< namespace _
-#endif
-#endif
+}  // namespace Touch
+}  // namespace CTK
+#endif  //< _Seam >= _CrabsTKTouchCore
+#endif  //< _CrabsTKTouchEventHPP

@@ -1,10 +1,10 @@
 // Copyright AStarship <https://astarship.net>.
 #pragma once
-#ifndef CRABSTK_AUDIO_SOUNDWAVE_TEMPLATES_DECL_DECL
-#define CRABSTK_AUDIO_SOUNDWAVE_TEMPLATES_DECL_DECL
-#include "_Config.h"
+#ifndef _CrabsTKAudioSoundWaveTemplatesHPP
+#define _CrabsTKAudioSoundWaveTemplatesHPP
+#include <_Config.h>
 #include "SoundWave.h"
-namespace _ {
+namespace CTK {
 
 template <typename IS>
 void TSoundStore(const CHR* filename, const IS* sample_buffer,
@@ -47,6 +47,6 @@ void TSoundStore(const CHR* filename, const IS* sample_buffer,
   fclose(f);
 }
 
-}  //< namespace _
+}  //< namespace CTK
 
-#endif
+#endif  //< _CrabsTKAudioSoundWaveTemplatesHPP

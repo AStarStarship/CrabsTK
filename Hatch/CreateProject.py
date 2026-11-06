@@ -7,7 +7,7 @@
 #   python3 CreateProject.py <project_name> <output_dir> [--mode MODE]
 #
 # Modes:
-#   crabstk     CrabsTK project (module-based, CT namespace, MPL headers)
+#   crabstk     CrabsTK project (module-based, CTK namespace, MPL headers)
 #   asciicrabs  ASCII Crabs project (flat _Seams/, ProjectTest namespace)
 #
 # Examples:
@@ -194,17 +194,17 @@ def CreateProject(project_name, output_dir, mode):
   with open(yaml_path, "w") as fh:
     fh.write(seams_yaml)
 
-  # Also write __Seams.yaml — double-underscore prefix ensures it appears at the
+  # Also write _Seams.yaml — double-underscore prefix ensures it appears at the
   # top of alphabetically sorted file listings, keeping it separated from source
   # code files and making it the "visible" single source of truth.
-  __seams_yaml_content = seams_yaml.replace("seams.yaml", "__Seams.yaml")
-  # Ensure the __Seams.yaml header starts with "// __Seams" comment.
+  __seams_yaml_content = seams_yaml.replace("seams.yaml", "_Seams.yaml")
+  # Ensure the _Seams.yaml header starts with "// _Seams" comment.
   # Replace the original header line if needed.
   lines = __seams_yaml_content.split("\n", 1)
   if lines[0].startswith("// seams.yaml"):
-    lines[0] = "// __Seams.yaml -- single source of truth for the seam system."
+    lines[0] = "// _Seams.yaml -- single source of truth for the seam system."
   __seams_yaml_content = "\n".join(lines)
-  __yaml_path = os.path.join(output_dir, "__Seams.yaml")
+  __yaml_path = os.path.join(output_dir, "_Seams.yaml")
   with open(__yaml_path, "w") as fh:
     fh.write(__seams_yaml_content)
 
@@ -240,15 +240,15 @@ def CreateProject(project_name, output_dir, mode):
   # Next steps.
   print(f"\nNext steps:")
   if mode == "crabstk":
-    print(f"  1. Add your module source files next to _Package.hxx.")
-    print(f"  2. Edit _Package.hxx to include your module headers.")
-    print(f"  3. Edit _Seams/<Module>/00.Core.hxx to add your test code.")
+    print(f"  1. Add your module source files next to _Seams.hxx.")
+    print(f"  2. Edit _Seams.hxx to include your module headers.")
+    print(f"  3. Edit _Seams/<Module>/01.Core.hxx to add your test code.")
     print(f"  4. Add more seams in seams.yaml, then run: python3 SyncSeams.py")
     print(f"  5. Build: cd {os.path.join(output_dir, '_Seams')} && cmake . && make")
   else:
     print(f"  1. Fix the ASCIICrabs include paths in _ConfigFooter.h,")
-    print(f"     _ConfigHeader.h, _Package.hxx, and _Test.h.")
-    print(f"  2. Add your source files next to _Package.hxx.")
+    print(f"     _ConfigHeader.h, _Seams.hxx, and _Test.h.")
+    print(f"  2. Add your source files next to _Seams.hxx.")
     print(f"  3. Edit _Seams/01.Core.hxx to add your test code.")
     print(f"  4. Add more seams in seams.yaml, then run: python3 SyncSeams.py")
     print(f"  5. Build: cd {os.path.join(output_dir, '_Seams')} && cmake . && make")
@@ -262,7 +262,7 @@ def ParseArgs(argv):
     print(f"Usage: python3 {script} <project_name> <output_dir> [--mode MODE]")
     print()
     print(f"Modes:")
-    print(f"  crabstk     CrabsTK project (module-based, CT namespace)")
+    print(f"  crabstk     CrabsTK project (module-based, CTK namespace)")
     print(f"  asciicrabs  ASCII Crabs project (flat _Seams, ProjectTest)")
     print()
     print(f"Examples:")

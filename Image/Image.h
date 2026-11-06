@@ -1,10 +1,10 @@
 // Copyright AStarship <https://astarship.net>.
 #pragma once
-#ifndef CRABSTK_IMAGE_IMAGE_DECL
-#define CRABSTK_IMAGE_IMAGE_DECL
-#include "_Config.h"
-
-namespace _ {
+#ifndef _CrabsTKImageImageH
+#define _CrabsTKImageImageH
+#include <_Config.h>
+namespace CTK {
+namespace Image {
 
 /* A raster image buffer. Width/height in pixels, 3 or 4 channels.
 No heap allocation — the caller owns the pixel data. */
@@ -34,5 +34,6 @@ class Image {
   CImage image_;
 };
 
-}  //< namespace _
+}  //< namespace Image
+}  //< namespace CTK
 #endif

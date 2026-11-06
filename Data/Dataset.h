@@ -1,10 +1,11 @@
 // Copyright AStarship <https://astarship.net>.
 #pragma once
-#ifndef CRABSTK_DATA_DATASET_DECL
-#define CRABSTK_DATA_DATASET_DECL
+#ifndef CRABSTK_DATA_DATASETH
+#define CRABSTK_DATA_DATASETH
 #include "Record.h"
-#if SEAM >= CRABSTK_DATA_RECORD
-namespace _ {
+#if _Seam >= _CrabsTKDataRecord
+namespace CTK {
+namespace Data {
 
 /* Owned POSIX stream state, NOT a serializable record. Do not copy an open
 stream. Close explicitly; default construction owns no descriptor. */
@@ -45,7 +46,7 @@ RecordStatus TReaderNext(TReader& reader, IUA* scratch, IUC capacity, IUC* used)
 template<IUC C, IUC O, IUC A, IUC S>
 RecordStatus TReaderRead(TReader& reader, TRecord<C, O, A, S>& record,
                         IUA* scratch, IUC capacity);
-
-}  //< namespace _
-#endif
-#endif
+}  //< namespace Data
+}  //< namespace CTK
+#endif  //< _Seam >= _CrabsTKDataRecord
+#endif  //< CRABSTK_DATA_DATASETH

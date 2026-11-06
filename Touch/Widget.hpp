@@ -1,13 +1,14 @@
 // Copyright AStarship <https://astarship.net>.
 #pragma once
-#ifndef CRABSTK_TOUCH_WIDGET_DECL_DECL
-#define CRABSTK_TOUCH_WIDGET_DECL_DECL
-#include "_Config.h"
-#if SEAM >= CRABSTK_TOUCH_CORE
+#ifndef _CrabsTKTouchWidgetHPP
+#define _CrabsTKTouchWidgetHPP
+#include <_Config.h>
+#if _Seam >= _CrabsTKTouchCore
 #include "ControlMatrix.hpp"
 #include "Component.hpp"
 #include "ControlMidi.hpp"
-namespace _ {
+namespace CTK {
+namespace Touch {
 
 /* A TWidget or instance of a widget.
 @todo Convert from stupid linked list to ASCII.
@@ -130,7 +131,7 @@ class LIB_MEMBER TWidget : public Operation {
   const CHR* Name() { return name_; }
 
   /* Renames this TWidget to the given AString. */
-  const CHA* SetName(const const CHR* new_name) {
+  const CHA* SetName(const CHR* new_name) {
     return name_.Set (new_name);
   }
 
@@ -264,7 +265,7 @@ class LIB_MEMBER TWidget : public Operation {
   }
 
   /* Gets the filename of this TWidget. */
-  const const CHR* GetFilename () { return filename_; }
+  const CHR* GetFilename () { return filename_; }
 
   /* Prints the page_labels_ to the given Printer. */
   template<typename Printer>
@@ -368,6 +369,7 @@ class LIB_MEMBER TWidget : public Operation {
   }
 };
 
-}  //< namespace _
-#endif
-#endif
+}  // namespace Touch
+}  // namespace CTK
+#endif  //< _Seam >= _CrabsTKTouchCore
+#endif  //< _CrabsTKTouchWidgetHPP

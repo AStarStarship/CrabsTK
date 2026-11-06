@@ -1,13 +1,14 @@
 // Copyright AStarship <https://astarship.net>.
 #pragma once
-#include "_Config.h"
-#if SEAM >= CRABSTK_TOUCH_CORE
-#ifndef CRABSTK_TOUCH_BUTTONPAGE_DECL_DECL
-#define CRABSTK_TOUCH_BUTTONPAGE_DECL_DECL
+#include <_Config.h>
+#if _Seam >= _CrabsTKTouchCore
+#ifndef _CrabsTKTouchButtonPageH
+#define _CrabsTKTouchButtonPageH
 #include "Button.hpp"
 #include "ControlLayer.hpp"
 #include "WidgetPage.hpp"
-namespace _ {
+namespace CTK {
+namespace Touch {
 
 /* A type of Button that loads a WidgetPage into a Control Layer
 The difference between a page and a macro button is that a page button
@@ -54,6 +55,8 @@ class LIB_MEMBER PageButton : public Button {
  private:
   WidgetPage* page_;  //< The page to load.
 };
-}  //< namespace _
-#endif
-#endif
+
+}  // namespace Touch
+}  // namespace CTK
+#endif  //< _Seam >= _CrabsTKTouchCore
+#endif  //< _CrabsTKTouchButtonPageH

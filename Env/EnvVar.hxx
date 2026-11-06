@@ -1,12 +1,10 @@
 // Copyright AStarship <https://astarship.net>.
+#ifndef CRABSTK_ENV_VARH
+#define CRABSTK_ENV_VARH
 #include "EnvVar.h"
-#if SEAM >= CRABSTK_ENV_VAR
-#include <cstdio>
-#include <cstdlib>
-#include <cstring>
-#include <cerrno>
-
-namespace _ {
+#if _Seam >= _CrabsTKEnvCore
+namespace CTK {
+namespace Env {
 
 /* Trim leading/trailing whitespace in place; returns length. */
 static IUC EnvTrim(CHA* s) {
@@ -188,5 +186,7 @@ template ISN TEnvExport<64>(const TEnvTable<64>&);
 template ISN TEnvExport<128>(const TEnvTable<128>&);
 template ISN TEnvExport<256>(const TEnvTable<256>&);
 
-}  //< namespace _
-#endif
+}  //< namespace Env
+}  //< namespace CTK
+#endif  //< _Seam >= _CrabsTKEnvCore
+#endif  //< CRABSTK_ENV_VARH

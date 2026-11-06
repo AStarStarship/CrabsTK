@@ -1,13 +1,14 @@
 // Copyright AStarship <https://astarship.net>.
 #pragma once
-#ifndef CRABSTK_WHO_USERLIST_DECL_DECL
-#define CRABSTK_WHO_USERLIST_DECL_DECL
-#include "_Config.h"
-#if SEAM >= CRABSTK_WHO_CORE
+#ifndef _CrabsTKWhoUserListHPP
+#define _CrabsTKWhoUserListHPP
+#include <_Config.h>
+#if _Seam >= _CrabsTKWhoCore
 #include "AuthenticatorDefault.hpp"
 #include "UIDAssigner.hpp"
 #include "User.hpp"
-namespace _ {
+namespace CTK {
+namespace Who {
 
 /* A List of User(s).
 This class uses a single Authenticator interface for validating both user
@@ -97,7 +98,7 @@ class UserList : public Operand {
   TAuthenticator* GetAuthenticator() { return auth_; }
 
   /* Adds a new User to the list with the given handle and password. */
-  ISC Add(const const CHR* handle, const const CHR* password = TPassword::DefaultPassword,
+  ISC Add(const CHR* handle, const CHR* password = TPassword::DefaultPassword,
           FPD balance = TUser::DefaultBalance,
           int64_t value = TUser::DefaultValue) {
     cout << "\n| Attempting to add @" << ((handle == nullptr) ? "null" : handle)
@@ -174,7 +175,7 @@ class UserList : public Operand {
   }
 
   /* Finds an entity in the list by the given search CHA. */
-  ISC Find(const const CHR* AString) {
+  ISC Find(const CHR* AString) {
     if (handle == nullptr) {
       return -1;
     }
@@ -205,7 +206,7 @@ class UserList : public Operand {
   @param handle   The handle of the user to delete.
   @param password The password of the user to delete.
   @return Returns the new users_ count or <0 upon failure. */
-  ISC Remove(const const CHR* handle, const const CHR* password) {
+  ISC Remove(const CHR* handle, const CHR* password) {
     ISC session = Find (handle);
     if (session < 0) {
       return -1;
@@ -233,12 +234,12 @@ class UserList : public Operand {
   }
 
   /* Attempts to login to the given session and returns a session key. */
-  virtual IUD LogIn(const const CHR* handle, const const CHR* password) {
+  virtual IUD LogIn(const CHR* handle, const CHR* password) {
     return LogIn (Find (handle), password);
   }
 
   /* Attempts to login to the given session and returns a session key. */
-  virtual IUD LogIn(ISC session, const const CHR* password) {
+  virtual IUD LogIn(ISC session, const CHR* password) {
     cout << "\n| Attempting to log in as " << index << "\"" << password << "\"";
     User* user = GetUser (index);
     if (!user) {
@@ -287,7 +288,7 @@ class UserList : public Operand {
   /* Attempts to remove the given session.
   @param  handle The handle of the User to remove.
   @return Returns negative upon failure and the user count upon success. */
-  virtual ISC Remove(const const CHR* handle) {
+  virtual ISC Remove(const CHR* handle) {
     ISC session = Find (handle);
     if (session < 0) {
       return session;
@@ -314,11 +315,11 @@ class UserList : public Operand {
     return txt;
   }
   
-  /*const const CHR* Sudo(const const CHR* text, const const CHR* String_end) {
+  /*const CHR* Sudo(const CHR* text, const CHR* String_end) {
     CHA handle[Handle::MaxLength + 1], password[Password::MaxLength + 1];
     FPD balance;
     int64_t value;
-    const const CHR* next_token;
+    const CHR* next_token;
 
     if (!text) {
       return nullptr;
@@ -402,6 +403,7 @@ class UserList : public Operand {
   UidServer<> uids_;      //< Unique Session Key server
 };
 
-}       //< namespace _
-#endif
-#endif
+}  // namespace Who
+}  // namespace CTK
+#endif  //< _Seam >= _CrabsTKWhoCore
+#endif  //< _CrabsTKWhoUserListHPP

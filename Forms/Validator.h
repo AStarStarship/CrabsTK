@@ -2,8 +2,9 @@
 #pragma once
 #ifndef KT_FORMS_VALIDATOR
 #define KT_FORMS_VALIDATOR
-#include "_Config.h"
-namespace _ {
+#include <_Config.h>
+namespace CTK {
+namespace Forms {
 
 /* A form field that can validate its own content. */
 class Validatable {
@@ -18,5 +19,6 @@ class Validator : public Validatable {
   BOL IsValid() override { return true; }
 };
 
-}  //< namespace _
+}  //< namespace Forms
+}  //< namespace CTK
 #endif

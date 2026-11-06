@@ -16,7 +16,7 @@
 #   seams:       Ordered list. Each gets a sequential number starting at 1.
 #     name:      Macro suffix + C++ test function name.
 #     file:      Seam test file (ASCIICrabs mode only; CrabsTK uses 01.Core.h).
-#     module:    (CrabsTK) Namespace under CT::. Groups seams into modules.
+#     module:    (CrabsTK) Namespace under CTK::. Groups seams into modules.
 #     label:     Heading printed by the test.
 #
 # To add a seam: append an entry. Never renumber existing seams.

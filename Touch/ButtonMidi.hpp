@@ -1,12 +1,13 @@
 // Copyright AStarship <https://astarship.net>.
 #pragma once
-#include "_Config.h"
-#if SEAM >= CRABSTK_TOUCH_CORE
-#ifndef CRABSTK_TOUCH_MIDIBUTTON_DECL_DECL
-#define CRABSTK_TOUCH_MIDIBUTTON_DECL_DECL
+#include <_Config.h>
+#if _Seam >= _CrabsTKTouchCore
+#ifndef _CrabsTKTouchButtonMidiH
+#define _CrabsTKTouchButtonMidiH
 #include "Button.hpp"
 #include "ControlMidi.hpp"
-namespace _ {
+namespace CTK {
+namespace Touch {
 
 class LIB_MEMBER ControlMidi;
 
@@ -49,7 +50,9 @@ class LIB_MEMBER TButtonMIDI : public ControlMidi, public Button {
 
  private:
   ControlMidi* control_;  //< This Button's ControlMidi.
-};  //< class MidiButton
-}  //< namespace _
-#endif
-#endif
+};  // class MidiButton
+
+}  // namespace Touch
+}  // namespace CTK
+#endif  //< _Seam >= _CrabsTKTouchCore
+#endif  //< _CrabsTKTouchButtonMidiH
