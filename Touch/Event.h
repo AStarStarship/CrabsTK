@@ -3,7 +3,7 @@
 #ifndef _CrabsTKTouchEventHPP
 #define _CrabsTKTouchEventHPP
 #include <_Config.h>
-#if _Seam >= CRABSTK_AV_1
+#if _Seam >= _CrabsTKTouchCore
 namespace CTK {
 namespace Touch {
 
@@ -32,5 +32,5 @@ class Event {
 
 }  // namespace Touch
 }  // namespace CTK
-#endif  //< _Seam >= CRABSTK_AV_1
+#endif  //< _Seam >= _CrabsTKTouchCore
 #endif  //< _CrabsTKTouchEventHPP

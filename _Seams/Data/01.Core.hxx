@@ -7,17 +7,12 @@
 #include <ASCIICrabs/_Release.h>
 #endif
 #include <ASCIICrabs/Test.h>
-namespace CTKDataTest {
+#include "../../Data/_Package.hxx"
 using namespace ::_;
 using namespace ::CTK;
 
-IUC FuzzNext(IUC& state) {
-  state ^= state << 13;
-  state ^= state >> 17;
-  state ^= state << 5;
-  return state;
-}
-BOL DemoWrite(co_NilPHA* text, IUC bytes) {
+namespace CTKDataTest {
+BOL DemoWrite(const CHA* text, IUC bytes) {
   IUC sent = 0;
   while (sent < bytes) {
     ISW result = write(1, text + sent, bytes - sent);
@@ -31,12 +26,6 @@ BOL DemoLabel(const CHA* text) {
   IUC bytes = 0;
   while (text[bytes]) ++bytes;
   return DemoWrite(text, bytes);
-}
-IUC FuzzNext(IUC& state) {
-  state ^= state << 13;
-  state ^= state >> 17;
-  state ^= state << 5;
-  return state;
 }
 
 inline const CHA* Core(const CHA* args) {

@@ -2,7 +2,7 @@
 #ifndef CRABSTK_ENV_VARH
 #define CRABSTK_ENV_VARH
 #include "EnvVar.h"
-#if _Seam >= CRABSTK_ENV_VAR
+#if _Seam >= _CrabsTKEnvCore
 namespace CTK {
 namespace Env {
 
@@ -188,5 +188,5 @@ template ISN TEnvExport<256>(const TEnvTable<256>&);
 
 }  //< namespace Env
 }  //< namespace CTK
-#endif  //< _Seam >= CRABSTK_ENV_VAR
+#endif  //< _Seam >= _CrabsTKEnvCore
 #endif  //< CRABSTK_ENV_VARH

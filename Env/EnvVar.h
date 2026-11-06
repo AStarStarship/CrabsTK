@@ -3,7 +3,7 @@
 #ifndef CRABSTK_ENV_VARH
 #define CRABSTK_ENV_VARH
 #include <_Config.h>
-#if _Seam >= CRABSTK_ENV_VAR
+#if _Seam >= _CrabsTKEnvCore
 namespace CTK {
 namespace Env {
 

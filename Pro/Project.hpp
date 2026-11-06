@@ -3,7 +3,7 @@
 #ifndef _CrabsTKProProject
 #define _CrabsTKProProject
 #include <_Config.h>
-#if _Seam >= CRABSTK_PRO
+#if _Seam >= _CrabsTKProCore
 #include "Schedule.hpp"
 #include "Task.hpp"
 namespace CTK {

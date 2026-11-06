@@ -19,10 +19,6 @@
 #ifndef CRABSTK_CONFIG_H
 #define CRABSTK_CONFIG_H
 
-#if !defined(CRABSTK_IPC_LEGACY) && \
-    __has_include(<ASCIICrabs/_ConfigHeader.h>)
 #include <ASCIICrabs/_ConfigHeader.h>
-#else
-#endif
 
 #endif  //< CRABSTK_CONFIG_H

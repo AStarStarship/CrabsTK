@@ -3,7 +3,7 @@
 #ifndef _CrabsTKProIssue
 #define _CrabsTKProIssue
 #include <_Config.h>
-#if _Seam >= CRABSTK_PRO_1
+#if _Seam >= _CrabsTKProCore
 #include "Schedule.hpp"
 #include "Task.hpp"
 namespace CTK {
@@ -42,5 +42,5 @@ class Issue : public Operand {
 
 }  // namespace Pro
 }  // namespace CTK
-#endif  //< _Seam >= CRABSTK_PRO_1
+#endif  //< _Seam >= _CrabsTKProCore
 #endif  //< _CrabsTKProIssue
