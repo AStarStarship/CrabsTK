@@ -50,15 +50,15 @@ enum EFitCode : IUB {
 struct TFitting {
   EFitSeverity severity;
   EFitCode code;
-  ISN line;
-  ISN column;
+  ISC line;
+  ISC column;
   const CHA* message;  //< Static string, never null.
 };
 
 /* Fitter options. All have sensible defaults for CrabsTK. */
 struct TFitterOptions {
-  ISN indent_width;       //< Spaces per indent level. Default 2.
-  ISN max_line_length;    //< Soft limit. Default 100. 0 = unlimited.
+  ISC indent_width;       //< Spaces per indent level. Default 2.
+  ISC max_line_length;    //< Soft limit. Default 100. 0 = unlimited.
   BOL enforce_seam_gate;  //< Require #if _Seam >= in .h files. Default true.
   BOL enforce_header_guard; //< Require #pragma once. Default true.
   const CHA* project_name;  //< For guard prefix (e.g. "CRABSTK"). Default "CRABSTK".
@@ -67,35 +67,35 @@ struct TFitterOptions {
 /* Fitter result: reformatted bytes + diagnostics. */
 struct TFittingResult {
   const CHA* output;       //< Formatted source (caller-owned buffer).
-  IUD output_len;          //< Length in bytes.
+  IUD output_length;          //< Length in bytes.
   const TFitting* findings; //< Caller-owned diagnostic array.
-  ISN finding_count;
-  ISN finding_capacity;
-  ISN error_count;         //< Findings with FIT_SEV_ERROR.
-  ISN warning_count;       //< Findings with FIT_SEV_WARNING.
+  ISC finding_count;
+  ISC finding_capacity;
+  ISC error_count;         //< Findings with FIT_SEV_ERROR.
+  ISC warning_count;       //< Findings with FIT_SEV_WARNING.
 };
 
 /* Fit a token stream into canonical Chimera+ form.
 tokens:       Token array from CodeLexer.
 token_count:  Number of tokens.
 source:       Original source bytes (for extracting token text).
-out_buf:      Caller-owned output buffer.
-out_buf_len:  Capacity of out_buf (bytes).
+output_buffer:      Caller-owned output buffer.
+output_capacity:  Capacity of output_buffer (bytes).
 out_result:   Filled with output pointer/length and diagnostics.
 findings:     Caller-owned diagnostic array.
 finding_capacity: Capacity of findings.
 options:      Fitter options (pass zero-initialized for defaults).
-Returns 0 on success, -1 on bad arguments, -2 if out_buf is too small. */
-ISN CodeFit(const TCodeToken* tokens, ISN token_count,
+Returns 0 on success, -1 on bad arguments, -2 if output_buffer is too small. */
+ISC CodeFit(const TCodeToken* tokens, ISC token_count,
             const CHA* source,
-            CHA* out_buf, IUD out_buf_len,
+            CHA* output_buffer, IUD output_capacity,
             TFittingResult* out_result,
-            TFitting* findings, ISN finding_capacity,
+            TFitting* findings, ISC finding_capacity,
             const TFitterOptions* options);
 
 /* Count indent level at a given token index (by tracking braces).
 Used internally; exposed for the LSP. */
-ISN CodeIndentLevel(const TCodeToken* tokens, ISN token_count, ISN index);
+ISC CodeIndentLevel(const TCodeToken* tokens, ISC token_count, ISC index);
 
 }  //< namespace Code
 }  //< namespace CTK

@@ -127,7 +127,7 @@
   #include "BuildBar.hxx"       // generated — coexists in one TU
 
   ISC main() {
-    static alignas(64) char buf[1 << 30];   // 1 GB arena, caller-owned
+    static alignas(64) CHR buf[1 << 30];   // 1 GB arena, caller-owned
     TJsx<ISC, ISC, DTB, CHR, CHR, IUN> j;
     j.Init(buf, sizeof(buf), ISC(1 << 20));
     ISC ctx = j.NewContext(ISC(16));
@@ -182,7 +182,7 @@
   <b>bold</b> in a text child is baked as the C++ literal "bold" (the
   <b> is a nested element, not text).  A JSX source containing the
   literal string "a & b" in a prop value is baked as the C++ literal
-  "a & b" (ampersand is not a C++ special char).  The renderer will
+  "a & b" (ampersand is not a C++ special CHR).  The renderer will
   escape & to &amp; when emitting HTML.
 
 # 3. Defect List (all confirmed in AGENT_PLAN §2, all in current source)
@@ -224,7 +224,7 @@
 
 # 4. Public API — JsxToCpp (unchanged entry point, additive diagnostics)
 
-  inline ISN JsxToCpp(const CHA* source, ISN source_len,
+  inline ISC JsxToCpp(const CHA* source, ISC source_len,
                       CHA* out_buf, IUD out_buf_len,
                       TJsxTransformResult* out_result)
 
@@ -238,12 +238,12 @@
 
   TJsxTransformResult (existing fields, additive):
     CHA* output;            //< Emitted C++ source (caller-owned buffer).
-    ISN  output_len;        //< Length in bytes (NUL-terminated).
-    ISN  element_count;     //< Number of elements in the JSX tree.
-    ISN  error_count;       //< Number of parse errors (0 or 1 in v1:
+    ISC  output_len;        //< Length in bytes (NUL-terminated).
+    ISC  element_count;     //< Number of elements in the JSX tree.
+    ISC  error_count;       //< Number of parse errors (0 or 1 in v1:
                             //< first error is fatal, parsing stops).
     const CHA* first_error; //< Static message or "".
-    ISN  error_offset;      //< NEW: byte offset of the error in source.
+    ISC  error_offset;      //< NEW: byte offset of the error in source.
                             //< -1 if no error.
 
 # 5. CodeLexer / CodeFit Tooling Adapter (for the verification lane)

@@ -10,7 +10,7 @@ namespace Touch {
 
 /* A group of touch::Parameter(s).
  */
-class LIB_MEMBER Controller {
+class Controller {
  public:
   enum {
     MaxTemplates =

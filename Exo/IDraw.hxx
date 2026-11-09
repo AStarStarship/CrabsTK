@@ -1,18 +1,19 @@
 // Copyright AStarship <https://astarship.net>.
+#pragma once
 #include "IDraw.h"
 namespace CTK {
-namespace Image {
+namespace Exo {
 
-IUN PackColor(const TColor& c) {
+IUN PackColor(const VColor& c) {
   return (IUN)c.a | ((IUN)c.b << 8) | ((IUN)c.g << 16) | ((IUN)c.r << 24);
 }
 
 /* Alpha blend the source color over the destination pixel. */
-static void BlendPixel(CImage& img, ISN x, ISN y, const TColor& src) {
+void BlendPixel(CImage& img, ISC x, ISC y, const VColor& src) {
   if (img.data == nullptr) return;
   if (x < 0 || y < 0 || x >= img.width || y >= img.height) return;
-  if (img.channels != 4) return;  // blending defined for RGBA.
-  ISN idx = (y * img.width + x) * 4;
+  if (img.format != PixelFormat::RGBA8) return;  // blending defined for RGBA8.
+  ISC idx = (y * img.width + x) * 4;
   IUA dr = img.data[idx];
   IUA dg = img.data[idx + 1];
   IUA db = img.data[idx + 2];
@@ -37,8 +38,8 @@ static void BlendPixel(CImage& img, ISN x, ISN y, const TColor& src) {
   img.data[idx + 3] = oa;
 }
 
-void Fill(CImage& img, const TColor& c) {
-  if (img.data == nullptr || img.channels != 4) return;
+void Fill(CImage& img, const VColor& c) {
+  if (img.data == nullptr || img.format != PixelFormat::RGBA8) return;
   IUN px = (IUN)img.width * (IUN)img.height;
   for (IUN i = 0; i < px; ++i) {
     img.data[i * 4] = c.r;
@@ -55,27 +56,27 @@ void Clear(CImage& img) {
   for (IUN i = 0; i < bytes; ++i) img.data[i] = 0;
 }
 
-void PutPixel(CImage& img, ISN x, ISN y, const TColor& c) {
+void PutPixel(CImage& img, ISC x, ISC y, const VColor& c) {
   BlendPixel(img, x, y, c);
 }
 
-void Line(CImage& img, ISN x0, ISN y0, ISN x1, ISN y1, const TColor& c,
-          ISN thickness) {
-  ISN dx = x1 > x0 ? x1 - x0 : x0 - x1;
-  ISN dy = y1 > y0 ? y1 - y0 : y0 - y1;
-  ISN sx = x0 < x1 ? 1 : -1;
-  ISN sy = y0 < y1 ? 1 : -1;
-  ISN err = dx - dy;
+void Line(CImage& img, ISC x0, ISC y0, ISC x1, ISC y1, const VColor& c,
+          ISC thickness) {
+  ISC dx = x1 > x0 ? x1 - x0 : x0 - x1;
+  ISC dy = y1 > y0 ? y1 - y0 : y0 - y1;
+  ISC sx = x0 < x1 ? 1 : -1;
+  ISC sy = y0 < y1 ? 1 : -1;
+  ISC err = dx - dy;
   for (;;) {
     if (thickness <= 1) {
       PutPixel(img, x0, y0, c);
     } else {
-      ISN h = thickness / 2;
-      for (ISN oy = -h; oy <= h; ++oy)
-        for (ISN ox = -h; ox <= h; ++ox) PutPixel(img, x0 + ox, y0 + oy, c);
+      ISC h = thickness / 2;
+      for (ISC oy = -h; oy <= h; ++oy)
+        for (ISC ox = -h; ox <= h; ++ox) PutPixel(img, x0 + ox, y0 + oy, c);
     }
     if (x0 == x1 && y0 == y1) break;
-    ISN e2 = 2 * err;
+    ISC e2 = 2 * err;
     if (e2 > -dy) {
       err -= dy;
       x0 += sx;
@@ -87,24 +88,24 @@ void Line(CImage& img, ISN x0, ISN y0, ISN x1, ISN y1, const TColor& c,
   }
 }
 
-void FillRect(CImage& img, ISN x0, ISN y0, ISN x1, ISN y1, const TColor& c) {
+void FillRect(CImage& img, ISC x0, ISC y0, ISC x1, ISC y1, const VColor& c) {
   if (img.data == nullptr) return;
   if (x0 > x1) {
-    ISN t = x0; x0 = x1; x1 = t;
+    ISC t = x0; x0 = x1; x1 = t;
   }
   if (y0 > y1) {
-    ISN t = y0; y0 = y1; y1 = t;
+    ISC t = y0; y0 = y1; y1 = t;
   }
-  for (ISN y = y0; y <= y1; ++y)
-    for (ISN x = x0; x <= x1; ++x) PutPixel(img, x, y, c);
+  for (ISC y = y0; y <= y1; ++y)
+    for (ISC x = x0; x <= x1; ++x) PutPixel(img, x, y, c);
 }
 
-void FillCircle(CImage& img, ISN cx, ISN cy, ISN r, const TColor& c) {
+void FillCircle(CImage& img, ISC cx, ISC cy, ISC r, const VColor& c) {
   if (r < 0) return;
   // Midpoint circle: step the radius in octants, drawing horizontal spans.
-  ISN x = 0;
-  ISN y = r;
-  ISN d = 3 - 2 * r;
+  ISC x = 0;
+  ISC y = r;
+  ISC d = 3 - 2 * r;
   while (x <= y) {
     Line(img, cx - x, cy + y, cx + x, cy + y, c, 1);
     Line(img, cx - y, cy + x, cx + y, cy + x, c, 1);
@@ -130,5 +131,5 @@ BOL ClipRect(CImage& img, TRect* r) {
   return true;
 }
 
-}  // namespace Image
-}  // namespace CTK
+}  //< namespace Exo
+}  //< namespace CTK

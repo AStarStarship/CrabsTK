@@ -204,7 +204,7 @@ style guide (`~/AStarStarship/ASCIICrabs/__ChimeraPlus.md`).
 ### Naming Summary
 | Element | Convention | Example |
 |---|---|---|
-| Type aliases (fixed-width) | 3-letter CAPS codes | `CHA` char8, `ISC` int32, `IUD` uint64, `BOL` bool, `FPC` float32, `FPD` double64 |
+| Type aliases (fixed-width) | 3-letter CAPS codes | `CHA` char8, `ISC` int32, `IUD` uint64, `BOL` BOL, `FPC` float32, `FPD` double64 |
 | Structs / classes | CamelCase + T(POD)/A(utoject) prefix | `TArray`, `AMap`, `Crabs` |
 | Struct members (mutable) | lower_snake_case | `socket_bytes`, `header_bytes` |
 | Struct members (immutable) | CamelCase | `StackTotalMin`, `ColumnWidth` |

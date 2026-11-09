@@ -6,7 +6,7 @@
 namespace CTK {
 namespace Web {
 // C++23 HTTP Request representation for ASCIICrabs Web Framework
-// Uses ASCIICrabs types: BOL (bool), ISZ (size types), CHA (strings)
+// Uses ASCIICrabs types: BOL (BOL), ISZ (size types), CHA (strings)
 // Single-translation-unit (STU) compatible
 
 /// HTTP Method enumeration
@@ -68,7 +68,7 @@ struct HttpResponse {
 
 /// Route parameter match result
 struct RouteMatch {
-  bool matched;
+  BOL matched;
   CHA path[512];
   ISZ path_len;
   CHA params_keys[8][64];

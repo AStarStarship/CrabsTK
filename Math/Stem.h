@@ -42,18 +42,18 @@ inline FPD2 IsoProject(const FPD3& p, FPD* depth) {
    used for per-point rotation in extended visualizations. */
 inline FPD3 EulerTo3D(FPD azimuth, FPD polar, FPD twist) {
   (void)twist;
-  FPD sp = FPDsin(polar);
+  FPD sp = Sine(polar);
   return FPD3(
-    FPDCos(azimuth) * sp,
-    FPDsin(azimuth) * sp,
-    FPDCos(polar)
+    Cosine(azimuth) * sp,
+    Sine(azimuth) * sp,
+    Cosine(polar)
   );
 }
 
 /* Normalize a vector in-place to unit length. Returns the original norm,
    or 0 if the vector is zero. */
 inline FPD Normalize3(FPD3* p) {
-  FPD n = FPDSquareRoot(p->x * p->x + p->y * p->y + p->z * p->z);
+  FPD n = SquareRoot(p->x * p->x + p->y * p->y + p->z * p->z);
   if (n > 0) {
     FPD inv = 1.0 / n;
     *p = (*p) * inv;
@@ -84,7 +84,7 @@ inline ISB4 RankColor(IUD rank, IUD n) {
 }
 
 /* Point size by Zipf rank: rank 0 = 4px, high rank = 1px. */
-inline ISN RankSize(IUD rank, IUD n) {
+inline ISC RankSize(IUD rank, IUD n) {
   if (rank < 64) return 4;
   if (rank < 512) return 2;
   (void)n;
@@ -92,10 +92,10 @@ inline ISN RankSize(IUD rank, IUD n) {
 }
 
 /* Map normalized 3D (-1..1) to pixel coords within a rect. */
-inline void NormToPixel(FPD nx, FPD ny, ISN x0, ISN y0, ISN x1, ISN y1,
-                        ISN* px, ISN* py) {
-  *px = x0 + (ISN)((nx * 0.5 + 0.5) * (x1 - x0));
-  *py = y0 + (ISN)((ny * 0.5 + 0.5) * (y1 - y0));
+inline void NormToPixel(FPD nx, FPD ny, ISC x0, ISC y0, ISC x1, ISC y1,
+                        ISC* px, ISC* py) {
+  *px = x0 + (ISC)((nx * 0.5 + 0.5) * (x1 - x0));
+  *py = y0 + (ISC)((ny * 0.5 + 0.5) * (y1 - y0));
 }
 
 /* ── Binary I/O ───────────────────────────────────────────────────

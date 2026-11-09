@@ -1,5 +1,5 @@
 // Copyright AStarship <https://astarship.net>.
-#if _Seam >= Release
+#if _Seam >= _CrabsTKWebRelease
 #include "01.Core.hxx"
 #include "02.Release.hxx"
 namespace CTKWebTest {
@@ -7,7 +7,7 @@ using namespace ::_;
 using namespace CTK;
 
 inline const CHR* Main(const CHR* args) {
-#if _Seam == Release
+#if _Seam == _CrabsTKWebRelease
   return Release(args);
 #else
   return TTestTree<Core>(args);

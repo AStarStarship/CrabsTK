@@ -18,7 +18,7 @@ namespace Touch {
     Controls are stored as pointers in a linear linked list to optimize for
    speed.
 */
-class LIB_MEMBER ButtonMacro : public Parameter<ISC>, public Button {
+class ButtonMacro : public Parameter<ISC>, public Button {
  public:
   /* Default constructor creates a ButtonMacro with no controls.
       A ButtonMacro without any controls triggers system functions only.*/

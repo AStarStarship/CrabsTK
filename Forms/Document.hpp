@@ -8,9 +8,13 @@ namespace Forms {
 
 class Document {
  public:
-  Document();
+  Document() {
 
-  ISN Run(ISN arg_count, CHA** args);
+  }
+
+  ISC Run(ISC arg_count, CHA** args) {
+    return 0;
+  }
 
   template<typename Printer>
   Printer& PrintTo(Printer& p) {

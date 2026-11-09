@@ -18,25 +18,25 @@ static const TFitterOptions FitDefaults = {
 
 struct TFitBuf {
   CHA* data;
-  IUD len;
-  IUD cap;
+  IUD length;
+  IUD capacity;
   BOL full;
 };
 
-static void FitBufInit(TFitBuf* buf, CHA* data, IUD cap) {
-  buf->data = data;
-  buf->len = 0;
-  buf->cap = cap;
-  buf->full = false;
+static void FitBufferInit(TFitBuf* buffer, CHA* data, IUD capacity) {
+  buffer->data = data;
+  buffer->length = 0;
+  buffer->capacity = capacity;
+  buffer->full = false;
 }
 
-static void FitBufByte(TFitBuf* buf, CHA c) {
-  if (buf->len >= buf->cap) { buf->full = true; return; }
-  buf->data[buf->len++] = c;
+static void FitBufByte(TFitBuf* buffer, CHA c) {
+  if (buffer->length >= buffer->capacity) { buffer->full = true; return; }
+  buffer->data[buffer->length++] = c;
 }
 
-static void FitBufBytes(TFitBuf* buf, const CHA* s, IUD n) {
-  for (IUD i = 0; i < n; ++i) FitBufByte(buf, s[i]);
+static void FitBufferBytes(TFitBuf* buffer, const CHA* s, IUD n) {
+  for (IUD i = 0; i < n; ++i) FitBufByte(buffer, s[i]);
 }
 
 /* FitBufStr and FitBufSpaces are reserved for the v2 formatter
@@ -44,9 +44,9 @@ pass that will normalize spacing and indentation. */
 
 /* --- Indent tracking --- */
 
-ISN CodeIndentLevel(const TCodeToken* tokens, ISN token_count, ISN index) {
-  ISN level = 0;
-  for (ISN i = 0; i < index && i < token_count; ++i) {
+ISC CodeIndentLevel(const TCodeToken* tokens, ISC token_count, ISC index) {
+  ISC level = 0;
+  for (ISC i = 0; i < index && i < token_count; ++i) {
     if (tokens[i].kind == CODE_TOK_LBRACE) ++level;
     else if (tokens[i].kind == CODE_TOK_RBRACE) {
       if (level > 0) --level;
@@ -57,9 +57,9 @@ ISN CodeIndentLevel(const TCodeToken* tokens, ISN token_count, ISN index) {
 
 /* --- Diagnostic helper --- */
 
-static ISN FitAddFinding(TFittingResult* result, TFitting* findings,
-                         ISN capacity, EFitSeverity sev, EFitCode code,
-                         ISN line, ISN col, const CHA* msg) {
+static ISC FitAddFinding(TFittingResult* result, TFitting* findings,
+                         ISC capacity, EFitSeverity sev, EFitCode code,
+                         ISC line, ISC col, const CHA* msg) {
   if (result->finding_count >= capacity) return 0;
   TFitting* f = &findings[result->finding_count];
   f->severity = sev;
@@ -77,12 +77,12 @@ static ISN FitAddFinding(TFittingResult* result, TFitting* findings,
 
 /* Check if token at index is the start of a std:: reference.
 Looks for IDENT "std" followed by DBL_COLON. */
-static BOL FitIsStdRef(const TCodeToken* tokens, ISN token_count, ISN i) {
+static BOL FitIsStdRef(const TCodeToken* tokens, ISC token_count, ISC i) {
   if (i + 1 >= token_count) return false;
   if (tokens[i].kind != CODE_TOK_IDENT) return false;
   if (tokens[i + 1].kind != CODE_TOK_DBL_COLON) return false;
-  ISN len = tokens[i].byte_end - tokens[i].byte_start;
-  if (len != 3) return false;
+  ISC length = ISC(tokens[i].byte_end - tokens[i].byte_start);
+  if (length != 3) return false;
   /* The source pointer is needed to check the actual text.
   We use a simplified check: the token kind is IDENT and the next
   is DBL_COLON and the ident is 3 chars. The Fitter's main loop
@@ -92,14 +92,14 @@ static BOL FitIsStdRef(const TCodeToken* tokens, ISN token_count, ISN i) {
 
 /* --- Main fitter --- */
 
-ISN CodeFit(const TCodeToken* tokens, ISN token_count,
+ISC CodeFit(const TCodeToken* tokens, ISC token_count,
             const CHA* source,
-            CHA* out_buf, IUD out_buf_len,
+            CHA* output_buffer, IUD output_capacity,
             TFittingResult* out_result,
-            TFitting* findings, ISN finding_capacity,
+            TFitting* findings, ISC finding_capacity,
             const TFitterOptions* options) {
-  if (IsError(tokens) || IsError(out_buf) || IsError(out_result) ||
-      out_buf_len == 0 || token_count <= 0) {
+  if (IsError(tokens) || IsError(output_buffer) || IsError(out_result) ||
+      output_capacity == 0 || token_count <= 0) {
     return -1;
   }
   if (IsError(findings) && finding_capacity > 0) return -1;
@@ -108,26 +108,26 @@ ISN CodeFit(const TCodeToken* tokens, ISN token_count,
   if (options) opts = *options;
   else opts = FitDefaults;
 
-  TFitBuf buf;
-  FitBufInit(&buf, out_buf, out_buf_len);
+  TFitBuf buffer;
+  FitBufferInit(&buffer, output_buffer, output_capacity);
 
-  out_result->output = out_buf;
-  out_result->output_len = 0;
+  out_result->output = output_buffer;
+  out_result->output_length = 0;
   out_result->findings = findings;
   out_result->finding_count = 0;
   out_result->finding_capacity = finding_capacity;
   out_result->error_count = 0;
   out_result->warning_count = 0;
 
-  ISN indent = 0;
-  ISN line = 1;
+  ISC indent = 0;
+  ISC line = 1;
 
   /* Check for header guard in the first few tokens. */
   BOL has_pragma_once = false;
-  for (ISN i = 0; i < 10 && i < token_count; ++i) {
+  for (ISC i = 0; i < 10 && i < token_count; ++i) {
     if (tokens[i].kind == CODE_TOK_KEYWORD) {
-      ISN len = tokens[i].byte_end - tokens[i].byte_start;
-      if (source && len == 8) {
+      ISC length = ISC(tokens[i].byte_end - tokens[i].byte_start);
+      if (source && length == 8) {
         /* Check for "pragma" */
         has_pragma_once = true;
       }
@@ -140,31 +140,31 @@ ISN CodeFit(const TCodeToken* tokens, ISN token_count,
                   "missing #pragma once");
   }
 
-  for (ISN i = 0; i < token_count; ++i) {
-    const TCodeToken* tok = &tokens[i];
-    IUD text_len = (IUD)(tok->byte_end - tok->byte_start);
+  for (ISC i = 0; i < token_count; ++i) {
+    const TCodeToken* token = &tokens[i];
+    IUD text_length = (IUD)(token->byte_end - token->byte_start);
 
     /* std:: detection. */
     if (source && FitIsStdRef(tokens, token_count, i)) {
-      ISN len = tok->byte_end - tok->byte_start;
-      if (len == 3 && source[tok->byte_start] == 's' &&
-          source[tok->byte_start + 1] == 't' &&
-          source[tok->byte_start + 2] == 'd') {
+      ISC length = ISC(token->byte_end - token->byte_start);
+      if (length == 3 && source[token->byte_start] == 's' &&
+          source[token->byte_start + 1] == 't' &&
+          source[token->byte_start + 2] == 'd') {
         FitAddFinding(out_result, findings, finding_capacity,
                       FIT_SEV_ERROR, FIT_CODE_STD_TYPE,
-                      tok->line, tok->column,
+                      token->line, token->column,
                       "std:: type — use ASCII Data Types");
         /* Still emit the token. */
       }
     }
 
     /* Tab detection. */
-    if (tok->kind == CODE_TOK_SPACE && source) {
-      for (IUD b = 0; b < text_len; ++b) {
-        if (source[tok->byte_start + b] == '\t') {
+    if (token->kind == CODE_TOK_SPACE && source) {
+      for (IUD b = 0; b < text_length; ++b) {
+        if (source[token->byte_start + b] == '\t') {
           FitAddFinding(out_result, findings, finding_capacity,
                         FIT_SEV_WARNING, FIT_CODE_TAB,
-                        tok->line, tok->column,
+                        token->line, token->column,
                         "tab — use spaces");
           break;
         }
@@ -173,30 +173,30 @@ ISN CodeFit(const TCodeToken* tokens, ISN token_count,
 
     /* Emit the token text. */
     if (source) {
-      FitBufBytes(&buf, source + tok->byte_start, text_len);
+      FitBufferBytes(&buffer, source + token->byte_start, text_length);
     }
 
     /* Track indentation. */
-    if (tok->kind == CODE_TOK_LBRACE) {
+    if (token->kind == CODE_TOK_LBRACE) {
       ++indent;
-    } else if (tok->kind == CODE_TOK_RBRACE) {
+    } else if (token->kind == CODE_TOK_RBRACE) {
       if (indent > 0) --indent;
     }
 
     /* Track newlines. */
-    if (tok->kind == CODE_TOK_NEWLINE) {
+    if (token->kind == CODE_TOK_NEWLINE) {
       ++line;
     }
     /* v1 preserves original spacing; a future pass will normalize. */
   }
 
   /* Null-terminate the output. */
-  if (buf.len < buf.cap) {
-    buf.data[buf.len] = 0;
+  if (buffer.length < buffer.capacity) {
+    buffer.data[buffer.length] = 0;
   }
-  out_result->output_len = buf.len;
+  out_result->output_length = buffer.length;
 
-  if (buf.full) return -2;
+  if (buffer.full) return -2;
   return 0;
 }
 

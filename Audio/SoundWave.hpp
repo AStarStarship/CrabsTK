@@ -8,9 +8,9 @@ namespace CTK {
 
 template <typename IS>
 void TSoundStore(const CHR* filename, const IS* sample_buffer,
-                 ISN sample_count, ISN channels, ISN bit_depth = 16,
-                 ISN sample_rate = 44100) {
-  ISN byte_count = (sample_count * channels) * sizeof(IS);
+                 ISC sample_count, ISC channels, ISC bit_depth = 16,
+                 ISC sample_rate = 44100) {
+  ISC byte_count = (sample_count * channels) * sizeof(IS);
 
   SoundWave aw;
   aw.riff_id[0] = 'R';

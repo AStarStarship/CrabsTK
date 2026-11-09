@@ -3,12 +3,19 @@
 #ifndef CRABSTK_DATA_DATASET_HXX
 #define CRABSTK_DATA_DATASET_HXX
 #include "Dataset.h"
-#if _Seam >= _CrabsTKDataRecord
+#if !defined(_WIN32)
+#include <errno.h>   /* errno, EINTR */
+#include <fcntl.h>   /* open, O_WRONLY/O_CREAT/O_APPEND/O_CLOEXEC */
+#include <unistd.h>  /* read, write, close */
+#endif
+#if _Seam >= _CrabsTKDataDataset
 #if defined(_WIN32)
 #error Dataset v1 file adapter is POSIX; Record codec is platform-independent.
 #else
 namespace CTK {
 namespace Data {
+
+namespace DatasetDetail {
 
 RecordStatus Read(ISC fd, IUA* output, IUC bytes) {
   IUC received = 0;

@@ -81,7 +81,7 @@ void TestBasicLoad() {
   _Check("missing key numeric returns EnvNotFound", st == EnvNotFound);
 
   // TEnvFind.
-  ISN idx = TEnvFind<8>(table, "SLAVE_PORT");
+  ISC idx = TEnvFind<8>(table, "SLAVE_PORT");
   _Check("TEnvFind finds SLAVE_PORT", idx >= 0);
   idx = TEnvFind<8>(table, "NO_SUCH_KEY");
   _Check("TEnvFind missing returns -1", idx == -1);
@@ -98,8 +98,8 @@ void TestCapacity() {
   CHA buf[2048];
   buf[0] = '\0';
   // Write 10 entries but table capacity is 4.
-  int offset = 0;
-  for (int i = 0; i < 10; ++i) {
+  ISC offset = 0;
+  for (ISC i = 0; i < 10; ++i) {
     offset += snprintf(buf + offset, sizeof(buf) - (size_t)offset, "KEY_%d=val%d\n", i, i);
   }
   CHA* path = WriteTempEnv(buf);
@@ -135,7 +135,7 @@ void TestExport() {
   EnvStatus st = TEnvLoad<4>(path, &table);
   _Check("export load OK", st == EnvOK && table.count == 3);
 
-  ISN exported = TEnvExport<4>(table);
+  ISC exported = TEnvExport<4>(table);
   _Check("exported 2 (existing skipped)", exported == 2);
 
   const CHA* h = getenv("CRABSTK_TEST_HOST");

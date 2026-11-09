@@ -9,16 +9,16 @@ namespace CTK {
 namespace Touch {
 
 /*
-class LIB_MEMBER ButtonMacro;
-class LIB_MEMBER MacroEvent;
-class LIB_MEMBER Widget;
-class LIB_MEMBER ControlsPage; */
+class ButtonMacro;
+class MacroEvent;
+class Widget;
+class ControlsPage; */
 
 /* A ButtonWidget is a ButtonMacro that has the ability to change the Widget
 on a ControlSurfaces.
 A Widget button is capable of changing the Widget on a ControlSurface and
 triggering a MacroEvent. */
-class LIB_MEMBER ButtonWidget : public ButtonMacro {
+class ButtonWidget : public ButtonMacro {
  public:
   /* Constructor. */
   ButtonWidget(const CHA* HMIComponent = const CHA* ::empty,

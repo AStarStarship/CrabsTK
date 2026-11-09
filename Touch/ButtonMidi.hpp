@@ -9,10 +9,10 @@
 namespace CTK {
 namespace Touch {
 
-class LIB_MEMBER ControlMidi;
+class ControlMidi;
 
 /* A button that triggers a MIDIEvent. */
-class LIB_MEMBER TButtonMIDI : public ControlMidi, public Button {
+class TButtonMIDI : public ControlMidi, public Button {
  public:
   /* Constructor. */
   TButtonMIDI(AString newLabel = "", ISC cc = 0, ISC channel = 0, ISC value = 0,

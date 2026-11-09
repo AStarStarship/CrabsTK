@@ -54,7 +54,7 @@ def ParseSeamsH(path):
         continue
       m = _DEFINE_RE.match(line)
       if m:
-        macro, num = m.group(1), int(m.group(2))
+        macro, num = m.group(1), ISC(m.group(2))
         # Skip SEAM_N itself (a pointer, not a numbered seam) and guards.
         if macro == "SEAM_N" or macro.endswith("_SEAMS_H") or macro == "PACKAGE_CONFIGURATION":
           continue
@@ -283,7 +283,7 @@ def Main():
   project_dir = os.path.dirname(seams_dir)
   project = sys.argv[2] if len(sys.argv) > 2 else os.path.basename(project_dir)
   mode = sys.argv[3] if len(sys.argv) > 3 else "igeek"
-  base_offset = int(sys.argv[4]) if len(sys.argv) > 4 else 0
+  base_offset = ISC(sys.argv[4]) if len(sys.argv) > 4 else 0
 
   seams, release = ParseSeamsH(seams_h)
   world_map = RecoverWorldNames(project_dir)

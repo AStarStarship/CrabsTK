@@ -27,7 +27,7 @@ def first_arg_label(argexpr):
   a = argexpr.strip()
   # Strip a leading '<< ' and any cast.
   a = re.sub(r'^<<\s*', '', a)
-  m = re.match(r'^\((?:double|int|IUD|ISC|IUC|FPC|FPD|unsigned long)\)\s*([\w.]+)', a)
+  m = re.match(r'^\((?:double|ISC|IUD|ISC|IUC|FPC|FPD|unsigned long)\)\s*([\w.]+)', a)
   if m:
     name = m.group(1)
   else:

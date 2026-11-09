@@ -8,7 +8,7 @@ namespace CTK {
 namespace Touch {
 
 /* A ADSR filter. */
-class LIB_MEMBER ADSR : public Op {
+class ADSR : public Op {
  public:
   /* Constructs an ADSR with all zeroed out controls. */
   ADSR();

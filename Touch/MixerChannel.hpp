@@ -8,7 +8,7 @@ namespace CTK {
 namespace Touch {
 
 /* A mixer channel Operation. */
-class LIB_MEMBER MixerChannel : public Op {
+class MixerChannel : public Op {
   NONCOPYABLE(MixerChannel)
  public:
   enum {

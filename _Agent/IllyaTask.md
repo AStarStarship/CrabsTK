@@ -47,11 +47,11 @@ proposed narrow core patch to the integrator; do not silently edit List.hpp.
    reads must not reinterpret unrelated bytes. Audit every compound helper for
    lost allocation errors, counter increments after failure and partial state.
 3. Fix scalar update widths and type transitions: Set currently writes four bytes
-   for a stored one-byte char. Reuse core type machinery. Reject unsupported
+   for a stored one-byte CHR. Reuse core type machinery. Reject unsupported
    transitions explicitly if safe resize is unavailable; keep old data intact.
    Do not introduce an unreviewed second type encoding.
 4. Make supported index and character widths explicit. PutString currently
-   allocates n+1 bytes for n+1 CHS elements; KeyFmt casts static char storage to
+   allocates n+1 bytes for n+1 CHS elements; KeyFmt casts static CHR storage to
    CHS*. Prefer an honest initial UTF-8 contract over fake generic support.
    Avoid a shared static formatting buffer. Retain existing public signatures
    where possible; report proposed error/API changes to Mary/Captain first.

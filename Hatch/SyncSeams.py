@@ -70,7 +70,7 @@ def ScanSeams(project_dir):
     for f in sorted(os.listdir(mod_path)):
       m = re.match(r"^(\d{2})\.(\w+)\.hxx$", f)
       if m:
-        files.append((int(m.group(1)), m.group(2), f))
+        files.append((ISC(m.group(1)), m.group(2), f))
     if not files:
       continue
     files.sort()
@@ -216,7 +216,7 @@ def _ParseScalar(val):
     return val.lower() == "true"
   # Integer.
   try:
-    return int(val)
+    return ISC(val)
   except ValueError:
     pass
   return val
@@ -397,7 +397,7 @@ def GenerateMainCpp(project, ordered_seams, release_seam, mode):
 
 using namespace ::_;
 
-ISN main(ISN arg_count, CHA** args) {{
+ISC main(ISC arg_count, CHA** args) {{
   const CHA* argss = ArgsToString(arg_count, args);
   return SeamResult({project}Tests(argss));
 }}
@@ -419,7 +419,7 @@ ISN main(ISN arg_count, CHA** args) {{
 {module_includes}
 using namespace CTK;
 using namespace CTK;
-ISN main(ISN arg_count, CHA** args) {{
+ISC main(ISC arg_count, CHA** args) {{
   return TTestTree<{test_fns}>(arg_count, args);
 }}
 """
@@ -427,7 +427,7 @@ ISN main(ISN arg_count, CHA** args) {{
 #include <_Config.h>
 #include <_Tests.hxx>
 using namespace ::_;
-ISN main(ISN arg_count, CHA** args) {{
+ISC main(ISC arg_count, CHA** args) {{
   return TTestTree<ProjectTests>(arg_count, args);
 }}
 """
@@ -477,7 +477,7 @@ namespace {{
 {tree_entries}
 }};
 }}
-ISN main(ISN arg_count, CHA** args) {{
+ISC main(ISC arg_count, CHA** args) {{
   return SeamTreeTest(arg_count, args, CrabsTkTree,
                       sizeof(CrabsTkTree) / sizeof(CrabsTkTree[0]));
 }}
@@ -598,8 +598,11 @@ def LoadDependsOn(project_dir, depends_on):
   ordered = OrderSeams(bseams)
   # Mark each base seam with its module so the table generator can namespace
   # the includes; base seams are consumed as the standard-library layer.
+  # Base seam names ARE the macro names (_CrabsCore, _CrabsIToS, ...) so
+  # set macro=name for uniform access downstream.
   for s in ordered:
     s.setdefault("module", bdata.get("project", "Base"))
+    s.setdefault("macro", s["name"])
     s["_base"] = True
   return ordered
 
@@ -623,7 +626,7 @@ def GenerateCrabstkSeamsCpp(project, base_seams, module_info, release_seam,
   table = []  # (num, macro, module, is_release)
   for s in base_seams:
     num += 1
-    macro = s["name"]
+    macro = s["macro"]
     table.append((num, macro, s.get("module", "Base"), s is release_seam))
     lines.append(f"#define {macro}\t\t\t{num}")
   for mi in module_info:
@@ -631,14 +634,14 @@ def GenerateCrabstkSeamsCpp(project, base_seams, module_info, release_seam,
       # Dormant: numbered (stable) but excluded from the rollup includes.
       for s in mi["seams"]:
         num += 1
-        table.append((num, s["name"], mi["name"], s is release_seam))
-        lines.append(f"#define {s['name']}\t\t\t{num}")
+        table.append((num, s["macro"], mi["name"], s is release_seam))
+        lines.append(f"#define {s['macro']}\t\t\t{num}")
       continue
     for s in mi["seams"]:
       num += 1
-      table.append((num, s["name"], mi["name"], s is release_seam))
-      lines.append(f"#define {s['name']}\t\t\t{num}")
-  release_macro = release_seam["name"]
+      table.append((num, s["macro"], mi["name"], s is release_seam))
+      lines.append(f"#define {s['macro']}\t\t\t{num}")
+  release_macro = release_seam["macro"]
   lines.append(f"#define _SeamN {release_macro}")
   lines.append("")
   # Config + core machine + test primitives.
@@ -658,7 +661,7 @@ def GenerateCrabstkSeamsCpp(project, base_seams, module_info, release_seam,
   lines.append("")
   lines.append("using namespace CTK;")
   lines.append("")
-  lines.append("ISN main(ISN arg_count, CHA** args) {")
+  lines.append("ISC main(ISC arg_count, CHA** args) {")
   lines.append("  const CHA* argss = ArgsToString(arg_count, args);")
   lines.append("  #if _Seam == _SeamN")
   lines.append("  return SeamResult(CTKTest::Release(argss));")
@@ -683,10 +686,10 @@ def GenerateModuleSeamsHxx(module, ordered_m):
   name = module
   incs = "\n".join(f'#include "{s["file"]}"' for s in ordered_m if s.get("file"))
   # The module's own release seam is its last seam.
-  rel_macro = ordered_m[-1]["name"]
+  rel_macro = ordered_m[-1]["macro"]
   # The non-release test functions, in seam order (Core first), by short name.
   fns = [TestFunctionNameV2(None, name, s["name"]) for s in ordered_m
-         if s["name"] != rel_macro]
+         if s["macro"] != rel_macro]
   fn_list = ", ".join(fns)
   lines = ["// Copyright AStarship <https://astarship.net>."]
   lines.append(f"#if _Seam >= {rel_macro}")
@@ -789,12 +792,12 @@ def GenerateModuleSeamsCpp(project, base_seams, module_info, mi, release_seam):
   num = 0
   for s in base_seams:
     num += 1
-    lines.append(f"#define {s['name']}\t\t\t{num}")
+    lines.append(f"#define {s['macro']}\t\t\t{num}")
   for other in module_info:
     for s in other["seams"]:
       num += 1
-      lines.append(f"#define {s['name']}\t\t\t{num}")
-  lines.append(f"#define _SeamN {release_seam['name']}")
+      lines.append(f"#define {s['macro']}\t\t\t{num}")
+  lines.append(f"#define _SeamN {release_seam['macro']}")
   lines.append("")
   lines.append("#include <_Config.h>")
   lines.append("#include <ASCIICrabs/_Config.h>")
@@ -804,7 +807,7 @@ def GenerateModuleSeamsCpp(project, base_seams, module_info, mi, release_seam):
   lines.append("")
   lines.append("using namespace CTK;")
   lines.append("")
-  lines.append("ISN main(ISN arg_count, CHA** args) {")
+  lines.append("ISC main(ISC arg_count, CHA** args) {")
   lines.append("  const CHA* argss = ArgsToString(arg_count, args);")
   lines.append(f"  return SeamResult(CTK{name}Test::Main(argss));")
   lines.append("}")
@@ -817,7 +820,7 @@ def GenerateNumberedHxx(module, seam, release_seam, is_release):
   include, the debug/release gate, the test function. No AUTO-GENERATED
   stub, no SYNC-KEEP markers, no placeholder comments."""
   name = module
-  macro = seam["name"]
+  macro = seam["macro"]
   fn = TestFunctionNameV2(None, name, seam["name"])
   lines = ["// Copyright AStarship <https://astarship.net>.", "#pragma once"]
   if is_release:
@@ -905,7 +908,7 @@ def SyncCrabstk(project_dir, data, mode, output_dir=None):
         "name": name,
         "folder": folder,
         "seams": ordered_m,
-        "dormant": bool(m.get("dormant")),
+        "dormant": BOL(m.get("dormant")),
         "mdata": mdata,
     })
 
@@ -1028,7 +1031,7 @@ def SyncModules(project_dir, data, mode):
         "name": name,
         "folder": folder,
         "seams": ordered_m,
-        "dormant": bool(m.get("dormant")),
+        "dormant": BOL(m.get("dormant")),
         "mdata": mdata,
     })
 
@@ -1404,7 +1407,7 @@ def GenerateIgeekSeamsCpp(project, ordered_seams, release_seam, base_offset,
   lines.append("")
   lines.append("using namespace CTK;")
   lines.append("")
-  lines.append("ISN main(ISN arg_count, CHA** args) {")
+  lines.append("ISC main(ISC arg_count, CHA** args) {")
   lines.append("  const CHA* argss = ArgsToString(arg_count, args);")
   lines.append("  #if SEAM == SEAM_N")
   lines.append("  return SeamResult(iGeekTest::iGeekRelease(argss));")
@@ -1446,7 +1449,7 @@ def SyncIgeek(project_dir, data, mode):
   # top of. iGeek = 23 (CRABS_* is 1..23). Read from the ASCIICrabs seam
   # table (the one the project's _Seams.h includes) so the iGeek block starts
   # at base+1, not 1. Fall back to the data's base_offset, else 0.
-  base_offset = int(data.get("base_offset", 0))
+  base_offset = ISC(data.get("base_offset", 0))
   if base_offset == 0:
     # Read from _Seams.cpp first (the new self-contained TU), fall back to
     # _Seams.h (the legacy separate header).
@@ -1457,7 +1460,7 @@ def SyncIgeek(project_dir, data, mode):
         with open(asc_seams) as _f:
           _crabs = _re.findall(r"#define\s+CRABS_[A-Z0-9_]+\s+(\d+)", _f.read())
           if _crabs:
-            base_offset = max(int(x) for x in _crabs)
+            base_offset = max(ISC(x) for x in _crabs)
             break
 
   # Build the global all_seams + module_info (same logic as SyncModules, but
@@ -1495,7 +1498,7 @@ def SyncIgeek(project_dir, data, mode):
         "name": name,
         "folder": folder,
         "seams": ordered_m,
-        "dormant": bool(m.get("dormant")),
+        "dormant": BOL(m.get("dormant")),
         "mdata": mdata,
     })
 

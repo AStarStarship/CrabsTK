@@ -7,14 +7,14 @@
 namespace CTK {
 namespace Touch {
 
-class LIB_MEMBER Mixer;
-class LIB_MEMBER MixerChannel;
+class Mixer;
+class MixerChannel;
 
 /* Class that represents a page of mixer channels on the Symmetry Live!
 A MixerPage stores 8 TemplatePages in an array. The user can switch through
 banks of pages on the mixer. The mixer can either be sorted in ascending
 track index order or the page banks can be customized to make buses. */
-class LIB_MEMBER MixerPage {
+class MixerPage {
   public:
 
   /* Constructor. */

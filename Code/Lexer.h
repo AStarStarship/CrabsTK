@@ -106,17 +106,17 @@ line/column for diagnostics. The text is source + byte_start ..
 byte_end (caller reads it, no copy). */
 struct TCodeToken {
   IUB kind;         //< ECodeToken.
-  ISN byte_start;   //< 0-based offset into source.
-  ISN byte_end;     //< 0-based, exclusive.
-  ISN line;         //< 1-based line number.
-  ISN column;       //< 1-based byte column from line start.
+  ISC byte_start;   //< 0-based offset into source.
+  ISC byte_end;     //< 0-based, exclusive.
+  ISC line;         //< 1-based line number.
+  ISC column;       //< 1-based byte column from line start.
 };
 
 /* Token span: a half-open range [first, last) into a token array.
 Used by the Fitter to select regions for reformatting. */
 struct TCodeSpan {
-  ISN first;
-  ISN last;
+  ISC first;
+  ISC last;
 };
 
 /* Lexer state. The source pointer is read-only; the token array is
@@ -124,20 +124,20 @@ caller-owned. No heap allocation. The lexer tracks line/column so
 diagnostics can point at the right position. */
 struct TCodeLexer {
   const CHA* source;
-  IUD source_len;
-  ISN pos;              //< Current byte offset.
-  ISN line;             //< Current line (1-based).
-  ISN column;           //< Current column (1-based).
+  IUD source_length;
+  ISC pos;              //< Current byte offset.
+  ISC line;             //< Current line (1-based).
+  ISC column;           //< Current column (1-based).
   TCodeToken* tokens;   //< Caller-owned array.
-  ISN token_count;      //< Tokens produced so far.
-  ISN token_capacity;   //< Capacity of the tokens array.
+  ISC token_count;      //< Tokens produced so far.
+  ISC token_capacity;   //< Capacity of the tokens array.
   BOL full;             //< True when tokens array is full (next token dropped).
 };
 
 /* Initialize the lexer. The token array must be pre-allocated.
 Returns 0 on success, -1 on bad arguments. */
-ISN CodeLexerInit(TCodeLexer* lexer, const CHA* source, IUD source_len,
-                  TCodeToken* tokens, ISN token_capacity);
+ISC CodeLexerInit(TCodeLexer* lexer, const CHA* source, IUD source_length,
+                  TCodeToken* tokens, ISC token_capacity);
 
 /* Advance the lexer by one token. Writes the token into
 tokens[token_count] and increments token_count. Returns the token
@@ -146,8 +146,9 @@ sets full=true and returns CODE_TOK_EOF without advancing. */
 IUB CodeLexerNext(TCodeLexer* lexer);
 
 /* Check if a string is a C++ keyword. Case-sensitive, exact match.
-Used by CodeLexerNext to classify ident vs keyword. */
-BOL CodeIsKeyword(const CHA* text, ISN len);
+Used by CodeLexerNext to classify ident vs keyword. `length` is a length,
+so it is ISC (pinned 32-bit) rather than the adaptive ISC. */
+BOL CodeIsKeyword(const CHA* text, ISC length);
 
 /* Get the spelling of a punctuation token (e.g. "&&" for CODE_TOK_AND).
 Returns nilp for non-punctuation tokens. */

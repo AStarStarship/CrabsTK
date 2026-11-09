@@ -3,39 +3,39 @@
 namespace CTK {
 namespace Plot {
 
-// TAxis
-TAxis::TAxis() = default;
+// Axis
+Axis::Axis() = default;
 
-void TAxis::SetRect(ISN x0, ISN y0, ISN x1, ISN y1) {
+void Axis::SetRect(ISC x0, ISC y0, ISC x1, ISC y1) {
   x0_ = x0;
   y0_ = y0;
   x1_ = x1;
   y1_ = y1;
 }
-void TAxis::SetXRange(FPD lo, FPD hi) {
+void Axis::SetXRange(FPD lo, FPD hi) {
   range_.xmin = lo;
   range_.xmax = hi;
 }
-void TAxis::SetYRange(FPD lo, FPD hi) {
+void Axis::SetYRange(FPD lo, FPD hi) {
   range_.ymin = lo;
   range_.ymax = hi;
 }
-ISN TAxis::DataToPixX(FPD fx) const {
+ISC Axis::DataToPixX(FPD fx) const {
   if (range_.xmax == range_.xmin) return (x0_ + x1_) / 2;
   FPD t = (fx - range_.xmin) / (range_.xmax - range_.xmin);
-  return x0_ + (ISN)(t * (x1_ - x0_));
+  return x0_ + (ISC)(t * (x1_ - x0_));
 }
-ISN TAxis::DataToPixY(FPD fy) const {
+ISC Axis::DataToPixY(FPD fy) const {
   if (range_.ymax == range_.ymin) return (y0_ + y1_) / 2;
   FPD t = (fy - range_.ymin) / (range_.ymax - range_.ymin);
   // y is flipped: data max is at the top (small pixel y).
-  return y1_ - (ISN)(t * (y1_ - y0_));
+  return y1_ - (ISC)(t * (y1_ - y0_));
 }
 
-void AutoFit(TAxis& ax, const TSeries2D& s) {
+void AutoFit(Axis& ax, const Series2D& s) {
   if (s.x == nullptr || s.y == nullptr || s.count == 0) return;
   FPD xlo = s.x[0], xhi = s.x[0], ylo = s.y[0], yhi = s.y[0];
-  for (ISN i = 1; i < s.count; ++i) {
+  for (ISC i = 1; i < s.count; ++i) {
     if (s.x[i] < xlo) xlo = s.x[i];
     if (s.x[i] > xhi) xhi = s.x[i];
     if (s.y[i] < ylo) ylo = s.y[i];
@@ -49,20 +49,20 @@ void AutoFit(TAxis& ax, const TSeries2D& s) {
   ax.SetYRange(ylo - ypad, yhi + ypad);
 }
 
-// TFigure
-TFigure::TFigure(ISN width, ISN height, TColor bg)
-    : Width_(width), Height_(height),
-      canvas_{nullptr, width, height, 4} {
+// Figure
+Figure::Figure(ISC width, ISC height, VColor bg)
+    : Width_(width), Height_(height), canvas_{nullptr, width, height} {
+  canvas_.format = Exo::PixelFormat::RGBA8;
   canvas_.data = new IUA[(IUN)width * (IUN)height * 4]();
-  ImageDraw::Fill(canvas_, bg);
+  Exo::Fill(canvas_, bg);
 }
 
-ISN TFigure::AddAxis(FPD fx0, FPD fy0, FPD fx1, FPD fy1) {
+ISC Figure::AddAxis(FPD fx0, FPD fy0, FPD fx1, FPD fy1) {
   if (axis_count_ >= kMaxAxes) return -1;
-  ISN x0 = (ISN)(fx0 * Width_);
-  ISN y0 = (ISN)(fy0 * Height_);
-  ISN x1 = (ISN)(fx1 * Width_);
-  ISN y1 = (ISN)(fy1 * Height_);
+  ISC x0 = (ISC)(fx0 * Width_);
+  ISC y0 = (ISC)(fy0 * Height_);
+  ISC x1 = (ISC)(fx1 * Width_);
+  ISC y1 = (ISC)(fy1 * Height_);
   if (x0 < 0) x0 = 0;
   if (y0 < 0) y0 = 0;
   if (x1 > Width_) x1 = Width_ - 1;
@@ -180,19 +180,19 @@ static IUB GlyphIndex(CHA c) {
   return 0;  // space for unknown
 }
 
-ISN DrawText(TFigure& fig, TAxis& ax, const CHA* text, ISN px, ISN py,
-             TColor color) {
+ISC DrawText(Figure& fig, Axis& ax, const CHA* text, ISC px, ISC py,
+             VColor color) {
   (void)ax;
   if (text == nullptr) return 0;
-  ISN written = 0;
+  ISC written = 0;
   CImage& cv = fig.Canvas();
   for (const CHA* p = text; *p != 0; ++p) {
     IUB g = GlyphIndex(*p);
-    for (ISN row = 0; row < 7; ++row) {
+    for (ISC row = 0; row < 7; ++row) {
       IUB bits = kGlyphs[g][row];
-      for (ISN col = 0; col < 5; ++col) {
-        if (bits & (IUB)(1 << col)) {
-          ImageDraw::PutPixel(cv, px + col, py + row, color);
+      for (ISC col = 0; col < 5; ++col) {
+        if (bits & (IUB)(1 << (4 - col))) {  // table is MSB-first (bit4=left)
+          Exo::PutPixel(cv, px + col, py + row, color);
           ++written;
         }
       }
@@ -203,65 +203,65 @@ ISN DrawText(TFigure& fig, TAxis& ax, const CHA* text, ISN px, ISN py,
 }
 
 // RenderFrame
-static void DrawTicks(TFigure& fig, TAxis& ax) {
+static void DrawTicks(Figure& fig, Axis& ax) {
   CImage& cv = fig.Canvas();
-  TColor frame_c = ax.FrameColor();
-  for (ISN i = 0; i <= ax.XTicks(); ++i) {
+  VColor frame_c = ax.FrameColor();
+  for (ISC i = 0; i <= ax.XTicks(); ++i) {
     FPD fx = ax.XMin() + (ax.XMax() - ax.XMin()) * (FPD)i / (FPD)ax.XTicks();
-    ISN px = ax.DataToPixX(fx);
-    ImageDraw::Line(cv, px, ax.Y1(), px, ax.Y1() + 4, frame_c, 1);
+    ISC px = ax.DataToPixX(fx);
+    Exo::Line(cv, px, ax.Y1(), px, ax.Y1() + 4, frame_c, 1);
   }
-  for (ISN i = 0; i <= ax.YTicks(); ++i) {
+  for (ISC i = 0; i <= ax.YTicks(); ++i) {
     FPD fy = ax.YMin() + (ax.YMax() - ax.YMin()) * (FPD)i / (FPD)ax.YTicks();
-    ISN py = ax.DataToPixY(fy);
-    ImageDraw::Line(cv, ax.X0() - 4, py, ax.X0(), py, frame_c, 1);
+    ISC py = ax.DataToPixY(fy);
+    Exo::Line(cv, ax.X0() - 4, py, ax.X0(), py, frame_c, 1);
   }
 }
 
-void RenderFrame(TFigure& fig) {
+void RenderFrame(Figure& fig) {
   CImage& cv = fig.Canvas();
-  for (ISN a = 0; a < fig.AxisCount(); ++a) {
-    TAxis& ax = fig.Axis(a);
-    ISN x0 = ax.X0(), y0 = ax.Y0(), x1 = ax.X1(), y1 = ax.Y1();
-    TColor frame_c = ax.FrameColor();
-    TColor grid_c = ax.GridColor();
-    TColor bg_c = ax.BgColor();
-    ISN xt = ax.XTicks();
-    ISN yt = ax.YTicks();
+  for (ISC a = 0; a < fig.AxisCount(); ++a) {
+    Axis& ax = fig.AxisAt(a);
+    ISC x0 = ax.X0(), y0 = ax.Y0(), x1 = ax.X1(), y1 = ax.Y1();
+    VColor frame_c = ax.FrameColor();
+    VColor grid_c = ax.GridColor();
+    VColor bg_c = ax.BgColor();
+    ISC xt = ax.XTicks();
+    ISC yt = ax.YTicks();
     // Background
-    ImageDraw::FillRect(cv, x0, y0, x1, y1, bg_c);
+    Exo::FillRect(cv, x0, y0, x1, y1, bg_c);
     if (ax.Grid()) {
-      for (ISN i = 1; i < xt; ++i) {
+      for (ISC i = 1; i < xt; ++i) {
         FPD fx = ax.XMin() + (ax.XMax() - ax.XMin()) * (FPD)i / (FPD)xt;
-        ISN px = ax.DataToPixX(fx);
-        ImageDraw::Line(cv, px, y0, px, y1, grid_c, 1);
+        ISC px = ax.DataToPixX(fx);
+        Exo::Line(cv, px, y0, px, y1, grid_c, 1);
       }
-      for (ISN i = 1; i < yt; ++i) {
+      for (ISC i = 1; i < yt; ++i) {
         FPD fy = ax.YMin() + (ax.YMax() - ax.YMin()) * (FPD)i / (FPD)yt;
-        ISN py = ax.DataToPixY(fy);
-        ImageDraw::Line(cv, x0, py, x1, py, grid_c, 1);
+        ISC py = ax.DataToPixY(fy);
+        Exo::Line(cv, x0, py, x1, py, grid_c, 1);
       }
     }
     if (ax.Frame()) {
-      ImageDraw::Line(cv, x0, y0, x1, y0, frame_c, 1);
-      ImageDraw::Line(cv, x0, y1, x1, y1, frame_c, 1);
-      ImageDraw::Line(cv, x0, y0, x0, y1, frame_c, 1);
-      ImageDraw::Line(cv, x1, y0, x1, y1, frame_c, 1);
+      Exo::Line(cv, x0, y0, x1, y0, frame_c, 1);
+      Exo::Line(cv, x0, y1, x1, y1, frame_c, 1);
+      Exo::Line(cv, x0, y0, x0, y1, frame_c, 1);
+      Exo::Line(cv, x1, y0, x1, y1, frame_c, 1);
     }
     DrawTicks(fig, ax);
     // Title centered on top.
     if (ax.Title() != nullptr) {
-      ISN len = 0;
+      ISC len = 0;
       while (ax.Title()[len] != 0) ++len;
-      ISN tx = x0 + (x1 - x0) / 2 - (len * 6) / 2;
+      ISC tx = x0 + (x1 - x0) / 2 - (len * 6) / 2;
       if (tx < x0) tx = x0;
       DrawText(fig, ax, ax.Title(), tx, y0 - 9, frame_c);
     }
     // X label centered below.
     if (ax.XLabel() != nullptr) {
-      ISN len = 0;
+      ISC len = 0;
       while (ax.XLabel()[len] != 0) ++len;
-      ISN tx = x0 + (x1 - x0) / 2 - (len * 6) / 2;
+      ISC tx = x0 + (x1 - x0) / 2 - (len * 6) / 2;
       if (tx < x0) tx = x0;
       DrawText(fig, ax, ax.XLabel(), tx, y1 + 6, frame_c);
     }
@@ -269,167 +269,167 @@ void RenderFrame(TFigure& fig) {
 }
 
 // 2D charts
-static const TSeries2D* CheckSeries(const TSeries2D& s) {
+static const Series2D* CheckSeries(const Series2D& s) {
   if (s.x == nullptr || s.y == nullptr || s.count <= 0) return nullptr;
   return &s;
 }
 
-PlotStatus PlotLine(TFigure& fig, TAxis& ax, const TSeries2D& s, ISN thickness) {
+PlotStatus PlotLine(Figure& fig, Axis& ax, const Series2D& s, ISC thickness) {
   if (!CheckSeries(s)) return PlotStatus::Empty;
   CImage& cv = fig.Canvas();
-  for (ISN i = 1; i < s.count; ++i) {
-    ISN x0 = ax.DataToPixX(s.x[i - 1]);
-    ISN y0 = ax.DataToPixY(s.y[i - 1]);
-    ISN x1 = ax.DataToPixX(s.x[i]);
-    ISN y1 = ax.DataToPixY(s.y[i]);
-    ImageDraw::Line(cv, x0, y0, x1, y1, s.color, thickness);
+  for (ISC i = 1; i < s.count; ++i) {
+    ISC x0 = ax.DataToPixX(s.x[i - 1]);
+    ISC y0 = ax.DataToPixY(s.y[i - 1]);
+    ISC x1 = ax.DataToPixX(s.x[i]);
+    ISC y1 = ax.DataToPixY(s.y[i]);
+    Exo::Line(cv, x0, y0, x1, y1, s.color, thickness);
   }
   return PlotStatus::OK;
 }
 
-PlotStatus PlotScatter(TFigure& fig, TAxis& ax, const TSeries2D& s,
-                       ISN marker_radius) {
+PlotStatus PlotScatter(Figure& fig, Axis& ax, const Series2D& s,
+                       ISC marker_radius) {
   if (!CheckSeries(s)) return PlotStatus::Empty;
   CImage& cv = fig.Canvas();
-  for (ISN i = 0; i < s.count; ++i) {
-    ISN px = ax.DataToPixX(s.x[i]);
-    ISN py = ax.DataToPixY(s.y[i]);
-    ImageDraw::FillCircle(cv, px, py, marker_radius, s.color);
+  for (ISC i = 0; i < s.count; ++i) {
+    ISC px = ax.DataToPixX(s.x[i]);
+    ISC py = ax.DataToPixY(s.y[i]);
+    Exo::FillCircle(cv, px, py, marker_radius, s.color);
   }
   return PlotStatus::OK;
 }
 
-PlotStatus PlotArea(TFigure& fig, TAxis& ax, const TSeries2D& s) {
+PlotStatus PlotArea(Figure& fig, Axis& ax, const Series2D& s) {
   if (!CheckSeries(s)) return PlotStatus::Empty;
   CImage& cv = fig.Canvas();
-  ISN base = ax.DataToPixY(0);
-  for (ISN i = 1; i < s.count; ++i) {
-    ISN x0 = ax.DataToPixX(s.x[i - 1]);
-    ISN y0 = ax.DataToPixY(s.y[i - 1]);
-    ISN x1 = ax.DataToPixX(s.x[i]);
-    ISN y1 = ax.DataToPixY(s.y[i]);
+  ISC base = ax.DataToPixY(0);
+  for (ISC i = 1; i < s.count; ++i) {
+    ISC x0 = ax.DataToPixX(s.x[i - 1]);
+    ISC y0 = ax.DataToPixY(s.y[i - 1]);
+    ISC x1 = ax.DataToPixX(s.x[i]);
+    ISC y1 = ax.DataToPixY(s.y[i]);
     // Fill the vertical band between the two columns down to the baseline.
-    ISN xa = x0 < x1 ? x0 : x1;
-    ISN xb = x0 < x1 ? x1 : x0;
-    ISN ya = y0 < y1 ? y0 : y1;
-    ISN yb = (base < y0 ? base : y0) < (base < y1 ? base : y1)
+    ISC xa = x0 < x1 ? x0 : x1;
+    ISC xb = x0 < x1 ? x1 : x0;
+    ISC ya = y0 < y1 ? y0 : y1;
+    ISC yb = (base < y0 ? base : y0) < (base < y1 ? base : y1)
                  ? (base < y0 ? base : y0)
                  : (base < y1 ? base : y1);
-    for (ISN xx = xa; xx <= xb; ++xx)
-      ImageDraw::Line(cv, xx, ya, xx, yb, s.color, 1);
+    for (ISC xx = xa; xx <= xb; ++xx)
+      Exo::Line(cv, xx, ya, xx, yb, s.color, 1);
   }
   return PlotStatus::OK;
 }
 
-PlotStatus PlotStairs(TFigure& fig, TAxis& ax, const TSeries2D& s,
-                      ISN thickness) {
+PlotStatus PlotStairs(Figure& fig, Axis& ax, const Series2D& s,
+                      ISC thickness) {
   if (!CheckSeries(s)) return PlotStatus::Empty;
   CImage& cv = fig.Canvas();
-  for (ISN i = 1; i < s.count; ++i) {
-    ISN x0 = ax.DataToPixX(s.x[i - 1]);
-    ISN y0 = ax.DataToPixY(s.y[i - 1]);
-    ISN x1 = ax.DataToPixX(s.x[i]);
-    ISN y1 = ax.DataToPixY(s.y[i]);
+  for (ISC i = 1; i < s.count; ++i) {
+    ISC x0 = ax.DataToPixX(s.x[i - 1]);
+    ISC y0 = ax.DataToPixY(s.y[i - 1]);
+    ISC x1 = ax.DataToPixX(s.x[i]);
+    ISC y1 = ax.DataToPixY(s.y[i]);
     // Horizontal then vertical (post).
-    ImageDraw::Line(cv, x0, y0, x1, y0, s.color, thickness);
-    ImageDraw::Line(cv, x1, y0, x1, y1, s.color, thickness);
+    Exo::Line(cv, x0, y0, x1, y0, s.color, thickness);
+    Exo::Line(cv, x1, y0, x1, y1, s.color, thickness);
   }
   return PlotStatus::OK;
 }
 
-PlotStatus PlotStem(TFigure& fig, TAxis& ax, const TSeries2D& s) {
+PlotStatus PlotStem(Figure& fig, Axis& ax, const Series2D& s) {
   if (!CheckSeries(s)) return PlotStatus::Empty;
   CImage& cv = fig.Canvas();
-  ISN base = ax.DataToPixY(0);
-  for (ISN i = 0; i < s.count; ++i) {
-    ISN px = ax.DataToPixX(s.x[i]);
-    ISN py = ax.DataToPixY(s.y[i]);
-    ImageDraw::Line(cv, px, base, px, py, s.color, 1);
-    ImageDraw::FillCircle(cv, px, py, 2, s.color);
+  ISC base = ax.DataToPixY(0);
+  for (ISC i = 0; i < s.count; ++i) {
+    ISC px = ax.DataToPixX(s.x[i]);
+    ISC py = ax.DataToPixY(s.y[i]);
+    Exo::Line(cv, px, base, px, py, s.color, 1);
+    Exo::FillCircle(cv, px, py, 2, s.color);
   }
   return PlotStatus::OK;
 }
 
-PlotStatus PlotErrorbar(TFigure& fig, TAxis& ax, const TSeries2D& s,
-                        const FPD* yerr, ISN thickness) {
+PlotStatus PlotErrorbar(Figure& fig, Axis& ax, const Series2D& s,
+                        const FPD* yerr, ISC thickness) {
   if (!CheckSeries(s) || yerr == nullptr) return PlotStatus::Empty;
   CImage& cv = fig.Canvas();
-  for (ISN i = 0; i < s.count; ++i) {
-    ISN px = ax.DataToPixX(s.x[i]);
-    ISN py = ax.DataToPixY(s.y[i]);
-    ISN pyh = ax.DataToPixY(s.y[i] + yerr[i]);
-    ISN pyb = ax.DataToPixY(s.y[i] - yerr[i]);
-    ImageDraw::Line(cv, px, pyh, px, pyb, s.color, 1);
-    ImageDraw::Line(cv, px - 3, pyh, px + 3, pyh, s.color, 1);
-    ImageDraw::Line(cv, px - 3, pyb, px + 3, pyb, s.color, 1);
+  for (ISC i = 0; i < s.count; ++i) {
+    ISC px = ax.DataToPixX(s.x[i]);
+    ISC py = ax.DataToPixY(s.y[i]);
+    ISC pyh = ax.DataToPixY(s.y[i] + yerr[i]);
+    ISC pyb = ax.DataToPixY(s.y[i] - yerr[i]);
+    Exo::Line(cv, px, pyh, px, pyb, s.color, 1);
+    Exo::Line(cv, px - 3, pyh, px + 3, pyh, s.color, 1);
+    Exo::Line(cv, px - 3, pyb, px + 3, pyb, s.color, 1);
   }
   PlotLine(fig, ax, s, thickness);
   return PlotStatus::OK;
 }
 
-PlotStatus PlotBar(TFigure& fig, TAxis& ax, const TSeries2D& s, FPD bar_width) {
+PlotStatus PlotBar(Figure& fig, Axis& ax, const Series2D& s, FPD bar_width) {
   if (!CheckSeries(s)) return PlotStatus::Empty;
   CImage& cv = fig.Canvas();
-  ISN base = ax.DataToPixY(0);
-  for (ISN i = 0; i < s.count; ++i) {
-    ISN pc = ax.DataToPixX(s.x[i]);
-    ISN py = ax.DataToPixY(s.y[i]);
-    ISN half = (ISN)((bar_width / (ax.XMax() - ax.XMin())) * (ax.X1() - ax.X0()) / 2);
+  ISC base = ax.DataToPixY(0);
+  for (ISC i = 0; i < s.count; ++i) {
+    ISC pc = ax.DataToPixX(s.x[i]);
+    ISC py = ax.DataToPixY(s.y[i]);
+    ISC half = ISC((bar_width / (ax.XMax() - ax.XMin())) * (ax.X1() - ax.X0()) / 2);
     if (half < 1) half = 1;
-    ImageDraw::FillRect(cv, pc - half, py < base ? py : base,
+    Exo::FillRect(cv, pc - half, py < base ? py : base,
                         pc + half, py < base ? base : py, s.color);
   }
   return PlotStatus::OK;
 }
 
-PlotStatus PlotHist(TFigure& fig, TAxis& ax, const FPD* values, ISN count,
-                    ISN bins, TColor color) {
+PlotStatus PlotHist(Figure& fig, Axis& ax, const FPD* values, ISC count,
+                    ISC bins, VColor color) {
   if (values == nullptr || count <= 0 || bins <= 0) return PlotStatus::Empty;
   FPD lo = values[0], hi = values[0];
-  for (ISN i = 1; i < count; ++i) {
+  for (ISC i = 1; i < count; ++i) {
     if (values[i] < lo) lo = values[i];
     if (values[i] > hi) hi = values[i];
   }
   if (hi == lo) hi = lo + 1;
   FPD w = (hi - lo) / (FPD)bins;
-  ISN hist[128];
-  for (ISN b = 0; b < bins && b < 128; ++b) hist[b] = 0;
-  for (ISN i = 0; i < count; ++i) {
-    ISN b = (ISN)((values[i] - lo) / w);
+  ISC hist[128];
+  for (ISC b = 0; b < bins && b < 128; ++b) hist[b] = 0;
+  for (ISC i = 0; i < count; ++i) {
+    ISC b = (ISC)((values[i] - lo) / w);
     if (b < 0) b = 0;
     if (b >= bins) b = bins - 1;
     if (b < 128) ++hist[b];
   }
   // Build a bar series in bin-center coordinates.
   FPD xs[128], ys[128];
-  for (ISN b = 0; b < bins && b < 128; ++b) {
+  for (ISC b = 0; b < bins && b < 128; ++b) {
     xs[b] = lo + (b + 0.5f) * w;
     ys[b] = (FPD)hist[b];
   }
-  ISN nb = bins < 128 ? bins : 128;
+  ISC nb = bins < 128 ? bins : 128;
   FPD bw = w * 0.9f;
-  TSeries2D s{xs, ys, nb, color};
+  Series2D s{xs, ys, nb, color};
   return PlotBar(fig, ax, s, bw);
 }
 
-PlotStatus PlotBoxplot(TFigure& fig, TAxis& ax, const TSeries2D& groups) {
+PlotStatus PlotBoxplot(Figure& fig, Axis& ax, const Series2D& groups) {
   if (!CheckSeries(groups)) return PlotStatus::Empty;
   // groups.x = group index (0..n-1), groups.y = the single summary value is
   // not enough for a real boxplot; this renders a simplified whisker/box per
   // group using the provided y as the median and a fixed 10% spread.
   CImage& cv = fig.Canvas();
-  for (ISN i = 0; i < groups.count; ++i) {
-    ISN px = ax.DataToPixX(groups.x[i]);
-    ISN py = ax.DataToPixY(groups.y[i]);
+  for (ISC i = 0; i < groups.count; ++i) {
+    ISC px = ax.DataToPixX(groups.x[i]);
+    ISC py = ax.DataToPixY(groups.y[i]);
     FPD spread = (ax.YMax() - ax.YMin()) * 0.1f;
-    ISN pyhi = ax.DataToPixY(groups.y[i] + spread);
-    ISN pylo = ax.DataToPixY(groups.y[i] - spread);
-    ISN hw = 6;
-    ImageDraw::Line(cv, px, pyhi, px, py, groups.color, 1);
-    ImageDraw::Line(cv, px, py, px, pylo, groups.color, 1);
-    ImageDraw::Line(cv, px - hw, pyhi, px + hw, pyhi, groups.color, 1);
-    ImageDraw::Line(cv, px - hw, pylo, px + hw, pylo, groups.color, 1);
-    ImageDraw::FillRect(cv, px - hw, py - 4, px + hw, py + 4, groups.color);
+    ISC pyhi = ax.DataToPixY(groups.y[i] + spread);
+    ISC pylo = ax.DataToPixY(groups.y[i] - spread);
+    ISC hw = 6;
+    Exo::Line(cv, px, pyhi, px, py, groups.color, 1);
+    Exo::Line(cv, px, py, px, pylo, groups.color, 1);
+    Exo::Line(cv, px - hw, pyhi, px + hw, pyhi, groups.color, 1);
+    Exo::Line(cv, px - hw, pylo, px + hw, pylo, groups.color, 1);
+    Exo::FillRect(cv, px - hw, py - 4, px + hw, py + 4, groups.color);
   }
   return PlotStatus::OK;
 }
@@ -438,7 +438,7 @@ PlotStatus PlotBoxplot(TFigure& fig, TAxis& ax, const TSeries2D& groups) {
 
 /* A fixed isometric-ish projection: rotate around vertical axis by 45deg,
    then tilt. Pure math, no allocation. */
-static void Project3(TAxis& ax, FPD x, FPD y, FPD z,
+static void Project3(Axis& ax, FPD x, FPD y, FPD z,
                      FPD* px, FPD* py, FPD* depth) {
   // Normalize x,y into 0..1 over the axis range, z into 0..1 over its range.
   FPD xn = (x - ax.XMin()) / (ax.XMax() == ax.XMin() ? 1 : (ax.XMax() - ax.XMin()));
@@ -452,46 +452,46 @@ static void Project3(TAxis& ax, FPD x, FPD y, FPD z,
   *depth = (xn + yn) * 0.5f;  // for painter's order (approx)
 }
 
-static void Plot3Pt(TFigure& fig, TAxis& ax, FPD x, FPD y, FPD z, TColor color) {
+static void Plot3Pt(Figure& fig, Axis& ax, FPD x, FPD y, FPD z, VColor color) {
   FPD px, py, depth;
   (void)depth;
   Project3(ax, x, y, z, &px, &py, &depth);
   // Map normalized (-1..1) screen coords into the axis pixel rect.
-  ISN sx = ax.X0() + (ISN)((px * 0.5f + 0.5f) * (ax.X1() - ax.X0()));
-  ISN sy = ax.Y0() + (ISN)((py * 0.5f + 0.5f) * (ax.Y1() - ax.Y0()));
-  ImageDraw::PutPixel(fig.Canvas(), sx, sy, color);
+  ISC sx = ax.X0() + (ISC)((px * 0.5f + 0.5f) * (ax.X1() - ax.X0()));
+  ISC sy = ax.Y0() + (ISC)((py * 0.5f + 0.5f) * (ax.Y1() - ax.Y0()));
+  Exo::PutPixel(fig.Canvas(), sx, sy, color);
 }
 
-PlotStatus Plot3(TFigure& fig, TAxis& ax, const TPoint3* pts, ISN count,
-                 TColor color, ISN thickness) {
+PlotStatus Plot3(Figure& fig, Axis& ax, const Point3* pts, ISC count,
+                 VColor color, ISC thickness) {
   if (pts == nullptr || count <= 0) return PlotStatus::Empty;
   (void)thickness;
-  for (ISN i = 0; i < count; ++i) {
+  for (ISC i = 0; i < count; ++i) {
     FPD px0, py0, d0, px1, py1, d1;
     (void)d0;
     (void)d1;
     Project3(ax, pts[i].x, pts[i].y, pts[i].z, &px0, &py0, &d0);
-    ISN sx0 = ax.X0() + (ISN)((px0 * 0.5f + 0.5f) * (ax.X1() - ax.X0()));
-    ISN sy0 = ax.Y0() + (ISN)((py0 * 0.5f + 0.5f) * (ax.Y1() - ax.Y0()));
+    ISC sx0 = ax.X0() + (ISC)((px0 * 0.5f + 0.5f) * (ax.X1() - ax.X0()));
+    ISC sy0 = ax.Y0() + (ISC)((py0 * 0.5f + 0.5f) * (ax.Y1() - ax.Y0()));
     if (i + 1 < count) {
       Project3(ax, pts[i + 1].x, pts[i + 1].y, pts[i + 1].z, &px1, &py1, &d1);
-      ISN sx1 = ax.X0() + (ISN)((px1 * 0.5f + 0.5f) * (ax.X1() - ax.X0()));
-      ISN sy1 = ax.Y0() + (ISN)((py1 * 0.5f + 0.5f) * (ax.Y1() - ax.Y0()));
-      ImageDraw::Line(fig.Canvas(), sx0, sy0, sx1, sy1, color, thickness);
+      ISC sx1 = ax.X0() + (ISC)((px1 * 0.5f + 0.5f) * (ax.X1() - ax.X0()));
+      ISC sy1 = ax.Y0() + (ISC)((py1 * 0.5f + 0.5f) * (ax.Y1() - ax.Y0()));
+      Exo::Line(fig.Canvas(), sx0, sy0, sx1, sy1, color, thickness);
     } else {
-      ImageDraw::PutPixel(fig.Canvas(), sx0, sy0, color);
+      Exo::PutPixel(fig.Canvas(), sx0, sy0, color);
     }
   }
   return PlotStatus::OK;
 }
 
-PlotStatus PlotMesh(TFigure& fig, TAxis& ax, const FPD* grid, ISN nx, ISN ny,
-                    TColor color) {
+PlotStatus PlotMesh(Figure& fig, Axis& ax, const FPD* grid, ISC nx, ISC ny,
+                    VColor color) {
   // grid is nx*ny of z-values, row-major (y then x).
   if (grid == nullptr || nx <= 0 || ny <= 0) return PlotStatus::Empty;
   CImage& cv = fig.Canvas();
-  for (ISN iy = 0; iy < ny; ++iy) {
-    for (ISN ix = 0; ix < nx; ++ix) {
+  for (ISC iy = 0; iy < ny; ++iy) {
+    for (ISC ix = 0; ix < nx; ++ix) {
       FPD xn = (FPD)ix / (FPD)(nx - 1);
       FPD yn = (FPD)iy / (FPD)(ny - 1);
       FPD z0 = grid[iy * nx + ix];
@@ -502,11 +502,11 @@ PlotStatus PlotMesh(TFigure& fig, TAxis& ax, const FPD* grid, ISN nx, ISN ny,
         (void)d0; (void)d1;
         Project3(ax, xn, yn, z0, &px0, &py0, &d0);
         Project3(ax, xn2, yn, z1, &px1, &py1, &d1);
-        ISN sx0 = ax.X0() + (ISN)((px0 * 0.5f + 0.5f) * (ax.X1() - ax.X0()));
-        ISN sy0 = ax.Y0() + (ISN)((py0 * 0.5f + 0.5f) * (ax.Y1() - ax.Y0()));
-        ISN sx1 = ax.X0() + (ISN)((px1 * 0.5f + 0.5f) * (ax.X1() - ax.X0()));
-        ISN sy1 = ax.Y0() + (ISN)((py1 * 0.5f + 0.5f) * (ax.Y1() - ax.Y0()));
-        ImageDraw::Line(cv, sx0, sy0, sx1, sy1, color, 1);
+        ISC sx0 = ax.X0() + (ISC)((px0 * 0.5f + 0.5f) * (ax.X1() - ax.X0()));
+        ISC sy0 = ax.Y0() + (ISC)((py0 * 0.5f + 0.5f) * (ax.Y1() - ax.Y0()));
+        ISC sx1 = ax.X0() + (ISC)((px1 * 0.5f + 0.5f) * (ax.X1() - ax.X0()));
+        ISC sy1 = ax.Y0() + (ISC)((py1 * 0.5f + 0.5f) * (ax.Y1() - ax.Y0()));
+        Exo::Line(cv, sx0, sy0, sx1, sy1, color, 1);
       }
       if (iy + 1 < ny) {
         FPD yn2 = (FPD)(iy + 1) / (FPD)(ny - 1);
@@ -515,66 +515,66 @@ PlotStatus PlotMesh(TFigure& fig, TAxis& ax, const FPD* grid, ISN nx, ISN ny,
         (void)d0; (void)d1;
         Project3(ax, xn, yn, z0, &px0, &py0, &d0);
         Project3(ax, xn, yn2, z1, &px1, &py1, &d1);
-        ISN sx0 = ax.X0() + (ISN)((px0 * 0.5f + 0.5f) * (ax.X1() - ax.X0()));
-        ISN sy0 = ax.Y0() + (ISN)((py0 * 0.5f + 0.5f) * (ax.Y1() - ax.Y0()));
-        ISN sx1 = ax.X0() + (ISN)((px1 * 0.5f + 0.5f) * (ax.X1() - ax.X0()));
-        ISN sy1 = ax.Y0() + (ISN)((py1 * 0.5f + 0.5f) * (ax.Y1() - ax.Y0()));
-        ImageDraw::Line(cv, sx0, sy0, sx1, sy1, color, 1);
+        ISC sx0 = ax.X0() + (ISC)((px0 * 0.5f + 0.5f) * (ax.X1() - ax.X0()));
+        ISC sy0 = ax.Y0() + (ISC)((py0 * 0.5f + 0.5f) * (ax.Y1() - ax.Y0()));
+        ISC sx1 = ax.X0() + (ISC)((px1 * 0.5f + 0.5f) * (ax.X1() - ax.X0()));
+        ISC sy1 = ax.Y0() + (ISC)((py1 * 0.5f + 0.5f) * (ax.Y1() - ax.Y0()));
+        Exo::Line(cv, sx0, sy0, sx1, sy1, color, 1);
       }
     }
   }
   return PlotStatus::OK;
 }
 
-PlotStatus PlotSurf(TFigure& fig, TAxis& ax, const FPD* grid, ISN nx, ISN ny,
-                    TColor color) {
+PlotStatus PlotSurf(Figure& fig, Axis& ax, const FPD* grid, ISC nx, ISC ny,
+                    VColor color) {
   // Surface = mesh plus a flat fill per quad (approximated by filling a
   // small rect at each projected cell center, shaded by z).
   if (grid == nullptr || nx <= 0 || ny <= 0) return PlotStatus::Empty;
   CImage& cv = fig.Canvas();
   FPD zmin = grid[0], zmax = grid[0];
-  for (ISN i = 1; i < nx * ny; ++i) {
+  for (ISC i = 1; i < nx * ny; ++i) {
     if (grid[i] < zmin) zmin = grid[i];
     if (grid[i] > zmax) zmax = grid[i];
   }
-  for (ISN iy = 0; iy < ny; ++iy) {
-    for (ISN ix = 0; ix < nx; ++ix) {
+  for (ISC iy = 0; iy < ny; ++iy) {
+    for (ISC ix = 0; ix < nx; ++ix) {
       FPD xn = (FPD)ix / (FPD)(nx - 1);
       FPD yn = (FPD)iy / (FPD)(ny - 1);
       FPD z = grid[iy * nx + ix];
       FPD px, py, d;
       (void)d;
       Project3(ax, xn, yn, z, &px, &py, &d);
-      ISN sx = ax.X0() + (ISN)((px * 0.5f + 0.5f) * (ax.X1() - ax.X0()));
-      ISN sy = ax.Y0() + (ISN)((py * 0.5f + 0.5f) * (ax.Y1() - ax.Y0()));
+      ISC sx = ax.X0() + (ISC)((px * 0.5f + 0.5f) * (ax.X1() - ax.X0()));
+      ISC sy = ax.Y0() + (ISC)((py * 0.5f + 0.5f) * (ax.Y1() - ax.Y0()));
       IUB shade = (IUB)(64 + (IUN)((z - zmin) / (zmax - zmin) * 128.0f));
       IUB cr = (IUB)((IUN)color.r * (IUN)shade / 255);
       IUB cg = (IUB)((IUN)color.g * (IUN)shade / 255);
       IUB cb = (IUB)((IUN)color.b * (IUN)shade / 255);
-      TColor c{cr, cg, cb, 255};
-      ImageDraw::FillRect(cv, sx - 1, sy - 1, sx + 1, sy + 1, c);
+      VColor c{cr, cg, cb, 255};
+      Exo::FillRect(cv, sx - 1, sy - 1, sx + 1, sy + 1, c);
     }
   }
   return PlotStatus::OK;
 }
 
-PlotStatus PlotContour(TFigure& fig, TAxis& ax, const FPD* grid, ISN nx,
-                       ISN ny, ISN levels, TColor color) {
+PlotStatus PlotContour(Figure& fig, Axis& ax, const FPD* grid, ISC nx,
+                       ISC ny, ISC levels, VColor color) {
   if (grid == nullptr || nx <= 0 || ny <= 0 || levels <= 0)
     return PlotStatus::Empty;
   CImage& cv = fig.Canvas();
   FPD zmin = grid[0], zmax = grid[0];
-  for (ISN i = 1; i < nx * ny; ++i) {
+  for (ISC i = 1; i < nx * ny; ++i) {
     if (grid[i] < zmin) zmin = grid[i];
     if (grid[i] > zmax) zmax = grid[i];
   }
   // For each cell, if the z range of the cell crosses a level, mark the cell
   // boundary (a cheap marching-squares stand-in for the seam test).
-  for (ISN lv = 0; lv < levels; ++lv) {
+  for (ISC lv = 0; lv < levels; ++lv) {
     FPD t = (FPD)lv / (FPD)(levels - 1);
     FPD lvl = zmin + t * (zmax - zmin);
-    for (ISN iy = 0; iy < ny; ++iy) {
-      for (ISN ix = 0; ix < nx; ++ix) {
+    for (ISC iy = 0; iy < ny; ++iy) {
+      for (ISC ix = 0; ix < nx; ++ix) {
         FPD z = grid[iy * nx + ix];
         if ((z - lvl) * (grid[iy * nx + ix] - lvl) > 0) continue;
         FPD xn = (FPD)ix / (FPD)(nx - 1);
@@ -582,9 +582,9 @@ PlotStatus PlotContour(TFigure& fig, TAxis& ax, const FPD* grid, ISN nx,
         FPD px, py, d;
         (void)d;
         Project3(ax, xn, yn, z, &px, &py, &d);
-        ISN sx = ax.X0() + (ISN)((px * 0.5f + 0.5f) * (ax.X1() - ax.X0()));
-        ISN sy = ax.Y0() + (ISN)((py * 0.5f + 0.5f) * (ax.Y1() - ax.Y0()));
-        ImageDraw::PutPixel(cv, sx, sy, color);
+        ISC sx = ax.X0() + (ISC)((px * 0.5f + 0.5f) * (ax.X1() - ax.X0()));
+        ISC sy = ax.Y0() + (ISC)((py * 0.5f + 0.5f) * (ax.Y1() - ax.Y0()));
+        Exo::PutPixel(cv, sx, sy, color);
       }
     }
   }
@@ -593,26 +593,26 @@ PlotStatus PlotContour(TFigure& fig, TAxis& ax, const FPD* grid, ISN nx,
 
 // Quiver
 
-PlotStatus PlotQuiver(TFigure& fig, TAxis& ax, const FPD* x, const FPD* y,
-                      const FPD* u, const FPD* v, ISN count, FPD scale,
-                      TColor color) {
+PlotStatus PlotQuiver(Figure& fig, Axis& ax, const FPD* x, const FPD* y,
+                      const FPD* u, const FPD* v, ISC count, FPD scale,
+                      VColor color) {
   if (x == nullptr || y == nullptr || u == nullptr || v == nullptr || count <= 0)
     return PlotStatus::Empty;
   CImage& cv = fig.Canvas();
-  for (ISN i = 0; i < count; ++i) {
-    ISN x0 = ax.DataToPixX(x[i]);
-    ISN y0 = ax.DataToPixY(y[i]);
-    ISN x1 = ax.DataToPixX(x[i] + u[i] * scale);
-    ISN y1 = ax.DataToPixY(y[i] + v[i] * scale);
-    ImageDraw::Line(cv, x0, y0, x1, y1, color, 1);
+  for (ISC i = 0; i < count; ++i) {
+    ISC x0 = ax.DataToPixX(x[i]);
+    ISC y0 = ax.DataToPixY(y[i]);
+    ISC x1 = ax.DataToPixX(x[i] + u[i] * scale);
+    ISC y1 = ax.DataToPixY(y[i] + v[i] * scale);
+    Exo::Line(cv, x0, y0, x1, y1, color, 1);
     // Arrow head: two short lines from the tip.
     FPD dx = FPD(x1 - x0), dy = (FPD)(y1 - y0);
-    FPD len = FPD(FPDSquareRoot(dx * dx + dy * dy));
+    FPD len = FPD(_::SquareRoot(dx * dx + dy * dy));
     if (len < 1.0f) len = 1.0f;
     FPD hx = dx / len * 4.0f, hy = dy / len * 4.0f;
-    ImageDraw::Line(cv, x1, y1, (ISN)(x1 - hx - hy), (ISN)(y1 - hy + hx),
+    Exo::Line(cv, x1, y1, (ISC)(x1 - hx - hy), (ISC)(y1 - hy + hx),
                     color, 1);
-    ImageDraw::Line(cv, x1, y1, (ISN)(x1 - hx + hy), (ISN)(y1 - hy - hx),
+    Exo::Line(cv, x1, y1, (ISC)(x1 - hx + hy), (ISC)(y1 - hy - hx),
                     color, 1);
   }
   return PlotStatus::OK;

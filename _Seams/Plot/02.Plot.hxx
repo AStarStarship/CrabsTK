@@ -4,8 +4,8 @@
 #define _CrabsTKPlotPlotHXX
 #include "../../Plot/Plot.h"
 #include "../../Plot/Plot.hxx"
-#include "../../Image/IDraw.h"
-#include "../../Image/IDraw.hxx"
+#include "../../Exo/IDraw.h"
+#include "../../Exo/IDraw.hxx"
 #if __has_include("../../Plot/Plot.h") && \
     __has_include("../../Plot/Plot.hxx")
 #define _CrabsTKPlotCorePresent 1
@@ -16,10 +16,10 @@ using namespace ::CTK;
 
 /* Count pixels in the canvas that are not the background white and opaque.
 Used to assert that a chart actually rendered something. */
-inline ISN CountNonWhite(const CImage& cv, const IUA bg_r = 255,
+inline ISC CountNonWhite(const CImage& cv, const IUA bg_r = 255,
                          const IUA bg_g = 255, const IUA bg_b = 255) {
-  ISN n = 0;
-  for (ISN i = 0; i < cv.width * cv.height; ++i) {
+  ISC n = 0;
+  for (ISC i = 0; i < cv.width * cv.height; ++i) {
     if (cv.data[i * 4 + 3] == 255 && cv.data[i * 4] == bg_r &&
         cv.data[i * 4 + 1] == bg_g && cv.data[i * 4 + 2] == bg_b)
       continue;
@@ -34,12 +34,12 @@ inline const CHA* P01_FigureAndFrame(const CHA* args) {
 #if !defined(_CrabsTKPlotCorePresent)
   return "FAIL P01: Plot module is not present";
 #endif
-  Plot::TFigure fig(200, 120, ImageDraw::IWhite);
+  Plot::Figure fig(200, 120, ImageDraw::IWhite);
   if (fig.Width() != 200 || fig.Height() != 120)
     return "FAIL P01: figure size";
-  ISN a = fig.AddAxis(0.1f, 0.1f, 0.9f, 0.9f);
+  ISC a = fig.AddAxis(0.1f, 0.1f, 0.9f, 0.9f);
   if (a < 0 || fig.AxisCount() != 1) return "FAIL P01: AddAxis";
-  Plot::TAxis& ax = fig.Axis(a);
+  Plot::Axis& ax = fig.AxisAt(a);
   if (ax.X0() < 0 || ax.Y0() < 0 || ax.X1() > 199 || ax.Y1() > 119)
     return "FAIL P01: axis rect out of bounds";
   Plot::RenderFrame(fig);
@@ -53,8 +53,8 @@ inline const CHA* P02_AxisCapacity(const CHA* args) {
 #if !defined(_CrabsTKPlotCorePresent)
   return "FAIL P02: Plot module is not present";
 #endif
-  Plot::TFigure fig(100, 100);
-  for (ISN i = 0; i < Plot::kMaxAxes; ++i) {
+  Plot::Figure fig(100, 100);
+  for (ISC i = 0; i < Plot::kMaxAxes; ++i) {
     if (fig.AddAxis(0.1f, 0.1f, 0.9f, 0.9f) < 0) return "FAIL P02: add";
   }
   if (fig.AddAxis(0.1f, 0.1f, 0.9f, 0.9f) != -1)
@@ -68,7 +68,7 @@ inline const CHA* P03_DataToPixel(const CHA* args) {
 #if !defined(_CrabsTKPlotCorePresent)
   return "FAIL P03: Plot module is not present";
 #endif
-  Plot::TAxis ax;
+  Plot::Axis ax;
   ax.SetRect(10, 20, 110, 120);
   ax.SetXRange(0, 100);
   ax.SetYRange(0, 100);
@@ -87,21 +87,21 @@ inline const CHA* P04_PlotLine(const CHA* args) {
 #if !defined(_CrabsTKPlotCorePresent)
   return "FAIL P04: Plot module is not present";
 #endif
-  Plot::TFigure fig(160, 100);
-  ISN a = fig.AddAxis(0.1f, 0.1f, 0.9f, 0.9f);
-  Plot::TAxis& ax = fig.Axis(a);
+  Plot::Figure fig(160, 100);
+  ISC a = fig.AddAxis(0.1f, 0.1f, 0.9f, 0.9f);
+  Plot::Axis& ax = fig.AxisAt(a);
   ax.SetXRange(0, 10);
   ax.SetYRange(0, 100);
   FPD x[11], y[11];
-  for (ISN i = 0; i < 11; ++i) {
+  for (ISC i = 0; i < 11; ++i) {
     x[i] = (FPD)i;
     y[i] = (FPD)(i * 10);
   }
-  Plot::TSeries2D s{x, y, 11, ImageDraw::IRed};
+  Plot::Series2D s{x, y, 11, ImageDraw::IRed};
   if (Plot::PlotLine(fig, ax, s, 1) != Plot::PlotStatus::OK)
     return "FAIL P04: PlotLine status";
   if (CountNonWhite(fig.Canvas()) < 10) return "FAIL P04: line not drawn";
-  Plot::TSeries2D empty{nullptr, nullptr, 0, ImageDraw::IRed};
+  Plot::Series2D empty{nullptr, nullptr, 0, ImageDraw::IRed};
   if (Plot::PlotLine(fig, ax, empty, 1) != Plot::PlotStatus::Empty)
     return "FAIL P04: empty series should be Empty";
   return nullptr;
@@ -112,17 +112,17 @@ inline const CHA* P05_ScatterAndBar(const CHA* args) {
 #if !defined(_CrabsTKPlotCorePresent)
   return "FAIL P05: Plot module is not present";
 #endif
-  Plot::TFigure fig(160, 100);
-  ISN a = fig.AddAxis(0.1f, 0.1f, 0.9f, 0.9f);
-  Plot::TAxis& ax = fig.Axis(a);
+  Plot::Figure fig(160, 100);
+  ISC a = fig.AddAxis(0.1f, 0.1f, 0.9f, 0.9f);
+  Plot::Axis& ax = fig.AxisAt(a);
   ax.SetXRange(0, 10);
   ax.SetYRange(0, 100);
   FPD x[5], y[5];
-  for (ISN i = 0; i < 5; ++i) {
+  for (ISC i = 0; i < 5; ++i) {
     x[i] = (FPD)(i * 2);
     y[i] = (FPD)(20 + i * 15);
   }
-  Plot::TSeries2D s{x, y, 5, ImageDraw::IBlue};
+  Plot::Series2D s{x, y, 5, ImageDraw::IBlue};
   if (Plot::PlotScatter(fig, ax, s, 3) != Plot::PlotStatus::OK)
     return "FAIL P05: scatter status";
   if (CountNonWhite(fig.Canvas()) < 20) return "FAIL P05: scatter not drawn";
@@ -137,13 +137,13 @@ inline const CHA* P06_Hist(const CHA* args) {
 #if !defined(_CrabsTKPlotCorePresent)
   return "FAIL P06: Plot module is not present";
 #endif
-  Plot::TFigure fig(160, 100);
-  ISN a = fig.AddAxis(0.1f, 0.1f, 0.9f, 0.9f);
-  Plot::TAxis& ax = fig.Axis(a);
+  Plot::Figure fig(160, 100);
+  ISC a = fig.AddAxis(0.1f, 0.1f, 0.9f, 0.9f);
+  Plot::Axis& ax = fig.AxisAt(a);
   ax.SetXRange(0, 10);
   ax.SetYRange(0, 50);
   FPD vals[100];
-  for (ISN i = 0; i < 100; ++i) vals[i] = (FPD)(i % 10);
+  for (ISC i = 0; i < 100; ++i) vals[i] = (FPD)(i % 10);
   if (Plot::PlotHist(fig, ax, vals, 100, 10, ImageDraw::IGreen) !=
       Plot::PlotStatus::OK)
     return "FAIL P06: hist status";
@@ -156,20 +156,20 @@ inline const CHA* P07_ThreeDAndQuiver(const CHA* args) {
 #if !defined(_CrabsTKPlotCorePresent)
   return "FAIL P07: Plot module is not present";
 #endif
-  Plot::TFigure fig(160, 160);
-  ISN a = fig.AddAxis(0.1f, 0.1f, 0.9f, 0.9f);
-  Plot::TAxis& ax = fig.Axis(a);
+  Plot::Figure fig(160, 160);
+  ISC a = fig.AddAxis(0.1f, 0.1f, 0.9f, 0.9f);
+  Plot::Axis& ax = fig.AxisAt(a);
   ax.SetXRange(0, 10);
   ax.SetYRange(0, 10);
-  ISN nx = 5, ny = 5;
+  ISC nx = 5, ny = 5;
   FPD grid[25];
-  for (ISN i = 0; i < 25; ++i) grid[i] = (FPD)(i % 5);
+  for (ISC i = 0; i < 25; ++i) grid[i] = (FPD)(i % 5);
   if (Plot::PlotMesh(fig, ax, grid, nx, ny, ImageDraw::IBlue) !=
       Plot::PlotStatus::OK)
     return "FAIL P07: mesh status";
   if (CountNonWhite(fig.Canvas()) < 20) return "FAIL P07: mesh not drawn";
   FPD qx[4], qy[4], qu[4], qv[4];
-  for (ISN i = 0; i < 4; ++i) {
+  for (ISC i = 0; i < 4; ++i) {
     qx[i] = (FPD)i * 2;
     qy[i] = (FPD)i * 2;
     qu[i] = 1.0f;
@@ -187,10 +187,10 @@ inline const CHA* P08_DrawText(const CHA* args) {
 #if !defined(_CrabsTKPlotCorePresent)
   return "FAIL P08: Plot module is not present";
 #endif
-  Plot::TFigure fig(60, 30);
-  ISN a = fig.AddAxis(0.0f, 0.0f, 1.0f, 1.0f);
-  Plot::TAxis& ax = fig.Axis(a);
-  ISN n = Plot::DrawText(fig, ax, "O", 10, 10, ImageDraw::IBlack);
+  Plot::Figure fig(60, 30);
+  ISC a = fig.AddAxis(0.0f, 0.0f, 1.0f, 1.0f);
+  Plot::Axis& ax = fig.AxisAt(a);
+  ISC n = Plot::DrawText(fig, ax, "O", 10, 10, ImageDraw::IBlack);
   // The 'O' glyph (0x0E,0x11,0x11,0x11,0x11,0x11,0x0E) has 16 set bits.
   if (n != 16) return "FAIL P08: O glyph pixel count";
   if (CountNonWhite(fig.Canvas()) < 10) return "FAIL P08: text not drawn";
@@ -202,10 +202,10 @@ inline const CHA* P09_AutoFit(const CHA* args) {
 #if !defined(_CrabsTKPlotCorePresent)
   return "FAIL P09: Plot module is not present";
 #endif
-  Plot::TAxis ax;
+  Plot::Axis ax;
   FPD x[3] = {1.0f, 2.0f, 3.0f};
   FPD y[3] = {10.0f, 20.0f, 30.0f};
-  Plot::TSeries2D s{x, y, 3, ImageDraw::IRed};
+  Plot::Series2D s{x, y, 3, ImageDraw::IRed};
   Plot::AutoFit(ax, s);
   // x range 1..3 -> pad 0.1 -> 0.9..3.1
   if (ax.XMin() > 0.95f || ax.XMin() < 0.85f)

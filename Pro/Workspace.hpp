@@ -9,7 +9,7 @@ namespace CTK {
 namespace Pro {
 
 /* A workspace folder and settings. */
-class LIB_MEMBER Workspace {
+class Workspace {
  public:
   /* Constructor. */
   Workspace() {}

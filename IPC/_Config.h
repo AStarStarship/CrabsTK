@@ -1,7 +1,7 @@
 // Copyright AStarship <https://astarship.net>.
 // IPC configuration — canonical types come from the ASCIICrabs config chain.
 //
-// 2026-10-20: the previous file re-declared CHA/ISN/ISW/BOL/IUC locally.
+// 2026-10-20: the previous file re-declared CHA/ISC/ISW/BOL/IUC locally.
 // Those shadow typedefs defeated cross-project type identity. This header
 // now pulls the canonical definitions through ../_Config.h (which routes to
 // ASCIICrabs/_ConfigHeader.h + _ConfigFooter.h in a normal single-TU build)
@@ -22,11 +22,11 @@
 // and still demonstrates the legacy fault.
 #include <cstdint>
 #include <cstddef>
-typedef char CHA;
-typedef int ISN;
-typedef int ISC;
+typedef CHR CHA;
+typedef ISC ISC;
+typedef ISC ISC;
 typedef intptr_t ISW;
-typedef bool BOL;
+typedef BOL BOL;
 typedef uint32_t IUC;
 typedef uint8_t IUA;
 typedef int64_t IUD;
@@ -39,22 +39,22 @@ static_assert(sizeof(IUC) == 4, "IUC must be 32-bit");
 
 // Compile-time TYPE-IDENTITY against the canonical ASCIICrabs configuration.
 // Width checks were insufficient: the old IPC types had the right size and
-// the wrong spelling (unsigned int ISW, unsigned char BOL, long long IUC).
+// the wrong spelling (IUC ISW, CHR BOL, long long IUC).
 // std::is_same against the canonical types is the real integration proof.
 #include <type_traits>
-static_assert(std::is_same<CHA, char>::value,
-              "IPC CHA must be the canonical ASCIICrabs char");
-static_assert(std::is_same<ISC, int>::value,
+static_assert(std::is_same<CHA, CHR>::value,
+              "IPC CHA must be the canonical ASCIICrabs CHR");
+static_assert(std::is_same<ISC, ISC>::value,
               "IPC ISC must be the canonical 32-bit signed index");
 static_assert(std::is_same<ISW, intptr_t>::value,
               "IPC ISW must be the canonical pointer-sized signed word");
-// ISN is the canonical 32-bit signed index (the old IPC re-declared it
-// locally as `int` — the same type, a shadow copy that defeated identity
+// ISC is the canonical 32-bit signed index (the old IPC re-declared it
+// locally as `ISC` — the same type, a shadow copy that defeated identity
 // checks; that shadow is gone now, so the identity assert is real).
-static_assert(std::is_same<ISN, int>::value,
-              "IPC ISN must be the canonical 32-bit signed index");
-static_assert(std::is_same<BOL, bool>::value,
-              "IPC BOL must be the canonical bool");
+static_assert(std::is_same<ISC, ISC>::value,
+              "IPC ISC must be the canonical 32-bit signed index");
+static_assert(std::is_same<BOL, BOL>::value,
+              "IPC BOL must be the canonical BOL");
 static_assert(std::is_same<IUC, uint32_t>::value,
               "IPC IUC must be the canonical 32-bit unsigned");
 static_assert(std::is_same<IUD, uint64_t>::value,

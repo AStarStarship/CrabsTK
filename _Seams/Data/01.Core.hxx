@@ -7,7 +7,6 @@
 #include <ASCIICrabs/_Release.h>
 #endif
 #include <ASCIICrabs/Test.h>
-#include "../../Data/_Package.hxx"
 using namespace ::_;
 using namespace ::CTK;
 

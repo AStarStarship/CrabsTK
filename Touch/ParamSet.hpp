@@ -11,7 +11,7 @@ namespace Touch {
 /* A set of Parameter<T> that can be addressed by index.
  */
 template <typename T>
-class LIB_MEMBER ParamSet {
+class ParamSet {
  public:
   enum {
     kMinNumElements = 2,    //< The minimum number of columns.

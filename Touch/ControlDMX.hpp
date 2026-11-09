@@ -10,7 +10,7 @@ namespace Touch {
 
 /* A DMX Control.
  */
-class LIB_MEMBER ControlDMX : public Parameter<ISC> {
+class ControlDMX : public Parameter<ISC> {
  public:
   enum {
     NumChannels = 512  //< The number of DMX512 channels.

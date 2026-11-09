@@ -10,11 +10,11 @@ namespace Touch {
 
 /* A grid of Controls.
 Each Parameter<ISC> Layer on the Symmetry Live can either have 8 pots or
-encoders, or can have 4 pots and 4 encoders. This class LIB_MEMBER helps us swap
+encoders, or can have 4 pots and 4 encoders. This class helps us swap
 the values out quickly and efficiently.
 
 A TControlMatrix must have the option of being bifurcated. */
-class LIB_MEMBER TControlMatrix {
+class TControlMatrix {
  public:
   enum {
     cMinNumRows = 1,                             //< The min number of rows.

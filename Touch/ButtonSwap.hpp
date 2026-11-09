@@ -14,7 +14,7 @@ modes.
 you have a Knob that has a Button that you can press that changes the
 functionality of the knob through a cycle of different parameters.
 */
-class LIB_MEMBER ButtonSwap : public Button {
+class ButtonSwap : public Button {
  public:
   /* Constructor. */
   ButtonSwap(const CHA* init_name = StringEmpty ()) 
