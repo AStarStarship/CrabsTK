@@ -35,7 +35,7 @@ EnvStatus TEnvLoad(const CHA* uri, TEnvTable<Capacity>* table) {
   IUD line_no = 0;
   IUC count = 0;
 
-  while (fgets(line, (int)sizeof(line), fp) != nullptr) {
+  while (fgets(line, (ISC)sizeof(line), fp) != nullptr) {
     ++line_no;
 
     // Strip newline.
@@ -107,11 +107,11 @@ EnvStatus TEnvLoad(const CHA* uri, TEnvTable<Capacity>* table) {
 }
 
 template<IUC Capacity>
-ISN TEnvFind(const TEnvTable<Capacity>& table, const CHA* key) {
+ISC TEnvFind(const TEnvTable<Capacity>& table, const CHA* key) {
   if (IsError(key)) return -1;
   for (IUC i = 0; i < table.count; ++i) {
     if (strcmp(table.entries[i].key, key) == 0) {
-      return (ISN)i;
+      return (ISC)i;
     }
   }
   return -1;
@@ -119,7 +119,7 @@ ISN TEnvFind(const TEnvTable<Capacity>& table, const CHA* key) {
 
 template<IUC Capacity>
 const CHA* TEnvGet(const TEnvTable<Capacity>& table, const CHA* key) {
-  ISN idx = TEnvFind<Capacity>(table, key);
+  ISC idx = TEnvFind<Capacity>(table, key);
   if (idx < 0) return nullptr;
   return table.entries[idx].value;
 }
@@ -142,8 +142,8 @@ EnvStatus TEnvGetI(const TEnvTable<Capacity>& table, const CHA* key,
 }
 
 template<IUC Capacity>
-ISN TEnvExport(const TEnvTable<Capacity>& table) {
-  ISN exported = 0;
+ISC TEnvExport(const TEnvTable<Capacity>& table) {
+  ISC exported = 0;
   for (IUC i = 0; i < table.count; ++i) {
     const CHA* key = table.entries[i].key;
     const CHA* value = table.entries[i].value;
@@ -162,11 +162,11 @@ template EnvStatus TEnvLoad<64>(const CHA*, TEnvTable<64>*);
 template EnvStatus TEnvLoad<128>(const CHA*, TEnvTable<128>*);
 template EnvStatus TEnvLoad<256>(const CHA*, TEnvTable<256>*);
 
-template ISN TEnvFind<16>(const TEnvTable<16>&, const CHA*);
-template ISN TEnvFind<32>(const TEnvTable<32>&, const CHA*);
-template ISN TEnvFind<64>(const TEnvTable<64>&, const CHA*);
-template ISN TEnvFind<128>(const TEnvTable<128>&, const CHA*);
-template ISN TEnvFind<256>(const TEnvTable<256>&, const CHA*);
+template ISC TEnvFind<16>(const TEnvTable<16>&, const CHA*);
+template ISC TEnvFind<32>(const TEnvTable<32>&, const CHA*);
+template ISC TEnvFind<64>(const TEnvTable<64>&, const CHA*);
+template ISC TEnvFind<128>(const TEnvTable<128>&, const CHA*);
+template ISC TEnvFind<256>(const TEnvTable<256>&, const CHA*);
 
 template const CHA* TEnvGet<16>(const TEnvTable<16>&, const CHA*);
 template const CHA* TEnvGet<32>(const TEnvTable<32>&, const CHA*);
@@ -180,11 +180,11 @@ template EnvStatus TEnvGetI<64>(const TEnvTable<64>&, const CHA*, ISC*);
 template EnvStatus TEnvGetI<128>(const TEnvTable<128>&, const CHA*, ISC*);
 template EnvStatus TEnvGetI<256>(const TEnvTable<256>&, const CHA*, ISC*);
 
-template ISN TEnvExport<16>(const TEnvTable<16>&);
-template ISN TEnvExport<32>(const TEnvTable<32>&);
-template ISN TEnvExport<64>(const TEnvTable<64>&);
-template ISN TEnvExport<128>(const TEnvTable<128>&);
-template ISN TEnvExport<256>(const TEnvTable<256>&);
+template ISC TEnvExport<16>(const TEnvTable<16>&);
+template ISC TEnvExport<32>(const TEnvTable<32>&);
+template ISC TEnvExport<64>(const TEnvTable<64>&);
+template ISC TEnvExport<128>(const TEnvTable<128>&);
+template ISC TEnvExport<256>(const TEnvTable<256>&);
 
 }  //< namespace Env
 }  //< namespace CTK

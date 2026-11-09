@@ -7,11 +7,11 @@
 namespace CTK {
 namespace Touch {
 
-class LIB_MEMBER MixerChannel;
+class MixerChannel;
 
 /* A generic parameter mixer. */
 template <typename T>
-class LIB_MEMBER Mixer {
+class Mixer {
  public:
   typedef enum {
     Midi = 0,

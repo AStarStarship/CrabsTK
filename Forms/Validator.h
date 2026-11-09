@@ -1,7 +1,7 @@
 // Copyright AStarship <https://astarship.net>.
 #pragma once
-#ifndef KT_FORMS_VALIDATOR
-#define KT_FORMS_VALIDATOR
+#ifndef _CrabsTKFormsValidatorH
+#define _CrabsTKFormsValidatorH
 #include <_Config.h>
 namespace CTK {
 namespace Forms {
@@ -19,6 +19,6 @@ class Validator : public Validatable {
   BOL IsValid() override { return true; }
 };
 
-}  //< namespace Forms
-}  //< namespace CTK
-#endif
+}       //< namespace Forms
+}       //< namespace CTK
+#endif  //< _CrabsTKFormsValidatorH

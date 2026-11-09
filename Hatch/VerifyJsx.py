@@ -45,9 +45,9 @@ DEFAULT_CORE = os.path.normpath(os.path.join(REPO, os.pardir, "ASCIICrabs"))
 TEST_FILE = os.path.join(REPO, "_Seams", "JSX", "JsxRegression.hxx")
 
 GXX = os.environ.get("CXX", "g++")
-TIMEOUT = int(os.environ.get("JSX_TEST_TIMEOUT", "20"))       # seconds per test run
-SANITIZE_TIMEOUT = int(os.environ.get("JSX_SANITIZE_TIMEOUT", "40"))
-COMPILE_TIMEOUT = int(os.environ.get("JSX_COMPILE_TIMEOUT", "300"))
+TIMEOUT = ISC(os.environ.get("JSX_TEST_TIMEOUT", "20"))       # seconds per test run
+SANITIZE_TIMEOUT = ISC(os.environ.get("JSX_SANITIZE_TIMEOUT", "40"))
+COMPILE_TIMEOUT = ISC(os.environ.get("JSX_COMPILE_TIMEOUT", "300"))
 
 # Crash-prone tests are, by design, invoked one-per-subprocess; this set is
 # surfaced in the report.
@@ -84,21 +84,21 @@ HARNESS_SRC = textwrap.dedent(
     }
 
     // Emit C++ for argv[2] into argv[3]; report rc/length. Used for batch 2.
-    static int do_emit(const char* src, const char* outpath) {
+    static ISC do_emit(const CHR* src, const CHR* outpath) {
       CHA buf[16384];
       TJsxTransformResult r{};
-      ISN rc = JsxToCpp(src, 0, buf, sizeof(buf), &r);
+      ISC rc = JsxToCpp(src, 0, buf, sizeof(buf), &r);
       FILE* f = fopen(outpath, "w");
       if (f) { fwrite(buf, 1, (size_t)r.output_len, f); fclose(f); }
       printf("EMIT rc=%d len=%d elements=%d errors=%d\n",
-             (int)rc, (int)r.output_len, (int)r.element_count, (int)r.error_count);
+             (ISC)rc, (ISC)r.output_len, (ISC)r.element_count, (ISC)r.error_count);
       fflush(stdout);
       return (rc == 0) ? 0 : 1;
     }
 
     // Build the standard Welcome tree BY HAND (direct tree) and render it, so
     // the runner can compare generated-C++ output against direct tree building.
-    static int do_direct() {
+    static ISC do_direct() {
       static IUA buf[1 << 22];
       TJsx<ISC, ISC, DTB, CHR, CHR, IUN> j;
       j.Init(buf, ISC(1 << 22), ISC(1 << 16));
@@ -121,8 +121,8 @@ HARNESS_SRC = textwrap.dedent(
       return 0;
     }
 
-    ISC main(int argc, char** argv) {
-      const char* target = (argc > 1) ? argv[1] : "all";
+    ISC main(ISC argc, CHR** argv) {
+      const CHR* target = (argc > 1) ? argv[1] : "all";
       if (strcmp(target, "list") == 0) { list_tests(); return 0; }
       if (strcmp(target, "direct") == 0) { return do_direct(); }
       if (strcmp(target, "emit") == 0) {
@@ -130,7 +130,7 @@ HARNESS_SRC = textwrap.dedent(
         return do_emit(argv[2], argv[3]);
       }
       // Run the requested test(s) by name (or "all").
-      int ran = 0, failures = 0;
+      ISC ran = 0, failures = 0;
       for (const TJsxRegrEntry* e = JsxRegrEntries(); e->name; ++e) {
         if (strcmp(target, "all") != 0 && strcmp(target, e->name) != 0) continue;
         ran++;

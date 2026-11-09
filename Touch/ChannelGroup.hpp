@@ -8,7 +8,7 @@ namespace CTK {
 namespace Touch {
 
 /* A group of */
-class LIB_MEMBER ChannelGroup {
+class ChannelGroup {
  public:
   /* Constructs a group of channels. */
    ChannelGroup () {}

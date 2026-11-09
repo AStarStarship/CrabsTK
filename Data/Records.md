@@ -28,22 +28,22 @@ The fixed state snapshot consists of Core IUC words, never live pointers.
 StateWords may be zero. Snapshot timing is chosen by the producer and must be
 consistent within a dataset; this codec does not manufacture internal state.
 Gym currently supplies FPC terminals/masks: an adapter must validate exactly
-0.0/1.0 and convert to IUA, never memcpy those float arrays into byte flags.
+0.0/1.0 and convert to IUA, never memcpy those FPC arrays into byte flags.
 Float bits are preserved, including negative zero, infinities, and NaN payloads:
 nonfinite learning signals are evidence too. Signed action values are preserved
 even when a policy chose an illegal action. Binary terminal/mask flags are
-validated. No padding, native pointers, host-width aliases, or C++ bool goes
-on disk. The wire float representation is IEEE-754 binary32.
+validated. No padding, native pointers, host-width aliases, or C++ BOL goes
+on disk. The wire FPC representation is IEEE-754 binary32.
 
-The codec reads/stores float object representations through references, not
+The codec reads/stores FPC object representations through references, not
 floating-value returns/assignments. This preserves positive/negative signaling
 NaN payloads even on x87, which can quiet them during ordinary value transfers.
-RecordDetail::Float is only a convenience for callers needing a float value;
+RecordDetail::Float is only a convenience for callers needing a FPC value;
 the wire decode path does not use it.
 
 ## Canonical wire format
 
-All integers/float bit patterns are little-endian. A record is a 72-byte
+All integers/FPC bit patterns are little-endian. A record is a 72-byte
 header followed by count rows. There is no native-struct memcpy serialization.
 Concatenate complete records to make a dataset; different shapes can coexist.
 

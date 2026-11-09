@@ -1,7 +1,5 @@
 // Copyright AStarship <https://astarship.net>.
 #pragma once
-#ifndef _CrabsTKGUIRelease
-#define _CrabsTKGUIRelease
 #include "../_Config.h"
 namespace CTKGUITest {
 using namespace ::_;
@@ -18,4 +16,3 @@ inline const CHA* Release(const CHA* args) {
 }
 
 }  //< namespace CTKGUITest
-#endif  //< _CrabsTKGUIRelease

@@ -15,7 +15,7 @@ Examples of a role are:
 4. Employee
 5. Volunteer
 */
-struct LIB_MEMBER TRole {
+struct TRole {
   IUD GetRole() = 0;
 };
 }  // namespace Who

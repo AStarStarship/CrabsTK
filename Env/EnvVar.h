@@ -42,7 +42,7 @@ EnvStatus TEnvLoad(const CHA* uri, TEnvTable<Capacity>* table);
 
 /* Search for a key; returns its index or -1 if absent. */
 template<IUC Capacity>
-ISN TEnvFind(const TEnvTable<Capacity>& table, const CHA* key);
+ISC TEnvFind(const TEnvTable<Capacity>& table, const CHA* key);
 
 /* Return the value for key, or _NilP if absent. */
 template<IUC Capacity>
@@ -59,7 +59,7 @@ environment wins). OS-specific hiding from processes/agents is a future
 integration point.
 @return Number of entries actually exported. */
 template<IUC Capacity>
-ISN TEnvExport(const TEnvTable<Capacity>& table);
+ISC TEnvExport(const TEnvTable<Capacity>& table);
 
 }  //< namespace Env
 }  //< namespace CTK

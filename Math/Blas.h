@@ -89,8 +89,8 @@ inline void Gemm(BOL ta, BOL tb, FPD alpha, const FPD* a, ISC lda,
 // reference computations in BlasTest.hxx.
 inline void ref_dgemm(ISC m, ISC n, ISC k, FPD alpha, const FPD* a, ISC lda,
                       const FPD* b, ISC ldb, FPD beta, FPD* c, ISC ldc) {
-  _::Math::RefGemm(false, false, m, n, k, alpha, a, lda, b, ldb,
-                          beta, c, ldc);
+  RefGemm(false, false, m, n, k, alpha, a, lda, b, ldb,
+              beta, c, ldc);
 }
 
 // Reference dgemv: y(m) = alpha * A(m,n) * x(n) + beta * y(m)
@@ -98,8 +98,8 @@ inline void ref_dgemm(ISC m, ISC n, ISC k, FPD alpha, const FPD* a, ISC lda,
 // x is length n, y is length m.
 inline void ref_dgemv(ISC m, ISC n, FPD alpha, const FPD* a, ISC lda,
                       const FPD* x, FPD beta, FPD* y) {
-  _::Math::RefGemm(false, false, m, 1, n, alpha, a, lda, x, 1,
-                          beta, y, 1);
+  RefGemm(false, false, m, 1, n, alpha, a, lda, x, 1,
+              beta, y, 1);
 }
 
 // Compatibility hook: never mutate process-wide thread policy implicitly.
@@ -165,8 +165,8 @@ inline void ZeroMatrix(FPD* data, ISC count) {
 inline FPD MaxErr(const FPD* a, const FPD* b, ISC count) {
   FPD e = 0;
   for (ISC i = 0; i < count; ++i) {
-    const FPD err = FPDAbsolute(a[i] - b[i]);
-    if (!FPDIsFinite(err)) return FPD(err) / FPD(err);
+    const FPD err = _::Absolute(a[i] - b[i]);
+    if (!_::IsFinite(err)) return FPD(err) / FPD(err);
     if (err > e) e = err;
   }
   return e;

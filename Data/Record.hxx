@@ -10,6 +10,10 @@ namespace Data {
 static_assert(sizeof(IUA) == 1 && sizeof(IUC) == 4 && sizeof(ISC) == 4 &&
               sizeof(IUD) == 8 && sizeof(FPC) == 4);
 
+/* Declared in Record.h inside RecordDetail; defining them in Data instead left
+   every unqualified call ambiguous through the using-directive below. */
+namespace RecordDetail {
+
 IUD Load(const IUA* data, IUC bytes) {
   IUD result = 0;
   for (IUC i = 0; i < bytes; ++i) result |= IUD(data[i]) << (8 * i);
@@ -50,6 +54,8 @@ IUC Checksum(const IUA* data, IUC bytes) {
   }
   return crc ^ 0xffffffffU;
 }
+
+}  //< namespace RecordDetail
 
 RecordStatus TRecordBytes(const TRecordHeader& header, IUC* bytes) {
   if (!bytes) return RecordInvalid;

@@ -25,12 +25,12 @@ Comment tokens (CODE_TOK_COMMENT_LINE, CODE_TOK_COMMENT_BLOCK) are
 removed. All other tokens are preserved in order. Whitespace tokens
 adjacent to a removed comment are merged or dropped to avoid
 double-spacing. */
-ISN CodeStripComments(const TCodeToken* tokens, ISN token_count,
-                      TCodeToken* out_tokens, ISN* out_count);
+ISC CodeStripComments(const TCodeToken* tokens, ISC token_count,
+                      TCodeToken* out_tokens, ISC* out_count);
 
 /* Count the number of non-comment tokens in a token array.
 Useful for sizing the output buffer before calling CodeStripComments. */
-ISN CodeCountNonComments(const TCodeToken* tokens, ISN token_count);
+ISC CodeCountNonComments(const TCodeToken* tokens, ISC token_count);
 
 }  //< namespace Code
 }  //< namespace CTK

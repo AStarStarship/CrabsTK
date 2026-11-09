@@ -69,7 +69,7 @@ inline const CHA* Ring(const CHA* args) {
   Check(!s.HasData(), "ring: no data poll");
 
   // (2) exact-boundary write fills the ring; overflow rejected whole.
-  ISN w = m.Write(cell, 256);
+  ISC w = m.Write(cell, 256);
   Check(w == 256, "ring: full write");
   Check(m.SpaceAvailable() == 0, "ring: full space zero");
   Check(s.BytesAvailable() == 256, "ring: full avail 256");
@@ -77,7 +77,7 @@ inline const CHA* Ring(const CHA* args) {
   Check(s.BytesAvailable() == 256, "ring: rejected write left ring intact");
 
   // (3) exact-boundary read drains; counters return to equal.
-  ISN r = s.Read(cell, 256);
+  ISC r = s.Read(cell, 256);
   Check(r == 256, "ring: full read");
   Check(s.Read(cell, 1) == PipeEmpty, "ring: drained empty");
   Check(m.SpaceAvailable() == 256, "ring: space restored");
@@ -87,9 +87,9 @@ inline const CHA* Ring(const CHA* args) {
   for (IUC i = 0; i < 200; ++i) expect[i] = (CHA)('A' + i % 25);
   BOL wrap_ok = true;
   for (IUC i = 0; i < 64; ++i) {
-    ISN ww = m.Write(expect, 200);
+    ISC ww = m.Write(expect, 200);
     if (ww != 200) { wrap_ok = false; break; }
-    ISN rr = s.Read(cell, sizeof(cell));
+    ISC rr = s.Read(cell, sizeof(cell));
     if (rr != 200 || memcmp(cell, expect, 200) != 0) { wrap_ok = false; break; }
   }
   Check(wrap_ok, "ring: 64 wraps exact bytes");
@@ -99,15 +99,15 @@ inline const CHA* Ring(const CHA* args) {
   // then the remaining 44.
   CHA big[300];
   for (IUC i = 0; i < 300; ++i) big[i] = (CHA)(i % 251);
-  ISN w1 = m.Write(big, 300);
+  ISC w1 = m.Write(big, 300);
   Check(w1 == 256, "ring: partial write = free space");
   // Drain the first 256 bytes so the ring has space for the remainder.
   CHA drain[256];
-  ISN rd = s.Read(drain, 256, 0);
+  ISC rd = s.Read(drain, 256, 0);
   Check(rd == 256, "ring: drain before remainder");
-  ISN w2 = m.Write(big + 256, 44);
+  ISC w2 = m.Write(big + 256, 44);
   Check(w2 == 44, "ring: remainder write");
-  ISN r1 = s.Read(cell, 44, 0);
+  ISC r1 = s.Read(cell, 44, 0);
   Check(r1 == 44, "ring: remainder read");
   // Verify the full 300-byte sequence: first 256 in drain, last 44 in cell.
   Check(memcmp(drain, big, 256) == 0, "ring: split bytes part 1 exact");
@@ -127,7 +127,7 @@ inline const CHA* Ring(const CHA* args) {
     // (the 256-byte ring holds exactly one chunk at a time).
     for (IUC off = 0; off < 4096 && roll_ok; off += 256) {
       if (m.Write(stream + off, 256) != 256) { roll_ok = false; break; }
-      ISN rr = s.Read(sbuf + off, 256, 0);
+      ISC rr = s.Read(sbuf + off, 256, 0);
       if (rr != 256 || memcmp(sbuf + off, stream + off, 256) != 0) {
         roll_ok = false; break;
       }
@@ -141,14 +141,14 @@ inline const CHA* Ring(const CHA* args) {
   m.Write(zeros, 128);
   CHA probe[128];
   memset(probe, 0xFF, sizeof(probe));
-  ISN zr = s.Read(probe, sizeof(probe), 0);
+  ISC zr = s.Read(probe, sizeof(probe), 0);
   Check(zr == 128 && memcmp(probe, zeros, 128) == 0, "ring: zero bytes exact");
 
   // (8) canary-guarded read buffer: Read must never write past max_bytes.
   CHA canary[600];
   memset(canary, 0x5A, sizeof(canary));
   m.Write(stream, 100);
-  ISN cr = s.Read(canary + 400, 100, 0);
+  ISC cr = s.Read(canary + 400, 100, 0);
   Check(cr == 100, "ring: canary read size");
   Check(canary[399] == 0x5A && canary[500] == 0x5A, "ring: canaries intact");
 
@@ -157,11 +157,11 @@ inline const CHA* Ring(const CHA* args) {
   // the master READS replies the slave writes.
   CHA reply[64];
   memset(reply, 'R', sizeof(reply));
-  ISN sr = s.Write(reply, 10);
+  ISC sr = s.Write(reply, 10);
   Check(sr == 10, "ring: slave writes reply");
   Check(m.BytesAvailable() == 10, "ring: master sees reply");
   CHA mcell[64];
-  ISN mr = m.Read(mcell, sizeof(mcell), 0);
+  ISC mr = m.Read(mcell, sizeof(mcell), 0);
   Check(mr == 10 && mcell[0] == 'R', "ring: master reads reply");
 
   // (10) timeout path: drain both directions, then a bounded wait on the
@@ -169,7 +169,7 @@ inline const CHA* Ring(const CHA* args) {
   s.Read(cell, sizeof(cell), 0);  // drain request
   m.Read(cell, sizeof(cell), 0);  // drain reply
   ISW t0 = NowMsForTest();
-  ISN tr = s.Read(cell, sizeof(cell), 30);
+  ISC tr = s.Read(cell, sizeof(cell), 30);
   ISW elapsed = NowMsForTest() - t0;
   Check(tr == PipeTimeout, "ring: bounded wait times out");
   Check(elapsed >= 20 && elapsed < 5000, "ring: timeout duration sane");

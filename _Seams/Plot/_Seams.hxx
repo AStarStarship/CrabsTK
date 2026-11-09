@@ -1,5 +1,5 @@
 // Copyright AStarship <https://astarship.net>.
-#if _Seam >= Release
+#if _Seam >= _CrabsTKPlotRelease
 #include "01.Core.hxx"
 #include "02.Plot.hxx"
 #include "03.Release.hxx"
@@ -8,7 +8,7 @@ using namespace ::_;
 using namespace CTK;
 
 inline const CHR* Main(const CHR* args) {
-#if _Seam == Release
+#if _Seam == _CrabsTKPlotRelease
   return Release(args);
 #else
   return TTestTree<Core, Plot>(args);

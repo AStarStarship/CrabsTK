@@ -29,7 +29,7 @@ accept 14-bit MIDI values.
 
 # Saving and Loading TWidget(s):
 */
-class LIB_MEMBER TWidget : public Operation {
+class TWidget : public Operation {
  public:
   /* A list of all the different types of Human-Machine Input types. */
   enum Types { Touchscreen = 0, Keyboard, DrumPad, Controller, DMXWidget };

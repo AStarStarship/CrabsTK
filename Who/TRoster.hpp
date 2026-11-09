@@ -112,7 +112,7 @@ struct TRoster {
   @pre Event thread only.
   @note This is the hot path: Find + validate + RingWrite + Room broadcast.
         All steps are allocation-free. */
-  ISN SendMessage(const CHA* handle, const CHA* text,
+  ISC SendMessage(const CHA* handle, const CHA* text,
                   IUA type = TMessage::Chat, IUB length = (IUB)-1) {
     TSession* session = sessions_.Find(handle, length);
     if (!session) return -1;
@@ -128,12 +128,12 @@ struct TRoster {
     /* Write to the room's replay ring and count the fanout.
     The session already carries its room, so this is one lookup, not two. */
     IUC room = session->Room();
-    ISN fanout = 0;
+    ISC fanout = 0;
     if (room != 0) {
       TRoom* room_ptr = rooms_.Find(room);
       if (room_ptr) {
         room_ptr->RingWriteShort(&msg);
-        fanout = (ISN)room_ptr->MemberCount();
+        fanout = (ISC)room_ptr->MemberCount();
       }
     }
     session->SentIncrement();
@@ -147,16 +147,16 @@ struct TRoster {
   @param text  The UTF-8 message text.
   @return the number of sessions the message was broadcast to.
   @pre Event thread only. */
-  ISN SendSystem(IUC room, const CHA* text) {
+  ISC SendSystem(IUC room, const CHA* text) {
     if ((++ts_cache_tick_ & 1023) == 0) ts_cache_ = ClockTS();
     TMessage msg(0, ts_cache_, TMessage::System, room, text, (IUB)-1);
     outbound_.WriteShort(&msg);
-    ISN fanout = 0;
+    ISC fanout = 0;
     if (room != 0) {
       TRoom* room_ptr = rooms_.Find(room);
       if (room_ptr) {
         room_ptr->RingWriteShort(&msg);
-        fanout = (ISN)room_ptr->MemberCount();
+        fanout = (ISC)room_ptr->MemberCount();
       }
     }
     ++message_count_;

@@ -47,7 +47,7 @@ namespace JSX {
 //   ISZ  byte-offset width   (POD; 32-bit addresses a 4GB stack)
 //   ISY  count/index width   (POD)
 //   DT   type-code width
-//   CHS  key char type, CHT  char type, HSH  hash type
+//   CHS  key CHR type, CHT  CHR type, HSH  hash type
 template<typename ISZ = ISC, typename ISY = ISC, typename DT = DTB,
          typename CHS = CHR, typename CHT = CHR, typename HSH = IUN>
 struct TJsx {
@@ -73,7 +73,7 @@ struct TJsx {
   // The stack offset of a tuple (its TListAlloc'd region).
   ISZ AllocOff(ISY idx) const { return TListValuesMap<ISZ, ISY, DT>(stack)[idx]; }
 
-  // Push a scalar (number / char) onto the stack; returns the stack index.
+  // Push a scalar (number / CHR) onto the stack; returns the stack index.
   ISY Push(DT type, IUW value) {
     return TListInsert<ISZ, ISY, DT>(stack, type, value);
   }
@@ -218,15 +218,15 @@ struct TJsx {
   // ---- Element node helpers (a JSX element = a Dictionary on the stack) ----
   // Build a "prefix<i>" key into a single-threaded scratch buffer.
   const CHS* KeyFmt(const CHS* prefix, ISY i) const {
-    static char buf[80];
+    static CHR buf[80];
     ISZ p = 0;
-    while (prefix[p] != 0) buf[p++] = (char)prefix[p];
-    char tmp[24];
+    while (prefix[p] != 0) buf[p++] = (CHR)prefix[p];
+    CHR tmp[24];
     ISZ tn = 0;
     if (i == 0) tmp[tn++] = '0';
     else {
       ISY t = i;
-      while (t > 0) { tmp[tn++] = (char)('0' + (t % 10)); t /= 10; }
+      while (t > 0) { tmp[tn++] = (CHR)('0' + (t % 10)); t /= 10; }
     }
     for (ISZ k = tn; k > 0; k--) buf[p++] = tmp[k - 1];
     buf[p] = 0;
@@ -357,10 +357,10 @@ struct TJsx {
 // success. Exercises: the JSON object + heterogeneous scalars + by-name lookup;
 // Book and Table push (the "hierarchical types all working"); and a hand-built
 // JSX element rendered by the Star reducer (static + dynamic props + text).
-inline int JsxSelfTest(void* buffer, ISC bytes, ISC dic_bytes = 65536) {
+inline ISC JsxSelfTest(void* buffer, ISC bytes, ISC dic_bytes = 65536) {
   TJsx<ISC, ISC, DTB, CHR, CHR, IUN> j;
   j.Init(buffer, bytes, ISC(1 << 16));
-  int ok = 1;
+  ISC ok = 1;
 
   // (1) JSON object + heterogeneous scalars + by-name lookup.
   ISC obj = j.AddObject(dic_bytes, ISC(16), ISC(1024));
@@ -374,7 +374,7 @@ inline int JsxSelfTest(void* buffer, ISC bytes, ISC dic_bytes = 65536) {
   ISC pg = j.Find(obj, (const CHR*)"gamma");
   ok &= (pa > 0 && pb > 0 && pg > 0);
   ok &= (IUC(*j.ValuePtr<IUC>(obj, pa)) == 1);
-  ok &= ((char)*j.ValuePtr<CHA>(obj, pb) == 'x');
+  ok &= ((CHR)*j.ValuePtr<CHA>(obj, pb) == 'x');
   ok &= (IUD(*j.ValuePtr<IUD>(obj, pg)) == IUD(123456789));
   ok &= (IUC(j.ValueAt(obj, pa).type) == _IUC);
   ok &= (IUC(j.ValueAt(obj, pg).type) == _IUD);

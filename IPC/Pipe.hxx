@@ -57,7 +57,7 @@ static void FutexWait(IUC* word, IUC expected, ISW timeout_ms) {
   if (deadline_ms >= 0) deadline_ms += NowMs();
   for (;;) {
     struct timespec ts;
-    bool bounded = timeout_ms >= 0;
+    BOL bounded = timeout_ms >= 0;
     if (bounded) {
       ISW left = deadline_ms - NowMs();
       if (left <= 0) return;
@@ -213,7 +213,7 @@ Pipe Pipe::Create(const CHA* name, IUC ring_bytes) {
   if (!name || !name[0]) return pipe;
   ring_bytes = RoundRing(ring_bytes);
   IUC total = PipeHeaderBytes + 2 * ring_bytes;
-  int fd = shm_open(name, O_CREAT | O_EXCL | O_RDWR, S_IRUSR | S_IWUSR);
+  ISC fd = shm_open(name, O_CREAT | O_EXCL | O_RDWR, S_IRUSR | S_IWUSR);
   if (fd < 0) {
     if (errno == EEXIST) {
       // Never adopt a peer's resource under the creator contract: a
@@ -258,7 +258,7 @@ Pipe Pipe::Create(const CHA* name, IUC ring_bytes) {
 Pipe Pipe::Attach(const CHA* name, ISC timeout_ms) {
   Pipe pipe;
   if (!name || !name[0]) return pipe;
-  int fd = shm_open(name, O_RDWR, 0);
+  ISC fd = shm_open(name, O_RDWR, 0);
   if (fd < 0) return pipe;
   struct stat st;
   if (fstat(fd, &st) < 0) {

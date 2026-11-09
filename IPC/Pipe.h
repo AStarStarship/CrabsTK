@@ -179,7 +179,7 @@ public:
 
   // The shared name ("" if never created/attached).
   const CHA* Name() const { return name_; }
-  operator bool() const { return valid_; }
+  operator BOL() const { return valid_; }
 
 public:
   // Next lower power of two (min 64): the ring size reduction applied by

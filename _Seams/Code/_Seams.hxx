@@ -1,5 +1,5 @@
 // Copyright AStarship <https://astarship.net>.
-#if _Seam >= Release
+#if _Seam >= _CrabsTKCodeRelease
 #include "01.Core.hxx"
 #include "02.StripComments.hxx"
 #include "03.Release.hxx"
@@ -8,7 +8,7 @@ using namespace ::_;
 using namespace CTK;
 
 inline const CHR* Main(const CHR* args) {
-#if _Seam == Release
+#if _Seam == _CrabsTKCodeRelease
   return Release(args);
 #else
   return TTestTree<Core, StripComments>(args);

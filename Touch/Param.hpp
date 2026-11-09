@@ -9,7 +9,7 @@ namespace CTK {
 namespace Touch {
 
 /* A parameter with upper and lower bounds. */
-class LIB_MEMBER Parameter : public HMIComponent {
+class Parameter : public HMIComponent {
  public:
   typedef enum {
     ControlMidi = 0,

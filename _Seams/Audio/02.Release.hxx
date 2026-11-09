@@ -14,4 +14,3 @@ inline const CHA* Release(const CHA* args) {
 }
 
 }  //< namespace CTKAudioTest
-_NilP

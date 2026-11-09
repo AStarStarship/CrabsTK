@@ -25,13 +25,13 @@ if (st == EnvOK) {
   const CHA* host = TEnvGet<64>(table, "SLAVE_HOST");
   ISC port = 0;
   TEnvGetI<64>(table, "SLAVE_PORT", &port);
-  ISN exported = TEnvExport<64>(table);
+  ISC exported = TEnvExport<64>(table);
 }
 ```
 
 ## Design
 
-- `TEnvVar`: fixed 128-char key + 1024-char value + line number. No pointers, no heap.
+- `TEnvVar`: fixed 128-CHR key + 1024-CHR value + line number. No pointers, no heap.
 - `TEnvTable<Capacity>`: array of `TEnvVar`, POD. `count` = loaded entries, `count_max` = Capacity.
 - `TEnvLoad`: reads a file, skips comments/blanks/malformed lines. First occurrence of a duplicate key wins.
 - `TEnvGet` / `TEnvFind`: linear search, O(n).

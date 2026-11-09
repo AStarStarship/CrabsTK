@@ -5,16 +5,16 @@ namespace Exo {
 
 // Exo.hxx — implementation of the Exo software rasterizer.
 // Self-contained: all math from ASCIICrabs Math.hxx (no libm), all pixel
-// writes through the CrabsTK Image layer (CImage / ImageDraw). No stdlib.
+// writes through the CrabsTK Image layer (CImage / the CTK::Exo raster primitives). No stdlib.
 
 // Matrix algebra
 
 TMat4 Multiply(const TMat4& a, const TMat4& b) {
   TMat4 r;
-  for (int col = 0; col < 4; ++col) {
-    for (int row = 0; row < 4; ++row) {
+  for (ISC col = 0; col < 4; ++col) {
+    for (ISC row = 0; row < 4; ++row) {
       FPD s = 0.0;
-      for (int k = 0; k < 4; ++k) s += a.m[k * 4 + row] * b.m[col * 4 + k];
+      for (ISC k = 0; k < 4; ++k) s += a.m[k * 4 + row] * b.m[col * 4 + k];
       r.m[col * 4 + row] = s;
     }
   }
@@ -23,7 +23,7 @@ TMat4 Multiply(const TMat4& a, const TMat4& b) {
 
 TMat4 Perspective(FPD fovY, FPD aspect, FPD near_, FPD far_) {
   TMat4 m = TMat4::Identity();
-  const FPD f = 1.0 / FPDtan(fovY * 0.5);
+  const FPD f = 1.0 / Tan(fovY * 0.5);
   // Column-major storage m[col*4+row]. GL perspective:
   //   row0: [f/aspect, 0, 0, 0]
   //   row1: [0, f, 0, 0]
@@ -47,7 +47,7 @@ TMat4 LookAt(const FPD3& eye, const FPD3& target, const FPD3& up) {
   // A point in front of the camera maps to view z < 0, so the perspective
   // matrix (m[15] = -1) gives w' = -z_view > 0 for in-front geometry.
   FPD fx = eye.x - target.x, fy = eye.y - target.y, fz = eye.z - target.z;
-  FPD flen = FPDSquareRoot(fx * fx + fy * fy + fz * fz);
+  FPD flen = SquareRoot(fx * fx + fy * fy + fz * fz);
   FPD finv = flen > 0.0 ? 1.0 / flen : 0.0;
   fx *= finv; fy *= finv; fz *= finv;
 
@@ -55,7 +55,7 @@ TMat4 LookAt(const FPD3& eye, const FPD3& target, const FPD3& up) {
   FPD sx = fy * up.z - fz * up.y;
   FPD sy = fz * up.x - fx * up.z;
   FPD sz = fx * up.y - fy * up.x;
-  FPD slen = FPDSquareRoot(sx * sx + sy * sy + sz * sz);
+  FPD slen = SquareRoot(sx * sx + sy * sy + sz * sz);
   FPD sinv = slen > 0.0 ? 1.0 / slen : 0.0;
   sx *= sinv; sy *= sinv; sz *= sinv;
 
@@ -78,7 +78,7 @@ TMat4 LookAt(const FPD3& eye, const FPD3& target, const FPD3& up) {
 }
 
 TMat4 RotateX(FPD rad) {
-  FPD c = FPDCos(rad), s = FPDsin(rad);
+  FPD c = Cosine(rad), s = Sine(rad);
   TMat4 m = TMat4::Identity();
   m.m[5] = c;  m.m[6] = s;
   m.m[9] = -s; m.m[10] = c;
@@ -86,7 +86,7 @@ TMat4 RotateX(FPD rad) {
 }
 
 TMat4 RotateY(FPD rad) {
-  FPD c = FPDCos(rad), s = FPDsin(rad);
+  FPD c = Cosine(rad), s = Sine(rad);
   TMat4 m = TMat4::Identity();
   m.m[0] = c;  m.m[2] = -s;
   m.m[8] = s;  m.m[10] = c;
@@ -94,7 +94,7 @@ TMat4 RotateY(FPD rad) {
 }
 
 TMat4 RotateZ(FPD rad) {
-  FPD c = FPDCos(rad), s = FPDsin(rad);
+  FPD c = Cosine(rad), s = Sine(rad);
   TMat4 m = TMat4::Identity();
   m.m[0] = c;  m.m[1] = s;
   m.m[4] = -s; m.m[5] = c;
@@ -120,21 +120,21 @@ FPD3 TransformPoint(const TMat4& M, const FPD3& p) {
   FPD oy = M.m[1] * x + M.m[5] * y + M.m[9] * z + M.m[13];
   FPD oz = M.m[2] * x + M.m[6] * y + M.m[10] * z + M.m[14];
   FPD ow = M.m[3] * x + M.m[7] * y + M.m[11] * z + M.m[15];
-  FPD iw = FPDAbsolute(ow) > 1.0e-12 ? 1.0 / ow : 0.0;
+  FPD iw = Absolute(ow) > 1.0e-12 ? 1.0 / ow : 0.0;
   return FPD3(ox * iw, oy * iw, oz * iw);
 }
 
 // Frame
 
-void ClearFrame(TFrame& f, const ImageDraw::TColor& bg) {
-  ImageDraw::Fill(*f.img, bg);
+void ClearFrame(TFrame& f, const VColor& bg) {
+  Fill(*f.img, bg);
   IUN px = (IUN)f.width * (IUN)f.height;
   for (IUN i = 0; i < px; ++i) f.zbuf[i] = f.zfar;
 }
 
 // Projection
 
-BOL ProjectPoint(const TMat4& proj, const FPD3& world, ISN width, ISN height,
+BOL ProjectPoint(const TMat4& proj, const FPD3& world, ISC width, ISC height,
                  FPD* sx, FPD* sy, FPD* depth) {
   // Transform to clip space WITHOUT the perspective divide, so we can test
   // w' (the homogeneous w) for the near-plane check.
@@ -146,7 +146,7 @@ BOL ProjectPoint(const TMat4& proj, const FPD3& world, ISN width, ISN height,
   // Near-plane check (measured, this camera basis): in-front geometry yields
   // cw < 0 with the canonical look-at + perspective pair. Reject at/behind
   // the near plane: cw >= 0.
-  if (FPDAbsolute(cw) < 1.0e-12 || cw >= 0.0) return false;
+  if (Absolute(cw) < 1.0e-12 || cw >= 0.0) return false;
   FPD iw = 1.0 / cw;
   FPD nx = cx * iw, ny = cy * iw, nz = cz * iw;
   // Reject only on the far plane (nz beyond the far clip). x/y may exceed
@@ -167,13 +167,13 @@ BOL ProjectPoint(const TMat4& proj, const FPD3& world, ISN width, ISN height,
 
 /* Edge function: positive if the point (px,py) is on the inside of the
    directed edge a->b. Standard 2D cross product. */
-static FPD Edge(FPD ax, FPD ay, FPD bx, FPD by, FPD px, FPD py) {
+FPD Edge(FPD ax, FPD ay, FPD bx, FPD by, FPD px, FPD py) {
   return (bx - ax) * (py - ay) - (by - ay) * (px - ax);
 }
 
-static void WritePixel(TFrame& f, ISN x, ISN y, FPD r, FPD g, FPD b) {
+void WritePixel(TFrame& f, ISC x, ISC y, FPD r, FPD g, FPD b) {
   if (x < 0 || y < 0 || x >= f.width || y >= f.height) return;
-  ISN idx = (y * f.width + x) * 4;
+  ISC idx = (y * f.width + x) * 4;
   // Premultiplied-ish "over" blend with a fully-opaque source is just a
   // store; we store opaque (a=255) triangle fragments.
   f.img->data[idx]     = (IUA)(r < 0.0 ? 0.0 : (r > 255.0 ? 255.0 : r));
@@ -187,10 +187,10 @@ void Triangle(TFrame& f,
               FPD bx, FPD by, FPD bz, FPD br, FPD bg, FPD bb,
               FPD cx, FPD cy, FPD cz, FPD cr, FPD cg, FPD cb) {
   // Bounding box of the triangle in screen space.
-  FPD minx = FPDCeiling(FPDMin(ax, FPDMin(bx, cx)));
-  FPD maxx = FPDFloor(FPDMax(ax, FPDMax(bx, cx)));
-  FPD miny = FPDCeiling(FPDMin(ay, FPDMin(by, cy)));
-  FPD maxy = FPDFloor(FPDMax(ay, FPDMax(by, cy)));
+  FPD minx = Ceiling(Min(ax, Min(bx, cx)));
+  FPD maxx = Floor(Max(ax, Max(bx, cx)));
+  FPD miny = Ceiling(Min(ay, Min(by, cy)));
+  FPD maxy = Floor(Max(ay, Max(by, cy)));
   if (minx > maxx || miny > maxy) return;
 
   // Total area (2x). Its sign tells us winding. In SCREEN space (y-down,
@@ -202,18 +202,18 @@ void Triangle(TFrame& f,
   if (area <= 0.0) return;  // back-facing (or degenerate) -> cull
   FPD invArea = 1.0 / area;
 
-  ISN x0 = (ISN)minx, x1 = (ISN)maxx;
-  ISN y0 = (ISN)miny, y1 = (ISN)maxy;
+  ISC x0 = (ISC)minx, x1 = (ISC)maxx;
+  ISC y0 = (ISC)miny, y1 = (ISC)maxy;
   // Clamp the bounding box to the frame. A vertex clipped exactly onto the
   // near plane projects to (nearly) infinity; without this clamp the box
-  // overflows the ISN cast and the loop indexes the z-buffer out of bounds.
+  // overflows the ISC cast and the loop indexes the z-buffer out of bounds.
   if (x0 < 0) x0 = 0;
   if (y0 < 0) y0 = 0;
   if (x1 > f.width - 1) x1 = f.width - 1;
   if (y1 > f.height - 1) y1 = f.height - 1;
   if (x0 > x1 || y0 > y1) return;
-  for (ISN py = y0; py <= y1; ++py) {
-    for (ISN px = x0; px <= x1; ++px) {
+  for (ISC py = y0; py <= y1; ++py) {
+    for (ISC px = x0; px <= x1; ++px) {
       // Sample at pixel center.
       FPD sx = (FPD)px + 0.5, sy = (FPD)py + 0.5;
       // Barycentric weights (each opposite its vertex).
@@ -257,10 +257,10 @@ struct TClipVertex {
 // Near-plane margin: we clip to cw < NEAR_EPS so interpolated vertices have a
 // finite nonzero cw (avoids divide-by-zero) while staying effectively on the
 // near plane.
-static const FPD NEAR_EPS = -1.0e-6;
+const FPD NEAR_EPS = -1.0e-6;
 
 // World point -> clip space (no perspective divide).
-static TClipVertex ToClipSpace(const TMat4& proj, const FPD3& w, const ISB4& col) {
+TClipVertex ToClipSpace(const TMat4& proj, const FPD3& w, const ISB4& col) {
   TClipVertex v;
   v.cx = proj.m[0] * w.x + proj.m[4] * w.y + proj.m[8]  * w.z + proj.m[12];
   v.cy = proj.m[1] * w.x + proj.m[5] * w.y + proj.m[9]  * w.z + proj.m[13];
@@ -276,7 +276,7 @@ static TClipVertex ToClipSpace(const TMat4& proj, const FPD3& w, const ISB4& col
 // outside vertex (cw > NEAR_EPS), `b` the inside vertex (cw < NEAR_EPS). The
 // crossing point is where cw == NEAR_EPS: a + t * (b - a),
 // t = (cw_a - NEAR_EPS) / (cw_a - cw_b).
-static TClipVertex InterpNear(const TClipVertex& a, const TClipVertex& b) {
+TClipVertex InterpNear(const TClipVertex& a, const TClipVertex& b) {
   TClipVertex o;
   FPD t = (a.cw - NEAR_EPS) / (a.cw - b.cw);
   o.cx = a.cx + t * (b.cx - a.cx);
@@ -298,7 +298,7 @@ static TClipVertex InterpNear(const TClipVertex& a, const TClipVertex& b) {
 // the interpolated crossing vertex has cw = NEAR_EPS, a finite nonzero value.
 // That gives it a correct, finite screen position after the divide, instead
 // of dividing by zero at cw == 0.
-static IUD ClipNear(const TClipVertex* in, IUD n, TClipVertex* out, IUD outCap) {
+IUD ClipNear(const TClipVertex* in, IUD n, TClipVertex* out, IUD outCap) {
   IUD oc = 0;
   const TClipVertex* prev = &in[n - 1];
   for (IUD i = 0; i < n; ++i) {
@@ -318,7 +318,7 @@ static IUD ClipNear(const TClipVertex* in, IUD n, TClipVertex* out, IUD outCap) 
 }
 
 // Clip-space vertex -> screen (x,y) + depth, after the near plane is gone.
-static BOL ProjectClip(const TClipVertex& v, ISN width, ISN height,
+BOL ProjectClip(const TClipVertex& v, ISC width, ISC height,
                        FPD* sx, FPD* sy, FPD* depth) {
   // After clipping, every vertex is at or in front of the near plane. cw is
   // <= 0 here; the crossing vertices have cw == 0 exactly, which would
@@ -348,13 +348,13 @@ static BOL ProjectClip(const TClipVertex& v, ISN width, ISN height,
 // Indexed batch
 
 void DrawIndexed(TFrame& f, const TMat4& proj, const TVertex* verts,
-                 IUD vertCount, const ISN* indices, IUD indexCount) {
+                 IUD vertCount, const ISC* indices, IUD indexCount) {
   (void)vertCount;
   for (IUD i = 0; i + 2 < indexCount; i += 3) {
-    ISN ia = indices[i], ib = indices[i + 1], ic = indices[i + 2];
-    if (ia < 0 || ia >= (ISN)vertCount) continue;
-    if (ib < 0 || ib >= (ISN)vertCount) continue;
-    if (ic < 0 || ic >= (ISN)vertCount) continue;
+    ISC ia = indices[i], ib = indices[i + 1], ic = indices[i + 2];
+    if (ia < 0 || ia >= (ISC)vertCount) continue;
+    if (ib < 0 || ib >= (ISC)vertCount) continue;
+    if (ic < 0 || ic >= (ISC)vertCount) continue;
 
     // 1. Transform the three corners to clip space (no divide).
     TClipVertex tri[3];
@@ -395,9 +395,9 @@ void DrawIndexed(TFrame& f, const TMat4& proj, const TVertex* verts,
 // doing it here keeps the display transform in the renderer.
 
 void BlitTexture(TFrame& f, const CImage& tex, FPD scale, FPD panX, FPD panY) {
-  ISN W = f.width, H = f.height;
-  for (ISN y = 0; y < H; ++y) {
-    for (ISN x = 0; x < W; ++x) {
+  ISC W = f.width, H = f.height;
+  for (ISC y = 0; y < H; ++y) {
+    for (ISC x = 0; x < W; ++x) {
       // Full-screen quad coord in [-1,1], x right, y down.
       FPD px = (2.0 * (FPD)x + 1.0) / (FPD)W - 1.0;
       FPD py = (2.0 * (FPD)y + 1.0) / (FPD)H - 1.0;
@@ -405,13 +405,13 @@ void BlitTexture(TFrame& f, const CImage& tex, FPD scale, FPD panX, FPD panY) {
       FPD u = 0.5 + px * scale + panX;
       FPD v = 0.5 - py * scale - panY;
       // Nearest-sample the texture; clamp to edges.
-      ISN tx = (ISN)(u * (FPD)tex.width);
-      ISN ty = (ISN)(v * (FPD)tex.height);
+      ISC tx = (ISC)(u * (FPD)tex.width);
+      ISC ty = (ISC)(v * (FPD)tex.height);
       if (tx < 0) tx = 0;
       if (ty < 0) ty = 0;
       if (tx >= tex.width) tx = tex.width - 1;
       if (ty >= tex.height) ty = tex.height - 1;
-      IUN sidx = ((IUN)ty * (IUN)tex.width + (IUN)tx) * (IUN)tex.channels;
+      IUN sidx = ((IUN)ty * (IUN)tex.width + (IUN)tx) * (IUN)PixelBytes(tex.format);
       IUN didx = ((IUN)y * (IUN)W + (IUN)x) * 4;
       f.img->data[didx]     = tex.data[sidx];
       f.img->data[didx + 1] = tex.data[sidx + 1];
@@ -436,7 +436,7 @@ TScene::~TScene() {
 
 // Grow the vertex/index arrays if needed. Returns false if the requested
 // count cannot fit (the scene is finite; the caller checks).
-static BOL SceneGrowVerts(TScene& s, IUD need) {
+BOL SceneGrowVerts(TScene& s, IUD need) {
   if (need <= s.vert_count) return true;
   IUD newcap = s.vert_count ? s.vert_count : 64;
   while (newcap < need) newcap *= 2;
@@ -448,11 +448,11 @@ static BOL SceneGrowVerts(TScene& s, IUD need) {
   return true;
 }
 
-static BOL SceneGrowIdx(TScene& s, IUD need) {
+BOL SceneGrowIdx(TScene& s, IUD need) {
   if (need <= s.idx_count) return true;
   IUD newcap = s.idx_count ? s.idx_count : 64;
   while (newcap < need) newcap *= 2;
-  ISN* ni = new ISN[newcap]();
+  ISC* ni = new ISC[newcap]();
   for (IUD i = 0; i < s.idx_used; ++i) ni[i] = s.indices[i];
   delete[] s.indices;
   s.indices = ni;
@@ -460,7 +460,7 @@ static BOL SceneGrowIdx(TScene& s, IUD need) {
   return true;
 }
 
-ISN TScene::AddQuad(const FPD3& pos, const FPD2& size, const ISB4& color,
+ISC TScene::AddQuad(const FPD3& pos, const FPD2& size, const ISB4& color,
                     const FPD2& t0, const FPD2& t1, ISC axis) {
   if (!SceneGrowVerts(*this, vert_used + 4) ||
       !SceneGrowIdx(*this, idx_used + 6)) return -1;
@@ -500,13 +500,13 @@ ISN TScene::AddQuad(const FPD3& pos, const FPD2& size, const ISB4& color,
   // Two triangles: (0,1,2) and (0,2,3). Winding chosen so the quad faces
   // +Z (toward a camera at +Z) for axis 0; the back-face cull in Triangle
   // drops the reverse winding.
-  const ISN tri[6] = {(ISN)base, (ISN)base + 1, (ISN)base + 2,
-                      (ISN)base, (ISN)base + 2, (ISN)base + 3};
+  const ISC tri[6] = {(ISC)base, (ISC)base + 1, (ISC)base + 2,
+                      (ISC)base, (ISC)base + 2, (ISC)base + 3};
   for (IUD i = 0; i < 6; ++i) indices[idx_used++] = tri[i];
-  return (ISN)base;
+  return (ISC)base;
 }
 
-ISN TScene::AddCube(const FPD3& pos, const ISB4& color) {
+ISC TScene::AddCube(const FPD3& pos, const ISB4& color) {
   // A unit cube centered at pos = 6 quads (one per face). Each face is a
   // quad in its plane. We add them as 6 quads via AddQuad, but each face
   // needs its own plane axis and orientation. For simplicity, build the 8
@@ -529,7 +529,7 @@ ISN TScene::AddCube(const FPD3& pos, const ISB4& color) {
     ++vert_used;
   }
   // 12 triangles (2 per face), same winding as ExoTest's cube.
-  const ISN tri[36] = {
+  const ISC tri[36] = {
       // front (z=+s)
       4, 5, 6, 4, 6, 7,
       // back (z=-s)
@@ -542,8 +542,8 @@ ISN TScene::AddCube(const FPD3& pos, const ISB4& color) {
       0, 1, 5, 0, 5, 4,
       // top (y=+s)
       3, 7, 6, 3, 6, 2};
-  for (IUD i = 0; i < 36; ++i) indices[idx_used++] = (ISN)(base + tri[i]);
-  return (ISN)base;
+  for (IUD i = 0; i < 36; ++i) indices[idx_used++] = (ISC)(base + tri[i]);
+  return (ISC)base;
 }
 
 void TScene::SetCamera(const FPD3& eye_, const FPD3& target_,
@@ -554,7 +554,7 @@ void TScene::SetCamera(const FPD3& eye_, const FPD3& target_,
   fov = fov_;
 }
 
-void TScene::Render(TFrame& frame, const ImageDraw::TColor& bg) {
+void TScene::Render(TFrame& frame, const VColor& bg) {
   if (idx_used == 0) {
     ClearFrame(frame, bg);
     return;

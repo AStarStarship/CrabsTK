@@ -28,9 +28,9 @@ namespace CTKIPCTest {
 inline void RoundMaster(Pipe& m, ISC tag, CHA* scratch, IUC* failures) {
   CHA payload[256];  // NOT static: avoid fork-shared state
   for (IUC i = 0; i < 256; ++i) payload[i] = (CHA)(i * 13 + tag * 17);
-  ISN w = m.Write(payload, 256);
+  ISC w = m.Write(payload, 256);
   if (w != 256) { ++*failures; return; }
-  ISN r = m.Read(scratch, 256, 2000);
+  ISC r = m.Read(scratch, 256, 2000);
   if (r != 256) { ++*failures; return; }
   for (IUC i = 0; i < 256; ++i)
     if (scratch[i] != (CHA)~payload[i]) { ++*failures; break; }
@@ -38,13 +38,13 @@ inline void RoundMaster(Pipe& m, ISC tag, CHA* scratch, IUC* failures) {
 
 inline void RoundSlave(Pipe& s, ISC tag, CHA* scratch, IUC* failures) {
   CHA req[256];  // NOT static: avoid fork-shared state
-  ISN r = s.Read(req, 256, 2000);
+  ISC r = s.Read(req, 256, 2000);
   if (r != 256) { ++*failures; return; }
   for (IUC i = 0; i < 256; ++i)
     if (req[i] != (CHA)(i * 13 + tag * 17)) { ++*failures; break; }
   // Write the bitwise NOT of the request as the reply.
   for (IUC i = 0; i < 256; ++i) scratch[i] = (CHA)~req[i];
-  ISN w = s.Write(scratch, 256);
+  ISC w = s.Write(scratch, 256);
   if (w != 256) { ++*failures; return; }
 }
 
@@ -68,13 +68,13 @@ inline const CHA* TwoProc(const CHA* args) {
     IUC fails = 0;
     for (ISC t = 0; t < 20; ++t) RoundSlave(s, t, scratch, &fails);
     s.Close();
-    _exit((int)fails);
+    _exit((ISC)fails);
   }
   // PARENT (master): run the master half of each round.
   CHA scratch[256];
   IUC fails = 0;
   for (ISC t = 0; t < 20; ++t) RoundMaster(m, t, scratch, &fails);
-  int status = 0;
+  ISC status = 0;
   waitpid(pid, &status, 0);
   Check(fails == 0, "twoproc: parent 20 rounds exact");
   Check(WIFEXITED(status) && WEXITSTATUS(status) == 0,
@@ -97,7 +97,7 @@ inline const CHA* TwoProc(const CHA* args) {
     // Poll (bounded) until the creator's endpoint closed: the name can
     // still be opened while mapped; the header remains readable either
     // way, so the observable contract is: the farewell message arrives.
-    ISN r = 0;
+    ISC r = 0;
     for (ISC attempt = 0; attempt < 500 && r < 0; ++attempt) {
       r = Pipe::Attach(name, 0).Read(scratch, sizeof(scratch), 50);
       usleep(1000);
@@ -112,7 +112,7 @@ inline const CHA* TwoProc(const CHA* args) {
     if (m2.Write(fare, sizeof(fare)) != 64) fails++;
     m2.Close();  // creator gone before the child's read completes
   }
-  int status2 = 0;
+  ISC status2 = 0;
   waitpid(pid2, &status2, 0);
   Check(WIFEXITED(status2), "twoproc: child exited after creator");
   shm_unlink(name);  // reclaim; the child attached (never owned) the name

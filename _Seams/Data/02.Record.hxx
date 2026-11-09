@@ -147,7 +147,7 @@ inline const CHA* Record(const CHA* args) {
       TRecordEncode(source, wire, sizeof(wire), _NilP) != RecordInvalid)
     return "FAIL R06: null buffers/count pointers accepted";
 
-  // R07: exact float bits survive (signed zero, infinities, NaN payloads).
+  // R07: exact FPC bits survive (signed zero, infinities, NaN payloads).
   source.obs[0] = RecordDetail::Float(0x80000000U);
   source.obs[1] = RecordDetail::Float(0x7fc12345U);
   source.rewards[0] = RecordDetail::Float(0x7f800000U);
@@ -160,7 +160,7 @@ inline const CHA* Record(const CHA* args) {
       RecordDetail::FloatBits(decoded.obs[1]) != 0x7fc12345U ||
       RecordDetail::FloatBits(decoded.rewards[0]) != 0x7f800000U ||
       RecordDetail::FloatBits(decoded.values[0]) != 0xff800000U)
-    return "FAIL R07: float bit patterns changed";
+    return "FAIL R07: FPC bit patterns changed";
 
   // Install and observe signaling NaNs as bytes, never floating values.
   const IUC SignalingBits[] = {0x7f800001U, 0x7f812345U, 0xff800001U,

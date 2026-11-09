@@ -10,7 +10,7 @@ namespace CTK {
 namespace Touch {
 
 /* A scrollable array Button (s). */
-class LIB_MEMBER ButtonScroller : public HMIComponent {
+class ButtonScroller : public HMIComponent {
  public:
   enum {
     cDefaultVisibleButtonCount = 5,  //< Default number of visible numbers.

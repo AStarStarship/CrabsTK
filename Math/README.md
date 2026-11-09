@@ -71,7 +71,7 @@ other providers have not been independently verified here.
 ## API and buffer contract
 
 Existing function names, argument ordering and void return types are preserved.
-`FPD` and `ISC` are canonical ASCIICrabs aliases for double and 32-bit int on
+`FPD` and `ISC` are canonical ASCIICrabs aliases for double and 32-bit ISC on
 the tested Linux build. `ISW` is used before stride/index multiplication.
 
     GemmRR:  C[m,n] = alpha * A[m,k]   * B[k,n]   + beta * C[m,n]

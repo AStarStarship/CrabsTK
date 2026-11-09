@@ -46,11 +46,11 @@ enum { TS_SYM_NAME_MAX = 128 };
 /* A single symbol in the table. */
 struct TTreeShakeSymbol {
   CHA name[TS_SYM_NAME_MAX];  //< Symbol name (null-terminated).
-  ISN def_file;               //< Index into the source file array (-1 if not a definition).
-  ISN def_start;              //< Byte offset of the definition in the source.
-  ISN def_end;                //< Byte offset (exclusive) of the definition.
-  ISN ref_count;              //< Number of times referenced (across all sources).
-  ISN ref_files[16];          //< Which files reference this symbol (deduped).
+  ISC def_file;               //< Index into the source file array (-1 if not a definition).
+  ISC def_start;              //< Byte offset of the definition in the source.
+  ISC def_end;                //< Byte offset (exclusive) of the definition.
+  ISC ref_count;              //< Number of times referenced (across all sources).
+  ISC ref_files[16];          //< Which files reference this symbol (deduped).
   BOL is_definition;          //< True if this symbol is defined (not just referenced).
   BOL kept;                   //< True if this symbol is in the keep-set (reachable from roots).
 };
@@ -58,8 +58,8 @@ struct TTreeShakeSymbol {
 /* The symbol table: a flat array of symbols. */
 struct TTreeShakeSymTab {
   TTreeShakeSymbol* syms;     //< Caller-owned array.
-  ISN count;                  //< Number of symbols.
-  ISN capacity;               //< Capacity of the array.
+  ISC count;                  //< Number of symbols.
+  ISC capacity;               //< Capacity of the array.
 };
 
 /* ============================================================
@@ -75,15 +75,15 @@ struct TTreeShakeSource {
   const CHA* text;            //< File contents (caller-owned, null-terminated).
   IUD text_len;               //< Length of the file contents.
   TCodeToken* tokens;         //< Token array (caller-owned).
-  ISN token_count;            //< Number of tokens.
-  ISN token_capacity;         //< Capacity of the token array.
+  ISC token_count;            //< Number of tokens.
+  ISC token_capacity;         //< Capacity of the token array.
 };
 
 /* The source file table. */
 struct TTreeShakeSources {
   TTreeShakeSource* files;    //< Caller-owned array.
-  ISN count;                  //< Number of source files.
-  ISN capacity;               //< Capacity of the array.
+  ISC count;                  //< Number of source files.
+  ISC capacity;               //< Capacity of the array.
 };
 
 /* ============================================================
@@ -106,9 +106,9 @@ struct TTreeShakeOptions {
 
 struct TTreeShakeResult {
   IUD output_len;             //< Length of the emitted header (bytes).
-  ISN kept_symbol_count;      //< Number of symbols in the keep-set.
-  ISN total_symbol_count;     //< Total symbols found across all sources.
-  ISN source_count;           //< Number of source files processed.
+  ISC kept_symbol_count;      //< Number of symbols in the keep-set.
+  ISC total_symbol_count;     //< Total symbols found across all sources.
+  ISC source_count;           //< Number of source files processed.
   IUD input_bytes;            //< Total input bytes (all sources).
   IUD output_bytes;           //< Total output bytes (the header).
   CHA diagnostics[4096];      //< Diagnostic messages (for the user).
@@ -124,7 +124,7 @@ sources:      Source file table (pre-populated with file contents).
 syms:         Symbol table (pre-allocated).
 tokens:       Token arrays for each source (pre-allocated, one per source).
 Returns 0 on success, -1 on bad arguments. */
-ISN TreeShakeInit(TTreeShakeSources* sources, TTreeShakeSymTab* syms,
+ISC TreeShakeInit(TTreeShakeSources* sources, TTreeShakeSymTab* syms,
                   TTreeShakeOptions* options);
 
 /* Run the tree shake: lex all sources, build the reference graph,
@@ -135,20 +135,20 @@ out_buf:      Caller-owned output buffer (the emitted header).
 out_buf_len:  Capacity of out_buf.
 result:       Filled with stats + diagnostics.
 Returns 0 on success, -1 on error, -2 if out_buf is too small. */
-ISN TreeShakeRun(TTreeShakeSources* sources, TTreeShakeSymTab* syms,
-                 const CHA* const* roots, ISN root_count,
+ISC TreeShakeRun(TTreeShakeSources* sources, TTreeShakeSymTab* syms,
+                 const CHA* const* roots, ISC root_count,
                  CHA* out_buf, IUD out_buf_len,
                  TTreeShakeResult* result,
                  const TTreeShakeOptions* options);
 
 /* Read a file into a caller-owned buffer. Returns 0 on success, -1 on error. */
-ISN TreeShakeReadFile(const CHA* path, CHA* buf, IUD buf_len, IUD* out_len);
+ISC TreeShakeReadFile(const CHA* path, CHA* buf, IUD buf_len, IUD* out_len);
 
 /* ============================================================
  * Implementation
  * ============================================================ */
 
-ISN TreeShakeReadFile(const CHA* path, CHA* buf, IUD buf_len, IUD* out_len) {
+ISC TreeShakeReadFile(const CHA* path, CHA* buf, IUD buf_len, IUD* out_len) {
   FILE* fp = fopen(path, "rb");
   if (!fp) return -1;
   fseek(fp, 0, SEEK_END);
@@ -162,7 +162,7 @@ ISN TreeShakeReadFile(const CHA* path, CHA* buf, IUD buf_len, IUD* out_len) {
   return 0;
 }
 
-ISN TreeShakeInit(TTreeShakeSources* sources, TTreeShakeSymTab* syms,
+ISC TreeShakeInit(TTreeShakeSources* sources, TTreeShakeSymTab* syms,
                   TTreeShakeOptions* options) {
   if (IsError(sources) || IsError(sources->files) ||
       IsError(syms) || IsError(syms->syms) || IsError(options)) {
@@ -170,7 +170,7 @@ ISN TreeShakeInit(TTreeShakeSources* sources, TTreeShakeSymTab* syms,
   }
   if (sources->count <= 0 || syms->capacity <= 0) return -1;
   /* Lex all source files. */
-  for (ISN i = 0; i < sources->count; ++i) {
+  for (ISC i = 0; i < sources->count; ++i) {
     TTreeShakeSource* src = &sources->files[i];
     if (IsError(src->text) || src->text_len == 0) return -1;
     if (IsError(src->tokens) || src->token_capacity <= 0) return -1;
@@ -183,9 +183,9 @@ ISN TreeShakeInit(TTreeShakeSources* sources, TTreeShakeSymTab* syms,
 }
 
 /* Internal: find or create a symbol in the table. Returns the index, or -1 if full. */
-static ISN TsFindOrAddSym(TTreeShakeSymTab* syms, const CHA* name, ISN name_len) {
+static ISC TsFindOrAddSym(TTreeShakeSymTab* syms, const CHA* name, ISC name_len) {
   /* Search for an existing symbol with this name. */
-  for (ISN i = 0; i < syms->count; ++i) {
+  for (ISC i = 0; i < syms->count; ++i) {
     if (strlen(syms->syms[i].name) == name_len &&
         strncmp(syms->syms[i].name, name, name_len) == 0) {
       return i;
@@ -195,14 +195,14 @@ static ISN TsFindOrAddSym(TTreeShakeSymTab* syms, const CHA* name, ISN name_len)
   if (syms->count >= syms->capacity) return -1;
   TTreeShakeSymbol* s = &syms->syms[syms->count];
   memset(s, 0, sizeof(*s));
-  ISN copy_len = name_len < TS_SYM_NAME_MAX - 1 ? name_len : TS_SYM_NAME_MAX - 1;
+  ISC copy_len = name_len < TS_SYM_NAME_MAX - 1 ? name_len : TS_SYM_NAME_MAX - 1;
   memcpy(s->name, name, copy_len);
   s->name[copy_len] = 0;
   s->def_file = -1;
   s->def_start = -1;
   s->def_end = -1;
   s->ref_count = 0;
-  for (ISN r = 0; r < 16; ++r) s->ref_files[r] = -1;
+  for (ISC r = 0; r < 16; ++r) s->ref_files[r] = -1;
   s->is_definition = false;
   s->kept = false;
   return syms->count++;
@@ -213,17 +213,17 @@ A definition is an IDENT token that is preceded by a type keyword (struct, enum,
 typedef, class, namespace) or followed by LPAREN (function definition).
 For v1, we use a simpler heuristic: any IDENT that appears at the start of a
 line (column 1) or after a type keyword is a candidate definition. */
-static BOL TsIsDefinition(const TCodeToken* tokens, ISN token_count, ISN index,
+static BOL TsIsDefinition(const TCodeToken* tokens, ISC token_count, ISC index,
                           const CHA* source) {
   if (index < 0 || index >= token_count) return false;
   const TCodeToken* tok = &tokens[index];
   if (tok->kind != CODE_TOK_IDENT && tok->kind != CODE_TOK_KEYWORD) return false;
 
   /* Check if the previous non-whitespace token is a type keyword. */
-  for (ISN i = index - 1; i >= 0; --i) {
+  for (ISC i = index - 1; i >= 0; --i) {
     if (tokens[i].kind == CODE_TOK_SPACE || tokens[i].kind == CODE_TOK_NEWLINE) continue;
     if (tokens[i].kind == CODE_TOK_KEYWORD) {
-      ISN klen = tokens[i].byte_end - tokens[i].byte_start;
+      ISC klen = tokens[i].byte_end - tokens[i].byte_start;
       const CHA* ktext = source + tokens[i].byte_start;
       if ((klen == 6 && strncmp(ktext, "struct", 6) == 0) ||
           (klen == 4 && strncmp(ktext, "enum", 4) == 0) ||
@@ -237,7 +237,7 @@ static BOL TsIsDefinition(const TCodeToken* tokens, ISN token_count, ISN index,
   }
 
   /* Check if the next non-whitespace token is LPAREN (function definition). */
-  for (ISN i = index + 1; i < token_count; ++i) {
+  for (ISC i = index + 1; i < token_count; ++i) {
     if (tokens[i].kind == CODE_TOK_SPACE || tokens[i].kind == CODE_TOK_NEWLINE) continue;
     if (tokens[i].kind == CODE_TOK_LPAREN) return true;
     break;
@@ -251,18 +251,18 @@ static BOL TsIsDefinition(const TCodeToken* tokens, ISN token_count, ISN index,
 
 /* Internal: build the symbol reference graph by walking all tokens. */
 static void TsBuildRefGraph(TTreeShakeSources* sources, TTreeShakeSymTab* syms) {
-  for (ISN fi = 0; fi < sources->count; ++fi) {
+  for (ISC fi = 0; fi < sources->count; ++fi) {
     TTreeShakeSource* src = &sources->files[fi];
-    for (ISN ti = 0; ti < src->token_count; ++ti) {
+    for (ISC ti = 0; ti < src->token_count; ++ti) {
       const TCodeToken* tok = &src->tokens[ti];
       if (tok->kind != CODE_TOK_IDENT) continue;
-      ISN name_len = tok->byte_end - tok->byte_start;
+      ISC name_len = tok->byte_end - tok->byte_start;
       if (name_len <= 0 || name_len >= TS_SYM_NAME_MAX) continue;
       const CHA* name = src->text + tok->byte_start;
 
       /* Check if this is a definition. */
       if (TsIsDefinition(src->tokens, src->token_count, ti, src->text)) {
-        ISN sym_idx = TsFindOrAddSym(syms, name, name_len);
+        ISC sym_idx = TsFindOrAddSym(syms, name, name_len);
         if (sym_idx >= 0) {
           syms->syms[sym_idx].is_definition = true;
           syms->syms[sym_idx].def_file = fi;
@@ -272,12 +272,12 @@ static void TsBuildRefGraph(TTreeShakeSources* sources, TTreeShakeSymTab* syms) 
       }
 
       /* Record a reference (all IDENTS are references, including definitions). */
-      ISN sym_idx = TsFindOrAddSym(syms, name, name_len);
+      ISC sym_idx = TsFindOrAddSym(syms, name, name_len);
       if (sym_idx >= 0) {
         syms->syms[sym_idx].ref_count++;
         /* Record which file references this symbol (deduped). */
         BOL already = false;
-        for (ISN r = 0; r < 16; ++r) {
+        for (ISC r = 0; r < 16; ++r) {
           if (syms->syms[sym_idx].ref_files[r] == fi) { already = true; break; }
           if (syms->syms[sym_idx].ref_files[r] == -1) {
             syms->syms[sym_idx].ref_files[r] = fi;
@@ -285,7 +285,7 @@ static void TsBuildRefGraph(TTreeShakeSources* sources, TTreeShakeSymTab* syms) 
           }
         }
         if (!already) {
-          for (ISN r = 0; r < 16; ++r) {
+          for (ISC r = 0; r < 16; ++r) {
             if (syms->syms[sym_idx].ref_files[r] == -1) {
               syms->syms[sym_idx].ref_files[r] = fi;
               break;
@@ -299,11 +299,11 @@ static void TsBuildRefGraph(TTreeShakeSources* sources, TTreeShakeSymTab* syms) 
 
 /* Internal: do the reachability walk from the roots. */
 static void TsReachability(TTreeShakeSymTab* syms, const CHA* const* roots,
-                           ISN root_count, BOL deep) {
+                           ISC root_count, BOL deep) {
   /* Mark the roots as kept. */
-  for (ISN r = 0; r < root_count; ++r) {
+  for (ISC r = 0; r < root_count; ++r) {
     if (!roots[r] || !roots[r][0]) continue;  //< skip empty roots
-    for (ISN i = 0; i < syms->count; ++i) {
+    for (ISC i = 0; i < syms->count; ++i) {
       if (!syms->syms[i].name[0]) continue;  //< skip empty symbol names
       if (strncmp(syms->syms[i].name, roots[r], TS_SYM_NAME_MAX - 1) == 0) {
         syms->syms[i].kept = true;
@@ -318,19 +318,19 @@ static void TsReachability(TTreeShakeSymTab* syms, const CHA* const* roots,
   BOL changed = true;
   while (changed) {
     changed = false;
-    for (ISN i = 0; i < syms->count; ++i) {
+    for (ISC i = 0; i < syms->count; ++i) {
       if (!syms->syms[i].kept) continue;
       /* For each kept symbol, mark all symbols it references as kept.
       In v1, we approximate "references" as "all symbols that appear
       in the same source file as this symbol's definition." */
       if (syms->syms[i].def_file < 0) continue;
-      for (ISN j = 0; j < syms->count; ++j) {
+      for (ISC j = 0; j < syms->count; ++j) {
         if (syms->syms[j].kept) continue;
         if (syms->syms[j].def_file != syms->syms[i].def_file) continue;
         /* Symbol j is defined in the same file as symbol i.
         Check if symbol i references symbol j (j appears in i's file). */
         BOL refd = false;
-        for (ISN r = 0; r < 16; ++r) {
+        for (ISC r = 0; r < 16; ++r) {
           if (syms->syms[i].ref_files[r] == syms->syms[j].def_file) { refd = true; break; }
         }
         if (refd) {
@@ -368,34 +368,34 @@ static IUD TsEmit(TTreeShakeSources* sources, TTreeShakeSymTab* syms,
 
   /* Emit the type shim (always needed). */
   EMIT("/* Type definitions (ASCII Crabs canonical widths). */\n");
-  EMIT("typedef char CHA;\n");
-  EMIT("typedef signed char ISA;\n");
-  EMIT("typedef unsigned char IUA;\n");
+  EMIT("typedef CHR CHA;\n");
+  EMIT("typedef signed CHR ISA;\n");
+  EMIT("typedef CHR IUA;\n");
   EMIT("typedef short ISB;\n");
   EMIT("typedef unsigned short IUB;\n");
-  EMIT("typedef int ISC;\n");
-  EMIT("typedef unsigned int IUC;\n");
+  EMIT("typedef ISC ISC;\n");
+  EMIT("typedef IUC IUC;\n");
   EMIT("typedef long long ISD;\n");
   EMIT("typedef unsigned long long IUD;\n");
-  EMIT("typedef int ISN;\n");
-  EMIT("typedef unsigned int IUN;\n");
+  EMIT("typedef ISC ISC;\n");
+  EMIT("typedef IUC IUN;\n");
   EMIT("typedef long ISW;\n");
   EMIT("typedef unsigned long IUW;\n");
-  EMIT("typedef float FPC;\n");
+  EMIT("typedef FPC FPC;\n");
   EMIT("typedef double FPD;\n");
-  EMIT("typedef bool BOL;\n");
+  EMIT("typedef BOL BOL;\n");
   EMIT("inline BOL IsError(const void* p) { return p == 0; }\n");
   EMIT("#define _NilP 0\n");
   EMIT("\n");
 
   /* Emit the kept symbols (in definition order). */
-  for (ISN i = 0; i < syms->count; ++i) {
+  for (ISC i = 0; i < syms->count; ++i) {
     if (!syms->syms[i].kept) continue;
     if (!syms->syms[i].is_definition) continue;
     if (syms->syms[i].def_file < 0) continue;
     TTreeShakeSource* src = &sources->files[syms->syms[i].def_file];
-    ISN start = syms->syms[i].def_start;
-    ISN end = syms->syms[i].def_end;
+    ISC start = syms->syms[i].def_start;
+    ISC end = syms->syms[i].def_end;
     if (end <= start) continue;
     /* Emit the definition (just the name for v1; a full emitter would
     emit the entire function/struct body). */
@@ -407,8 +407,8 @@ static IUD TsEmit(TTreeShakeSources* sources, TTreeShakeSymTab* syms,
   return pos;
 }
 
-ISN TreeShakeRun(TTreeShakeSources* sources, TTreeShakeSymTab* syms,
-                 const CHA* const* roots, ISN root_count,
+ISC TreeShakeRun(TTreeShakeSources* sources, TTreeShakeSymTab* syms,
+                 const CHA* const* roots, ISC root_count,
                  CHA* out_buf, IUD out_buf_len,
                  TTreeShakeResult* result,
                  const TTreeShakeOptions* options) {
@@ -419,7 +419,7 @@ ISN TreeShakeRun(TTreeShakeSources* sources, TTreeShakeSymTab* syms,
   if (out_buf_len == 0 || root_count <= 0) return -1;
 
   /* Initialize (lex all sources). */
-  ISN rc = TreeShakeInit(sources, syms, (TTreeShakeOptions*)options);
+  ISC rc = TreeShakeInit(sources, syms, (TTreeShakeOptions*)options);
   if (rc != 0) return rc;
 
   /* Build the reference graph. */
@@ -430,7 +430,7 @@ ISN TreeShakeRun(TTreeShakeSources* sources, TTreeShakeSymTab* syms,
 
   /* Count input bytes. */
   IUD input_bytes = 0;
-  for (ISN i = 0; i < sources->count; ++i) {
+  for (ISC i = 0; i < sources->count; ++i) {
     input_bytes += sources->files[i].text_len;
   }
 
@@ -445,7 +445,7 @@ ISN TreeShakeRun(TTreeShakeSources* sources, TTreeShakeSymTab* syms,
   result->output_bytes = output_len;
   result->total_symbol_count = syms->count;
   result->kept_symbol_count = 0;
-  for (ISN i = 0; i < syms->count; ++i) {
+  for (ISC i = 0; i < syms->count; ++i) {
     if (syms->syms[i].kept) ++result->kept_symbol_count;
   }
   result->diag_len = 0;
@@ -476,7 +476,7 @@ static void TreeShakeUsage(const CHA* prog) {
   printf("  --seam=N         _Seam value for constant-folding (default 1)\n");
 }
 
-ISC main(int argc, CHA** argv) {
+ISC main(ISC argc, CHA** argv) {
   using namespace CTK;
   CHA api_name[128] = {0};
   CHA sources_csv[4096] = {0};
@@ -486,7 +486,7 @@ ISC main(int argc, CHA** argv) {
   BOL demacro = true;
   IUD seam_value = 1;
 
-  for (int i = 1; i < argc; ++i) {
+  for (ISC i = 1; i < argc; ++i) {
     if (strncmp(argv[i], "--api=", 6) == 0) strncpy(api_name, argv[i] + 6, 127);
     else if (strncmp(argv[i], "--sources=", 10) == 0) strncpy(sources_csv, argv[i] + 10, 4095);
     else if (strncmp(argv[i], "--roots=", 8) == 0) strncpy(roots_csv, argv[i] + 8, 1023);
@@ -505,7 +505,7 @@ ISC main(int argc, CHA** argv) {
   /* Parse the sources CSV into a file list. */
   enum { TS_MAX_SOURCES = 32 };
   CHA source_paths[TS_MAX_SOURCES][512];
-  ISN source_count = 0;
+  ISC source_count = 0;
   {
     CHA* saveptr = 0;
     CHA* tok = strtok(sources_csv, ",");
@@ -520,7 +520,7 @@ ISC main(int argc, CHA** argv) {
   /* Parse the roots CSV into a symbol list. */
   enum { TS_MAX_ROOTS = 64 };
   CHA roots[TS_MAX_ROOTS][TS_SYM_NAME_MAX];
-  ISN root_count = 0;
+  ISC root_count = 0;
   {
     CHA* tok = strtok(roots_csv, ",");
     while (tok && root_count < TS_MAX_ROOTS) {
@@ -535,7 +535,7 @@ ISC main(int argc, CHA** argv) {
   struct TsFileStat { long size; };
   TsFileStat file_stats[TS_MAX_SOURCES];
   IUD total_file_bytes = 0;
-  for (ISN i = 0; i < source_count; ++i) {
+  for (ISC i = 0; i < source_count; ++i) {
     FILE* fp = fopen(source_paths[i], "rb");
     if (!fp) { printf("ERROR: cannot open %s\n", source_paths[i]); return 1; }
     fseek(fp, 0, SEEK_END);
@@ -559,9 +559,9 @@ ISC main(int argc, CHA** argv) {
   }
   TTreeShakeSource sources_arr[TS_MAX_SOURCES];
   IUD buf_off = 0;
-  for (ISN i = 0; i < source_count; ++i) {
+  for (ISC i = 0; i < source_count; ++i) {
     IUD len = 0;
-    ISN rc = TreeShakeReadFile(source_paths[i], file_bufs + buf_off,
+    ISC rc = TreeShakeReadFile(source_paths[i], file_bufs + buf_off,
                                (IUD)(sizeof(file_bufs) - buf_off), &len);
     if (rc != 0) { printf("ERROR: cannot read %s\n", source_paths[i]); return 1; }
     sources_arr[i].path = source_paths[i];
@@ -579,19 +579,19 @@ ISC main(int argc, CHA** argv) {
 
   /* Token pool (stack, sized to actual input). */
   enum { TS_TOKENS_PER_BYTE = 4 };
-  ISN total_token_cap = (ISN)(total_file_bytes * TS_TOKENS_PER_BYTE) + 64 * source_count;
+  ISC total_token_cap = (ISC)(total_file_bytes * TS_TOKENS_PER_BYTE) + 64 * source_count;
   /* Stack array: 8K tokens = 160KB (enough for ~4KB of input at 4 tokens/byte).
   For larger inputs, the caller should reduce the source list or use a
   RAMFactory-allocated pool. */
   TCodeToken tokens_pool[8192];
-  if (total_token_cap > (ISN)(sizeof(tokens_pool) / sizeof(TCodeToken))) {
+  if (total_token_cap > (ISC)(sizeof(tokens_pool) / sizeof(TCodeToken))) {
     printf("ERROR: token pool too small for %d tokens (max %zu)\n",
            total_token_cap, sizeof(tokens_pool) / sizeof(TCodeToken));
     return 1;
   }
   TCodeToken* token_cursor = tokens_pool;
-  for (ISN i = 0; i < source_count; ++i) {
-    ISN cap = (ISN)(sources_arr[i].text_len * TS_TOKENS_PER_BYTE) + 64;
+  for (ISC i = 0; i < source_count; ++i) {
+    ISC cap = (ISC)(sources_arr[i].text_len * TS_TOKENS_PER_BYTE) + 64;
     sources_arr[i].tokens = token_cursor;
     sources_arr[i].token_capacity = cap;
     token_cursor += cap;
@@ -620,15 +620,15 @@ ISC main(int argc, CHA** argv) {
   TTreeShakeResult result;
   memset(&result, 0, sizeof(result));
 
-  ISN rc = TreeShakeRun(&sources, &syms, (const CHA* const*)roots, root_count,
+  ISC rc = TreeShakeRun(&sources, &syms, (const CHA* const*)roots, root_count,
                         out_buf, TS_OUT_BUF, &result, &opts);
   if (rc == -2) {
-    printf("ERROR: output buffer too small (%d bytes needed)\n", (int)result.output_len);
+    printf("ERROR: output buffer too small (%d bytes needed)\n", (ISC)result.output_len);
     return 1;
   }
   if (rc != 0) {
     printf("ERROR: TreeShakeRun failed (rc=%d)\n", rc);
-    if (result.diag_len > 0) printf("%.*s\n", (int)result.diag_len, result.diagnostics);
+    if (result.diag_len > 0) printf("%.*s\n", (ISC)result.diag_len, result.diagnostics);
     return 1;
   }
 
@@ -655,7 +655,7 @@ ISC main(int argc, CHA** argv) {
   }
   if (result.diag_len > 0) {
     printf("  diagnostics:\n");
-    printf("%.*s\n", (int)result.diag_len, result.diagnostics);
+    printf("%.*s\n", (ISC)result.diag_len, result.diagnostics);
   }
 
   /* Cleanup: nothing to free (all stack-allocated). */

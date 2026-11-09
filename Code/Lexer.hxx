@@ -1,5 +1,6 @@
 // Copyright AStarship <https://astarship.net>.
 #include <_Config.h>
+#include <string.h>   /* memcmp, size_t for raw-string delimiter compare */
 #include "Lexer.h"
 namespace CTK {
 namespace Code {
@@ -9,13 +10,13 @@ for binary search. Derived from Clang TokenKinds.def (BSD license).
 The table is a flat array of (text, length) pairs. */
 struct TCodeKeyword {
   const CHA* text;
-  IUB len;
+  IUB length;
 };
 
 static const TCodeKeyword CodeKeywordTable[] = {
   {"alignas", 7},      {"alignof", 7},      {"asm", 3},
-  {"auto", 4},         {"bool", 4},         {"break", 5},
-  {"case", 4},         {"catch", 5},        {"char", 4},
+  {"auto", 4},         {"BOL", 4},         {"break", 5},
+  {"case", 4},         {"catch", 5},        {"CHR", 4},
   {"char16_t", 8},     {"char32_t", 8},     {"char8_t", 7},
   {"class", 5},        {"co_await", 8},     {"co_return", 9},
   {"co_yield", 8},     {"concept", 7},      {"const", 5},
@@ -24,9 +25,9 @@ static const TCodeKeyword CodeKeywordTable[] = {
   {"do", 2},           {"double", 6},       {"dynamic_cast", 12},
   {"else", 4},         {"enum", 4},         {"explicit", 8},
   {"export", 6},       {"extern", 6},       {"false", 5},
-  {"float", 5},        {"for", 3},          {"friend", 6},
+  {"FPC", 5},        {"for", 3},          {"friend", 6},
   {"goto", 4},         {"if", 2},           {"inline", 6},
-  {"int", 3},          {"long", 4},         {"mutable", 7},
+  {"ISC", 3},          {"long", 4},         {"mutable", 7},
   {"namespace", 9},    {"new", 3},          {"noexcept", 8},
   {"nullptr", 7},      {"operator", 8},     {"private", 7},
   {"protected", 9},    {"public", 6},       {"register", 8},
@@ -42,21 +43,22 @@ static const TCodeKeyword CodeKeywordTable[] = {
   {"wchar_t", 7},      {"while", 5},
 };
 
-static const ISN CodeKeywordCount =
-  (ISN)(sizeof(CodeKeywordTable) / sizeof(CodeKeywordTable[0]));
+static const ISC CodeKeywordCount =
+  ISC(sizeof(CodeKeywordTable) / sizeof(CodeKeywordTable[0]));
 
-/* Binary search the keyword table. Returns true if text[0..len) is
-a known C++ keyword. Case-sensitive exact match. */
-BOL CodeIsKeyword(const CHA* text, ISN len) {
-  ISN lo = 0, hi = CodeKeywordCount - 1;
+/* Binary search the keyword table. Returns true if text[0..length) is
+a known C++ keyword. Case-sensitive exact match. A length is a
+measurement, so it is ISC (pinned 32-bit), not ISC. */
+BOL CodeIsKeyword(const CHA* text, ISC length) {
+  ISC lo = 0, hi = CodeKeywordCount - 1;
   while (lo <= hi) {
-    ISN mid = (lo + hi) / 2;
+    ISC mid = (lo + hi) / 2;
     const TCodeKeyword& kw = CodeKeywordTable[mid];
-    /* strcmp-style comparison: compare up to min(len), then
+    /* strcmp-style comparison: compare up to min(length), then
     resolve by length if all compared chars match. */
-    ISN n = (len < (ISN)kw.len) ? len : (ISN)kw.len;
-    ISN cmp = 0;
-    for (ISN i = 0; i < n; ++i) {
+    ISC n = (length < ISC(kw.length)) ? length : ISC(kw.length);
+    ISC cmp = 0;
+    for (ISC i = 0; i < n; ++i) {
       if (text[i] != kw.text[i]) {
         cmp = (text[i] < kw.text[i]) ? -1 : 1;
         break;
@@ -64,8 +66,8 @@ BOL CodeIsKeyword(const CHA* text, ISN len) {
     }
     if (cmp == 0) {
       /* All compared chars match — resolve by length. */
-      if (len == (ISN)kw.len) return true;
-      if (len < (ISN)kw.len) hi = mid - 1;
+      if (length == ISC(kw.length)) return true;
+      if (length < ISC(kw.length)) hi = mid - 1;
       else lo = mid + 1;
     } else if (cmp < 0) {
       hi = mid - 1;
@@ -148,42 +150,32 @@ const CHA* CodeTokenSpelling(IUB kind) {
   return _NilP;
 }
 
-/* Token names for diagnostics. */
-static const CHA* CodeTokenNames[] = {
-  "eof",            /* CODE_TOK_EOF */
-  "identifier",     /* CODE_TOK_IDENT */
-  "keyword",        /* CODE_TOK_KEYWORD */
-  "int_literal",    /* CODE_TOK_INT */
-  "float_literal",  /* CODE_TOK_FLOAT */
-  "char_literal",   /* CODE_TOK_CHAR */
-  "string_literal", /* CODE_TOK_STRING */
-  "user_string",    /* CODE_TOK_USER_STRING */
-  /* Punctuation: use spelling as name. */
-  "punct", "punct", "punct", "punct", "punct", "punct",
-  "punct", "punct", "punct", "punct", "punct", "punct",
-  "punct", "punct", "punct", "punct", "punct", "punct",
-  "punct", "punct", "punct", "punct", "punct", "punct",
-  "punct", "punct", "punct", "punct", "punct", "punct",
-  "punct", "punct", "punct", "punct", "punct", "punct",
-  "punct", "punct", "punct", "punct", "punct", "punct",
-  "punct", "punct", "punct", "punct", "punct", "punct",
-  "punct", "punct", "punct", "punct", "punct", "punct",
-  "punct", "punct", "punct", "punct", "punct", "punct",
-  "line_comment",   /* CODE_TOK_COMMENT_LINE */
-  "block_comment",  /* CODE_TOK_COMMENT_BLOCK */
-  "space",          /* CODE_TOK_SPACE */
-  "newline",        /* CODE_TOK_NEWLINE */
+/* Token names for diagnostics. Designated initialisers pin each name to its
+   kind so the table can never drift out of step with ECodeToken; punctuation
+   kinds are named via CodeTokenSpelling() and left nil here. */
+static const CHA* CodeTokenNames[CODE_TOK_COUNT] = {
+  [CODE_TOK_EOF]           = "eof",
+  [CODE_TOK_IDENT]         = "identifier",
+  [CODE_TOK_KEYWORD]       = "keyword",
+  [CODE_TOK_INT]           = "int_literal",
+  [CODE_TOK_FLOAT]         = "float_literal",
+  [CODE_TOK_CHAR]          = "char_literal",
+  [CODE_TOK_STRING]        = "string_literal",
+  [CODE_TOK_USER_STRING]   = "user_string",
+  [CODE_TOK_COMMENT_LINE]  = "line_comment",
+  [CODE_TOK_COMMENT_BLOCK] = "block_comment",
+  [CODE_TOK_SPACE]         = "space",
+  [CODE_TOK_NEWLINE]       = "newline",
 };
 
 const CHA* CodeTokenName(IUB kind) {
-  if (kind < CODE_TOK_COUNT && kind < (IUB)(sizeof(CodeTokenNames) / sizeof(CHA*))) {
-    if (kind >= CodePunctFirst && kind <= CodePunctLast) {
-      const CHA* sp = CodeTokenSpelling(kind);
-      if (sp) return sp;
-    }
-    return CodeTokenNames[kind];
+  if (kind >= CODE_TOK_COUNT) return "unknown";
+  if (kind >= CodePunctFirst && kind <= CodePunctLast) {
+    const CHA* sp = CodeTokenSpelling(kind);
+    if (sp) return sp;
   }
-  return "unknown";
+  const CHA* name = CodeTokenNames[kind];
+  return name ? name : "punct";
 }
 
 /* --- Character classification helpers --- */
@@ -210,12 +202,12 @@ static BOL CodeIsSpace(CHA c) {
 
 /* --- Lexer initialization --- */
 
-ISN CodeLexerInit(TCodeLexer* lexer, const CHA* source, IUD source_len,
-                  TCodeToken* tokens, ISN token_capacity) {
+ISC CodeLexerInit(TCodeLexer* lexer, const CHA* source, IUD source_length,
+                  TCodeToken* tokens, ISC token_capacity) {
   if (IsError(lexer) || IsError(tokens) || token_capacity <= 0) return -1;
-  if (IsError(source) && source_len > 0) return -1;
+  if (IsError(source) && source_length > 0) return -1;
   lexer->source = source;
-  lexer->source_len = source_len;
+  lexer->source_length = source_length;
   lexer->pos = 0;
   lexer->line = 1;
   lexer->column = 1;
@@ -228,31 +220,31 @@ ISN CodeLexerInit(TCodeLexer* lexer, const CHA* source, IUD source_len,
 
 /* --- Internal: record a token --- */
 
-static void CodeRecordToken(TCodeLexer* lexer, IUB kind, ISN start_pos,
-                            ISN start_line, ISN start_col) {
+static void CodeRecordToken(TCodeLexer* lexer, IUB kind, ISC start_pos,
+                            ISC start_line, ISC start_col) {
   if (lexer->token_count >= lexer->token_capacity) {
     lexer->full = true;
     return;
   }
-  TCodeToken* tok = &lexer->tokens[lexer->token_count];
-  tok->kind = kind;
-  tok->byte_start = start_pos;
-  tok->byte_end = lexer->pos;
-  tok->line = start_line;
-  tok->column = start_col;
+  TCodeToken* token = &lexer->tokens[lexer->token_count];
+  token->kind = kind;
+  token->byte_start = start_pos;
+  token->byte_end = lexer->pos;
+  token->line = start_line;
+  token->column = start_col;
   ++lexer->token_count;
 }
 
 /* --- Internal: skip whitespace, producing SPACE and NEWLINE tokens --- */
 
 static void CodeSkipWhitespace(TCodeLexer* lexer) {
-  while (lexer->pos < (ISN)lexer->source_len) {
+  while (lexer->pos < (ISC)lexer->source_length) {
     CHA c = lexer->source[lexer->pos];
     if (c == '\n' || c == '\r') {
-      ISN start = lexer->pos;
-      ISN start_line = lexer->line;
-      ISN start_col = lexer->column;
-      if (c == '\r' && lexer->pos + 1 < (ISN)lexer->source_len &&
+      ISC start = lexer->pos;
+      ISC start_line = lexer->line;
+      ISC start_col = lexer->column;
+      if (c == '\r' && lexer->pos + 1 < (ISC)lexer->source_length &&
           lexer->source[lexer->pos + 1] == '\n') {
         lexer->pos += 2;
       } else {
@@ -262,10 +254,10 @@ static void CodeSkipWhitespace(TCodeLexer* lexer) {
       lexer->column = 1;
       CodeRecordToken(lexer, CODE_TOK_NEWLINE, start, start_line, start_col);
     } else if (CodeIsSpace(c)) {
-      ISN start = lexer->pos;
-      ISN start_line = lexer->line;
-      ISN start_col = lexer->column;
-      while (lexer->pos < (ISN)lexer->source_len &&
+      ISC start = lexer->pos;
+      ISC start_line = lexer->line;
+      ISC start_col = lexer->column;
+      while (lexer->pos < (ISC)lexer->source_length &&
              CodeIsSpace(lexer->source[lexer->pos])) {
         ++lexer->pos;
         ++lexer->column;
@@ -281,41 +273,51 @@ static void CodeSkipWhitespace(TCodeLexer* lexer) {
 /* Handles: "normal", L"wide", u8"utf8", u"utf16", U"utf32",
    R"delim(raw)delim", L R"delim(raw)delim", etc. */
 
-static void CodeLexString(TCodeLexer* lexer, ISN start_pos, ISN start_line,
-                          ISN start_col) {
-  const CHA* src = lexer->source;
-  IUD len = lexer->source_len;
-  ISN pos = lexer->pos;
+static void CodeLexString(TCodeLexer* lexer, ISC start_pos, ISC start_line,
+                          ISC start_col) {
+  const CHA* source = lexer->source;
+  const IUD length = lexer->source_length;
+  ISC pos = lexer->pos;
 
-  /* Check for raw string: R"delim( ... )delim" */
-  if (pos < (ISN)len && src[pos] == 'R' &&
-      pos + 1 < (ISN)len && src[pos + 1] == '"') {
-    /* Find the delimiter. */
-    ISN delim_start = pos + 2;
-    ISN delim_end = delim_start;
-    while (delim_end < (ISN)len && src[delim_end] != '(') ++delim_end;
-    if (delim_end < (ISN)len) {
-      /* Skip to the matching )delim" */
+  /* Skip the encoding prefix (u8 / L / u / U / R) to reach the opening quote.
+     Without this, L"..." tokenized as the 2-byte string L" and the remainder
+     of the file was swallowed as one giant string. */
+  ISC qpos = pos;
+  while ((IUD)qpos < length &&
+         (source[qpos] == 'L' || source[qpos] == 'u' || source[qpos] == 'U' ||
+          source[qpos] == 'R' || source[qpos] == '8'))
+    ++qpos;
+  if ((IUD)qpos >= length || source[qpos] != '"') {
+    /* Not a string after all: consume just the prefix char and move on. */
+    lexer->pos = (qpos > pos) ? qpos : pos + 1;
+    lexer->column = start_col + (ISC)(lexer->pos - start_pos);
+    CodeRecordToken(lexer, CODE_TOK_STRING, start_pos, start_line, start_col);
+    return;
+  }
+  const BOL is_raw = (qpos > pos && source[qpos - 1] == 'R');
+
+  /* Raw string: R"delim( ... )delim" */
+  if (is_raw) {
+    ISC delim_start = qpos + 1;
+    ISC delim_end = delim_start;
+    while ((IUD)delim_end < length && source[delim_end] != '(') ++delim_end;
+    if ((IUD)delim_end < length) {
       ++delim_end; /* skip ( */
-      while (delim_end < (ISN)len) {
-        if (src[delim_end] == ')' &&
-            memcmp(src + delim_end + 1, src + delim_start,
-                   delim_end - delim_start) == 0) {
+      while ((IUD)delim_end < length) {
+        if (source[delim_end] == ')' &&
+            memcmp(source + delim_end + 1, source + delim_start,
+                   (size_t)(delim_end - delim_start)) == 0) {
           delim_end += (delim_end - delim_start) + 2; /* )delim" */
           break;
         }
         ++delim_end;
       }
-      lexer->pos = (delim_end < (ISN)len) ? delim_end : (ISN)len;
-      /* Update line/column. */
-      for (ISN i = lexer->pos - (lexer->pos - start_pos); i < lexer->pos; ++i) {
-        /* This is approximate; raw strings can span multiple lines. */
-      }
-      /* Recount lines. */
+      lexer->pos = ((IUD)delim_end < length) ? delim_end : (ISC)length;
+      /* Recount line/column: raw strings can span multiple lines. */
       lexer->line = start_line;
       lexer->column = start_col;
-      for (ISN i = start_pos; i < lexer->pos && i < (ISN)len; ++i) {
-        if (src[i] == '\n') { ++lexer->line; lexer->column = 1; }
+      for (ISC i = start_pos; (IUD)i < length && i < lexer->pos; ++i) {
+        if (source[i] == '\n') { ++lexer->line; lexer->column = 1; }
         else ++lexer->column;
       }
       CodeRecordToken(lexer, CODE_TOK_STRING, start_pos, start_line, start_col);
@@ -323,91 +325,99 @@ static void CodeLexString(TCodeLexer* lexer, ISN start_pos, ISN start_line,
     }
   }
 
-  /* Normal string: skip to closing quote, handling escapes. */
-  ++pos; /* skip opening quote */
-  while (pos < (ISN)len && src[pos] != '"') {
-    if (src[pos] == '\\' && pos + 1 < (ISN)len) {
+  /* Normal string: from the opening quote to the closing quote, honoring
+     backslash escapes. */
+  pos = qpos + 1; /* skip opening quote */
+  while ((IUD)pos < length && source[pos] != '"') {
+    if (source[pos] == '\\' && (IUD)(pos + 1) < length) {
       pos += 2; /* skip escape */
     } else {
       ++pos;
     }
   }
-  if (pos < (ISN)len) ++pos; /* skip closing quote */
+  if ((IUD)pos < length) ++pos; /* skip closing quote */
   lexer->pos = pos;
-  lexer->column = start_col + (ISN)(pos - start_pos);
+  lexer->column = start_col + (ISC)(pos - start_pos);
   CodeRecordToken(lexer, CODE_TOK_STRING, start_pos, start_line, start_col);
 }
 
 /* --- Internal: lex a character literal --- */
 
-static void CodeLexChar(TCodeLexer* lexer, ISN start_pos, ISN start_line,
-                        ISN start_col) {
-  const CHA* src = lexer->source;
-  IUD len = lexer->source_len;
-  ISN pos = lexer->pos + 1; /* skip opening quote */
-  while (pos < (ISN)len && src[pos] != '\'') {
-    if (src[pos] == '\\' && pos + 1 < (ISN)len) pos += 2;
+static void CodeLexChar(TCodeLexer* lexer, ISC start_pos, ISC start_line,
+                        ISC start_col) {
+  const CHA* source = lexer->source;
+  IUD length = lexer->source_length;
+  ISC pos = lexer->pos + 1; /* skip opening quote */
+  while (pos < (ISC)length && source[pos] != '\'') {
+    if (source[pos] == '\\' && pos + 1 < (ISC)length) pos += 2;
     else ++pos;
   }
-  if (pos < (ISN)len) ++pos; /* skip closing quote */
+  if (pos < (ISC)length) ++pos; /* skip closing quote */
   lexer->pos = pos;
-  lexer->column = start_col + (ISN)(pos - start_pos);
+  lexer->column = start_col + (ISC)(pos - start_pos);
   CodeRecordToken(lexer, CODE_TOK_CHAR, start_pos, start_line, start_col);
 }
 
 /* --- Internal: lex a number --- */
 
-static void CodeLexNumber(TCodeLexer* lexer, ISN start_pos, ISN start_line,
-                          ISN start_col) {
-  const CHA* src = lexer->source;
-  IUD len = lexer->source_len;
-  ISN pos = lexer->pos;
+static void CodeLexNumber(TCodeLexer* lexer, ISC start_pos, ISC start_line,
+                          ISC start_col) {
+  const CHA* source = lexer->source;
+  const IUD length = lexer->source_length;
+  ISC pos = lexer->pos;
   BOL is_float = false;
+  BOL have_prefix = false;
 
   /* Hex, octal, binary prefix. */
-  if (src[pos] == '0' && pos + 1 < (ISN)len) {
-    CHA next = src[pos + 1];
+  if (source[pos] == '0' && (IUD)pos + 1 < length) {
+    CHA next = source[pos + 1];
     if (next == 'x' || next == 'X') {
+      have_prefix = true;
       pos += 2;
-      while (pos < (ISN)len && CodeIsHexDigit(src[pos])) ++pos;
-      /* Hex float: 0x1.8p3 */
-      if (pos < (ISN)len && src[pos] == '.') {
+      while ((IUD)pos < length && CodeIsHexDigit(source[pos])) ++pos;
+      /* Hex FPC: 0x1.8p3 */
+      if ((IUD)pos < length && source[pos] == '.') {
         is_float = true;
         ++pos;
-        while (pos < (ISN)len && CodeIsHexDigit(src[pos])) ++pos;
+        while ((IUD)pos < length && CodeIsHexDigit(source[pos])) ++pos;
       }
-      if (pos < (ISN)len && (src[pos] == 'p' || src[pos] == 'P')) {
+      if ((IUD)pos < length && (source[pos] == 'p' || source[pos] == 'P')) {
         is_float = true;
         ++pos;
-        if (pos < (ISN)len && (src[pos] == '+' || src[pos] == '-')) ++pos;
-        while (pos < (ISN)len && CodeIsDigit(src[pos])) ++pos;
+        if ((IUD)pos < length && (source[pos] == '+' || source[pos] == '-')) ++pos;
+        while ((IUD)pos < length && CodeIsDigit(source[pos])) ++pos;
       }
     } else if (next >= '0' && next <= '7') {
+      have_prefix = true;
       pos += 2;
-      while (pos < (ISN)len && src[pos] >= '0' && src[pos] <= '7') ++pos;
+      while ((IUD)pos < length && source[pos] >= '0' && source[pos] <= '7') ++pos;
     } else if (next == 'b' || next == 'B') {
+      have_prefix = true;
       pos += 2;
-      while (pos < (ISN)len && (src[pos] == '0' || src[pos] == '1')) ++pos;
+      while ((IUD)pos < length && (source[pos] == '0' || source[pos] == '1')) ++pos;
     }
-  } else {
-    /* Decimal integer or float. */
-    while (pos < (ISN)len && CodeIsDigit(src[pos])) ++pos;
-    if (pos < (ISN)len && src[pos] == '.') {
+  }
+
+  if (!have_prefix) {
+    /* Decimal integer or FPC. Covers bare '0' (no base prefix) so pos
+       always advances at least one digit. */
+    while ((IUD)pos < length && CodeIsDigit(source[pos])) ++pos;
+    if ((IUD)pos < length && source[pos] == '.') {
       is_float = true;
       ++pos;
-      while (pos < (ISN)len && CodeIsDigit(src[pos])) ++pos;
+      while ((IUD)pos < length && CodeIsDigit(source[pos])) ++pos;
     }
-    if (pos < (ISN)len && (src[pos] == 'e' || src[pos] == 'E')) {
+    if ((IUD)pos < length && (source[pos] == 'e' || source[pos] == 'E')) {
       is_float = true;
       ++pos;
-      if (pos < (ISN)len && (src[pos] == '+' || src[pos] == '-')) ++pos;
-      while (pos < (ISN)len && CodeIsDigit(src[pos])) ++pos;
+      if ((IUD)pos < length && (source[pos] == '+' || source[pos] == '-')) ++pos;
+      while ((IUD)pos < length && CodeIsDigit(source[pos])) ++pos;
     }
   }
 
   /* Type suffix: u, U, l, L, ll, LL, f, F. */
-  while (pos < (ISN)len) {
-    CHA c = src[pos];
+  while ((IUD)pos < length) {
+    CHA c = source[pos];
     if (c == 'u' || c == 'U' || c == 'l' || c == 'L' ||
         c == 'f' || c == 'F') {
       ++pos;
@@ -417,59 +427,59 @@ static void CodeLexNumber(TCodeLexer* lexer, ISN start_pos, ISN start_line,
   }
 
   lexer->pos = pos;
-  lexer->column = start_col + (ISN)(pos - start_pos);
+  lexer->column = start_col + (ISC)(pos - start_pos);
   CodeRecordToken(lexer, is_float ? CODE_TOK_FLOAT : CODE_TOK_INT,
                   start_pos, start_line, start_col);
 }
 
 /* --- Internal: lex an identifier or keyword --- */
 
-static void CodeLexIdent(TCodeLexer* lexer, ISN start_pos, ISN start_line,
-                         ISN start_col) {
-  const CHA* src = lexer->source;
-  IUD len = lexer->source_len;
-  ISN pos = lexer->pos;
+static void CodeLexIdent(TCodeLexer* lexer, ISC start_pos, ISC start_line,
+                         ISC start_col) {
+  const CHA* source = lexer->source;
+  IUD length = lexer->source_length;
+  ISC pos = lexer->pos;
 
   /* String literal prefixes: L" , u8" , u" , U" , R" */
-  if (pos < (ISN)len && src[pos] == 'L' && pos + 1 < (ISN)len &&
-      src[pos + 1] == '"') {
+  if (pos < (ISC)length && source[pos] == 'L' && pos + 1 < (ISC)length &&
+      source[pos + 1] == '"') {
     lexer->pos = pos; /* let the string lexer handle it */
     CodeLexString(lexer, start_pos, start_line, start_col);
     return;
   }
-  if (pos < (ISN)len && src[pos] == 'U' && pos + 1 < (ISN)len &&
-      src[pos + 1] == '"') {
+  if (pos < (ISC)length && source[pos] == 'U' && pos + 1 < (ISC)length &&
+      source[pos + 1] == '"') {
     lexer->pos = pos;
     CodeLexString(lexer, start_pos, start_line, start_col);
     return;
   }
-  if (pos < (ISN)len && src[pos] == 'u' && pos + 1 < (ISN)len) {
-    if (src[pos + 1] == '"') {
+  if (pos < (ISC)length && source[pos] == 'u' && pos + 1 < (ISC)length) {
+    if (source[pos + 1] == '"') {
       lexer->pos = pos;
       CodeLexString(lexer, start_pos, start_line, start_col);
       return;
     }
-    if (src[pos + 1] == '8' && pos + 2 < (ISN)len && src[pos + 2] == '"') {
+    if (source[pos + 1] == '8' && pos + 2 < (ISC)length && source[pos + 2] == '"') {
       lexer->pos = pos;
       CodeLexString(lexer, start_pos, start_line, start_col);
       return;
     }
   }
-  if (pos < (ISN)len && src[pos] == 'R' && pos + 1 < (ISN)len &&
-      src[pos + 1] == '"') {
+  if (pos < (ISC)length && source[pos] == 'R' && pos + 1 < (ISC)length &&
+      source[pos + 1] == '"') {
     lexer->pos = pos;
     CodeLexString(lexer, start_pos, start_line, start_col);
     return;
   }
 
   /* Consume identifier characters. */
-  while (pos < (ISN)len && CodeIsIdentChar(src[pos])) ++pos;
-  ISN ident_len = pos - start_pos;
+  while (pos < (ISC)length && CodeIsIdentChar(source[pos])) ++pos;
+  ISC ident_length = pos - start_pos;
   lexer->pos = pos;
-  lexer->column = start_col + ident_len;
+  lexer->column = start_col + ident_length;
 
   IUB kind = CODE_TOK_IDENT;
-  if (CodeIsKeyword(src + start_pos, ident_len)) kind = CODE_TOK_KEYWORD;
+  if (CodeIsKeyword(source + start_pos, ident_length)) kind = CODE_TOK_KEYWORD;
 
   /* User-defined string literal: "hello"_suffix */
   CodeRecordToken(lexer, kind, start_pos, start_line, start_col);
@@ -484,7 +494,7 @@ IUB CodeLexerNext(TCodeLexer* lexer) {
   if (lexer->full) return CODE_TOK_EOF;
 
   /* Skip whitespace and comments. */
-  while (lexer->pos < (ISN)lexer->source_len) {
+  while (lexer->pos < (ISC)lexer->source_length) {
     CHA c = lexer->source[lexer->pos];
     if (CodeIsSpace(c) || c == '\n' || c == '\r') {
       CodeSkipWhitespace(lexer);
@@ -493,24 +503,24 @@ IUB CodeLexerNext(TCodeLexer* lexer) {
     break;
   }
 
-  if (lexer->pos >= (ISN)lexer->source_len) {
+  if (lexer->pos >= (ISC)lexer->source_length) {
     CodeRecordToken(lexer, CODE_TOK_EOF, lexer->pos, lexer->line,
                     lexer->column);
     return CODE_TOK_EOF;
   }
 
-  ISN start = lexer->pos;
-  ISN start_line = lexer->line;
-  ISN start_col = lexer->column;
+  ISC start = lexer->pos;
+  ISC start_line = lexer->line;
+  ISC start_col = lexer->column;
   CHA c = lexer->source[lexer->pos];
 
   /* Comments. */
-  if (c == '/' && lexer->pos + 1 < (ISN)lexer->source_len) {
+  if (c == '/' && lexer->pos + 1 < (ISC)lexer->source_length) {
     CHA next = lexer->source[lexer->pos + 1];
     if (next == '/') {
       /* Line comment: // ... \n */
       lexer->pos += 2;
-      while (lexer->pos < (ISN)lexer->source_len &&
+      while (lexer->pos < (ISC)lexer->source_length &&
              lexer->source[lexer->pos] != '\n') {
         ++lexer->pos;
         ++lexer->column;
@@ -524,7 +534,7 @@ IUB CodeLexerNext(TCodeLexer* lexer) {
       /* Block comment: open-brace-star ... star-close-brace */
       lexer->pos += 2;
       lexer->column += 2;
-      while (lexer->pos + 1 < (ISN)lexer->source_len) {
+      while (lexer->pos + 1 < (ISC)lexer->source_length) {
         if (lexer->source[lexer->pos] == '*' &&
             lexer->source[lexer->pos + 1] == '/') {
           lexer->pos += 2;
@@ -545,7 +555,7 @@ IUB CodeLexerNext(TCodeLexer* lexer) {
     }
   }
 
-  /* String / char literal (with optional prefix already consumed as ident). */
+  /* String / CHR literal (with optional prefix already consumed as ident). */
   if (c == '"') {
     CodeLexString(lexer, start, start_line, start_col);
     return CODE_TOK_STRING;
@@ -571,13 +581,13 @@ IUB CodeLexerNext(TCodeLexer* lexer) {
     return CODE_TOK_IDENT;
   }
 
-  /* Multi-char operators (longest match first). */
-  const CHA* src = lexer->source;
-  IUD len = lexer->source_len;
+  /* Multi-CHR operators (longest match first). */
+  const CHA* source = lexer->source;
+  IUD length = lexer->source_length;
 
-  /* Three-char: <<<, >>>, <<=, >>=, <=>, ... */
-  if (lexer->pos + 2 < (ISN)len) {
-    CHA c2 = src[lexer->pos + 1], c3 = src[lexer->pos + 2];
+  /* Three-CHR: <<<, >>>, <<=, >>=, <=>, ... */
+  if (lexer->pos + 2 < (ISC)length) {
+    CHA c2 = source[lexer->pos + 1], c3 = source[lexer->pos + 2];
     if (c == '<' && c2 == '<' && c3 == '<') {
       lexer->pos += 3; lexer->column += 3;
       CodeRecordToken(lexer, CODE_TOK_LSHIFT3, start, start_line, start_col);
@@ -600,14 +610,14 @@ IUB CodeLexerNext(TCodeLexer* lexer) {
     }
   }
 
-  /* Two-char operators. */
-  if (lexer->pos + 1 < (ISN)len) {
-    CHA c2 = src[lexer->pos + 1];
+  /* Two-CHR operators. */
+  if (lexer->pos + 1 < (ISC)length) {
+    CHA c2 = source[lexer->pos + 1];
     IUB two_char = CODE_TOK_EOF;
     if (c == ':' && c2 == ':') two_char = CODE_TOK_DBL_COLON;
     else if (c == '.' && c2 == '*') two_char = CODE_TOK_DOT_STAR;
     else if (c == '-' && c2 == '>') {
-      if (lexer->pos + 2 < (ISN)len && src[lexer->pos + 2] == '*') {
+      if (lexer->pos + 2 < (ISC)length && source[lexer->pos + 2] == '*') {
         /* ->* is three chars; handle as ARROW_STAR. */
         lexer->pos += 3; lexer->column += 3;
         CodeRecordToken(lexer, CODE_TOK_ARROW_STAR, start, start_line, start_col);
@@ -620,7 +630,7 @@ IUB CodeLexerNext(TCodeLexer* lexer) {
     else if (c == '<' && c2 == '=') two_char = CODE_TOK_LE;
     else if (c == '>' && c2 == '=') two_char = CODE_TOK_GE;
     else if (c == '<' && c2 == '<') {
-      if (lexer->pos + 2 < (ISN)len && src[lexer->pos + 2] == '=') {
+      if (lexer->pos + 2 < (ISC)length && source[lexer->pos + 2] == '=') {
         lexer->pos += 3; lexer->column += 3;
         CodeRecordToken(lexer, CODE_TOK_LSHIFT_ASSIGN, start, start_line, start_col);
         return CODE_TOK_LSHIFT_ASSIGN;
@@ -628,7 +638,7 @@ IUB CodeLexerNext(TCodeLexer* lexer) {
       two_char = CODE_TOK_LSHIFT;
     }
     else if (c == '>' && c2 == '>') {
-      if (lexer->pos + 2 < (ISN)len && src[lexer->pos + 2] == '=') {
+      if (lexer->pos + 2 < (ISC)length && source[lexer->pos + 2] == '=') {
         lexer->pos += 3; lexer->column += 3;
         CodeRecordToken(lexer, CODE_TOK_RSHIFT_ASSIGN, start, start_line, start_col);
         return CODE_TOK_RSHIFT_ASSIGN;
@@ -659,7 +669,7 @@ IUB CodeLexerNext(TCodeLexer* lexer) {
     }
   }
 
-  /* Single-char tokens. */
+  /* Single-CHR tokens. */
   IUB single = CODE_TOK_EOF;
   switch (c) {
     case '(': single = CODE_TOK_LPAREN; break;
@@ -698,7 +708,7 @@ IUB CodeLexerNext(TCodeLexer* lexer) {
     return single;
   }
 
-  /* Unknown character: record as IDENT (single char) to avoid
+  /* Unknown character: record as IDENT (single CHR) to avoid
   crashing the pipeline. The Fitter will flag it. */
   ++lexer->pos;
   ++lexer->column;

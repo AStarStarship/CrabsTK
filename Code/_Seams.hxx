@@ -5,5 +5,6 @@ No stb, no std::, no external dependencies.
 Token taxonomy derived from Clang (BSD, see LICENSE.Clang). */
 #include "Lexer.hxx"
 #include "Stripper.hxx"
+#include "CommentStripper.hxx"
 #include "Fitter.hxx"
 #include "CodeModule.hxx"

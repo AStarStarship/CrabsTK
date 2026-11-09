@@ -10,7 +10,7 @@
 namespace CTK {
 namespace Touch {
 
-class LIB_MEMBER DMXButton : public Parameter<ISC>, public Button {
+class DMXButton : public Parameter<ISC>, public Button {
  public:
   /* Default constructor. */
    DMXButton (const CHA* label = "", ISC channel = 0, ISC init_value = 0,

@@ -45,7 +45,7 @@ inline ISC JsxRegrLen(const CHA* s) {
 }
 
 // Full string equality over two NUL-terminated strings.
-inline bool JsxRegrEq(const CHA* a, const CHA* b) {
+inline BOL JsxRegrEq(const CHA* a, const CHA* b) {
   return JsxRegrContains(a, b) != _NilP && JsxRegrLen(a) == JsxRegrLen(b);
 }
 
@@ -60,12 +60,12 @@ inline bool JsxRegrEq(const CHA* a, const CHA* b) {
 inline const CHA* JsxRegr_CapacityGuard(const CHA* args) {
   CHA big[8192];
   TJsxTransformResult r{};
-  ISN rc = JsxToCpp("<a/>", 0, big, sizeof(big), &r);
+  ISC rc = JsxToCpp("<a/>", 0, big, sizeof(big), &r);
   if (rc < 0) return "could not measure <a/> emission on an 8192 buffer";
   ISC need = r.output_len;
   if (need < 64) return "measured <a/> emission is implausibly small (<64)";
 
-  struct TCase { const CHA* name; ISC cap; int mode; };
+  struct TCase { const CHA* name; ISC cap; ISC mode; };
   const TCase cases[] = {
     { "zero", 0, 0 },
     { "one", 1, 0 },
@@ -80,13 +80,13 @@ inline const CHA* JsxRegr_CapacityGuard(const CHA* args) {
     CHA guard[gsize];
     for (ISC i = 0; i < gsize; i++) guard[i] = (CHA)0x90;
     TJsxTransformResult rr{};
-    ISN rc2 = JsxToCpp("<a/>", 0, guard, cap, &rr);
+    ISC rc2 = JsxToCpp("<a/>", 0, guard, cap, &rr);
     // Invariant A: no byte at or beyond the declared capacity may change.
     for (ISC i = cap; i < gsize; i++)
       if (guard[i] != (CHA)0x90) {
         static CHA m[160];
         snprintf(m, sizeof(m), "%s: guard byte clobbered at index %d (got %d, want 144)",
-                 c.name, i, (int)guard[i]);
+                 c.name, i, (ISC)guard[i]);
         return m;
       }
     // Invariant B: status must reflect whether the output fit.
@@ -127,7 +127,7 @@ inline const CHA* JsxRegr_GrammarReject(const CHA* args) {
   for (const CHA* s : bad) {
     CHA out[8192];
     TJsxTransformResult r{};
-    ISN rc = JsxToCpp(s, 0, out, sizeof(out), &r);
+    ISC rc = JsxToCpp(s, 0, out, sizeof(out), &r);
     if (rc == 0 && r.error_count == 0) {
       static CHA m[200];
       snprintf(m, sizeof(m), "malformed JSX accepted (rc=0, errors=0): %s", s);
@@ -144,7 +144,7 @@ inline const CHA* JsxRegr_MultiDigitChildren(const CHA* args) {
   const CHA* src = "<r><a/><a/><a/><a/><a/><a/><a/><a/><a/><a/><a/></r>";
   CHA out[8192];
   TJsxTransformResult r{};
-  ISN rc = JsxToCpp(src, 0, out, sizeof(out), &r);
+  ISC rc = JsxToCpp(src, 0, out, sizeof(out), &r);
   if (rc != 0) {
     static CHA m[160];
     snprintf(m, sizeof(m), "root with 11 children failed to parse (rc=%d, err=%s)",
@@ -222,7 +222,7 @@ inline const CHA* JsxRegr_SpacePreserve(const CHA* args) {
   const CHA* src = "<r>Hello <b>bold</b> world</r>";
   CHA out[8192];
   TJsxTransformResult r{};
-  ISN rc = JsxToCpp(src, 0, out, sizeof(out), &r);
+  ISC rc = JsxToCpp(src, 0, out, sizeof(out), &r);
   if (rc != 0) {
     static CHA m[160];
     snprintf(m, sizeof(m), "space-preservation fixture failed to parse (rc=%d)", rc);
@@ -280,7 +280,7 @@ inline const CHA* JsxRegr_ScalarUpdateIsolation(const CHA* args) {
 inline const CHA* JsxRegr_ExhaustionFailsSafely(const CHA* args) {
   TJsx<ISC, ISC, DTB, CHR, CHR, IUN>& j = JsxRegrFresh();
   ISC last = 0;
-  int iters = 0;
+  ISC iters = 0;
   while (iters < 100000) {
     last = j.AddObject(ISC(4096), ISC(16), ISC(256));
     if (last < 0) break;  // exhausted
@@ -340,7 +340,7 @@ inline const CHA* JsxRegr_ZeroRenderCapacity(const CHA* args) {
   if (guard[0] != (CHA)0x90) {
     static CHA m[128];
     snprintf(m, sizeof(m), "Render(cap=0) wrote to the buffer (guard[0]=%d, want 144)",
-             (int)guard[0]);
+             (ISC)guard[0]);
     return m;
   }
   if (n > 0) {

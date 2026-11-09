@@ -7,7 +7,7 @@
 namespace CTK {
 namespace Touch {
 
-class LIB_MEMBER XyTouchpad : public Component {
+class XyTouchpad : public Component {
  public:
   /* Constructor. */
   XyTouchpad(ISC x = 0, ISC y = 0, ISC left_bounds = 0, ISC right_bounds = 0,

@@ -11,7 +11,7 @@ namespace IMUL {
 // there); the rollup TU sees both the declarations and these definitions
 // in one scope, so ImulCompile resolves unambiguously.
 
-inline ISN ImulParseWorkspace(TImulWorkspace* workspace, TImulLimits* limits,
+inline ISC ImulParseWorkspace(TImulWorkspace* workspace, TImulLimits* limits,
                               TImulStorage* storage, TImulResult* result) {
   (void)workspace;
   (void)limits;
@@ -25,7 +25,7 @@ inline ISN ImulParseWorkspace(TImulWorkspace* workspace, TImulLimits* limits,
 This is a TEST STUB, not a general compiler. The byte-count check
 below is intentional: any other input returns 1 (invalid document).
 Phase 2 will replace this with a real line-by-line parser. */
-inline ISN ImulCompile(const CHA* source, IUD source_len,
+inline ISC ImulCompile(const CHA* source, IUD source_len,
                        TImulWorkspace* workspace, TImulLimits* limits,
                        TImulStorage* storage, TImulResult* result) {
   (void)workspace;
@@ -63,13 +63,13 @@ inline ISN ImulCompile(const CHA* source, IUD source_len,
   }
   CHA* display = storage->display_text;
   const CHA* left = source + 0;
-  const ISN left_len = 5;
+  const ISC left_len = 5;
   const CHA* right = source + 8;
-  const ISN right_len = 5;
-  ISN display_len = 0;
-  for (ISN i = 0; i < right_len; ++i) display[display_len++] = right[i];
+  const ISC right_len = 5;
+  ISC display_len = 0;
+  for (ISC i = 0; i < right_len; ++i) display[display_len++] = right[i];
   display[display_len++] = ' ';
-  for (ISN i = 0; i < left_len; ++i) display[display_len++] = left[i];
+  for (ISC i = 0; i < left_len; ++i) display[display_len++] = left[i];
   TImulEvent* event = storage->events;
   event->kind = IMUL_EVENT_NOTE;
   event->span.byte_start = 0;

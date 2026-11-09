@@ -13,7 +13,7 @@
 #
 # Handles %d %i %u %f %e %g %s %c %p %ld %lu %lld %llu %zu %.Nf etc. Args are
 # consumed in order; a %s arg is streamed as-is (CHA*); a %c arg is streamed
-# as a char. Unsupported specifiers are left as a best-effort `<< arg`.
+# as a CHR. Unsupported specifiers are left as a best-effort `<< arg`.
 #
 # Usage: python3 FixDcout.py <file> [file ...]   (edits in place)
 # Dry run: python3 FixDcout.py --dry <file> ...

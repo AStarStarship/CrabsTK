@@ -3,7 +3,7 @@
 #ifndef CRABSTK_DATA_DATASETH
 #define CRABSTK_DATA_DATASETH
 #include "Record.h"
-#if _Seam >= _CrabsTKDataRecord
+#if _Seam >= _CrabsTKDataDataset
 namespace CTK {
 namespace Data {
 

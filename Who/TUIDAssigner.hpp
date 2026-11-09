@@ -41,14 +41,14 @@ struct TUIDAssigner {
 
   /* Saves the current counter to the given file.
   @return 0 on success, -1 on failure. */
-  ISN Save(const CHA* filename) const {
+  ISC Save(const CHA* filename) const {
     if (!filename) return -1;
     FILE* file = ::fopen(filename, "wb");
     if (!file) return -1;
     IUD value = next_uid_.load(::std::memory_order_relaxed);
     /* Write as 8 bytes big-endian. */
     CHA bytes[8];
-    for (ISN i = 0; i < 8; ++i)
+    for (ISC i = 0; i < 8; ++i)
       bytes[i] = (CHA)(value >> (56 - i * 8));
     size_t written = ::fwrite(bytes, 1, 8, file);
     ::fclose(file);
@@ -57,7 +57,7 @@ struct TUIDAssigner {
 
   /* Loads the counter from the given file.
   @return 0 on success, -1 on failure. */
-  ISN Load(const CHA* filename) {
+  ISC Load(const CHA* filename) {
     if (!filename) return -1;
     FILE* file = ::fopen(filename, "rb");
     if (!file) return -1;
@@ -66,7 +66,7 @@ struct TUIDAssigner {
     ::fclose(file);
     if (read != 8) return -1;
     IUD value = 0;
-    for (ISN i = 0; i < 8; ++i)
+    for (ISC i = 0; i < 8; ++i)
       value = (value << 8) | (IUD)(IUA)bytes[i];
     Set(value);
     return 0;

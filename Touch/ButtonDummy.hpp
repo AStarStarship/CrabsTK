@@ -10,7 +10,7 @@ namespace CTK {
 namespace Touch {
 
 /* Dummy Button does nothing. */
-class LIB_MEMBER ButtonDummy : public Button {
+class ButtonDummy : public Button {
  public:
   /* Creates a ButtonDummy with the given label. */
   ButtonDummy(const CHA* label = "") :

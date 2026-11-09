@@ -34,8 +34,8 @@ enum {
 };
 
 /* Returns the length of the given nil-terminated CHA string. */
-inline ISN TPasswordLen(const CHA* text) {
-  ISN length = 0;
+inline ISC TPasswordLen(const CHA* text) {
+  ISC length = 0;
   if (text == _NilP) return 0;
   while (text[length] != '\0') ++length;
   return length;
@@ -43,9 +43,9 @@ inline ISN TPasswordLen(const CHA* text) {
 
 /* Compares two byte buffers in constant time.
 @return true if the buffers are equal. */
-inline BOL TPasswordConstantTimeEquals(const IUA* a, const IUA* b, ISN count) {
+inline BOL TPasswordConstantTimeEquals(const IUA* a, const IUA* b, ISC count) {
   IUA diff = 0;
-  for (ISN i = 0; i < count; ++i) diff |= (IUA)(a[i] ^ b[i]);
+  for (ISC i = 0; i < count; ++i) diff |= (IUA)(a[i] ^ b[i]);
   return diff == 0;
 }
 
@@ -73,12 +73,12 @@ struct TSha256 {
 /* Packs 4 big-endian bytes into an IUC (32-bit). */
 inline IUC TPasswordBe4(const IUA* bytes) {
   IUC packed = 0;
-  for (ISN i = 0; i < 4; ++i) packed = (packed << 8) | bytes[i];
+  for (ISC i = 0; i < 4; ++i) packed = (packed << 8) | bytes[i];
   return packed;
 }
 
 /* 32-bit right rotate. */
-inline IUC TSha256Rotr(IUC x, ISN n) { return (x >> n) | (x << (32 - n)); }
+inline IUC TSha256Rotr(IUC x, ISC n) { return (x >> n) | (x << (32 - n)); }
 
 /* SHA-256 compression over one 64-byte block (FIPS 180-2 Sec 6.2.2).
 Uses 32-bit arithmetic throughout (IUC). The block must already be fully
@@ -86,9 +86,9 @@ formed: message bytes, 0x80 padding bit, zero fill, 64-bit BE bit-length. */
 inline void TSha256Compress(const IUA* block, IUA* digest) {
   // Message schedule: 64 x 32-bit words.
   IUC w[64];
-  for (ISN i = 0; i < 16; ++i)
+  for (ISC i = 0; i < 16; ++i)
     w[i] = TPasswordBe4(block + 4 * i);
-  for (ISN i = 16; i < 64; ++i) {
+  for (ISC i = 16; i < 64; ++i) {
     IUC s0 = TSha256Rotr(w[i-15], 7) ^ TSha256Rotr(w[i-15], 18) ^ (w[i-15] >> 3);
     IUC s1 = TSha256Rotr(w[i-2], 17) ^ TSha256Rotr(w[i-2], 19) ^ (w[i-2] >> 10);
     w[i] = w[i-16] + s0 + w[i-7] + s1;
@@ -99,7 +99,7 @@ inline void TSha256Compress(const IUA* block, IUA* digest) {
   // Save the initial state: the rounds compute the compression delta F(block),
   // and the final digest is H(0) + F(block) per FIPS 180-2 Sec 6.2.2.
   const IUC h0[8] = {a, b, c, d, e, f, g, hh};
-  for (ISN i = 0; i < 64; ++i) {
+  for (ISC i = 0; i < 64; ++i) {
     IUC S1 = TSha256Rotr(e, 6) ^ TSha256Rotr(e, 11) ^ TSha256Rotr(e, 25);
     IUC ch = (e & f) ^ ((~e) & g);
     IUC t1 = hh + S1 + ch + TPasswordShaK[i] + w[i];
@@ -112,7 +112,7 @@ inline void TSha256Compress(const IUA* block, IUA* digest) {
   // Final digest: H(0) + F(block), per-word mod 2^32.
   const IUC h[8] = {a + h0[0], b + h0[1], c + h0[2], d + h0[3],
                     e + h0[4], f + h0[5], g + h0[6], hh + h0[7]};
-  for (ISN i = 0; i < 8; ++i) {
+  for (ISC i = 0; i < 8; ++i) {
     digest[4 * i] = (IUA)(h[i] >> 24);
     digest[4 * i + 1] = (IUA)(h[i] >> 16);
     digest[4 * i + 2] = (IUA)(h[i] >> 8);
@@ -124,24 +124,24 @@ inline void TSha256Compress(const IUA* block, IUA* digest) {
 zero fill, then the 8-byte BE bit-length (8 * prefix_len) in bytes 56-63.
 Then compresses into digest. Per FIPS 180-2 the appended length is the
 message length in BITS, big-endian, in the final 8 bytes of the block. */
-inline void TPasswordSha256(const IUA* prefix, ISN prefix_len, IUA* digest) {
+inline void TPasswordSha256(const IUA* prefix, ISC prefix_len, IUA* digest) {
   TSha256 sha;
-  for (ISN i = 0; i < 64; ++i) sha.input[i] = 0;
-  for (ISN i = 0; i < prefix_len; ++i) sha.input[i] = prefix[i];
+  for (ISC i = 0; i < 64; ++i) sha.input[i] = 0;
+  for (ISC i = 0; i < prefix_len; ++i) sha.input[i] = prefix[i];
   sha.input[prefix_len] = 0x80;
   // 64-bit BE bit-length in bytes 56-63: 8 * prefix_len, high 4 bytes zero.
   IUD bit_length = (IUD)prefix_len * 8;
-  for (ISN i = 0; i < 8; ++i)
+  for (ISC i = 0; i < 8; ++i)
     sha.input[56 + i] = (IUA)(bit_length >> (56 - 8 * i));
   TSha256Compress(sha.input, digest);
 }
 
 /* One PBKDF2-PRF round: SHA256(salt || INT32_BE(counter)).
 Writes the 32-byte digest into out_digest. */
-inline void TPasswordPrf(const IUA* salt, ISN salt_count, IUD counter,
+inline void TPasswordPrf(const IUA* salt, ISC salt_count, IUD counter,
                          IUA* out_digest) {
   IUA prefix[PasswordSaltBytes + 4];
-  for (ISN i = 0; i < salt_count; ++i) prefix[i] = salt[i];
+  for (ISC i = 0; i < salt_count; ++i) prefix[i] = salt[i];
   prefix[salt_count] = (IUA)(counter >> 24);
   prefix[salt_count + 1] = (IUA)(counter >> 16);
   prefix[salt_count + 2] = (IUA)(counter >> 8);
@@ -153,25 +153,25 @@ inline void TPasswordPrf(const IUA* salt, ISN salt_count, IUD counter,
   digest[0] = SHA256(salt || password)
   key[i]    = digest[i-1] XOR PRF(i)   for i = 1..KdfRounds
 Then FNV-1a avalanche over all 32 bytes. */
-inline void TPasswordDeriveKey(const IUA* salt, ISN salt_count,
+inline void TPasswordDeriveKey(const IUA* salt, ISC salt_count,
                                const CHA* password, IUA* key) {
   IUA prefix[PasswordSaltBytes + 255];
-  for (ISN i = 0; i < salt_count; ++i) prefix[i] = salt[i];
-  ISN pwd_len = TPasswordLen(password);
-  for (ISN i = 0; i < pwd_len; ++i) prefix[salt_count + i] = (IUA)password[i];
+  for (ISC i = 0; i < salt_count; ++i) prefix[i] = salt[i];
+  ISC pwd_len = TPasswordLen(password);
+  for (ISC i = 0; i < pwd_len; ++i) prefix[salt_count + i] = (IUA)password[i];
   TPasswordSha256(prefix, salt_count + pwd_len, key);
   for (IUD i = 1; i <= PasswordKdfRounds; ++i) {
     IUA prf[PasswordKeyBytes];
     TPasswordPrf(salt, salt_count, i, prf);
-    for (ISN j = 0; j < PasswordKeyBytes; ++j) key[j] ^= prf[j];
+    for (ISC j = 0; j < PasswordKeyBytes; ++j) key[j] ^= prf[j];
   }
   // FNV-1a avalanche: mix all 32 bytes into each other.
   IUD fnv = 0xCBF29CE484222325;
-  for (ISN i = 0; i < PasswordKeyBytes; ++i) {
+  for (ISC i = 0; i < PasswordKeyBytes; ++i) {
     fnv ^= key[i];
     fnv *= 0x100000001B3;
   }
-  for (ISN i = 0; i < PasswordKeyBytes; ++i) {
+  for (ISC i = 0; i < PasswordKeyBytes; ++i) {
     key[i] ^= (IUA)(fnv >> (8 * (i % 8)));
     key[i] ^= (IUA)(fnv >> (8 * ((i + 1) % 8)));
   }
@@ -185,7 +185,7 @@ inline void TPasswordHex2(IUA value, CHA** out) {
   *out += 2;
 }
 
-/* Parses one hex char into a 4-bit value. Returns 0xFF on failure. */
+/* Parses one hex CHR into a 4-bit value. Returns 0xFF on failure. */
 inline IUA TPasswordHex1(CHA c) {
   if (c >= '0' && c <= '9') return (IUA)(c - '0');
   if (c >= 'A' && c <= 'F') return (IUA)(c - 'A' + 10);
@@ -199,9 +199,9 @@ Falls back to the ASCIICrabs Random API if the OS call fails (degraded,
 logged via D_COUT in debug builds). */
 inline void TPasswordRandomSalt(IUA* out) {
 #if defined(__linux__)
-  ISN got = 0;
+  ISC got = 0;
   while (got < PasswordSaltBytes) {
-    ISN n = getrandom(out + got, PasswordSaltBytes - got, 0);
+    ISC n = getrandom(out + got, PasswordSaltBytes - got, 0);
     if (n < 0) break;  //< EINTR or error.
     got += n;
   }
@@ -218,7 +218,7 @@ inline void TPasswordRandomSalt(IUA* out) {
   arc4random_buf(out, PasswordSaltBytes);
 #else
   // Non-POSIX fallback: use the ASCIICrabs Random API.
-  for (ISN i = 0; i < PasswordSaltBytes; ++i)
+  for (ISC i = 0; i < PasswordSaltBytes; ++i)
     out[i] = (IUA)(IUCRandom() & 0xFF);
 #endif
 }
@@ -228,9 +228,9 @@ inline void TPasswordRandomSalt(IUA* out) {
 inline void TPasswordSerialize(const IUA* salt, const IUA* key, CHA* out) {
   out[0] = 'P'; out[1] = 'B'; out[2] = 'K'; out[3] = '2'; out[4] = '$';
   CHA* cursor = out + 5;
-  for (ISN i = 0; i < PasswordSaltBytes; ++i) TPasswordHex2(salt[i], &cursor);
+  for (ISC i = 0; i < PasswordSaltBytes; ++i) TPasswordHex2(salt[i], &cursor);
   *cursor++ = '$';
-  for (ISN i = 0; i < PasswordKeyBytes; ++i) TPasswordHex2(key[i], &cursor);
+  for (ISC i = 0; i < PasswordKeyBytes; ++i) TPasswordHex2(key[i], &cursor);
   *cursor = '\0';
 }
 
@@ -246,7 +246,7 @@ inline BOL TPasswordParse(const CHA* stored, IUA* salt, IUA* key) {
   const CHA* salt_hex = stored + 5;
   if (TPasswordLen(salt_hex) != PasswordSaltBytes * 2 + 1 + PasswordKeyLength)
     return false;
-  for (ISN i = 0; i < PasswordSaltBytes; ++i) {
+  for (ISC i = 0; i < PasswordSaltBytes; ++i) {
     IUA hi = TPasswordHex1(salt_hex[2 * i]);
     IUA lo = TPasswordHex1(salt_hex[2 * i + 1]);
     if (hi == 0xFF || lo == 0xFF) return false;
@@ -255,7 +255,7 @@ inline BOL TPasswordParse(const CHA* stored, IUA* salt, IUA* key) {
   const CHA* key_hex = salt_hex + PasswordSaltBytes * 2;
   if (key_hex[0] != '$') return false;
   key_hex += 1;
-  for (ISN i = 0; i < PasswordKeyBytes; ++i) {
+  for (ISC i = 0; i < PasswordKeyBytes; ++i) {
     IUA hi = TPasswordHex1(key_hex[2 * i]);
     IUA lo = TPasswordHex1(key_hex[2 * i + 1]);
     if (hi == 0xFF || lo == 0xFF) return false;
@@ -287,7 +287,7 @@ class TPassword {
       will be used. */
   TPassword(TAuthenticator* authenticator, const CHA* password = DefaultPassword)
     : auth_ (authenticator), type_ (Validation), salted_ (false) {
-    for (ISN i = 0; i < PasswordStoredLengthMin; ++i) stored_[i] = '\0';
+    for (ISC i = 0; i < PasswordStoredLengthMin; ++i) stored_[i] = '\0';
     SetKey (password);
   }
 
@@ -307,7 +307,7 @@ class TPassword {
     IUA salt[PasswordSaltBytes];
     IUA key[PasswordKeyBytes];
     if (!TPasswordParse(stored_, salt, key)) return false;
-    for (ISN i = 0; i < PasswordSaltBytes; ++i) out[i] = salt[i];
+    for (ISC i = 0; i < PasswordSaltBytes; ++i) out[i] = salt[i];
     return true;
   }
 

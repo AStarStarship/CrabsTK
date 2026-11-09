@@ -9,7 +9,7 @@ namespace CTK {
 namespace Touch {
 
 /* A controller for MIDI signals. */
-class LIB_MEMBER ControlMidi : public Parameter<ISC> {
+class ControlMidi : public Parameter<ISC> {
  public:
   enum {
     NumChannels = 16  //< Number of MIDI channels.

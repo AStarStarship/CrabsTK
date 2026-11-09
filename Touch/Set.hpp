@@ -9,7 +9,7 @@ namespace CTK {
 namespace Touch {
 
 /* A collection of shared objects, . */
-class LIB_MEMBER Set {
+class Set {
  public:
   /* Constructor. */
   Set(const CHA* name, IUD uid) : name_(name), uid_(uid) {}

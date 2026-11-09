@@ -10,7 +10,7 @@ namespace CTK {
 // Single-translation-unit (STU) compatible
 
 /// Route handler callback type
-using RouteHandler = bool (*)(const HttpRequest& req, HttpResponse& resp);
+using RouteHandler = BOL (*)(const HttpRequest& req, HttpResponse& resp);
 
 /// Route pattern with optional parameters
 struct RoutePattern {
@@ -41,7 +41,7 @@ struct RoutePattern {
   }
 
   /// Match a request path against this pattern
-  bool match(const CHA* path, ISZ path_len, ISZ& out_param_count) const {
+  BOL match(const CHA* path, ISZ path_len, ISZ& out_param_count) const {
     out_param_count = 0;
     ISZ pi = 0, qi = 0;
     while (pi < pattern_len && qi < path_len) {
@@ -88,7 +88,7 @@ public:
     }
   }
 
-  bool dispatch(const HttpRequest& req, HttpResponse& resp) const {
+  BOL dispatch(const HttpRequest& req, HttpResponse& resp) const {
     for (ISZ i = 0; i < route_count; ++i) {
       ISZ pcount = 0;
       if (routes_[i].match(req.target, req.target_len, pcount)) {

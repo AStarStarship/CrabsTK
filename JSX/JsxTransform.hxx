@@ -48,11 +48,11 @@ namespace JSX {
 // (Existing fields preserved; error_offset is additive.)
 struct TJsxTransformResult {
   CHA* output;            //< Emitted C++ source (caller-owned buffer).
-  ISN output_len;         //< Length in bytes (NUL-terminated).
-  ISN element_count;      //< Number of elements in the JSX tree.
-  ISN error_count;        //< Number of parse errors (0 or 1: first is fatal).
+  ISC output_len;         //< Length in bytes (NUL-terminated).
+  ISC element_count;      //< Number of elements in the JSX tree.
+  ISC error_count;        //< Number of parse errors (0 or 1: first is fatal).
   const CHA* first_error; //< Static message or "".
-  ISN error_offset;       //< NEW: byte offset of the error in source, or -1.
+  ISC error_offset;       //< NEW: byte offset of the error in source, or -1.
 };
 
 // Internal parser/emitter state. Every emit is bounded; the emitter tracks
@@ -61,19 +61,19 @@ struct TJsxTransformResult {
 class TJsxParser {
   public:
   const CHA* src;
-  ISN src_len;
+  ISC src_len;
   CHA* out;
   IUD out_cap;
-  ISN out_n;
-  ISN pos;
-  ISN elem;
-  ISN err;
-  ISN err_off;
+  ISC out_n;
+  ISC pos;
+  ISC elem;
+  ISC err;
+  ISC err_off;
   const CHA* first_err;
   BOL overflow;
-  ISN depth;
+  ISC depth;
 
-  TJsxParser(const CHA* s, ISN sl, CHA* o, IUD oc)
+  TJsxParser(const CHA* s, ISC sl, CHA* o, IUD oc)
     : src(s), src_len(sl), out(o), out_cap(oc), out_n(0), pos(0), elem(0),
       err(0), err_off(-1), first_err(""), overflow(false), depth(0) {}
 
@@ -83,15 +83,15 @@ class TJsxParser {
     if (out_n + 1 >= out_cap) { overflow = true; return; }
     out[out_n++] = c;
   }
-  void emits(const CHA* s, ISN len) {
+  void emits(const CHA* s, ISC len) {
     if (overflow) return;
-    for (ISN i = 0; i < len; i++) {
+    for (ISC i = 0; i < len; i++) {
       if (out_n + 1 >= out_cap) { overflow = true; return; }
       out[out_n++] = s[i];
     }
   }
   void emit(const CHA* s) {
-    ISN i = 0;
+    ISC i = 0;
     while (s[i]) {
       if (out_n + 1 >= out_cap) { overflow = true; return; }
       out[out_n++] = s[i++];
@@ -99,8 +99,8 @@ class TJsxParser {
   }
   // Emit a C++ string literal body (the bytes between the quotes), escaping
   // for the C++ lexer. The caller emits the surrounding quotes.
-  void emit_lit(const CHA* s, ISN len) {
-    for (ISN i = 0; i < len; i++) {
+  void emit_lit(const CHA* s, ISC len) {
+    for (ISC i = 0; i < len; i++) {
       IUA b = (IUA)s[i];
       switch (b) {
         case '\\': emitc('\\'); emitc('\\'); break;
@@ -122,18 +122,18 @@ class TJsxParser {
       }
     }
   }
-  void indent() { for (ISN i = 0; i < depth; i++) emitc(' '); }
+  void indent() { for (ISC i = 0; i < depth; i++) emitc(' '); }
 
   // Build "el<N>" into buf (capacity >= 16). Returns length (no NUL).
-  ISN var_name(ISN idx, CHA* buf) {
+  ISC var_name(ISC idx, CHA* buf) {
     buf[0] = 'e'; buf[1] = 'l';
-    ISN vi = 2;
+    ISC vi = 2;
     CHA tmp[12];
-    ISN tn = 0;
-    ISN t = idx;
+    ISC tn = 0;
+    ISC t = idx;
     if (t == 0) tmp[tn++] = '0';
     else { while (t > 0) { tmp[tn++] = (CHA)('0' + (t % 10)); t /= 10; } }
-    for (ISN k = tn; k > 0; k--) buf[vi++] = tmp[k - 1];
+    for (ISC k = tn; k > 0; k--) buf[vi++] = tmp[k - 1];
     return vi;  // full numeric ID, no % 10.
   }
 
@@ -161,7 +161,7 @@ class TJsxParser {
 
   // Parse a single element starting at '<'. Returns the element index, or -1
   // on error (err/err_off set). Reserves the index before children.
-  ISN parse_element() {
+  ISC parse_element() {
     skip_ws();
     if (pos >= src_len || src[pos] != '<') { set_err("expected '<'"); return -1; }
     if (depth > 64) { set_err("nesting too deep"); return -1; }
@@ -175,16 +175,16 @@ class TJsxParser {
     }
 
     // Tag name.
-    ISN tag_start = pos;
+    ISC tag_start = pos;
     while (pos < src_len && is_tag_char(src[pos])) pos++;
-    ISN tag_len = pos - tag_start;
+    ISC tag_len = pos - tag_start;
     if (tag_len == 0) { set_err("empty tag"); return -1; }
 
-    ISN my_idx = elem;
+    ISC my_idx = elem;
     elem++;  // reserve before children.
 
     CHA vn[16];
-    ISN vn_len = var_name(my_idx, vn);
+    ISC vn_len = var_name(my_idx, vn);
 
     // Emit: ISC elN = j->AddObject(ISC(65536), ISC(64), ISC(4096));
     indent();
@@ -197,12 +197,12 @@ class TJsxParser {
     emits(vn, vn_len);
     emit(" < 0) return -");
     {
-      ISN code = 2 + my_idx;  // -2, -3, -4, ... unique per node.
-      CHA cb[12]; ISN cn = 0;
-      ISN t = code;
+      ISC code = 2 + my_idx;  // -2, -3, -4, ... unique per node.
+      CHA cb[12]; ISC cn = 0;
+      ISC t = code;
       if (t == 0) cb[cn++] = '0';
       else { while (t > 0) { cb[cn++] = (CHA)('0' + (t % 10)); t /= 10; } }
-      for (ISN k = cn; k > 0; k--) emitc(cb[k - 1]);
+      for (ISC k = cn; k > 0; k--) emitc(cb[k - 1]);
     }
     emit(";\n");
 
@@ -232,9 +232,9 @@ class TJsxParser {
       }
       // Attribute name.
       if (!is_ident_start(src[pos])) { set_err("invalid attribute name"); return -1; }
-      ISN attr_start = pos;
+      ISC attr_start = pos;
       while (pos < src_len && is_ident_char(src[pos])) pos++;
-      ISN attr_len = pos - attr_start;
+      ISC attr_len = pos - attr_start;
       skip_ws();
       if (pos >= src_len || src[pos] != '=') { set_err("expected '=' after attribute"); return -1; }
       pos++;  // skip '='
@@ -243,10 +243,10 @@ class TJsxParser {
       if (src[pos] == '"') {
         // Static string value.
         pos++;  // skip opening quote.
-        ISN val_start = pos;
+        ISC val_start = pos;
         while (pos < src_len && src[pos] != '"') pos++;
         if (pos >= src_len) { set_err("unterminated string value"); return -1; }
-        ISN val_len = pos - val_start;
+        ISC val_len = pos - val_start;
         pos++;  // skip closing quote.
         indent();
         emit("j->SetProp(");
@@ -259,9 +259,9 @@ class TJsxParser {
       } else if (src[pos] == '{') {
         // Dynamic value: {identifier}.
         pos++;  // skip '{'.
-        ISN var_start = pos;
+        ISC var_start = pos;
         while (pos < src_len && is_ident_char(src[pos])) pos++;
-        ISN var_len = pos - var_start;
+        ISC var_len = pos - var_start;
         if (var_len == 0) { set_err("empty binding"); return -1; }
         if (pos >= src_len || src[pos] != '}') {
           set_err("unterminated or non-identifier binding"); return -1;
@@ -291,11 +291,11 @@ class TJsxParser {
         if (pos + 1 < src_len && src[pos + 1] == '/') {
           // Closing tag: must match this element's name.
           pos += 2;  // skip '</'.
-          ISN close_start = pos;
+          ISC close_start = pos;
           while (pos < src_len && is_tag_char(src[pos])) pos++;
-          ISN close_len = pos - close_start;
+          ISC close_len = pos - close_start;
           if (close_len != tag_len) { set_err("mismatched closing tag"); return -1; }
-          for (ISN k = 0; k < tag_len; k++) {
+          for (ISC k = 0; k < tag_len; k++) {
             if (src[close_start + k] != src[tag_start + k]) {
               set_err("mismatched closing tag"); return -1;
             }
@@ -306,7 +306,7 @@ class TJsxParser {
           return my_idx;
         }
         // Nested element.
-        ISN child_idx = parse_element();
+        ISC child_idx = parse_element();
         if (child_idx < 0) return -1;
         indent();
         emit("j->SetChild(");
@@ -314,29 +314,29 @@ class TJsxParser {
         emit(", ");
         {
           CHA cvn[16];
-          ISN cvn_len = var_name(child_idx, cvn);
+          ISC cvn_len = var_name(child_idx, cvn);
           emits(cvn, cvn_len);
         }
         emit(");\n");
       } else {
         // Text run: bytes until the next '<'.
-        ISN text_start = pos;
+        ISC text_start = pos;
         while (pos < src_len && src[pos] != '<') pos++;
-        ISN text_len = pos - text_start;
+        ISC text_len = pos - text_start;
         // Reject '>' in text (the v1 renderer does not HTML-escape).
-        for (ISN k = 0; k < text_len; k++) {
+        for (ISC k = 0; k < text_len; k++) {
           if (src[text_start + k] == '>') { set_err("unexpected '>' in text"); return -1; }
         }
         // Pure-whitespace run: drop it (inter-element gap). Mixed run: keep
         // internal spaces (semantic spaces preserved).
         BOL any_nonws = false;
-        for (ISN k = 0; k < text_len; k++) {
+        for (ISC k = 0; k < text_len; k++) {
           CHA c = src[text_start + k];
           if (c != ' ' && c != '\t' && c != '\n' && c != '\r') { any_nonws = true; break; }
         }
         if (any_nonws) {
           // Trim leading/trailing whitespace of the run but keep internal.
-          ISN ts = text_start, te = text_start + text_len;
+          ISC ts = text_start, te = text_start + text_len;
           while (ts < te && (src[ts] == ' ' || src[ts] == '\t' ||
                  src[ts] == '\n' || src[ts] == '\r')) ts++;
           while (te > ts && (src[te - 1] == ' ' || src[te - 1] == '\t' ||
@@ -365,7 +365,7 @@ class TJsxParser {
 //   -2  source too long (> 65536 bytes).
 //   -3  parse error (out_result->first_error + error_offset).
 //   -4  output buffer overflow.
-inline ISN JsxToCpp(const CHA* source, ISN source_len,
+inline ISC JsxToCpp(const CHA* source, ISC source_len,
                     const CHA* builder_name,
                     CHA* out_buf, IUD out_buf_len,
                     TJsxTransformResult* out_result) {
@@ -373,7 +373,7 @@ inline ISN JsxToCpp(const CHA* source, ISN source_len,
   if (out_buf_len < 256) return -1;
   if (source_len == 0) {
     // NUL-terminated source: compute the length (bounded scan).
-    ISN i = 0;
+    ISC i = 0;
     while (source[i] && i < 65536) i++;
     source_len = i;
   }
@@ -390,9 +390,9 @@ inline ISN JsxToCpp(const CHA* source, ISN source_len,
 
   // Upper-cased builder name for the include guard.
   CHA upper[64];
-  ISN upper_len = 0;
+  ISC upper_len = 0;
   {
-    ISN i = 0;
+    ISC i = 0;
     while (builder_name[i] && upper_len < 63) {
       CHA c = builder_name[i];
       if (c >= 'a' && c <= 'z') c = (CHA)(c - 'a' + 'A');
@@ -422,7 +422,7 @@ inline ISN JsxToCpp(const CHA* source, ISN source_len,
 
   // Parse the single root element.
   p.depth = 2;  // two levels of indent for the body.
-  ISN root_idx = p.parse_element();
+  ISC root_idx = p.parse_element();
   if (root_idx < 0) {
     // No partial code on failure: leave the buffer empty.
     out_buf[0] = 0;
@@ -449,7 +449,7 @@ inline ISN JsxToCpp(const CHA* source, ISN source_len,
   p.emit("*out_root = ");
   {
     CHA rvn[16];
-    ISN rvn_len = p.var_name(root_idx, rvn);
+    ISC rvn_len = p.var_name(root_idx, rvn);
     p.emits(rvn, rvn_len);
   }
   p.emit(";\n");

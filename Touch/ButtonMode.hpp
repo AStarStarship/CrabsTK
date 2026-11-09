@@ -8,16 +8,16 @@
 namespace CTK {
 namespace Touch {
 
-class LIB_MEMBER ButtonMacro;
-class LIB_MEMBER MacroEvent;
-class LIB_MEMBER Device;
-class LIB_MEMBER ControlsPage;
+class ButtonMacro;
+class MacroEvent;
+class Device;
+class ControlsPage;
 
 /* A ModeButton is a ButtonMacro that has the ability to change the Device on a
    ControlSurfaces. A Device button is capable of changing the Device on a
    ControlSurface and triggering a MacroEvent.
 */
-class LIB_MEMBER ModeButton : public Button {
+class ModeButton : public Button {
  public:
   /* Constructor. */
   ModeButton(const CHA* label = "", const MacroEvent& macro = MacroEvent(),

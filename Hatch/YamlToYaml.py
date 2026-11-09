@@ -133,7 +133,7 @@ def _ParseScalar(val):
   if val.lower() in ("true", "false"):
     return val.lower() == "true"
   try:
-    return int(val)
+    return ISC(val)
   except ValueError:
     pass
   return val
@@ -150,7 +150,7 @@ def EmitScalar(val):
     return val
   if isinstance(val, list):
     return "[" + ", ".join(EmitScalar(x) for x in val) + "]"
-  if isinstance(val, bool):
+  if isinstance(val, BOL):
     return "true" if val else "false"
   return str(val)
 
@@ -242,7 +242,7 @@ def DiscoverSeams(module_dir, project, module_name):
   files = sorted(
       [f for f in os.listdir(module_dir)
        if re.match(r"^\d+\..*\.hxx$", f)],
-      key=lambda f: (int(f.split(".")[0]), f))
+      key=lambda f: (ISC(f.split(".")[0]), f))
   if not files:
     return []
   # Must start with a Core file and end with a Release file.

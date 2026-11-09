@@ -7,8 +7,8 @@
 namespace CTK {
 namespace Touch {
 
-class LIB_MEMBER ControlsPage;
-class LIB_MEMBER Controller;
+class ControlsPage;
+class Controller;
 
 /*  The WidgetManager is an editor for templates
 The Template editor has one Template at a time loaded along with one page
@@ -16,9 +16,9 @@ that it is editing.
 
 There is one main global instance of the WidgetManager. Through the GUI, a
 user can edit only one parameter on either ControlLayer through a drop
-down/up menu on either the Top or bottom of the screen. The separation of LIB_MEMBER
+down/up menu on either the Top or bottom of the screen. The separation of
 from GUI allows the GUI to be programmed much easier by simply having them
-wrap the functions to the LIB_MEMBER. Because of this separation, there is not going
+wrap the functions to the. Because of this separation, there is not going
 to be any checking to see if a template has been saved in before applying any
 changes that this classes functions might make.
 
@@ -26,7 +26,7 @@ changes that this classes functions might make.
 The data for the Template file will be in the same order as the data
 declarations in this object followed by a packed array of the ControlsPage.
 */
-class LIB_MEMBER WidgetManager {
+class WidgetManager {
  public:
   /* Default constructor. */
   WidgetManager(Controller* controller = nullptr);

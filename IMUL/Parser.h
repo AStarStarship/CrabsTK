@@ -63,7 +63,7 @@ enum {
 @endcode
 line/column are 1-based; column counts bytes from the line start. */
 struct TImulSpan {
-  ISN byte_start,
+  ISC byte_start,
       byte_end,
       line,
       column;
@@ -74,10 +74,10 @@ struct TImulCorrection {
   TImulSpan span;         //< The original correction span (both operands).
   IUD has_left;
   const CHA* left;
-  ISN left_len;
+  ISC left_len;
   IUD has_right;
   const CHA* right;
-  ISN right_len;
+  ISC right_len;
 };
 
 /* A mapping operand (kind, original text, comparison key). */
@@ -85,10 +85,10 @@ struct TImulMapNode {
   IUD kind;             //< IMUL_NODE_IDENTIFIER or IMUL_NODE_LITERAL.
   IUD has_text;
   const CHA* text;      //< Original operand text.
-  ISN text_len;
+  ISC text_len;
   IUD has_key;
   const CHA* key;       //< Identifier comparison key (identifiers only).
-  ISN key_len;
+  ISC key_len;
 };
 
 /* One mapping record (source-backed edge). */
@@ -135,11 +135,11 @@ struct TImulEvent {
   IUD resolution;        //< IMUL_RES_* code.
   IUD has_display;       //< 1 when display_text is set.
   const CHA* display_text;
-  ISN display_len;
+  ISC display_len;
   // Note payloads:
   IUD has_corrections;
   const TImulCorrection* corrections;
-  ISN correction_count;
+  ISC correction_count;
   // Mapping payloads:
   IUD has_mapping;
   TImulMapping mapping;
@@ -147,10 +147,10 @@ struct TImulEvent {
 
 /* A closed session row (start/stop pairs committed in source order). */
 struct TImulSession {
-  ISN session_id;
+  ISC session_id;
   IUD has_label;
   const CHA* label;
-  ISN label_len;
+  ISC label_len;
   IUD has_repo;
   const CHA* repository;
   IUD has_issue;
@@ -174,7 +174,7 @@ struct TImulCase {
 The caller owns all storage the result arrays point at. */
 struct TImulResult {
   IUD status;            //< 0 valid, 1 has errors, 2 limit exceeded.
-  ISN event_count,
+  ISC event_count,
       session_count,
       mapping_count,
       error_count,
@@ -202,7 +202,7 @@ struct TImulLimits {
 struct TImulWorkspace {
   const CHA* text;    //< Original manifest bytes (null = no manifest).
   IUD text_len;
-  ISN binding_count;  //< Filled by ImulParseWorkspace.
+  ISC binding_count;  //< Filled by ImulParseWorkspace.
 };
 
 /* Caller-owned compile storage. All array pointers may be null only when
@@ -210,22 +210,22 @@ the matching capacity is zero. ImulCompile fills result's arrays with
 pointers into this storage. */
 struct TImulStorage {
   TImulEvent* events;
-  ISN event_capacity;
+  ISC event_capacity;
   TImulSession* sessions;
-  ISN session_capacity;
+  ISC session_capacity;
   TImulMapping* mappings;
-  ISN mapping_capacity;
+  ISC mapping_capacity;
   TImulDiagnostic* diagnostics;
-  ISN diagnostic_capacity;
+  ISC diagnostic_capacity;
   TImulCorrection* corrections;
-  ISN correction_capacity;
+  ISC correction_capacity;
   CHA* display_text;        //< projection buffer for corrected display text.
-  ISN display_capacity;
+  ISC display_capacity;
 };
 
 /* Parses a workspace manifest into its bindings (bounded by limits).
 @return 0 valid, 1 invalid manifest. */
-ISN ImulParseWorkspace(TImulWorkspace* workspace, TImulLimits* limits,
+ISC ImulParseWorkspace(TImulWorkspace* workspace, TImulLimits* limits,
                        TImulStorage* storage, TImulResult* result);
 
 /* Compiles verified IMUL text into the caller-owned records of storage.
@@ -233,7 +233,7 @@ The source bytes are preserved untouched; records point into them.
 Each document starts with empty clock/target/session state.
 @return 0 success, 1 invalid document (diagnostics recorded),
         2 limit/encoding failure. No allocation, no host clock, no I/O. */
-ISN ImulCompile(const CHA* source, IUD source_len, TImulWorkspace* workspace,
+ISC ImulCompile(const CHA* source, IUD source_len, TImulWorkspace* workspace,
                 TImulLimits* limits, TImulStorage* storage,
                 TImulResult* result);
 
