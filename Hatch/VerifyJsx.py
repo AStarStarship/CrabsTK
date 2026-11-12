@@ -100,7 +100,7 @@ HARNESS_SRC = textwrap.dedent(
     // the runner can compare generated-C++ output against direct tree building.
     static ISC do_direct() {
       static IUA buf[1 << 22];
-      TJsx<ISC, ISC, DTB, CHR, CHR, IUN> j;
+      TJsx<ISC, ISC, DTB, CHR, CHR, IUC> j;
       j.Init(buf, ISC(1 << 22), ISC(1 << 16));
       ISC ctx = j.NewContext(ISC(16));
       j.SetVar(ctx, "name", "Captain");

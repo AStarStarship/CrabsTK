@@ -6,10 +6,10 @@ CppToAscii.py — convert C/C++ sources to ASCIICrabs/CrabsTK (Chimera+ style).
 Layers (applied in order, longest-first, word-boundary safe):
   1. #include directives are masked so header filenames are never clobbered.
   2. std POD types -> ASCIICrabs width codes (ISC/IUC/ISB/IUB/ISA/IUA/ISD/IUD,
-     CHA/CHB/CHC, FPC/FPD, BOL, ISC/IUN, ISW/IUW).
+     CHA/CHB/CHC, FPC/FPD, BOL, ISC/IUC, ISW/IUW).
      - size_t is deliberately NOT converted: it is a platform type that
        operator new / memcpy / sizeof / pointer-width casts depend on, and on
-       a 64-bit host size_t is 8 bytes while IUN (unsigned int) is 4.
+       a 64-bit host size_t is 8 bytes while IUC (unsigned int) is 4.
   3. STL containers -> ASCIICrabs containers (best-effort, type-position only):
        std::vector<T>     -> AArray<T>
        std::list<T>       -> AList<T>
@@ -105,7 +105,7 @@ HEADERS = [
 # the first #include so every converted TU resolves ISC/FPC/etc.
 PREAMBLE = (
     "\n// ASCIICrabs foundation: width codes (ISC/IUC/ISB/IUB/ISA/IUA/ISD/IUD,\n"
-    "// CHA/CHB/CHC, FPC/FPD, BOL, ISC/IUN, ISW/IUW) used throughout this file.\n"
+    "// CHA/CHB/CHC, FPC/FPD, BOL, ISC/IUC, ISW/IUW) used throughout this file.\n"
     "#include <ASCIICrabs/_ConfigHeader.h>\n"
     "#include <ASCIICrabs/_ConfigDefault.h>\n"
     "#include <ASCIICrabs/_ConfigFooter.h>\n"

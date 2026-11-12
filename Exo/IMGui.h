@@ -4,7 +4,7 @@
 #define _CrabsTKGUIImageGuiH
 #include "Window.h"
 namespace CTK {
-namespace GUI {
+namespace Exo {
 
 /* Intermediate Mode Graphical User Interface ASCIICrabs style.
 Owns the ImGui context and its two backends (SDL3, OpenGL3). Call Init
@@ -32,6 +32,6 @@ class IMGui {
   BOL ready_;
 };
 
-}       //< namespace GUI
+}       //< namespace Exo
 }       //< namespace CTK
 #endif  //< _CrabsTKGUIImageGuiH

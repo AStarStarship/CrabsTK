@@ -6,7 +6,7 @@
 #include "../Exo/Image.h"
 
 namespace CTK {
-namespace GUI {
+namespace Exo {
 
 /* A CPU raster target. Mirrors the AWindow/ATexture frame discipline
  * (BeginFrame -> draw -> EndFrame) without any GL. The canvas is an AImage:
@@ -44,6 +44,6 @@ class ARenderTarget {
   CTK::Exo::VColor bg_;
 };
 
-}  //< namespace GUI
+}  //< namespace Exo
 }  //< namespace CTK
 #endif  //< _CrabsTKGUIImageRenderTargetH

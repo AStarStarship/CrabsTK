@@ -5,7 +5,7 @@
 #include "imgui_impl_sdl3.h"
 #include "imgui_impl_opengl3.h"
 namespace CTK {
-namespace GUI {
+namespace Exo {
 using namespace ::_;
 
 BOL IMGui::ready_ = false;
@@ -46,5 +46,5 @@ void IMGui::Render(AWindow& window) {
 
 BOL IMGui::Ready() { return ready_; }
 
-}  //< namespace GUI
+}  //< namespace Exo
 }  //< namespace CTK

@@ -61,8 +61,8 @@ BOL AImage::Resize(ISC width, ISC height, PixelFormat format) {
     ISC row_bytes = (old_stride < new_stride) ? old_stride : new_stride;
     ISC rows = (view_.height < height) ? view_.height : height;
     for (ISC y = 0; y < rows; ++y)
-      ArrayCopy(pixels + (IUN)y * (IUN)new_stride, row_bytes,
-                view_.data + (IUN)y * (IUN)old_stride, row_bytes);
+      ArrayCopy(pixels + (IUC)y * (IUC)new_stride, row_bytes,
+                view_.data + (IUC)y * (IUC)old_stride, row_bytes);
     factory(ajt_.origin, RAMFactoryDelete);
   }
 

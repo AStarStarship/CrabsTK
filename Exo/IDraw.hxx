@@ -4,8 +4,8 @@
 namespace CTK {
 namespace Exo {
 
-IUN PackColor(const VColor& c) {
-  return (IUN)c.a | ((IUN)c.b << 8) | ((IUN)c.g << 16) | ((IUN)c.r << 24);
+IUC PackColor(const VColor& c) {
+  return (IUC)c.a | ((IUC)c.b << 8) | ((IUC)c.g << 16) | ((IUC)c.r << 24);
 }
 
 /* Alpha blend the source color over the destination pixel. */
@@ -28,10 +28,10 @@ void BlendPixel(CImage& img, ISC x, ISC y, const VColor& src) {
   }
   if (sa == 0 || da == 0) return;
   // Standard "over" blend, integer math.
-  IUA oa = (IUA)(sa + da - (IUN)sa * da / 255);
-  IUA nr = (IUA)(((IUN)src.r * sa + (IUN)dr * da * (255 - sa)) / oa);
-  IUA ng = (IUA)(((IUN)src.g * sa + (IUN)dg * da * (255 - sa)) / oa);
-  IUA nb = (IUA)(((IUN)src.b * sa + (IUN)db * da * (255 - sa)) / oa);
+  IUA oa = IUA(sa + da - IUC(sa) * da / 255);
+  IUA nr = IUA((IUC(src.r) * sa + IUC(dr) * da * (255 - sa)) / oa);
+  IUA ng = IUA((IUC(src.g) * sa + IUC(dg) * da * (255 - sa)) / oa);
+  IUA nb = IUA((IUC(src.b) * sa + IUC(db) * da * (255 - sa)) / oa);
   img.data[idx] = nr;
   img.data[idx + 1] = ng;
   img.data[idx + 2] = nb;
@@ -40,8 +40,8 @@ void BlendPixel(CImage& img, ISC x, ISC y, const VColor& src) {
 
 void Fill(CImage& img, const VColor& c) {
   if (img.data == nullptr || img.format != PixelFormat::RGBA8) return;
-  IUN px = (IUN)img.width * (IUN)img.height;
-  for (IUN i = 0; i < px; ++i) {
+  IUC px = (IUC)img.width * (IUC)img.height;
+  for (IUC i = 0; i < px; ++i) {
     img.data[i * 4] = c.r;
     img.data[i * 4 + 1] = c.g;
     img.data[i * 4 + 2] = c.b;
@@ -51,9 +51,9 @@ void Fill(CImage& img, const VColor& c) {
 
 void Clear(CImage& img) {
   if (img.data == nullptr) return;
-  IUN px = (IUN)img.width * (IUN)img.height;
-  IUN bytes = px * 4;
-  for (IUN i = 0; i < bytes; ++i) img.data[i] = 0;
+  IUC px = IUC(img.width) * IUC(img.height);
+  IUC bytes = px * 4;
+  for (IUC i = 0; i < bytes; ++i) img.data[i] = 0;
 }
 
 void PutPixel(CImage& img, ISC x, ISC y, const VColor& c) {
@@ -121,7 +121,7 @@ void FillCircle(CImage& img, ISC cx, ISC cy, ISC r, const VColor& c) {
   }
 }
 
-BOL ClipRect(CImage& img, TRect* r) {
+BOL ClipRect(CImage& img, RectangleISC* r) {
   if (r == nullptr) return false;
   if (r->x0 < 0) r->x0 = 0;
   if (r->y0 < 0) r->y0 = 0;

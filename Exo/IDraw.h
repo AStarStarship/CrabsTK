@@ -1,7 +1,7 @@
 // Copyright AStarship <https://astarship.net>.
 #pragma once
-#ifndef CRABSTK_IMAGE_IDRAWH
-#define CRABSTK_IMAGE_IDRAWH
+#ifndef CrabsTKExoIDrawH
+#define CrabsTKExoIDrawH
 #include "Image.h"
 namespace CTK {
 namespace Exo {
@@ -39,7 +39,7 @@ inline const VColor ISteel = VColor{70, 130, 180, 255};
 inline const VColor ITransparent = VColor{0, 0, 0, 0};
 
 /* Pack a color to a little-endian RGBA pixel (A|B<<8|G<<16|R<<24). */
-IUN PackColor(const VColor& c);
+IUC PackColor(const VColor& c);
 
 /* Fill the whole image with a solid color. */
 void Fill(CImage& img, const VColor& c);
@@ -61,7 +61,7 @@ void FillRect(CImage& img, ISC x0, ISC y0, ISC x1, ISC y1, const VColor& c);
 void FillCircle(CImage& img, ISC cx, ISC cy, ISC r, const VColor& c);
 
 /* Bounding box of an axis-aligned rectangle (for clip math). */
-struct TRect {
+struct RectangleISC {
   ISC x0;
   ISC y0;
   ISC x1;
@@ -69,8 +69,8 @@ struct TRect {
 };
 
 /* Clip a rectangle against the image bounds. Returns false if empty. */
-BOL ClipRect(CImage& img, TRect* r);
+BOL ClipRect(CImage& img, RectangleISC* r);
 
-}  //< namespace Exo
-}  //< namespace CTK
-#endif
+}       //< namespace Exo
+}       //< namespace CTK
+#endif  //< CrabsTKExoIDrawH

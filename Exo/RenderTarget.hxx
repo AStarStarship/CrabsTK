@@ -4,7 +4,7 @@
 #include <ASCIICrabs/Array.hxx>  // ArrayCopy / ArrayFill definitions
 
 namespace CTK {
-namespace GUI {
+namespace Exo {
 
 ARenderTarget::ARenderTarget(ISC width, ISC height, Exo::VColor bg)
     : width_(width),
@@ -38,10 +38,10 @@ void ARenderTarget::Blit(Exo::CImage& src, ISC px, ISC py) {
     if (x1 > dst.width) x1 = dst.width;
     if (x1 <= x0) continue;
     ISC run = (x1 - x0) * pixel_bytes;
-    ::_::ArrayCopy(dst.data + (IUN)dy * (IUN)dst_stride + (IUN)x0 * (IUN)pixel_bytes,
+    ::_::ArrayCopy(dst.data + (IUC)dy * (IUC)dst_stride + (IUC)x0 * (IUC)pixel_bytes,
               run,
-              src.data + (IUN)y * (IUN)src_stride + (IUN)(x0 - px) *
-                  (IUN)pixel_bytes,
+              src.data + (IUC)y * (IUC)src_stride + (IUC)(x0 - px) *
+                  (IUC)pixel_bytes,
               run);
   }
 }
@@ -50,5 +50,5 @@ void ARenderTarget::FillRect(ISC x0, ISC y0, ISC x1, ISC y1, Exo::VColor c) {
   Exo::FillRect(canvas_.View(), x0, y0, x1, y1, c);
 }
 
-}  //< namespace GUI
+}  //< namespace Exo
 }  //< namespace CTK

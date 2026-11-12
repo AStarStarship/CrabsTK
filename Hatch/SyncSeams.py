@@ -70,7 +70,7 @@ def ScanSeams(project_dir):
     for f in sorted(os.listdir(mod_path)):
       m = re.match(r"^(\d{2})\.(\w+)\.hxx$", f)
       if m:
-        files.append((ISC(m.group(1)), m.group(2), f))
+        files.append((int(m.group(1)), m.group(2), f))
     if not files:
       continue
     files.sort()
@@ -216,7 +216,7 @@ def _ParseScalar(val):
     return val.lower() == "true"
   # Integer.
   try:
-    return ISC(val)
+    return int(val)
   except ValueError:
     pass
   return val
@@ -724,10 +724,9 @@ def GenerateCrabstkCMakeLists(project, module_info, release_module):
     "# One .cpp = one binary. The main entry is _Seams.cpp (this directory);",
     "# each module also gets a standalone binary from <Mod>/_Seams.cpp.",
   ]
-  get_root = 'get_filename_component (CRABSTK_ROOT "${CMAKE_CURRENT_SOURCE_DIR}/.." ABSOLUTE)'
-  get_parent = 'get_filename_component (CRABSTK_PARENT "${CRABSTK_ROOT}/.." ABSOLUTE)'
-  lines.append(get_root)
-  lines.append(get_parent)
+  # Include roots are spelled relative to this directory so the build carries
+  # no absolute path and no resolved cache variable: ../.. is the checkout
+  # parent, which is where the ASCIICrabs sibling lives.
   lines.append("")
 
   # Main binary: _Seams/_Seams.cpp -> build/generated/_Seams.cpp wrapper.
@@ -739,9 +738,9 @@ def GenerateCrabstkCMakeLists(project, module_info, release_module):
   lines.append('add_executable(CrabsTK "${CMAKE_BINARY_DIR}/generated/_Seams.cpp")')
   lines.append('target_include_directories(CrabsTK PRIVATE')
   lines.append('  "${CMAKE_CURRENT_SOURCE_DIR}"')
-  lines.append('  "${CRABSTK_ROOT}"')
-  lines.append('  "${CRABSTK_PARENT}/ASCIICrabs"')
-  lines.append('  "${CRABSTK_PARENT}"')
+  lines.append('  "${CMAKE_CURRENT_SOURCE_DIR}/.."')
+  lines.append('  "${CMAKE_CURRENT_SOURCE_DIR}/../../ASCIICrabs"')
+  lines.append('  "${CMAKE_CURRENT_SOURCE_DIR}/../.."')
   lines.append(")")
   lines.append("set_target_properties(CrabsTK PROPERTIES")
   lines.append("  CXX_STANDARD 23")
@@ -766,9 +765,9 @@ def GenerateCrabstkCMakeLists(project, module_info, release_module):
     lines.append(f'target_include_directories({target} PRIVATE')
     lines.append(f'  "${{CMAKE_CURRENT_SOURCE_DIR}}/{name}"')
     lines.append(f'  "${{CMAKE_CURRENT_SOURCE_DIR}}"')
-    lines.append(f'  "${{CRABSTK_ROOT}}"')
-    lines.append(f'  "${{CRABSTK_PARENT}}/ASCIICrabs"')
-    lines.append(f'  "${{CRABSTK_PARENT}}"')
+    lines.append(f'  "${{CMAKE_CURRENT_SOURCE_DIR}}/.."')
+    lines.append(f'  "${{CMAKE_CURRENT_SOURCE_DIR}}/../../ASCIICrabs"')
+    lines.append(f'  "${{CMAKE_CURRENT_SOURCE_DIR}}/../.."')
     lines.append(")")
     lines.append(f"set_target_properties({target} PROPERTIES")
     lines.append("  CXX_STANDARD 23")
@@ -908,7 +907,7 @@ def SyncCrabstk(project_dir, data, mode, output_dir=None):
         "name": name,
         "folder": folder,
         "seams": ordered_m,
-        "dormant": BOL(m.get("dormant")),
+        "dormant": bool(m.get("dormant")),
         "mdata": mdata,
     })
 
@@ -1031,7 +1030,7 @@ def SyncModules(project_dir, data, mode):
         "name": name,
         "folder": folder,
         "seams": ordered_m,
-        "dormant": BOL(m.get("dormant")),
+        "dormant": bool(m.get("dormant")),
         "mdata": mdata,
     })
 
@@ -1449,7 +1448,7 @@ def SyncIgeek(project_dir, data, mode):
   # top of. iGeek = 23 (CRABS_* is 1..23). Read from the ASCIICrabs seam
   # table (the one the project's _Seams.h includes) so the iGeek block starts
   # at base+1, not 1. Fall back to the data's base_offset, else 0.
-  base_offset = ISC(data.get("base_offset", 0))
+  base_offset = int(data.get("base_offset", 0))
   if base_offset == 0:
     # Read from _Seams.cpp first (the new self-contained TU), fall back to
     # _Seams.h (the legacy separate header).
@@ -1460,7 +1459,7 @@ def SyncIgeek(project_dir, data, mode):
         with open(asc_seams) as _f:
           _crabs = _re.findall(r"#define\s+CRABS_[A-Z0-9_]+\s+(\d+)", _f.read())
           if _crabs:
-            base_offset = max(ISC(x) for x in _crabs)
+            base_offset = max(int(x) for x in _crabs)
             break
 
   # Build the global all_seams + module_info (same logic as SyncModules, but
@@ -1498,7 +1497,7 @@ def SyncIgeek(project_dir, data, mode):
         "name": name,
         "folder": folder,
         "seams": ordered_m,
-        "dormant": BOL(m.get("dormant")),
+        "dormant": bool(m.get("dormant")),
         "mdata": mdata,
     })
 

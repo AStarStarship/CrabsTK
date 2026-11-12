@@ -1,4 +1,5 @@
 // Copyright AStarship <https://astarship.net>.
+#pragma once
 #include "Plot.h"
 namespace CTK {
 namespace Plot {
@@ -51,11 +52,13 @@ void AutoFit(Axis& ax, const Series2D& s) {
 
 // Figure
 Figure::Figure(ISC width, ISC height, VColor bg)
-    : Width_(width), Height_(height), canvas_{nullptr, width, height} {
-  canvas_.format = Exo::PixelFormat::RGBA8;
-  canvas_.data = new IUA[(IUN)width * (IUN)height * 4]();
+    : Width_(width), Height_(height),
+      owned_(width, height, Exo::PixelFormat::RGBA8), canvas_(owned_.View()) {
   Exo::Fill(canvas_, bg);
 }
+
+Figure::Figure(const CImage& canvas)
+    : Width_(canvas.width), Height_(canvas.height), canvas_(canvas) {}
 
 ISC Figure::AddAxis(FPD fx0, FPD fy0, FPD fx1, FPD fy1) {
   if (axis_count_ >= kMaxAxes) return -1;
@@ -547,10 +550,10 @@ PlotStatus PlotSurf(Figure& fig, Axis& ax, const FPD* grid, ISC nx, ISC ny,
       Project3(ax, xn, yn, z, &px, &py, &d);
       ISC sx = ax.X0() + (ISC)((px * 0.5f + 0.5f) * (ax.X1() - ax.X0()));
       ISC sy = ax.Y0() + (ISC)((py * 0.5f + 0.5f) * (ax.Y1() - ax.Y0()));
-      IUB shade = (IUB)(64 + (IUN)((z - zmin) / (zmax - zmin) * 128.0f));
-      IUB cr = (IUB)((IUN)color.r * (IUN)shade / 255);
-      IUB cg = (IUB)((IUN)color.g * (IUN)shade / 255);
-      IUB cb = (IUB)((IUN)color.b * (IUN)shade / 255);
+      IUB shade = (IUB)(64 + (IUC)((z - zmin) / (zmax - zmin) * 128.0f));
+      IUB cr = (IUB)((IUC)color.r * (IUC)shade / 255);
+      IUB cg = (IUB)((IUC)color.g * (IUC)shade / 255);
+      IUB cb = (IUB)((IUC)color.b * (IUC)shade / 255);
       VColor c{cr, cg, cb, 255};
       Exo::FillRect(cv, sx - 1, sy - 1, sx + 1, sy + 1, c);
     }

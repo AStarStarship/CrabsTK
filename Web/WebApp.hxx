@@ -185,7 +185,7 @@ struct TCrowApp {
   ISC port;
   in_addr_t bind_addr;  //< Bind address (default INADDR_LOOPBACK).
   // JSX engine (shared across requests).
-  TJsx<ISC, ISC, DTB, CHR, CHR, IUN>* jsx;
+  TJsx<ISC, ISC, DTB, CHR, CHR, IUC>* jsx;
   ISC ctx;  //< Shared context.
 
   TCrowApp() : route_count(0), port(18080), bind_addr(INADDR_LOOPBACK),
@@ -215,7 +215,7 @@ struct TCrowApp {
   TCrowApp& Port(ISC p) { port = p; return *this; }
 
   // Set the JSX engine + context.
-  TCrowApp& Jsx(TJsx<ISC, ISC, DTB, CHR, CHR, IUN>* j, ISC c) {
+  TCrowApp& Jsx(TJsx<ISC, ISC, DTB, CHR, CHR, IUC>* j, ISC c) {
     jsx = j; ctx = c; return *this;
   }
 

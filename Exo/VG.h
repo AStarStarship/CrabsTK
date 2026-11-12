@@ -6,6 +6,8 @@
 #include <ASCIICrabs/_ConfigDefault.h>
 #include <ASCIICrabs/_ConfigFooter.h>
 #include <ASCIICrabs/Binary.hpp>
+#include <ASCIICrabs/Room.hpp>
+#include "FontStash.h"
 
 namespace CTK {
 namespace Exo {
@@ -322,15 +324,21 @@ void ExoFontFaceId(RenderContext* context, ISC font);
 
 void ExoFontFace(RenderContext* context, const CHR* font);
 
-FPC ExoText(RenderContext* context, FPC x, FPC y, const CHR* string, const CHR* end);
+FPC ExoText(RenderContext* context, FPC x, FPC y, const CHR* string, 
+  const CHR* end);
 
-void ExoTextBox(RenderContext* context, FPC x, FPC y, FPC breakRowWidth, const CHR* string, const CHR* end);
+void ExoTextBox(RenderContext* context, FPC x, FPC y, FPC breakRowWidth, 
+  const CHR* string, const CHR* end);
 
-FPC ExoTextBounds(RenderContext* context, FPC x, FPC y, const CHR* string, const CHR* end, FPC* bounds);
+FPC ExoTextBounds(RenderContext* context, FPC x, FPC y, const CHR* string, 
+  const CHR* end, FPC* bounds);
 
-void ExoTextBoxBounds(RenderContext* context, FPC x, FPC y, FPC breakRowWidth, const CHR* string, const CHR* end, FPC* bounds);
+void ExoTextBoxBounds(RenderContext* context, FPC x, FPC y, FPC breakRowWidth, 
+  const CHR* string, const CHR* end, FPC* bounds);
 
-ISC ExoTextGlyphPositions(RenderContext* context, FPC x, FPC y, const CHR* string, const CHR* end, GlyphPosition* positions, ISC maxPositions);
+ISC ExoTextGlyphPositions(RenderContext* context, FPC x, FPC y,
+  const CHR* string, const CHR* end, GlyphPosition* positions, ISC 
+  max_positions);
 
 void ExoTextMetrics(RenderContext* context, FPC* ascender, FPC* descender, FPC* lineh);
 
@@ -389,7 +397,52 @@ struct RenderParams {
   void (*renderDelete)(void* uptr);
 };
 
-RenderContext* ExoCreateInternal(RenderParams* params);
+/* What the renderer carves out of the Room Wall at creation. Every field is a
+count, not a byte size: the renderer multiplies by the element size, so a
+caller picks capacities in the units it draws in. Growth copies into another
+Wall block; superseded blocks remain reserved until the Wall is reset.
+Budget the atlas, font cache, initial arrays and growth copies in bytes and
+block slots. ExoWallBlocks covers initial allocation only. */
+struct RenderConfig {
+  ISC commands;      //< path command floats, four per line segment.
+  ISC points;        //< path points across all paths in the cache.
+  ISC paths;         //< sub paths (a MoveTo starts one) in the cache.
+  ISC verts;         //< scratch vertices a fill or a stroke expands into.
+  ISC atlas_start;   //< glyph atlas edge the cache starts at.
+  ISC atlas_max;     //< largest glyph atlas edge the cache may grow to.
+  ISC fonts;         //< fonts the stash can hold.
+  ISC glyphs;        //< glyph tiles per font.
+};
+
+/* Generous enough for a dense UI frame: 4096 command floats is about a
+thousand segments, 2048 points and 128 sub paths is a busy icon sheet, and
+8192 vertices is a stroke-heavy frame. The atlas starts at 512 and may grow
+to 1024, which is 1 MiB of Wall for the atlas alone. */
+constexpr RenderConfig RenderConfigDefault = {
+  4096, 2048, 128, 8192, 512, 1024, 4, 512,
+};
+
+/* Blocks a Wall needs to hold a renderer with a cache of `fonts` fonts: the
+context, the command array, the point, path and vertex tables, the cache
+object itself, and the shared FontStash blocks. Reserve extra slots for growth
+and any backend allocations. */
+constexpr ISC ExoWallBlocks(ISC fonts = RenderConfigDefault.fonts) {
+  return 6 + StashWallBlocks(fonts);
+}
+
+/* Smallest Wall that holds RenderConfigDefault, rounded up so a caller can
+pass it straight to TWallInit. */
+constexpr ISW ExoWallBytesMin = ISW(2) << 20;
+
+/* Builds a renderer over `params`. `wall` is the Room Wall its state lives in
+and must outlive it; it has to be initialized with at least
+ExoWallBlocks(config.fonts) block slots. Returns nil when the Wall cannot hold
+the state or the backend cannot create its context. */
+RenderContext* ExoCreateInternal(RenderParams* params, _::TWall<>* wall,
+                                 RenderConfig config = RenderConfigDefault);
+
+/* Shuts the renderer and its backend down. The Wall is the caller's, so the
+blocks go back when the caller resets or drops it. */
 void ExoDeleteInternal(RenderContext* context);
 
 RenderParams* ExoInternalParams(RenderContext* context);

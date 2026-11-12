@@ -1,23 +1,12 @@
-// Copyright AStarship <https://astarship.net>.
 #pragma once
-/* Exo NanoVG — the vector-graphics core.
-
-Vendor scaffolding is gone: no stb image loader, no MSVC pragmas. The geometry
-math comes from ASCIICrabs/Math.hxx (FPD kernels), so no libm is used here.
-The only remaining <math.h> users are the font decoder (fontstash.h and
-imstb_truetype.h), which is the one sanctioned stb component. */
 #include "VG.h"
 #include <ASCIICrabs/Math.hxx>
 #include <ASCIICrabs/Array.hxx>
-#include <ASCIICrabs/Autoject.hxx>
-#define FONTSTASH_IMPLEMENTATION
-#include "fontstash.h"
+#include <ASCIICrabs/Room.hpp>
+#include "FontStash.hxx"
 namespace CTK {
 namespace Exo {
 
-#define _FontImageSizeInit 512
-#define _FontImageSizeMax  2048
-#define _FontImagesMax     4
 #define _CommandsSizeInit  256
 #define _PointsSizeInit    128
 #define _PathsSizeInit     16
@@ -82,48 +71,61 @@ struct PathCache {
   FPC bounds[4];
 };
 
+/* One block type for everything the renderer carves out of the Wall: an IUD
+aligned payload covers the context, the command floats, the path tables, the
+vertex scratch and the font cache alike. */
+enum : DTB { ExoBlockType = _::_IUD };
+
+/* The List parameter set a Wall is built on: ISS, ISR, DTB. */
+typedef _::TList<ISS, ISR, DTB> ExoList;
+
+/* The vertex scratch outlives a single path: RenderPath::fill and
+RenderPath::stroke point into it until the frame is drawn. */
 struct RenderContext {
   RenderParams params;
+  _::TWall<>* wall_;       //< the Room Wall every block below came from.
   FPC* commands;
   ISC ccommands;
   ISC ncommands;
   FPC commandx, commandy;
   RenderState states[RenderStateCount];
   ISC nstates;
-  PathCache* cache;
+  PathCache cache;         //< points, paths and the vertex scratch.
   FPC tess_tol;
   FPC distance_tol;
   FPC fringe_width;
   FPC device_pixel_ratio;
-  FONScontext* fs;
-  ISC font_images[_FontImagesMax];
-  ISC font_image_index;
+  FontStash* fs;           //< glyph atlas and text layout, in the same Wall.
+  ISC font_image;          //< backend texture the atlas is uploaded to.
+  ISC atlas_max;           //< largest atlas edge the cache was started with.
   ISC draw_call_count;
   ISC fill_tri_count;
   ISC stroke_tri_count;
   ISC text_tri_count;
 };
 
-/* Vector-layer allocation via the ASCIICrabs RAMFactory. No in-place grow, so
-  realloc allocs the bigger block, copies the old_bytes live, frees the old; a
-  failed grow keeps the original. old_bytes is the live size to preserve. */
-void* Exo__alloc(ISW bytes) {
-  if (bytes <= 0) return _NilP;
-  return _::ObjectFactoryHeap(_NilP, bytes);
+/* Reserves one block in the Room Wall and hands back its payload.
+A Wall hands out whole blocks and never takes one back, so a grow below is an
+allocate and a copy and the old block stays dead until the Wall is reset. */
+void* Exo__alloc(_::TWall<>* wall, ISW bytes) {
+  if (wall == _NilP || bytes <= 0) return _NilP;
+  ExoList* root = _::TWallRoot<>(wall);
+  if (root == _NilP) return _NilP;
+  ISR index = _::TListAlloc<ISS, ISR, DTB>(root, DTB(ExoBlockType),
+                                          ISS(bytes));
+  if (index < 0) return _NilP;
+  return _::TListValue<ISS, ISR, DTB>(root, index);
 }
 
-void Exo__free(void* origin) {
-  if (origin != _NilP) _::ObjectFactoryHeap((IUW*)origin, 0);
-}
-
-void* Exo__realloc(void* origin, ISW old_bytes, ISW new_bytes) {
-  if (origin == _NilP) return Exo__alloc(new_bytes);
-  if (new_bytes <= 0) { Exo__free(origin); return _NilP; }
+/* Copies into a larger Wall block. Failure leaves the original untouched
+and returns nil so callers retain their original pointer and capacity. */
+void* Exo__realloc(_::TWall<>* wall, void* origin, ISW old_bytes,
+                   ISW new_bytes) {
+  if (origin == _NilP) return Exo__alloc(wall, new_bytes);
   if (new_bytes <= old_bytes) return origin;
-  void* grown = Exo__alloc(new_bytes);
-  if (grown == _NilP) return origin;
+  void* grown = Exo__alloc(wall, new_bytes);
+  if (grown == _NilP) return _NilP;
   _::ArrayCopy(grown, new_bytes, origin, old_bytes);
-  Exo__free(origin);
   return grown;
 }
 
@@ -164,33 +166,25 @@ FPC Normalize(FPC *x, FPC* y) {
   }
   return d;
 }
-void Exo__deletePathCache(PathCache* c) {
-  if (c == nullptr) return;
-  if (c->points != nullptr) Exo__free(c->points);
-  if (c->paths != nullptr) Exo__free(c->paths);
-  if (c->verts != nullptr) Exo__free(c->verts);
-  Exo__free(c);
-}
-PathCache* Exo__allocPathCache(void) {
-  PathCache* c = (PathCache*)Exo__alloc(sizeof(PathCache));
-  if (c == nullptr) goto error;
-  _::ArrayFill(c, sizeof(PathCache));
-  c->points = (Point2DFPC*)Exo__alloc(sizeof(Point2DFPC)*_PointsSizeInit);
-  if (!c->points) goto error;
-  c->npoints = 0;
-  c->cpoints = _PointsSizeInit;
-  c->paths = (RenderPath*)Exo__alloc(sizeof(RenderPath)*_PathsSizeInit);
-  if (!c->paths) goto error;
-  c->npaths = 0;
-  c->cpaths = _PathsSizeInit;
-  c->verts = (VertexFPC*)Exo__alloc(sizeof(VertexFPC)*_VertexsSizeInit);
-  if (!c->verts) goto error;
-  c->nverts = 0;
-  c->cverts = _VertexsSizeInit;
-  return c;
-error:
-  Exo__deletePathCache(c);
-  return nullptr;
+/* Carves the points, the paths and the vertex scratch out of the Wall at
+their configured capacities. Nothing here grows at run time unless the scene
+outruns them, and then the grow is one more block. */
+BOL Exo__initPathCache(RenderContext* context, RenderConfig config) {
+  PathCache* cache = &context->cache;
+  _::ArrayFill(cache, sizeof(PathCache));
+  cache->points = (Point2DFPC*)Exo__alloc(
+      context->wall_, sizeof(Point2DFPC) * config.points);
+  if (cache->points == _NilP) return false;
+  cache->cpoints = config.points;
+  cache->paths = (RenderPath*)Exo__alloc(
+      context->wall_, sizeof(RenderPath) * config.paths);
+  if (cache->paths == _NilP) return false;
+  cache->cpaths = config.paths;
+  cache->verts = (VertexFPC*)Exo__alloc(
+      context->wall_, sizeof(VertexFPC) * config.verts);
+  if (cache->verts == _NilP) return false;
+  cache->cverts = config.verts;
+  return true;
 }
 
 void Exo__setDevicePixelRatio(RenderContext* context, FPC ratio) {
@@ -199,6 +193,10 @@ void Exo__setDevicePixelRatio(RenderContext* context, FPC ratio) {
   context->fringe_width = 1.0f / ratio;
   context->device_pixel_ratio = ratio;
 }
+
+/* Uploads whatever the glyph atlas changed since the last call. Defined with
+the rest of the text code; the frame loop needs it before then. */
+void Exo__flushTextTexture(RenderContext* context);
 
 CompositeOperationState Exo__compositeOperationState(ISC op){
   ISC sfactor, dfactor;
@@ -262,43 +260,43 @@ RenderState* Exo__getState(RenderContext* context) {
   return &context->states[context->nstates-1];
 }
 
-RenderContext* ExoCreateInternal(RenderParams* params) {
-  FONSparams fontParams;
-  RenderContext* context = (RenderContext*)Exo__alloc(sizeof(RenderContext));
+RenderContext* ExoCreateInternal(RenderParams* params, _::TWall<>* wall,
+                                 RenderConfig config) {
   ISC i;
-  if (context == nullptr) goto error;
+  if (params == _NilP || wall == _NilP) return _NilP;
+  RenderContext* context = (RenderContext*)Exo__alloc(wall, sizeof(RenderContext));
+  if (context == _NilP) return _NilP;
   _::ArrayFill(context, sizeof(RenderContext));
+  context->wall_ = wall;
   context->params = *params;
-  for (i = 0; i < _FontImagesMax; i++)
-    context->font_images[i] = 0;
-  context->commands = (FPC*)Exo__alloc(sizeof(FPC)*_CommandsSizeInit);
-  if (!context->commands) goto error;
+  context->commands = (FPC*)Exo__alloc(wall, sizeof(FPC) * config.commands);
+  if (context->commands == _NilP) goto error;
   context->ncommands = 0;
-  context->ccommands = _CommandsSizeInit;
-  context->cache = Exo__allocPathCache();
-  if (context->cache == nullptr) goto error;
+  context->ccommands = config.commands;
+  if (!Exo__initPathCache(context, config)) goto error;
   ExoSave(context);
   ExoReset(context);
   Exo__setDevicePixelRatio(context, 1.0f);
   if (context->params.renderCreate(context->params.userPtr) == 0) goto error;
-  _::ArrayFill(&fontParams, sizeof(fontParams));
-  fontParams.width = _FontImageSizeInit;
-  fontParams.height = _FontImageSizeInit;
-  fontParams.flags = FONS_ZERO_TOPLEFT;
-  fontParams.renderCreate = nullptr;
-  fontParams.renderUpdate = nullptr;
-  fontParams.renderDraw = nullptr;
-  fontParams.renderDelete = nullptr;
-  fontParams.userPtr = nullptr;
-  context->fs = fonsCreateInternal(&fontParams);
-  if (context->fs == nullptr) goto error;
-  context->font_images[0] = context->params.renderCreateTexture(context->params.userPtr, TextureAlpha, fontParams.width, fontParams.height, 0, nullptr);
-  if (context->font_images[0] == 0) goto error;
-  context->font_image_index = 0;
+
+  /* The atlas block is taken at its largest size so the cache can be reset
+  larger later without a second block; the working size starts smaller. */
+  context->atlas_max = config.atlas_max;
+  context->fs = (FontStash*)Exo__alloc(wall, sizeof(FontStash));
+  if (context->fs == _NilP) goto error;
+  if (!context->fs->Start(wall, config.atlas_max, config.atlas_max,
+                          config.glyphs, config.fonts, true)) goto error;
+  if (config.atlas_start < config.atlas_max &&
+      !context->fs->ResetAtlas(config.atlas_start, config.atlas_start))
+    goto error;
+  context->font_image = context->params.renderCreateTexture(
+      context->params.userPtr, TextureAlpha, config.atlas_start,
+      config.atlas_start, 0, _NilP);
+  if (context->font_image == 0) goto error;
   return context;
 error:
   ExoDeleteInternal(context);
-  return 0;
+  return _NilP;
 }
 
 RenderParams* ExoInternalParams(RenderContext* context) {
@@ -306,21 +304,23 @@ RenderParams* ExoInternalParams(RenderContext* context) {
 }
 
 void ExoDeleteInternal(RenderContext* context) {
-  ISC i;
-  if (context == nullptr) return;
-  if (context->commands != nullptr) Exo__free(context->commands);
-  if (context->cache != nullptr) Exo__deletePathCache(context->cache);
-  if (context->fs)
-    fonsDeleteInternal(context->fs);
-  for (i = 0; i < _FontImagesMax; i++) {
-    if (context->font_images[i] != 0) {
-      ExoDeleteImage(context, context->font_images[i]);
-      context->font_images[i] = 0;
-    }
+  if (context == _NilP) return;
+  /* Every block belongs to the Wall, so there is nothing to free: the backend
+  and its textures are the only things that own anything outside it. The
+  context can still be reached after a failed create, when the Wall may have
+  handed out only part of the table. */
+  if (context->font_image != 0) {
+    ExoDeleteImage(context, context->font_image);
+    context->font_image = 0;
   }
-  if (context->params.renderDelete != nullptr)
+  if (context->params.renderDelete != _NilP)
     context->params.renderDelete(context->params.userPtr);
-  Exo__free(context);
+  context->commands = _NilP;
+  context->cache.points = _NilP;
+  context->cache.paths = _NilP;
+  context->cache.verts = _NilP;
+  context->fs = _NilP;
+  context->wall_ = _NilP;
 }
 
 void ExoBeginFrame(RenderContext* context, FPC windowWidth, FPC windowHeight,
@@ -341,30 +341,10 @@ void ExoCancelFrame(RenderContext* context) {
 }
 
 void ExoEndFrame(RenderContext* context) {
+  /* The atlas is uploaded once per frame, after the last text call, so a
+  frame that draws ten strings costs one texture update and not ten. */
+  Exo__flushTextTexture(context);
   context->params.renderFlush(context->params.userPtr);
-  if (context->font_image_index != 0) {
-    ISC fontImage = context->font_images[context->font_image_index];
-    context->font_images[context->font_image_index] = 0;
-    ISC i, j, iw, ih;
-    if (fontImage == 0)
-      return;
-    ExoImageSize(context, fontImage, &iw, &ih);
-    for (i = j = 0; i < context->font_image_index; i++) {
-      if (context->font_images[i] != 0) {
-        ISC nw, nh;
-        ISC image = context->font_images[i];
-        context->font_images[i] = 0;
-        ExoImageSize(context, image, &nw, &nh);
-        if (nw < iw || nh < ih)
-          ExoDeleteImage(context, image);
-        else
-          context->font_images[j++] = image;
-      }
-    }
-    context->font_images[j] = context->font_images[0];
-    context->font_images[0] = fontImage;
-    context->font_image_index = 0;
-  }
 }
 
 ColorFPC ExoRGB(IUA r, IUA g, IUA b) {
@@ -465,7 +445,7 @@ void ExoTransformScale(FPC* t, FPC sx, FPC sy) {
 }
 
 void ExoTransformRotate(FPC* t, FPC a) {
-  FPC cs = Cosine(a), sn = Sine(a);
+  FPC cs = _::Cosine(a), sn = _::Sine(a);
   t[0] = cs; t[1] = sn;
   t[2] = -sn; t[3] = cs;
   t[4] = 0.0f; t[5] = 0.0f;
@@ -473,12 +453,12 @@ void ExoTransformRotate(FPC* t, FPC a) {
 
 void ExoTransformSkewX(FPC* t, FPC a) {
   t[0] = 1.0f; t[1] = 0.0f;
-  t[2] = Tan(a); t[3] = 1.0f;
+  t[2] = _::Tan(a); t[3] = 1.0f;
   t[4] = 0.0f; t[5] = 0.0f;
 }
 
 void ExoTransformSkewY(FPC* t, FPC a) {
-  t[0] = 1.0f; t[1] = Tan(a);
+  t[0] = 1.0f; t[1] = _::Tan(a);
   t[2] = 0.0f; t[3] = 1.0f;
   t[4] = 0.0f; t[5] = 0.0f;
 }
@@ -876,7 +856,7 @@ void Exo__appendCommands(RenderContext* context, FPC* vals, ISC nvals) {
   if (context->ncommands+nvals > context->ccommands) {
     FPC* commands;
     ISC ccommands = context->ncommands+nvals + context->ccommands/2;
-    commands = (FPC*)Exo__realloc(context->commands, 
+    commands = (FPC*)Exo__realloc(context->wall_, context->commands,
       sizeof(FPC)*context->ncommands, sizeof(FPC)*ccommands);
     if (commands == nullptr) return;
     context->commands = commands;
@@ -919,62 +899,62 @@ void Exo__appendCommands(RenderContext* context, FPC* vals, ISC nvals) {
 }
 
 void Exo__clearPathCache(RenderContext* context) {
-  context->cache->npoints = 0;
-  context->cache->npaths = 0;
+  context->cache.npoints = 0;
+  context->cache.npaths = 0;
 }
 
 RenderPath* Exo__lastPath(RenderContext* context) {
-  if (context->cache->npaths > 0)
-    return &context->cache->paths[context->cache->npaths-1];
+  if (context->cache.npaths > 0)
+    return &context->cache.paths[context->cache.npaths-1];
   return nullptr;
 }
 
 void Exo__addPath(RenderContext* context) {
   RenderPath* path;
-  if (context->cache->npaths+1 > context->cache->cpaths) {
+  if (context->cache.npaths+1 > context->cache.cpaths) {
     RenderPath* paths;
-    ISC cpaths = context->cache->npaths+1 + context->cache->cpaths/2;
-    paths = (RenderPath*)Exo__realloc(context->cache->paths, sizeof(RenderPath)*context->cache->npaths, sizeof(RenderPath)*cpaths);
+    ISC cpaths = context->cache.npaths+1 + context->cache.cpaths/2;
+    paths = (RenderPath*)Exo__realloc(context->wall_, context->cache.paths, sizeof(RenderPath)*context->cache.npaths, sizeof(RenderPath)*cpaths);
     if (paths == nullptr) return;
-    context->cache->paths = paths;
-    context->cache->cpaths = cpaths;
+    context->cache.paths = paths;
+    context->cache.cpaths = cpaths;
   }
-  path = &context->cache->paths[context->cache->npaths];
+  path = &context->cache.paths[context->cache.npaths];
   _::ArrayFill(path, sizeof(*path));
-  path->first = context->cache->npoints;
+  path->first = context->cache.npoints;
   path->winding = CCW;
-  context->cache->npaths++;
+  context->cache.npaths++;
 }
 Point2DFPC* Exo__lastPoint(RenderContext* context) {
-  if (context->cache->npoints > 0)
-    return &context->cache->points[context->cache->npoints-1];
+  if (context->cache.npoints > 0)
+    return &context->cache.points[context->cache.npoints-1];
   return nullptr;
 }
 void Exo__addPoint(RenderContext* context, FPC x, FPC y, ISC flags) {
   RenderPath* path = Exo__lastPath(context);
   Point2DFPC* pt;
   if (path == nullptr) return;
-  if (path->count > 0 && context->cache->npoints > 0) {
+  if (path->count > 0 && context->cache.npoints > 0) {
     pt = Exo__lastPoint(context);
     if (Exo__ptEquals(pt->x,pt->y, x,y, context->distance_tol)) {
       pt->flags |= flags;
       return;
     }
   }
-  if (context->cache->npoints+1 > context->cache->cpoints) {
+  if (context->cache.npoints+1 > context->cache.cpoints) {
     Point2DFPC* points;
-    ISC cpoints = context->cache->npoints+1 + context->cache->cpoints/2;
-    points = (Point2DFPC*)Exo__realloc(context->cache->points, sizeof(Point2DFPC)*context->cache->npoints, sizeof(Point2DFPC)*cpoints);
+    ISC cpoints = context->cache.npoints+1 + context->cache.cpoints/2;
+    points = (Point2DFPC*)Exo__realloc(context->wall_, context->cache.points, sizeof(Point2DFPC)*context->cache.npoints, sizeof(Point2DFPC)*cpoints);
     if (points == nullptr) return;
-    context->cache->points = points;
-    context->cache->cpoints = cpoints;
+    context->cache.points = points;
+    context->cache.cpoints = cpoints;
   }
-  pt = &context->cache->points[context->cache->npoints];
+  pt = &context->cache.points[context->cache.npoints];
   _::ArrayFill(pt, sizeof(*pt));
   pt->x = x;
   pt->y = y;
   pt->flags = (CHR)flags;
-  context->cache->npoints++;
+  context->cache.npoints++;
   path->count++;
 }
 
@@ -997,15 +977,15 @@ FPC Exo__getAverageScale(FPC *t) {
 }
 
 VertexFPC* Exo__allocTempVerts(RenderContext* context, ISC nverts) {
-  if (nverts > context->cache->cverts) {
+  if (nverts > context->cache.cverts) {
     VertexFPC* verts;
     ISC cverts = (nverts + 0xff) & ~0xff; 
-    verts = (VertexFPC*)Exo__realloc(context->cache->verts, 0, sizeof(VertexFPC)*cverts);
+    verts = (VertexFPC*)Exo__realloc(context->wall_, context->cache.verts, 0, sizeof(VertexFPC)*cverts);
     if (verts == nullptr) return nullptr;
-    context->cache->verts = verts;
-    context->cache->cverts = cverts;
+    context->cache.verts = verts;
+    context->cache.cverts = cverts;
   }
-  return context->cache->verts;
+  return context->cache.verts;
 }
 
 FPC Exo__triarea2(FPC ax, FPC ay, FPC bx, FPC by, FPC cx, FPC cy) {
@@ -1077,7 +1057,7 @@ void Exo__tesselateBezier(RenderContext* context, FPC x1, FPC y1, FPC x2, FPC y2
 }
 
 void Exo__flattenPaths(RenderContext* context) {
-  PathCache* cache = context->cache;
+  PathCache* cache = &context->cache;
   Point2DFPC* last;
   Point2DFPC* p0;
   Point2DFPC* p1;
@@ -1160,8 +1140,8 @@ void Exo__flattenPaths(RenderContext* context) {
 }
 
 ISC Exo__curveDivs(FPC r, FPC arc, FPC tol) {
-  FPC da = ArcCosine(r / (r + tol)) * 2.0f;
-  return Max2(2, (ISC)Ceiling(arc / da));
+  FPC da = _::ArcCosine(r / (r + tol)) * 2.0f;
+  return Max2(2, (ISC)_::Ceiling(arc / da));
 }
 
 void Exo__chooseBevel(ISC bevel, Point2DFPC* p0, Point2DFPC* p1, FPC w,
@@ -1190,17 +1170,17 @@ VertexFPC* Exo__roundJoin(VertexFPC* dst, Point2DFPC* p0, Point2DFPC* p1,
   if (p1->flags & PFPointLeft) {
     FPC lx0,ly0,lx1,ly1,a0,a1;
     Exo__chooseBevel(p1->flags & PFPointInterBevel, p0, p1, lw, &lx0,&ly0, &lx1,&ly1);
-    a0 = ArcTangent2(-dly0, -dlx0);
-    a1 = ArcTangent2(-dly1, -dlx1);
+    a0 = _::ArcTangent2(-dly0, -dlx0);
+    a1 = _::ArcTangent2(-dly1, -dlx1);
     if (a1 > a0) a1 -= _PiFPC*2;
     Exo__vset(dst, lx0, ly0, lu,1); dst++;
     Exo__vset(dst, p1->x - dlx0*rw, p1->y - dly0*rw, ru,1); dst++;
-    n = Clamp((ISC)Ceiling(((a0 - a1) / _PiFPC) * ncap), 2, ncap);
+    n = Clamp((ISC)_::Ceiling(((a0 - a1) / _PiFPC) * ncap), 2, ncap);
     for (i = 0; i < n; i++) {
       FPC u = i/(FPC)(n-1);
       FPC a = a0 + u*(a1-a0);
-      FPC rx = p1->x + Cosine(a) * rw;
-      FPC ry = p1->y + Sine(a) * rw;
+      FPC rx = p1->x + _::Cosine(a) * rw;
+      FPC ry = p1->y + _::Sine(a) * rw;
       Exo__vset(dst, p1->x, p1->y, 0.5f,1); dst++;
       Exo__vset(dst, rx, ry, ru,1); dst++;
     }
@@ -1209,17 +1189,17 @@ VertexFPC* Exo__roundJoin(VertexFPC* dst, Point2DFPC* p0, Point2DFPC* p1,
   } else {
     FPC rx0,ry0,rx1,ry1,a0,a1;
     Exo__chooseBevel(p1->flags & PFPointInterBevel, p0, p1, -rw, &rx0,&ry0, &rx1,&ry1);
-    a0 = ArcTangent2(dly0, dlx0);
-    a1 = ArcTangent2(dly1, dlx1);
+    a0 = _::ArcTangent2(dly0, dlx0);
+    a1 = _::ArcTangent2(dly1, dlx1);
     if (a1 < a0) a1 += _PiFPC*2;
     Exo__vset(dst, p1->x + dlx0*rw, p1->y + dly0*rw, lu,1); dst++;
     Exo__vset(dst, rx0, ry0, ru,1); dst++;
-    n = Clamp((ISC)Ceiling(((a1 - a0) / _PiFPC) * ncap), 2, ncap);
+    n = Clamp((ISC)_::Ceiling(((a1 - a0) / _PiFPC) * ncap), 2, ncap);
     for (i = 0; i < n; i++) {
       FPC u = i/(FPC)(n-1);
       FPC a = a0 + u*(a1-a0);
-      FPC lx = p1->x + Cosine(a) * lw;
-      FPC ly = p1->y + Sine(a) * lw;
+      FPC lx = p1->x + _::Cosine(a) * lw;
+      FPC ly = p1->y + _::Sine(a) * lw;
       Exo__vset(dst, lx, ly, lu,1); dst++;
       Exo__vset(dst, p1->x, p1->y, 0.5f,1); dst++;
     }
@@ -1316,7 +1296,7 @@ VertexFPC* Exo__roundCapStart(VertexFPC* dst, Point2DFPC* p, FPC dx, FPC dy, FPC
   _NotUsed(aa);
   for (i = 0; i < ncap; i++) {
     FPC a = i/(FPC)(ncap-1)*_PiFPC;
-    FPC ax = Cosine(a) * w, ay = Sine(a) * w;
+    FPC ax = _::Cosine(a) * w, ay = _::Sine(a) * w;
     Exo__vset(dst, px - dlx*ax - dx*ay, py - dly*ax - dy*ay, u0,1); dst++;
     Exo__vset(dst, px, py, 0.5f,1); dst++;
   }
@@ -1336,7 +1316,7 @@ VertexFPC* Exo__roundCapEnd(VertexFPC* dst, Point2DFPC* p, FPC dx, FPC dy, FPC w
   Exo__vset(dst, px - dlx*w, py - dly*w, u1,1); dst++;
   for (i = 0; i < ncap; i++) {
     FPC a = i/(FPC)(ncap-1)*_PiFPC;
-    FPC ax = Cosine(a) * w, ay = Sine(a) * w;
+    FPC ax = _::Cosine(a) * w, ay = _::Sine(a) * w;
     Exo__vset(dst, px, py, 0.5f,1); dst++;
     Exo__vset(dst, px - dlx*ax + dx*ay, py - dly*ax + dy*ay, u0,1); dst++;
   }
@@ -1345,7 +1325,7 @@ VertexFPC* Exo__roundCapEnd(VertexFPC* dst, Point2DFPC* p, FPC dx, FPC dy, FPC w
 
 void Exo__calculateJoins(RenderContext* context, FPC w, ISC line_join, 
   FPC miter_limit) {
-  PathCache* cache = context->cache;
+  PathCache* cache = &context->cache;
   ISC i, j;
   FPC iw = 0.0f;
   if (w > 0.0f) iw = 1.0f / w;
@@ -1397,7 +1377,7 @@ void Exo__calculateJoins(RenderContext* context, FPC w, ISC line_join,
 
 ISC Exo__expandStroke(RenderContext* context, FPC w, FPC fringe, ISC line_cap,
   ISC line_join, FPC miter_limit) {
-  PathCache* cache = context->cache;
+  PathCache* cache = &context->cache;
   VertexFPC* verts;
   VertexFPC* dst;
   ISC cverts, i, j;
@@ -1497,7 +1477,7 @@ ISC Exo__expandStroke(RenderContext* context, FPC w, FPC fringe, ISC line_cap,
 
 ISC Exo__expandFill(RenderContext* context, FPC w, ISC line_join, 
   FPC miter_limit) {
-  PathCache* cache = context->cache;
+  PathCache* cache = &context->cache;
   VertexFPC* verts;
   VertexFPC* dst;
   ISC cverts, convex, i, j;
@@ -1645,8 +1625,8 @@ void ExoArcTo(RenderContext* context, FPC x1, FPC y1, FPC x2, FPC y2,
   dy1 = y2-y1;
   Normalize(&dx0,&dy0);
   Normalize(&dx1,&dy1);
-  a = ArcCosine(dx0*dx1 + dy0*dy1);
-  d = radius / Tan(a/2.0f);
+  a = _::ArcCosine(dx0*dx1 + dy0*dy1);
+  d = radius / _::Tan(a/2.0f);
   if (d > 10000.0f) {
     ExoLineTo(context, x1,y1);
     return;
@@ -1654,14 +1634,14 @@ void ExoArcTo(RenderContext* context, FPC x1, FPC y1, FPC x2, FPC y2,
   if (Cross(dx0,dy0, dx1,dy1) > 0.0f) {
     cx = x1 + dx0*d + dy0*radius;
     cy = y1 + dy0*d + -dx0*radius;
-    a0 = ArcTangent2(dx0, -dy0);
-    a1 = ArcTangent2(-dx1, dy1);
+    a0 = _::ArcTangent2(dx0, -dy0);
+    a1 = _::ArcTangent2(-dx1, dy1);
     dir = CW;
   } else {
     cx = x1 + dx0*d + -dy0*radius;
     cy = y1 + dy0*d + dx0*radius;
-    a0 = ArcTangent2(-dx0, dy0);
-    a1 = ArcTangent2(dx1, -dy1);
+    a0 = _::ArcTangent2(-dx0, dy0);
+    a1 = _::ArcTangent2(dx1, -dy1);
     dir = CCW;
   }
   ExoArc(context, cx, cy, radius, a0, a1, dir);
@@ -1701,14 +1681,14 @@ void ExoArc(RenderContext* context, FPC cx, FPC cy, FPC r, FPC a0, FPC a1,
   }
   ndivs = Max2(1, Min2((ISC)(Absolute(da) / (_PiFPC*0.5f) + 0.5f), 5));
   hda = (da / (FPC)ndivs) / 2.0f;
-  kappa = Absolute(4.0f / 3.0f * (1.0f - Cosine(hda)) / Sine(hda));
+  kappa = Absolute(4.0f / 3.0f * (1.0f - _::Cosine(hda)) / _::Sine(hda));
   if (dir == CCW)
     kappa = -kappa;
   nvals = 0;
   for (i = 0; i <= ndivs; i++) {
     a = a0 + da * (i/(FPC)ndivs);
-    dx = Cosine(a);
-    dy = Sine(a);
+    dx = _::Cosine(a);
+    dy = _::Sine(a);
     x = cx + dx*r;
     y = cy + dy*r;
     tanx = -dy*r*kappa;
@@ -1804,9 +1784,9 @@ void ExoFill(RenderContext* context) {
   fillPaint.inner_color.a *= state->alpha;
   fillPaint.outer_color.a *= state->alpha;
   context->params.renderFill(context->params.userPtr, &fillPaint, state->composite_operation, &state->scissor, context->fringe_width,
-               context->cache->bounds, context->cache->paths, context->cache->npaths);
-  for (i = 0; i < context->cache->npaths; i++) {
-    path = &context->cache->paths[i];
+               context->cache.bounds, context->cache.paths, context->cache.npaths);
+  for (i = 0; i < context->cache.npaths; i++) {
+    path = &context->cache.paths[i];
     context->fill_tri_count += path->nfill-2;
     context->fill_tri_count += path->nstroke-2;
     context->draw_call_count += 2;
@@ -1834,52 +1814,72 @@ void ExoStroke(RenderContext* context) {
   else
     Exo__expandStroke(context, stroke_width*0.5f, 0.0f, state->line_cap, state->line_join, state->miter_limit);
   context->params.renderStroke(context->params.userPtr, &strokePaint, state->composite_operation, &state->scissor, context->fringe_width,
-               stroke_width, context->cache->paths, context->cache->npaths);
-  for (i = 0; i < context->cache->npaths; i++) {
-    path = &context->cache->paths[i];
+               stroke_width, context->cache.paths, context->cache.npaths);
+  for (i = 0; i < context->cache.npaths; i++) {
+    path = &context->cache.paths[i];
     context->stroke_tri_count += path->nstroke-2;
     context->draw_call_count++;
   }
 }
 
+/* ── Fonts ─────────────────────────────────────────────────────────────
+The cache is FontStash: it takes the font bytes, decodes them with TrueTypeFont
+and fills one 8 bit atlas, all out of the same Room Wall this renderer uses.
+Nothing here opens a file, so a font arrives as bytes. */
+
 ISC ExoCreateFont(RenderContext* context, const CHR* name, const CHR* filename) {
-  return fonsAddFont(context->fs, name, filename, 0);
+  /* There is no file reader in this tree: a caller with a font on disk loads
+  it and hands the bytes to ExoCreateFontMem. */
+  (void)context; (void)name; (void)filename;
+  return -1;
 }
 
-ISC ExoCreateFontAtIndex(RenderContext* context, const CHR* name, 
+ISC ExoCreateFontAtIndex(RenderContext* context, const CHR* name,
   const CHR* filename, const ISC fontIndex) {
-  return fonsAddFont(context->fs, name, filename, fontIndex);
+  (void)context; (void)name; (void)filename; (void)fontIndex;
+  return -1;
 }
 
-ISC ExoCreateFontMem(RenderContext* context, const CHR* name, IUA* data, ISC ndata,
-  ISC freeData) {
-  return fonsAddFontMem(context->fs, name, data, ndata, freeData, 0);
+ISC ExoCreateFontMem(RenderContext* context, const CHR* name, IUA* data,
+  ISC ndata, ISC freeData) {
+  /* The bytes are borrowed, not copied: they have to outlive the renderer, so
+  freeData is not something the stash can honour. */
+  (void)freeData;
+  if (context == _NilP || context->fs == _NilP) return -1;
+  return context->fs->AddFont(name, data, ndata);
 }
 
-ISC ExoCreateFontMemAtIndex(RenderContext* context, const CHR* name, IUA* data, 
+ISC ExoCreateFontMemAtIndex(RenderContext* context, const CHR* name, IUA* data,
   ISC ndata, ISC freeData, const ISC fontIndex) {
-  return fonsAddFontMem(context->fs, name, data, ndata, freeData, fontIndex);
+  /* One face per font block: a collection member is selected by handing the
+  block the offset fontIndex reports, which is what TrueTypeFont::FontOffset
+  answers. */
+  (void)freeData;
+  if (context == _NilP || context->fs == _NilP || data == _NilP) return -1;
+  ISC offset = TrueTypeFont::FontOffset(data, fontIndex);
+  if (offset < 0) return -1;
+  return context->fs->AddFont(name, data + offset, ndata - offset);
 }
 
-ISC ExoFindFont(RenderContext* context, const CHR* name)
-{
-  if (name == nullptr) return -1;
-  return fonsGetFontByName(context->fs, name);
+ISC ExoFindFont(RenderContext* context, const CHR* name) {
+  if (context == _NilP || context->fs == _NilP || name == _NilP) return -1;
+  return context->fs->FindFont(name);
 }
 
 ISC ExoAddFallbackFontId(RenderContext* context, ISC baseFont, ISC fallbackFont) {
-  if(baseFont == -1 || fallbackFont == -1) return 0;
-  return fonsAddFallbackFont(context->fs, baseFont, fallbackFont);
+  if (context == _NilP || context->fs == _NilP) return -1;
+  return context->fs->AddFallback(baseFont, fallbackFont);
 }
 
-ISC ExoAddFallbackFont(RenderContext* context, const CHR* baseFont, 
+ISC ExoAddFallbackFont(RenderContext* context, const CHR* baseFont,
   const CHR* fallbackFont) {
-  return ExoAddFallbackFontId(context, ExoFindFont(context, baseFont), 
+  return ExoAddFallbackFontId(context, ExoFindFont(context, baseFont),
                               ExoFindFont(context, fallbackFont));
 }
 
 void ExoResetFallbackFontsId(RenderContext* context, ISC baseFont) {
-  fonsResetFallbackFont(context->fs, baseFont);
+  if (context == _NilP || context->fs == _NilP) return;
+  context->fs->ResetFallbacks(baseFont);
 }
 
 void ExoResetFallbackFonts(RenderContext* context, const CHR* baseFont) {
@@ -1918,128 +1918,143 @@ void ExoFontFaceId(RenderContext* context, ISC font) {
 
 void ExoFontFace(RenderContext* context, const CHR* font) {
   RenderState* state = Exo__getState(context);
-  state->font_id = fonsGetFontByName(context->fs, font);
+  state->font_id = context->fs == _NilP ? -1 : context->fs->FindFont(font);
 }
 
 FPC Exo__quantize(FPC a, FPC d) {
   return (ISC(a / d + 0.5f)) * d;
 }
 
+/* The text is laid out at the device scale and transformed back per vertex, so
+a zoomed view rasterizes glyphs for the pixels it will actually cover. */
 FPC Exo__getFontScale(RenderState* state) {
   return Minf(Exo__quantize(Exo__getAverageScale(state->xform), 0.01f), 4.0f);
 }
 
-void Exo__flushTextTexture(RenderContext* context) {
-  ISC dirty[4];
-  if (fonsValidateTexture(context->fs, dirty)) {
-    ISC fontImage = context->font_images[context->font_image_index];
-    if (fontImage != 0) {
-      ISC iw, ih;
-      const IUA* data = fonsGetTextureData(context->fs, &iw, &ih);
-      ISC x = dirty[0];
-      ISC y = dirty[1];
-      ISC w = dirty[2] - dirty[0];
-      ISC h = dirty[3] - dirty[1];
-      context->params.renderUpdateTexture(context->params.userPtr, fontImage, x,y, w,h, data);
-    }
-  }
+/* Pushes the render state into the stash. The stash keeps its own stack; this
+renderer's Push and Pop already moved the state, so the stash is resynchronized
+before every text call instead of being pushed in step. */
+void Exo__setFontState(RenderContext* context, RenderState* state, FPC scale) {
+  FontStash* fs = context->fs;
+  if (fs == _NilP) return;
+  fs->SetFont(state->font_id);
+  fs->SetSize(state->font_size * scale);
+  fs->SetSpacing(state->letter_spacing * scale);
+  fs->SetBlur(state->font_blur * scale);
+  fs->SetAlign(TextAlign(state->text_align));
 }
-ISC Exo__allocTextAtlas(RenderContext* context) {
+
+void Exo__flushTextTexture(RenderContext* context) {
+  if (context->fs == _NilP || context->font_image == 0) return;
+  ISC dirty[4];
+  if (!context->fs->ValidateTexture(dirty)) return;
   ISC iw, ih;
-  Exo__flushTextTexture(context);
-  if (context->font_image_index >= _FontImagesMax-1)
-    return 0;
-  if (context->font_images[context->font_image_index+1] != 0)
-    ExoImageSize(context, context->font_images[context->font_image_index+1], &iw, &ih);
-  else { 
-    ExoImageSize(context, context->font_images[context->font_image_index], &iw, &ih);
-    if (iw > ih)
-      ih *= 2;
-    else
-      iw *= 2;
-    if (iw > _FontImageSizeMax || ih > _FontImageSizeMax)
-      iw = ih = _FontImageSizeMax;
-    context->font_images[context->font_image_index+1] = context->params.renderCreateTexture(context->params.userPtr, TextureAlpha, iw, ih, 0, nullptr);
-  }
-  ++context->font_image_index;
-  fonsResetAtlas(context->fs, iw, ih);
-  return 1;
+  const IUA* data = context->fs->Texture(iw, ih);
+  /* The backend takes the atlas base pointer and the changed rectangle; its
+  row pitch is the atlas width, which is what the texture was created at. */
+  context->params.renderUpdateTexture(context->params.userPtr,
+    context->font_image, dirty[0], dirty[1], dirty[2], dirty[3], data);
+}
+
+/* Grows the atlas and the texture that mirrors it, up to the block the Wall
+took at creation. Returns false when it is already at the ceiling. */
+ISC Exo__growTextAtlas(RenderContext* context) {
+  if (context->fs == _NilP || context->font_image == 0) return 0;
+  ISC iw, ih;
+  context->fs->Texture(iw, ih);
+  ISC nw = iw, nh = ih;
+  if (iw > ih) nh = ih * 2;
+  else         nw = iw * 2;
+  if (nw > context->atlas_max) nw = context->atlas_max;
+  if (nh > context->atlas_max) nh = context->atlas_max;
+  if (nw == iw && nh == ih) return 0;
+  if (!context->fs->ResetAtlas(nw, nh)) return 0;
+  context->params.renderDeleteTexture(context->params.userPtr,
+                                      context->font_image);
+  context->font_image = context->params.renderCreateTexture(
+    context->params.userPtr, TextureAlpha, nw, nh, 0, _NilP);
+  return context->font_image != 0;
 }
 
 void Exo__renderText(RenderContext* context, VertexFPC* verts, ISC nverts) {
   RenderState* state = Exo__getState(context);
   VectorPaint paint = state->fill;
-  paint.image = context->font_images[context->font_image_index];
+  paint.image = context->font_image;
   paint.inner_color.a *= state->alpha;
   paint.outer_color.a *= state->alpha;
   context->params.renderTriangles(context->params.userPtr, &paint, state->composite_operation, &state->scissor, verts, nverts, context->fringe_width);
   context->draw_call_count++;
   context->text_tri_count += nverts/3;
 }
+
 ISC Exo__isTransformFlipped(const FPC *xform) {
   FPC det = xform[0] * xform[3] - xform[2] * xform[1];
   return(det < 0);
 }
-FPC ExoText(RenderContext* context, FPC x, FPC y, const CHR* string, 
+
+/* Turns one glyph quad into the two triangles, applying the transform per
+vertex so a rotation or a scale lands on the atlas sprite intact. */
+void Exo__emitQuad(RenderState* state, VertexFPC* verts, ISC& nverts,
+                   ISC cverts, const StashQuad& q, FPC invscale, ISC flipped) {
+  FPC c[4*2];
+  FPC s0 = q.s0, t0 = q.t0, s1 = q.s1, t1 = q.t1;
+  FPC y0 = q.y0, y1 = q.y1;
+  if (flipped) {
+    FPC tmp = y0; y0 = y1; y1 = tmp;
+    tmp = t0; t0 = t1; t1 = tmp;
+  }
+  ExoTransformPoint(&c[0],&c[1], state->xform, q.x0*invscale, y0*invscale);
+  ExoTransformPoint(&c[2],&c[3], state->xform, q.x1*invscale, y0*invscale);
+  ExoTransformPoint(&c[4],&c[5], state->xform, q.x1*invscale, y1*invscale);
+  ExoTransformPoint(&c[6],&c[7], state->xform, q.x0*invscale, y1*invscale);
+  if (nverts + 6 > cverts) return;
+  Exo__vset(&verts[nverts], c[0], c[1], s0, t0); nverts++;
+  Exo__vset(&verts[nverts], c[4], c[5], s1, t1); nverts++;
+  Exo__vset(&verts[nverts], c[2], c[3], s1, t0); nverts++;
+  Exo__vset(&verts[nverts], c[0], c[1], s0, t0); nverts++;
+  Exo__vset(&verts[nverts], c[6], c[7], s0, t1); nverts++;
+  Exo__vset(&verts[nverts], c[4], c[5], s1, t1); nverts++;
+}
+
+FPC ExoText(RenderContext* context, FPC x, FPC y, const CHR* string,
   const CHR* end) {
   RenderState* state = Exo__getState(context);
-  FONStextIter iter, prevIter;
-  FONSquad q;
-  VertexFPC* verts;
+  if (context->fs == _NilP || state->font_id < 0) return x;
   FPC scale = Exo__getFontScale(state) * context->device_pixel_ratio;
   FPC invscale = 1.0f / scale;
-  ISC cverts = 0;
-  ISC nverts = 0;
-  ISC isFlipped = Exo__isTransformFlipped(state->xform);
-  if (end == nullptr)
+  ISC flipped = Exo__isTransformFlipped(state->xform);
+  if (end == _NilP)
     end = string + Exo__cstrlen(string);
-  if (state->font_id == FONS_INVALID) return x;
-  fonsSetSize(context->fs, state->font_size*scale);
-  fonsSetSpacing(context->fs, state->letter_spacing*scale);
-  fonsSetBlur(context->fs, state->font_blur*scale);
-  fonsSetAlign(context->fs, state->text_align);
-  fonsSetFont(context->fs, state->font_id);
-  cverts = Max2(2, (ISC)(end - string)) * 6; 
-  verts = Exo__allocTempVerts(context, cverts);
-  if (verts == nullptr) return x;
-  fonsTextIterInit(context->fs, &iter, x*scale, y*scale, string, end, FONS_GLYPH_BITMAP_REQUIRED);
-  prevIter = iter;
-  while (fonsTextIterNext(context->fs, &iter, &q)) {
-    FPC c[4*2];
-    if (iter.prevGlyphIndex == -1) { 
-      if (nverts != 0) {
-        Exo__renderText(context, verts, nverts);
-        nverts = 0;
-      }
-      if (!Exo__allocTextAtlas(context))
-        break; 
-      iter = prevIter;
-      fonsTextIterNext(context->fs, &iter, &q); 
-      if (iter.prevGlyphIndex == -1) 
-        break;
+  ISC cverts = Max2(2, (ISC)(end - string)) * 6;
+  VertexFPC* verts = Exo__allocTempVerts(context, cverts);
+  if (verts == _NilP) return x;
+  Exo__setFontState(context, state, scale);
+
+  ISC nverts = 0;
+  FPC pen_x = x;
+  TextIter iter;
+  StashQuad quad;
+  /* A glyph that does not fit the atlas is not drawn, but the pen still moves,
+  so the pass restarts at the larger atlas instead of losing the line. Four
+  attempts is the whole growth ladder from the start size to the ceiling. */
+  for (ISC attempt = 0; attempt < 4; ++attempt) {
+    nverts = 0;
+    if (!context->fs->TextIterInit(iter, x*scale, y*scale, string, end,
+                                   BitmapMode::Required))
+      return x;
+    context->fs->TakeMissing();
+    BOL full = false;
+    while (context->fs->TextIterNext(iter, quad)) {
+      if (context->fs->TakeMissing() != 0) { full = true; break; }
+      Exo__emitQuad(state, verts, nverts, cverts, quad, invscale, flipped);
     }
-    prevIter = iter;
-    if(isFlipped) {
-      FPC tmp;
-      tmp = q.y0; q.y0 = q.y1; q.y1 = tmp;
-      tmp = q.t0; q.t0 = q.t1; q.t1 = tmp;
-    }
-    ExoTransformPoint(&c[0],&c[1], state->xform, q.x0*invscale, q.y0*invscale);
-    ExoTransformPoint(&c[2],&c[3], state->xform, q.x1*invscale, q.y0*invscale);
-    ExoTransformPoint(&c[4],&c[5], state->xform, q.x1*invscale, q.y1*invscale);
-    ExoTransformPoint(&c[6],&c[7], state->xform, q.x0*invscale, q.y1*invscale);
-    if (nverts+6 <= cverts) {
-      Exo__vset(&verts[nverts], c[0], c[1], q.s0, q.t0); nverts++;
-      Exo__vset(&verts[nverts], c[4], c[5], q.s1, q.t1); nverts++;
-      Exo__vset(&verts[nverts], c[2], c[3], q.s1, q.t0); nverts++;
-      Exo__vset(&verts[nverts], c[0], c[1], q.s0, q.t0); nverts++;
-      Exo__vset(&verts[nverts], c[6], c[7], q.s0, q.t1); nverts++;
-      Exo__vset(&verts[nverts], c[4], c[5], q.s1, q.t1); nverts++;
-    }
+    pen_x = iter.next_x * invscale;
+    if (!full) break;
+    if (!Exo__growTextAtlas(context)) break;
   }
   Exo__flushTextTexture(context);
   Exo__renderText(context, verts, nverts);
-  return iter.nextx / scale;
+  return pen_x;
 }
 
 void ExoTextBox(RenderContext* context, FPC x, FPC y, FPC breakRowWidth, const CHR* string, const CHR* end) {
@@ -2050,8 +2065,8 @@ void ExoTextBox(RenderContext* context, FPC x, FPC y, FPC breakRowWidth, const C
   ISC halign = state->text_align & (AlignLeft | AlignCenter | AlignRight);
   ISC valign = state->text_align & (AlignTop | AlignMiddle | AlignBottom | AlignBaseline);
   FPC lineh = 0;
-  if (state->font_id == FONS_INVALID) return;
-  ExoTextMetrics(context, nullptr, nullptr, &lineh);
+  if (state->font_id < 0) return;
+  ExoTextMetrics(context, _NilP, _NilP, &lineh);
   state->text_align = AlignLeft | valign;
   while ((nrows = ExoTextBreakLines(context, string, end, breakRowWidth, rows, 2))) {
     for (i = 0; i < nrows; i++) {
@@ -2068,143 +2083,140 @@ void ExoTextBox(RenderContext* context, FPC x, FPC y, FPC breakRowWidth, const C
   }
   state->text_align = oldAlign;
 }
+
 ISC ExoTextGlyphPositions(RenderContext* context, FPC x, FPC y, const CHR* string, const CHR* end, GlyphPosition* positions, ISC maxPositions) {
   RenderState* state = Exo__getState(context);
+  if (context->fs == _NilP || state->font_id < 0) return 0;
+  if (positions == _NilP || maxPositions <= 0) return 0;
   FPC scale = Exo__getFontScale(state) * context->device_pixel_ratio;
   FPC invscale = 1.0f / scale;
-  FONStextIter iter, prevIter;
-  FONSquad q;
-  ISC npos = 0;
-  if (state->font_id == FONS_INVALID) return 0;
-  if (end == nullptr)
+  if (end == _NilP)
     end = string + Exo__cstrlen(string);
   if (string == end)
     return 0;
-  fonsSetSize(context->fs, state->font_size*scale);
-  fonsSetSpacing(context->fs, state->letter_spacing*scale);
-  fonsSetBlur(context->fs, state->font_blur*scale);
-  fonsSetAlign(context->fs, state->text_align);
-  fonsSetFont(context->fs, state->font_id);
-  fonsTextIterInit(context->fs, &iter, x*scale, y*scale, string, end, FONS_GLYPH_BITMAP_OPTIONAL);
-  prevIter = iter;
-  while (fonsTextIterNext(context->fs, &iter, &q)) {
-    if (iter.prevGlyphIndex < 0 && Exo__allocTextAtlas(context)) { 
-      iter = prevIter;
-      fonsTextIterNext(context->fs, &iter, &q); 
-    }
-    prevIter = iter;
-    positions[npos].str = iter.str;
+  Exo__setFontState(context, state, scale);
+  ISC npos = 0;
+  TextIter iter;
+  StashQuad q;
+  if (!context->fs->TextIterInit(iter, x*scale, y*scale, string, end,
+                                 BitmapMode::Optional))
+    return 0;
+  while (iter.cursor < end) {
+    const CHR* start = iter.cursor;
+    if (!context->fs->TextIterNext(iter, q)) break;
+    positions[npos].str = start;
     positions[npos].x = iter.x * invscale;
     positions[npos].min_x = Minf(iter.x, q.x0) * invscale;
-    positions[npos].max_x = Maxf(iter.nextx, q.x1) * invscale;
+    positions[npos].max_x = Maxf(iter.next_x, q.x1) * invscale;
     npos++;
     if (npos >= maxPositions)
       break;
   }
   return npos;
 }
+
 enum CodepointType {
   CTSpace,
   CTNewLine,
   CTCharacter,
   CTCJKCharacter,
 };
+
+/* Breaks a string into rows. The walk is the stash's codepoint iterator; the
+break rule is the one a UI expects: break on newline always, break after a run
+of spaces that follows a word, and break mid word only when a single word is
+wider than the row. */
 ISC ExoTextBreakLines(RenderContext* context, const CHR* string, const CHR* end, FPC breakRowWidth, TextRow* rows, ISC maxRows) {
   RenderState* state = Exo__getState(context);
+  if (context->fs == _NilP || state->font_id < 0) return 0;
+  if (maxRows == 0 || rows == _NilP) return 0;
   FPC scale = Exo__getFontScale(state) * context->device_pixel_ratio;
   FPC invscale = 1.0f / scale;
-  FONStextIter iter, prevIter;
-  FONSquad q;
   ISC nrows = 0;
   FPC rowStartX = 0;
   FPC rowWidth = 0;
   FPC rowMinX = 0;
   FPC rowMaxX = 0;
-  const CHR* rowStart = nullptr;
-  const CHR* rowEnd = nullptr;
-  const CHR* wordStart = nullptr;
+  const CHR* rowStart = _NilP;
+  const CHR* rowEnd = _NilP;
+  const CHR* wordStart = _NilP;
   FPC wordStartX = 0;
   FPC wordMinX = 0;
-  const CHR* breakEnd = nullptr;
+  const CHR* breakEnd = _NilP;
   FPC breakWidth = 0;
   FPC breakMaxX = 0;
   ISC type = CTSpace, ptype = CTSpace;
   IUC pcodepoint = 0;
-  if (maxRows == 0) return 0;
-  if (state->font_id == FONS_INVALID) return 0;
-  if (end == nullptr)
+  if (end == _NilP)
     end = string + Exo__cstrlen(string);
   if (string == end) return 0;
-  fonsSetSize(context->fs, state->font_size*scale);
-  fonsSetSpacing(context->fs, state->letter_spacing*scale);
-  fonsSetBlur(context->fs, state->font_blur*scale);
-  fonsSetAlign(context->fs, state->text_align);
-  fonsSetFont(context->fs, state->font_id);
+  Exo__setFontState(context, state, scale);
   breakRowWidth *= scale;
-  fonsTextIterInit(context->fs, &iter, 0, 0, string, end, FONS_GLYPH_BITMAP_OPTIONAL);
-  prevIter = iter;
-  while (fonsTextIterNext(context->fs, &iter, &q)) {
-    if (iter.prevGlyphIndex < 0 && Exo__allocTextAtlas(context)) { 
-      iter = prevIter;
-      fonsTextIterNext(context->fs, &iter, &q); 
-    }
-    prevIter = iter;
-    switch (iter.codepoint) {
-      case 9:      
-      case 11:    
-      case 12:    
-      case 32:    
-      case 0x00a0:  
+  TextIter iter;
+  StashQuad q;
+  if (!context->fs->TextIterInit(iter, 0, 0, string, end,
+                                 BitmapMode::Optional))
+    return 0;
+  while (iter.cursor < end) {
+    const CHR* glyph_start = iter.cursor;
+    if (!context->fs->TextIterNext(iter, q)) break;
+    const CHR* glyph_next = iter.cursor;
+    switch (iter.code_point) {
+      case 9:
+      case 11:
+      case 12:
+      case 32:
+      case 0x00a0:
         type = CTSpace;
         break;
-      case 10:    
+      case 10:
         type = pcodepoint == 13 ? CTSpace : CTNewLine;
         break;
-      case 13:    
+      case 13:
         type = pcodepoint == 10 ? CTSpace : CTNewLine;
         break;
-      case 0x0085:  
+      case 0x0085:
         type = CTNewLine;
         break;
       default:
-        if ((iter.codepoint >= 0x4E00 && iter.codepoint <= 0x9FFF) ||
-          (iter.codepoint >= 0x3000 && iter.codepoint <= 0x30FF) ||
-          (iter.codepoint >= 0xFF00 && iter.codepoint <= 0xFFEF) ||
-          (iter.codepoint >= 0x1100 && iter.codepoint <= 0x11FF) ||
-          (iter.codepoint >= 0x3130 && iter.codepoint <= 0x318F) ||
-          (iter.codepoint >= 0xAC00 && iter.codepoint <= 0xD7AF))
+        if ((iter.code_point >= 0x4E00 && iter.code_point <= 0x9FFF) ||
+          (iter.code_point >= 0x3000 && iter.code_point <= 0x30FF) ||
+          (iter.code_point >= 0xFF00 && iter.code_point <= 0xFFEF) ||
+          (iter.code_point >= 0x1100 && iter.code_point <= 0x11FF) ||
+          (iter.code_point >= 0x3130 && iter.code_point <= 0x318F) ||
+          (iter.code_point >= 0xAC00 && iter.code_point <= 0xD7AF))
           type = CTCJKCharacter;
         else
           type = CTCharacter;
         break;
     }
     if (type == CTNewLine) {
-      rows[nrows].start = rowStart != nullptr ? rowStart : iter.str;
-      rows[nrows].end = rowEnd != nullptr ? rowEnd : iter.str;
+      rows[nrows].start = rowStart != _NilP ? rowStart : glyph_start;
+      rows[nrows].end = rowEnd != _NilP ? rowEnd : glyph_start;
       rows[nrows].width = rowWidth * invscale;
       rows[nrows].min_x = rowMinX * invscale;
       rows[nrows].max_x = rowMaxX * invscale;
-      rows[nrows].next = iter.next;
+      rows[nrows].next = glyph_next;
       nrows++;
       if (nrows >= maxRows)
         return nrows;
       breakEnd = rowStart;
       breakWidth = 0.0;
       breakMaxX = 0.0;
-      rowStart = nullptr;
-      rowEnd = nullptr;
+      rowStart = _NilP;
+      rowEnd = _NilP;
       rowWidth = 0;
       rowMinX = rowMaxX = 0;
     } else {
-      if (rowStart == nullptr) {
+      if (rowStart == _NilP) {
         if (type == CTCharacter || type == CTCJKCharacter) {
           rowStartX = iter.x;
-          rowStart = iter.str;
-          rowEnd = iter.next;
-          rowWidth = iter.nextx - rowStartX;
+          rowStart = glyph_start;
+          rowEnd = glyph_next;
+          rowWidth = iter.next_x - rowStartX;
           rowMinX = q.x0 - rowStartX;
           rowMaxX = q.x1 - rowStartX;
-          wordStart = iter.str;
+          wordStart = glyph_start;
           wordStartX = iter.x;
           wordMinX = q.x0 - rowStartX;
           breakEnd = rowStart;
@@ -2212,42 +2224,42 @@ ISC ExoTextBreakLines(RenderContext* context, const CHR* string, const CHR* end,
           breakMaxX = 0.0;
         }
       } else {
-        FPC nextWidth = iter.nextx - rowStartX;
+        FPC nextWidth = iter.next_x - rowStartX;
         if (type == CTCharacter || type == CTCJKCharacter) {
-          rowEnd = iter.next;
-          rowWidth = iter.nextx - rowStartX;
+          rowEnd = glyph_next;
+          rowWidth = iter.next_x - rowStartX;
           rowMaxX = q.x1 - rowStartX;
         }
-        if (((ptype == CTCharacter || 
+        if (((ptype == CTCharacter ||
           ptype == CTCJKCharacter) && type == CTSpace) || type == CTCJKCharacter) {
-          breakEnd = iter.str;
+          breakEnd = glyph_start;
           breakWidth = rowWidth;
           breakMaxX = rowMaxX;
         }
-        if ((ptype == CTSpace && (type == CTCharacter || 
+        if ((ptype == CTSpace && (type == CTCharacter ||
             type == CTCJKCharacter)) || type == CTCJKCharacter) {
-          wordStart = iter.str;
+          wordStart = glyph_start;
           wordStartX = iter.x;
           wordMinX = q.x0;
         }
         if ((type == CTCharacter || type == CTCJKCharacter) && nextWidth > breakRowWidth) {
           if (breakEnd == rowStart) {
             rows[nrows].start = rowStart;
-            rows[nrows].end = iter.str;
+            rows[nrows].end = glyph_start;
             rows[nrows].width = rowWidth * invscale;
             rows[nrows].min_x = rowMinX * invscale;
             rows[nrows].max_x = rowMaxX * invscale;
-            rows[nrows].next = iter.str;
+            rows[nrows].next = glyph_start;
             nrows++;
             if (nrows >= maxRows)
               return nrows;
             rowStartX = iter.x;
-            rowStart = iter.str;
-            rowEnd = iter.next;
-            rowWidth = iter.nextx - rowStartX;
+            rowStart = glyph_start;
+            rowEnd = glyph_next;
+            rowWidth = iter.next_x - rowStartX;
             rowMinX = q.x0 - rowStartX;
             rowMaxX = q.x1 - rowStartX;
-            wordStart = iter.str;
+            wordStart = glyph_start;
             wordStartX = iter.x;
             wordMinX = q.x0 - rowStartX;
           } else {
@@ -2262,8 +2274,8 @@ ISC ExoTextBreakLines(RenderContext* context, const CHR* string, const CHR* end,
               return nrows;
             rowStartX = wordStartX;
             rowStart = wordStart;
-            rowEnd = iter.next;
-            rowWidth = iter.nextx - rowStartX;
+            rowEnd = glyph_next;
+            rowWidth = iter.next_x - rowStartX;
             rowMinX = wordMinX - rowStartX;
             rowMaxX = q.x1 - rowStartX;
           }
@@ -2273,10 +2285,10 @@ ISC ExoTextBreakLines(RenderContext* context, const CHR* string, const CHR* end,
         }
       }
     }
-    pcodepoint = iter.codepoint;
+    pcodepoint = IUC(iter.code_point);
     ptype = type;
   }
-  if (rowStart != nullptr) {
+  if (rowStart != _NilP) {
     rows[nrows].start = rowStart;
     rows[nrows].end = rowEnd;
     rows[nrows].width = rowWidth * invscale;
@@ -2287,29 +2299,29 @@ ISC ExoTextBreakLines(RenderContext* context, const CHR* string, const CHR* end,
   }
   return nrows;
 }
-FPC ExoTextBounds(RenderContext* context, FPC x, FPC y, const CHR* string, 
+
+FPC ExoTextBounds(RenderContext* context, FPC x, FPC y, const CHR* string,
   const CHR* end, FPC* bounds) {
   RenderState* state = Exo__getState(context);
+  if (context->fs == _NilP || state->font_id < 0) return 0;
   FPC scale = Exo__getFontScale(state) * context->device_pixel_ratio;
   FPC invscale = 1.0f / scale;
-  FPC width;
-  if (state->font_id == FONS_INVALID) return 0;
-  fonsSetSize(context->fs, state->font_size*scale);
-  fonsSetSpacing(context->fs, state->letter_spacing*scale);
-  fonsSetBlur(context->fs, state->font_blur*scale);
-  fonsSetAlign(context->fs, state->text_align);
-  fonsSetFont(context->fs, state->font_id);
-  width = fonsTextBounds(context->fs, x*scale, y*scale, string, end, bounds);
-  if (bounds != nullptr) {
-    fonsLineBounds(context->fs, y*scale, &bounds[1], &bounds[3]);
+  Exo__setFontState(context, state, scale);
+  FPC width = context->fs->TextBounds(x*scale, y*scale, string, end, bounds);
+  if (bounds != _NilP) {
+    /* The line box replaces the vertical extent: a string of wide letters and
+    one of narrow ones sit on the same baseline range. */
+    FPC min_y = 0, max_y = 0;
+    context->fs->LineBounds(y*scale, min_y, max_y);
     bounds[0] *= invscale;
-    bounds[1] *= invscale;
+    bounds[1] = min_y * invscale;
     bounds[2] *= invscale;
-    bounds[3] *= invscale;
+    bounds[3] = max_y * invscale;
   }
   return width * invscale;
 }
-void ExoTextBoxBounds(RenderContext* context, FPC x, FPC y, FPC breakRowWidth, 
+
+void ExoTextBoxBounds(RenderContext* context, FPC x, FPC y, FPC breakRowWidth,
   const CHR* string, const CHR* end, FPC* bounds) {
   RenderState* state = Exo__getState(context);
   TextRow rows[2];
@@ -2321,24 +2333,20 @@ void ExoTextBoxBounds(RenderContext* context, FPC x, FPC y, FPC breakRowWidth,
   ISC valign = state->text_align & (AlignTop | AlignMiddle | AlignBottom | AlignBaseline);
   FPC lineh = 0, rminy = 0, rmaxy = 0;
   FPC min_x, miny, max_x, maxy;
-  if (state->font_id == FONS_INVALID) {
-    if (bounds != nullptr)
+  if (context->fs == _NilP || state->font_id < 0) {
+    if (bounds != _NilP)
       bounds[0] = bounds[1] = bounds[2] = bounds[3] = 0.0f;
     return;
   }
-  ExoTextMetrics(context, nullptr, nullptr, &lineh);
+  ExoTextMetrics(context, _NilP, _NilP, &lineh);
   state->text_align = AlignLeft | valign;
   min_x = max_x = x;
   miny = maxy = y;
-  fonsSetSize(context->fs, state->font_size*scale);
-  fonsSetSpacing(context->fs, state->letter_spacing*scale);
-  fonsSetBlur(context->fs, state->font_blur*scale);
-  fonsSetAlign(context->fs, state->text_align);
-  fonsSetFont(context->fs, state->font_id);
-  fonsLineBounds(context->fs, 0, &rminy, &rmaxy);
+  Exo__setFontState(context, state, scale);
+  context->fs->LineBounds(0, rminy, rmaxy);
   rminy *= invscale;
   rmaxy *= invscale;
-  while ((nrows = ExoTextBreakLines(context, string, end, breakRowWidth, 
+  while ((nrows = ExoTextBreakLines(context, string, end, breakRowWidth,
     rows, 2))) {
     for (i = 0; i < nrows; i++) {
       TextRow* row = &rows[i];
@@ -2360,31 +2368,26 @@ void ExoTextBoxBounds(RenderContext* context, FPC x, FPC y, FPC breakRowWidth,
     string = rows[nrows-1].next;
   }
   state->text_align = oldAlign;
-  if (bounds != nullptr) {
+  if (bounds != _NilP) {
     bounds[0] = min_x;
     bounds[1] = miny;
     bounds[2] = max_x;
     bounds[3] = maxy;
   }
 }
-void ExoTextMetrics(RenderContext* context, FPC* ascender, FPC* descender, 
+
+void ExoTextMetrics(RenderContext* context, FPC* ascender, FPC* descender,
   FPC* lineh) {
   RenderState* state = Exo__getState(context);
+  if (context->fs == _NilP || state->font_id < 0) return;
   FPC scale = Exo__getFontScale(state) * context->device_pixel_ratio;
   FPC invscale = 1.0f / scale;
-  if (state->font_id == FONS_INVALID) return;
-  fonsSetSize(context->fs, state->font_size*scale);
-  fonsSetSpacing(context->fs, state->letter_spacing*scale);
-  fonsSetBlur(context->fs, state->font_blur*scale);
-  fonsSetAlign(context->fs, state->text_align);
-  fonsSetFont(context->fs, state->font_id);
-  fonsVertMetrics(context->fs, ascender, descender, lineh);
-  if (ascender != nullptr)
-    *ascender *= invscale;
-  if (descender != nullptr)
-    *descender *= invscale;
-  if (lineh != nullptr)
-    *lineh *= invscale;
+  Exo__setFontState(context, state, scale);
+  FPC asc = 0, desc = 0, line = 0;
+  context->fs->VerticalMetrics(asc, desc, line);
+  if (ascender != _NilP)  *ascender = asc * invscale;
+  if (descender != _NilP) *descender = desc * invscale;
+  if (lineh != _NilP)     *lineh = line * invscale;
 }
 
 }  //< namespace Exo

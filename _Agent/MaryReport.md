@@ -75,7 +75,7 @@
 
   Each JSX source file Foo.jsx produces an includable C++ header with:
 
-    inline ISC BuildFoo(TJsx<ISC, ISC, DTB, CHR, CHR, IUN>* j,
+    inline ISC BuildFoo(TJsx<ISC, ISC, DTB, CHR, CHR, IUC>* j,
                         ISC ctx, ISC* out_root)
 
   - Returns 0 on success;  *out_root is a valid tree root index (>= 0).
@@ -100,7 +100,7 @@
   #include <_Seams.hxx>
   #include "Jsx.hxx"
   namespace CTK {
-  inline ISC BuildFoo(TJsx<ISC, ISC, DTB, CHR, CHR, IUN>* j,
+  inline ISC BuildFoo(TJsx<ISC, ISC, DTB, CHR, CHR, IUC>* j,
                       ISC ctx, ISC* out_root) {
     if (!j || !out_root) return -1;
     *out_root = -1;
@@ -128,7 +128,7 @@
 
   ISC main() {
     static alignas(64) CHR buf[1 << 30];   // 1 GB arena, caller-owned
-    TJsx<ISC, ISC, DTB, CHR, CHR, IUN> j;
+    TJsx<ISC, ISC, DTB, CHR, CHR, IUC> j;
     j.Init(buf, sizeof(buf), ISC(1 << 20));
     ISC ctx = j.NewContext(ISC(16));
     j.SetVar(ctx, (const CHR*)"name", (const CHR*)"Captain");

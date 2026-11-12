@@ -1,2 +1,3 @@
 // Copyright AStarship <https://astarship.net>.
-#include "Document.hxx"
+#pragma once
+#include "TextEdit.hxx"

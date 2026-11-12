@@ -16,9 +16,9 @@ using namespace ::CTK;
 // Shared caller-owned stack buffer (4 MiB). One TJsx is re-Init'd per call so
 // every direct-tree test starts from a clean slate. Static so the 4 MiB region
 // never lands on the call stack.
-inline TJsx<ISC, ISC, DTB, CHR, CHR, IUN>& JsxRegrFresh() {
+inline TJsx<ISC, ISC, DTB, CHR, CHR, IUC>& JsxRegrFresh() {
   static CHA buf[1 << 22];
-  static TJsx<ISC, ISC, DTB, CHR, CHR, IUN> j;
+  static TJsx<ISC, ISC, DTB, CHR, CHR, IUC> j;
   j.Init(buf, ISC(1 << 22), ISC(1 << 16));
   return j;
 }
@@ -171,7 +171,7 @@ inline const CHA* JsxRegr_MultiDigitChildren(const CHA* args) {
 // cannot be allocated, that IS the finding (context sizing bug); if it can, the
 // dynamic prop must resolve to the bound value at render time.
 inline const CHA* JsxRegr_ContextSizing(const CHA* args) {
-  TJsx<ISC, ISC, DTB, CHR, CHR, IUN>& j = JsxRegrFresh();
+  TJsx<ISC, ISC, DTB, CHR, CHR, IUC>& j = JsxRegrFresh();
   ISC ctx = j.NewContext(ISC(16));
   if (ctx < 0)
     return "context vars=16: NewContext(16) failed to allocate (context sizing/init bug)";
@@ -197,7 +197,7 @@ inline const CHA* JsxRegr_ContextSizing(const CHA* args) {
 // (5) HTML escaping: user-controlled text must be escaped so a hostile value
 // cannot inject markup. & < > in a text child render as entities.
 inline const CHA* JsxRegr_HtmlEscape(const CHA* args) {
-  TJsx<ISC, ISC, DTB, CHR, CHR, IUN>& j = JsxRegrFresh();
+  TJsx<ISC, ISC, DTB, CHR, CHR, IUC>& j = JsxRegrFresh();
   ISC ctx = j.NewContext(ISC(8));
   ISC el = j.AddObject(ISC(16384), ISC(32), ISC(2048));
   if (el < 0) return "AddObject failed";
@@ -240,7 +240,7 @@ inline const CHA* JsxRegr_SpacePreserve(const CHA* args) {
 // key. Checked at both the IUC (3-byte) and IUB (2-byte) widths, each on its own
 // node so the widths do not interact.
 inline const CHA* JsxRegr_ScalarUpdateIsolation(const CHA* args) {
-  TJsx<ISC, ISC, DTB, CHR, CHR, IUN>& j = JsxRegrFresh();
+  TJsx<ISC, ISC, DTB, CHR, CHR, IUC>& j = JsxRegrFresh();
 
   // IUC in-place update isolation.
   ISC o1 = j.AddObject(ISC(16384), ISC(32), ISC(2048));
@@ -278,7 +278,7 @@ inline const CHA* JsxRegr_ScalarUpdateIsolation(const CHA* args) {
 // pushes must fail safely (negative index) without crashing or corrupting.
 // Crash-prone -> the runner invokes this in its own subprocess.
 inline const CHA* JsxRegr_ExhaustionFailsSafely(const CHA* args) {
-  TJsx<ISC, ISC, DTB, CHR, CHR, IUN>& j = JsxRegrFresh();
+  TJsx<ISC, ISC, DTB, CHR, CHR, IUC>& j = JsxRegrFresh();
   ISC last = 0;
   ISC iters = 0;
   while (iters < 100000) {
@@ -299,7 +299,7 @@ inline const CHA* JsxRegr_ExhaustionFailsSafely(const CHA* args) {
 // negative element index must fail safely (0 / _NilP / -1), never crash.
 // Crash-prone -> the runner invokes this in its own subprocess.
 inline const CHA* JsxRegr_InvalidHandleFailsSafely(const CHA* args) {
-  TJsx<ISC, ISC, DTB, CHR, CHR, IUN>& j = JsxRegrFresh();
+  TJsx<ISC, ISC, DTB, CHR, CHR, IUC>& j = JsxRegrFresh();
   ISC ctx = j.NewContext(ISC(8));
   ISC el = j.AddObject(ISC(16384), ISC(32), ISC(2048));
   if (el < 0) return "AddObject failed";
@@ -327,7 +327,7 @@ inline const CHA* JsxRegr_InvalidHandleFailsSafely(const CHA* args) {
 // when cap=0, writing past a zero-size buffer.
 // Crash-prone -> the runner invokes this in its own subprocess.
 inline const CHA* JsxRegr_ZeroRenderCapacity(const CHA* args) {
-  TJsx<ISC, ISC, DTB, CHR, CHR, IUN>& j = JsxRegrFresh();
+  TJsx<ISC, ISC, DTB, CHR, CHR, IUC>& j = JsxRegrFresh();
   ISC ctx = j.NewContext(ISC(8));
   ISC el = j.AddObject(ISC(16384), ISC(32), ISC(2048));
   if (el < 0) return "AddObject failed";
