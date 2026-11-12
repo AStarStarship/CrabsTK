@@ -4,10 +4,16 @@
 #define _CrabsTKGUIImageWindowH
 #include <_Config.h>
 #include <SDL3/SDL.h>
+/* The blit uses GL 2.0+ entry points (shaders, VAOs) that the platform GL
+header only declares when the extension prototypes are requested. */
+#ifndef GL_GLEXT_PROTOTYPES
+#define GL_GLEXT_PROTOTYPES 1
+#endif
+#include <SDL3/SDL_opengl.h>
 #include "../Exo/Image.h"
 
 namespace CTK {
-namespace GUI {
+namespace Exo {
 
 /* An SDL3 window with an OpenGL 3.3 core context. Owns the window, the GL
 context, and the swap interval. The context is current while the window
@@ -40,42 +46,54 @@ class AWindow {
   /* The underlying SDL window (for backend init). */
   SDL_Window* SdlWindow() { return window_; }
   /* The GL context handle. */
-  void* GlContext() { return gl_context_; }
+  SDL_GLContext GlContext() { return gl_context_; }
 
  private:
   SDL_Window* window_ = nullptr;
-  void* gl_context_ = nullptr;
+  SDL_GLContext gl_context_ = nullptr;
   ISC width_ = 0, height_ = 0;
   BOL open_ = false;
 };
 
 /* A GL texture that mirrors a CImage (RGBA, row-major, top-left origin).
 Call Upload() after the image is rasterized; the texture is ready for
-ImGui::Image or raw GL draws until the next Upload. */
+ATexture::Draw until the next Upload. */
 class ATexture {
  public:
   ATexture();
-  
+
   ~ATexture();
 
   /* (Re)create the texture and upload the image's pixels. */
   void Upload(CTK::Exo::CImage& img);
 
+  /* Present the texture: a full textured quad from the top-left (x, y) to
+  (x + w, y + h) in a target_width x target_height pixel viewport. This is
+  the whole window path — an app rasterizes its Room canvas and blits it, no
+  intermediate UI toolkit. Builds its shader and vertex array on the first
+  call, so a current GL 3.3 core context is required. */
+  void Draw(ISC target_width, ISC target_height, ISC x, ISC y, ISC w, ISC h);
+
   /* The GL texture id (0 if not yet uploaded). */
-  IUA Id() { return id_; }
+  IUC Id() { return id_; }
 
   ISC Width() { return width_; }
 
   ISC Height() { return height_; }
 
-  /* Free the GPU resource. */
+  /* Free the GPU resources (texture, program, vertex array). */
   void Release();
 
  private:
-  IUA id_ = 0;
+  BOL InitProgram_();
+
+  IUC id_ = 0;
+  IUC program_ = 0;
+  IUC vao_ = 0;
+  IUC vbo_ = 0;
   ISC width_ = 0, height_ = 0;
 };
 
-}  //< namespace GUI
+}  //< namespace Exo
 }  //< namespace CTK
 #endif  //< _CrabsTKGUIImageWindowH

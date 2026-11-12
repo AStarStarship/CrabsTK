@@ -34,7 +34,7 @@ namespace JSX {
 //   depth/element/source limits.
 //
 // Emitted builder contract (MaryReport.md §2):
-//   inline ISC Build<Name>(TJsx<ISC,ISC,DTB,CHR,CHR,IUN>* j, ISC ctx,
+//   inline ISC Build<Name>(TJsx<ISC,ISC,DTB,CHR,CHR,IUC>* j, ISC ctx,
 //                          ISC* out_root)
 //   0 on success (*out_root = valid root), negative on failure
 //   (*out_root = -1). No main, no new/delete, no printf, no static state,
@@ -416,7 +416,7 @@ inline ISC JsxToCpp(const CHA* source, ISC source_len,
   p.emit("namespace CTK {\n");
   p.emit("inline ISC Build");
   p.emit(builder_name);
-  p.emit("(TJsx<ISC, ISC, DTB, CHR, CHR, IUN>* j, ISC ctx, ISC* out_root) {\n");
+  p.emit("(TJsx<ISC, ISC, DTB, CHR, CHR, IUC>* j, ISC ctx, ISC* out_root) {\n");
   p.emit("  if (!j || !out_root) return -1;\n");
   p.emit("  *out_root = -1;\n");
 

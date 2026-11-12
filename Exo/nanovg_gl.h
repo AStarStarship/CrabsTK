@@ -37,10 +37,16 @@ enum CreateFlags {
 
 // Creates NanoVG contexts for different OpenGL (ES) versions.
 // Flags should be combination of the create flags above.
+// The caller-owned Wall must outlive the context. Reserve six backend slots
+// beyond the VG/font budget: context, textures, calls, paths, verts, uniforms.
+// Each growth consumes another slot and retains the old block until Wall reset.
+// Initial arrays hold 4 textures, 128 calls/paths/uniforms and 4096 vertices;
+// budget their bytes (uniforms use the GL-aligned fragSize) plus growth copies.
+// Delete the context before resetting the Wall so GL resources are released.
 
 #if defined NANOVG_GL2
 
-RenderContext* ExoCreateGL2(ISC flags);
+RenderContext* ExoCreateGL2(ISC flags, _::TWall<>* wall);
 void ExoDeleteGL2(RenderContext* context);
 
 ISC ExolCreateImageFromHandleGL2(RenderContext* context, GLuint textureId, ISC w, ISC h, ISC flags);
@@ -50,7 +56,7 @@ GLuint ExolImageHandleGL2(RenderContext* context, ISC image);
 
 #if defined NANOVG_GL3
 
-RenderContext* ExoCreateGL3(ISC flags);
+RenderContext* ExoCreateGL3(ISC flags, _::TWall<>* wall);
 void ExoDeleteGL3(RenderContext* context);
 
 ISC ExolCreateImageFromHandleGL3(RenderContext* context, GLuint textureId, ISC w, ISC h, ISC flags);
@@ -60,7 +66,7 @@ GLuint ExolImageHandleGL3(RenderContext* context, ISC image);
 
 #if defined NANOVG_GLES2
 
-RenderContext* ExoCreateGLES2(ISC flags);
+RenderContext* ExoCreateGLES2(ISC flags, _::TWall<>* wall);
 void ExoDeleteGLES2(RenderContext* context);
 
 ISC ExolCreateImageFromHandleGLES2(RenderContext* context, GLuint textureId, ISC w, ISC h, ISC flags);
@@ -70,7 +76,7 @@ GLuint ExolImageHandleGLES2(RenderContext* context, ISC image);
 
 #if defined NANOVG_GLES3
 
-RenderContext* ExoCreateGLES3(ISC flags);
+RenderContext* ExoCreateGLES3(ISC flags, _::TWall<>* wall);
 void ExoDeleteGLES3(RenderContext* context);
 
 ISC ExolCreateImageFromHandleGLES3(RenderContext* context, GLuint textureId, ISC w, ISC h, ISC flags);
@@ -205,6 +211,7 @@ struct GLExoFragUniforms {
 };
 
 struct GLExoContext {
+  _::TWall<>* wall;
   GLExoShader shader;
   GLExoTexture* textures;
   FPC view[2];
@@ -335,7 +342,8 @@ GLExoTexture* glExo__allocTexture(GLExoContext* gl)
     if (gl->ntextures+1 > gl->ctextures) {
       GLExoTexture* textures;
       ISC ctextures = glExo__maxi(gl->ntextures+1, 4) +  gl->ctextures/2; // 1.5x Overallocate
-      textures = (GLExoTexture*)Exo__realloc(gl->textures, sizeof(GLExoTexture)*gl->ctextures, sizeof(GLExoTexture)*ctextures);
+      textures = (GLExoTexture*)Exo__realloc(gl->wall, gl->textures,
+          sizeof(GLExoTexture)*gl->ctextures, sizeof(GLExoTexture)*ctextures);
       if (textures == nullptr) return nullptr;
       gl->textures = textures;
       gl->ctextures = ctextures;
@@ -1257,7 +1265,8 @@ GLExoCall* glExo__allocCall(GLExoContext* gl)
   if (gl->ncalls+1 > gl->ccalls) {
     GLExoCall* calls;
     ISC ccalls = glExo__maxi(gl->ncalls+1, 128) + gl->ccalls/2; // 1.5x Overallocate
-    calls = (GLExoCall*)Exo__realloc(gl->calls, sizeof(GLExoCall) * gl->ccalls, sizeof(GLExoCall) * ccalls);
+    calls = (GLExoCall*)Exo__realloc(gl->wall, gl->calls,
+        sizeof(GLExoCall) * gl->ccalls, sizeof(GLExoCall) * ccalls);
     if (calls == nullptr) return nullptr;
     gl->calls = calls;
     gl->ccalls = ccalls;
@@ -1273,7 +1282,8 @@ ISC glExo__allocPaths(GLExoContext* gl, ISC n)
   if (gl->npaths+n > gl->cpaths) {
     GLExoPath* paths;
     ISC cpaths = glExo__maxi(gl->npaths + n, 128) + gl->cpaths/2; // 1.5x Overallocate
-    paths = (GLExoPath*)Exo__realloc(gl->paths, sizeof(GLExoPath) * gl->cpaths, sizeof(GLExoPath) * cpaths);
+    paths = (GLExoPath*)Exo__realloc(gl->wall, gl->paths,
+        sizeof(GLExoPath) * gl->cpaths, sizeof(GLExoPath) * cpaths);
     if (paths == nullptr) return -1;
     gl->paths = paths;
     gl->cpaths = cpaths;
@@ -1289,7 +1299,8 @@ ISC glExo__allocVerts(GLExoContext* gl, ISC n)
   if (gl->nverts+n > gl->cverts) {
     VertexFPC* verts;
     ISC cverts = glExo__maxi(gl->nverts + n, 4096) + gl->cverts/2; // 1.5x Overallocate
-    verts = (VertexFPC*)Exo__realloc(gl->verts, sizeof(VertexFPC) * gl->cverts, sizeof(VertexFPC) * cverts);
+    verts = (VertexFPC*)Exo__realloc(gl->wall, gl->verts,
+        sizeof(VertexFPC) * gl->cverts, sizeof(VertexFPC) * cverts);
     if (verts == nullptr) return -1;
     gl->verts = verts;
     gl->cverts = cverts;
@@ -1305,7 +1316,8 @@ ISC glExo__allocFragUniforms(GLExoContext* gl, ISC n)
   if (gl->nuniforms+n > gl->cuniforms) {
     CHR* uniforms;
     ISC cuniforms = glExo__maxi(gl->nuniforms+n, 128) + gl->cuniforms/2; // 1.5x Overallocate
-    uniforms = (CHR*)Exo__realloc(gl->uniforms, structSize * gl->cuniforms, structSize * cuniforms);
+    uniforms = (CHR*)Exo__realloc(gl->wall, gl->uniforms,
+        structSize * gl->cuniforms, structSize * cuniforms);
     if (uniforms == nullptr) return -1;
     gl->uniforms = uniforms;
     gl->cuniforms = cuniforms;
@@ -1524,32 +1536,26 @@ void glExo__renderDelete(void* uptr)
     if (gl->textures[i].tex != 0 && (gl->textures[i].flags & ImageNoDelete) == 0)
       glDeleteTextures(1, &gl->textures[i].tex);
   }
-  Exo__free(gl->textures);
-
-  Exo__free(gl->paths);
-  Exo__free(gl->verts);
-  Exo__free(gl->uniforms);
-  Exo__free(gl->calls);
-
-  Exo__free(gl);
+  // CPU blocks belong to the caller's Wall, including superseded arrays.
 }
 
 
 #if defined NANOVG_GL2
-RenderContext* ExoCreateGL2(ISC flags)
+RenderContext* ExoCreateGL2(ISC flags, _::TWall<>* wall)
 #elif defined NANOVG_GL3
-RenderContext* ExoCreateGL3(ISC flags)
+RenderContext* ExoCreateGL3(ISC flags, _::TWall<>* wall)
 #elif defined NANOVG_GLES2
-RenderContext* ExoCreateGLES2(ISC flags)
+RenderContext* ExoCreateGLES2(ISC flags, _::TWall<>* wall)
 #elif defined NANOVG_GLES3
-RenderContext* ExoCreateGLES3(ISC flags)
+RenderContext* ExoCreateGLES3(ISC flags, _::TWall<>* wall)
 #endif
 {
   RenderParams params;
   RenderContext* context = nullptr;
-  GLExoContext* gl = (GLExoContext*)Exo__alloc(sizeof(GLExoContext));
+  GLExoContext* gl = (GLExoContext*)Exo__alloc(wall, sizeof(GLExoContext));
   if (gl == nullptr) goto error;
   _::ArrayFill(gl, sizeof(GLExoContext));
+  gl->wall = wall;
 
   _::ArrayFill(&params, sizeof(params));
   params.renderCreate = glExo__renderCreate;
@@ -1569,13 +1575,13 @@ RenderContext* ExoCreateGLES3(ISC flags)
 
   gl->flags = flags;
 
-  context = ExoCreateInternal(&params);
+  context = ExoCreateInternal(&params, wall);
   if (context == nullptr) goto error;
 
   return context;
 
 error:
-  // 'gl' is freed by ExoDeleteInternal.
+  // ExoCreateInternal cleans up GL resources on failure; Wall owns CPU blocks.
   if (context != nullptr) ExoDeleteInternal(context);
   return nullptr;
 }

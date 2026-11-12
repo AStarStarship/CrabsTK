@@ -378,7 +378,7 @@ static IUD TsEmit(TTreeShakeSources* sources, TTreeShakeSymTab* syms,
   EMIT("typedef long long ISD;\n");
   EMIT("typedef unsigned long long IUD;\n");
   EMIT("typedef ISC ISC;\n");
-  EMIT("typedef IUC IUN;\n");
+  EMIT("typedef IUC IUC;\n");
   EMIT("typedef long ISW;\n");
   EMIT("typedef unsigned long IUW;\n");
   EMIT("typedef FPC FPC;\n");

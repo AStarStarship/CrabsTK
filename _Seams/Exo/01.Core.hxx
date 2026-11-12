@@ -7,10 +7,7 @@
 #include <ASCIICrabs/_Release.h>
 #endif
 #include <ASCIICrabs/Test.h>
-#include "../../Exo/Image.hxx"
-#include "../../Exo/IDraw.hxx"
-#include "../../Exo/VG.hxx"
-#include "../../Exo/Canvas.hxx"
+#include "../../Exo/_Package.hxx"
 namespace CTKGUITest {
 using namespace ::_;
 using namespace ::CTK;
@@ -25,7 +22,7 @@ Every assertion reads real pixels: a path is only correct if the raster agrees. 
 
 /* One 8-bit channel of a pixel in an RGBA8 buffer. */
 inline IUB ChannelAt(const Exo::CImage& image, ISC x, ISC y, ISC channel) {
-  return image.data[((IUN)y * (IUN)image.width + (IUN)x) * 4 + (IUN)channel];
+  return image.data[((IUC)y * (IUC)image.width + (IUC)x) * 4 + (IUC)channel];
 }
 
 /* Bytes a normalised channel value represents, rounded. */
@@ -67,19 +64,23 @@ inline const CHA* Core(const CHA* args) {
     _DCheck(c.r > 0.99F && c.g < 0.01F && c.b < 0.01F, "hue 0 is red");
   }
 
-  // --- the canvas is a headless RGBA8 target ------------------------------
+  // --- the canvas is a Room-backed RGBA8 target ---------------------------
   {
-    GUI::AVCanvas canvas(32, 32, Exo::IWhite);
+    Exo::ARoom room("exo_core");
+    Exo::AVCanvas canvas;
+    _DCheck(canvas.Init(room, 32, 32, Exo::IWhite), "canvas binds to a Room");
     _DCheck(canvas.Image().width == 32 && canvas.Image().height == 32,
             "canvas is 32x32");
     _DCheck(canvas.Image().format == Exo::PixelFormat::RGBA8,
             "canvas is RGBA8");
-    _DCheckPointer(canvas.Image().data, "canvas owns its pixels");
+    _DCheckPointer(canvas.Image().data, "canvas draws in Room pixels");
   }
 
   // A frame with nothing in it holds the background
   {
-    GUI::AVCanvas canvas(8, 8, Exo::IBlue);
+    Exo::ARoom room("exo_core");
+    Exo::AVCanvas canvas;
+    canvas.Init(room, 8, 8, Exo::IBlue);
     canvas.BeginFrame();
     canvas.EndFrame();
     const Exo::CImage& image = canvas.Image();
@@ -90,7 +91,9 @@ inline const CHA* Core(const CHA* args) {
 
   // Clear paints every pixel
   {
-    GUI::AVCanvas canvas(16, 16, Exo::IWhite);
+    Exo::ARoom room("exo_core");
+    Exo::AVCanvas canvas;
+    canvas.Init(room, 16, 16, Exo::IWhite);
     canvas.BeginFrame();
     canvas.Clear(Exo::IRed);
     canvas.EndFrame();
@@ -103,7 +106,9 @@ inline const CHA* Core(const CHA* args) {
 
   // A filled quad paints its interior and nothing outside
   {
-    GUI::AVCanvas canvas(32, 32, Exo::IWhite);
+    Exo::ARoom room("exo_core");
+    Exo::AVCanvas canvas;
+    canvas.Init(room, 32, 32, Exo::IWhite);
     canvas.BeginFrame();
     canvas.BeginPath();
     canvas.MoveTo(8, 8);
@@ -136,7 +141,9 @@ inline const CHA* Core(const CHA* args) {
 
   // A circle paints its disc, not its bounding box
   {
-    GUI::AVCanvas canvas(32, 32, Exo::IWhite);
+    Exo::ARoom room("exo_core");
+    Exo::AVCanvas canvas;
+    canvas.Init(room, 32, 32, Exo::IWhite);
     canvas.BeginFrame();
     canvas.BeginPath();
     canvas.Circle(16, 16, 10);
@@ -153,7 +160,9 @@ inline const CHA* Core(const CHA* args) {
 
   // A stroke follows the segment----------------
   {
-    GUI::AVCanvas canvas(32, 32, Exo::IWhite);
+    Exo::ARoom room("exo_core");
+    Exo::AVCanvas canvas;
+    canvas.Init(room, 32, 32, Exo::IWhite);
     canvas.BeginFrame();
     canvas.BeginPath();
     canvas.MoveTo(4, 16);
@@ -169,7 +178,9 @@ inline const CHA* Core(const CHA* args) {
 
   // Geometry outside the canvas is clipped, never fatal
   {
-    GUI::AVCanvas canvas(16, 16, Exo::IWhite);
+    Exo::ARoom room("exo_core");
+    Exo::AVCanvas canvas;
+    canvas.Init(room, 16, 16, Exo::IWhite);
     canvas.BeginFrame();
     canvas.BeginPath();
     canvas.MoveTo(-8, -8);

@@ -16,9 +16,9 @@ static CHA* CodeReadFile(const CHA* path, ISC* byte_count) {
   const long size = ftell(file);
   if (size < 0) { fclose(file); return _NilP; }
   if (fseek(file, 0, SEEK_SET) != 0) { fclose(file); return _NilP; }
-  CHA* buffer = (CHA*)malloc((IUN)size + 1);
+  CHA* buffer = (CHA*)malloc((IUC)size + 1);
   if (!buffer) { fclose(file); return _NilP; }
-  if (fread(buffer, 1, (IUN)size, file) != (IUN)size) {
+  if (fread(buffer, 1, (IUC)size, file) != (IUC)size) {
     free(buffer); fclose(file); return _NilP;
   }
   fclose(file);
@@ -89,7 +89,7 @@ ISC StripComments(const CHA* directory, const CHA* filename,
   /* One token per byte is the worst case. */
   ISC capacity = source_bytes + 64;
   TCodeToken* tokens =
-      (TCodeToken*)malloc(sizeof(TCodeToken) * (IUN)capacity);
+      (TCodeToken*)malloc(sizeof(TCodeToken) * (IUC)capacity);
   if (!tokens) { free(source); return -1; }
 
   TCodeLexer lexer;
@@ -100,7 +100,7 @@ ISC StripComments(const CHA* directory, const CHA* filename,
     if (lexer.full) { free(tokens); free(source); return -1; }
   }
 
-  CHA* comment_mask = (CHA*)calloc((IUN)source_bytes + 1, 1);
+  CHA* comment_mask = (CHA*)calloc((IUC)source_bytes + 1, 1);
   if (!comment_mask) { free(tokens); free(source); return -1; }
   for (ISC i = 0; i < ISC(lexer.token_count); ++i) {
     if (!CodeIsCommentKind(tokens[i].kind)) continue;

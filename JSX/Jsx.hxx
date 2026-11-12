@@ -49,7 +49,7 @@ namespace JSX {
 //   DT   type-code width
 //   CHS  key CHR type, CHT  CHR type, HSH  hash type
 template<typename ISZ = ISC, typename ISY = ISC, typename DT = DTB,
-         typename CHS = CHR, typename CHT = CHR, typename HSH = IUN>
+         typename CHS = CHR, typename CHT = CHR, typename HSH = IUC>
 struct TJsx {
   using JsxLST = TList<ISZ, ISY, DT>;
   using JsxDic = TDic<CHS, CHT, ISZ, ISY, DT, HSH>;
@@ -358,7 +358,7 @@ struct TJsx {
 // Book and Table push (the "hierarchical types all working"); and a hand-built
 // JSX element rendered by the Star reducer (static + dynamic props + text).
 inline ISC JsxSelfTest(void* buffer, ISC bytes, ISC dic_bytes = 65536) {
-  TJsx<ISC, ISC, DTB, CHR, CHR, IUN> j;
+  TJsx<ISC, ISC, DTB, CHR, CHR, IUC> j;
   j.Init(buffer, bytes, ISC(1 << 16));
   ISC ok = 1;
 
@@ -392,11 +392,11 @@ inline ISC JsxSelfTest(void* buffer, ISC bytes, ISC dic_bytes = 65536) {
   // (3) Table push: the ASCII hash table (Star-reducer backing).
   ISC tbl = j.AddTable(ISC(8192), ISC(64));
   ok &= (tbl >= 0);
-  TTableAppend<CHR, CHR, ISC, ISC, IUN>(j.Table(tbl), (const CHR*)"route");
-  TTableAppend<CHR, CHR, ISC, ISC, IUN>(j.Table(tbl), (const CHR*)"health");
-  ok &= (TTableFind<CHR, CHR, ISC, ISC, IUN>(j.Table(tbl), (const CHR*)"route") >= 0);
-  ok &= (TTableFind<CHR, CHR, ISC, ISC, IUN>(j.Table(tbl), (const CHR*)"health") >= 0);
-  ok &= (TTableFind<CHR, CHR, ISC, ISC, IUN>(j.Table(tbl), (const CHR*)"missing") < 0);
+  TTableAppend<CHR, CHR, ISC, ISC, IUC>(j.Table(tbl), (const CHR*)"route");
+  TTableAppend<CHR, CHR, ISC, ISC, IUC>(j.Table(tbl), (const CHR*)"health");
+  ok &= (TTableFind<CHR, CHR, ISC, ISC, IUC>(j.Table(tbl), (const CHR*)"route") >= 0);
+  ok &= (TTableFind<CHR, CHR, ISC, ISC, IUC>(j.Table(tbl), (const CHR*)"health") >= 0);
+  ok &= (TTableFind<CHR, CHR, ISC, ISC, IUC>(j.Table(tbl), (const CHR*)"missing") < 0);
 
   // (4) A JSX element, rendered by the Star reducer (static + dynamic + text).
   ISC ctx = j.NewContext(ISC(8));

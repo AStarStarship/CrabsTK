@@ -120,10 +120,14 @@ class Axis {
   ISC y_ticks_ = 5;
 };
 
-/* A figure owns the CImage canvas and a small set of axes. */
+/* A figure owns its pixels or borrows a caller-owned RGBA8 canvas. */
 class Figure {
  public:
   Figure(ISC width, ISC height, VColor bg = Exo::IWhite);
+  /* The pixels must outlive the Figure; no allocation or clear occurs. */
+  explicit Figure(const CImage& canvas);
+  Figure(const Figure&) = delete;
+  Figure& operator=(const Figure&) = delete;
 
   ISC Width() const { return Width_; }
   ISC Height() const { return Height_; }
@@ -146,6 +150,7 @@ class Figure {
  private:
   ISC Width_;
   ISC Height_;
+  Exo::AImage owned_;
   CImage canvas_;
   Axis axes_[kMaxAxes];
   ISC axis_count_ = 0;

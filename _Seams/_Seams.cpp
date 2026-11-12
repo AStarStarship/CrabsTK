@@ -76,21 +76,6 @@
    implementations. Without it every "using namespace CTK;" below fails. */
 using namespace ::_;
 #include "../_Package.hxx"
-#include "Audio/_Seams.hxx"
-#include "Code/_Seams.hxx"
-#include "Data/_Seams.hxx"
-#include "Env/_Seams.hxx"
-#include "Forms/_Seams.hxx"
-#include "Exo/_Seams.hxx"
-#include "IMUL/_Seams.hxx"
-#include "IPC/_Seams.hxx"
-#include "Math/_Seams.hxx"
-#include "Plot/_Seams.hxx"
-#include "Pro/_Seams.hxx"
-#include "Touch/_Seams.hxx"
-#include "Web/_Seams.hxx"
-#include "Who/_Seams.hxx"
-#include "Release.hxx"
 
 using namespace CTK;
 

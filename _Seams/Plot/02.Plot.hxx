@@ -225,7 +225,7 @@ inline const CHA* P10_ImageDraw(const CHA* args) {
   return "FAIL P10: Plot module is not present";
 #endif
   CImage cv{nullptr, 64, 32, 4};
-  cv.data = new IUA[(IUN)64 * (IUN)32 * 4]();
+  cv.data = new IUA[(IUC)64 * (IUC)32 * 4]();
   ImageDraw::Fill(cv, ImageDraw::IBlack);
   ImageDraw::PutPixel(cv, 10, 10, ImageDraw::IRed);
   if (cv.data[(10 * 64 + 10) * 4] != 255 ||

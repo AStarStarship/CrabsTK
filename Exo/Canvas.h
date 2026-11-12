@@ -8,7 +8,17 @@
 #include "VG.h"
 
 namespace CTK {
-namespace GUI {
+namespace Exo {
+
+/* The one Room an application owns.
+An app that IS an iGeek Environment passes Environment::Room(); an app that
+is not (a tool, a shell, a game) creates exactly one of these and shares it
+with every canvas it opens. The Room is the whole memory model: its Floor is
+the inline state and each Wall is a block carved out of it. There is no
+second path — a canvas only draws into a Room Wall — so pixels, renderer
+state and raster scratch rise and fall with the Room instead of with a
+per-canvas heap. Apps never name ROM_D; this alias is the contract. */
+using ARoom = _::TRoom<ROM_D>;
 
 /* Backend state handed to the Exo::RenderParams vtable as userPtr. It must
   outlive the per-frame render callbacks and delete, so it lives with the
@@ -17,15 +27,28 @@ struct SHeadless {
   Exo::CImage* img;
   IUA* pixels;
   ISC w, h;
+  ISC* indices;          //< polygon scratch, reserved in the canvas Wall.
+  ISC index_count;
 };
 
-/* A vector canvas. Construct headless (it owns a CImage) or over an existing
-GL context. The path is built with BeginPath/MoveTo/LineTo/Circle then
-committed with Fill/Stroke. */
+/* A vector canvas drawn entirely out of one Chinese Room Wall. The path is
+built with BeginPath/MoveTo/LineTo/Circle then committed with Fill/Stroke.
+There is no constructor that allocates outside a Room: a canvas without a
+Room would be a second memory model, so Init(room) is the only way up. */
 class AVCanvas {
  public:
-  /* Headless: create a WxH RGBA8 canvas. */
-  AVCanvas(ISC width, ISC height, Exo::VColor bg = Exo::IWhite);
+  AVCanvas() = default;
+  AVCanvas(const AVCanvas&) = delete;
+  AVCanvas& operator=(const AVCanvas&) = delete;
+
+  /* Attach a graphics Wall to the application's Room. The Room must outlive
+  the canvas. Pixels, renderer state and raster scratch share this Wall.
+  Failure leaves the canvas empty; Release detaches only its own Wall. */
+  BOL Init(ARoom& room, ISC width, ISC height, Exo::VColor bg = Exo::IWhite);
+  void Release();
+  BOL Ready() const { return ctx_ != _NilP; }
+  ARoom* Room() const { return room_; }
+
   ~AVCanvas();
 
   /* The rasterized canvas (headless backend). */
@@ -50,13 +73,15 @@ class AVCanvas {
   void Clear(Exo::VColor c);
 
  private:
-  Exo::RenderContext* ctx_ = nullptr;
-  Exo::AImage owned_;   //< one Autoject block: [ISW bytes | RGBA pixels]
-  Exo::CImage img_;     //< view of owned_, handed to the renderer
-  SHeadless headless_;  //< backend state for the vtable; outlives ctx_
+  BOL Init_(ISC width, ISC height, Exo::VColor bg);
+  ARoom* room_ = _NilP;
+  _::TWall<> wall_ = {}; //< registered with room_ when application-owned.
+  Exo::RenderContext* ctx_ = _NilP;
+  Exo::CImage img_ = {}; //< pixels borrowed from wall_.
+  SHeadless headless_ = {};
   ISC width_ = 0, height_ = 0;
 };
 
-}  //< namespace GUI
+}  //< namespace Exo
 }  //< namespace CTK
 #endif  //< _CrabsTKGUIImageCanvasH

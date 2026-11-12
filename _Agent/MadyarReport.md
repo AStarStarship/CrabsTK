@@ -21,7 +21,7 @@ are useful evidence, not a claim that the engine is done.
 
 | File | Role |
 |---|---|
-| `_Seams/JSX/JsxRegression.hxx` | 10 callable regression test functions (no main). Caller-owned 4 MiB contiguous stack; ASCIICrabs types only (ISC/CHA/DTB/CHR/IUN/IUB/IUC/IUW/ISC); fixed expected results; no `std::` product types. |
+| `_Seams/JSX/JsxRegression.hxx` | 10 callable regression test functions (no main). Caller-owned 4 MiB contiguous stack; ASCIICrabs types only (ISC/CHA/DTB/CHR/IUC/IUB/IUC/IUW/ISC); fixed expected results; no `std::` product types. |
 | `Hatch/VerifyJsx.py` | Python runner: generates one temporary single-TU harness under the active TMPDIR, builds real C++ (`-x c++ -std=gnu++23`), runs each test in its own subprocess, counts PASS/FAIL/BLOCKED programmatically, exits nonzero for an incomplete required gate. Normal + ASan/UBSan modes, per-test timeout, repo-relative path discovery, `--core` override. |
 | `Agents/MadyarReport.md` | This report. |
 

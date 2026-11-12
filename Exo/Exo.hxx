@@ -128,8 +128,8 @@ FPD3 TransformPoint(const TMat4& M, const FPD3& p) {
 
 void ClearFrame(TFrame& f, const VColor& bg) {
   Fill(*f.img, bg);
-  IUN px = (IUN)f.width * (IUN)f.height;
-  for (IUN i = 0; i < px; ++i) f.zbuf[i] = f.zfar;
+  IUC px = (IUC)f.width * (IUC)f.height;
+  for (IUC i = 0; i < px; ++i) f.zbuf[i] = f.zfar;
 }
 
 // Projection
@@ -227,7 +227,7 @@ void Triangle(TFrame& f,
       FPD z = w0 * az + w1 * bz + w2 * cz;
       // Depth test (canonical GL): NDC.z maps near=+1, far=-1, so LARGER z is
       // CLOSER. Keep the fragment if z >= stored (as close or closer).
-      IUN zidx = (IUN)py * (IUN)f.width + (IUN)px;
+      IUC zidx = (IUC)py * (IUC)f.width + (IUC)px;
       if (z < f.zbuf[zidx]) continue;
       f.zbuf[zidx] = z;
 
@@ -411,8 +411,8 @@ void BlitTexture(TFrame& f, const CImage& tex, FPD scale, FPD panX, FPD panY) {
       if (ty < 0) ty = 0;
       if (tx >= tex.width) tx = tex.width - 1;
       if (ty >= tex.height) ty = tex.height - 1;
-      IUN sidx = ((IUN)ty * (IUN)tex.width + (IUN)tx) * (IUN)PixelBytes(tex.format);
-      IUN didx = ((IUN)y * (IUN)W + (IUN)x) * 4;
+      IUC sidx = ((IUC)ty * (IUC)tex.width + (IUC)tx) * (IUC)PixelBytes(tex.format);
+      IUC didx = ((IUC)y * (IUC)W + (IUC)x) * 4;
       f.img->data[didx]     = tex.data[sidx];
       f.img->data[didx + 1] = tex.data[sidx + 1];
       f.img->data[didx + 2] = tex.data[sidx + 2];
